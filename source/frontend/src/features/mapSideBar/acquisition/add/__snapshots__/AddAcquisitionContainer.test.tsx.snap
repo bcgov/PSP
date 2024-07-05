@@ -6,7 +6,193 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  height: 3.8rem;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c16 button.close {
+  font-size: 2.4rem;
+}
+
+.c17 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c17 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c17 .react-datepicker-wrapper {
+  max-width: 17rem;
+}
+
+.c18.c18.form-control.is-valid {
+  background-image: none;
+}
+
+.c18.c18.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c27 {
+  padding-right: 0;
+}
+
+.c27 .form-control {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.c28:not(:first-child) {
+  padding-left: 0;
+}
+
+.c28:not(:first-child) .form-control {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.c29 {
+  font-size: 1.4rem;
+}
+
+.c1 {
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
   border-bottom: solid 0.5rem;
@@ -15,18 +201,278 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
+.c22 {
+  font-family: 'BCSans-Bold';
+  font-size: 2.2rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c32 {
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c5 {
+  border-left: 0.1rem solid;
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
+}
+
+.c4.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid;
+  background-color: white;
+}
+
+.c4.btn.btn-light.Button:focus,
+.c4.btn.btn-light.Button:active {
+  background-color: white;
+}
+
+.c4.btn,
+.c4 .Button__icon,
+.c4 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
+.c0 {
+  min-width: 90rem;
+  height: 100%;
+  position: relative;
+  padding: 1.6rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
 .c2 {
+  gap: 1.5rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c8 {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c9 {
+  height: 100%;
+  width: 100%;
+}
+
+.c7 {
   width: 100%;
   border-bottom: solid 0.5rem;
 }
 
-.c1 {
+.c6 {
   font-size: 2.4rem;
   cursor: pointer;
 }
 
+.c34 {
+  position: -webkit-sticky;
+  position: sticky;
+  padding-top: 2rem;
+  bottom: 0;
+  background: white;
+  z-index: 10;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c33 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  background-image: none;
+  border: solid 0.1rem;
+  cursor: pointer;
+}
+
+.c33.is-invalid {
+  border: solid 0.1rem;
+}
+
+.c13 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c12 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c15.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c14 {
+  font-weight: bold;
+}
+
+.c24:hover {
+  cursor: pointer;
+}
+
+.c23.c23.c23 input,
+.c23.c23.c23 select,
+.c23.c23.c23 textarea {
+  background: none;
+  border: none;
+  resize: none;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  padding: 0;
+}
+
+.c23.c23.c23 .form-label {
+  font-weight: bold;
+}
+
+.c25 {
+  font-family: 'BcSans-Bold';
+  margin-bottom: 1rem;
+}
+
+.c19 {
+  height: 100%;
+}
+
+.c19 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c19 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c21 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c21 .nav-tabs {
+  height: auto;
+}
+
+.c21 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 1.2rem;
+}
+
+.c21 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c21 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
+.c20 {
+  height: auto;
+}
+
+.c20.tab-content {
+  height: auto;
+}
+
+.c26 {
+  border-radius: 0.5rem;
+}
+
+.c26 .idir-input-group .input-group-prepend select {
+  width: 16rem;
+}
+
+.c26 .idir-input-group input {
+  width: 18rem;
+  max-width: 100%;
+}
+
+.c30 {
+  font-size: 1.6rem;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c31 input.form-control {
+  min-width: 50rem;
+  max-width: 100%;
+}
+
+.c11 .form-section {
+  margin: 0;
+  padding-left: 0;
+}
+
+.c11 .tab-pane .form-section {
+  margin: 1.5rem;
+  padding-left: 1.5rem;
+}
+
+.c11 [name='region'] {
+  max-width: 25rem;
+}
+
 <div
-    class=""
+    class="c0"
   >
     <div
       class="row"
@@ -35,29 +481,67 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
         class="col"
       >
         <h1
-          class="c0 mr-auto"
+          class="c1 mr-auto"
         >
-          <svg
+          <span
             class="mr-2"
-            fill="currentColor"
-            height="2.6rem"
-            title="Acquisition file Icon"
-            viewBox="0 0 24 24"
-            width="2.6rem"
-            xmlns="http://www.w3.org/2000/svg"
           >
-            <path
-              d="M16.5896 7.61509H15.446V6.44474H16.5896V7.61509ZM16.5896 9.95579H15.446V8.78544H16.5896V9.95579ZM14.3024 7.61509H13.1588V6.44474H14.3024V7.61509ZM14.3024 9.95579H13.1588V8.78544H14.3024V9.95579ZM14.8666 0L6.8615 5.85175V8.78544H9.14867L18.4498 12.6086C19.7306 13.1391 20.5845 14.4031 20.5845 15.8075H22.8717V5.85175L14.8666 0ZM21.7281 18.1482H13.723L11.3291 17.29L11.7103 16.1821L13.723 16.9623H16.9403C17.6874 16.9623 18.2973 16.3381 18.2973 15.5735C18.2973 14.9961 17.9466 14.4812 17.413 14.2783L9.10292 11.1105H6.84625V21.6593L14.8513 23.9844L24 20.4734C24 19.1782 22.9784 18.1327 21.7128 18.1327L21.7281 18.1482ZM0 24H5.32433V11.1261H0V24Z"
-            />
-          </svg>
+            <svg
+              fill="currentColor"
+              height="2.6rem"
+              title="Acquisition file Icon"
+              viewBox="0 0 24 24"
+              width="2.6rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.5896 7.61509H15.446V6.44474H16.5896V7.61509ZM16.5896 9.95579H15.446V8.78544H16.5896V9.95579ZM14.3024 7.61509H13.1588V6.44474H14.3024V7.61509ZM14.3024 9.95579H13.1588V8.78544H14.3024V9.95579ZM14.8666 0L6.8615 5.85175V8.78544H9.14867L18.4498 12.6086C19.7306 13.1391 20.5845 14.4031 20.5845 15.8075H22.8717V5.85175L14.8666 0ZM21.7281 18.1482H13.723L11.3291 17.29L11.7103 16.1821L13.723 16.9623H16.9403C17.6874 16.9623 18.2973 16.3381 18.2973 15.5735C18.2973 14.9961 17.9466 14.4812 17.413 14.2783L9.10292 11.1105H6.84625V21.6593L14.8513 23.9844L24 20.4734C24 19.1782 22.9784 18.1327 21.7128 18.1327L21.7281 18.1482ZM0 24H5.32433V11.1261H0V24Z"
+              />
+            </svg>
+          </span>
           Create Acquisition File
         </h1>
       </div>
       <div
-        class="col-auto"
+        class="c2 d-flex col-auto"
       >
+        <span>
+          <button
+            class="c3 Button Button--icon-only c4 btn btn-light"
+            title="collapse"
+            type="button"
+          >
+            <div
+              class="Button__icon"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"
+                />
+                <path
+                  d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"
+                />
+              </svg>
+            </div>
+          </button>
+        </span>
+        <div
+          class="c5"
+        />
         <svg
-          class="c1"
+          class="c6"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -76,1240 +560,854 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c2"
+      class="c7"
     />
-  </div>
-  .c21.btn {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  padding: 0.4rem 1.2rem;
-  min-height: 3rem;
-  border: 0.2rem solid transparent;
-  border-radius: 0.4rem;
-  text-align: center;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 1.8rem;
-  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
-  font-weight: 700;
-  -webkit-letter-spacing: 0.1rem;
-  -moz-letter-spacing: 0.1rem;
-  -ms-letter-spacing: 0.1rem;
-  letter-spacing: 0.1rem;
-  cursor: pointer;
-  height: 3.8rem;
-}
-
-.c21.btn:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-  opacity: 0.8;
-}
-
-.c21.btn:focus {
-  outline-width: 0.4rem;
-  outline-style: solid;
-  outline-offset: 1px;
-  box-shadow: none;
-}
-
-.c21.btn.btn-primary {
-  border: none;
-}
-
-.c21.btn.btn-secondary {
-  background: none;
-}
-
-.c21.btn.btn-info {
-  border: none;
-  background: none;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
-}
-
-.c21.btn.btn-info:hover,
-.c21.btn.btn-info:active,
-.c21.btn.btn-info:focus {
-  background: none;
-}
-
-.c21.btn.btn-light {
-  border: none;
-}
-
-.c21.btn.btn-dark {
-  border: none;
-}
-
-.c21.btn.btn-link {
-  font-size: 1.6rem;
-  font-weight: 400;
-  background: none;
-  border: none;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  min-height: 2.5rem;
-  line-height: 3rem;
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-  -ms-flex-pack: left;
-  justify-content: left;
-  -webkit-letter-spacing: unset;
-  -moz-letter-spacing: unset;
-  -ms-letter-spacing: unset;
-  letter-spacing: unset;
-  text-align: left;
-  padding: 0;
-}
-
-.c21.btn.btn-link:hover,
-.c21.btn.btn-link:active,
-.c21.btn.btn-link:focus {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-  border: none;
-  background: none;
-  box-shadow: none;
-  outline: none;
-}
-
-.c21.btn.btn-link:disabled,
-.c21.btn.btn-link.disabled {
-  background: none;
-  pointer-events: none;
-}
-
-.c21.btn:disabled,
-.c21.btn:disabled:hover {
-  box-shadow: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  pointer-events: none;
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.c21.Button .Button__icon {
-  margin-right: 1.6rem;
-}
-
-.c21.Button--icon-only:focus {
-  outline: none;
-}
-
-.c21.Button--icon-only .Button__icon {
-  margin-right: 0;
-}
-
-.c8 button.close {
-  font-size: 2.4rem;
-}
-
-.c9 .react-datepicker__calendar-icon {
-  width: 2.4rem;
-  height: 3rem;
-  margin-top: 0.5rem;
-  margin-right: 1.2rem;
-  right: 0;
-  pointer-events: none;
-}
-
-.c9 .react-datepicker__view-calendar-icon input {
-  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
-}
-
-.c9 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
-.c10.c10.form-control.is-valid {
-  background-image: none;
-}
-
-.c10.c10.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
-.c19 {
-  padding-right: 0;
-}
-
-.c19 .form-control {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-.c20:not(:first-child) {
-  padding-left: 0;
-}
-
-.c20:not(:first-child) .form-control {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-}
-
-.c22 {
-  font-size: 1.4rem;
-}
-
-.c14 {
-  font-family: 'BCSans-Bold';
-  font-size: 2.2rem;
-  border-bottom: solid 0.2rem;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2.4rem;
-}
-
-.c25 {
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-.c0 {
-  width: 100%;
-  position: relative;
-  overflow: auto;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c1 {
-  height: 100%;
-  width: 100%;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c26 {
-  position: relative;
-  border-radius: 0.4rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-left: 1.2rem;
-  padding-right: 2.8rem;
-  background-image: none;
-  border: solid 0.1rem;
-  cursor: pointer;
-}
-
-.c26.is-invalid {
-  border: solid 0.1rem;
-}
-
-.c5 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c4 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c7.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c6 {
-  font-weight: bold;
-}
-
-.c16:hover {
-  cursor: pointer;
-}
-
-.c15.c15.c15 input,
-.c15.c15.c15 select,
-.c15.c15.c15 textarea {
-  background: none;
-  border: none;
-  resize: none;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  padding: 0;
-}
-
-.c15.c15.c15 .form-label {
-  font-weight: bold;
-}
-
-.c17 {
-  font-family: 'BcSans-Bold';
-  margin-bottom: 1rem;
-}
-
-.c11 {
-  height: 100%;
-}
-
-.c11 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
-  overflow-y: auto;
-}
-
-.c11 .tab-content .tab-pane {
-  position: relative;
-}
-
-.c13 {
-  background-color: white;
-  font-size: 1.4rem;
-  border-color: transparent;
-}
-
-.c13 .nav-tabs {
-  height: auto;
-}
-
-.c13 .nav-item {
-  min-width: 5rem;
-  padding: 0.1rem 1.2rem;
-}
-
-.c13 .nav-item:hover {
-  border-color: transparent;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c13 .nav-item.active {
-  font-family: 'BCSans-Bold';
-  border-color: transparent;
-}
-
-.c12 {
-  height: auto;
-}
-
-.c12.tab-content {
-  height: auto;
-}
-
-.c18 {
-  border-radius: 0.5rem;
-}
-
-.c18 .idir-input-group .input-group-prepend select {
-  width: 16rem;
-}
-
-.c18 .idir-input-group input {
-  width: 18rem;
-  max-width: 100%;
-}
-
-.c23 {
-  font-size: 1.6rem;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
-.c24 input.form-control {
-  min-width: 50rem;
-  max-width: 100%;
-}
-
-.c3 .form-section {
-  margin: 0;
-  padding-left: 0;
-}
-
-.c3 .tab-pane .form-section {
-  margin: 1.5rem;
-  padding-left: 1.5rem;
-}
-
-.c3 [name='region'] {
-  max-width: 25rem;
-}
-
-<div
-    class="c0"
-  >
     <div
-      class="c1"
+      class="c8"
     >
       <div
-        class="c2"
+        class="c9"
       >
         <div
-          class="c3"
+          class="c10"
         >
           <div
-            class="c4 form-section"
+            class="c11"
           >
-            <h2
-              class="c5"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Project
-                </div>
-              </div>
-            </h2>
             <div
-              class="collapse show"
+              class="c12 form-section"
             >
-              <div
-                class="pb-2 row"
+              <h2
+                class="c13"
               >
                 <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Ministry project:
-                  </label>
-                </div>
-                <div
-                  class="c7 text-left col"
+                  class="no-gutters row"
                 >
                   <div
-                    class="c8 form-group"
-                    data-testid="typeahead-project"
+                    class="col"
                   >
-                    <div
-                      class="rbt"
-                      style="outline: none; position: relative;"
-                      tabindex="-1"
-                    >
-                      <div
-                        style="display: flex; flex: 1; height: 100%; position: relative;"
-                      >
-                        <input
-                          aria-autocomplete="both"
-                          aria-expanded="false"
-                          aria-haspopup="listbox"
-                          autocomplete="off"
-                          class="rbt-input-main form-control rbt-input"
-                          id="typeahead-project"
-                          name="typeahead-project"
-                          placeholder="Type to search for a Project"
-                          role="combobox"
-                          type="text"
-                          value=""
-                        />
-                        <input
-                          aria-hidden="true"
-                          class="rbt-input-hint"
-                          readonly=""
-                          style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
-                          tabindex="-1"
-                          value=""
-                        />
-                      </div>
-                      <div
-                        class="rbt-aux pr-3"
-                      >
-                        <svg
-                          color="#bcbec5"
-                          fill="currentColor"
-                          height="1.6rem"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          style="color: rgb(188, 190, 197);"
-                          viewBox="0 0 512 512"
-                          width="1.6rem"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                          />
-                        </svg>
-                      </div>
-                    </div>
+                    Project
                   </div>
                 </div>
-              </div>
+              </h2>
               <div
-                class="pb-2 row"
+                class="collapse show"
               >
                 <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Funding:
-                  </label>
-                </div>
-                <div
-                  class="c7 text-left col"
+                  class="pb-2 row"
                 >
                   <div
-                    class="form-group"
+                    class="pr-0 text-left col-4"
                   >
-                    <select
-                      class="form-select form-control"
-                      id="input-fundingTypeCode"
-                      name="fundingTypeCode"
+                    <label
+                      class="c14"
                     >
-                      <option
-                        value=""
-                      >
-                        Select...
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-BCTFA"
-                        value="BCTFA"
-                      >
-                        BCTFA
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-CAPITAL"
-                        value="CAPITAL"
-                      >
-                        Capital Program
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-DFAA"
-                        value="DFAA"
-                      >
-                        DFAA (Disaster Financial Assistance Arrangement)
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-EVERGRN"
-                        value="EVERGRN"
-                      >
-                        Evergreen
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-FEDERAL"
-                        value="FEDERAL"
-                      >
-                        Federal
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-MAJORPR"
-                        value="MAJORPR"
-                      >
-                        Major Projects
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-MOTIDST"
-                        value="MOTIDST"
-                      >
-                        MoTI District
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-MOTIREG"
-                        value="MOTIREG"
-                      >
-                        MoTI Region
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-OTHER"
-                        value="OTHER"
-                      >
-                        Other
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-REHAB"
-                        value="REHAB"
-                      >
-                        Rehab & Maintenance
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-TICORP"
-                        value="TICORP"
-                      >
-                        TI Corp
-                      </option>
-                    </select>
+                      Ministry project:
+                    </label>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="c4 form-section"
-          >
-            <h2
-              class="c5"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Schedule
-                </div>
-              </div>
-            </h2>
-            <div
-              class="collapse show"
-            >
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Assigned date:
-                  </label>
-                </div>
-                <div
-                  class="c7 text-left col"
-                >
                   <div
-                    class="c9 form-group"
+                    class="c15 text-left col"
                   >
                     <div
-                      class="react-datepicker-wrapper d-block"
+                      class="c16 form-group"
+                      data-testid="typeahead-project"
                     >
                       <div
-                        class="react-datepicker__input-container react-datepicker__view-calendar-icon"
-                      >
-                        <svg
-                          class="react-datepicker__calendar-icon"
-                          viewBox="0 0 448 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-                          />
-                        </svg>
-                        <input
-                          autocomplete="off"
-                          class="c10 form-control date-picker"
-                          id="datepicker-assignedDate"
-                          name="assignedDate"
-                          placeholder="MMM DD, YYYY"
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Delivery date:
-                  </label>
-                </div>
-                <div
-                  class="c7 text-left col"
-                >
-                  <div
-                    class="c9 form-group"
-                  >
-                    <div
-                      class="react-datepicker-wrapper d-block"
-                    >
-                      <div
-                        class="react-datepicker__input-container react-datepicker__view-calendar-icon"
-                      >
-                        <svg
-                          class="react-datepicker__calendar-icon"
-                          viewBox="0 0 448 512"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-                          />
-                        </svg>
-                        <input
-                          autocomplete="off"
-                          class="c10 form-control date-picker"
-                          id="datepicker-deliveryDate"
-                          name="deliveryDate"
-                          placeholder="MMM DD, YYYY"
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="c4 form-section"
-          >
-            <h2
-              class="c5"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Properties to include in this file:
-                </div>
-              </div>
-            </h2>
-            <div
-              class="collapse show"
-            >
-              <div
-                class="py-2"
-              >
-                Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
-              </div>
-              <div
-                class="py-3 no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  <div
-                    class="c11 c12"
-                  >
-                    <nav
-                      class="c13 nav nav-tabs"
-                      role="tablist"
-                    >
-                      <a
-                        aria-selected="true"
-                        class="nav-item nav-link active"
-                        data-rb-event-key="map"
-                        href="#"
-                        role="tab"
-                      >
-                        Locate on Map
-                      </a>
-                      <a
-                        aria-selected="false"
-                        class="nav-item nav-link"
-                        data-rb-event-key="list"
-                        href="#"
-                        role="tab"
-                      >
-                        Search
-                      </a>
-                    </nav>
-                    <div
-                      class="tab-content"
-                    >
-                      <div
-                        aria-hidden="false"
-                        class="fade tab-pane active show"
-                        role="tabpanel"
+                        class="rbt"
+                        style="outline: none; position: relative;"
+                        tabindex="-1"
                       >
                         <div
-                          class="c4 form-section"
+                          style="display: flex; flex: 1; height: 100%; position: relative;"
                         >
-                          <div
-                            class="collapse show"
+                          <input
+                            aria-autocomplete="both"
+                            aria-expanded="false"
+                            aria-haspopup="listbox"
+                            autocomplete="off"
+                            class="rbt-input-main form-control rbt-input"
+                            id="typeahead-project"
+                            name="typeahead-project"
+                            placeholder="Type to search for a Project"
+                            role="combobox"
+                            type="text"
+                            value=""
+                          />
+                          <input
+                            aria-hidden="true"
+                            class="rbt-input-hint"
+                            readonly=""
+                            style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
+                            tabindex="-1"
+                            value=""
+                          />
+                        </div>
+                        <div
+                          class="rbt-aux pr-3"
+                        >
+                          <svg
+                            color="#bcbec5"
+                            fill="currentColor"
+                            height="1.6rem"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            style="color: rgb(188, 190, 197);"
+                            viewBox="0 0 512 512"
+                            width="1.6rem"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <h3
-                              class="c14"
-                            >
-                              Select a property
-                            </h3>
-                            <div
-                              class="c15 row"
-                            >
-                              <div
-                                class="col-md-4"
-                              >
-                                <div
-                                  class="d-flex flex-column align-items-center"
-                                >
-                                  <svg
-                                    class="c16"
-                                    height="97"
-                                    id="Layer_2"
-                                    title="Click once to enter property selection mode."
-                                    viewBox="0 0 20 30"
-                                    width="97"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <defs>
-                                      <style />
-                                    </defs>
-                                    <g
-                                      id="PDF_preview"
-                                    >
-                                      <path
-                                        class="cls-1"
-                                        d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
-                                        fill="#2a81cb"
-                                      />
-                                    </g>
-                                  </svg>
-                                  <ol>
-                                    <li>
-                                      Single-click blue marker above
-                                    </li>
-                                    <li>
-                                      Mouse to a parcel on the map
-                                    </li>
-                                    <li>
-                                      Single-click on parcel to select it
-                                    </li>
-                                  </ol>
-                                </div>
-                              </div>
-                              <div
-                                class="col-md-8"
-                              >
-                                <div
-                                  class="row"
-                                >
-                                  <div
-                                    class="c17 col"
-                                  >
-                                    Selected property attributes
-                                  </div>
-                                </div>
-                                <div
-                                  class="pb-2 row"
-                                >
-                                  <div
-                                    class="pr-0 text-left col-4"
-                                  >
-                                    <label
-                                      class="c6"
-                                    >
-                                      PID:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c7 text-left col"
-                                  />
-                                </div>
-                                <div
-                                  class="pb-2 row"
-                                >
-                                  <div
-                                    class="pr-0 text-left col-4"
-                                  >
-                                    <label
-                                      class="c6"
-                                    >
-                                      Plan #:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c7 text-left col"
-                                  />
-                                </div>
-                                <div
-                                  class="pb-2 row"
-                                >
-                                  <div
-                                    class="pr-0 text-left col-4"
-                                  >
-                                    <label
-                                      class="c6"
-                                    >
-                                      Address:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c7 text-left col"
-                                  />
-                                </div>
-                                <div
-                                  class="pb-2 row"
-                                >
-                                  <div
-                                    class="pr-0 text-left col-4"
-                                  >
-                                    <label
-                                      class="c6"
-                                    >
-                                      Region:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c7 text-left col"
-                                  />
-                                </div>
-                                <div
-                                  class="pb-2 row"
-                                >
-                                  <div
-                                    class="pr-0 text-left col-4"
-                                  >
-                                    <label
-                                      class="c6"
-                                    >
-                                      District:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="c7 text-left col"
-                                  />
-                                </div>
-                                <div
-                                  class="row"
-                                >
-                                  <div
-                                    class="col-md-12"
-                                  >
-                                    <label
-                                      class="form-label"
-                                    >
-                                      Legal Description:
-                                    </label>
-                                  </div>
-                                  <div
-                                    class="col-md-12"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                            <path
+                              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                            />
+                          </svg>
                         </div>
                       </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Funding:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-fundingTypeCode"
+                        name="fundingTypeCode"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-BCTFA"
+                          value="BCTFA"
+                        >
+                          BCTFA
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-CAPITAL"
+                          value="CAPITAL"
+                        >
+                          Capital Program
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-DFAA"
+                          value="DFAA"
+                        >
+                          DFAA (Disaster Financial Assistance Arrangement)
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-EVERGRN"
+                          value="EVERGRN"
+                        >
+                          Evergreen
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-FEDERAL"
+                          value="FEDERAL"
+                        >
+                          Federal
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MAJORPR"
+                          value="MAJORPR"
+                        >
+                          Major Projects
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOTIDST"
+                          value="MOTIDST"
+                        >
+                          MoTI District
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MOTIREG"
+                          value="MOTIREG"
+                        >
+                          MoTI Region
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-OTHER"
+                          value="OTHER"
+                        >
+                          Other
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REHAB"
+                          value="REHAB"
+                        >
+                          Rehab & Maintenance
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-TICORP"
+                          value="TICORP"
+                        >
+                          TI Corp
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c12 form-section"
+            >
+              <h2
+                class="c13"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    Schedule
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Assigned date:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="c17 form-group"
+                    >
                       <div
-                        aria-hidden="true"
-                        class="fade tab-pane"
-                        role="tabpanel"
+                        class="react-datepicker-wrapper d-block"
                       >
                         <div
-                          class="c4 form-section"
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c18 form-control date-picker"
+                            id="datepicker-assignedDate"
+                            name="assignedDate"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Delivery date:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="c17 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c18 form-control date-picker"
+                            id="datepicker-deliveryDate"
+                            name="deliveryDate"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c12 form-section"
+            >
+              <h2
+                class="c13"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    Properties to include in this file:
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="py-2"
+                >
+                  Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
+                </div>
+                <div
+                  class="py-3 no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    <div
+                      class="c19 c20"
+                    >
+                      <nav
+                        class="c21 nav nav-tabs"
+                        role="tablist"
+                      >
+                        <a
+                          aria-selected="true"
+                          class="nav-item nav-link active"
+                          data-rb-event-key="map"
+                          href="#"
+                          role="tab"
+                        >
+                          Locate on Map
+                        </a>
+                        <a
+                          aria-selected="false"
+                          class="nav-item nav-link"
+                          data-rb-event-key="list"
+                          href="#"
+                          role="tab"
+                        >
+                          Search
+                        </a>
+                      </nav>
+                      <div
+                        class="tab-content"
+                      >
+                        <div
+                          aria-hidden="false"
+                          class="fade tab-pane active show"
+                          role="tabpanel"
                         >
                           <div
-                            class="collapse show"
+                            class="c12 form-section"
                           >
-                            <h3
-                              class="c14"
+                            <div
+                              class="collapse show"
                             >
-                              Search for a property
-                            </h3>
-                            <form
-                              class="c18 p-3"
-                              novalidate=""
-                            >
+                              <h3
+                                class="c22"
+                              >
+                                Select a property
+                              </h3>
                               <div
-                                class="row"
+                                class="c23 row"
                               >
                                 <div
-                                  class="col-xl-6"
+                                  class="col-md-4"
                                 >
                                   <div
-                                    class="flex-nowrap input-group row"
+                                    class="d-flex flex-column align-items-center"
                                   >
-                                    <div
-                                      class="c19 col-auto"
+                                    <svg
+                                      class="c24"
+                                      height="97"
+                                      id="Layer_2"
+                                      title="Click once to enter property selection mode."
+                                      viewBox="0 0 20 30"
+                                      width="97"
+                                      xmlns="http://www.w3.org/2000/svg"
                                     >
-                                      <div
-                                        class="input-group-prepend"
+                                      <defs>
+                                        <style />
+                                      </defs>
+                                      <g
+                                        id="PDF_preview"
                                       >
-                                        <div
-                                          class="form-group"
-                                        >
-                                          <select
-                                            class="form-select form-control"
-                                            id="input-searchBy"
-                                            name="searchBy"
-                                          >
-                                            <option
-                                              class="option"
-                                              data-testid="select-option-pid"
-                                              value="pid"
-                                            >
-                                              PID
-                                            </option>
-                                            <option
-                                              class="option"
-                                              data-testid="select-option-pin"
-                                              value="pin"
-                                            >
-                                              PIN
-                                            </option>
-                                            <option
-                                              class="option"
-                                              data-testid="select-option-address"
-                                              value="address"
-                                            >
-                                              Address
-                                            </option>
-                                            <option
-                                              class="option"
-                                              data-testid="select-option-planNumber"
-                                              value="planNumber"
-                                            >
-                                              Plan #
-                                            </option>
-                                            <option
-                                              class="option"
-                                              data-testid="select-option-legalDescription"
-                                              value="legalDescription"
-                                            >
-                                              Legal Description
-                                            </option>
-                                          </select>
-                                        </div>
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="c20 col"
-                                    >
-                                      <div
-                                        class="input form-group"
-                                      >
-                                        <input
-                                          autocomplete="off"
-                                          class="form-control"
-                                          id="input-pid"
-                                          name="pid"
-                                          placeholder="Enter a PID"
-                                          title=""
-                                          value=""
+                                        <path
+                                          class="cls-1"
+                                          d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                                          fill="#2a81cb"
                                         />
-                                      </div>
-                                    </div>
+                                      </g>
+                                    </svg>
+                                    <ol>
+                                      <li>
+                                        Single-click blue marker above
+                                      </li>
+                                      <li>
+                                        Mouse to a parcel on the map
+                                      </li>
+                                      <li>
+                                        Single-click on parcel to select it
+                                      </li>
+                                    </ol>
                                   </div>
                                 </div>
                                 <div
-                                  class="pr-0 col-xl-2"
+                                  class="col-md-8"
                                 >
                                   <div
                                     class="row"
                                   >
                                     <div
-                                      class="pr-0 col"
+                                      class="c25 col"
                                     >
-                                      <button
-                                        class="c21 Button Button--icon-only primary btn btn-primary"
-                                        data-testid="search"
-                                        id="search-button"
-                                        title="search"
-                                        type="button"
+                                      Selected property attributes
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="pb-2 row"
+                                  >
+                                    <div
+                                      class="pr-0 text-left col-4"
+                                    >
+                                      <label
+                                        class="c14"
                                       >
-                                        <div
-                                          class="Button__icon"
-                                        >
-                                          <svg
-                                            fill="currentColor"
-                                            height="20"
-                                            stroke="currentColor"
-                                            stroke-width="0"
-                                            viewBox="0 0 512 512"
-                                            width="20"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                                            />
-                                          </svg>
-                                        </div>
-                                      </button>
+                                        PID:
+                                      </label>
                                     </div>
                                     <div
-                                      class="pl-0 col"
+                                      class="c15 text-left col"
+                                    />
+                                  </div>
+                                  <div
+                                    class="pb-2 row"
+                                  >
+                                    <div
+                                      class="pr-0 text-left col-4"
                                     >
-                                      <button
-                                        class="c21 Button Button--icon-only btn btn-info"
-                                        data-testid="reset-button"
-                                        id="reset-button"
-                                        title="reset-button"
-                                        type="reset"
+                                      <label
+                                        class="c14"
                                       >
-                                        <div
-                                          class="Button__icon"
-                                        >
-                                          <svg
-                                            fill="currentColor"
-                                            height="20"
-                                            stroke="currentColor"
-                                            stroke-width="0"
-                                            viewBox="0 0 512 512"
-                                            width="20"
-                                            xmlns="http://www.w3.org/2000/svg"
-                                          >
-                                            <path
-                                              d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
-                                            />
-                                          </svg>
-                                        </div>
-                                      </button>
+                                        Plan #:
+                                      </label>
                                     </div>
+                                    <div
+                                      class="c15 text-left col"
+                                    />
+                                  </div>
+                                  <div
+                                    class="pb-2 row"
+                                  >
+                                    <div
+                                      class="pr-0 text-left col-4"
+                                    >
+                                      <label
+                                        class="c14"
+                                      >
+                                        Address:
+                                      </label>
+                                    </div>
+                                    <div
+                                      class="c15 text-left col"
+                                    />
+                                  </div>
+                                  <div
+                                    class="pb-2 row"
+                                  >
+                                    <div
+                                      class="pr-0 text-left col-4"
+                                    >
+                                      <label
+                                        class="c14"
+                                      >
+                                        Region:
+                                      </label>
+                                    </div>
+                                    <div
+                                      class="c15 text-left col"
+                                    />
+                                  </div>
+                                  <div
+                                    class="pb-2 row"
+                                  >
+                                    <div
+                                      class="pr-0 text-left col-4"
+                                    >
+                                      <label
+                                        class="c14"
+                                      >
+                                        District:
+                                      </label>
+                                    </div>
+                                    <div
+                                      class="c15 text-left col"
+                                    />
+                                  </div>
+                                  <div
+                                    class="row"
+                                  >
+                                    <div
+                                      class="col-md-12"
+                                    >
+                                      <label
+                                        class="form-label"
+                                      >
+                                        Legal Description:
+                                      </label>
+                                    </div>
+                                    <div
+                                      class="col-md-12"
+                                    />
                                   </div>
                                 </div>
                               </div>
-                            </form>
+                            </div>
                           </div>
                         </div>
                         <div
-                          class="c4 form-section"
+                          aria-hidden="true"
+                          class="fade tab-pane"
+                          role="tabpanel"
                         >
                           <div
-                            class="collapse show"
+                            class="c12 form-section"
                           >
                             <div
-                              class="table"
-                              data-testid="map-properties"
-                              role="table"
+                              class="collapse show"
                             >
-                              <div
-                                class="thead thead-light"
+                              <h3
+                                class="c22"
+                              >
+                                Search for a property
+                              </h3>
+                              <form
+                                class="c26 p-3"
+                                novalidate=""
                               >
                                 <div
-                                  class="tr"
-                                  role="row"
-                                  style="display: flex; flex: 1 0 auto; min-width: 120px;"
+                                  class="row"
                                 >
                                   <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                    class="col-xl-6"
                                   >
                                     <div
-                                      class="sortable-column"
+                                      class="flex-nowrap input-group row"
                                     >
-                                      <div>
-                                        <input
-                                          data-testid="selectrow-parent"
-                                          name=""
-                                          style="cursor: pointer;"
-                                          title="Click to deselect all."
-                                          type="checkbox"
-                                        />
+                                      <div
+                                        class="c27 col-auto"
+                                      >
+                                        <div
+                                          class="input-group-prepend"
+                                        >
+                                          <div
+                                            class="form-group"
+                                          >
+                                            <select
+                                              class="form-select form-control"
+                                              id="input-searchBy"
+                                              name="searchBy"
+                                            >
+                                              <option
+                                                class="option"
+                                                data-testid="select-option-pid"
+                                                value="pid"
+                                              >
+                                                PID
+                                              </option>
+                                              <option
+                                                class="option"
+                                                data-testid="select-option-pin"
+                                                value="pin"
+                                              >
+                                                PIN
+                                              </option>
+                                              <option
+                                                class="option"
+                                                data-testid="select-option-address"
+                                                value="address"
+                                              >
+                                                Address
+                                              </option>
+                                              <option
+                                                class="option"
+                                                data-testid="select-option-planNumber"
+                                                value="planNumber"
+                                              >
+                                                Plan #
+                                              </option>
+                                              <option
+                                                class="option"
+                                                data-testid="select-option-legalDescription"
+                                                value="legalDescription"
+                                              >
+                                                Legal Description
+                                              </option>
+                                            </select>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div
+                                        class="c28 col"
+                                      >
+                                        <div
+                                          class="input form-group"
+                                        >
+                                          <input
+                                            autocomplete="off"
+                                            class="form-control"
+                                            id="input-pid"
+                                            name="pid"
+                                            placeholder="Enter a PID"
+                                            title=""
+                                            value=""
+                                          />
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                   <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                    class="pr-0 col-xl-2"
                                   >
                                     <div
-                                      class="sortable-column"
+                                      class="row"
                                     >
-                                      PID
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                                  >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      PIN
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                                  >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      Plan #
-                                    </div>
-                                  </div>
-                                  <div
-                                    class="th"
-                                    colspan="1"
-                                    role="columnheader"
-                                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                                  >
-                                    <div
-                                      class="sortable-column"
-                                    >
-                                      Address
+                                      <div
+                                        class="pr-0 col"
+                                      >
+                                        <button
+                                          class="c3 Button Button--icon-only primary btn btn-primary"
+                                          data-testid="search"
+                                          id="search-button"
+                                          title="search"
+                                          type="button"
+                                        >
+                                          <div
+                                            class="Button__icon"
+                                          >
+                                            <svg
+                                              fill="currentColor"
+                                              height="20"
+                                              stroke="currentColor"
+                                              stroke-width="0"
+                                              viewBox="0 0 512 512"
+                                              width="20"
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <path
+                                                d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                                              />
+                                            </svg>
+                                          </div>
+                                        </button>
+                                      </div>
+                                      <div
+                                        class="pl-0 col"
+                                      >
+                                        <button
+                                          class="c3 Button Button--icon-only btn btn-info"
+                                          data-testid="reset-button"
+                                          id="reset-button"
+                                          title="reset-button"
+                                          type="reset"
+                                        >
+                                          <div
+                                            class="Button__icon"
+                                          >
+                                            <svg
+                                              fill="currentColor"
+                                              height="20"
+                                              stroke="currentColor"
+                                              stroke-width="0"
+                                              viewBox="0 0 512 512"
+                                              width="20"
+                                              xmlns="http://www.w3.org/2000/svg"
+                                            >
+                                              <path
+                                                d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+                                              />
+                                            </svg>
+                                          </div>
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
-                              <div
-                                class="no-rows-message"
-                              >
-                                No results found for your search criteria.
-                              </div>
+                              </form>
                             </div>
+                          </div>
+                          <div
+                            class="c12 form-section"
+                          >
                             <div
-                              class="row"
+                              class="collapse show"
                             >
                               <div
-                                class="align-self-center col-auto"
-                              />
-                              <div
-                                class="ml-auto align-self-center col-auto"
+                                class="table"
+                                data-testid="map-properties"
+                                role="table"
                               >
-                                <p
-                                  class="c22"
+                                <div
+                                  class="thead thead-light"
                                 >
-                                  0 selected
-                                </p>
+                                  <div
+                                    class="tr"
+                                    role="row"
+                                    style="display: flex; flex: 1 0 auto; min-width: 120px;"
+                                  >
+                                    <div
+                                      class="th"
+                                      colspan="1"
+                                      role="columnheader"
+                                      style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                    >
+                                      <div
+                                        class="sortable-column"
+                                      >
+                                        <div>
+                                          <input
+                                            data-testid="selectrow-parent"
+                                            name=""
+                                            style="cursor: pointer;"
+                                            title="Click to deselect all."
+                                            type="checkbox"
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="th"
+                                      colspan="1"
+                                      role="columnheader"
+                                      style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                    >
+                                      <div
+                                        class="sortable-column"
+                                      >
+                                        PID
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="th"
+                                      colspan="1"
+                                      role="columnheader"
+                                      style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                    >
+                                      <div
+                                        class="sortable-column"
+                                      >
+                                        PIN
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="th"
+                                      colspan="1"
+                                      role="columnheader"
+                                      style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                    >
+                                      <div
+                                        class="sortable-column"
+                                      >
+                                        Plan #
+                                      </div>
+                                    </div>
+                                    <div
+                                      class="th"
+                                      colspan="1"
+                                      role="columnheader"
+                                      style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                    >
+                                      <div
+                                        class="sortable-column"
+                                      >
+                                        Address
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  class="no-rows-message"
+                                >
+                                  No results found for your search criteria.
+                                </div>
                               </div>
                               <div
-                                class="align-self-center col-auto"
-                              />
+                                class="row"
+                              >
+                                <div
+                                  class="align-self-center col-auto"
+                                />
+                                <div
+                                  class="ml-auto align-self-center col-auto"
+                                >
+                                  <p
+                                    class="c29"
+                                  >
+                                    0 selected
+                                  </p>
+                                </div>
+                                <div
+                                  class="align-self-center col-auto"
+                                />
+                              </div>
                             </div>
                           </div>
                         </div>
@@ -1317,767 +1415,623 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                     </div>
                   </div>
                 </div>
-              </div>
-              <div
-                class="c4 form-section"
-              >
-                <h2
-                  class="c5"
-                >
-                  <div
-                    class="no-gutters row"
-                  >
-                    <div
-                      class="col"
-                    >
-                      Selected properties
-                    </div>
-                  </div>
-                </h2>
                 <div
-                  class="collapse show"
+                  class="c12 form-section"
                 >
-                  <div
-                    class="c23 no-gutters row"
+                  <h2
+                    class="c13"
                   >
                     <div
-                      class="col-md-3"
+                      class="no-gutters row"
                     >
-                      Identifier
-                    </div>
-                    <div
-                      class="col-md-9"
-                    >
-                      Provide a descriptive name for this land
-                      <span
-                        class="tooltip-icon"
-                        data-testid="tooltip-icon-property-selector-tooltip"
-                        id="property-selector-tooltip"
+                      <div
+                        class="col"
                       >
-                        <svg
-                          class="tooltip-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 512 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <path
-                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                          />
-                        </svg>
-                      </span>
+                        Selected properties
+                      </div>
                     </div>
-                  </div>
-                  <span>
-                    No Properties selected
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="c4 form-section"
-          >
-            <h2
-              class="c5"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Acquisition Details
-                </div>
-              </div>
-            </h2>
-            <div
-              class="collapse show"
-            >
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Acquisition file name:
-                  </label>
-                </div>
-                <div
-                  class="c7 required text-left col"
-                >
+                  </h2>
                   <div
-                    class="c24 input form-group"
+                    class="collapse show"
                   >
-                    <input
-                      class="form-control"
-                      id="input-fileName"
-                      name="fileName"
-                      title=""
-                      value=""
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Historical file number:
-                    <span
-                      class="ml-2"
+                    <div
+                      class="c30 no-gutters row"
                     >
-                      <span
-                        class="tooltip-icon"
-                        data-testid="tooltip-icon-section-field-tooltip"
-                        id="section-field-tooltip"
+                      <div
+                        class="col-md-3"
                       >
-                        <svg
+                        Identifier
+                      </div>
+                      <div
+                        class="col-md-9"
+                      >
+                        Provide a descriptive name for this land
+                        <span
                           class="tooltip-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 512 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                          data-testid="tooltip-icon-property-selector-tooltip"
+                          id="property-selector-tooltip"
                         >
-                          <path
-                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                          />
-                        </svg>
-                      </span>
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <span>
+                      No Properties selected
                     </span>
-                  </label>
-                </div>
-                <div
-                  class="c7 text-left col"
-                >
-                  <div
-                    class="c24 input form-group"
-                  >
-                    <input
-                      class="form-control"
-                      id="input-legacyFileNumber"
-                      name="legacyFileNumber"
-                      title=""
-                      value=""
-                    />
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Physical file status:
-                  </label>
-                </div>
-                <div
-                  class="c7 text-left col"
-                >
-                  <div
-                    class="form-group"
-                  >
-                    <select
-                      class="form-select form-control"
-                      id="input-acquisitionPhysFileStatusType"
-                      name="acquisitionPhysFileStatusType"
-                    >
-                      <option
-                        value=""
-                      >
-                        Select...
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-ACTIVE"
-                        value="ACTIVE"
-                      >
-                        Active
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-ARCHIVE"
-                        value="ARCHIVE"
-                      >
-                        Archive - Offsite
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-PENDING"
-                        value="PENDING"
-                      >
-                        Pending Litigation
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Acquisition type:
-                  </label>
-                </div>
-                <div
-                  class="c7 required text-left col"
-                >
-                  <div
-                    class="required form-group"
-                  >
-                    <select
-                      class="form-select form-control"
-                      id="input-acquisitionType"
-                      name="acquisitionType"
-                      required=""
-                    >
-                      <option
-                        value=""
-                      >
-                        Select...
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-CONSEN"
-                        value="CONSEN"
-                      >
-                        Consensual Agreement
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-HISTORY"
-                        value="HISTORY"
-                      >
-                        Historical
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-SECTN3"
-                        value="SECTN3"
-                      >
-                        Section 3 Agreement
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-SECTN6"
-                        value="SECTN6"
-                      >
-                        Section 6 Expropriation
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-XFR"
-                        value="XFR"
-                      >
-                        Transferred
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Ministry region:
-                  </label>
-                </div>
-                <div
-                  class="c7 required text-left col"
-                >
-                  <div
-                    class="required d-flex form-group"
-                  >
-                    <select
-                      class="form-select form-control"
-                      id="input-region"
-                      name="region"
-                      required=""
-                    >
-                      <option
-                        value=""
-                      >
-                        Select region...
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-1"
-                        value="1"
-                      >
-                        South Coast Region
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-2"
-                        value="2"
-                      >
-                        Southern Interior Region
-                      </option>
-                    </select>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div
-            class="c4 form-section"
-          >
-            <h2
-              class="c5"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Acquisition Team
-                </div>
-              </div>
-            </h2>
             <div
-              class="collapse show"
+              class="c12 form-section"
             >
-              <button
-                class="c21 Button btn btn-link"
-                data-testid="add-team-member"
-                type="button"
+              <h2
+                class="c13"
               >
                 <div
-                  class="Button__value"
-                >
-                  + Add another team member
-                </div>
-              </button>
-              <div />
-            </div>
-          </div>
-          <div
-            class="c4 form-section"
-          >
-            <h2
-              class="c5"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="col"
-                >
-                  Owners
-                </div>
-              </div>
-            </h2>
-            <div
-              class="collapse show"
-            >
-              <p
-                class="c25"
-              >
-                Each property in this file should be owned by the owner(s) in this section
-              </p>
-              <button
-                class="c21 Button btn btn-link"
-                data-testid="add-file-owner"
-                type="button"
-              >
-                <div
-                  class="Button__value"
-                >
-                  + Add owner
-                </div>
-              </button>
-              <div />
-              <div
-                class="mt-4 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Owner solicitor:
-                  </label>
-                </div>
-                <div
-                  class="c7 text-left col"
+                  class="no-gutters row"
                 >
                   <div
-                    class="form-group"
+                    class="col"
+                  >
+                    Acquisition Details
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Acquisition file name:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 required text-left col"
                   >
                     <div
-                      class="row"
+                      class="c31 input form-group"
                     >
-                      <div
-                        class="col"
-                      >
-                        <div
-                          class="c26"
-                        >
-                          Select from contacts
-                        </div>
-                        <div
-                          class="d-none input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-ownerSolicitor.contact.id"
-                            name="ownerSolicitor.contact.id"
-                            placeholder="Select from Contacts"
-                            title=""
-                            value=""
-                          />
-                        </div>
-                      </div>
-                      <div
-                        class="pl-0 col-auto"
-                      >
-                        <button
-                          class="c21 Button Button--icon-only px-2 btn btn-primary"
-                          title="Select Contact"
-                          type="button"
-                        >
-                          <div
-                            class="Button__icon"
-                          >
-                            <svg
-                              fill="currentColor"
-                              height="20"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 448 512"
-                              width="20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
-                              />
-                            </svg>
-                          </div>
-                        </button>
-                      </div>
+                      <input
+                        class="form-control"
+                        id="input-fileName"
+                        name="fileName"
+                        title=""
+                        value=""
+                      />
                     </div>
                   </div>
-                  <div />
-                </div>
-              </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Owner representative:
-                  </label>
                 </div>
                 <div
-                  class="c7 text-left col"
+                  class="pb-2 row"
                 >
                   <div
-                    class="form-group"
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Historical file number:
+                      <span
+                        class="ml-2"
+                      >
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
                   >
                     <div
-                      class="row"
+                      class="c31 input form-group"
                     >
-                      <div
-                        class="col"
-                      >
-                        <div
-                          class="c26"
-                        >
-                          Select from contacts
-                        </div>
-                        <div
-                          class="d-none input form-group"
-                        >
-                          <input
-                            class="form-control"
-                            id="input-ownerRepresentative.contact.id"
-                            name="ownerRepresentative.contact.id"
-                            placeholder="Select from Contacts"
-                            title=""
-                            value=""
-                          />
-                        </div>
-                      </div>
-                      <div
-                        class="pl-0 col-auto"
-                      >
-                        <button
-                          class="c21 Button Button--icon-only px-2 btn btn-primary"
-                          title="Select Contact"
-                          type="button"
-                        >
-                          <div
-                            class="Button__icon"
-                          >
-                            <svg
-                              fill="currentColor"
-                              height="20"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 448 512"
-                              width="20"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
-                              />
-                            </svg>
-                          </div>
-                        </button>
-                      </div>
+                      <input
+                        class="form-control"
+                        id="input-legacyFileNumber"
+                        name="legacyFileNumber"
+                        title=""
+                        value=""
+                      />
                     </div>
                   </div>
-                  <div />
-                </div>
-              </div>
-              <div
-                class="pb-2 row"
-              >
-                <div
-                  class="pr-0 text-left col-4"
-                >
-                  <label
-                    class="c6"
-                  >
-                    Comment:
-                  </label>
                 </div>
                 <div
-                  class="c7 text-left col"
+                  class="pb-2 row"
                 >
                   <div
-                    class="textarea input form-group"
+                    class="pr-0 text-left col-4"
                   >
-                    <textarea
-                      class="form-control"
-                      id="input-ownerRepresentative.comment"
-                      name="ownerRepresentative.comment"
-                      placeholder="Remarks or additional representative(s)"
-                    />
+                    <label
+                      class="c14"
+                    >
+                      Physical file status:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-acquisitionPhysFileStatusType"
+                        name="acquisitionPhysFileStatusType"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-ACTIVE"
+                          value="ACTIVE"
+                        >
+                          Active
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-ARCHIVE"
+                          value="ARCHIVE"
+                        >
+                          Archive - Offsite
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-PENDING"
+                          value="PENDING"
+                        >
+                          Pending Litigation
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Acquisition type:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 required text-left col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-acquisitionType"
+                        name="acquisitionType"
+                        required=""
+                      >
+                        <option
+                          value=""
+                        >
+                          Select...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-CONSEN"
+                          value="CONSEN"
+                        >
+                          Consensual Agreement
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-HISTORY"
+                          value="HISTORY"
+                        >
+                          Historical
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-SECTN3"
+                          value="SECTN3"
+                        >
+                          Section 3 Agreement
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-SECTN6"
+                          value="SECTN6"
+                        >
+                          Section 6 Expropriation
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-XFR"
+                          value="XFR"
+                        >
+                          Transferred
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Ministry region:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 required text-left col"
+                  >
+                    <div
+                      class="required d-flex form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-region"
+                        name="region"
+                        required=""
+                      >
+                        <option
+                          value=""
+                        >
+                          Select region...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-1"
+                          value="1"
+                        >
+                          South Coast Region
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-2"
+                          value="2"
+                        >
+                          Southern Interior Region
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c12 form-section"
+            >
+              <h2
+                class="c13"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    Acquisition Team
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <button
+                  class="c3 Button btn btn-link"
+                  data-testid="add-team-member"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    + Add another team member
+                  </div>
+                </button>
+                <div />
+              </div>
+            </div>
+            <div
+              class="c12 form-section"
+            >
+              <h2
+                class="c13"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    Owners
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <p
+                  class="c32"
+                >
+                  Each property in this file should be owned by the owner(s) in this section
+                </p>
+                <button
+                  class="c3 Button btn btn-link"
+                  data-testid="add-file-owner"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    + Add owner
+                  </div>
+                </button>
+                <div />
+                <div
+                  class="mt-4 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Owner solicitor:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="c33"
+                          >
+                            Select from contacts
+                          </div>
+                          <div
+                            class="d-none input form-group"
+                          >
+                            <input
+                              class="form-control"
+                              id="input-ownerSolicitor.contact.id"
+                              name="ownerSolicitor.contact.id"
+                              placeholder="Select from Contacts"
+                              title=""
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="pl-0 col-auto"
+                        >
+                          <button
+                            class="c3 Button Button--icon-only px-2 btn btn-primary"
+                            title="Select Contact"
+                            type="button"
+                          >
+                            <div
+                              class="Button__icon"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="20"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 448 512"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                                />
+                              </svg>
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div />
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Owner representative:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="c33"
+                          >
+                            Select from contacts
+                          </div>
+                          <div
+                            class="d-none input form-group"
+                          >
+                            <input
+                              class="form-control"
+                              id="input-ownerRepresentative.contact.id"
+                              name="ownerRepresentative.contact.id"
+                              placeholder="Select from Contacts"
+                              title=""
+                              value=""
+                            />
+                          </div>
+                        </div>
+                        <div
+                          class="pl-0 col-auto"
+                        >
+                          <button
+                            class="c3 Button Button--icon-only px-2 btn btn-primary"
+                            title="Select Contact"
+                            type="button"
+                          >
+                            <div
+                              class="Button__icon"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="20"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 448 512"
+                                width="20"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                                />
+                              </svg>
+                            </div>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                    <div />
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Comment:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="textarea input form-group"
+                    >
+                      <textarea
+                        class="form-control"
+                        id="input-ownerRepresentative.comment"
+                        name="ownerRepresentative.comment"
+                        placeholder="Remarks or additional representative(s)"
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div />
         </div>
-        <div />
       </div>
     </div>
-  </div>
-  .c1.btn {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  padding: 0.4rem 1.2rem;
-  min-height: 3rem;
-  border: 0.2rem solid transparent;
-  border-radius: 0.4rem;
-  text-align: center;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  font-size: 1.8rem;
-  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
-  font-weight: 700;
-  -webkit-letter-spacing: 0.1rem;
-  -moz-letter-spacing: 0.1rem;
-  -ms-letter-spacing: 0.1rem;
-  letter-spacing: 0.1rem;
-  cursor: pointer;
-  height: 3.8rem;
-}
-
-.c1.btn:hover {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-  opacity: 0.8;
-}
-
-.c1.btn:focus {
-  outline-width: 0.4rem;
-  outline-style: solid;
-  outline-offset: 1px;
-  box-shadow: none;
-}
-
-.c1.btn.btn-primary {
-  border: none;
-}
-
-.c1.btn.btn-secondary {
-  background: none;
-}
-
-.c1.btn.btn-info {
-  border: none;
-  background: none;
-  padding-left: 0.6rem;
-  padding-right: 0.6rem;
-}
-
-.c1.btn.btn-info:hover,
-.c1.btn.btn-info:active,
-.c1.btn.btn-info:focus {
-  background: none;
-}
-
-.c1.btn.btn-light {
-  border: none;
-}
-
-.c1.btn.btn-dark {
-  border: none;
-}
-
-.c1.btn.btn-link {
-  font-size: 1.6rem;
-  font-weight: 400;
-  background: none;
-  border: none;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  min-height: 2.5rem;
-  line-height: 3rem;
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-  -ms-flex-pack: left;
-  justify-content: left;
-  -webkit-letter-spacing: unset;
-  -moz-letter-spacing: unset;
-  -ms-letter-spacing: unset;
-  letter-spacing: unset;
-  text-align: left;
-  padding: 0;
-}
-
-.c1.btn.btn-link:hover,
-.c1.btn.btn-link:active,
-.c1.btn.btn-link:focus {
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-  border: none;
-  background: none;
-  box-shadow: none;
-  outline: none;
-}
-
-.c1.btn.btn-link:disabled,
-.c1.btn.btn-link.disabled {
-  background: none;
-  pointer-events: none;
-}
-
-.c1.btn:disabled,
-.c1.btn:disabled:hover {
-  box-shadow: none;
-  -webkit-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
-  pointer-events: none;
-  cursor: not-allowed;
-  opacity: 0.65;
-}
-
-.c1.Button .Button__icon {
-  margin-right: 1.6rem;
-}
-
-.c1.Button--icon-only:focus {
-  outline: none;
-}
-
-.c1.Button--icon-only .Button__icon {
-  margin-right: 0;
-}
-
-.c0 {
-  position: -webkit-sticky;
-  position: sticky;
-  padding-top: 2rem;
-  bottom: 0;
-  background: white;
-  z-index: 10;
-}
-
-<div
-    class=""
-  >
     <div
-      class="c0 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+      class=""
     >
       <div
-        class="pr-3 col-auto"
-      />
-      <div
-        class="pr-6 col-auto"
+        class="c34 justify-content-end mb-12 mt-12 p-0 no-gutters row"
       >
-        <button
-          class="c1 Button btn btn-secondary"
-          type="button"
+        <div
+          class="pr-3 col-auto"
+        />
+        <div
+          class="pr-6 col-auto"
         >
-          <div
-            class="Button__value"
+          <button
+            class="c3 Button btn btn-secondary"
+            type="button"
           >
-            Cancel
-          </div>
-        </button>
-      </div>
-      <div
-        class="col-auto"
-      >
-        <button
-          class="c1 Button mr-9 btn btn-primary"
-          type="button"
+            <div
+              class="Button__value"
+            >
+              Cancel
+            </div>
+          </button>
+        </div>
+        <div
+          class="col-auto"
         >
-          <div
-            class="Button__value"
+          <button
+            class="c3 Button mr-9 btn btn-primary"
+            type="button"
           >
-            Save
-          </div>
-        </button>
+            <div
+              class="Button__value"
+            >
+              Save
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>

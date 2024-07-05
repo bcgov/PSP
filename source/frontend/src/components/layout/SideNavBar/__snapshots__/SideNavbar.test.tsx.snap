@@ -1,9 +1,166 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`SideNavbar display and logic > renders 1`] = `
+.c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  height: 3.8rem;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  border: none;
+}
+
+.c4.btn.btn-secondary {
+  background: none;
+}
+
+.c4.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  background: none;
+}
+
+.c4.btn.btn-light {
+  border: none;
+}
+
+.c4.btn.btn-dark {
+  border: none;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid;
+  background-color: white;
+}
+
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
+  background-color: white;
+}
+
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
 .c1 {
   height: calc( 100vh - -  );
   overflow-y: auto;
+  overflow-x: hidden;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -25,25 +182,21 @@ exports[`SideNavbar display and logic > renders 1`] = `
 
 .c1 label {
   color: white;
+  min-width: 8rem;
 }
 
 .c1.expanded {
   width: 16rem;
 }
 
-.c1 svg {
+.c1 .nav-item svg {
   fill: white;
+  min-width: 2.4rem;
 }
 
-.c1 .chevron {
+.c1 .to-bottom {
   margin-top: auto;
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
-  cursor: pointer;
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
+  margin-bottom: 1.6rem;
 }
 
 .c1 .nav-link {
@@ -55,7 +208,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
   position: relative;
 }
 
-.c6 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -66,16 +219,16 @@ exports[`SideNavbar display and logic > renders 1`] = `
   height: 100%;
 }
 
-.c6 a {
+.c8 a {
   font-size: 1.7rem;
 }
 
-.c5#close-tray {
+.c7#close-tray {
   float: right;
   cursor: pointer;
 }
 
-.c4 {
+.c6 {
   height: 100%;
   overflow-y: auto;
   position: absolute;
@@ -92,7 +245,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
   box-shadow: 0.3rem 0 0.4rem rgba(0,0,0,0.2);
 }
 
-.c4.show {
+.c6.show {
   -webkit-transform: translateX(64rem);
   -ms-transform: translateX(64rem);
   transform: translateX(64rem);
@@ -124,11 +277,11 @@ exports[`SideNavbar display and logic > renders 1`] = `
 }
 
 @media (max-width:1225px) {
-  .c4 {
+  .c6 {
     width: 32rem;
   }
 
-  .c4.show {
+  .c6.show {
     -webkit-transform: translateX(32rem);
     -ms-transform: translateX(32rem);
     transform: translateX(32rem);
@@ -306,34 +459,47 @@ exports[`SideNavbar display and logic > renders 1`] = `
           </svg>
         </a>
       </div>
-      <svg
-        class="chevron"
-        fill="currentColor"
-        height="24"
-        stroke="currentColor"
-        stroke-width="0"
-        viewBox="0 0 24 24"
-        width="24"
-        xmlns="http://www.w3.org/2000/svg"
+      <span
+        class="to-bottom"
       >
-        <title>
-          expand
-        </title>
-        <path
-          d="M0 0h24v24H0z"
-          fill="none"
-        />
-        <path
-          d="M10 6 8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"
-        />
-      </svg>
+        <button
+          class="c4 Button Button--icon-only c5 btn btn-light"
+          title="expand"
+          type="button"
+        >
+          <div
+            class="Button__icon"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M6.41 6 5 7.41 9.58 12 5 16.59 6.41 18l6-6z"
+              />
+              <path
+                d="m13 6-1.41 1.41L16.17 12l-4.58 4.59L13 18l6-6z"
+              />
+            </svg>
+          </div>
+        </button>
+      </span>
     </div>
     <div
-      class="c4"
+      class="c6"
       data-testid="side-tray"
     >
       <svg
-        class="c5"
+        class="c7"
         fill="currentColor"
         height="32"
         id="close-tray"
@@ -351,7 +517,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
         />
       </svg>
       <div
-        class="c6"
+        class="c8"
       />
     </div>
   </div>

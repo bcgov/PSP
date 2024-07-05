@@ -6,80 +6,198 @@ exports[`AcquisitionView component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  border-bottom: solid 0.5rem;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2.4rem;
-}
-
-.c2 {
-  width: 100%;
-  border-bottom: solid 0.5rem;
-}
-
-.c1 {
-  font-size: 2.4rem;
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
-<div
-    class=""
-  >
-    <div
-      class="row"
-    >
-      <div
-        class="col"
-      >
-        <h1
-          class="c0 mr-auto"
-        >
-          <svg
-            class="mr-2"
-            fill="currentColor"
-            height="2.6rem"
-            title="Acquisition file Icon"
-            viewBox="0 0 24 24"
-            width="2.6rem"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M16.5896 7.61509H15.446V6.44474H16.5896V7.61509ZM16.5896 9.95579H15.446V8.78544H16.5896V9.95579ZM14.3024 7.61509H13.1588V6.44474H14.3024V7.61509ZM14.3024 9.95579H13.1588V8.78544H14.3024V9.95579ZM14.8666 0L6.8615 5.85175V8.78544H9.14867L18.4498 12.6086C19.7306 13.1391 20.5845 14.4031 20.5845 15.8075H22.8717V5.85175L14.8666 0ZM21.7281 18.1482H13.723L11.3291 17.29L11.7103 16.1821L13.723 16.9623H16.9403C17.6874 16.9623 18.2973 16.3381 18.2973 15.5735C18.2973 14.9961 17.9466 14.4812 17.413 14.2783L9.10292 11.1105H6.84625V21.6593L14.8513 23.9844L24 20.4734C24 19.1782 22.9784 18.1327 21.7128 18.1327L21.7281 18.1482ZM0 24H5.32433V11.1261H0V24Z"
-            />
-          </svg>
-          Acquisition File
-        </h1>
-      </div>
-      <div
-        class="col-auto"
-      >
-        <svg
-          class="c1"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>
-            close
-          </title>
-          <path
-            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-          />
-        </svg>
-      </div>
-    </div>
-    <div
-      class="c2"
-    />
-  </div>
-  .c5 {
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c26 {
+  height: 100%;
+}
+
+.c26 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c26 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c27 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c27 .nav-tabs {
+  height: auto;
+}
+
+.c27 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 1.2rem;
+}
+
+.c27 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c27 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
+.c17 {
+  height: 100%;
+}
+
+.c18 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c24 {
+  overflow: auto;
+  height: 100%;
+  width: 100%;
+}
+
+.c13 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -89,299 +207,23 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c0 {
-  position: relative;
-}
-
-.c3 {
-  font-size: 0.87em;
-  line-height: 1.9;
-}
-
-.c6 {
-  font-family: 'BCSans-Bold';
-  font-size: 1.4rem;
-  border-radius: 0.4rem;
-  -webkit-letter-spacing: 0.1rem;
-  -moz-letter-spacing: 0.1rem;
-  -ms-letter-spacing: 0.1rem;
-  letter-spacing: 0.1rem;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 0.2rem 0.5rem;
-  margin-left: 0.4rem;
-  gap: 0.5rem;
-  color: undefined;
-  background-color: undefined;
-}
-
-.c4 {
-  margin-top: auto;
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
 .c1 {
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom-style: solid;
-  border-bottom-color: grey;
-  border-bottom-width: 0.1rem;
-}
-
-.c2 {
-  height: 100%;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-<div
-    class="c0"
-  >
-    <div
-      class="c1 no-gutters row"
-    >
-      <div
-        class="col-8"
-      >
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <strong>
-              <label>
-                File:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-          >
-            1-12345-01 - Test ACQ File
-          </div>
-        </div>
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <strong>
-              <label>
-                Ministry project:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-          >
-            001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
-          </div>
-        </div>
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <strong>
-              <label>
-                Ministry product:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-            data-testid="acq-header-product-val"
-          >
-            00048 - MISCELLANEOUS CLAIMS
-          </div>
-        </div>
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <strong>
-              <label>
-                Historical File #:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-          >
-            <div />
-          </div>
-        </div>
-      </div>
-      <div
-        class="col"
-      >
-        <div
-          class="c2"
-        >
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="text-right col"
-            >
-              <span
-                class="c3"
-              >
-                <strong>
-                  Created: 
-                </strong>
-                May 27, 2022 by 
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
-                >
-                  <strong>
-                    admin
-                  </strong>
-                </span>
-              </span>
-            </div>
-          </div>
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="text-right col"
-            >
-              <span
-                class="c3"
-              >
-                <strong>
-                  Updated: 
-                </strong>
-                Oct 6, 2023 by 
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
-                >
-                  <strong>
-                    MARODRIG
-                  </strong>
-                </span>
-              </span>
-            </div>
-          </div>
-          <div
-            class="c4 no-gutters justify-content-end align-items-end row"
-          >
-            <div
-              class="col"
-            />
-            <div
-              class="align-self-end d-flex col-auto"
-            >
-              <span
-                class="c3"
-              >
-                <b>
-                  File:
-                </b>
-              </span>
-              <div
-                class="c5 c6"
-              >
-                <svg
-                  fill="currentColor"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
-                  />
-                </svg>
-                ACTIVE
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  .c11 {
-  height: 100%;
-}
-
-.c11 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
-  overflow-y: auto;
-}
-
-.c11 .tab-content .tab-pane {
-  position: relative;
-}
-
-.c12 {
-  background-color: white;
-  font-size: 1.4rem;
-  border-color: transparent;
-}
-
-.c12 .nav-tabs {
-  height: auto;
-}
-
-.c12 .nav-item {
-  min-width: 5rem;
-  padding: 0.1rem 1.2rem;
-}
-
-.c12 .nav-item:hover {
-  border-color: transparent;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c12 .nav-item.active {
   font-family: 'BCSans-Bold';
-  border-color: transparent;
-}
-
-.c2 {
-  height: 100%;
-}
-
-.c3 {
-  overflow: auto;
-  height: 100%;
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem;
   width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
 }
 
-.c9 {
-  overflow: auto;
-  height: 100%;
-  width: 100%;
+.c5 {
+  border-left: 0.1rem solid;
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
 }
 
-.c20 {
+.c35 {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -407,7 +249,51 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   justify-content: center;
 }
 
+.c4.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid;
+  background-color: white;
+}
+
+.c4.btn.btn-light.Button:focus,
+.c4.btn.btn-light.Button:active {
+  background-color: white;
+}
+
+.c4.btn,
+.c4 .Button__icon,
+.c4 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
 .c0 {
+  min-width: 90rem;
+  height: 100%;
+  position: relative;
+  padding: 1.6rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c2 {
+  gap: 1.5rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c15 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -416,12 +302,26 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   flex: 1;
 }
 
-.c1 {
+.c16 {
   height: 100%;
   width: 100%;
 }
 
-.c10 {
+.c8 {
+  position: relative;
+}
+
+.c7 {
+  width: 100%;
+  border-bottom: solid 0.5rem;
+}
+
+.c6 {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
+.c25 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -438,21 +338,21 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c13 {
+.c28 {
   padding-top: 1rem;
 }
 
-.c14 {
+.c29 {
   text-align: right;
 }
 
-.c16 {
+.c31 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c15 {
+.c30 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -460,36 +360,85 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c18.required::before {
+.c33.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c17 {
+.c32 {
   font-weight: bold;
 }
 
-.c4 {
+.c11 {
+  font-size: 0.87em;
+  line-height: 1.9;
+}
+
+.c14 {
+  font-family: 'BCSans-Bold';
+  font-size: 1.4rem;
+  border-radius: 0.4rem;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0.2rem 0.5rem;
+  margin-left: 0.4rem;
+  gap: 0.5rem;
+  color: undefined;
+  background-color: undefined;
+}
+
+.c12 {
+  margin-top: auto;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.c9 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+}
+
+.c10 {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c19 {
   text-align: left;
   padding: 0px;
   margin: 0px;
   width: 100%;
 }
 
-.c5 {
+.c20 {
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
 }
 
-.c5.selected {
+.c20.selected {
   font-weight: bold;
   cursor: default;
 }
 
-.c8 {
+.c23 {
   font-size: 1.5rem;
   border-radius: 50%;
   opacity: 0.8;
@@ -510,7 +459,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c6 {
+.c21 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -527,12 +476,12 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   border-bottom: 1px solid;
 }
 
-.c7 {
+.c22 {
   font-size: 1.4rem;
   line-height: 2.2rem;
 }
 
-.c19 {
+.c34 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -547,708 +496,983 @@ exports[`AcquisitionView component > renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="c1"
+      class="row"
     >
       <div
-        class="c2 no-gutters row"
+        class="col"
       >
-        <div
-          class="c3 d-flex flex-column col-3"
+        <h1
+          class="c1 mr-auto"
         >
-          <div
-            class="c4"
+          <span
+            class="mr-2"
+          >
+            <svg
+              fill="currentColor"
+              height="2.6rem"
+              title="Acquisition file Icon"
+              viewBox="0 0 24 24"
+              width="2.6rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M16.5896 7.61509H15.446V6.44474H16.5896V7.61509ZM16.5896 9.95579H15.446V8.78544H16.5896V9.95579ZM14.3024 7.61509H13.1588V6.44474H14.3024V7.61509ZM14.3024 9.95579H13.1588V8.78544H14.3024V9.95579ZM14.8666 0L6.8615 5.85175V8.78544H9.14867L18.4498 12.6086C19.7306 13.1391 20.5845 14.4031 20.5845 15.8075H22.8717V5.85175L14.8666 0ZM21.7281 18.1482H13.723L11.3291 17.29L11.7103 16.1821L13.723 16.9623H16.9403C17.6874 16.9623 18.2973 16.3381 18.2973 15.5735C18.2973 14.9961 17.9466 14.4812 17.413 14.2783L9.10292 11.1105H6.84625V21.6593L14.8513 23.9844L24 20.4734C24 19.1782 22.9784 18.1327 21.7128 18.1327L21.7281 18.1482ZM0 24H5.32433V11.1261H0V24Z"
+              />
+            </svg>
+          </span>
+          Acquisition File
+        </h1>
+      </div>
+      <div
+        class="c2 d-flex col-auto"
+      >
+        <span>
+          <button
+            class="c3 Button Button--icon-only c4 btn btn-light"
+            title="collapse"
+            type="button"
           >
             <div
-              class="c5 no-gutters selected row"
-              data-testid="menu-item-row-0"
+              class="Button__icon"
             >
-              <div
-                class="col-1"
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <svg
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 192 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-                  />
-                </svg>
-              </div>
-              <div
-                class="col"
-              >
-                File Summary
-              </div>
-              <div
-                class="c6"
-              >
-                <span
-                  class="c7"
-                >
-                  Properties
-                </span>
-              </div>
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"
+                />
+                <path
+                  d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"
+                />
+              </svg>
+            </div>
+          </button>
+        </span>
+        <div
+          class="c5"
+        />
+        <svg
+          class="c6"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>
+            close
+          </title>
+          <path
+            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="c7"
+    />
+    <div
+      class="c8"
+    >
+      <div
+        class="c9 no-gutters row"
+      >
+        <div
+          class="col-8"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <strong>
+                <label>
+                  File:
+                </label>
+              </strong>
             </div>
             <div
-              class="c5 no-gutters row"
-              data-testid="menu-item-row-1"
+              class="pl-1 text-left col-9"
             >
-              <div
-                class="col-1"
-              />
-              <div
-                class="pr-2 col-auto"
-              >
-                <div
-                  class="c8"
-                >
-                  1
-                </div>
-              </div>
-              <div
-                class="col"
-              >
-                023-214-937
-              </div>
+              1-12345-01 - Test ACQ File
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <strong>
+                <label>
+                  Ministry project:
+                </label>
+              </strong>
             </div>
             <div
-              class="c5 no-gutters row"
-              data-testid="menu-item-row-2"
+              class="pl-1 text-left col-9"
             >
-              <div
-                class="col-1"
-              />
-              <div
-                class="pr-2 col-auto"
-              >
-                <div
-                  class="c8"
-                >
-                  2
-                </div>
-              </div>
-              <div
-                class="col"
-              >
-                024-996-777
-              </div>
+              001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <strong>
+                <label>
+                  Ministry product:
+                </label>
+              </strong>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+              data-testid="acq-header-product-val"
+            >
+              00048 - MISCELLANEOUS CLAIMS
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <strong>
+                <label>
+                  Historical File #:
+                </label>
+              </strong>
+            </div>
+            <div
+              class="pl-1 text-left col-9"
+            >
+              <div />
             </div>
           </div>
         </div>
         <div
-          class="c9 col-9"
+          class="col"
         >
           <div
             class="c10"
           >
             <div
-              class="c11"
+              class="no-gutters row"
             >
-              <nav
-                class="c12 nav nav-tabs"
-                role="tablist"
-              >
-                <a
-                  aria-selected="true"
-                  class="nav-item nav-link active"
-                  data-rb-event-key="fileDetails"
-                  href="#"
-                  role="tab"
-                >
-                  File details
-                </a>
-                <a
-                  aria-selected="false"
-                  class="nav-item nav-link"
-                  data-rb-event-key="checklist"
-                  href="#"
-                  role="tab"
-                >
-                  Checklist
-                </a>
-                <a
-                  aria-selected="false"
-                  class="nav-item nav-link"
-                  data-rb-event-key="stakeholders"
-                  href="#"
-                  role="tab"
-                >
-                  Stakeholders
-                </a>
-              </nav>
               <div
-                class="tab-content"
+                class="text-right col"
+              >
+                <span
+                  class="c11"
+                >
+                  <strong>
+                    Created: 
+                  </strong>
+                  May 27, 2022 by 
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      admin
+                    </strong>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="text-right col"
+              >
+                <span
+                  class="c11"
+                >
+                  <strong>
+                    Updated: 
+                  </strong>
+                  Oct 6, 2023 by 
+                  <span
+                    class="tooltip-icon"
+                    data-testid="tooltip-icon-userNameTooltip"
+                    id="userNameTooltip"
+                  >
+                    <strong>
+                      MARODRIG
+                    </strong>
+                  </span>
+                </span>
+              </div>
+            </div>
+            <div
+              class="c12 no-gutters justify-content-end align-items-end row"
+            >
+              <div
+                class="col"
+              />
+              <div
+                class="align-self-end d-flex col-auto"
+              >
+                <span
+                  class="c11"
+                >
+                  <b>
+                    File:
+                  </b>
+                </span>
+                <div
+                  class="c13 c14"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="16"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="16"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
+                    />
+                  </svg>
+                  ACTIVE
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c15"
+    >
+      <div
+        class="c16"
+      >
+        <div
+          class="c17 no-gutters row"
+        >
+          <div
+            class="c18 d-flex flex-column col-3"
+          >
+            <div
+              class="c19"
+            >
+              <div
+                class="c20 no-gutters selected row"
+                data-testid="menu-item-row-0"
               >
                 <div
-                  aria-hidden="false"
-                  class="fade tab-pane active show"
-                  role="tabpanel"
+                  class="col-1"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 192 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
+                    />
+                  </svg>
+                </div>
+                <div
+                  class="col"
+                >
+                  File Summary
+                </div>
+                <div
+                  class="c21"
+                >
+                  <span
+                    class="c22"
+                  >
+                    Properties
+                  </span>
+                </div>
+              </div>
+              <div
+                class="c20 no-gutters row"
+                data-testid="menu-item-row-1"
+              >
+                <div
+                  class="col-1"
+                />
+                <div
+                  class="pr-2 col-auto"
                 >
                   <div
-                    class="c13"
+                    class="c23"
+                  >
+                    1
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  023-214-937
+                </div>
+              </div>
+              <div
+                class="c20 no-gutters row"
+                data-testid="menu-item-row-2"
+              >
+                <div
+                  class="col-1"
+                />
+                <div
+                  class="pr-2 col-auto"
+                >
+                  <div
+                    class="c23"
+                  >
+                    2
+                  </div>
+                </div>
+                <div
+                  class="col"
+                >
+                  024-996-777
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c24 col-9"
+          >
+            <div
+              class="c25"
+            >
+              <div
+                class="c26"
+              >
+                <nav
+                  class="c27 nav nav-tabs"
+                  role="tablist"
+                >
+                  <a
+                    aria-selected="true"
+                    class="nav-item nav-link active"
+                    data-rb-event-key="fileDetails"
+                    href="#"
+                    role="tab"
+                  >
+                    File details
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="checklist"
+                    href="#"
+                    role="tab"
+                  >
+                    Checklist
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="stakeholders"
+                    href="#"
+                    role="tab"
+                  >
+                    Stakeholders
+                  </a>
+                </nav>
+                <div
+                  class="tab-content"
+                >
+                  <div
+                    aria-hidden="false"
+                    class="fade tab-pane active show"
+                    role="tabpanel"
                   >
                     <div
-                      class="c14 mr-3 my-1"
-                    />
-                    <div
-                      class="c15 form-section"
+                      class="c28"
                     >
-                      <h2
-                        class="c16"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Project
-                          </div>
-                        </div>
-                      </h2>
                       <div
-                        class="collapse show"
+                        class="c29 mr-3 my-1"
+                      />
+                      <div
+                        class="c30 form-section"
                       >
-                        <div
-                          class="pb-2 row"
+                        <h2
+                          class="c31"
                         >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="no-gutters row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="col"
                             >
-                              Ministry project:
-                            </label>
+                              Project
+                            </div>
                           </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
-                          </div>
-                        </div>
+                        </h2>
                         <div
-                          class="pb-2 row"
+                          class="collapse show"
                         >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              Product:
-                            </label>
-                          </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            00048 MISCELLANEOUS CLAIMS
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-4"
-                          >
-                            <label
-                              class="c17"
+                              <label
+                                class="c32"
+                              >
+                                Ministry project:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
                             >
-                              Funding:
-                            </label>
+                              001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
+                            </div>
                           </div>
                           <div
-                            class="c18 text-left col"
-                          />
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c32"
+                              >
+                                Product:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              00048 MISCELLANEOUS CLAIMS
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c32"
+                              >
+                                Funding:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="c15 form-section"
-                    >
-                      <h2
-                        class="c16"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Schedule
-                          </div>
-                        </div>
-                      </h2>
                       <div
-                        class="collapse show"
+                        class="c30 form-section"
                       >
-                        <div
-                          class="pb-2 row"
+                        <h2
+                          class="c31"
                         >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="no-gutters row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="col"
                             >
-                              Assigned date:
-                            </label>
+                              Schedule
+                            </div>
                           </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            Jun 27, 2022
-                          </div>
-                        </div>
+                        </h2>
                         <div
-                          class="pb-2 row"
+                          class="collapse show"
                         >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              Delivery date:
-                              <span
-                                class="ml-2"
+                              <label
+                                class="c32"
                               >
+                                Assigned date:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              Jun 27, 2022
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c32"
+                              >
+                                Delivery date:
                                 <span
-                                  class="tooltip-icon"
-                                  data-testid="tooltip-icon-section-field-tooltip"
-                                  id="section-field-tooltip"
+                                  class="ml-2"
                                 >
-                                  <svg
+                                  <span
                                     class="tooltip-icon"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 512 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
+                                    data-testid="tooltip-icon-section-field-tooltip"
+                                    id="section-field-tooltip"
                                   >
-                                    <path
-                                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                                    />
-                                  </svg>
+                                    <svg
+                                      class="tooltip-icon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 512 512"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                      />
+                                    </svg>
+                                  </span>
                                 </span>
-                              </span>
-                            </label>
-                          </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            Jul 29, 2022
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              Jul 29, 2022
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="c15 form-section"
-                    >
-                      <h2
-                        class="c16"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Acquisition Details
-                          </div>
-                        </div>
-                      </h2>
                       <div
-                        class="collapse show"
+                        class="c30 form-section"
                       >
-                        <div
-                          class="pb-2 row"
+                        <h2
+                          class="c31"
                         >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="no-gutters row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="col"
                             >
-                              Acquisition file name:
-                            </label>
+                              Acquisition Details
+                            </div>
                           </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            Test ACQ File
-                          </div>
-                        </div>
+                        </h2>
                         <div
-                          class="pb-2 row"
+                          class="collapse show"
                         >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              Historical file number:
-                              <span
-                                class="ml-2"
+                              <label
+                                class="c32"
                               >
+                                Acquisition file name:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              Test ACQ File
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c32"
+                              >
+                                Historical file number:
                                 <span
-                                  class="tooltip-icon"
-                                  data-testid="tooltip-icon-section-field-tooltip"
-                                  id="section-field-tooltip"
+                                  class="ml-2"
                                 >
-                                  <svg
+                                  <span
                                     class="tooltip-icon"
-                                    fill="currentColor"
-                                    height="1em"
-                                    stroke="currentColor"
-                                    stroke-width="0"
-                                    viewBox="0 0 512 512"
-                                    width="1em"
-                                    xmlns="http://www.w3.org/2000/svg"
+                                    data-testid="tooltip-icon-section-field-tooltip"
+                                    id="section-field-tooltip"
                                   >
-                                    <path
-                                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                                    />
-                                  </svg>
+                                    <svg
+                                      class="tooltip-icon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 512 512"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                      />
+                                    </svg>
+                                  </span>
                                 </span>
-                              </span>
-                            </label>
-                          </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            legacy file number
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-4"
-                          >
-                            <label
-                              class="c17"
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
                             >
-                              Physical file status:
-                            </label>
+                              legacy file number
+                            </div>
                           </div>
                           <div
-                            class="c18 text-left col"
-                          />
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-4"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              Acquisition type:
-                            </label>
+                              <label
+                                class="c32"
+                              >
+                                Physical file status:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            />
                           </div>
                           <div
-                            class="c18 text-left col"
+                            class="pb-2 row"
                           >
-                            Consensual Agreement
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-4"
-                          >
-                            <label
-                              class="c17"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              Ministry region:
-                            </label>
+                              <label
+                                class="c32"
+                              >
+                                Acquisition type:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              Consensual Agreement
+                            </div>
                           </div>
                           <div
-                            class="c18 text-left col"
+                            class="pb-2 row"
                           >
-                            South Coast Region
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c32"
+                              >
+                                Ministry region:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              South Coast Region
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="c15 form-section"
-                    >
-                      <h2
-                        class="c16"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Acquisition Team
-                          </div>
-                        </div>
-                      </h2>
                       <div
-                        class="collapse show"
+                        class="c30 form-section"
                       >
-                        <div
-                          class="pb-2 row"
+                        <h2
+                          class="c31"
                         >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="no-gutters row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="col"
                             >
-                              Negotiation agent:
-                            </label>
+                              Acquisition Team
+                            </div>
                           </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            <a
-                              class="c19"
-                              href="/contact/P1"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <span>
-                                Bob Billy Smith
-                              </span>
-                              <svg
-                                class="ml-2"
-                                fill="currentColor"
-                                height="1rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                width="1rem"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                                />
-                              </svg>
-                            </a>
-                          </div>
-                        </div>
+                        </h2>
                         <div
-                          class="pb-2 row"
+                          class="collapse show"
                         >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              Negotiation agent:
-                            </label>
+                              <label
+                                class="c32"
+                              >
+                                Negotiation agent:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              <a
+                                class="c34"
+                                href="/contact/P1"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                              >
+                                <span>
+                                  Bob Billy Smith
+                                </span>
+                                <svg
+                                  class="ml-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
                           </div>
                           <div
-                            class="c18 text-left col"
+                            class="pb-2 row"
                           >
-                            <a
-                              class="c19"
-                              href="/contact/P3"
-                              rel="noopener noreferrer"
-                              target="_blank"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              <span>
-                                Stinky Cheese
-                              </span>
-                              <svg
-                                class="ml-2"
-                                fill="currentColor"
-                                height="1rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                width="1rem"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <label
+                                class="c32"
                               >
-                                <path
-                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                                />
-                              </svg>
-                            </a>
+                                Negotiation agent:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              <a
+                                class="c34"
+                                href="/contact/P3"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                              >
+                                <span>
+                                  Stinky Cheese
+                                </span>
+                                <svg
+                                  class="ml-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div
-                      class="c15 form-section"
-                    >
-                      <h2
-                        class="c16"
-                      >
-                        <div
-                          class="no-gutters row"
-                        >
-                          <div
-                            class="col"
-                          >
-                            Owner Information
-                          </div>
-                        </div>
-                      </h2>
                       <div
-                        class="collapse show"
+                        class="c30 form-section"
                       >
-                        <div
-                          class="c20"
+                        <h2
+                          class="c31"
                         >
                           <div
-                            class="spinner-border text-warning"
-                            data-testid="filter-backdrop-loading"
-                          />
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-4"
+                            class="no-gutters row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="col"
                             >
-                              Owner solicitor:
-                            </label>
+                              Owner Information
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="c35"
+                          >
+                            <div
+                              class="spinner-border text-warning"
+                              data-testid="filter-backdrop-loading"
+                            />
                           </div>
                           <div
-                            class="c18 text-left col"
+                            class="pb-2 row"
                           >
-                            <a
-                              class="c19"
-                              href="/contact/O1"
-                              rel="noopener noreferrer"
-                              target="_blank"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              <span>
-                                Millennium Inc
-                              </span>
-                              <svg
-                                class="ml-2"
-                                fill="currentColor"
-                                height="1rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                width="1rem"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <label
+                                class="c32"
                               >
-                                <path
-                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                                />
-                              </svg>
-                            </a>
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-4"
-                          >
-                            <label
-                              class="c17"
+                                Owner solicitor:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
                             >
-                              Primary contact:
-                            </label>
-                          </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            <a
-                              class="c19"
-                              href="/contact/P1"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <span />
-                              <svg
-                                class="m1-2"
-                                fill="currentColor"
-                                height="1rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                width="1rem"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <a
+                                class="c34"
+                                href="/contact/O1"
+                                rel="noopener noreferrer"
+                                target="_blank"
                               >
-                                <path
-                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                                />
-                              </svg>
-                            </a>
+                                <span>
+                                  Millennium Inc
+                                </span>
+                                <svg
+                                  class="ml-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
                           </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
                           <div
-                            class="pr-0 text-left col-4"
+                            class="pb-2 row"
                           >
-                            <label
-                              class="c17"
+                            <div
+                              class="pr-0 text-left col-4"
                             >
-                              Owner representative:
-                            </label>
-                          </div>
-                          <div
-                            class="c18 text-left col"
-                          >
-                            <a
-                              class="c19"
-                              href="/contact/P2"
-                              rel="noopener noreferrer"
-                              target="_blank"
-                            >
-                              <span>
-                                Han Solo
-                              </span>
-                              <svg
-                                class="ml-2"
-                                fill="currentColor"
-                                height="1rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 512 512"
-                                width="1rem"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <label
+                                class="c32"
                               >
-                                <path
-                                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                                />
-                              </svg>
-                            </a>
-                          </div>
-                        </div>
-                        <div
-                          class="pb-2 row"
-                        >
-                          <div
-                            class="pr-0 text-left col-4"
-                          >
-                            <label
-                              class="c17"
+                                Primary contact:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
                             >
-                              Comment:
-                            </label>
+                              <a
+                                class="c34"
+                                href="/contact/P1"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                              >
+                                <span />
+                                <svg
+                                  class="m1-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
                           </div>
                           <div
-                            class="c18 text-left col"
+                            class="pb-2 row"
                           >
-                            test representative comment
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c32"
+                              >
+                                Owner representative:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              <a
+                                class="c34"
+                                href="/contact/P2"
+                                rel="noopener noreferrer"
+                                target="_blank"
+                              >
+                                <span>
+                                  Han Solo
+                                </span>
+                                <svg
+                                  class="ml-2"
+                                  fill="currentColor"
+                                  height="1rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 512 512"
+                                  width="1rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                                  />
+                                </svg>
+                              </a>
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c32"
+                              >
+                                Comment:
+                              </label>
+                            </div>
+                            <div
+                              class="c33 text-left col"
+                            >
+                              test representative comment
+                            </div>
                           </div>
                         </div>
                       </div>
