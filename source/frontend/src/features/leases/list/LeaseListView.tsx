@@ -4,9 +4,9 @@ import { Col, Row } from 'react-bootstrap';
 import { FaFileAlt, FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
-import { Button, StyledIconButton } from '@/components/common/buttons';
+import { StyledIconButton } from '@/components/common/buttons';
+import { StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
@@ -124,12 +124,5 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
     </Styled.ListPage>
   );
 };
-
-const StyledAddButton = styled(Button)`
-  &.btn.btn-primary,
-  &.btn.btn-primary:active {
-    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
-  }
-`;
 
 export default LeaseListView;
