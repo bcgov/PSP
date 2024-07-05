@@ -6,55 +6,65 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_DISPOSITION_CHECKLIST_ITEM")]
-[Index("ChklstItemStatusTypeCode", Name = "DSPCKI_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
-[Index("DispositionFileId", Name = "DSPCKI_DISPOSITION_FILE_ID_IDX")]
-[Index("DispositionFileId", "DspChklstItemTypeCode", Name = "DSPCKI_DISPOSITION_FILE_ID_UK_IDX", IsUnique = true)]
-[Index("DspChklstItemTypeCode", Name = "DSPCKI_DSP_CHKLST_ITEM_TYPE_CODE_IDX")]
-public partial class PimsDispositionChecklistItem
+/// <summary>
+/// Table containing lease renewal options.
+/// </summary>
+[Table("PIMS_LEASE_RENEWAL")]
+[Index("LeaseId", Name = "LSRNWL_LEASE_ID_IDX")]
+public partial class PimsLeaseRenewal
 {
     /// <summary>
-    /// Unique auto-generated surrogate primary key
+    /// Generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("DISPOSITION_CHECKLIST_ITEM_ID")]
-    public long DispositionChecklistItemId { get; set; }
+    [Column("LEASE_RENEWAL_ID")]
+    public long LeaseRenewalId { get; set; }
 
     /// <summary>
-    /// Foreign key of the disposition file.
+    /// Foreign key to the PIMS_LEASE table.
     /// </summary>
-    [Column("DISPOSITION_FILE_ID")]
-    public long DispositionFileId { get; set; }
+    [Column("LEASE_ID")]
+    public long LeaseId { get; set; }
 
     /// <summary>
-    /// Code value for the checklist item.
+    /// Date that the lease lease begins.
     /// </summary>
-    [Column("DSP_CHKLST_ITEM_TYPE_CODE")]
-    [StringLength(20)]
-    public string DspChklstItemTypeCode { get; set; }
+    [Column("COMMENCEMENT_DT", TypeName = "datetime")]
+    public DateTime? CommencementDt { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_CHKLST_ITEM_STATUS_TYPE table.
+    /// Date that the lease lease ends.
     /// </summary>
-    [Required]
-    [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
-    [StringLength(20)]
-    public string ChklstItemStatusTypeCode { get; set; }
+    [Column("EXPIRY_DT", TypeName = "datetime")]
+    public DateTime? ExpiryDt { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
+    /// Indicates if the lease renewal was exercised.
+    /// </summary>
+    [Column("IS_EXERCISED")]
+    public bool? IsExercised { get; set; }
+
+    /// <summary>
+    /// Notes pertaining to the lease reewal.
+    /// </summary>
+    [Column("RENEWAL_NOTE")]
+    [StringLength(2000)]
+    public string RenewalNote { get; set; }
+
+    /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
     /// <summary>
-    /// The date and time the record was created by the user.
+    /// The date and time the user created the record.
     /// </summary>
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// The user that created the record.
+    /// The user account that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -62,13 +72,13 @@ public partial class PimsDispositionChecklistItem
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// GUID of the user that created the record.
+    /// The GUID of the user account that created the record.
     /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     /// <summary>
-    /// User directory of the user that created the record.
+    /// The directory of the user account that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
@@ -76,13 +86,13 @@ public partial class PimsDispositionChecklistItem
     public string AppCreateUserDirectory { get; set; }
 
     /// <summary>
-    /// The date and time the record was updated by the user.
+    /// The date and time the user updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// The user that updated the record.
+    /// The user account that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
@@ -90,13 +100,13 @@ public partial class PimsDispositionChecklistItem
     public string AppLastUpdateUserid { get; set; }
 
     /// <summary>
-    /// GUID of the user that updated the record.
+    /// The GUID of the user account that updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     /// <summary>
-    /// User directory of the user that updated the record.
+    /// The directory of the user account that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
@@ -131,15 +141,7 @@ public partial class PimsDispositionChecklistItem
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("ChklstItemStatusTypeCode")]
-    [InverseProperty("PimsDispositionChecklistItems")]
-    public virtual PimsChklstItemStatusType ChklstItemStatusTypeCodeNavigation { get; set; }
-
-    [ForeignKey("DispositionFileId")]
-    [InverseProperty("PimsDispositionChecklistItems")]
-    public virtual PimsDispositionFile DispositionFile { get; set; }
-
-    [ForeignKey("DspChklstItemTypeCode")]
-    [InverseProperty("PimsDispositionChecklistItems")]
-    public virtual PimsDspChklstItemType DspChklstItemTypeCodeNavigation { get; set; }
+    [ForeignKey("LeaseId")]
+    [InverseProperty("PimsLeaseRenewals")]
+    public virtual PimsLease Lease { get; set; }
 }
