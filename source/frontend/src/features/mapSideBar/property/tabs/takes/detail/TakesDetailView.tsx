@@ -106,7 +106,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             claims={[Claims.PROPERTY_EDIT]}
             addButtonIcon={<FaPlus />}
             addButtonText="Add Take"
-            onAdd={onAdd}
+            onAdd={statusSolver.canEditTakes() ? onAdd : undefined}
           />
         </H2>
         {[...nonCancelledTakes, ...cancelledTakes].map((take, index) => {

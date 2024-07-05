@@ -46,6 +46,20 @@ public partial class PimsLeasePayment
     public string LeasePaymentStatusTypeCode { get; set; }
 
     /// <summary>
+    /// Foreign key reference to the PIMS_LEASE_PAYMENT_CATEGORY_TYPE_CODE table.
+    /// </summary>
+    [Column("LEASE_PAYMENT_CATEGORY_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeasePaymentCategoryTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE_CODE table.
+    /// </summary>
+    [Column("LEASE_PMT_FREQ_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeasePmtFreqTypeCode { get; set; }
+
+    /// <summary>
     /// Date the payment was received or sent
     /// </summary>
     [Column("PAYMENT_RECEIVED_DATE", TypeName = "datetime")]
@@ -171,20 +185,6 @@ public partial class PimsLeasePayment
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// Foreign key reference to the PIMS_LEASE_PAYMENT_CATEGORY_TYPE_CODE table.
-    /// </summary>
-    [Column("LEASE_PAYMENT_CATEGORY_TYPE_CODE")]
-    [StringLength(20)]
-    public string LeasePaymentCategoryTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE_CODE table.
-    /// </summary>
-    [Column("LEASE_PMT_FREQ_TYPE_CODE")]
-    [StringLength(20)]
-    public string LeasePmtFreqTypeCode { get; set; }
 
     [ForeignKey("LeasePaymentCategoryTypeCode")]
     [InverseProperty("PimsLeasePayments")]

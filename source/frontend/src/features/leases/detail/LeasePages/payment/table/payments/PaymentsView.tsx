@@ -40,8 +40,9 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
         isReceivable,
         isGstEligible,
         onSave,
+        payments,
       }),
-    [onEdit, onDelete, isReceivable, isGstEligible, onSave],
+    [onEdit, onDelete, isReceivable, isGstEligible, onSave, payments],
   );
 
   return (

@@ -102,7 +102,8 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
         }) as LocationFeatureDataset[];
         setSearchResults(locations);
       } else {
-        setSearchResults([]);
+        const locations = result?.features?.map(p => featureToLocationFeatureDataset(p));
+        setSearchResults(locations ?? []);
       }
     };
     searchFunc();
