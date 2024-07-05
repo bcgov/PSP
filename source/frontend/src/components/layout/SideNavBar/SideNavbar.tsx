@@ -1,6 +1,5 @@
 import clsx from 'classnames';
 import { useContext, useState } from 'react';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
@@ -12,6 +11,8 @@ import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ProjectsIcon from '@/assets/images/projects-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
 import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
+import { ExpandCollapseButton } from '@/components/common/buttons/ExpandCollapseButton';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { NavIcon } from '@/components/layout';
 import { Claims, Roles } from '@/constants/index';
 
@@ -89,21 +90,17 @@ export const SideNavBar = () => {
           showText={expanded}
           roles={[Roles.SYSTEM_ADMINISTRATOR]}
         />
-        {expanded ? (
-          <MdChevronLeft
-            title="collapse"
-            className="chevron"
-            size={24}
-            onClick={() => setExpanded(false)}
-          />
-        ) : (
-          <MdChevronRight
-            title="expand"
-            className="chevron"
-            size={24}
-            onClick={() => setExpanded(true)}
-          />
-        )}
+        <TooltipWrapper
+          tooltipId="expand-navbar"
+          tooltip={expanded ? 'Collapse Menu' : 'Expand Menu'}
+        >
+          <span className="to-bottom">
+            <ExpandCollapseButton
+              expanded={expanded}
+              toggleExpanded={() => setExpanded(!expanded)}
+            />
+          </span>
+        </TooltipWrapper>
       </Styled.SideNavBar>
       <SideTray context={trayPage} setContext={setTrayPage} />
     </Styled.ZIndexWrapper>
