@@ -4,10 +4,9 @@ import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
 import { StyledIconButton } from '@/components/common/buttons/IconButton';
+import { StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
@@ -137,11 +136,5 @@ export const AcquisitionListView: React.FunctionComponent<
     </Styled.ListPage>
   );
 };
-
-const StyledAddButton = styled(Button)`
-  &.btn.btn-primary {
-    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
-  }
-`;
 
 export default AcquisitionListView;
