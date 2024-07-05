@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// Create a new instance of an Disposition File checklist item.
         /// </summary>
         /// <returns></returns>
-        public static Entity.PimsDispositionChecklistItem CreateDispositionChecklistItem(long? id = null, long? dispositionFileId = null, PimsDspChklstItemStatusType statusType = null, PimsDspChklstItemType itemType = null)
+        public static Entity.PimsDispositionChecklistItem CreateDispositionChecklistItem(long? id = null, long? dispositionFileId = null, PimsChklstItemStatusType statusType = null, PimsDspChklstItemType itemType = null)
         {
             var checklistItem = new Entity.PimsDispositionChecklistItem()
             {
@@ -30,8 +30,8 @@ namespace Pims.Core.Test
                 DbLastUpdateUserid = string.Empty,
                 ConcurrencyControlNumber = 1,
             };
-            checklistItem.DspChklstItemStatusTypeCodeNavigation = statusType ?? new Entity.PimsDspChklstItemStatusType() { Id = "INCOMP", Description = "Incomplete", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now };
-            checklistItem.DspChklstItemStatusTypeCode = checklistItem.DspChklstItemStatusTypeCodeNavigation.Id;
+            checklistItem.ChklstItemStatusTypeCodeNavigation = statusType ?? new Entity.PimsChklstItemStatusType() { Id = "INCOMP", Description = "Incomplete", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now };
+            checklistItem.ChklstItemStatusTypeCode = checklistItem.ChklstItemStatusTypeCodeNavigation.Id;
             checklistItem.DspChklstItemTypeCodeNavigation = itemType ?? new Entity.PimsDspChklstItemType() { Id = "APPRAISE", Description = "Appraisals and reviews", DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, DspChklstSectionTypeCode = "section" };
             checklistItem.DspChklstItemTypeCode = checklistItem.DspChklstItemTypeCodeNavigation.Id;
 
@@ -44,7 +44,7 @@ namespace Pims.Core.Test
         /// <returns></returns>
         public static Entity.PimsDispositionChecklistItem CreateDispositionChecklistItem(this PimsContext context, long? id = null, long? dispositionFileId = null)
         {
-            var statusType = context.PimsDspChklstItemStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find checklist item status type.");
+            var statusType = context.PimsChklstItemStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find checklist item status type.");
             var itemType = context.PimsDspChklstItemTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find checklist item type.");
             var checklistItem = EntityHelper.CreateDispositionChecklistItem(id: id, dispositionFileId: dispositionFileId, statusType: statusType, itemType: itemType);
             context.PimsDispositionChecklistItems.Add(checklistItem);

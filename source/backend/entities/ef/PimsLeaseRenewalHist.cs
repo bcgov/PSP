@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_ACQUISITION_CHECKLIST_ITEM_HIST")]
-[Index("AcquisitionChecklistItemHistId", "EndDateHist", Name = "PIMS_ACQCKI_H_UK", IsUnique = true)]
-public partial class PimsAcquisitionChecklistItemHist
+[Table("PIMS_LEASE_RENEWAL_HIST")]
+[Index("LeaseRenewalHistId", "EndDateHist", Name = "PIMS_LSRNWL_H_UK", IsUnique = true)]
+public partial class PimsLeaseRenewalHist
 {
     [Key]
-    [Column("_ACQUISITION_CHECKLIST_ITEM_HIST_ID")]
-    public long AcquisitionChecklistItemHistId { get; set; }
+    [Column("_LEASE_RENEWAL_HIST_ID")]
+    public long LeaseRenewalHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,20 +20,24 @@ public partial class PimsAcquisitionChecklistItemHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("ACQUISITION_CHECKLIST_ITEM_ID")]
-    public long AcquisitionChecklistItemId { get; set; }
+    [Column("LEASE_RENEWAL_ID")]
+    public long LeaseRenewalId { get; set; }
 
-    [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    [Column("LEASE_ID")]
+    public long LeaseId { get; set; }
 
-    [Column("ACQ_CHKLST_ITEM_TYPE_CODE")]
-    [StringLength(20)]
-    public string AcqChklstItemTypeCode { get; set; }
+    [Column("COMMENCEMENT_DT", TypeName = "datetime")]
+    public DateTime? CommencementDt { get; set; }
 
-    [Required]
-    [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
-    [StringLength(20)]
-    public string ChklstItemStatusTypeCode { get; set; }
+    [Column("EXPIRY_DT", TypeName = "datetime")]
+    public DateTime? ExpiryDt { get; set; }
+
+    [Column("IS_EXERCISED")]
+    public bool? IsExercised { get; set; }
+
+    [Column("RENEWAL_NOTE")]
+    [StringLength(2000)]
+    public string RenewalNote { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

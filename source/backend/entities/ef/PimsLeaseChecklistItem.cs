@@ -10,7 +10,7 @@ namespace Pims.Dal.Entities;
 /// Table that contains the lease &amp; license checklist items.
 /// </summary>
 [Table("PIMS_LEASE_CHECKLIST_ITEM")]
-[Index("LeaseChklstItemStatusTypeCode", Name = "LCHKLI_LEASE_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
+[Index("ChklstItemStatusTypeCode", Name = "LCHKLI_LEASE_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
 [Index("LeaseChklstItemTypeCode", Name = "LCHKLI_LEASE_CHKLST_ITEM_TYPE_CODE_IDX")]
 [Index("LeaseId", Name = "LCHKLI_LEASE_ID_IDX")]
 [Index("LeaseId", "LeaseChklstItemTypeCode", Name = "LCHKLI_LEASE_ID_UK", IsUnique = true)]
@@ -38,12 +38,12 @@ public partial class PimsLeaseChecklistItem
     public string LeaseChklstItemTypeCode { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_LEASE_CHKLST_ITEM_STATUS_TYPE table.
+    /// Foreign key to the PIMS_CHKLST_ITEM_STATUS_TYPE table.
     /// </summary>
     [Required]
-    [Column("LEASE_CHKLST_ITEM_STATUS_TYPE_CODE")]
+    [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string LeaseChklstItemStatusTypeCode { get; set; }
+    public string ChklstItemStatusTypeCode { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -135,13 +135,13 @@ public partial class PimsLeaseChecklistItem
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    [ForeignKey("ChklstItemStatusTypeCode")]
+    [InverseProperty("PimsLeaseChecklistItems")]
+    public virtual PimsChklstItemStatusType ChklstItemStatusTypeCodeNavigation { get; set; }
+
     [ForeignKey("LeaseId")]
     [InverseProperty("PimsLeaseChecklistItems")]
     public virtual PimsLease Lease { get; set; }
-
-    [ForeignKey("LeaseChklstItemStatusTypeCode")]
-    [InverseProperty("PimsLeaseChecklistItems")]
-    public virtual PimsLeaseChklstItemStatusType LeaseChklstItemStatusTypeCodeNavigation { get; set; }
 
     [ForeignKey("LeaseChklstItemTypeCode")]
     [InverseProperty("PimsLeaseChecklistItems")]
