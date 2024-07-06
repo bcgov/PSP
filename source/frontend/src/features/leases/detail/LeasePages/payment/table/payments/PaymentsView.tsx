@@ -1,4 +1,3 @@
-import { round } from 'lodash';
 import { useMemo } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -8,7 +7,6 @@ import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableProps } from '@/components/Table';
 import Claims from '@/constants/claims';
 import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
-import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 
 import {
   defaultFormLeasePayment,
@@ -40,9 +38,6 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
   isReceivable,
   period,
 }) => {
-  const { getSystemConstant } = useSystemConstants();
-  const gstConstant = getSystemConstant(SystemConstants.GST);
-  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
   const variablePaymentColumns = getLeaseVariablePeriodColumns();
   const variablePaymentData: FormLeasePeriodWithCategory[] = [
     { category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE, ...period },
@@ -52,7 +47,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
       isGstEligible: period?.isAdditionalRentGstEligible,
       paymentAmount: period?.additionalRentPaymentAmount ?? 0,
       leasePmtFreqTypeCode: period?.additionalRentFreqTypeCode,
-      gstAmount: round(+period?.additionalRentPaymentAmount * (gstDecimal / 100), 2),
+      gstAmount: period.additionalRentGstAmount,
     },
     {
       category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL,
@@ -60,7 +55,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
       isGstEligible: period?.isVariableRentGstEligible,
       paymentAmount: period?.variableRentPaymentAmount ?? 0,
       leasePmtFreqTypeCode: period?.variableRentFreqTypeCode,
-      gstAmount: round(+period?.variableRentPaymentAmount * (gstDecimal / 100), 2),
+      gstAmount: period.variableRentGstAmount,
     },
   ];
   const columns = useMemo(

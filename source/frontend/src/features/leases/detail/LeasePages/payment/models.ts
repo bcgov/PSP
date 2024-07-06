@@ -4,7 +4,7 @@ import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Conce
 import { ApiGen_Concepts_Payment } from '@/models/api/generated/ApiGen_Concepts_Payment';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { isValidIsoDateTime } from '@/utils';
+import { isValidIsoDateTime, round } from '@/utils';
 import { stringToNumber, stringToNumberOrNull } from '@/utils/formUtils';
 
 import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from './../../../../../models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
@@ -24,6 +24,8 @@ export class FormLeasePeriod {
   additionalRentPaymentAmount: NumberFieldValue = '';
   variableRentPaymentAmount: NumberFieldValue = '';
   gstAmount: NumberFieldValue = '';
+  additionalRentGstAmount: NumberFieldValue = '';
+  variableRentGstAmount: NumberFieldValue = '';
   paymentDueDateStr = '';
   paymentNote = '';
   isGstEligible?: boolean;
@@ -56,7 +58,17 @@ export class FormLeasePeriod {
       variableRentPaymentAmount: stringToNumberOrNull(formLeasePeriod.variableRentPaymentAmount),
       gstAmount: stringToNumberOrNull(
         formLeasePeriod.isGstEligible && gstConstant !== undefined
-          ? (formLeasePeriod.paymentAmount as number) * (gstConstant / 100)
+          ? round((formLeasePeriod.paymentAmount as number) * (gstConstant / 100))
+          : null,
+      ),
+      additionalRentGstAmount: stringToNumberOrNull(
+        formLeasePeriod.isAdditionalRentGstEligible && gstConstant !== undefined
+          ? round((formLeasePeriod.additionalRentPaymentAmount as number) * (gstConstant / 100))
+          : null,
+      ),
+      variableRentGstAmount: stringToNumberOrNull(
+        formLeasePeriod.isVariableRentGstEligible && gstConstant !== undefined
+          ? round((formLeasePeriod.variableRentPaymentAmount as number) * (gstConstant / 100))
           : null,
       ),
       leasePmtFreqTypeCode: formLeasePeriod.leasePmtFreqTypeCode?.id
@@ -88,6 +100,8 @@ export class FormLeasePeriod {
       renewalDate: isValidIsoDateTime(apiLeasePeriod.renewalDate) ? apiLeasePeriod.renewalDate : '',
       paymentAmount: apiLeasePeriod.paymentAmount ?? '',
       gstAmount: apiLeasePeriod.gstAmount ?? '',
+      additionalRentGstAmount: apiLeasePeriod.additionalRentGstAmount ?? '',
+      variableRentGstAmount: apiLeasePeriod.variableRentGstAmount ?? '',
       paymentDueDateStr: apiLeasePeriod.paymentDueDateStr ?? '',
       paymentNote: apiLeasePeriod.paymentNote ?? '',
       payments:
@@ -117,6 +131,8 @@ export const defaultFormLeasePeriod: FormLeasePeriod = {
   variableRentPaymentAmount: '',
   additionalRentPaymentAmount: '',
   gstAmount: '',
+  additionalRentGstAmount: '',
+  variableRentGstAmount: '',
   paymentDueDateStr: '',
   paymentNote: '',
   isGstEligible: false,

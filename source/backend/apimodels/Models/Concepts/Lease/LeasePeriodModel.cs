@@ -27,6 +27,16 @@ namespace Pims.Api.Models.Concepts.Lease
         public decimal? GstAmount { get; set; }
 
         /// <summary>
+        /// get/set - The stored calculated additional gst amount based on the total payment and the system gst constant.
+        /// </summary>
+        public decimal? AdditionalRentGstAmount { get; set; }
+
+        /// <summary>
+        /// get/set - The stored calculated variable gst amount based on the total payment and the system gst constant.
+        /// </summary>
+        public decimal? VariableRentGstAmount { get; set; }
+
+        /// <summary>
         /// get/set - The expected payment amount of the period, less GST.
         /// </summary>
         public decimal? PaymentAmount { get; set; }

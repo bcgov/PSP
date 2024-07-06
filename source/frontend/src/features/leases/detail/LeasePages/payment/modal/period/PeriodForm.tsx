@@ -19,7 +19,6 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import * as API from '@/constants/API';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 

@@ -63,17 +63,13 @@ namespace Pims.Api.Services
                 throw new InvalidOperationException();
             }
             decimal? expectedTotal;
-            decimal gstMultiplier;
-            decimal gstDecimal = GetGstDecimal();
             switch (leasePaymentCategoryType)
             {
                 case LeasePaymentCategoryTypes.VBL:
-                    gstMultiplier = parent.IsVblRentSubjectToGst == true ? (1 + (gstDecimal / 100)) : 1.0m;
-                    expectedTotal = (parent.VblRentAgreedPmt ?? 0) * gstMultiplier;
+                    expectedTotal = (parent.VblRentAgreedPmt ?? 0) + (parent.VblRentGstAmount ?? 0);
                     break;
                 case LeasePaymentCategoryTypes.ADDL:
-                    gstMultiplier = parent.IsAddlRentSubjectToGst == true ? (1 + (gstDecimal / 100)) : 1.0m;
-                    expectedTotal = (parent.AddlRentAgreedPmt ?? 0) * gstMultiplier;
+                    expectedTotal = (parent.AddlRentAgreedPmt ?? 0) + (parent.AddlRentGstAmount ?? 0);
                     break;
                 case LeasePaymentCategoryTypes.BASE:
                     expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
@@ -101,16 +97,6 @@ namespace Pims.Api.Services
             {
                 throw new InvalidOperationException("Invalid payment value provided");
             }
-        }
-
-        private decimal GetGstDecimal()
-        {
-            var constants = _systemConstantRepository.GetAll();
-            if (!decimal.TryParse(constants.FirstOrDefault(c => c.StaticVariableName == "GST")?.StaticVariableValue, out decimal gstConstant))
-            {
-                throw new InvalidOperationException("Unable to determine GST constant");
-            }
-            return gstConstant;
         }
 
         /// <summary>
