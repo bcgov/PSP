@@ -42,7 +42,7 @@ const onEdit = vi.fn();
 const onDelete = vi.fn();
 const onSave = vi.fn();
 
-describe('PaymentsForm component', () => {
+describe('PaymentsView component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<IPaymentsViewProps> & {

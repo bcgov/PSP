@@ -10,6 +10,7 @@ import { IContactSearchResult } from '@/interfaces';
 import {
   act,
   getAllByRole as getAllByRoleBase,
+  getByText,
   renderAsync,
   RenderOptions,
   userEvent,
@@ -18,6 +19,8 @@ import { createRef } from 'react';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './PaymentPeriodsView';
 import { defaultFormLeasePeriod, FormLeasePayment } from '../../models';
+import { LEASE_PAYMENT_CATEGORY_TYPES } from '@/constants/API';
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -329,6 +332,124 @@ describe('PeriodsForm component', () => {
     expect(await findByText('last payment received: Jan 1, 2021'));
   });
 
+  it('displays the periods subtable for variable periods', async () => {
+    const {
+      component: { findByText, getByTestId },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        periods: [
+          {
+            ...defaultTestFormLeasePeriod,
+            isTermExercised: true,
+            isVariable: 'true',
+            payments: [
+              { amountTotal: 1, receivedDate: '2020-01-01T18:00' },
+              { amountTotal: 1, receivedDate: '2021-01-01T18:00' },
+            ] as FormLeasePayment[],
+          },
+        ],
+      },
+    });
+    await act(async () => {
+      await userEvent.click(getByTestId('table-row-expander-1'));
+    });
+    expect(await findByText('Base Rent'));
+    expect(await findByText('Additional Rent'));
+    expect(await findByText('Variable Rent'));
+  });
+
+  it('displays the payments summed into the correct categories', async () => {
+    const {
+      component: { findByText, getByTestId, container },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        periods: [
+          {
+            ...defaultTestFormLeasePeriod,
+            isTermExercised: true,
+            isVariable: 'true',
+            paymentAmount: 1,
+            additionalRentPaymentAmount: 2,
+            variableRentPaymentAmount: 3,
+            isAdditionalRentGstEligible: true,
+            isGstEligible: true,
+            isVariableRentGstEligible: true,
+            variableRentGstAmount: 0.15,
+            additionalRentGstAmount: 0.1,
+            gstAmount: 0.05,
+            payments: [
+              {
+                amountTotal: 2,
+                receivedDate: '2020-01-01T18:00',
+                leasePaymentCategoryTypeCode: {
+                  id: ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE,
+                },
+              },
+              {
+                amountTotal: 3,
+                receivedDate: '2020-01-01T18:00',
+                leasePaymentCategoryTypeCode: {
+                  id: ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL,
+                },
+              },
+              {
+                amountTotal: 4,
+                receivedDate: '2020-01-01T18:00',
+                leasePaymentCategoryTypeCode: {
+                  id: ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL,
+                },
+              },
+            ] as FormLeasePayment[],
+          },
+        ],
+      },
+    });
+    await act(async () => {
+      await userEvent.click(getByTestId('table-row-expander-1'));
+    });
+    const rows = container.querySelectorAll('.table .tbody .tr-wrapper');
+    getByText(rows[1] as HTMLElement, '$1.00');
+    getByText(rows[1] as HTMLElement, '$0.05');
+    getByText(rows[1] as HTMLElement, '$2.00');
+
+    getByText(rows[2] as HTMLElement, '$2.00');
+    getByText(rows[2] as HTMLElement, '$0.10');
+    getByText(rows[2] as HTMLElement, '$3.00');
+
+    getByText(rows[3] as HTMLElement, '$3.00');
+    getByText(rows[3] as HTMLElement, '$0.15');
+    getByText(rows[3] as HTMLElement, '$4.00');
+  });
+
+  it('Does not display variable payment fields for non-variable periods', async () => {
+    const {
+      component: { queryByText, getByTestId },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        periods: [
+          {
+            ...defaultTestFormLeasePeriod,
+            isTermExercised: true,
+            isVariable: 'false',
+            payments: [
+              { amountTotal: 1, receivedDate: '2020-01-01T18:00' },
+              { amountTotal: 1, receivedDate: '2021-01-01T18:00' },
+            ] as FormLeasePayment[],
+          },
+        ],
+      },
+    });
+    await act(async () => {
+      await userEvent.click(getByTestId('table-row-expander-1'));
+    });
+    expect(queryByText('Base Rent'));
+    expect(queryByText('Additional Rent'));
+    expect(queryByText('Variable Rent'));
+  });
+
   it('renders a delete icon when term has no payments and is not exercised', async () => {
     const {
       component: { getAllByTitle, getAllByRole },
@@ -399,6 +520,49 @@ describe('PeriodsForm component', () => {
     expect(queryByTitle('delete period')).toBeNull();
     expect(tooltip).toBeVisible();
     expect(tooltip.id).toBe('no-delete-tooltip-period-1');
+  });
+
+  it('renders a tooltip for variable periods', async () => {
+    const {
+      component: { getByTitle },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        periods: [
+          {
+            ...defaultTestFormLeasePeriod,
+            isTermExercised: false,
+            payments: [],
+            isVariable: 'true',
+          },
+        ],
+      },
+    });
+
+    const tooltip = getByTitle('Variable Payments');
+    expect(tooltip).not.toBeNull();
+  });
+
+  it('renders a tooltip and text for flexible periods', async () => {
+    const {
+      component: { getByTitle, getByText },
+    } = await setup({
+      initialValues: {
+        ...new LeaseFormModel(),
+        periods: [
+          {
+            ...defaultTestFormLeasePeriod,
+            isTermExercised: false,
+            payments: [],
+            isFlexible: 'true',
+          },
+        ],
+      },
+    });
+
+    const tooltip = getByTitle('Flexible Period');
+    expect(tooltip).not.toBeNull();
+    expect(getByText('(anticipated)', { exact: false })).toBeVisible();
   });
 
   it('does not render generation button if missing permissions', async () => {

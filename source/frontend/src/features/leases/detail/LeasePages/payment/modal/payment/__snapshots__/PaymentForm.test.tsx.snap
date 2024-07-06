@@ -262,56 +262,6 @@ exports[`PaymentForm component > renders as expected 1`] = `
         >
           <label
             class="form-label"
-            for="input-leasePaymentCategoryTypeCode.id"
-          >
-            <span
-              class="control-label"
-            >
-              Payment category:
-            </span>
-             
-          </label>
-          <select
-            class="form-select form-control"
-            id="input-leasePaymentCategoryTypeCode.id"
-            name="leasePaymentCategoryTypeCode.id"
-          >
-            <option
-              class="option"
-              data-testid="select-option-BASE"
-              value="BASE"
-            >
-              Base Rent
-            </option>
-            <option
-              class="option"
-              data-testid="select-option-ADDL"
-              value="ADDL"
-            >
-              Additional Rent
-            </option>
-            <option
-              class="option"
-              data-testid="select-option-VBL"
-              value="VBL"
-            >
-              Variable Rent
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div
-      class="row"
-    >
-      <div
-        class="col-md-6"
-      >
-        <div
-          class="form-group"
-        >
-          <label
-            class="form-label"
             for="input-amountTotal"
           >
             Total received ($) 
@@ -679,56 +629,6 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
               value="POST"
             >
               Post-dated cheque
-            </option>
-          </select>
-        </div>
-      </div>
-    </div>
-    <div
-      class="row"
-    >
-      <div
-        class="col-md-6"
-      >
-        <div
-          class="form-group"
-        >
-          <label
-            class="form-label"
-            for="input-leasePaymentCategoryTypeCode.id"
-          >
-            <span
-              class="control-label"
-            >
-              Payment category:
-            </span>
-             
-          </label>
-          <select
-            class="form-select form-control"
-            id="input-leasePaymentCategoryTypeCode.id"
-            name="leasePaymentCategoryTypeCode.id"
-          >
-            <option
-              class="option"
-              data-testid="select-option-BASE"
-              value="BASE"
-            >
-              Base Rent
-            </option>
-            <option
-              class="option"
-              data-testid="select-option-ADDL"
-              value="ADDL"
-            >
-              Additional Rent
-            </option>
-            <option
-              class="option"
-              data-testid="select-option-VBL"
-              value="VBL"
-            >
-              Variable Rent
             </option>
           </select>
         </div>

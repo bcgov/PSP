@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PaymentsForm component > renders as expected 1`] = `
+exports[`PaymentsView component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -269,7 +269,7 @@ exports[`PaymentsForm component > renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`PaymentsForm component > renders with data as expected 1`] = `
+exports[`PaymentsView component > renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -538,7 +538,7 @@ exports[`PaymentsForm component > renders with data as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`TermsPaymentsContainer component > renders as expected 1`] = `
+exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -818,7 +818,7 @@ exports[`TermsPaymentsContainer component > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1095,7 +1095,7 @@ exports[`TermsPaymentsContainer component > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
@@ -1266,7 +1266,7 @@ exports[`TermsPaymentsContainer component > renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`TermsPaymentsContainer component > renders with data as expected 1`] = `
+exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -1546,7 +1546,7 @@ exports[`TermsPaymentsContainer component > renders with data as expected 1`] = 
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1823,7 +1823,7 @@ exports[`TermsPaymentsContainer component > renders with data as expected 1`] = 
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div

@@ -81,7 +81,7 @@ export class FormLeasePeriod {
         ? formLeasePeriod.variableRentFreqTypeCode
         : null,
       statusTypeCode: formLeasePeriod.statusTypeCode?.id ? formLeasePeriod.statusTypeCode : null,
-      payments: formLeasePeriod.payments.map(payment => FormLeasePayment.toApi(payment)),
+      payments: formLeasePeriod.payments?.map(payment => FormLeasePayment.toApi(payment)),
       isGstEligible: formLeasePeriod.isGstEligible ?? false,
       isAdditionalRentGstEligible: formLeasePeriod.isAdditionalRentGstEligible,
       isVariableRentGstEligible: formLeasePeriod.isVariableRentGstEligible,
@@ -186,24 +186,24 @@ export class FormLeasePayment {
 
   public static fromApi(apiLeasePayment: ApiGen_Concepts_Payment): FormLeasePayment {
     const leasePayment = new FormLeasePayment();
-    leasePayment.id = apiLeasePayment.id ?? undefined;
-    leasePayment.leasePeriodId = apiLeasePayment.leasePeriodId;
-    leasePayment.leasePaymentMethodType = apiLeasePayment.leasePaymentMethodType ?? null;
+    leasePayment.id = apiLeasePayment?.id ?? undefined;
+    leasePayment.leasePeriodId = apiLeasePayment?.leasePeriodId;
+    leasePayment.leasePaymentMethodType = apiLeasePayment?.leasePaymentMethodType ?? null;
     leasePayment.receivedDate = isValidIsoDateTime(apiLeasePayment.receivedDate)
-      ? apiLeasePayment.receivedDate
+      ? apiLeasePayment?.receivedDate
       : '';
-    leasePayment.amountPreTax = apiLeasePayment.amountPreTax;
-    leasePayment.amountPst = apiLeasePayment.amountPst ?? '';
-    leasePayment.amountGst = apiLeasePayment.amountGst ?? '';
-    leasePayment.amountTotal = apiLeasePayment.amountTotal ?? '';
-    leasePayment.note = apiLeasePayment.note ?? undefined;
+    leasePayment.amountPreTax = apiLeasePayment?.amountPreTax;
+    leasePayment.amountPst = apiLeasePayment?.amountPst ?? '';
+    leasePayment.amountGst = apiLeasePayment?.amountGst ?? '';
+    leasePayment.amountTotal = apiLeasePayment?.amountTotal ?? '';
+    leasePayment.note = apiLeasePayment?.note ?? undefined;
     leasePayment.leasePaymentStatusTypeCode =
-      apiLeasePayment.leasePaymentStatusTypeCode ?? undefined;
-    leasePayment.leasePaymentCategoryTypeCode = apiLeasePayment.leasePaymentCategoryTypeCode ?? {
+      apiLeasePayment?.leasePaymentStatusTypeCode ?? undefined;
+    leasePayment.leasePaymentCategoryTypeCode = apiLeasePayment?.leasePaymentCategoryTypeCode ?? {
       ...defaultTypeCode(),
       id: ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE,
     };
-    leasePayment.rowVersion = apiLeasePayment.rowVersion ?? undefined;
+    leasePayment.rowVersion = apiLeasePayment?.rowVersion ?? undefined;
     return leasePayment;
   }
 }

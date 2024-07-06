@@ -13,13 +13,11 @@ namespace Pims.Api.Services
     {
         private readonly ILeasePeriodRepository _leasePeriodRepository;
         private readonly ILeasePaymentRepository _leasePaymentRepository;
-        private readonly ISystemConstantRepository _systemConstantRepository;
 
-        public LeasePaymentService(ILeasePeriodRepository leasePeriodRepository, ILeasePaymentRepository leasePaymentRepository, ISystemConstantRepository systemConstantRepository, ClaimsPrincipal user)
+        public LeasePaymentService(ILeasePeriodRepository leasePeriodRepository, ILeasePaymentRepository leasePaymentRepository, ClaimsPrincipal user)
         {
             _leasePeriodRepository = leasePeriodRepository;
             _leasePaymentRepository = leasePaymentRepository;
-            _systemConstantRepository = systemConstantRepository;
         }
 
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)

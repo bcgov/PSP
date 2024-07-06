@@ -47,7 +47,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
       isGstEligible: period?.isAdditionalRentGstEligible,
       paymentAmount: period?.additionalRentPaymentAmount ?? 0,
       leasePmtFreqTypeCode: period?.additionalRentFreqTypeCode,
-      gstAmount: period.additionalRentGstAmount,
+      gstAmount: period?.additionalRentGstAmount,
     },
     {
       category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL,
@@ -55,7 +55,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
       isGstEligible: period?.isVariableRentGstEligible,
       paymentAmount: period?.variableRentPaymentAmount ?? 0,
       leasePmtFreqTypeCode: period?.variableRentFreqTypeCode,
-      gstAmount: period.variableRentGstAmount,
+      gstAmount: period?.variableRentGstAmount,
     },
   ];
   const columns = useMemo(

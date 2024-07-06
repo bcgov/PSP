@@ -577,7 +577,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-label"
             for="input-paymentAmount"
           >
-            Agreed payment ($): 
+            Agreed payment ($) 
           </label>
           <div
             class="input-tooltip-wrapper"
@@ -1335,7 +1335,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-label"
             for="input-paymentAmount"
           >
-            Agreed payment ($): 
+            Agreed payment ($) 
           </label>
           <div
             class="input-tooltip-wrapper"

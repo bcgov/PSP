@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PaymentsForm component > renders as expected 1`] = `
+exports[`PaymentsView component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -269,7 +269,7 @@ exports[`PaymentsForm component > renders as expected 1`] = `
 </DocumentFragment>
 `;
 
-exports[`PaymentsForm component > renders with data as expected 1`] = `
+exports[`PaymentsView component > renders with data as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"

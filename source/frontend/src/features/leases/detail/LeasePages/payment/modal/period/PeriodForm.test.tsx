@@ -3,7 +3,14 @@ import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, act } from '@/utils/test-utils';
+import {
+  fillInput,
+  render,
+  RenderOptions,
+  act,
+  userEvent,
+  selectOptions,
+} from '@/utils/test-utils';
 
 import { FormLeasePeriod, defaultFormLeasePeriod } from '../../models';
 import PeriodForm, { IPeriodFormProps } from './PeriodForm';
@@ -47,6 +54,80 @@ describe('PeriodForm component', () => {
   it('renders with data as expected', async () => {
     const { asFragment } = setup({ initialValues: { ...defaultFormLeasePeriod } });
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('does not display variable period options if fixed period selected', async () => {
+    const { queryByText, getByTestId } = setup({});
+
+    const variableButton = getByTestId('radio-isvariable-predetermined');
+    await act(async () => {
+      userEvent.click(variableButton);
+    });
+
+    expect(queryByText('Add Base Rent')).toBeNull();
+    expect(queryByText('Add Additional Rent')).toBeNull();
+    expect(queryByText('Add Variable Rent')).toBeNull();
+  });
+
+  it('displays variable period options if variable period selected', async () => {
+    const { getByText, getByTestId } = setup({});
+
+    const variableButton = getByTestId('radio-isvariable-variable');
+    await act(async () => {
+      userEvent.click(variableButton);
+    });
+
+    expect(getByText('Add Base Rent')).toBeVisible();
+    expect(getByText('Add Additional Rent')).toBeVisible();
+    expect(getByText('Add Variable Rent')).toBeVisible();
+  });
+
+  it('Does not allow variability to be modified when editing', async () => {
+    const { getByTestId } = setup({
+      initialValues: { ...defaultFormLeasePeriod, id: 1 },
+    });
+
+    const variableButton = getByTestId('radio-isvariable-variable');
+    await act(async () => {
+      userEvent.click(variableButton);
+    });
+
+    expect(variableButton).toBeDisabled();
+  });
+
+  it('displays expected fields when period duration of fixed is selected', async () => {
+    const { getByText } = setup({});
+
+    await act(async () => {
+      selectOptions('isFlexible', 'false');
+    });
+
+    expect(getByText('Start date:')).toBeVisible();
+    expect(getByText('End date:')).toBeVisible();
+  });
+
+  it('displays expected fields when period duration of fixed is selected', async () => {
+    const { getByText } = setup({});
+
+    await act(async () => {
+      selectOptions('isFlexible', 'true');
+    });
+
+    expect(getByText('Start date:')).toBeVisible();
+    expect(getByText('End date (Anticipated):')).toBeVisible();
+  });
+
+  it('displays expected fields when period duration of flexible is selected', async () => {
+    const { getByText, getByTestId } = setup({});
+
+    const variableButton = getByTestId('radio-isvariable-variable');
+    await act(async () => {
+      userEvent.click(variableButton);
+    });
+
+    expect(getByText('Add Base Rent')).toBeVisible();
+    expect(getByText('Add Additional Rent')).toBeVisible();
+    expect(getByText('Add Variable Rent')).toBeVisible();
   });
 
   it('validates that the end date must be after the start date', async () => {

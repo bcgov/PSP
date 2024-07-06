@@ -81,7 +81,7 @@ const TermsView = (props: IPeriodPaymentsViewProps) => {
   );
 };
 
-describe('TermsPaymentsContainer component', () => {
+describe('PeriodsPaymentsContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<LeasePageProps<IPeriodPaymentsViewProps>> & {

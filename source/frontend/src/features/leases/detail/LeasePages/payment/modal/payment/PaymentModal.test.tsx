@@ -15,7 +15,7 @@ import {
   getByName,
 } from '@/utils/test-utils';
 
-import { defaultFormLeasePayment } from '../../models';
+import { FormLeasePeriod, defaultFormLeasePayment, defaultFormLeasePeriod } from '../../models';
 import { IPaymentModalProps, PaymentModal } from './PaymentModal';
 
 const history = createMemoryHistory();
@@ -35,7 +35,13 @@ describe('PaymentModal component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <PaymentModal onSave={onSave} onCancel={onCancel} displayModal={true} periods={[]} />,
+      <PaymentModal
+        onSave={onSave}
+        onCancel={onCancel}
+        displayModal={true}
+        periods={renderOptions.periods ?? []}
+        initialValues={renderOptions.initialValues ?? {}}
+      />,
       {
         ...renderOptions,
         history,
@@ -67,8 +73,11 @@ describe('PaymentModal component', () => {
   });
 
   it('submits all filled out fields as expected', async () => {
-    const { component } = await setup({});
-    const { findByDisplayValue, getByText, container } = component;
+    const { component } = await setup({
+      initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1 },
+      periods: [{ ...FormLeasePeriod.toApi(defaultFormLeasePeriod), id: 1, isVariable: true }],
+    });
+    const { getByText } = component;
 
     await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
     await act(async () =>
@@ -89,14 +98,30 @@ describe('PaymentModal component', () => {
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
       receivedDate: '2020-01-01',
+      leasePeriodId: 1,
+      id: 0,
+      note: '',
+      amountPst: '',
       amountTotal: 1200,
       amountPreTax: 1200,
       amountGst: '',
       leasePaymentCategoryTypeCode: {
         id: 'BASE',
+        description: '',
+        displayOrder: null,
+        isDisabled: false,
       },
       leasePaymentMethodType: {
         id: 'CHEQ',
+        isDisabled: false,
+        description: '',
+        displayOrder: null,
+      },
+      leasePaymentStatusTypeCode: {
+        description: '',
+        displayOrder: null,
+        id: '',
+        isDisabled: false,
       },
     });
   });

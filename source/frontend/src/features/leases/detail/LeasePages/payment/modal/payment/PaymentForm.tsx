@@ -37,7 +37,7 @@ export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPayme
     );
   }
 
-  const currentPeriod = periods.find(t => t.id === initialValues.leasePeriodId);
+  const currentPeriod = periods.find(t => t.id === initialValues?.leasePeriodId);
 
   return (
     <Formik<FormLeasePayment>
@@ -71,7 +71,7 @@ export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPayme
       <PaymentFormContent
         isReceived={!!isReceived}
         isGstEligible={!!isGstEligible}
-        isVariable={currentPeriod.isVariable}
+        isVariable={currentPeriod?.isVariable}
       />
     </Formik>
   );

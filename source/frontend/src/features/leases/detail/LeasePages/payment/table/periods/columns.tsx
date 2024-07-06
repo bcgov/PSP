@@ -34,9 +34,9 @@ function getPeriodName({ row: { index, original } }: CellProps<FormLeasePeriod, 
   return (
     <InlineFlexDiv className="align-items-center">
       <b>{stringToFragment(`Period ${index + 1}`)}</b>&nbsp;
-      {original.isVariable === 'true' && (
+      {original?.isVariable === 'true' && (
         <TooltipWrapper tooltipId="variable-period-tooltip" tooltip="Variable Payments">
-          <StyledRefreshIcon size={16} />
+          <StyledRefreshIcon size={16} title="Variable Payments" />
         </TooltipWrapper>
       )}
     </InlineFlexDiv>
@@ -50,7 +50,7 @@ function startAndEndDate({ row: { original } }: CellProps<FormLeasePeriod, strin
       <StyledBreak />
       <i>(anticipated)</i>
       <TooltipWrapper tooltipId="flexible-period-icon" tooltip="Flexible Period">
-        <StyledFlexibleIcon size={24} />
+        <StyledFlexibleIcon size={24} title="Flexible Period" />
       </TooltipWrapper>
     </>
   ) : (
