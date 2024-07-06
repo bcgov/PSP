@@ -55,11 +55,15 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
             />
           </HeaderField>
           <Row>
-            <HeaderLabelCol label="Lease Start:" labelWidth="3" />
+            <HeaderLabelCol
+              label="Commencement:"
+              labelWidth="3"
+              tooltip="The start date defined in the agreement."
+            />
             <HeaderContentCol contentWidth="3">
               {prettyFormatDate(lease?.startDate)}
             </HeaderContentCol>
-            <HeaderLabelCol label="Expiry:" />
+            <HeaderLabelCol label="Expiry:" tooltip="The end date specified in the agreement." />
             <HeaderContentCol>
               <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
             </HeaderContentCol>
