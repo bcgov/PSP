@@ -417,7 +417,12 @@ export const getLeasePeriodColumns = ({
       Cell: renderActualTotal,
     },
     {
-      Header: 'Exercised?',
+      Header: () => (
+        <>
+          Exercised?
+          <TooltipIcon toolTipId="exercisedTooltip" toolTip="Exercised period to add payments." />
+        </>
+      ),
       align: 'left',
       accessor: 'isTermExercised',
       maxWidth: 40,

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
+import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
 import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -223,9 +223,9 @@ const StyledFormWrapper = styled.div`
   background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
-const StyledSubdivideConsolidateIcon = styled(ConsolidateSubdivideIcon)`
-  width: 2.6rem;
-  height: 2.6rem;
+const StyledSubdivideConsolidateIcon = styled(SubdivisionIcon)`
+  width: 3rem;
+  height: 3rem;
   margin-right: 1rem;
   fill: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;
