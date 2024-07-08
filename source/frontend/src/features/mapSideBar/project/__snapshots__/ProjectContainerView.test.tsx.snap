@@ -195,10 +195,13 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
 }
 
 .c0 {
+  padding: 1.6rem;
+}
+
+.c0.expanded {
   min-width: 90rem;
   height: 100%;
   position: relative;
-  padding: 1.6rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -226,12 +229,13 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   flex: 1;
 }
 
-.c17 {
-  height: 100%;
+.c8 {
   width: 100%;
+  height: 100%;
+  display: contents;
 }
 
-.c8 {
+.c9 {
   position: relative;
 }
 
@@ -267,11 +271,6 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   line-height: 1.9;
 }
 
-.c10 {
-  font-weight: bold;
-  white-space: nowrap;
-}
-
 .c15 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
@@ -297,7 +296,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   padding-bottom: 1rem;
 }
 
-.c9 {
+.c10 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -356,7 +355,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
 }
 
 <div
-    class="c0"
+    class="c0 expanded"
   >
     <div
       class="row"
@@ -451,109 +450,109 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
       class="c8"
     >
       <div
-        class="c9 no-gutters row"
+        class="c9"
       >
         <div
-          class="col-7"
+          class="c10 no-gutters row"
         >
           <div
-            class="row"
+            class="col-7"
           >
             <div
-              class="pr-0 text-left col-3"
-            >
-              <label
-                class="c10"
-              >
-                Project:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              771 Project Cool A
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <label
-                class="c10"
-              >
-                MoTI region:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              South Coast Region
-            </div>
-          </div>
-        </div>
-        <div
-          class="col"
-        >
-          <div
-            class="c11"
-          >
-            <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="text-right col"
+                class="pr-0 text-left col-3"
               >
-                <span
-                  class="c12"
-                >
-                  <strong>
-                    Created: 
-                  </strong>
-                  Jan 31, 2023 by 
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon-userNameTooltip"
-                    id="userNameTooltip"
-                  >
-                    <strong>
-                      USER_B
-                    </strong>
-                  </span>
-                </span>
+                <strong>
+                  <label>
+                    Project:
+                  </label>
+                </strong>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                771 Project Cool A
               </div>
             </div>
             <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="text-right col"
+                class="pr-0 text-left col-3"
               >
-                <span
-                  class="c12"
-                >
-                  <strong>
-                    Updated: 
-                  </strong>
-                  Feb 1, 2023 by 
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon-userNameTooltip"
-                    id="userNameTooltip"
-                  >
-                    <strong>
-                      USER_A
-                    </strong>
-                  </span>
-                </span>
+                <strong>
+                  <label>
+                    MoTI Region:
+                  </label>
+                </strong>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                South Coast Region
               </div>
             </div>
+          </div>
+          <div
+            class="col"
+          >
             <div
-              class="c13"
+              class="c11"
             >
               <div
-                class="no-gutters justify-content-end align-items-end row"
+                class="no-gutters row"
+              >
+                <div
+                  class="text-right col"
+                >
+                  <span
+                    class="c12"
+                  >
+                    <strong>
+                      Created: 
+                    </strong>
+                    Jan 31, 2023 by 
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        USER_B
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="text-right col"
+                >
+                  <span
+                    class="c12"
+                  >
+                    <strong>
+                      Updated: 
+                    </strong>
+                    Feb 1, 2023 by 
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        USER_A
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="c13 no-gutters justify-content-end align-items-end row"
               >
                 <div
                   class="col"
@@ -594,10 +593,6 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="c16"
-    >
       <div
         class="c17"
       >
