@@ -6,5 +6,14 @@ namespace Pims.Core.Extensions
         {
             return val ? "Yes" : "No";
         }
+
+        public static string BoolToYesNoUnknown(this bool? val)
+        {
+            if(val == null)
+            {
+                return "Unknown";
+            }
+            return val.Value ? "Yes" : "No";
+        }
     }
 }
