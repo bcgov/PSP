@@ -4,6 +4,8 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import * as API from '@/constants/API';
+import { getConsultations } from '@/features/leases/add/ConsultationSubForm';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
@@ -11,6 +13,8 @@ import { LeaseFormModel } from '@/features/leases/models';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { isValidId } from '@/utils';
@@ -39,16 +43,22 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
 
   const mapMachine = useMapStateMachine();
 
+  const { getByType } = useLookupCodeHelpers();
+  const consultationTypes = getByType(API.CONSULTATION_TYPES);
+
+  // Not all consultations might be coming from the backend. Add the ones missing.
+
   const leaseId = lease?.id;
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     const exec = async () => {
       if (leaseId) {
         const lease = await getCompleteLease();
+        lease.consultations = getConsultations(lease, consultationTypes);
         formikRef?.current?.resetForm({ values: LeaseFormModel.fromApi(lease) });
       }
     };
     exec();
-  }, [getCompleteLease, leaseId, formikRef]);
+  }, [getCompleteLease, leaseId, formikRef, consultationTypes]);
 
   const afterSubmit = useCallback(
     async (updatedLease?: ApiGen_Concepts_Lease) => {
