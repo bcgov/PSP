@@ -215,6 +215,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c7 {
@@ -648,9 +649,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                 class="c3"
               >
                 Deposit due no later than:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"

@@ -367,6 +367,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c18 {
@@ -423,9 +424,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
               class="c2"
             >
               Status:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-status-field-tooltip"
@@ -543,9 +542,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
               class="c2"
             >
               Ministry project:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -817,9 +814,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
               class="c2"
             >
               Delivery date:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -937,9 +932,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
               class="c2"
             >
               Historical file number:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1839,9 +1832,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                   class="c2"
                 >
                   Other name:
-                  <span
-                    class="ml-2"
-                  >
+                  <span>
                     <span
                       class="tooltip-icon"
                       data-testid="tooltip-icon-section-field-tooltip"
@@ -2550,9 +2541,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                   class="c2"
                 >
                   Other name:
-                  <span
-                    class="ml-2"
-                  >
+                  <span>
                     <span
                       class="tooltip-icon"
                       data-testid="tooltip-icon-section-field-tooltip"
@@ -2632,9 +2621,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                   class="c2"
                 >
                   Registration number:
-                  <span
-                    class="ml-2"
-                  >
+                  <span>
                     <span
                       class="tooltip-icon"
                       data-testid="tooltip-icon-section-field-tooltip"

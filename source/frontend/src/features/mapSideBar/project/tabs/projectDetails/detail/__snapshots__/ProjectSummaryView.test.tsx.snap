@@ -42,6 +42,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
 
 .c5 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c7 {
