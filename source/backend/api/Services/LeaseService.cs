@@ -30,6 +30,7 @@ namespace Pims.Api.Services
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseTenantRepository _tenantRepository;
+        private readonly ILeaseRenewalRepository _renewalRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
@@ -45,6 +46,7 @@ namespace Pims.Api.Services
             IEntityNoteRepository entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseTenantRepository tenantRepository,
+            ILeaseRenewalRepository renewalRepository,
             IUserRepository userRepository,
             IPropertyService propertyService,
             ILookupRepository lookupRepository)
@@ -59,6 +61,7 @@ namespace Pims.Api.Services
             _propertyImprovementRepository = propertyImprovementRepository;
             _insuranceRepository = insuranceRepository;
             _tenantRepository = tenantRepository;
+            _renewalRepository = renewalRepository;
             _userRepository = userRepository;
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
@@ -226,6 +229,8 @@ namespace Pims.Api.Services
 
             _leaseRepository.UpdateLeaseConsultations(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseConsultations);
 
+            _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
+
             List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
@@ -239,6 +244,16 @@ namespace Pims.Api.Services
 
             _leaseRepository.CommitTransaction();
             return _leaseRepository.GetNoTracking(lease.LeaseId);
+        }
+
+        public IEnumerable<PimsLeaseRenewal> GetRenewalsByLeaseId(long leaseId)
+        {
+            _logger.LogInformation("Getting renewals on lease {leaseId}", leaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+
+            return _renewalRepository.GetByLeaseId(leaseId);
         }
 
         public IEnumerable<PimsLeaseChecklistItem> GetChecklistItems(long id)

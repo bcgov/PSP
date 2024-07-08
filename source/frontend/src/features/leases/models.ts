@@ -31,8 +31,8 @@ import { FormLeasePeriod } from './detail/LeasePages/payment/models';
 import { FormTenant } from './detail/LeasePages/tenant/models';
 
 export class FormLeaseRenewal {
-  id: number;
-  leaseId: number;
+  id = 0;
+  leaseId = 0;
   commencementDt: UtcIsoDateTime = '';
   expiryDt: UtcIsoDateTime = '';
   isExercised = false;
@@ -54,6 +54,7 @@ export class FormLeaseRenewal {
   }
 
   toApi(): ApiGen_Concepts_LeaseRenewal {
+    debugger;
     return {
       id: this.id,
       leaseId: this.leaseId,
@@ -223,7 +224,7 @@ export class LeaseFormModel {
       fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
-      renewalCount: 0,
+      renewalCount: formLease.renewals.length,
       ...getEmptyBaseAudit(formLease.rowVersion),
     };
   }

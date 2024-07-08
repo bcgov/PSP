@@ -100,6 +100,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.TerminationReason, src => src.TerminationReason)
                 .Map(dest => dest.PimsLeaseChecklistItems, src => src.FileChecklistItems)
                 .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
+                .Map(dest => dest.PimsLeaseRenewals, src => src.Renewals)
                 .IgnoreNullValues(true);
         }
     }

@@ -20,10 +20,12 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
   const { setModalContent, setDisplayModal } = useModalContext();
   console.log(values, setFieldValue);
 
+  const fieldName = 'renewals';
+
   return (
     <Section header="Renewal Option">
       <FieldArray
-        name="renewals"
+        name={fieldName}
         render={arrayHelpers => (
           <>
             {values.renewals.map((renewal, index) => (
@@ -33,24 +35,30 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                     <Row>
                       <Col xs="7">
                         <SectionField label="Excercised?" labelWidth="6" required>
-                          <YesNoSelect field="isExerciced" notNullable />
+                          <YesNoSelect field={`${fieldName}.${index}.isExercised`} notNullable />
                         </SectionField>
                       </Col>
                     </Row>
                     <Row>
                       <Col xs="7">
                         <SectionField label="Commencement" labelWidth="6" required>
-                          <FastDatePicker field="commencementDt" formikProps={formikProps} />
+                          <FastDatePicker
+                            field={`${fieldName}.${index}.commencementDt`}
+                            formikProps={formikProps}
+                          />
                         </SectionField>
                       </Col>
                       <Col>
                         <SectionField label="Expiry" labelWidth="4" required>
-                          <FastDatePicker field="expiryDt" formikProps={formikProps} />
+                          <FastDatePicker
+                            field={`${fieldName}.${index}.expiryDt`}
+                            formikProps={formikProps}
+                          />
                         </SectionField>
                       </Col>
                     </Row>
                     <SectionField label="Notes" contentWidth="12">
-                      <TextArea field="renewalNote" />
+                      <TextArea field={`${fieldName}.${index}.renewalNote`} />
                     </SectionField>
                   </Section>
                 </Col>
