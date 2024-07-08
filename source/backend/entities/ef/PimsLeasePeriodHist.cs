@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 [Table("PIMS_LEASE_PERIOD_HIST")]
-[Index("LeasePeriodHistId", "EndDateHist", Name = "PIMS_LSTERM_H_UK", IsUnique = true)]
+[Index("LeasePeriodHistId", "EndDateHist", Name = "PIMS_LSPERD_H_UK", IsUnique = true)]
 public partial class PimsLeasePeriodHist
 {
     [Key]
@@ -33,10 +33,6 @@ public partial class PimsLeasePeriodHist
     [Column("LEASE_PMT_FREQ_TYPE_CODE")]
     [StringLength(20)]
     public string LeasePmtFreqTypeCode { get; set; }
-
-    [Column("BASE_RENT_FREQ")]
-    [StringLength(20)]
-    public string BaseRentFreq { get; set; }
 
     [Column("ADDL_RENT_FREQ")]
     [StringLength(20)]
@@ -75,17 +71,11 @@ public partial class PimsLeasePeriodHist
     [Column("IS_PERIOD_EXERCISED")]
     public bool? IsPeriodExercised { get; set; }
 
-    [Column("PAYMENT_TYPE")]
-    public bool PaymentType { get; set; }
+    [Column("IS_VARIABLE_PAYMENT")]
+    public bool IsVariablePayment { get; set; }
 
-    [Column("PERIOD_DURATION")]
-    public bool PeriodDuration { get; set; }
-
-    [Column("BASE_RENT_AGREED_PMT", TypeName = "money")]
-    public decimal? BaseRentAgreedPmt { get; set; }
-
-    [Column("IS_BASE_RENT_SUBJECT_TO_GST")]
-    public bool? IsBaseRentSubjectToGst { get; set; }
+    [Column("IS_FLEXIBLE_DURATION")]
+    public bool IsFlexibleDuration { get; set; }
 
     [Column("ADDL_RENT_AGREED_PMT", TypeName = "money")]
     public decimal? AddlRentAgreedPmt { get; set; }
@@ -149,4 +139,10 @@ public partial class PimsLeasePeriodHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("ADDL_RENT_GST_AMOUNT", TypeName = "money")]
+    public decimal? AddlRentGstAmount { get; set; }
+
+    [Column("VBL_RENT_GST_AMOUNT", TypeName = "money")]
+    public decimal? VblRentGstAmount { get; set; }
 }

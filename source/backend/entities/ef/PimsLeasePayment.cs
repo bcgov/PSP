@@ -13,8 +13,8 @@ namespace Pims.Dal.Entities;
 [Index("LeasePaymentCategoryTypeCode", Name = "LSPYMT_LEASE_PAYMENT_CATEGORY_TYPE_CODE_IDX")]
 [Index("LeasePaymentMethodTypeCode", Name = "LSPYMT_LEASE_PAYMENT_METHOD_TYPE_CODE_IDX")]
 [Index("LeasePaymentStatusTypeCode", Name = "LSPYMT_LEASE_PAYMENT_STATUS_TYPE_CODE_IDX")]
+[Index("LeasePeriodId", Name = "LSPYMT_LEASE_PERIOD_ID_IDX")]
 [Index("LeasePmtFreqTypeCode", Name = "LSPYMT_LEASE_PMT_FREQ_TYPE_CODE_IDX")]
-[Index("LeasePeriodId", Name = "LSPYMT_LEASE_TERM_ID_IDX")]
 public partial class PimsLeasePayment
 {
     /// <summary>
