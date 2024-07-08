@@ -46,7 +46,7 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsAcquisitionChecklistItems
                 .Where(ci => ci.AcquisitionFileId == acquisitionFileId)
-                .Include(ci => ci.AcqChklstItemStatusTypeCodeNavigation)
+                .Include(ci => ci.ChklstItemStatusTypeCodeNavigation)
                 .Include(ci => ci.AcqChklstItemTypeCodeNavigation)
                     .ThenInclude(it => it.AcqChklstSectionTypeCodeNavigation)
                 .AsNoTracking()
