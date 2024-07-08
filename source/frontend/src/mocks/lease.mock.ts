@@ -25,6 +25,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   otherType: null,
   expiryDate: null,
   startDate: EpochIsoDateTime,
+  terminationDate: null,
   renewalCount: 0,
   paymentReceivableType: null,
   type: null,
