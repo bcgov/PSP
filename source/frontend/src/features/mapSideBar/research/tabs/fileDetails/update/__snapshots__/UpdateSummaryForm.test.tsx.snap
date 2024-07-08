@@ -309,6 +309,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c5 {

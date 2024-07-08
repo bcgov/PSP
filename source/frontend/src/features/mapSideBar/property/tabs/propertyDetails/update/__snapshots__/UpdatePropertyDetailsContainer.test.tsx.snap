@@ -278,6 +278,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c9 {

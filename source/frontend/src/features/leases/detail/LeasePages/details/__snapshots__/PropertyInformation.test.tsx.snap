@@ -15,6 +15,7 @@ exports[`PropertyInformation component > renders a complete lease as expected 1`
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c3 {
@@ -295,6 +296,7 @@ exports[`PropertyInformation component > renders minimally as expected 1`] = `
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c3 {
