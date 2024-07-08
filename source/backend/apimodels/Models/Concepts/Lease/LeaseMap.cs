@@ -57,7 +57,8 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Project, src => src.Project)
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
                 .Map(dest => dest.FileChecklistItems, src => src.PimsLeaseChecklistItems)
-                .Map(dest => dest.Periods, src => src.PimsLeasePeriods);
+                .Map(dest => dest.Periods, src => src.PimsLeasePeriods)
+                .Map(dest => dest.Renewals, src => src.PimsLeaseRenewals);
 
             config.NewConfig<LeaseModel, PimsLease>()
                 .PreserveReference(true)
