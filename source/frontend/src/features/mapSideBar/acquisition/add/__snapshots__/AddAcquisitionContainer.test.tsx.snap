@@ -356,6 +356,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c14 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c24:hover {
@@ -1538,9 +1539,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                       class="c14"
                     >
                       Historical file number:
-                      <span
-                        class="ml-2"
-                      >
+                      <span>
                         <span
                           class="tooltip-icon"
                           data-testid="tooltip-icon-section-field-tooltip"

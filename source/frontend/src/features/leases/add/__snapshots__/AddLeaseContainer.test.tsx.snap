@@ -362,6 +362,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c12 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c22.c22.c22 input,
@@ -658,9 +659,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                     class="c12"
                   >
                     Status:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-lease-status-tooltip"
@@ -2171,9 +2170,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                     class="c12"
                   >
                     Initiator:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
@@ -2254,9 +2251,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         class="c12"
                       >
                         Responsibility:
-                        <span
-                          class="ml-2"
-                        >
+                        <span>
                           <span
                             class="tooltip-icon"
                             data-testid="tooltip-icon-section-field-tooltip"
@@ -3044,9 +3039,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                     class="c12"
                   >
                     Document location:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
