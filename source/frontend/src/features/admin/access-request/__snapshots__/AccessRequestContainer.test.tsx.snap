@@ -43,6 +43,12 @@ exports[`AccessRequestContainer component > makes a request based on the access 
   height: 3.8rem;
 }
 
+.c5.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -766,6 +772,12 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c5.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c5.btn:hover {

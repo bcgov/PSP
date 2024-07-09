@@ -46,11 +46,15 @@ namespace Pims.Dal.Repositories
         {
             var periods = this.Context.PimsLeasePeriods.AsNoTracking()
                 .Include(t => t.LeasePmtFreqTypeCodeNavigation)
+                .Include(t => t.VblRentFreqNavigation)
+                .Include(t => t.AddlRentFreqNavigation)
                 .Include(t => t.LeasePeriodStatusTypeCodeNavigation)
                 .Include(t => t.PimsLeasePayments)
                     .ThenInclude(p => p.LeasePaymentMethodTypeCodeNavigation)
                 .Include(t => t.PimsLeasePayments)
                     .ThenInclude(p => p.LeasePaymentStatusTypeCodeNavigation)
+                .Include(t => t.PimsLeasePayments)
+                    .ThenInclude(p => p.LeasePaymentCategoryTypeCodeNavigation)
                 .Where(t => t.LeaseId == leaseId).ToArray();
 
             periods = periods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>

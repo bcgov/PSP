@@ -70,20 +70,6 @@ const documentMetadata: ApiGen_Mayan_DocumentMetadata[] = [
       label: '',
       datetime_created: '2022-07-27T16:06:42.42',
       description: '',
-      file: {
-        id: 2,
-
-        comment: '',
-        encoding: '',
-
-        mimetype: '',
-        size: 12,
-
-        filename: null,
-        timestamp: '',
-        checksum: '',
-        file: '',
-      },
       language: '',
       uuid: '',
       file_latest: {
