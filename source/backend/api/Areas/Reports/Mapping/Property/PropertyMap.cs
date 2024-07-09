@@ -25,6 +25,24 @@ namespace Pims.Api.Areas.Reports.Mapping.Property
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
                 .Map(dest => dest.Zoning, src => src.Zoning);
+
+            config.NewConfig<Entity.PimsPropertyVw, Model.PropertyModel>()
+                .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeCode)
+                .Map(dest => dest.ClassificationId, src => src.PropertyClassificationTypeCode)
+                .Map(dest => dest.Name, src => src.Name)
+                .Map(dest => dest.Description, src => src.Description)
+                .Map(dest => dest.Address, src => $"{src.StreetAddress1} {src.StreetAddress2} {src.StreetAddress3}")
+                .Map(dest => dest.Municipality, src => src.MunicipalityName)
+                .Map(dest => dest.Postal, src => src.PostalCode)
+                .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
+                .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
+                .Map(dest => dest.IsSensitive, src => src.IsSensitive)
+
+                .Map(dest => dest.PID, src => src.PidPadded)
+                .Map(dest => dest.PIN, src => src.Pin)
+                .Map(dest => dest.LandArea, src => src.LandArea)
+                .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
+                .Map(dest => dest.Zoning, src => src.Zoning);
         }
     }
 }

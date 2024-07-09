@@ -14,4 +14,10 @@ export const PaymentsYupSchema = Yup.object().shape({
   amountGst: Yup.number()
     .transform((value, originalValue) => (String(originalValue).trim() === '' ? null : value))
     .max(MAX_SQL_MONEY_SIZE),
+  leasePaymentMethodType: Yup.object().shape({
+    id: Yup.string().required('Required'),
+  }),
+  leasePaymentCategoryTypeCode: Yup.object().shape({
+    id: Yup.string().required('Required'),
+  }),
 });

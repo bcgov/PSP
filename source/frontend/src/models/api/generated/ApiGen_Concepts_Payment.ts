@@ -13,6 +13,7 @@ export interface ApiGen_Concepts_Payment extends ApiGen_Base_BaseAudit {
   leasePeriodId: number;
   leasePaymentMethodType: ApiGen_Base_CodeType<string> | null;
   leasePaymentStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  leasePaymentCategoryTypeCode: ApiGen_Base_CodeType<string> | null;
   receivedDate: UtcIsoDate;
   amountPreTax: number;
   amountPst: number;

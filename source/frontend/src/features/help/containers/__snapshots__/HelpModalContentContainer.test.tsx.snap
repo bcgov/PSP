@@ -35,6 +35,7 @@ exports[`HelpModalContentContainer component > renders correctly 1`] = `
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 {

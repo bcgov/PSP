@@ -37,6 +37,12 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
   height: 3.8rem;
 }
 
+.c13.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -193,6 +199,7 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 
 .c8 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c5.c5.c5 input,

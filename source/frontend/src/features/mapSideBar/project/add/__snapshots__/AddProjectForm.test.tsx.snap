@@ -37,6 +37,12 @@ exports[`AddProjectForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c7.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -168,6 +174,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 {
@@ -668,6 +675,12 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
   height: 3.8rem;
 }
 
+.c7.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -858,6 +871,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c11 textarea.form-control {
