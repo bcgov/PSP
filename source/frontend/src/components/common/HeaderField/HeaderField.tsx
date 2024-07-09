@@ -37,7 +37,7 @@ export const HeaderLabelCol: React.FC<IHeaderLabelColProps> = props => (
     {props.label && (
       <StyledHeaderLabel>
         {props.label}
-        {props.tooltip && <span className="ml-2">{renderTooltip(props.tooltip)}</span>}
+        {props.tooltip && <span>{renderTooltip(props.tooltip)}</span>}
       </StyledHeaderLabel>
     )}
   </Col>
