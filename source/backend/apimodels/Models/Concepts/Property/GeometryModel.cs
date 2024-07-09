@@ -5,7 +5,7 @@ namespace Pims.Api.Models.Concepts.Property
         #region Properties
 
         /// <summary>
-        /// get/set - The cordinate for the geometry.
+        /// get/set - The coordinate for the geometry.
         /// </summary>
         public CoordinateModel Coordinate { get; set; }
 
