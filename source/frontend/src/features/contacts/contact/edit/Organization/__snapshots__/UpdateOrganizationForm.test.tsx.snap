@@ -221,6 +221,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c7 {
@@ -765,9 +766,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                   class="c4"
                 >
                   Connected to this organization:
-                  <span
-                    class="ml-2"
-                  >
+                  <span>
                     <span
                       class="tooltip-icon"
                       data-testid="tooltip-icon-section-field-tooltip"

@@ -249,6 +249,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c10 {
@@ -769,9 +770,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
               class="c4"
             >
               Impacted properties:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1401,9 +1400,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
               class="c4"
             >
               Impacted properties:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"

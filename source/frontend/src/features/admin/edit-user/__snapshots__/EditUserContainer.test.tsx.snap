@@ -214,6 +214,7 @@ exports[`EditUserContainer component > makes a request based on the user id 1`] 
 
 .c0 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c4 {

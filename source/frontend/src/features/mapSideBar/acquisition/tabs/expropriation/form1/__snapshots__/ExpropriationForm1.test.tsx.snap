@@ -172,6 +172,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
 
 .c0 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div
@@ -264,6 +265,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
 
 .c0 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c3 {
@@ -282,9 +284,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
         class="c0"
       >
         Impacted properties:
-        <span
-          class="ml-2"
-        >
+        <span>
           <span
             class="tooltip-icon"
             data-testid="tooltip-icon-section-field-tooltip"
@@ -455,6 +455,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
 
 .c0 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div
@@ -494,6 +495,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
 
 .c0 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div

@@ -214,6 +214,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 .form-group {
@@ -699,6 +700,7 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 .form-group {

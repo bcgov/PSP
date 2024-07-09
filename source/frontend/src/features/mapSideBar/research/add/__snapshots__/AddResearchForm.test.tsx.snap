@@ -239,6 +239,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
 
 .c17 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c15:hover {

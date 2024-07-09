@@ -214,6 +214,7 @@ exports[`AccessRequestForm component > renders as expected 1`] = `
 
 .c0 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c4 {

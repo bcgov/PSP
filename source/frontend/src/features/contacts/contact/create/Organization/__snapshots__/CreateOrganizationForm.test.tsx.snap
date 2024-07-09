@@ -221,6 +221,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
 
 .c5 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c7 {

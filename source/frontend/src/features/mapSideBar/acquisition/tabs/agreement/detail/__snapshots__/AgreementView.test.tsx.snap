@@ -179,6 +179,7 @@ exports[`AgreementView component > renders as expected 1`] = `
 
 .c9 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c3 {
@@ -550,9 +551,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                     class="c9"
                   >
                     Deposit due no later than:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
@@ -859,9 +858,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                     class="c9"
                   >
                     Deposit due no later than:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
