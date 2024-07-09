@@ -51,6 +51,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   project: null,
   cancellationReason: null,
   terminationReason: null,
+  primaryArbitrationCity: null,
   ...getEmptyBaseAudit(),
   fileName: null,
   fileNumber: null,

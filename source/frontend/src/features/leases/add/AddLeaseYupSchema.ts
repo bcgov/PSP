@@ -111,4 +111,7 @@ export const AddLeaseYupSchema = Yup.object().shape({
       .max(500, 'Termination reason must be at most ${max} characters'),
     otherwise: Yup.string().nullable(),
   }),
+  primaryArbitrationCity: Yup.string()
+    .nullable()
+    .max(200, 'Primary arbitration city must be at most ${max} characters'),
 });

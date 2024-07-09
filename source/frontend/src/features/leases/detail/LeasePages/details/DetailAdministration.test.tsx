@@ -35,6 +35,7 @@ describe('DetailAdministration component', () => {
       component,
     };
   };
+
   it('renders minimally as expected', () => {
     const { component } = setup({
       lease: {
@@ -76,6 +77,7 @@ describe('DetailAdministration component', () => {
         psFileNo: '444',
         motiName: 'test moti name',
         note: 'a test note',
+        primaryArbitrationCity: 'VICTORIA',
         expiryDate: '2022-01-01',
         hasDigitalLicense: true,
         hasPhysicalLicense: false,
@@ -133,5 +135,18 @@ describe('DetailAdministration component', () => {
       },
     });
     expect(getByDisplayValue('A program')).toBeVisible();
+  });
+
+  it('renders the primary arbitration city', async () => {
+    const {
+      component: { getByDisplayValue },
+    } = setup({
+      lease: {
+        ...getEmptyLease(),
+        primaryArbitrationCity: 'Vancouver',
+      },
+    });
+
+    expect(getByDisplayValue('Vancouver')).toBeVisible();
   });
 });

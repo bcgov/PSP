@@ -190,6 +190,11 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public string TerminationReason { get; set; }
 
+        /// <summary>
+        /// get/set - Track arbitration cities.
+        /// </summary>
+        public string PrimaryArbitrationCity { get; set; }
+
         public bool IsExpired { get; set; }
 
         /// <summary>
