@@ -26,6 +26,7 @@ exports[`Acquisition File Owners View component > Renders Component as expected 
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c2 {
@@ -93,9 +94,7 @@ exports[`Acquisition File Owners View component > Renders Component as expected 
           class="c1"
         >
           Other name:
-          <span
-            class="ml-2"
-          >
+          <span>
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-section-field-tooltip"
@@ -198,6 +197,7 @@ Canada
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c2 {
@@ -264,9 +264,7 @@ Canada
           class="c1"
         >
           Other name:
-          <span
-            class="ml-2"
-          >
+          <span>
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-section-field-tooltip"

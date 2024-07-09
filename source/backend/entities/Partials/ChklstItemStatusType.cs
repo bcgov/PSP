@@ -3,9 +3,9 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsDspChklstItemStatusType class, provides an entity for the datamodel to manage a list of disposition checklist item status types.
+    /// PimsChklstItemStatusType class, provides an entity for the datamodel to manage a list of checklist item status types.
     /// </summary>
-    public partial class PimsDspChklstItemStatusType : ITypeEntity<string>
+    public partial class PimsChklstItemStatusType : ITypeEntity<string>
     {
         #region Properties
 
@@ -13,23 +13,23 @@ namespace Pims.Dal.Entities
         /// get/set - Primary key to identify this record.
         /// </summary>
         [NotMapped]
-        public string Id { get => DspChklstItemStatusTypeCode; set => DspChklstItemStatusTypeCode = value; }
+        public string Id { get => ChklstItemStatusTypeCode; set => ChklstItemStatusTypeCode = value; }
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Create a new instance of a PimsDspChklstItemStatusType class.
+        /// Create a new instance of a PimsChklstItemStatusType class.
         /// </summary>
         /// <param name="id"></param>
-        public PimsDspChklstItemStatusType(string id)
+        public PimsChklstItemStatusType(string id)
             : this()
         {
             Id = id;
         }
 
-        public PimsDspChklstItemStatusType()
+        public PimsChklstItemStatusType()
         {
         }
         #endregion

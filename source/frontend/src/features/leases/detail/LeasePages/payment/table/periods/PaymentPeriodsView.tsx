@@ -69,7 +69,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
           onSave={onSavePayment}
           onEdit={onEditPayment}
           onDelete={onDeletePayment}
-          payments={matchingPeriod?.payments ?? []}
+          period={matchingPeriod}
           isExercised={row?.statusTypeCode?.id === LeasePeriodStatusTypes.EXERCISED}
           isGstEligible={row.isGstEligible}
           isReceivable={isReceivable}

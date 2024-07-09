@@ -896,10 +896,10 @@ namespace Pims.Dal.Tests.Repositories
             var lookupRepository = helper.CreateRepository<LookupRepository>(user);
 
             // Act
-            var result = lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
+            var result = lookupRepository.GetAllChecklistItemStatusTypes();
 
             // Assert
-            Assert.IsType<PimsAcqChklstItemStatusType[]>(result);
+            Assert.IsType<PimsChklstItemStatusType[]>(result);
         }
 
         [Fact]

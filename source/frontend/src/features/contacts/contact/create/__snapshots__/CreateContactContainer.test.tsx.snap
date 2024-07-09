@@ -37,6 +37,12 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
   height: 3.8rem;
 }
 
+.c17.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c17.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -279,6 +285,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
 
 .c13 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c7 {

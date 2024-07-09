@@ -37,6 +37,12 @@ exports[`MapContainer > Renders the map 1`] = `
   height: 3.8rem;
 }
 
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;

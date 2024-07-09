@@ -38,6 +38,12 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c8.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -215,6 +221,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
 
 .c5 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c7 {
@@ -1499,6 +1506,12 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c2.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c2.btn:hover {

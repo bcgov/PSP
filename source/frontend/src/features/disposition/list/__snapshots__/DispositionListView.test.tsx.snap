@@ -37,6 +37,12 @@ exports[`Disposition List View > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
+.c10.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;

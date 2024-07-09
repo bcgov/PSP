@@ -13,6 +13,8 @@ export interface ApiGen_Concepts_LeasePeriod extends ApiGen_Base_BaseAudit {
   id: number | null;
   leaseId: number;
   gstAmount: number | null;
+  additionalRentGstAmount: number | null;
+  variableRentGstAmount: number | null;
   paymentAmount: number | null;
   statusTypeCode: ApiGen_Base_CodeType<string> | null;
   leasePmtFreqTypeCode: ApiGen_Base_CodeType<string> | null;
@@ -25,5 +27,11 @@ export interface ApiGen_Concepts_LeasePeriod extends ApiGen_Base_BaseAudit {
   isTermExercised: boolean;
   isFlexible: boolean;
   isVariable: boolean;
+  additionalRentPaymentAmount: number | null;
+  isAdditionalRentGstEligible: boolean | null;
+  additionalRentFreqTypeCode: ApiGen_Base_CodeType<string> | null;
+  variableRentPaymentAmount: number | null;
+  isVariableRentGstEligible: boolean | null;
+  variableRentFreqTypeCode: ApiGen_Base_CodeType<string> | null;
   payments: ApiGen_Concepts_Payment[] | null;
 }
