@@ -123,6 +123,7 @@ describe('UpdateProperties component', () => {
             displayOrder: null,
             fileId: 1,
             propertyName: null,
+            location: null,
             file: null,
           },
         ],

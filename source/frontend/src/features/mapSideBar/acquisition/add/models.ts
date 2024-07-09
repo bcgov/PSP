@@ -4,6 +4,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { latLngToApiLocation } from '@/utils';
 import { fromTypeCode, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
@@ -62,17 +63,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       // ACQ file properties
-      fileProperties: this.properties.map<ApiGen_Concepts_AcquisitionFileProperty>(ap => ({
-        id: ap.id ?? 0,
-        propertyName: ap.name ?? null,
-        displayOrder: ap.displayOrder ?? null,
-        rowVersion: ap.rowVersion ?? null,
-        property: ap.toApi(),
-        propertyId: ap.apiId ?? 0,
-        fileId: this.id ?? 0,
-        acquisitionFile: null,
-        file: null,
-      })),
+      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
       acquisitionFileOwners: this.owners
         .filter(x => !x.isEmpty())
         .map<ApiGen_Concepts_AcquisitionFileOwner>(x => x.toApi()),
@@ -92,6 +83,20 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       product: null,
       project: null,
       ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+
+  private toPropertyApi(x: PropertyForm): ApiGen_Concepts_AcquisitionFileProperty {
+    return {
+      id: x.id ?? 0,
+      fileId: this.id ?? 0,
+      property: x.toApi(),
+      propertyId: x.apiId ?? 0,
+      propertyName: x.name ?? null,
+      location: latLngToApiLocation(x.fileLocation?.lat, x.fileLocation?.lng),
+      displayOrder: x.displayOrder ?? null,
+      rowVersion: x.rowVersion ?? null,
+      file: null,
     };
   }
 
