@@ -1,4 +1,7 @@
+import { Placement } from 'react-bootstrap/esm/Overlay';
+
 import { SelectOption } from '@/components/common/form';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
@@ -221,4 +224,25 @@ export const getCurrencyCleanValue = (stringValue: string): number => {
 export function formatMinistryProject(projectNumber?: string | null, projectName?: string | null) {
   const formattedValue = [projectNumber, projectName].filter(x => x).join(' - ');
   return formattedValue;
+}
+
+export function renderTooltip(
+  tooltip?: React.ReactNode,
+  toolTipId?: string,
+  placement?: Placement,
+): React.ReactNode {
+  if (tooltip === undefined) {
+    return null;
+  }
+  if (typeof tooltip === 'string' || typeof tooltip === 'number') {
+    return (
+      <TooltipIcon
+        toolTipId={toolTipId ?? `section-field-tooltip`}
+        toolTip={tooltip}
+        placement={placement ?? 'auto'}
+      />
+    );
+  }
+  // we got a custom tooltip - render that
+  return tooltip;
 }

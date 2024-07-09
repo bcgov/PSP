@@ -8,10 +8,14 @@ import { IHistoricalNumbersViewProps } from './HistoricalNumberSectionView';
 
 export interface IHistoricalNumbersContainerProps {
   propertyIds: number[];
+  labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
+  contentWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
   View: React.FunctionComponent<IHistoricalNumbersViewProps>;
 }
 const HistoricalNumbersContainer: React.FC<IHistoricalNumbersContainerProps> = ({
   propertyIds,
+  labelWidth,
+  contentWidth,
   View,
 }) => {
   const [historicalNumbers, setHistoricalNumbers] = useState<
@@ -35,6 +39,12 @@ const HistoricalNumbersContainer: React.FC<IHistoricalNumbersContainerProps> = (
     });
   }, [propertyIds, getHistoricalExecute]);
 
-  return <View historicalNumbers={historicalNumbers} />;
+  return (
+    <View
+      historicalNumbers={historicalNumbers}
+      labelWidth={labelWidth}
+      contentWidth={contentWidth}
+    />
+  );
 };
 export default HistoricalNumbersContainer;
