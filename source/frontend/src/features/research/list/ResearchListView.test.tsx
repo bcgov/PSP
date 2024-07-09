@@ -571,6 +571,7 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
         propertyName: null,
         purposeTypes: null,
         researchSummary: null,
+        location: null,
         file: null,
       },
       {
@@ -603,6 +604,7 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
         propertyName: null,
         purposeTypes: null,
         researchSummary: null,
+        location: null,
         file: null,
       },
     ],

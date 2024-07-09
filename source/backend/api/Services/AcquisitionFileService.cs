@@ -223,6 +223,12 @@ namespace Pims.Api.Services
 
             PopulateAcquisitionChecklist(acquisitionFile);
 
+            // Update file specific marker locations
+            foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
+            }
+
             acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
@@ -282,7 +288,7 @@ namespace Pims.Api.Services
 
         public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
-            _logger.LogInformation("Updating acquisition file properties...");
+            _logger.LogInformation("Updating acquisition file properties with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
 
@@ -299,7 +305,7 @@ namespace Pims.Api.Services
             }
 
             // Get the current properties in the research file
-            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
+            var currentFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -307,22 +313,37 @@ namespace Pims.Api.Services
                 // If the property is not new, check if the name has been updated.
                 if (incomingAcquisitionProperty.Internal_Id != 0)
                 {
-                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
-                    if (existingProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
+                    var needsUpdate = false;
+                    PimsPropertyAcquisitionFile existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
+                    if (existingFileProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
                     {
-                        existingProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
-                        _acquisitionFilePropertyRepository.Update(existingProperty);
+                        existingFileProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+
+                    var incomingGeom = incomingAcquisitionProperty.Location;
+                    var existingGeom = existingFileProperty.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
+                        _propertyService.UpdateFilePropertyLocation(incomingAcquisitionProperty, existingFileProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
+                        _acquisitionFilePropertyRepository.Update(existingFileProperty);
                     }
                 }
                 else
                 {
                     // New property needs to be added
-                    _acquisitionFilePropertyRepository.Add(incomingAcquisitionProperty);
+                    var newFileProperty = _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
+                    _acquisitionFilePropertyRepository.Add(newFileProperty);
                 }
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsPropertyAcquisitionFile> differenceSet = currentFileProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);

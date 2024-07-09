@@ -10,6 +10,7 @@ export const getEmptyFileProperty = (): ApiGen_Concepts_FileProperty => {
     propertyId: 0,
     fileId: 0,
     file: null,
+    location: null,
     ...getEmptyBaseAudit(),
   };
 };
