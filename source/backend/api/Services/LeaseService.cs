@@ -282,7 +282,7 @@ namespace Pims.Api.Services
                 {
                     _leaseRepository.AddChecklistItem(incomingItem);
                 }
-                else if (existingItem.LeaseChklstItemStatusTypeCode != incomingItem.LeaseChklstItemStatusTypeCode)
+                else if (existingItem.ChklstItemStatusTypeCode != incomingItem.ChklstItemStatusTypeCode)
                 {
                     _leaseRepository.UpdateChecklistItem(incomingItem);
                 }
@@ -442,7 +442,7 @@ namespace Pims.Api.Services
                 PimsLeaseChecklistItem checklistItem = new()
                 {
                     LeaseChklstItemTypeCode = itemType.LeaseChklstItemTypeCode,
-                    LeaseChklstItemStatusTypeCode = LeaseChecklistItemStatusTypes.INCOMP.ToString(),
+                    ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                 };
 
                 chklistItems.Add(checklistItem);
@@ -453,7 +453,7 @@ namespace Pims.Api.Services
 
         private void AppendNewItemsToChecklist(PimsLease lease, ref List<PimsLeaseChecklistItem> pimsLeaseChecklistItems)
         {
-            PimsLeaseChklstItemStatusType incompleteStatusType = _lookupRepository.GetAllLeaseChecklistItemStatusTypes().FirstOrDefault(cst => cst.Id == LeaseChecklistItemStatusTypes.INCOMP.ToString());
+            PimsChklstItemStatusType incompleteStatusType = _lookupRepository.GetAllChecklistItemStatusTypes().FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString());
             foreach (var itemType in _leaseRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType() && !x.IsDisabled))
             {
                 if (!pimsLeaseChecklistItems.Any(cli => cli.LeaseChklstItemTypeCode == itemType.LeaseChklstItemTypeCode))
@@ -462,9 +462,9 @@ namespace Pims.Api.Services
                     {
                         LeaseChklstItemTypeCode = itemType.LeaseChklstItemTypeCode,
                         LeaseChklstItemTypeCodeNavigation = itemType,
-                        LeaseChklstItemStatusTypeCode = incompleteStatusType.Id,
+                        ChklstItemStatusTypeCode = incompleteStatusType.Id,
                         LeaseId = lease.LeaseId,
-                        LeaseChklstItemStatusTypeCodeNavigation = incompleteStatusType,
+                        ChklstItemStatusTypeCodeNavigation = incompleteStatusType,
                     };
 
                     pimsLeaseChecklistItems.Add(checklistItem);

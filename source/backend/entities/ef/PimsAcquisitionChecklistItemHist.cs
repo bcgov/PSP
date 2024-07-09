@@ -31,9 +31,9 @@ public partial class PimsAcquisitionChecklistItemHist
     public string AcqChklstItemTypeCode { get; set; }
 
     [Required]
-    [Column("ACQ_CHKLST_ITEM_STATUS_TYPE_CODE")]
+    [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string AcqChklstItemStatusTypeCode { get; set; }
+    public string ChklstItemStatusTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

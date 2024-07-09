@@ -42,7 +42,7 @@ const onEdit = vi.fn();
 const onDelete = vi.fn();
 const onSave = vi.fn();
 
-describe('PaymentsForm component', () => {
+describe('PaymentsView component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<IPaymentsViewProps> & {
@@ -56,7 +56,7 @@ describe('PaymentsForm component', () => {
         onEdit={onEdit}
         onDelete={onDelete}
         onSave={onSave}
-        payments={renderOptions.initialValues?.periods?.[0]?.payments ?? []}
+        period={renderOptions.initialValues?.periods?.[0]}
         isExercised={renderOptions?.isExercised ?? true}
         isReceivable={renderOptions?.isReceivable ?? true}
         isGstEligible={renderOptions?.isGstEligible ?? true}
@@ -190,10 +190,10 @@ describe('PaymentsForm component', () => {
         initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: true,
       });
-      expect(await findByText('Payments Received')).toBeVisible();
-      expect(await findByText('Received date')).toBeVisible();
-      expect(await findByText('Received payment ($)')).toBeVisible();
-      expect(await findByText('Received total ($)')).toBeVisible();
+      expect(await findByText('Payments')).toBeVisible();
+      expect(await findByText('Date')).toBeVisible();
+      expect(await findByText('Received payment ($)', { exact: false })).toBeVisible();
+      expect(await findByText('Total ($)')).toBeVisible();
     });
 
     it('Displays proper sent columns if payable', async () => {
@@ -203,10 +203,10 @@ describe('PaymentsForm component', () => {
         initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: false,
       });
-      expect(await findByText('Payments Sent')).toBeVisible();
-      expect(await findByText('Sent date')).toBeVisible();
+      expect(await findByText('Payments')).toBeVisible();
+      expect(await findByText('Date')).toBeVisible();
       expect(await findByText('Sent payment ($)')).toBeVisible();
-      expect(await findByText('Sent total ($)')).toBeVisible();
+      expect(await findByText('Total ($)')).toBeVisible();
     });
 
     it('Does not display GST values or calculations if period is not gst eligible', async () => {
@@ -218,8 +218,8 @@ describe('PaymentsForm component', () => {
       const footer = findFooter() as HTMLElement;
       expect(row).not.toBeNull();
       expect(footer).not.toBeNull();
-      expect(findCell(row, 3)?.textContent).toBe('-');
-      expect(findFooterCell(footer, 3)?.textContent).toBe('-');
+      expect(findCell(row, 4)?.textContent).toBe('-');
+      expect(findFooterCell(footer, 4)?.textContent).toBe('-');
     });
 
     it('Sums expected payment columns', async () => {
@@ -238,13 +238,13 @@ describe('PaymentsForm component', () => {
       const footer = findFooter() as HTMLElement;
       expect(row).not.toBeNull();
       expect(footer).not.toBeNull();
-      expect(findFooterCell(footer, 1)?.textContent).toBe('(2) payments');
-      expect(findCell(row, 2)?.textContent).toBe('$1,100.00');
-      expect(findFooterCell(footer, 2)?.textContent).toBe('$2,200.00');
-      expect(findCell(row, 3)?.textContent).toBe('$100.00');
-      expect(findFooterCell(footer, 3)?.textContent).toBe('$200.00');
-      expect(findCell(row, 4)?.textContent).toBe('$1,200.00');
-      expect(findFooterCell(footer, 4)?.textContent).toBe('$2,400.00');
+      expect(findFooterCell(footer, 2)?.textContent).toBe('(2) payments');
+      expect(findCell(row, 3)?.textContent).toBe('$1,100.00');
+      expect(findFooterCell(footer, 3)?.textContent).toBe('$2,200.00');
+      expect(findCell(row, 4)?.textContent).toBe('$100.00');
+      expect(findFooterCell(footer, 4)?.textContent).toBe('$200.00');
+      expect(findCell(row, 5)?.textContent).toBe('$1,200.00');
+      expect(findFooterCell(footer, 5)?.textContent).toBe('$2,400.00');
     });
   });
   describe('interactive functionality', () => {

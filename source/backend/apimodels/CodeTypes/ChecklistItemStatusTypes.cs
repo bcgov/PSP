@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 namespace Pims.Api.Models.CodeTypes
 {
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
-    public enum LeaseChecklistItemStatusTypes
+    public enum ChecklistItemStatusTypes
     {
         [EnumMember(Value = "COMPLT")]
         COMPLT,
@@ -12,7 +12,7 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "INCOMP")]
         INCOMP,
 
-        [EnumMember(Value = "NA")]
-        NA,
+        [EnumMember(Value = "NOTAPP")]
+        NOTAPP,
     }
 }

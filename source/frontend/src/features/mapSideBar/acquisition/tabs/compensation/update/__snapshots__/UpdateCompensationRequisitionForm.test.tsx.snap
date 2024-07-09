@@ -37,6 +37,12 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   height: 3.8rem;
 }
 
+.c11.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c11.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -202,6 +208,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c13 {
@@ -1055,9 +1062,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                 class="c3"
               >
                 GST number:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -1177,9 +1182,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                 class="c3"
               >
                 Total amount:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"

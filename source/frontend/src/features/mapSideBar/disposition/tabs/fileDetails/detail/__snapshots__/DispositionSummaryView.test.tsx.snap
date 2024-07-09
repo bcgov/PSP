@@ -37,6 +37,7 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c6 {
@@ -255,9 +256,7 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
               class="c3"
             >
               Reference number:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -331,9 +330,7 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
               class="c3"
             >
               Initiating document:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -373,9 +370,7 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
               class="c3"
             >
               Initiating document date:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"

@@ -19,6 +19,7 @@ exports[`PropertySelectorSubForm component > renders as expected when provided n
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0.c0.c0 input,
