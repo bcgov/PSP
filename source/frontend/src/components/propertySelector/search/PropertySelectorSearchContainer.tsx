@@ -207,14 +207,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
   );
 };
 
-export const featureToLocationFeatureDataset = (
-  feature: Feature<
-    Geometry,
-    {
-      [name: string]: any;
-    }
-  >,
-) => {
+export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJsonProperties>) => {
   const center = getFeatureBoundedCenter(feature);
   return {
     parcelFeature: feature,
