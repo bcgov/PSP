@@ -54,7 +54,6 @@ export class FormLeaseRenewal {
   }
 
   toApi(): ApiGen_Concepts_LeaseRenewal {
-    debugger;
     return {
       id: this.id,
       leaseId: this.leaseId,
@@ -74,7 +73,6 @@ export class LeaseFormModel {
   psFileNo = '';
   tfaFileNumber = '';
   expiryDate = '';
-  renewalDate = '';
   startDate = '';
   renewals: FormLeaseRenewal[] = [];
 
@@ -107,6 +105,7 @@ export class LeaseFormModel {
   hasDigitalLicense?: boolean;
   cancellationReason: string | null = null;
   terminationReason: string | null = null;
+  terminationDate = '';
   project?: IAutocompletePrediction;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
@@ -125,8 +124,8 @@ export class LeaseFormModel {
     leaseDetail.lFileNo = apiModel?.lFileNo || '';
     leaseDetail.psFileNo = apiModel?.psFileNo || '';
     leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber || '';
-    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel!.expiryDate : '';
-    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel!.startDate : '';
+    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel.expiryDate : '';
+    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel.startDate : '';
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
     leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
@@ -168,6 +167,9 @@ export class LeaseFormModel {
     leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
+    leaseDetail.terminationDate = isValidIsoDateTime(apiModel?.terminationDate)
+      ? apiModel.terminationDate
+      : '';
 
     return leaseDetail;
   }
@@ -225,6 +227,9 @@ export class LeaseFormModel {
       isExpired: false,
       programName: null,
       renewalCount: formLease.renewals.length,
+      terminationDate: isValidIsoDateTime(formLease.terminationDate)
+        ? formLease.terminationDate
+        : null,
       ...getEmptyBaseAudit(formLease.rowVersion),
     };
   }

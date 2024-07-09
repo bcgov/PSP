@@ -41,7 +41,11 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                     </Row>
                     <Row>
                       <Col xs="7">
-                        <SectionField label="Commencement" labelWidth="6" required>
+                        <SectionField
+                          label="Commencement"
+                          labelWidth="6"
+                          required={renewal.isExercised === true}
+                        >
                           <FastDatePicker
                             field={`${fieldName}.${index}.commencementDt`}
                             formikProps={formikProps}
@@ -49,7 +53,11 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                         </SectionField>
                       </Col>
                       <Col>
-                        <SectionField label="Expiry" labelWidth="4" required>
+                        <SectionField
+                          label="Expiry"
+                          labelWidth="4"
+                          required={renewal.isExercised === true}
+                        >
                           <FastDatePicker
                             field={`${fieldName}.${index}.expiryDt`}
                             formikProps={formikProps}

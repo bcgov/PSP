@@ -16,6 +16,7 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Services
 {
@@ -222,6 +223,8 @@ namespace Pims.Api.Services
 
                 _entityNoteRepository.Add(newLeaseNote);
             }
+
+            ValidateRenewalDates(lease, lease.PimsLeaseRenewals);
 
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
@@ -484,6 +487,68 @@ namespace Pims.Api.Services
 
                     pimsLeaseChecklistItems.Add(checklistItem);
                 }
+            }
+        }
+
+        private void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals)
+        {
+            if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
+            {
+                return;
+            }
+
+            List<Tuple<DateTime, DateTime>> renewalDates = new();
+
+            foreach (var renewal in renewals)
+            {
+                if (renewal.IsExercised == true)
+                {
+                    if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
+                    {
+                        renewalDates.Add(new Tuple<DateTime, DateTime>(renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
+                    }
+                    else
+                    {
+                        throw new BusinessRuleViolationException("Excercised renewals must have a commencement date and expiry date");
+                    }
+                }
+            }
+
+            // Sort agreement dates/renewals by start date.
+            renewalDates.Sort((a, b) => DateTime.Compare(a.Item1, b.Item1));
+
+            DateTime currentEndDate;
+
+            if (lease.OrigStartDate.HasValue && lease.OrigExpiryDate.HasValue)
+            {
+                var agreementStart = lease.OrigStartDate.Value;
+                var agreementEnd = lease.OrigExpiryDate.Value;
+                currentEndDate = agreementEnd;
+                if (DateTime.Compare(agreementEnd, agreementStart) <= 0)
+                {
+                    throw new BusinessRuleViolationException("Lease commencement date must be before its expiry date");
+                }
+            }
+            else
+            {
+                throw new BusinessRuleViolationException("Active leases must have agreement commencement expiry dates");
+            }
+
+            for (int i = 0; i < renewalDates.Count; i++)
+            {
+                var startDate = renewalDates[i].Item1;
+                var endDate = renewalDates[i].Item2;
+
+                if (DateTime.Compare(endDate, startDate) <= 0)
+                {
+                    throw new BusinessRuleViolationException("Renewal end date must be after it's start date");
+                }
+
+                if (DateTime.Compare(currentEndDate, startDate) >= 0)
+                {
+                    throw new BusinessRuleViolationException("Renewal start date must be after the last expiry date");
+                }
+                currentEndDate = endDate;
             }
         }
     }

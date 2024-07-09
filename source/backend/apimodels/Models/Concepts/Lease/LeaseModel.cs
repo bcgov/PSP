@@ -89,6 +89,11 @@ namespace Pims.Api.Models.Concepts.Lease
         public DateOnly? StartDate { get; set; }
 
         /// <summary>
+        /// get/set - The termination date of the lease.
+        /// </summary>
+        public DateOnly? TerminationDate { get; set; }
+
+        /// <summary>
         /// get/set - The lease renewal count.
         /// </summary>
         public int RenewalCount { get; set; }

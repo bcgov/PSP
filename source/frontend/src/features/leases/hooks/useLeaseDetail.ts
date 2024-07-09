@@ -45,7 +45,6 @@ export function useLeaseDetail(leaseId?: number) {
   const getApiLeaseByIdFunc = getApiLeaseById.execute;
 
   const getCompleteLease = useCallback(async () => {
-    debugger;
     if (leaseId) {
       const leasePromise = getApiLeaseByIdFunc(leaseId);
       const leaseTenantsPromise = getLeaseTenants(leaseId);
