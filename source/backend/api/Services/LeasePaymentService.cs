@@ -54,7 +54,7 @@ namespace Pims.Api.Services
             return updatedPayment;
         }
 
-        private string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
+        public static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
         {
             if (!Enum.TryParse(payment.LeasePaymentCategoryTypeCode, out LeasePaymentCategoryTypes leasePaymentCategoryType))
             {
@@ -64,30 +64,30 @@ namespace Pims.Api.Services
             switch (leasePaymentCategoryType)
             {
                 case LeasePaymentCategoryTypes.VBL:
-                    expectedTotal = (parent.VblRentAgreedPmt ?? 0) + (parent.VblRentGstAmount ?? 0);
+                    expectedTotal = (parent?.VblRentAgreedPmt ?? 0) + (parent?.VblRentGstAmount ?? 0);
                     break;
                 case LeasePaymentCategoryTypes.ADDL:
-                    expectedTotal = (parent.AddlRentAgreedPmt ?? 0) + (parent.AddlRentGstAmount ?? 0);
+                    expectedTotal = (parent?.AddlRentAgreedPmt ?? 0) + (parent?.AddlRentGstAmount ?? 0);
                     break;
                 case LeasePaymentCategoryTypes.BASE:
-                    expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
+                    expectedTotal = (parent?.PaymentAmount ?? 0) + (parent?.GstAmount ?? 0);
                     break;
                 default:
                     throw new InvalidOperationException();
             }
-            if (payment.PaymentAmountTotal == 0)
+            if (payment?.PaymentAmountTotal == 0)
             {
                 return PimsLeasePaymentStatusTypes.UNPAID;
             }
-            else if (payment.PaymentAmountTotal < expectedTotal)
+            else if (payment?.PaymentAmountTotal < expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.PARTIAL;
             }
-            else if (payment.PaymentAmountTotal == expectedTotal)
+            else if (payment?.PaymentAmountTotal == expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.PAID;
             }
-            else if (payment.PaymentAmountTotal > expectedTotal)
+            else if (payment?.PaymentAmountTotal > expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.OVERPAID;
             }

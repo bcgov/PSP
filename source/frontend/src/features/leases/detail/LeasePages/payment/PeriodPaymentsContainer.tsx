@@ -258,7 +258,6 @@ export const isActualGstEligible = (
   category: ApiGen_CodeTypes_LeasePaymentCategoryTypes,
 ) => {
   const period = find(periods, (period: FormLeasePeriod) => period.id === periodId);
-  console.log(period, periods, category, periodId);
   return (
     (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL &&
       period?.isVariableRentGstEligible) ||
