@@ -72,6 +72,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c7 textarea.form-control {
@@ -750,9 +751,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
             class="c2"
           >
             Initiator:
-            <span
-              class="ml-2"
-            >
+            <span>
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-section-field-tooltip"
@@ -833,9 +832,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                 class="c2"
               >
                 Responsibility:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"

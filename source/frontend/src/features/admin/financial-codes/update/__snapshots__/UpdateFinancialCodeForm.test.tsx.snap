@@ -175,6 +175,7 @@ exports[`UpdateFinancialCode form > renders as expected 1`] = `
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 .form-section {
@@ -280,9 +281,7 @@ exports[`UpdateFinancialCode form > renders as expected 1`] = `
           class="c1"
         >
           Effective date:
-          <span
-            class="ml-2"
-          >
+          <span>
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-section-field-tooltip"
@@ -351,9 +350,7 @@ exports[`UpdateFinancialCode form > renders as expected 1`] = `
           class="c1"
         >
           Expiry date:
-          <span
-            class="ml-2"
-          >
+          <span>
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-section-field-tooltip"
