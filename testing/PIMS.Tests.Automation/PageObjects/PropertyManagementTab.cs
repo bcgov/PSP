@@ -36,6 +36,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementContactsBodyCount = By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']");
         private By managementContactsDeleteBttns = By.CssSelector("button[title='Delete contact']");
         private By managementContactsFirstDeleteBttn = By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) [title='Delete contact']");
+        private By managementContactPaginationOptions = By.XPath("//div[@data-testid='PropertyContactsTable']/following-sibling::div/div/ul[@class='pagination']/li");
 
         //Create Property Contacts Elements
         private By managementContactDetailsTitle = By.XPath("//div[contains(text(),'Contact Details')]");
@@ -53,8 +54,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementActivitiesTable = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable']");
         private By managementActivitiesBodyCount = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']");
         private By managementActivitiesDeleteBttns = By.CssSelector("button[title='Delete']");
-
-        private By managementActivityPaginationOptions = By.CssSelector("ul[class='pagination'] li");
+        private By managementActivityPaginationOptions = By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
+        
 
         //Create Activity Elements
         //Activity Details
@@ -373,11 +374,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteAllContacts()
         {
-            Wait(2000);
+            Wait();
 
             while (webDriver.FindElements(managementContactsDeleteBttns).Count > 0)
             {
-                Wait(2000);
+                Wait();
                 webDriver.FindElement(managementContactsFirstDeleteBttn).Click();
 
                 Assert.Equal("Confirm delete", sharedModals.ModalHeader());
@@ -406,11 +407,18 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        public void ViewLastContactFromList()
+        {
+            var paginationLastPage = webDriver.FindElements(managementContactPaginationOptions).Count() -1;
+
+            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyContactsTable']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
+        }
+
         public void ViewLastActivityFromList()
         {
             var paginationLastPage = webDriver.FindElements(managementActivityPaginationOptions).Count() -1;
 
-            webDriver.FindElement(By.CssSelector("ul[class='pagination'] li:nth-child("+ paginationLastPage +")")).Click();
+            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
         }
 
         public void VerifyInitManagementTabView()
@@ -507,7 +515,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsertedSummaryForm(PropertyManagement managementProperty)
         {
-            Wait(2000);
+            Wait();
 
             AssertTrueIsDisplayed(managementSummaryTitle);
             AssertTrueIsDisplayed(managementPropertyPurposeLabel);

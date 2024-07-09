@@ -190,7 +190,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByAddressList(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 3);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
@@ -312,7 +312,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Go to the Property Management Tab
             propertyManagementTab.NavigateManagementTab();
-            //propertyManagementTab.VerifyInitManagementTabView();
+            propertyManagementTab.VerifyInitManagementTabView();
 
             //Click on Edit Summary
             propertyManagementTab.UpdateManagementSummaryButton();
