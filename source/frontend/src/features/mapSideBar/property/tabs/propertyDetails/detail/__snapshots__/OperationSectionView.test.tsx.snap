@@ -46,6 +46,7 @@ exports[`Operation section view > matches snapshot 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div
@@ -465,6 +466,7 @@ exports[`Operation section view > matches snapshot 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div

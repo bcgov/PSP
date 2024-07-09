@@ -198,6 +198,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 
 .c8 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c5.c5.c5 input,

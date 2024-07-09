@@ -334,6 +334,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
 
 .c14 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c24:hover {
@@ -1389,9 +1390,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                       class="c14"
                     >
                       Reference number:
-                      <span
-                        class="ml-2"
-                      >
+                      <span>
                         <span
                           class="tooltip-icon"
                           data-testid="tooltip-icon-section-field-tooltip"
@@ -1572,9 +1571,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                       class="c14"
                     >
                       Initiating document:
-                      <span
-                        class="ml-2"
-                      >
+                      <span>
                         <span
                           class="tooltip-icon"
                           data-testid="tooltip-icon-section-field-tooltip"
@@ -1657,9 +1654,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                       class="c14"
                     >
                       Initiating document date:
-                      <span
-                        class="ml-2"
-                      >
+                      <span>
                         <span
                           class="tooltip-icon"
                           data-testid="tooltip-icon-section-field-tooltip"
