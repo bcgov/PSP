@@ -48,7 +48,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositAddDescriptionTextarea = By.CssSelector("textarea[id='input-description']");
         private By licenseDepositAddAmountLabel = By.XPath("//label[contains(text(),'Deposit amount')]");
         private By licenseDepositAddAmountInput = By.Id("input-amountPaid");
-        private By licenseDepositAddPaidDateLabel = By.XPath("//label[contains(text(),'Paid date')]");
+        private By licenseDepositAddPaidDateLabel = By.XPath("//span[contains(text(),'Paid date')]");
         private By licenseDepositAddPaidDateInput = By.Id("datepicker-depositDate");
         private By licenseDepositAddDepositHolderLabel = By.XPath("//label[contains(text(),'Deposit holder')]");
         private By licenseDepositAddDepositHolderInput = By.CssSelector("label[for='input-contactHolder']");
@@ -59,7 +59,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositReturnDepositTypeContent = By.XPath("//strong[contains(text(),'Deposit type')]/parent::div/following-sibling::div");
         private By licenseDepositReturnDepositAmountLabel = By.XPath("//strong[contains(text(),'Deposit amount')]");
         private By licenseDepositReturnDepositAmountContent = By.XPath("//strong[contains(text(),'Deposit amount')]/parent::div/following-sibling::div");
-        private By licenseDepositReturnTerminationDateLabel = By.XPath("//label[contains(text(),'Termination or surrender date')]");
+        private By licenseDepositReturnTerminationDateLabel = By.XPath("//span[contains(text(),'Termination or surrender date')]");
         private By licenseDepositReturnTerminationDateInput = By.Id("datepicker-terminationDate");
         private By licenseDepositReturnClaimLabel = By.XPath("//label[contains(text(),'Claims against deposit ($)')]");
         private By licenseDepositReturnClaimInput = By.Id("input-claimsAgainst");
@@ -67,7 +67,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositReturnAmountInput = By.Id("input-returnAmount");
         private By licenseDepositReturnInterestPaidLabel = By.XPath("//label[contains(text(),'Interest paid ($)')]");
         private By licenseDepositReturnInterestPaidInput = By.Id("input-interestPaid");
-        private By licenseDepositReturnDateLabel = By.XPath("//label[contains(text(),'Returned date')]");
+        private By licenseDepositReturnDateLabel = By.XPath("//span[contains(text(),'Returned date')]");
         private By licenseDepositReturnDateInput = By.Id("datepicker-returnDate");
         private By licenseDepositReturnPayeeNameLabel = By.XPath("//label[contains(text(),'Payee name')]");
         private By licenseDepositRerturnPayeeNameInput = By.Id("input-contactHolder.id");
