@@ -20,7 +20,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
         {
-            return _leasePaymentRepository.GetAll(startDate, endDate);
+            return _leasePaymentRepository.GetAllTracking(startDate, endDate);
         }
 
         public bool DeletePayment(long leaseId, PimsLeasePayment payment)
@@ -52,7 +52,7 @@ namespace Pims.Api.Services
             return updatedPayment;
         }
 
-        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
+        public static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
         {
             decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
             if (payment.PaymentAmountTotal == 0)
