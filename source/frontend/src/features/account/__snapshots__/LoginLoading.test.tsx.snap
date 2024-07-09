@@ -32,6 +32,12 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
   height: 3.8rem;
 }
 
+.c2.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c2.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -370,6 +376,12 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c2.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c2.btn:hover {

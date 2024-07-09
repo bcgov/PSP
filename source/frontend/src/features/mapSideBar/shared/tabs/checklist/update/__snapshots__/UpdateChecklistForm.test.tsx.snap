@@ -33,6 +33,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c2 {
@@ -196,9 +197,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Property Acquisition (PA) Plan:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -319,9 +318,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Other reports:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -421,9 +418,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Spending Authority Approval(s) - SAA:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -471,9 +466,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Final agreements with owner(s):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -651,9 +644,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Registered Plan:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -701,9 +692,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Copy of new title:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -818,9 +807,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Notice of Advanced Payment (Form 8):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -998,9 +985,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               ALC order:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1069,9 +1054,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Copy of expropriation approval packages:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1119,9 +1102,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Notice of Expropriation (Form 1):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1169,9 +1150,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Approval of Expropriation (Form 5):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1219,9 +1198,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Vesting Notice (Form 9):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1342,9 +1319,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               File data entered into PIMS:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"

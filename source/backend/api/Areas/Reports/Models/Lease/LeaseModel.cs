@@ -112,6 +112,14 @@ namespace Pims.Api.Areas.Reports.Models.Lease
         [DisplayName("Is Expired?")]
         [CsvHelper.Configuration.Attributes.Name("Is Expired?")]
         public string IsExpired { get; set; }
+
+        [DisplayName("Financial Gain?")]
+        [CsvHelper.Configuration.Attributes.Name("Financial Gain?")]
+        public string FinancialGain { get; set; }
+
+        [DisplayName("Public Benefit?")]
+        [CsvHelper.Configuration.Attributes.Name("Public Benefit?")]
+        public string PublicBenefit { get; set; }
         #endregion
     }
 }

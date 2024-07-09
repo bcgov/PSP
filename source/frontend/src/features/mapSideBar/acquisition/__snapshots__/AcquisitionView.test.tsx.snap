@@ -37,6 +37,12 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -369,6 +375,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c32 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c11 {
@@ -1038,9 +1045,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                                 class="c32"
                               >
                                 Delivery date:
-                                <span
-                                  class="ml-2"
-                                >
+                                <span>
                                   <span
                                     class="tooltip-icon"
                                     data-testid="tooltip-icon-section-field-tooltip"
@@ -1119,9 +1124,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                                 class="c32"
                               >
                                 Historical file number:
-                                <span
-                                  class="ml-2"
-                                >
+                                <span>
                                   <span
                                     class="tooltip-icon"
                                     data-testid="tooltip-icon-section-field-tooltip"

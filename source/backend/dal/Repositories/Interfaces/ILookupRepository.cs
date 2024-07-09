@@ -157,5 +157,7 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsHistoricalFileNumberType> GetAllHistoricalNumberTypes();
 
         IEnumerable<PimsLeaseChklstSectionType> GetAllLeaseChecklistSectionTypes();
+
+        IEnumerable<PimsLeasePaymentCategoryType> GetAllLeasePaymentCategoryTypes();
     }
 }
