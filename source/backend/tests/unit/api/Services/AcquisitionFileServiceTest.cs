@@ -1344,6 +1344,7 @@ namespace Pims.Api.Test.Services
                     RegionCode = 1,
                 }
             );
+            propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyAcquisitionFile>())).Returns<PimsPropertyAcquisitionFile>(x => x);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));

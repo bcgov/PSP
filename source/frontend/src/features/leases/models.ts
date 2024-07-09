@@ -248,6 +248,7 @@ export class FormLeaseProperty {
         ? toTypeCodeNullable(formLeaseProperty.areaUnitTypeCode) ?? null
         : null,
       displayOrder: null,
+      location: null, // TODO: Add proper file location values when DB schema gets added
       ...getEmptyBaseAudit(formLeaseProperty.rowVersion),
     };
   }

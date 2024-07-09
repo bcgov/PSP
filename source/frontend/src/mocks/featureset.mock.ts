@@ -6,6 +6,10 @@ export const getMockLocationFeatureDataset = (): LocationFeatureDataset =>
       lat: 48.432802005,
       lng: -123.310041775,
     },
+    fileLocation: {
+      lat: 48.432802005,
+      lng: -123.310041775,
+    },
     pimsFeature: {
       properties: null,
       type: 'Feature',

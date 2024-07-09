@@ -230,6 +230,7 @@ describe('AddAcquisitionContainer component', () => {
       ...mapMachineBaseMock,
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
         pimsFeature: null,
         parcelFeature: null,
         regionFeature: {
@@ -258,6 +259,7 @@ describe('AddAcquisitionContainer component', () => {
       ...mapMachineBaseMock,
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
         pimsFeature: null,
         parcelFeature: null,
         regionFeature: {
