@@ -7,6 +7,11 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
   />
   <div />
   .c0 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c1 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -29,11 +34,11 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Civic Address:
-            </label>
-          </strong>
+          <label
+            class="c0"
+          >
+            Civic Address:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -47,11 +52,11 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Plan #:
-            </label>
-          </strong>
+          <label
+            class="c0"
+          >
+            Plan #:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -62,7 +67,7 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
       class="text-right col"
     >
       <div
-        class="c0"
+        class="c1"
       >
         <div
           class="justify-content-end row"
@@ -70,11 +75,11 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
           <div
             class="pr-0 text-left col-auto"
           >
-            <strong>
-              <label>
-                PID:
-              </label>
-            </strong>
+            <label
+              class="c0"
+            >
+              PID:
+            </label>
           </div>
           <div
             class="pl-1 text-left col-auto"
@@ -86,11 +91,11 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
           <div
             class="pr-0 text-left col-auto"
           >
-            <strong>
-              <label>
-                Land parcel type:
-              </label>
-            </strong>
+            <label
+              class="c0"
+            >
+              Land parcel type:
+            </label>
           </div>
           <div
             class="pl-1 text-left col-auto"
