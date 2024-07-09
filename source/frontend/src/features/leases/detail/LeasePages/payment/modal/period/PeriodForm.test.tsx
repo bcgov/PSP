@@ -46,7 +46,7 @@ describe('PeriodForm component', () => {
     };
   };
 
-  xit('renders as expected', async () => {
+  it.skip('renders as expected', async () => {
     const { asFragment } = setup({});
     expect(asFragment()).toMatchSnapshot();
   });
