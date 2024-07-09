@@ -36,6 +36,7 @@ export class LeaseFormModel {
   expiryDate = '';
   renewalDate = '';
   startDate = '';
+  terminationDate = '';
   responsibilityEffectiveDate = '';
   paymentReceivableTypeCode = '';
   categoryTypeCode = '';
@@ -84,8 +85,11 @@ export class LeaseFormModel {
     leaseDetail.lFileNo = apiModel?.lFileNo || '';
     leaseDetail.psFileNo = apiModel?.psFileNo || '';
     leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber || '';
-    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel!.expiryDate : '';
-    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel!.startDate : '';
+    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel.expiryDate : '';
+    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel.startDate : '';
+    leaseDetail.terminationDate = isValidIsoDateTime(apiModel?.terminationDate)
+      ? apiModel.terminationDate
+      : '';
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
     leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
@@ -139,6 +143,9 @@ export class LeaseFormModel {
       tfaFileNumber: stringToNull(formLease.tfaFileNumber),
       expiryDate: isValidIsoDateTime(formLease.expiryDate) ? formLease.expiryDate : null,
       startDate: isValidIsoDateTime(formLease.startDate) ? formLease.startDate : null,
+      terminationDate: isValidIsoDateTime(formLease.terminationDate)
+        ? formLease.terminationDate
+        : null,
       responsibilityEffectiveDate: isValidIsoDateTime(formLease.responsibilityEffectiveDate)
         ? formLease.responsibilityEffectiveDate
         : null,
@@ -307,6 +314,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     tenants: [],
     startDate: EpochIsoDateTime,
     expiryDate: EpochIsoDateTime,
+    terminationDate: null,
     lFileNo: '',
     tfaFileNumber: '',
     psFileNo: '',

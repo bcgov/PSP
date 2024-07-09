@@ -27,8 +27,9 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   otherProgramType: string | null;
   otherPurposeType: string | null;
   otherType: string | null;
-  expiryDate: UtcIsoDate | null;
   startDate: UtcIsoDate | null;
+  expiryDate: UtcIsoDate | null;
+  terminationDate: UtcIsoDate | null;
   renewalCount: number;
   paymentReceivableType: ApiGen_Base_CodeType<string> | null;
   type: ApiGen_Base_CodeType<string> | null;
