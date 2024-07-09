@@ -36,7 +36,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementContactsBodyCount = By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']");
         private By managementContactsDeleteBttns = By.CssSelector("button[title='Delete contact']");
         private By managementContactsFirstDeleteBttn = By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) [title='Delete contact']");
-        private By managementContactPaginationOptions = By.XPath("//div[@data-testid='PropertyContactsTable']/following-sibling::div/div/ul[@class='pagination']/li");
 
         //Create Property Contacts Elements
         private By managementContactDetailsTitle = By.XPath("//div[contains(text(),'Contact Details')]");
@@ -366,8 +365,8 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             Assert.Equal("Confirm changes", sharedModals.ModalHeader());
-            Assert.Equal("If you cancel now, this property information will not be saved.", sharedModals.ConfirmationModalText1());
-            Assert.Equal("Are you sure you want to Cancel?", sharedModals.ConfirmationModalText2());
+            Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
+            Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
 
             sharedModals.ModalClickOKBttn();
         }
@@ -405,13 +404,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 WaitUntilTableSpinnerDisappear();
             }
-        }
-
-        public void ViewLastContactFromList()
-        {
-            var paginationLastPage = webDriver.FindElements(managementContactPaginationOptions).Count() -1;
-
-            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyContactsTable']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
         }
 
         public void ViewLastActivityFromList()
