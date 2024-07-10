@@ -6,7 +6,7 @@ import { LeasePeriodStatusTypes } from '@/constants/index';
 export const LeasePeriodSchema = Yup.object().shape({
   startDate: Yup.date().required('Required'),
   expiryDate: Yup.date().when('isFlexible', (isFlexible, schema) =>
-    isFlexible
+    isFlexible === 'true'
       ? schema.min(Yup.ref('startDate'), 'Expiry Date must be after Start Date')
       : schema
           .min(Yup.ref('startDate'), 'Expiry Date must be after Start Date')

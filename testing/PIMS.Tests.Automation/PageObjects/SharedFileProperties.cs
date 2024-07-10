@@ -368,10 +368,10 @@ namespace PIMS.Tests.Automation.PageObjects
             while (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 0)
             {
 
-                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MoTI Inventory"))
+                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MOTI Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Contains("You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Contains("You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
                 }
                 else
                 {

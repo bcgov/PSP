@@ -37,6 +37,12 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c7.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -243,6 +249,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c10 {
@@ -763,9 +770,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
               class="c4"
             >
               Impacted properties:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1395,9 +1400,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
               class="c4"
             >
               Impacted properties:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"

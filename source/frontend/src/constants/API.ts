@@ -132,6 +132,7 @@ export const DISPOSITION_OFFER_STATUS_TYPES = 'PimsDispositionOfferStatusType';
 export const HISTORICAL_NUMBER_TYPES = 'PimsHistoricalFileNumberType';
 export const LEASE_CHECKLIST_SECTION_TYPES = 'PimsLeaseChklstSectionType';
 export const LEASE_CHECKLIST_ITEM_STATUS_TYPES = 'PimsLeaseChklstItemStatusType';
+export const LEASE_PAYMENT_CATEGORY_TYPES = 'PimsLeasePaymentCategoryType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

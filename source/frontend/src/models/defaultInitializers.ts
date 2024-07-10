@@ -41,6 +41,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   otherType: null,
   expiryDate: null,
   startDate: EpochIsoDateTime,
+  terminationDate: null,
   renewalCount: 0,
   paymentReceivableType: null,
   type: null,
@@ -70,8 +71,8 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   fileNumber: null,
   cancellationReason: null,
   terminationReason: null,
-  terminationDate: null,
   renewals: [],
+  primaryArbitrationCity: null,
   fileChecklistItems: [],
   ...getEmptyBaseAudit(),
 });

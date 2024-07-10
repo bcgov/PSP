@@ -75,7 +75,7 @@ export class LeaseFormModel {
   expiryDate = '';
   startDate = '';
   renewals: FormLeaseRenewal[] = [];
-
+  terminationDate = '';
   responsibilityEffectiveDate = '';
   paymentReceivableTypeCode = '';
   categoryTypeCode = '';
@@ -105,7 +105,6 @@ export class LeaseFormModel {
   hasDigitalLicense?: boolean;
   cancellationReason: string | null = null;
   terminationReason: string | null = null;
-  terminationDate = '';
   project?: IAutocompletePrediction;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
@@ -115,6 +114,7 @@ export class LeaseFormModel {
   periods: FormLeasePeriod[] = [];
   tenants: FormTenant[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
+  primaryArbitrationCity: string | null;
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -126,6 +126,9 @@ export class LeaseFormModel {
     leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber || '';
     leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel.expiryDate : '';
     leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel.startDate : '';
+    leaseDetail.terminationDate = isValidIsoDateTime(apiModel?.terminationDate)
+      ? apiModel.terminationDate
+      : '';
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
     leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
@@ -167,9 +170,7 @@ export class LeaseFormModel {
     leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
-    leaseDetail.terminationDate = isValidIsoDateTime(apiModel?.terminationDate)
-      ? apiModel.terminationDate
-      : '';
+    leaseDetail.primaryArbitrationCity = apiModel.primaryArbitrationCity;
 
     return leaseDetail;
   }
@@ -182,6 +183,9 @@ export class LeaseFormModel {
       tfaFileNumber: stringToNull(formLease.tfaFileNumber),
       expiryDate: isValidIsoDateTime(formLease.expiryDate) ? formLease.expiryDate : null,
       startDate: isValidIsoDateTime(formLease.startDate) ? formLease.startDate : null,
+      terminationDate: isValidIsoDateTime(formLease.terminationDate)
+        ? formLease.terminationDate
+        : null,
       responsibilityEffectiveDate: isValidIsoDateTime(formLease.responsibilityEffectiveDate)
         ? formLease.responsibilityEffectiveDate
         : null,
@@ -223,13 +227,11 @@ export class LeaseFormModel {
       hasPhysicalFile: formLease.hasPhysicalLicense ?? false,
       cancellationReason: stringToNull(formLease.cancellationReason),
       terminationReason: stringToNull(formLease.terminationReason),
+      primaryArbitrationCity: stringToNull(formLease.primaryArbitrationCity),
       fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
       renewalCount: formLease.renewals.length,
-      terminationDate: isValidIsoDateTime(formLease.terminationDate)
-        ? formLease.terminationDate
-        : null,
       ...getEmptyBaseAudit(formLease.rowVersion),
     };
   }
@@ -294,6 +296,7 @@ export class FormLeaseProperty {
         ? toTypeCodeNullable(formLeaseProperty.areaUnitTypeCode) ?? null
         : null,
       displayOrder: null,
+      location: null, // TODO: Add proper file location values when DB schema gets added
       ...getEmptyBaseAudit(formLeaseProperty.rowVersion),
     };
   }
@@ -352,6 +355,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     tenants: [],
     startDate: EpochIsoDateTime,
     expiryDate: EpochIsoDateTime,
+    terminationDate: null,
     lFileNo: '',
     tfaFileNumber: '',
     psFileNo: '',
@@ -395,6 +399,6 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     fileNumber: null,
     fileChecklistItems: [],
     renewals: [],
-    terminationDate: '',
+    primaryArbitrationCity: null,
     ...getEmptyBaseAudit(),
   });

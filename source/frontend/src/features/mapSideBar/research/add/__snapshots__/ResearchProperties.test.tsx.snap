@@ -37,6 +37,12 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   height: 3.8rem;
 }
 
+.c14.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c14.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -251,6 +257,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c9 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c6.c6.c6 input,

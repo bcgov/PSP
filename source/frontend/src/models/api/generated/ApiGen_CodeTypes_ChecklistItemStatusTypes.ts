@@ -5,5 +5,5 @@
 export enum ApiGen_CodeTypes_ChecklistItemStatusTypes {
   COMPLT = 'COMPLT',
   INCOMP = 'INCOMP',
-  NA = 'NA',
+  NOTAPP = 'NOTAPP',
 }

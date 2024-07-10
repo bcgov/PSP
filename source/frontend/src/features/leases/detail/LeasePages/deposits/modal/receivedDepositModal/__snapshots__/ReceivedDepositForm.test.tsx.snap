@@ -37,6 +37,12 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c7.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -208,6 +214,7 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 .form-group {
@@ -516,6 +523,12 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   height: 3.8rem;
 }
 
+.c7.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -687,6 +700,7 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
 
 .c1 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 .form-group {

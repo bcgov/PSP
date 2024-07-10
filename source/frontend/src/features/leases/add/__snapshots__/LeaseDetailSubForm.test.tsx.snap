@@ -58,6 +58,7 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div
@@ -161,9 +162,7 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
             class="c2"
           >
             Status:
-            <span
-              class="ml-2"
-            >
+            <span>
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-lease-status-tooltip"

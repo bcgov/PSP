@@ -124,216 +124,259 @@ exports[`PaymentForm component > renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="c1 required form-group"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="datepicker-receivedDate"
-      >
-        <span
-          class="datepicker-label"
-        >
-          Sent date:
-        </span>
-         
-      </label>
       <div
-        class="react-datepicker-wrapper d-block"
+        class="col-md-6"
       >
         <div
-          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+          class="c1 required form-group"
         >
-          <svg
-            class="react-datepicker__calendar-icon"
-            viewBox="0 0 448 512"
-            xmlns="http://www.w3.org/2000/svg"
+          <label
+            class="form-label"
+            for="datepicker-receivedDate"
           >
-            <path
-              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-            />
-          </svg>
-          <input
-            autocomplete="off"
-            class="c2 form-control date-picker"
-            id="datepicker-receivedDate"
-            name="receivedDate"
-            placeholder="MMM DD, YYYY"
-            required=""
-            type="text"
-            value=""
-          />
+            <span
+              class="datepicker-label"
+            >
+              Sent date:
+            </span>
+             
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+            >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-receivedDate"
+                name="receivedDate"
+                placeholder="MMM DD, YYYY"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div
-      class="form-group"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="input-leasePaymentMethodType.id"
+      <div
+        class="col-md-6"
       >
-        <span
-          class="control-label"
+        <div
+          class="form-group"
         >
-          Method:
-        </span>
-         
-      </label>
-      <select
-        class="form-select form-control"
-        id="input-leasePaymentMethodType.id"
-        name="leasePaymentMethodType.id"
-      >
-        <option
-          class="option"
-          data-testid="select-option-CASH"
-          value="CASH"
-        >
-          Cash
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-CHEQ"
-          value="CHEQ"
-        >
-          Cheque
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-CRDR"
-          value="CRDR"
-        >
-          Credit / Debit
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-EFT"
-          value="EFT"
-        >
-          EFT
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-H120"
-          value="H120"
-        >
-          H120
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-OTHR"
-          value="OTHR"
-        >
-          Other
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-POST"
-          value="POST"
-        >
-          Post-dated cheque
-        </option>
-      </select>
+          <label
+            class="form-label"
+            for="input-leasePaymentMethodType.id"
+          >
+            <span
+              class="control-label"
+            >
+              Method:
+            </span>
+             
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-leasePaymentMethodType.id"
+            name="leasePaymentMethodType.id"
+          >
+            <option
+              class="option"
+              data-testid="select-option-CASH"
+              value="CASH"
+            >
+              Cash
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-CHEQ"
+              value="CHEQ"
+            >
+              Cheque
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-CRDR"
+              value="CRDR"
+            >
+              Credit / Debit
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-EFT"
+              value="EFT"
+            >
+              EFT
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-H120"
+              value="H120"
+            >
+              H120
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-OTHR"
+              value="OTHR"
+            >
+              Other
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-POST"
+              value="POST"
+            >
+              Post-dated cheque
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
     <div
-      class="form-group"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="input-amountTotal"
-      >
-        Total received ($) 
-      </label>
       <div
-        class="input-tooltip-wrapper"
+        class="col-md-6"
       >
-        <input
-          class="form-control input-number"
-          id="input-amountTotal"
-          inputmode="numeric"
-          name="amountTotal"
-          placeholder=""
-          type="text"
-          value=""
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountTotal"
+          >
+            Total received ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountTotal"
+              inputmode="numeric"
+              name="amountTotal"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c3 c4"
+        >
+          <div
+            class="c5"
+          >
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-actual-calculation-tooltip"
+              id="actual-calculation-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="c3"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="form-label"
+                for="input-amountPreTax"
+              >
+                Expected payment ($) 
+              </label>
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number small"
+                  id="input-amountPreTax"
+                  inputmode="numeric"
+                  name="amountPreTax"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="form-group"
+            >
+              <label
+                class="form-label"
+                for="input-amountGst"
+              >
+                GST ($) 
+              </label>
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number small"
+                  id="input-amountGst"
+                  inputmode="numeric"
+                  name="amountGst"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="invalid-feedback"
         />
-      </div>
-    </div>
-    <div
-      class="c3 c4"
-    >
-      <div
-        class="c5"
-      >
-        <span
-          class="tooltip-icon"
-          data-testid="tooltip-icon-actual-calculation-tooltip"
-          id="actual-calculation-tooltip"
-        >
-          <svg
-            class="tooltip-icon"
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-            />
-          </svg>
-        </span>
-      </div>
-      <div
-        class="c3"
-      >
-        <div
-          class="form-group"
-        >
-          <label
-            class="form-label"
-            for="input-amountPreTax"
-          >
-            Expected payment ($) 
-          </label>
-          <div
-            class="input-tooltip-wrapper"
-          >
-            <input
-              class="form-control input-number small"
-              id="input-amountPreTax"
-              inputmode="numeric"
-              name="amountPreTax"
-              placeholder=""
-              type="text"
-              value=""
-            />
-          </div>
-        </div>
-        <div
-          class="form-group"
-        >
-          <label
-            class="form-label"
-            for="input-amountGst"
-          >
-            GST ($) 
-          </label>
-          <div
-            class="input-tooltip-wrapper"
-          >
-            <input
-              class="form-control input-number small"
-              id="input-amountGst"
-              inputmode="numeric"
-              name="amountGst"
-              placeholder=""
-              type="text"
-              value=""
-            />
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -464,216 +507,259 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
     class="c0"
   >
     <div
-      class="c1 required form-group"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="datepicker-receivedDate"
-      >
-        <span
-          class="datepicker-label"
-        >
-          Sent date:
-        </span>
-         
-      </label>
       <div
-        class="react-datepicker-wrapper d-block"
+        class="col-md-6"
       >
         <div
-          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+          class="c1 required form-group"
         >
-          <svg
-            class="react-datepicker__calendar-icon"
-            viewBox="0 0 448 512"
-            xmlns="http://www.w3.org/2000/svg"
+          <label
+            class="form-label"
+            for="datepicker-receivedDate"
           >
-            <path
-              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
-            />
-          </svg>
-          <input
-            autocomplete="off"
-            class="c2 form-control date-picker"
-            id="datepicker-receivedDate"
-            name="receivedDate"
-            placeholder="MMM DD, YYYY"
-            required=""
-            type="text"
-            value=""
-          />
+            <span
+              class="datepicker-label"
+            >
+              Sent date:
+            </span>
+             
+          </label>
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+            >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
+              <input
+                autocomplete="off"
+                class="c2 form-control date-picker"
+                id="datepicker-receivedDate"
+                name="receivedDate"
+                placeholder="MMM DD, YYYY"
+                required=""
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
     <div
-      class="form-group"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="input-leasePaymentMethodType.id"
+      <div
+        class="col-md-6"
       >
-        <span
-          class="control-label"
+        <div
+          class="form-group"
         >
-          Method:
-        </span>
-         
-      </label>
-      <select
-        class="form-select form-control"
-        id="input-leasePaymentMethodType.id"
-        name="leasePaymentMethodType.id"
-      >
-        <option
-          class="option"
-          data-testid="select-option-CASH"
-          value="CASH"
-        >
-          Cash
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-CHEQ"
-          value="CHEQ"
-        >
-          Cheque
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-CRDR"
-          value="CRDR"
-        >
-          Credit / Debit
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-EFT"
-          value="EFT"
-        >
-          EFT
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-H120"
-          value="H120"
-        >
-          H120
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-OTHR"
-          value="OTHR"
-        >
-          Other
-        </option>
-        <option
-          class="option"
-          data-testid="select-option-POST"
-          value="POST"
-        >
-          Post-dated cheque
-        </option>
-      </select>
+          <label
+            class="form-label"
+            for="input-leasePaymentMethodType.id"
+          >
+            <span
+              class="control-label"
+            >
+              Method:
+            </span>
+             
+          </label>
+          <select
+            class="form-select form-control"
+            id="input-leasePaymentMethodType.id"
+            name="leasePaymentMethodType.id"
+          >
+            <option
+              class="option"
+              data-testid="select-option-CASH"
+              value="CASH"
+            >
+              Cash
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-CHEQ"
+              value="CHEQ"
+            >
+              Cheque
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-CRDR"
+              value="CRDR"
+            >
+              Credit / Debit
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-EFT"
+              value="EFT"
+            >
+              EFT
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-H120"
+              value="H120"
+            >
+              H120
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-OTHR"
+              value="OTHR"
+            >
+              Other
+            </option>
+            <option
+              class="option"
+              data-testid="select-option-POST"
+              value="POST"
+            >
+              Post-dated cheque
+            </option>
+          </select>
+        </div>
+      </div>
     </div>
     <div
-      class="form-group"
+      class="row"
     >
-      <label
-        class="form-label"
-        for="input-amountTotal"
-      >
-        Total received ($) 
-      </label>
       <div
-        class="input-tooltip-wrapper"
+        class="col-md-6"
       >
-        <input
-          class="form-control input-number"
-          id="input-amountTotal"
-          inputmode="numeric"
-          name="amountTotal"
-          placeholder=""
-          type="text"
-          value=""
+        <div
+          class="form-group"
+        >
+          <label
+            class="form-label"
+            for="input-amountTotal"
+          >
+            Total received ($) 
+          </label>
+          <div
+            class="input-tooltip-wrapper"
+          >
+            <input
+              class="form-control input-number"
+              id="input-amountTotal"
+              inputmode="numeric"
+              name="amountTotal"
+              placeholder=""
+              type="text"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="c3 c4"
+        >
+          <div
+            class="c5"
+          >
+            <span
+              class="tooltip-icon"
+              data-testid="tooltip-icon-actual-calculation-tooltip"
+              id="actual-calculation-tooltip"
+            >
+              <svg
+                class="tooltip-icon"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+            </span>
+          </div>
+          <div
+            class="c3"
+          >
+            <div
+              class="form-group"
+            >
+              <label
+                class="form-label"
+                for="input-amountPreTax"
+              >
+                Expected payment ($) 
+              </label>
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number small"
+                  id="input-amountPreTax"
+                  inputmode="numeric"
+                  name="amountPreTax"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+            <div
+              class="form-group"
+            >
+              <label
+                class="form-label"
+                for="input-amountGst"
+              >
+                GST ($) 
+              </label>
+              <div
+                class="input-tooltip-wrapper"
+              >
+                <input
+                  class="form-control input-number small"
+                  id="input-amountGst"
+                  inputmode="numeric"
+                  name="amountGst"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
+    >
+      <div
+        class="col"
+      >
+        <div
+          class="invalid-feedback"
         />
-      </div>
-    </div>
-    <div
-      class="c3 c4"
-    >
-      <div
-        class="c5"
-      >
-        <span
-          class="tooltip-icon"
-          data-testid="tooltip-icon-actual-calculation-tooltip"
-          id="actual-calculation-tooltip"
-        >
-          <svg
-            class="tooltip-icon"
-            fill="currentColor"
-            height="1em"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
-            width="1em"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-            />
-          </svg>
-        </span>
-      </div>
-      <div
-        class="c3"
-      >
-        <div
-          class="form-group"
-        >
-          <label
-            class="form-label"
-            for="input-amountPreTax"
-          >
-            Expected payment ($) 
-          </label>
-          <div
-            class="input-tooltip-wrapper"
-          >
-            <input
-              class="form-control input-number small"
-              id="input-amountPreTax"
-              inputmode="numeric"
-              name="amountPreTax"
-              placeholder=""
-              type="text"
-              value=""
-            />
-          </div>
-        </div>
-        <div
-          class="form-group"
-        >
-          <label
-            class="form-label"
-            for="input-amountGst"
-          >
-            GST ($) 
-          </label>
-          <div
-            class="input-tooltip-wrapper"
-          >
-            <input
-              class="form-control input-number small"
-              id="input-amountGst"
-              inputmode="numeric"
-              name="amountGst"
-              placeholder=""
-              type="text"
-              value=""
-            />
-          </div>
-        </div>
       </div>
     </div>
   </div>

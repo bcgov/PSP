@@ -1,3 +1,4 @@
+import clsx from 'classnames';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -13,6 +14,7 @@ export interface ISectionListHeaderProps {
   onAdd?: () => void;
   claims: Claims[];
   'data-testId'?: string;
+  className?: string;
 }
 
 export const SectionListHeader: React.FunctionComponent<
@@ -22,7 +24,7 @@ export const SectionListHeader: React.FunctionComponent<
   const onClick = () => props.onAdd && props.onAdd();
 
   return (
-    <StyledRow className="no-gutters">
+    <StyledRow className={clsx('no-gutters', props.className)}>
       <Col xs="auto" className="px-2 my-1">
         {props.title}
       </Col>
