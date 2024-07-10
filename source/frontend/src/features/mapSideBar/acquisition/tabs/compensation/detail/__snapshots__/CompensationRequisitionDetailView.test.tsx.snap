@@ -611,13 +611,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c7"
+              class="c8"
             >
               Properties:
             </label>
           </div>
           <div
-            class="c8 text-left col"
+            class="c9 text-left col"
           >
             <p>
               <label>
@@ -637,7 +637,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c3"
+        class="c4"
       >
         <div
           class="no-gutters row"
