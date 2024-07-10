@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
