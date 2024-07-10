@@ -49,6 +49,19 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetPropertiesById_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetProperties(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
         public void GetById_Success()
         {
             // Arrange

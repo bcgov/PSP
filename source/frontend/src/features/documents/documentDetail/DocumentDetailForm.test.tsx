@@ -74,13 +74,10 @@ const documentMetadata: ApiGen_Mayan_DocumentMetadata[] = [
       uuid: '',
       file_latest: {
         id: 2,
-
         comment: '',
         encoding: '',
-
         mimetype: '',
         size: 12,
-
         filename: null,
         timestamp: '',
         checksum: '',
