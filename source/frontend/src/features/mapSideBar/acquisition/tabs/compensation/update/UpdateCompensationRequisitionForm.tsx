@@ -29,11 +29,10 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import { exists, isValidId } from '@/utils';
+import { isValidId } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { withNameSpace } from '@/utils/formUtils';
 
-import { CompensationRequisitionPropertyForm } from '../models/CompensationRequisitionPropertyForm';
 import { CompensationRequisitionYupSchema } from './CompensationRequisitionYupSchema';
 import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm';
 import { CompensationRequisitionFormModel } from './models';
@@ -224,25 +223,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <FilePropertiesTable
                     disabledSelection={false}
                     fileProperties={acquisitionFile.fileProperties ?? []}
-                    selectedFileProperties={
-                      initialValues.selectedProperties
-                        .map(p =>
-                          acquisitionFile.fileProperties?.find(
-                            fp => fp.id === p.propertyAcquisitionFileId,
-                          ),
-                        )
-                        .filter(exists) ?? []
-                    }
+                    selectedFileProperties={formikProps.values.selectedProperties}
                     setSelectedFileProperties={(fileProperties: ApiGen_Concepts_FileProperty[]) => {
-                      const compReqProperties = fileProperties.map(x => {
-                        return new CompensationRequisitionPropertyForm(
-                          null,
-                          initialValues.id,
-                          x.id,
-                        );
-                      });
-
-                      formikProps.setFieldValue('selectedProperties', compReqProperties);
+                      formikProps.setFieldValue('selectedProperties', fileProperties);
                     }}
                   ></FilePropertiesTable>
                 </SectionField>

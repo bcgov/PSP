@@ -6,12 +6,11 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompensationRequisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisitionProperty';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { isValidId, isValidIsoDateTime } from '@/utils';
 import { booleanToString, stringToBoolean, stringToNull } from '@/utils/formUtils';
-
-import { CompensationRequisitionPropertyForm } from '../models/CompensationRequisitionPropertyForm';
 
 export class CompensationRequisitionFormModel {
   id: number | null;
@@ -35,7 +34,7 @@ export class CompensationRequisitionFormModel {
   financials: FinancialActivityFormModel[] = [];
   payee: AcquisitionPayeeFormModel;
   alternateProject: IAutocompletePrediction | null = null;
-  selectedProperties: CompensationRequisitionPropertyForm[] = [];
+  selectedProperties: ApiGen_Concepts_FileProperty[] = [];
   rowVersion: number | null = null;
 
   constructor(id: number | null, acquisitionFileId = 0, finalizedDate: string) {
@@ -87,10 +86,14 @@ export class CompensationRequisitionFormModel {
       financials: this.financials
         .filter(x => !x.isEmpty())
         .map<ApiGen_Concepts_CompensationFinancial>(x => x.toApi()),
-      compensationRequisitionProperties:
-        this.selectedProperties.map<ApiGen_Concepts_CompensationRequisitionProperty>(x =>
-          x.toApi(),
-        ),
+      compensationRequisitionProperties: this.selectedProperties.map(x => {
+        return {
+          compensationRequisitionPropertyId: null,
+          compensationRequisitionId: this.id,
+          propertyAcquisitionFileId: x.id,
+          acquisitionFileProperty: null,
+        } as ApiGen_Concepts_CompensationRequisitionProperty;
+      }),
       rowVersion: this.rowVersion ?? null,
     };
   }
@@ -162,8 +165,8 @@ export class CompensationRequisitionFormModel {
     compensation.payee.pretaxAmount = payeePretaxAmount;
     compensation.payee.taxAmount = payeeTaxAmount;
     compensation.payee.totalAmount = payeeTotalAmount;
-    compensation.selectedProperties = apiModel.compensationRequisitionProperties.map(x =>
-      CompensationRequisitionPropertyForm.fromApi(x),
+    compensation.selectedProperties = apiModel.compensationRequisitionProperties.map(
+      x => x.acquisitionFileProperty,
     );
 
     return compensation;

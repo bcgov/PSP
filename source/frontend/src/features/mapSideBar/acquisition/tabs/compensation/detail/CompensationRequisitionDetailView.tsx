@@ -13,14 +13,14 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { StyledAddButton } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
-import { exists, formatMoney, prettyFormatDate } from '@/utils';
+import { exists, formatMoney, getFilePropertyName, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { cannotEditMessage } from '../../../common/constants';
@@ -30,6 +30,7 @@ import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
 export interface CompensationRequisitionDetailViewProps {
   acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   compensation: ApiGen_Concepts_CompensationRequisition;
+  compensationProperties: ApiGen_Concepts_FileProperty[];
   compensationContactPerson: ApiGen_Concepts_Person | undefined;
   compensationContactOrganization: ApiGen_Concepts_Organization | undefined;
   clientConstant: string;
@@ -51,6 +52,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 > = ({
   acquisitionFile,
   compensation,
+  compensationProperties,
   compensationContactPerson,
   compensationContactOrganization,
   clientConstant,
@@ -257,14 +259,14 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
       <Section header="Selected File Properties">
         <SectionField label="Properties" labelWidth="4">
-          <FilePropertiesTable
-            fileProperties={acquisitionFile.fileProperties}
-            setSelectedFileProperties={null}
-            selectedFileProperties={compensation.compensationRequisitionProperties.map(x => {
-              return x.acquisitionFileProperty;
-            })}
-            disabledSelection={true}
-          ></FilePropertiesTable>
+          {compensationProperties.map(x => {
+            const propertyName = getFilePropertyName(x);
+            return (
+              <p key={x.id}>
+                <label>{propertyName.value}</label>
+              </p>
+            );
+          })}
         </SectionField>
       </Section>
 
