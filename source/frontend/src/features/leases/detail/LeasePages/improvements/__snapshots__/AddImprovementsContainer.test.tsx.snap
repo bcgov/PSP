@@ -29,6 +29,7 @@ exports[`Add Improvements container component > displays the improvement types i
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c6 {
@@ -481,6 +482,7 @@ exports[`Add Improvements container component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c6 {

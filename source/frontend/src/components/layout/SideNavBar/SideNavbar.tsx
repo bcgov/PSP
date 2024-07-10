@@ -36,7 +36,7 @@ export const SideNavBar = () => {
             history.push('/mapview');
           }}
           icon={<HomeIcon />}
-          text="Home"
+          text="Map View"
           showText={expanded}
         />
         <NavIcon

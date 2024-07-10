@@ -37,6 +37,12 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
+.c11.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c11.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;

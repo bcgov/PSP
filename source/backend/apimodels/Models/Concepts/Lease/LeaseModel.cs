@@ -79,14 +79,19 @@ namespace Pims.Api.Models.Concepts.Lease
         public string OtherType { get; set; }
 
         /// <summary>
+        /// get/set - The original start date of the lease.
+        /// </summary>
+        public DateOnly? StartDate { get; set; }
+
+        /// <summary>
         /// get/set - The calculated expiry date of the lease.
         /// </summary>
         public DateOnly? ExpiryDate { get; set; }
 
         /// <summary>
-        /// get/set - The original start date of the lease.
+        /// get/set - Date that the lease was terminated.
         /// </summary>
-        public DateOnly? StartDate { get; set; }
+        public DateOnly? TerminationDate { get; set; }
 
         /// <summary>
         /// get/set - The lease renewal count.
@@ -189,6 +194,11 @@ namespace Pims.Api.Models.Concepts.Lease
         public string CancellationReason { get; set; }
 
         public string TerminationReason { get; set; }
+
+        /// <summary>
+        /// get/set - Track arbitration cities.
+        /// </summary>
+        public string PrimaryArbitrationCity { get; set; }
 
         public bool IsExpired { get; set; }
 

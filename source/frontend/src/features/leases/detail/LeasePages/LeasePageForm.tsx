@@ -22,7 +22,7 @@ export const LeaseViewPageForm: React.FunctionComponent<
 > = ({ children, leasePageName, isEditing, onEdit }) => {
   const { lease } = useContext(LeaseStateContext);
 
-  const DisplayLeasePeriodinationMessage = () => {
+  const displayLeaseTerminationMessage = () => {
     return (
       lease &&
       leasePageName === LeasePageNames.DETAILS &&
@@ -43,7 +43,7 @@ export const LeaseViewPageForm: React.FunctionComponent<
     <StyledLeasePage>
       <StyledEditWrapper className="mr-3 my-1">
         <StyledTerminationWrapper>
-          {DisplayLeasePeriodinationMessage() && (
+          {displayLeaseTerminationMessage() && (
             <StyledTerminationMessage>{getTerminationMessage()}</StyledTerminationMessage>
           )}
           <LeaseEditButton onEdit={onEdit} isEditing={isEditing} />

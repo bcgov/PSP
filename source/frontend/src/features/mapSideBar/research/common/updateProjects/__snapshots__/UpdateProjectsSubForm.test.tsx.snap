@@ -37,6 +37,12 @@ exports[`UpdateProjectsSubForm > renders as expected with minimal form data 1`] 
   height: 3.8rem;
 }
 
+.c0.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c0.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -192,6 +198,12 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   height: 3.8rem;
 }
 
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -343,6 +355,7 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
 
 .c0 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div
@@ -495,6 +508,12 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c0.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c0.btn:hover {

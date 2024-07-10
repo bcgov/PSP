@@ -1,8 +1,13 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
+
+import { renderTooltip } from '@/utils/formUtils';
 
 export interface IHeaderLabelColProps {
-  label: string;
+  label: string | null;
+  /** It accepts either a string or a custom React tooltip component  */
+  tooltip?: React.ReactNode;
   labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
 }
 
@@ -29,9 +34,12 @@ export const HeaderField: React.FC<React.PropsWithChildren<IHeaderFieldProps>> =
 
 export const HeaderLabelCol: React.FC<IHeaderLabelColProps> = props => (
   <Col xs={props.labelWidth ?? 'auto'} className="pr-0 text-left">
-    <strong>
-      <label>{props.label}</label>
-    </strong>
+    {props.label && (
+      <StyledHeaderLabel>
+        {props.label}
+        {props.tooltip && <span>{renderTooltip(props.tooltip)}</span>}
+      </StyledHeaderLabel>
+    )}
   </Col>
 );
 
@@ -48,3 +56,8 @@ export const HeaderContentCol: React.FC<
     </Col>
   );
 };
+
+const StyledHeaderLabel = styled.label`
+  font-weight: bold;
+  white-space: nowrap;
+`;

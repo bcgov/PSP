@@ -200,9 +200,10 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(elementBy);
             var numberFromElement = webDriver.FindElement(elementBy).GetAttribute("Value");
-            var number1 = double.Parse(numberFromElement);
+            var number1 = Math.Round(double.Parse(numberFromElement), 4, MidpointRounding.ToEven).ToString();
+            var roundedNumber2 = Math.Round(number2, 4, MidpointRounding.ToEven).ToString();
 
-            Assert.True(number1.Equals(number2));
+            Assert.Equal(roundedNumber2, number1);
         }
 
         protected void AssertTrueElementContains(By elementBy, string text)
@@ -293,7 +294,7 @@ namespace PIMS.Tests.Automation.PageObjects
             return result;
         }
 
-        protected string TransformBooleanFormat(bool elementValue)
+        protected string TransformBooleanLeaseFormat(bool elementValue)
         {
             if (elementValue)
                 { return "Y"; }
@@ -301,9 +302,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 { return "N"; }
         }
 
-        protected double TransformStringToDouble(string elementValue)
+        protected string TransformBooleanFormat(string elementValue)
         {
-            return double.Parse(elementValue, System.Globalization.CultureInfo.InvariantCulture);
+            var boolElementValue = bool.Parse(elementValue);
+
+            if (boolElementValue) return "Yes";
+            else return "No";
         }
 
         protected List<string> GetViewFieldListContent(By element)

@@ -139,7 +139,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
+            var leaseEntity = _mapper.Map<Dal.Entities.PimsLease>(leaseModel);
             var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
             var updatedLease = _leaseService.Update(leaseEntity, userOverrides);
 
