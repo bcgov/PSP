@@ -391,9 +391,10 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     terminationReason: null,
     isExpired: false,
     project: null,
-    ...getEmptyBaseAudit(),
     fileName: null,
     fileNumber: null,
     fileChecklistItems: [],
     renewals: [],
+    terminationDate: '',
+    ...getEmptyBaseAudit(),
   });
