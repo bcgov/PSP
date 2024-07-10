@@ -1,13 +1,16 @@
 import { Formik, FormikProps } from 'formik';
-import { Col, Row } from 'react-bootstrap';
+import { FaPlus } from 'react-icons/fa';
 import { Prompt } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons';
 import { TableSelect } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Section } from '@/components/common/Section/Section';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
+import { Claims } from '@/constants';
 import { TENANT_TYPES } from '@/constants/API';
 import { LeaseFormModel } from '@/features/leases/models';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -21,7 +24,6 @@ import PrimaryContactWarningModal, {
   IPrimaryContactWarningModalProps,
 } from './PrimaryContactWarningModal';
 import SelectedTableHeader from './SelectedTableHeader';
-import * as Styled from './styles';
 
 export interface IAddLeaseTenantFormProps {
   selectedContacts: IContactSearchResult[];
@@ -62,90 +64,89 @@ export const AddLeaseTenantForm: React.FunctionComponent<
   };
 
   return (
-    <>
-      <Styled.TenantH2>Add tenants & contacts to this Lease/License</Styled.TenantH2>
-      <p>
-        If the tenants are not already set up as contacts, you will have to add them first (under{' '}
-        {<Link to="/contact/list">Contacts</Link>}) before you can find them here.
-      </p>
-
-      <Formik
-        validationSchema={AddLeaseTenantYupSchema}
-        onSubmit={values => {
-          onSubmit(values);
-        }}
-        innerRef={formikRef}
-        enableReinitialize
-        initialValues={{ ...new LeaseFormModel(), ...initialValues, tenants: selectedTenants }}
+    <StyledSummarySection>
+      <Section
+        header={
+          <SectionListHeader
+            claims={[Claims.LEASE_EDIT]}
+            title="Tenants"
+            addButtonText="Select Tenant(s)"
+            addButtonIcon={<FaPlus size={'2rem'} />}
+            onAdd={() => {
+              setShowContactManager(true);
+            }}
+          />
+        }
       >
-        {formikProps => (
-          <>
-            <LoadingBackdrop show={loading} parentScreen />
-            <Prompt
-              when={formikProps.dirty && !formikProps.isSubmitting}
-              message="You have made changes on this form. Do you wish to leave without saving?"
-            />
-            <StyledFormBody>
-              <Row>
-                <Col>
-                  <StyledButton
-                    className="ml-auto"
-                    variant="secondary"
-                    onClick={() => {
-                      setShowContactManager(true);
-                    }}
-                  >
-                    Select Tenant(s)
-                  </StyledButton>
-                </Col>
-              </Row>
-              <TableSelect<FormTenant>
-                selectedItems={selectedTenants}
-                columns={getColumns(tenantTypes)}
-                field="tenants"
-                selectedTableHeader={SelectedTableHeader}
-                onRemove={onRemove}
-              ></TableSelect>
-              <ContactManagerModal
-                selectedRows={selectedContacts}
-                setSelectedRows={(s: IContactSearchResult[]) => {
-                  setSelectedContacts(s);
-                }}
-                display={showContactManager}
-                setDisplay={setShowContactManager}
-                handleModalOk={() => {
-                  setShowContactManager(false);
-                  setSelectedTenants(selectedContacts);
-                }}
-                handleModalCancel={() => {
-                  setShowContactManager(false);
-                  setSelectedContacts(
-                    selectedTenants.map(t => FormTenant.toContactSearchResult(t)),
-                  );
-                }}
-                showActiveSelector={true}
-                isSummary={true}
-              ></ContactManagerModal>
-            </StyledFormBody>
-            {children}
-          </>
-        )}
-      </Formik>
-      <PrimaryContactWarningModal
-        saveCallback={saveCallback}
-        onCancel={onCancel}
-        selectedTenants={selectedTenants}
-      />
-    </>
+        <span>
+          Note: If the tenants you are trying to find were never added to the &quot;contact
+          list&quot; it will not show up. Please add them to the contact list{' '}
+          {<Link to="/contact/list">here</Link>}, then you will be able to see them on the &quot;Add
+          &quot;Add a Tenant&quot; list.
+        </span>
+
+        <Formik
+          validationSchema={AddLeaseTenantYupSchema}
+          onSubmit={values => {
+            onSubmit(values);
+          }}
+          innerRef={formikRef}
+          enableReinitialize
+          initialValues={{ ...new LeaseFormModel(), ...initialValues, tenants: selectedTenants }}
+        >
+          {formikProps => (
+            <>
+              <LoadingBackdrop show={loading} parentScreen />
+              <Prompt
+                when={formikProps.dirty && !formikProps.isSubmitting}
+                message="You have made changes on this form. Do you wish to leave without saving?"
+              />
+              <StyledFormBody>
+                <TableSelect<FormTenant>
+                  selectedItems={selectedTenants}
+                  columns={getColumns(tenantTypes)}
+                  field="tenants"
+                  selectedTableHeader={SelectedTableHeader}
+                  onRemove={onRemove}
+                ></TableSelect>
+                <ContactManagerModal
+                  selectedRows={selectedContacts}
+                  setSelectedRows={(s: IContactSearchResult[]) => {
+                    setSelectedContacts(s);
+                  }}
+                  display={showContactManager}
+                  setDisplay={setShowContactManager}
+                  handleModalOk={() => {
+                    setShowContactManager(false);
+                    setSelectedTenants(selectedContacts);
+                  }}
+                  handleModalCancel={() => {
+                    setShowContactManager(false);
+                    setSelectedContacts(
+                      selectedTenants.map(t => FormTenant.toContactSearchResult(t)),
+                    );
+                  }}
+                  showActiveSelector={true}
+                  isSummary={true}
+                ></ContactManagerModal>
+              </StyledFormBody>
+              {children}
+            </>
+          )}
+        </Formik>
+        <PrimaryContactWarningModal
+          saveCallback={saveCallback}
+          onCancel={onCancel}
+          selectedTenants={selectedTenants}
+        />
+      </Section>
+    </StyledSummarySection>
   );
 };
 
 const StyledFormBody = styled.div`
   margin-top: 3rem;
   text-align: left;
-`;
-const StyledButton = styled(Button)`
-  float: left;
 `;
 
 export default AddLeaseTenantForm;

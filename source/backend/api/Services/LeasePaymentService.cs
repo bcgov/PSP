@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
@@ -9,12 +11,12 @@ namespace Pims.Api.Services
 {
     public class LeasePaymentService : ILeasePaymentService
     {
-        private readonly ILeaseTermRepository _leaseTermRepository;
+        private readonly ILeasePeriodRepository _leasePeriodRepository;
         private readonly ILeasePaymentRepository _leasePaymentRepository;
 
-        public LeasePaymentService(ILeaseTermRepository leaseTermRepository, ILeasePaymentRepository leasePaymentRepository, ClaimsPrincipal user)
+        public LeasePaymentService(ILeasePeriodRepository leasePeriodRepository, ILeasePaymentRepository leasePaymentRepository, ClaimsPrincipal user)
         {
-            _leaseTermRepository = leaseTermRepository;
+            _leasePeriodRepository = leasePeriodRepository;
             _leasePaymentRepository = leasePaymentRepository;
         }
 
@@ -52,22 +54,40 @@ namespace Pims.Api.Services
             return updatedPayment;
         }
 
-        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeaseTerm parent)
+        public static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
         {
-            decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
-            if (payment.PaymentAmountTotal == 0)
+            if (!Enum.TryParse(payment.LeasePaymentCategoryTypeCode, out LeasePaymentCategoryTypes leasePaymentCategoryType))
+            {
+                throw new InvalidOperationException();
+            }
+            decimal? expectedTotal;
+            switch (leasePaymentCategoryType)
+            {
+                case LeasePaymentCategoryTypes.VBL:
+                    expectedTotal = (parent?.VblRentAgreedPmt ?? 0) + (parent?.VblRentGstAmount ?? 0);
+                    break;
+                case LeasePaymentCategoryTypes.ADDL:
+                    expectedTotal = (parent?.AddlRentAgreedPmt ?? 0) + (parent?.AddlRentGstAmount ?? 0);
+                    break;
+                case LeasePaymentCategoryTypes.BASE:
+                    expectedTotal = (parent?.PaymentAmount ?? 0) + (parent?.GstAmount ?? 0);
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+            if (payment?.PaymentAmountTotal == 0)
             {
                 return PimsLeasePaymentStatusTypes.UNPAID;
             }
-            else if (payment.PaymentAmountTotal < expectedTotal)
+            else if (payment?.PaymentAmountTotal < expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.PARTIAL;
             }
-            else if (payment.PaymentAmountTotal == expectedTotal)
+            else if (payment?.PaymentAmountTotal == expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.PAID;
             }
-            else if (payment.PaymentAmountTotal > expectedTotal)
+            else if (payment?.PaymentAmountTotal > expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.OVERPAID;
             }
@@ -78,22 +98,22 @@ namespace Pims.Api.Services
         }
 
         /// <summary>
-        /// Validate that the payment received date is part of the parent term.
+        /// Validate that the payment received date is part of the parent period.
         /// </summary>
         /// <param name="payment"></param>
         private void ValidatePaymentRules(PimsLeasePayment payment)
         {
-            PimsLeaseTerm leaseTerm = _leaseTermRepository.GetById(payment.LeaseTermId, true);
-            if (leaseTerm == null)
+            PimsLeasePeriod leasePeriod = _leasePeriodRepository.GetById(payment.LeasePeriodId, true);
+            if (leasePeriod == null)
             {
-                throw new InvalidOperationException("Payment must be made against a parent term.");
+                throw new InvalidOperationException("Payment must be made against a parent period.");
             }
-            if (payment.PaymentReceivedDate < leaseTerm.TermStartDate || (leaseTerm.TermExpiryDate != null && payment.PaymentReceivedDate > leaseTerm.TermExpiryDate))
+            if (payment.PaymentReceivedDate < leasePeriod.PeriodStartDate || (leasePeriod.PeriodExpiryDate != null && payment.PaymentReceivedDate > leasePeriod.PeriodExpiryDate))
             {
-                throw new InvalidOperationException("Payment received date must be within the start and expiry date of the term.");
+                throw new InvalidOperationException("Payment received date must be within the start and expiry date of the period.");
             }
 
-            payment.LeasePaymentStatusTypeCode = GetPaymentStatus(payment, leaseTerm);
+            payment.LeasePaymentStatusTypeCode = GetPaymentStatus(payment, leasePeriod);
         }
     }
 }

@@ -37,6 +37,12 @@ exports[`NotesModal component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c0.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c0.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -165,7 +171,7 @@ exports[`NotesModal component > renders as expected 1`] = `
 }
 
 <button
-    class="c0 Button c1 btn btn-light"
+    class="c0 Button c1 btn btn-primary"
     title="notes"
     type="button"
   >
@@ -187,6 +193,5 @@ exports[`NotesModal component > renders as expected 1`] = `
       </svg>
     </div>
   </button>
-  <div />
 </DocumentFragment>
 `;

@@ -9,6 +9,7 @@ const MAX_RETRIES = 2;
 
 export const wfsAxios = (timeout?: number, onLayerError?: () => void) => {
   const instance = axios.create({ timeout: timeout ?? 5000 });
+  instance.defaults.withCredentials = true;
   instance.defaults.raxConfig = {
     retry: MAX_RETRIES,
     instance: instance,

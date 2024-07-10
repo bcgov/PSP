@@ -37,6 +37,12 @@ exports[`Manage access requests > Snapshot matches 1`] = `
   height: 3.8rem;
 }
 
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -143,6 +149,19 @@ exports[`Manage access requests > Snapshot matches 1`] = `
 
 .c5 {
   margin-top: 0.3rem;
+}
+
+.c6 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c6:disabled {
+  background: white;
 }
 
 .c0 {
@@ -714,7 +733,7 @@ exports[`Manage access requests > Snapshot matches 1`] = `
             class="Menu-button"
           >
             <div
-              style="display: flex;"
+              class="d-flex"
             >
               <span
                 class="c5"
@@ -722,9 +741,7 @@ exports[`Manage access requests > Snapshot matches 1`] = `
                 Show
               </span>
               <input
-                class="form-control form-control-sm"
-                disabled=""
-                style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
+                class="c6 form-control"
                 type="number"
                 value="10"
               />

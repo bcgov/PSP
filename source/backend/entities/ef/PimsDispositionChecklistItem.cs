@@ -7,9 +7,9 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 [Table("PIMS_DISPOSITION_CHECKLIST_ITEM")]
+[Index("ChklstItemStatusTypeCode", Name = "DSPCKI_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
 [Index("DispositionFileId", Name = "DSPCKI_DISPOSITION_FILE_ID_IDX")]
 [Index("DispositionFileId", "DspChklstItemTypeCode", Name = "DSPCKI_DISPOSITION_FILE_ID_UK_IDX", IsUnique = true)]
-[Index("DspChklstItemStatusTypeCode", Name = "DSPCKI_DSP_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
 [Index("DspChklstItemTypeCode", Name = "DSPCKI_DSP_CHKLST_ITEM_TYPE_CODE_IDX")]
 public partial class PimsDispositionChecklistItem
 {
@@ -34,12 +34,12 @@ public partial class PimsDispositionChecklistItem
     public string DspChklstItemTypeCode { get; set; }
 
     /// <summary>
-    /// Code value for the checklist item status.
+    /// Foreign key to the PIMS_CHKLST_ITEM_STATUS_TYPE table.
     /// </summary>
     [Required]
-    [Column("DSP_CHKLST_ITEM_STATUS_TYPE_CODE")]
+    [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string DspChklstItemStatusTypeCode { get; set; }
+    public string ChklstItemStatusTypeCode { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
@@ -131,13 +131,13 @@ public partial class PimsDispositionChecklistItem
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    [ForeignKey("ChklstItemStatusTypeCode")]
+    [InverseProperty("PimsDispositionChecklistItems")]
+    public virtual PimsChklstItemStatusType ChklstItemStatusTypeCodeNavigation { get; set; }
+
     [ForeignKey("DispositionFileId")]
     [InverseProperty("PimsDispositionChecklistItems")]
     public virtual PimsDispositionFile DispositionFile { get; set; }
-
-    [ForeignKey("DspChklstItemStatusTypeCode")]
-    [InverseProperty("PimsDispositionChecklistItems")]
-    public virtual PimsDspChklstItemStatusType DspChklstItemStatusTypeCodeNavigation { get; set; }
 
     [ForeignKey("DspChklstItemTypeCode")]
     [InverseProperty("PimsDispositionChecklistItems")]

@@ -6,7 +6,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c5.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,49 +37,55 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
-.c5.btn:hover {
+.c6.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c6.btn.btn-primary {
   border: none;
 }
 
-.c5.btn.btn-secondary {
+.c6.btn.btn-secondary {
   background: none;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-dark {
   border: none;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +106,9 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +117,14 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,42 +135,42 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6.c6.btn {
+.c7.c7.btn {
   background-color: unset;
   border: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:focus,
-.c6.c6.btn:active {
+.c7.c7.btn:hover,
+.c7.c7.btn:focus,
+.c7.c7.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c6.c6.btn svg {
+.c7.c7.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c6.c6.btn svg:hover {
+.c7.c7.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c3 {
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -203,12 +209,17 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c4 {
+.c5 {
   -webkit-box-pack: space-around;
   -webkit-justify-content: space-around;
   -ms-flex-pack: space-around;
   justify-content: space-around;
   width: 100%;
+}
+
+.c3 a {
+  font-weight: bold;
+  color: !important;
 }
 
 <div
@@ -258,7 +269,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -578,56 +589,48 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg
-              height="10"
-              overflow="visible"
-              preserveAspectRatio="none"
-              viewBox="0 0 10 10"
-              width="10"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+            <div
+              class="active"
             >
-              <g
-                transform="translate(1, 1)"
+              <svg
+                class="mr-2"
+                fill="currentColor"
+                height="10"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="10"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <defs>
-                  <path
-                    d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                    id="path-1635974705144170"
-                    vector-effect="non-scaling-stroke"
-                  />
-                </defs>
-                <g
-                  transform="translate(0, 0)"
-                >
-                  <path
-                    d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                    style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
-                    vector-effect="non-scaling-stroke"
-                  />
-                </g>
-              </g>
-            </svg>
+                <path
+                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                />
+              </svg>
+            </div>
           </div>
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg
-              fill="currentColor"
-              height="20"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 448 512"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="active"
             >
-              <path
-                d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
-              />
-            </svg>
+              <svg
+                fill="currentColor"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 448 512"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                />
+              </svg>
+            </div>
           </div>
           <div
             class="td clickable"
@@ -635,11 +638,15 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <a
-              href="/contact/1"
+            <div
+              class="c3"
             >
-              summary
-            </a>
+              <a
+                href="/contact/1"
+              >
+                summary
+              </a>
+            </div>
           </div>
           <div
             class="td"
@@ -702,10 +709,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 c4"
+              class="c4 c5"
             >
               <button
-                class="c5 Button c6 btn btn-light"
+                class="c6 Button c7 btn btn-light"
                 title="View Contact"
                 type="button"
               >
@@ -769,56 +776,48 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg
-              height="10"
-              overflow="visible"
-              preserveAspectRatio="none"
-              viewBox="0 0 10 10"
-              width="10"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+            <div
+              class="active"
             >
-              <g
-                transform="translate(1, 1)"
+              <svg
+                class="mr-2"
+                fill="currentColor"
+                height="10"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="10"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <defs>
-                  <path
-                    d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                    id="path-1635974705144170"
-                    vector-effect="non-scaling-stroke"
-                  />
-                </defs>
-                <g
-                  transform="translate(0, 0)"
-                >
-                  <path
-                    d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                    style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
-                    vector-effect="non-scaling-stroke"
-                  />
-                </g>
-              </g>
-            </svg>
+                <path
+                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                />
+              </svg>
+            </div>
           </div>
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg
-              fill="currentColor"
-              height="20"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 448 512"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="active"
             >
-              <path
-                d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
-              />
-            </svg>
+              <svg
+                fill="currentColor"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 448 512"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                />
+              </svg>
+            </div>
           </div>
           <div
             class="td clickable"
@@ -826,11 +825,15 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <a
-              href="/contact/2"
+            <div
+              class="c3"
             >
-              summary
-            </a>
+              <a
+                href="/contact/2"
+              >
+                summary
+              </a>
+            </div>
           </div>
           <div
             class="td"
@@ -893,10 +896,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 c4"
+              class="c4 c5"
             >
               <button
-                class="c5 Button c6 btn btn-light"
+                class="c6 Button c7 btn btn-light"
                 title="View Contact"
                 type="button"
               >
@@ -960,56 +963,48 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg
-              height="10"
-              overflow="visible"
-              preserveAspectRatio="none"
-              viewBox="0 0 10.999999999999995 10"
-              width="10.999999999999995"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
+            <div
+              class="inactive"
             >
-              <g
-                transform="translate(1, 1)"
+              <svg
+                class="mr-2"
+                fill="currentColor"
+                height="10"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="10"
+                xmlns="http://www.w3.org/2000/svg"
               >
-                <defs>
-                  <path
-                    d="M4.499999999999997 0 C6.983617610222995 0 8.999999999999995 1.7923399020239998 8.999999999999995 4 C8.999999999999995 6.207660097976 6.983617610222995 8 4.499999999999997 8 C2.016382389776999 8 0 6.207660097976 0 4 C0 1.7923399020239998 2.016382389776999 0 4.499999999999997 0 Z"
-                    id="path-1636147294005408"
-                    vector-effect="non-scaling-stroke"
-                  />
-                </defs>
-                <g
-                  transform="translate(0, 0)"
-                >
-                  <path
-                    d="M4.499999999999997 0 C6.983617610222995 0 8.999999999999995 1.7923399020239998 8.999999999999995 4 C8.999999999999995 6.207660097976 6.983617610222995 8 4.499999999999997 8 C2.016382389776999 8 0 6.207660097976 0 4 C0 1.7923399020239998 2.016382389776999 0 4.499999999999997 0 Z"
-                    style="stroke: rgb(92, 89, 89); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(255, 255, 255);"
-                    vector-effect="non-scaling-stroke"
-                  />
-                </g>
-              </g>
-            </svg>
+                <path
+                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                />
+              </svg>
+            </div>
           </div>
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <svg
-              fill="currentColor"
-              height="20"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 448 512"
-              width="20"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="inactive"
             >
-              <path
-                d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
-              />
-            </svg>
+              <svg
+                fill="currentColor"
+                height="20"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 448 512"
+                width="20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+                />
+              </svg>
+            </div>
           </div>
           <div
             class="td clickable"
@@ -1017,11 +1012,15 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 80 0 auto; min-width: 30px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <a
-              href="/contact/3"
+            <div
+              class="c3"
             >
-              summary
-            </a>
+              <a
+                href="/contact/3"
+              >
+                summary
+              </a>
+            </div>
           </div>
           <div
             class="td"
@@ -1084,10 +1083,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 c4"
+              class="c4 c5"
             >
               <button
-                class="c5 Button c6 btn btn-light"
+                class="c6 Button c7 btn btn-light"
                 title="View Contact"
                 type="button"
               >
@@ -1131,6 +1130,19 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   margin-top: 0.3rem;
 }
 
+.c2 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c2:disabled {
+  background: white;
+}
+
 <div
     class="row"
   >
@@ -1160,7 +1172,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
           class="Menu-button"
         >
           <div
-            style="display: flex;"
+            class="d-flex"
           >
             <span
               class="c1"
@@ -1168,9 +1180,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
               Show
             </span>
             <input
-              class="form-control form-control-sm"
-              disabled=""
-              style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
+              class="c2 form-control"
               type="number"
               value="10"
             />

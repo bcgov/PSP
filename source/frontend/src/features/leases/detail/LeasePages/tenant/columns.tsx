@@ -28,13 +28,13 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       Header: '',
       accessor: 'leaseTenantId',
       align: 'right',
-      width: 20,
-      maxWidth: 20,
+      width: 16,
+      maxWidth: 16,
       Cell: (props: CellProps<FormTenant>) =>
         isValidId(props.row.original.personId) ? (
-          <FaRegUser size={20} />
+          <FaRegUser size={16} />
         ) : (
-          <FaRegBuilding size={20} />
+          <FaRegBuilding size={16} />
         ),
     },
     {
@@ -94,7 +94,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       },
     },
     {
-      Header: 'Contact Info',
+      Header: 'Contact info',
       accessor: 'mailingAddress',
       align: 'left',
       minWidth: 80,
@@ -112,7 +112,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       },
     },
     {
-      Header: 'Type',
+      Header: 'Contact type',
       accessor: 'email',
       align: 'left',
       minWidth: 80,
@@ -127,25 +127,6 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
         );
       },
     },
-    // {
-    //   Header: 'Notes',
-    //   accessor: 'note',
-    //   align: 'left',
-    //   width: 30,
-    //   maxWidth: 50,
-    //   Cell: (props: CellProps<FormTenant>) => (
-    //     <NotesModal
-    //       nameSpace={`tenants.${props.row.index}`}
-    //       notesLabel={
-    //         <p>
-    //           Notes pertaining to <b>{props.row.original.summary}</b>
-    //         </p>
-    //       }
-    //       title="Tenant Notes"
-    //       onSave={noop}
-    //     />
-    //   ),
-    // },
-  ] as ColumnWithProps<FormTenant>[];
+  ];
 };
 export default getColumns;

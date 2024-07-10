@@ -4,19 +4,14 @@ import styled from 'styled-components';
 
 import { IMenuItemProps, Menu } from '@/components/menu/Menu';
 
-/** align text to middle of size input */
-const StyledText = styled.span`
-  margin-top: 0.3rem;
-`;
-
-interface IProps {
+export interface ITablePageSizeSelectorProps {
   options: number[];
   value: number;
   onChange: (size: number) => void;
   alignTop: boolean;
 }
 
-export const TablePageSizeSelector: React.FC<React.PropsWithChildren<IProps>> = ({
+export const TablePageSizeSelector: React.FC<ITablePageSizeSelectorProps> = ({
   options,
   value,
   onChange,
@@ -38,17 +33,28 @@ export const TablePageSizeSelector: React.FC<React.PropsWithChildren<IProps>> = 
   }));
   return (
     <Menu options={pageSizeOptions} alignTop={alignTop}>
-      <div style={{ display: 'flex' }}>
+      <div className="d-flex">
         <StyledText>Show</StyledText>
-        <Form.Control
-          size="sm"
-          value={`${selected}`}
-          type="number"
-          style={{ width: 50, marginLeft: 10, marginRight: 10, backgroundColor: 'white' }}
-          disabled
-        />
+        <StyledInput defaultValue={`${selected}`} type="number" />
         <StyledText>Entries</StyledText>
       </div>
     </Menu>
   );
 };
+
+/** align text to middle of size input */
+const StyledText = styled.span`
+  margin-top: 0.3rem;
+`;
+
+const StyledInput = styled(Form.Control)`
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  &:disabled {
+    background: white;
+  }
+  text-align: center;
+  padding: 0;
+`;

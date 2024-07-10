@@ -47,7 +47,7 @@ namespace Pims.Api.Repositories.Mayan
 
         Task<ExternalResponse<string>> TryDeleteDocumentTypeMetadataTypeAsync(long documentTypeId, long documentTypeMetadataTypeId);
 
-        Task<ExternalResponse<QueryResponse<FilePageModel>>> TryGetFilePageListAsync(long documentId, long documentFileId);
+        Task<ExternalResponse<QueryResponse<FilePageModel>>> TryGetFilePageListAsync(long documentId, long documentFileId, int pageSize, int pageNumber);
 
         Task<HttpResponseMessage> TryGetFilePageImage(long documentId, long documentFileId, long documentFilePageId);
     }

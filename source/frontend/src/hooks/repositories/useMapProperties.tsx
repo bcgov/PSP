@@ -20,6 +20,7 @@ export const useMapProperties = () => {
         STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
         PID_PADDED: params?.PID?.replace(/[-\s]/g, ''),
         PIN: params?.PIN,
+        HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
       };
       const url = `${propertiesUrl}${
         geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''

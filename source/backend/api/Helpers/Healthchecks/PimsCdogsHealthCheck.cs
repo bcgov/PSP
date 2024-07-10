@@ -20,15 +20,15 @@ namespace Pims.Api.Helpers.Healthchecks
             try
             {
 
-                var fileTypes = await _generationRepository.TryGetFileTypesAsync();
-                if (fileTypes.HttpStatusCode != System.Net.HttpStatusCode.OK || fileTypes.Payload == null || fileTypes.Payload.Dictionary.Count == 0)
+                var health = await _generationRepository.TryGetHealthAsync();
+                if (health.StatusCode != System.Net.HttpStatusCode.OK)
                 {
-                    return new HealthCheckResult(HealthStatus.Unhealthy, $"received invalid file types response from CDOGS");
+                    return new HealthCheckResult(HealthStatus.Degraded, $"received invalid health response from CDOGS");
                 }
             }
             catch (Exception e)
             {
-                return new HealthCheckResult(HealthStatus.Degraded, $"Cdogs error response: {e.Message} {e.StackTrace}");
+                return new HealthCheckResult(context.Registration.FailureStatus, $"Cdogs error response: {e.Message} {e.StackTrace}");
             }
             return HealthCheckResult.Healthy();
         }

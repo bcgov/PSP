@@ -4,6 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FastDatePicker, ProjectSelector, Select, TextArea } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import * as API from '@/constants/API';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -81,7 +82,34 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
       <SectionField label="Ministry project" labelWidth="2">
         <ProjectSelector field="project" />
       </SectionField>
-      <SectionField label="Status" labelWidth="2" contentWidth="4" required>
+      <SectionField
+        label="Status"
+        labelWidth="2"
+        contentWidth="4"
+        tooltip={
+          <TooltipIcon
+            toolTipId="lease-status-tooltip"
+            toolTip={
+              <ul>
+                <li>Draft: In progress but not finalized.</li>
+                <li>
+                  Active: Finalized and all requirements met. Lease/Licence being actively managed.
+                </li>
+                <li>
+                  Terminated: The expiry date of the last agreement if by effluxion of time or the
+                  early termination date for cause.
+                </li>
+                <li>Cancelled: Request cancelled by requestor or MOTI.</li>
+                <li>Duplicate: Duplicate file created by accident or data transfer.</li>
+                <li>Hold: Agreement in progress but will not be immediately addressed.</li>
+                <li>Archived: File to be archived as per ARCS/ORCS.</li>
+              </ul>
+            }
+            placement="right"
+          ></TooltipIcon>
+        }
+        required
+      >
         <Select
           placeholder="Select Status"
           field="statusTypeCode"
@@ -114,8 +142,15 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
       </SectionField>
       <Row>
         <Col>
-          <SectionField label="Start date" required>
-            <FastDatePicker formikProps={formikProps} field="startDate" required />
+          <SectionField
+            label="Start date"
+            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+          >
+            <FastDatePicker
+              formikProps={formikProps}
+              field="startDate"
+              required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+            />
           </SectionField>
         </Col>
         <Col>

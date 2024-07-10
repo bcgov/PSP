@@ -5,9 +5,17 @@ import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  renderAsync,
+  RenderOptions,
+  waitFor,
+  screen,
+  getByName,
+} from '@/utils/test-utils';
 
-import { defaultFormLeasePayment } from '../../models';
+import { FormLeasePeriod, defaultFormLeasePayment, defaultFormLeasePeriod } from '../../models';
 import { IPaymentModalProps, PaymentModal } from './PaymentModal';
 
 const history = createMemoryHistory();
@@ -27,7 +35,13 @@ describe('PaymentModal component', () => {
   ) => {
     // render component under test
     const component = await renderAsync(
-      <PaymentModal onSave={onSave} onCancel={onCancel} displayModal={true} terms={[]} />,
+      <PaymentModal
+        onSave={onSave}
+        onCancel={onCancel}
+        displayModal={true}
+        periods={renderOptions.periods ?? []}
+        initialValues={renderOptions.initialValues ?? {}}
+      />,
       {
         ...renderOptions,
         history,
@@ -59,28 +73,54 @@ describe('PaymentModal component', () => {
   });
 
   it('submits all filled out fields as expected', async () => {
-    const {
-      component: { getByText },
-    } = await setup({});
+    const { component } = await setup({
+      initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1 },
+      periods: [{ ...FormLeasePeriod.toApi(defaultFormLeasePeriod), id: 1, isVariable: true }],
+    });
+    const { getByText } = component;
 
     await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
-    await fillInput(document.body, 'leasePaymentMethodType.id', 'CHEQ', 'select');
-    await fillInput(document.body, 'amountPreTax', '1150');
-    await fillInput(document.body, 'amountGst', '50');
+    await act(async () =>
+      userEvent.selectOptions(
+        getByName('leasePaymentMethodType.id'),
+        screen.getByRole('option', { name: 'Cheque' }),
+      ),
+    );
+    await act(async () =>
+      userEvent.selectOptions(
+        getByName('leasePaymentCategoryTypeCode.id'),
+        screen.getByRole('option', { name: 'Base Rent' }),
+      ),
+    );
     await fillInput(document.body, 'amountTotal', '1200');
     const saveButton = getByText('Save payment');
     await act(async () => userEvent.click(saveButton));
     await waitFor(() => expect(onSave).toHaveBeenCalled());
     expect(onSave).toHaveBeenCalledWith({
-      ...defaultFormLeasePayment,
       receivedDate: '2020-01-01',
+      leasePeriodId: 1,
+      id: 0,
+      note: '',
+      amountPst: '',
       amountTotal: 1200,
       amountPreTax: 1200,
       amountGst: '',
+      leasePaymentCategoryTypeCode: {
+        id: 'BASE',
+        description: '',
+        displayOrder: null,
+        isDisabled: false,
+      },
       leasePaymentMethodType: {
         id: 'CHEQ',
+        isDisabled: false,
+        description: '',
         displayOrder: null,
-        description: null,
+      },
+      leasePaymentStatusTypeCode: {
+        description: '',
+        displayOrder: null,
+        id: '',
         isDisabled: false,
       },
     });

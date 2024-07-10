@@ -82,7 +82,7 @@ namespace Pims.Api.Test.Controllers
             var classificationTypes = EntityHelper.CreatePropertyClassificationType("classification");
             this._repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { classificationTypes });
 
-            var countries = EntityHelper.CreateCountry(1, "CAN");
+            var countries = EntityHelper.CreateCountry(1, "CA");
             this._repository.Setup(m => m.GetAllCountries()).Returns(new[] { countries });
 
             var districts = EntityHelper.CreateDistrict(1, "district");

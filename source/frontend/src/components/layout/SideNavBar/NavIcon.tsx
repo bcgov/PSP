@@ -22,6 +22,7 @@ interface INavIconProps {
  */
 export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIconProps) => {
   const { hasRole, hasClaim } = useKeycloakWrapper();
+
   const displayIcon =
     find(roles, (role: Roles) => hasRole(role)) || find(claims, (claim: Claims) => hasClaim(claim));
 
@@ -34,7 +35,7 @@ export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIc
         <TooltipWrapper tooltipId={`nav-tooltip-${text}`} tooltip={text}>
           {icon}
         </TooltipWrapper>
-        <StyledLabel className={clsx({ show: showText })}>{text}</StyledLabel>
+        {showText && <StyledLabel className={clsx({ show: showText })}>{text}</StyledLabel>}
       </StyledLink>
     </StyledNav>
   ) : null;
@@ -42,23 +43,37 @@ export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIc
 
 const StyledNav = styled(Nav.Item)`
   width: 100%;
+  margin-bottom: 2rem;
+  fill: ${({ theme }) => theme.css.pimsWhite};
+
+  svg {
+    min-width: max-content;
+  }
+
+  &:hover {
+    label {
+      color: ${({ theme }) => theme.css.hoverActionColor};
+    }
+
+    svg {
+      fill: ${({ theme }) => theme.css.hoverActionColor};
+    }
+  }
 `;
 
 const StyledLink = styled(Nav.Link)`
   display: flex;
   flex-direction: row;
   align-items: center;
-  svg {
-    min-width: max-content;
-  }
 `;
 
 const StyledLabel = styled.label`
-  margin-left: 0.4rem;
+  margin-left: 1rem;
   margin-bottom: 0;
   font-size: 1.2rem;
   color: white;
-  white-space: nowrap;
+  word-break: break-word;
+  white-space: break-spaces;
   transition: width 0.25s;
   width: 0;
   overflow: hidden;

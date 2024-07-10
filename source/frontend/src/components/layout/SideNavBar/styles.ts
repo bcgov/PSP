@@ -14,6 +14,7 @@ export const SideNavBar = styled.div`
     100vh - ${props => props.theme.css.headerHeight} - ${props => props.theme.css.footerHeight}
   );
   overflow-y: auto;
+  overflow-x: hidden;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -24,18 +25,18 @@ export const SideNavBar = styled.div`
   width: 6rem;
   label {
     color: white;
+    min-width: 8rem;
   }
   &.expanded {
     width: 16rem;
   }
-  svg {
+  .nav-item svg {
     fill: white;
+    min-width: 2.4rem;
   }
-  .chevron {
+  .to-bottom {
     margin-top: auto;
-    align-self: flex-end;
-    cursor: pointer;
-    flex-shrink: 0;
+    margin-bottom: 1.6rem;
   }
   .nav-link {
     padding: 0.8rem 1.6rem;
@@ -79,7 +80,7 @@ export const SideTray = styled.div`
   width: 64rem;
   padding: 0.8rem 1.6rem;
   text-align: left;
-  transition: transform 0.5s ease-in-out;
+  transition: transform 0.3s ease-in-out;
   box-shadow: 0.3rem 0 0.4rem rgba(0, 0, 0, 0.2);
   &.show {
     transform: translateX(64rem);

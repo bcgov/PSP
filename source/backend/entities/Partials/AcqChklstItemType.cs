@@ -1,6 +1,6 @@
-using Pims.Dal.Entities.Extensions;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
+using Pims.Dal.Entities.Extensions;
 
 namespace Pims.Dal.Entities
 {

@@ -37,6 +37,12 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c5.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -141,21 +147,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c7 {
-  margin-left: 0.5rem;
-  cursor: pointer;
-}
-
-.c12 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
 .c6.c6.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -188,6 +179,21 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
 .c6.c6.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c7 {
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
 .c11.form-group {
@@ -261,6 +267,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c8 {
@@ -1730,7 +1737,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         name="area-sq-feet"
                         step=".01"
                         type="number"
-                        value="269097.76"
+                        value="269097.7604"
                       />
                     </div>
                     <div
@@ -1751,7 +1758,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         name="area-acres"
                         step=".01"
                         type="number"
-                        value="6.18"
+                        value="6.1776"
                       />
                     </div>
                     <div
@@ -1903,7 +1910,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                             name="volume-cubic-feet"
                             step=".01"
                             type="number"
-                            value="35714.29"
+                            value="35714.2857"
                           />
                         </div>
                         <div

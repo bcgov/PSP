@@ -165,21 +165,52 @@ namespace Pims.Api.Test.Controllers.Reports
             result.InspectionNotes.Should().Be("inspection note");
         }
 
+        public static IEnumerable<object[]> Financial_Public_Values = new List<object[]>()
+        {
+            new object [] { null, "Unknown" },
+            new object [] { true, "Yes" },
+            new object [] { false, "No" },
+        };
+
+        [Theory]
+        [MemberData(nameof(Financial_Public_Values))]
+        public void ExportLeases_Lease_Mapping_Financial_Public(bool? actualValue, string expectedValue)
+        {
+            // Arrange
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.IsPublicBenefit = actualValue;
+            lease.IsFinancialGain = actualValue;
+            var leases = new[] { lease };
+
+            var page = new Paged<Entity.PimsLease>(leases);
+            this._leaseService.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false)).Returns(page);
+
+            // Act
+            var result = this._controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
+
+            // Assert
+            this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
+            result.PublicBenefit.Should().Be(expectedValue);
+            result.FinancialGain.Should().Be(expectedValue);
+        }
+
         [Fact]
-        public void ExportLeases_LeaseTerm_Mapping()
+        public void ExportLeases_LeasePeriod_Mapping()
         {
             // Arrange
             var headers = this._helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var lease = EntityHelper.CreateLease(1);
-            var leaseTerm = new PimsLeaseTerm();
-            leaseTerm.TermStartDate = DateTime.Now;
-            leaseTerm.TermRenewalDate = DateTime.Now.AddDays(1);
-            leaseTerm.TermExpiryDate = DateTime.Now.AddDays(2);
-            leaseTerm.LeasePmtFreqTypeCodeNavigation = new PimsLeasePmtFreqType() { LeasePmtFreqTypeCode = "PMT", Description = "pmt" };
-            leaseTerm.PaymentAmount = 1000;
-            lease.PimsLeaseTerms.Add(leaseTerm);
+            var leasePeriod = new PimsLeasePeriod();
+            leasePeriod.PeriodStartDate = DateTime.Now;
+            leasePeriod.PeriodRenewalDate = DateTime.Now.AddDays(1);
+            leasePeriod.PeriodExpiryDate = DateTime.Now.AddDays(2);
+            leasePeriod.LeasePmtFreqTypeCodeNavigation = new PimsLeasePmtFreqType() { LeasePmtFreqTypeCode = "PMT", Description = "pmt" };
+            leasePeriod.PaymentAmount = 1000;
+            lease.PimsLeasePeriods.Add(leasePeriod);
 
             var leases = new[] { lease };
 
@@ -191,11 +222,11 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
-            result.CurrentTermStartDate.Should().Be(DateOnly.FromDateTime(leaseTerm.TermStartDate));
-            result.CurrentTermEndDate.Should().Be(leaseTerm.TermExpiryDate.ToNullableDateOnly());
-            result.TermStartDate.Should().Be(DateOnly.FromDateTime(leaseTerm.TermStartDate));
-            result.TermRenewalDate.Should().Be(leaseTerm.TermRenewalDate.ToNullableDateOnly());
-            result.TermExpiryDate.Should().Be(leaseTerm.TermExpiryDate.ToNullableDateOnly());
+            result.CurrentPeriodStartDate.Should().Be(DateOnly.FromDateTime(leasePeriod.PeriodStartDate));
+            result.CurrentTermEndDate.Should().Be(leasePeriod.PeriodExpiryDate.ToNullableDateOnly());
+            result.PeriodStartDate.Should().Be(DateOnly.FromDateTime(leasePeriod.PeriodStartDate));
+            result.PeriodRenewalDate.Should().Be(leasePeriod.PeriodRenewalDate.ToNullableDateOnly());
+            result.PeriodExpiryDate.Should().Be(leasePeriod.PeriodExpiryDate.ToNullableDateOnly());
             result.IsExpired.Should().Be("No");
             result.LeasePaymentFrequencyType.Should().Be("pmt");
             result.LeaseAmount.Should().Be(1000);
@@ -268,9 +299,9 @@ namespace Pims.Api.Test.Controllers.Reports
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var lease = new PimsLease();
-            lease.PimsLeaseTerms.Add(new PimsLeaseTerm());
-            lease.PimsLeaseTerms.Add(new PimsLeaseTerm());
-            lease.PimsLeaseTerms.Add(new PimsLeaseTerm());
+            lease.PimsLeasePeriods.Add(new PimsLeasePeriod());
+            lease.PimsLeasePeriods.Add(new PimsLeasePeriod());
+            lease.PimsLeasePeriods.Add(new PimsLeasePeriod());
 
             lease.PimsLeaseTenants.Add(new PimsLeaseTenant());
             lease.PimsLeaseTenants.Add(new PimsLeaseTenant());

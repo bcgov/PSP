@@ -37,6 +37,12 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c16.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c16.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -286,6 +292,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
 
 .c10 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c15 {
@@ -619,27 +626,6 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div
-              class="c9 form-section"
-            >
-              <h2
-                class="c13"
-              >
-                <div
-                  class="no-gutters row"
-                >
-                  <div
-                    class="col"
-                  >
-                    Organization
-                  </div>
-                </div>
-              </h2>
-              <div
-                class="collapse show"
-              >
                 <div
                   class="pb-2 row"
                 >
@@ -1070,7 +1056,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="col-1"
+                    class="pl-8 col-auto"
                   >
                     <svg
                       class="c19"
@@ -1324,7 +1310,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                     Property Address
                   </div>
                   <div
-                    class="col-1"
+                    class="pl-8 col-auto"
                   >
                     <svg
                       class="c19"
@@ -1578,7 +1564,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
                     Billing Address
                   </div>
                   <div
-                    class="col-1"
+                    class="pl-8 col-auto"
                   >
                     <svg
                       class="c19"

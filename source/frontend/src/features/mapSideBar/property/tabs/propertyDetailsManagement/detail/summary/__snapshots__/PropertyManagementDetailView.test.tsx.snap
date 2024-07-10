@@ -38,6 +38,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div
@@ -55,7 +56,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
           Summary
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"
@@ -210,9 +211,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
             class="c4"
           >
             Additional details:
-            <span
-              class="ml-2"
-            >
+            <span>
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-section-field-tooltip"

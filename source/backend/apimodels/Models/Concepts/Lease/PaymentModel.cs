@@ -16,9 +16,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public long? Id { get; set; }
 
         /// <summary>
-        /// get/set - The primary key to identify the associated lease term.
+        /// get/set - The primary key to identify the associated lease period.
         /// </summary>
-        public long LeaseTermId { get; set; }
+        public long LeasePeriodId { get; set; }
 
         /// <summary>
         /// get/set - The payment method, such as cheque, transfer.
@@ -29,6 +29,11 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - The status of the payment, generally paid or unpaid.
         /// </summary>
         public CodeTypeModel<string> LeasePaymentStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The category of the payment: base, variable or additional.
+        /// </summary>
+        public CodeTypeModel<string> LeasePaymentCategoryTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The date the payment was or will be received.

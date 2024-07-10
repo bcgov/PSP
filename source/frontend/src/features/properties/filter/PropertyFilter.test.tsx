@@ -98,7 +98,12 @@ const getUiElement = (
   useGeocoder = true,
 ) => (
   <TestCommonWrapper store={getStore(filter)} history={history}>
-    <PropertyFilter useGeocoder={useGeocoder} defaultFilter={filter} onChange={onFilterChange} />
+    <PropertyFilter
+      propertyFilter={filter}
+      useGeocoder={useGeocoder}
+      defaultFilter={filter}
+      onChange={onFilterChange}
+    />
   </TestCommonWrapper>
 );
 

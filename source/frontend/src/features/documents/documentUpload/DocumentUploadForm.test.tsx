@@ -40,6 +40,10 @@ const documentTypeMetadataType: ApiGen_Mayan_DocumentTypeMetadataType[] = [
       delete_time_unit: null,
       trash_time_period: null,
       trash_time_unit: null,
+      document_stub_expiration_interval: null,
+      document_stub_pruning_enabled: null,
+      filename_generator_backend: '',
+      filename_generator_backend_arguments: '',
     },
     metadata_type: {
       default: '',

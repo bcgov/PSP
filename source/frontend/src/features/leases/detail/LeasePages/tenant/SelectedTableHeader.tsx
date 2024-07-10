@@ -7,7 +7,7 @@ const SelectedTableHeader: React.FC<React.PropsWithChildren<ISelectedTableHeader
   return (
     <>
       <CommonStyled.SelectedText>
-        {selectedCount} Tenants associated with this Lease/License
+        {selectedCount} Tenants associated with this Lease/Licence
       </CommonStyled.SelectedText>
     </>
   );

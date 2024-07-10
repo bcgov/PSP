@@ -1,4 +1,3 @@
-import { groupBy } from 'lodash';
 import moment from 'moment';
 import { useCallback } from 'react';
 import { Tooltip } from 'react-bootstrap';
@@ -10,8 +9,7 @@ import styled from 'styled-components';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
-import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
-import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
+import { HistoricalNumberFieldView } from '@/features/mapSideBar/shared/header/HistoricalNumberFieldView';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -117,79 +115,16 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     align: 'left',
     clickable: false,
     sortable: false,
-    width: 10,
-    maxWidth: 20,
+    width: 30,
+    maxWidth: 30,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
-      // File numbers types to display
-      const numberTypes: string[] = [
-        ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString(),
-        ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString(),
-        ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString(),
-      ];
-
       // Get unique file numbers from lease properties
-      const fileNumbers: ApiGen_Concepts_HistoricalFileNumber[] = [];
-      props.row.original.fileProperties?.forEach(fl => {
-        fl.property.historicalFileNumbers?.forEach(number => {
-          if (numberTypes.includes(number.historicalFileNumberTypeCode.id)) {
-            if (
-              !fileNumbers.find(
-                x =>
-                  x.historicalFileNumber === number.historicalFileNumber &&
-                  x.historicalFileNumberTypeCode.id === number.historicalFileNumberTypeCode.id,
-              )
-            ) {
-              fileNumbers.push(number);
-            }
-          }
-        });
-      });
+      const fileNumbers =
+        props.row.original?.fileProperties
+          ?.flatMap(fl => fl?.property?.historicalFileNumbers)
+          .filter(exists) ?? [];
 
-      const groupByType = groupBy(fileNumbers, x => x.historicalFileNumberTypeCode.id);
-
-      let lisNumbers = '';
-      let psNumbers = '';
-      let otherNumbers = '';
-      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]?.length) {
-        lisNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO.toString()]
-          .map(x => x.historicalFileNumber)
-          .join(', ');
-      }
-
-      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]?.length) {
-        psNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString()]
-          .map(x => x.historicalFileNumber)
-          .join(', ');
-      }
-
-      if (groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]?.length) {
-        otherNumbers = groupByType[ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER.toString()]
-          .map(x => x.historicalFileNumber)
-          .join(', ');
-      }
-
-      return (
-        <FileNumbersDiv>
-          {lisNumbers ? (
-            <label>
-              <span>LIS: </span>
-              {lisNumbers};
-            </label>
-          ) : null}
-          {psNumbers ? (
-            <label>
-              <span>PS: </span>
-              {psNumbers};
-            </label>
-          ) : null}
-          {otherNumbers ? (
-            <label>
-              <span>OTHER: </span>
-              {otherNumbers}.
-            </label>
-          ) : null}
-        </FileNumbersDiv>
-      );
+      return <HistoricalNumberFieldView historicalNumbers={fileNumbers} />;
     },
   },
   {
@@ -233,22 +168,12 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
       externalSort={{ sort: sort, setSort: setSort }}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
-      noRowsMessage="Lease / License details do not exist in PIMS inventory"
+      noRowsMessage="Lease / Licence details do not exist in PIMS inventory"
       totalItems={props.totalItems}
       {...rest}
     ></Table>
   );
 }
-
-const FileNumbersDiv = styled('div')`
-  label {
-    display: inline-block;
-
-    span {
-      font-weight: bold;
-    }
-  }
-`;
 
 const ExpiredIcon = styled('span')`
   color: ${props => props.theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};

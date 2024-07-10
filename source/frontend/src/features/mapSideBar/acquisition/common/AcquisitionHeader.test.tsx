@@ -64,10 +64,13 @@ describe('AcquisitionHeader component', () => {
 
   it('renders the file number and name concatenated', async () => {
     const testAcquisitionFile = mockAcquisitionFileResponse();
-    const { getByText } = setup({ acquisitionFile: testAcquisitionFile, lastUpdatedBy: null });
+    const { getByText, getAllByText } = setup({
+      acquisitionFile: testAcquisitionFile,
+      lastUpdatedBy: null,
+    });
     await act(async () => {});
 
-    expect(getByText('File:')).toBeVisible();
+    expect(getAllByText('File:')[0]).toBeVisible();
     expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
   });
 

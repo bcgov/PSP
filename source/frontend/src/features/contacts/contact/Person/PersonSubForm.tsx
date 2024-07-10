@@ -40,8 +40,6 @@ const PersonSubForm: React.FunctionComponent<React.PropsWithChildren<IPersonSubF
         <SectionField label="Preferred name">
           <Input field="preferredName" />
         </SectionField>
-      </Section>
-      <Section header="Organization">
         <SectionField label="Link to an existing organization">
           <AsyncTypeahead
             field="organization"

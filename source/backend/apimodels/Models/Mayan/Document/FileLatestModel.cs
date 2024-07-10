@@ -27,6 +27,12 @@ namespace Pims.Api.Models.Mayan.Document
         public string Encoding { get; set; }
 
         /// <summary>
+        /// get/set - uid of the file.
+        /// </summary>
+        [JsonPropertyName("file")]
+        public string FileUuid { get; set; }
+
+        /// <summary>
         /// get/set - Name of the file.
         /// </summary>
         [JsonPropertyName("filename")]
@@ -39,10 +45,16 @@ namespace Pims.Api.Models.Mayan.Document
         public string Mimetype { get; set; }
 
         /// <summary>
+        /// get/set - file checksum.
+        /// </summary>
+        [JsonPropertyName("checksum")]
+        public string Checksum { get; set; }
+
+        /// <summary>
         /// get/set - The size of the file.
         /// </summary>
         [JsonPropertyName("size")]
-        public long Size { get; set; }
+        public long? Size { get; set; }
 
         /// <summary>
         /// get/set - Timestamp for the file.

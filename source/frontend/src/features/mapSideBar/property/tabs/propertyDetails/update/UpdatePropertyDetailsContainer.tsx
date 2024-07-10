@@ -11,6 +11,7 @@ import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistorica
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { useQueryMapLayersByLocation } from '@/hooks/repositories/useQueryMapLayersByLocation';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
@@ -31,6 +32,7 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
 >((props, ref) => {
   const { id, onSuccess } = props;
   const isMounted = useIsMounted();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const {
     getPropertyWrapper: { execute: executeGetProperty, loading: loadingGetProperty },
@@ -135,10 +137,24 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
       } catch (e) {
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
-          if (axiosError?.response?.status === 400) {
-            toast.error(axiosError?.response?.data?.error);
+          if (axiosError.response?.status === 409) {
+            setModalContent({
+              variant: 'error',
+              title: 'Error',
+              message: axiosError.response.data as unknown as string,
+              okButtonText: 'Close',
+              handleOk: () => {
+                setDisplayModal(false);
+                fetchProperty(id);
+              },
+            });
+            setDisplayModal(true);
           } else {
-            toast.error('Unable to save. Please try again.');
+            if (axiosError.response?.status === 400) {
+              toast.error(axiosError.response.data.error);
+            } else {
+              toast.error('Unable to save. Please try again.');
+            }
           }
         }
       } finally {
@@ -149,8 +165,12 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
       countryCA?.id,
       executeUpdateHistoricalNumbers,
       executeUpdateProperty,
+      fetchProperty,
+      id,
       onSuccess,
       provinceBC?.id,
+      setDisplayModal,
+      setModalContent,
     ],
   );
 

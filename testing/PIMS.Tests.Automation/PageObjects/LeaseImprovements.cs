@@ -19,27 +19,27 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseImprovCommercialDescriptionContent = By.XPath("//div[contains(text(),'Commercial Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
         private By licenseImprovCommercialDescriptionTextarea = By.Id("input-improvements.0.description");
 
-        private By licenseImprovResidentialSubtitle = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2");
+        private By licenseImprovResidentialSubtitle = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2");
         private By licenseImprovResidentialUnitNbrLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]");
         private By licenceImprovResidentialUnitNbrInput = By.Id("input-improvements.1.address");
         private By licenseImprovResidentialUnitContent = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]/parent::div/following-sibling::div");
-        private By licenseImprovResidentialSizeLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]");
+        private By licenseImprovResidentialSizeLabel = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'House size')]");
         private By licenceImprovResidentialSizeInput = By.Id("input-improvements.1.structureSize");
-        private By licenseImprovResidentialSizeContent = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]/parent::div/following-sibling::div");
-        private By licenseImprovResidentialDescriptionLabel = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
+        private By licenseImprovResidentialSizeContent = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'House size')]/parent::div/following-sibling::div");
+        private By licenseImprovResidentialDescriptionLabel = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
         private By licenseImprovResidentialDescriptionTextarea = By.Id("input-improvements.1.description");
-        private By licenseImprovResidentialDescriptionContent = By.XPath("//div[contains(text(),'Residential')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
+        private By licenseImprovResidentialDescriptionContent = By.XPath("//div[contains(text(),'Residential Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
 
-        private By licenseImprovOtherSubtitle = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2");
-        private By licenseImprovOtherlUnitNbrLabel = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]");
+        private By licenseImprovOtherSubtitle = By.XPath("//span[contains(text(),'Other Improvements')]/parent::div/parent::div/parent::div/parent::h2");
+        private By licenseImprovOtherlUnitNbrLabel = By.XPath("//span[contains(text(),'Other Improvements')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]");
         private By licenceImprovOtherUnitNbrInput = By.Id("input-improvements.2.address");
-        private By licenseImprovOtherUnitNbrContent =  By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]/parent::div/following-sibling::div");
-        private By licenseImprovOtherSizeLabel = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]");
+        private By licenseImprovOtherUnitNbrContent =  By.XPath("//span[contains(text(),'Other Improvements')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Unit #')]/parent::div/following-sibling::div");
+        private By licenseImprovOtherSizeLabel = By.XPath("//span[contains(text(),'Other Improvements')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]");
         private By licenceImprovOtherSizeInput = By.Id("input-improvements.2.structureSize");
-        private By licenseImprovOtherSizeContent = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]/parent::div/following-sibling::div");
-        private By licenseImprovOtherDescriptionLabel = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
+        private By licenseImprovOtherSizeContent = By.XPath("//span[contains(text(),'Other Improvements')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Building size')]/parent::div/following-sibling::div");
+        private By licenseImprovOtherDescriptionLabel = By.XPath("//span[contains(text(),'Other Improvements')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
         private By licenceImprovOtherDescriptionTextarea = By.Id("input-improvements.2.description");
-        private By licenseImprovOtherDescriptionContent = By.XPath("//div[contains(text(),'Other Improvements')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
+        private By licenseImprovOtherDescriptionContent = By.XPath("//span[contains(text(),'Other Improvements')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
 
         private By licenseImproSaveButton = By.XPath("//button/div[contains(text(),'Save')]/ancestor::button");
 
@@ -52,7 +52,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToImprovementSection()
         {
             WaitUntilClickable(licenseImprovementLink);
-            webDriver.FindElement(licenseImprovementLink).Click();
+            FocusAndClick(licenseImprovementLink);
         }
 
         //Edit Improvements section

@@ -2,19 +2,24 @@ import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
 import * as Yup from 'yup';
 
-import Fence from '@/assets/images/fence.svg?react';
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
+import LeaseChecklistContainer from '@/features/leases/detail/LeasePages/checklist/LeaseChecklistContainer';
 import DepositsContainer from '@/features/leases/detail/LeasePages/deposits/DepositsContainer';
 import DetailContainer from '@/features/leases/detail/LeasePages/details/DetailContainer';
 import DocumentsPage from '@/features/leases/detail/LeasePages/documents/DocumentsPage';
 import { ImprovementsContainer } from '@/features/leases/detail/LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
-import TermPaymentsContainer from '@/features/leases/detail/LeasePages/payment/TermPaymentsContainer';
-import { TermPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/TermPaymentsYupSchema';
+import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsContainer';
+import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsYupSchema';
+import PeriodPaymentsView, {
+  IPeriodPaymentsViewProps,
+} from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from '@/features/leases/models';
@@ -47,16 +52,18 @@ const initialState: LeaseContainerState = {
   showConfirmModal: false,
 };
 
-export interface LeasePageProps {
+export interface LeasePageProps<T> {
   isEditing: boolean;
   onEdit?: (isEditing: boolean) => void;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onSuccess: () => void;
+  componentView: React.FunctionComponent<React.PropsWithChildren<T>>;
 }
 
-export interface ILeasePage {
+export interface ILeasePage<T> {
   pageName: LeasePageNames;
-  component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps>>;
+  component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<T>>>;
+  componentView?: React.FunctionComponent<React.PropsWithChildren<T>>;
   title: string;
   description?: string;
   validation?: Yup.ObjectSchema<any>;
@@ -73,10 +80,14 @@ export enum LeasePageNames {
   INSURANCE = 'insurance',
   DEPOSIT = 'deposit',
   SURPLUS = 'surplus',
+  CHECKLIST = 'checklist',
   DOCUMENTS = 'documents',
 }
 
-export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageNames, ILeasePage>([
+export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
+  LeasePageNames,
+  ILeasePage<any>
+>([
   [
     LeasePageNames.DETAILS,
     {
@@ -98,10 +109,11 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
     LeasePageNames.PAYMENTS,
     {
       pageName: LeasePageNames.PAYMENTS,
-      component: TermPaymentsContainer,
+      component: PeriodPaymentsContainer,
       title: 'Payments',
-      validation: TermPaymentsYupSchema,
-    },
+      validation: PeriodPaymentsYupSchema,
+      componentView: PeriodPaymentsView,
+    } as ILeasePage<IPeriodPaymentsViewProps>,
   ],
   [
     LeasePageNames.IMPROVEMENTS,
@@ -128,6 +140,14 @@ export const leasePages: Map<LeasePageNames, ILeasePage> = new Map<LeasePageName
     { pageName: LeasePageNames.SURPLUS, component: Surplus, title: 'Surplus Declaration' },
   ],
   [
+    LeasePageNames.CHECKLIST,
+    {
+      pageName: LeasePageNames.CHECKLIST,
+      component: LeaseChecklistContainer,
+      title: 'Checklist',
+    },
+  ],
+  [
     LeasePageNames.DOCUMENTS,
     {
       pageName: LeasePageNames.DOCUMENTS,
@@ -152,22 +172,22 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
-
-  const { setFullWidth, setStaleFile, staleFile, setStaleLastUpdatedBy, lastUpdatedBy } =
+  const { setStaleFile, staleFile, setStaleLastUpdatedBy, lastUpdatedBy } =
     useContext(SideBarContext);
 
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const activeTab = containerState.activeTab;
+  const { setFullWidthSideBar } = useMapStateMachine();
 
   useEffect(() => {
     if (activeTab === LeaseFileTabNames.deposit || activeTab === LeaseFileTabNames.payments) {
-      setFullWidth(true);
+      setFullWidthSideBar(true);
     } else {
-      setFullWidth(false);
+      setFullWidthSideBar(false);
     }
-    return () => setFullWidth(false);
-  }, [activeTab, setFullWidth]);
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
 
   useEffect(() => {
     const refreshLease = async () => {
@@ -224,9 +244,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     <MapSideBarLayout
       showCloseButton
       onClose={close}
-      title={containerState.isEditing ? 'Update Lease / License' : 'Lease / License'}
+      title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
       icon={
-        <Fence
+        <LeaseIcon
           title="Lease file icon"
           width="2.6rem"
           height="2.6rem"

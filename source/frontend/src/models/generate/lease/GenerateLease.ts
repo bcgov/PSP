@@ -3,8 +3,8 @@ import moment from 'moment';
 
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
-import { ApiGen_Concepts_LeaseTerm } from '@/models/api/generated/ApiGen_Concepts_LeaseTerm';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { formatMoney, pidFormatter } from '@/utils';
@@ -38,12 +38,12 @@ export class Api_GenerateLease {
     tenants: ApiGen_Concepts_LeaseTenant[],
     securityDeposits: ApiGen_Concepts_SecurityDeposit[],
     propertyLeases: ApiGen_Concepts_PropertyLease[],
-    terms: ApiGen_Concepts_LeaseTerm[],
+    periods: ApiGen_Concepts_LeasePeriod[],
   ) {
-    const firstTerm = first(orderBy(terms, (t: ApiGen_Concepts_LeaseTerm) => t.id));
+    const firstPeriod = first(orderBy(periods, (t: ApiGen_Concepts_LeasePeriod) => t.id));
     this.file_number = lease.lFileNo ?? '';
-    this.commencement_date = firstTerm?.startDate
-      ? moment.utc(firstTerm?.startDate).format('MMMM DD, YYYY')
+    this.commencement_date = firstPeriod?.startDate
+      ? moment.utc(firstPeriod?.startDate).format('MMMM DD, YYYY')
       : '';
     this.land_string =
       propertyLeases
@@ -56,11 +56,11 @@ export class Api_GenerateLease {
         )
         .join('\n\n') ?? '';
     this.intended_use = lease.description ?? '';
-    this.term_end_date = firstTerm?.expiryDate
-      ? moment.utc(firstTerm?.expiryDate).format('MMMM DD, YYYY') ?? ''
+    this.term_end_date = firstPeriod?.expiryDate
+      ? moment.utc(firstPeriod?.expiryDate).format('MMMM DD, YYYY') ?? ''
       : '';
-    this.payment_amount = formatMoney(firstTerm?.paymentAmount ?? 0);
-    this.payment_due_date = firstTerm?.paymentDueDateStr ?? '';
+    this.payment_amount = formatMoney(firstPeriod?.paymentAmount ?? 0);
+    this.payment_due_date = firstPeriod?.paymentDueDateStr ?? '';
     this.security_amount =
       formatMoney(
         securityDeposits

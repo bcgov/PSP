@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Immutable;
 using Mapster;
 using Pims.Api.Helpers.Extensions;
@@ -17,14 +16,15 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Id, src => src.LeaseId)
                 .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
                 .Map(dest => dest.Amount, src => src.LeaseAmount)
-                .Map(dest => dest.RenewalCount, src => src.PimsLeaseTerms.Count)
+                .Map(dest => dest.RenewalCount, src => src.PimsLeasePeriods.Count)
                 .Map(dest => dest.FileProperties, src => src.PimsPropertyLeases)
                 .Map(dest => dest.LFileNo, src => src.LFileNo)
                 .Map(dest => dest.TfaFileNumber, src => src.TfaFileNumber)
                 .Map(dest => dest.PsFileNo, src => src.PsFileNo)
                 .Map(dest => dest.MotiName, src => src.MotiContact)
                 .Map(dest => dest.ExpiryDate, src => src.GetExpiryDate().ToNullableDateOnly())
-                .Map(dest => dest.StartDate, src => DateOnly.FromDateTime(src.OrigStartDate))
+                .Map(dest => dest.StartDate, src => src.OrigStartDate.ToNullableDateOnly())
+                .Map(dest => dest.TerminationDate, src => src.TerminationDate.ToNullableDateOnly())
                 .Map(dest => dest.ProgramName, src => src.GetProgramName())
                 .Map(dest => dest.OtherCategoryType, src => src.LeaseCategoryOtherDesc)
                 .Map(dest => dest.OtherProgramType, src => src.OtherLeaseProgramType)
@@ -57,7 +57,9 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.TerminationReason, src => src.TerminationReason)
                 .Map(dest => dest.Project, src => src.Project)
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
-                .Map(dest => dest.Terms, src => src.PimsLeaseTerms);
+                .Map(dest => dest.FileChecklistItems, src => src.PimsLeaseChecklistItems)
+                .Map(dest => dest.PrimaryArbitrationCity, src => src.PrimaryArbitrationCity)
+                .Map(dest => dest.Periods, src => src.PimsLeasePeriods);
 
             config.NewConfig<LeaseModel, PimsLease>()
                 .PreserveReference(true)
@@ -75,7 +77,8 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.LeasePurposeOtherDesc, src => src.OtherPurposeType)
                 .Map(dest => dest.OtherLeaseLicenseType, src => src.OtherType)
                 .Map(dest => dest.OrigExpiryDate, src => src.ExpiryDate.ToNullableDateTime())
-                .Map(dest => dest.OrigStartDate, src => src.StartDate.ToDateTime(TimeOnly.MinValue))
+                .Map(dest => dest.OrigStartDate, src => src.StartDate.ToNullableDateTime())
+                .Map(dest => dest.TerminationDate, src => src.TerminationDate.ToNullableDateTime())
                 .Map(dest => dest.RegionCode, src => src.Region.Id)
                 .Map(dest => dest.LeaseProgramTypeCode, src => src.ProgramType.GetTypeId())
                 .Map(dest => dest.LeasePayRvblTypeCode, src => src.PaymentReceivableType.GetTypeId())
@@ -97,6 +100,8 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.HasDigitalLicense, src => src.HasDigitalLicense)
                 .Map(dest => dest.CancellationReason, src => src.CancellationReason)
                 .Map(dest => dest.TerminationReason, src => src.TerminationReason)
+                .Map(dest => dest.PimsLeaseChecklistItems, src => src.FileChecklistItems)
+                .Map(dest => dest.PrimaryArbitrationCity, src => src.PrimaryArbitrationCity)
                 .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
                 .IgnoreNullValues(true);
         }

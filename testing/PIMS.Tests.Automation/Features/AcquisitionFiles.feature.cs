@@ -144,7 +144,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.And("I update an Acquisition File\'s Properties from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 16
- testRunner.And("I update a Property details from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("I update a Property details from a file from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 17
  testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

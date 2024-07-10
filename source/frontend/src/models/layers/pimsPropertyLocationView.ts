@@ -1,3 +1,5 @@
+import { Geometry } from 'geojson';
+
 export type stringDate = string;
 
 // Source : Pims Geoserverview
@@ -47,6 +49,7 @@ export interface PIMS_Property_Location_View {
   readonly IS_ACTIVE_PAYABLE_LEASE: boolean | null;
   readonly IS_RECEIVABLE_LEASE: boolean | null;
   readonly IS_ACTIVE_RECEIVABLE_LEASE: boolean | null;
+  readonly HISTORICAL_FILE_NUMBER_STR: string | null;
 }
 
 export const EmptyPropertyLocation: PIMS_Property_Location_View = {
@@ -94,6 +97,7 @@ export const EmptyPropertyLocation: PIMS_Property_Location_View = {
   IS_ACTIVE_PAYABLE_LEASE: null,
   IS_RECEIVABLE_LEASE: null,
   IS_ACTIVE_RECEIVABLE_LEASE: null,
+  HISTORICAL_FILE_NUMBER_STR: null,
 };
 
 // Source : Pims Geoserverview
@@ -123,7 +127,7 @@ export interface PIMS_Property_Boundary_View {
   readonly ADDRESS_ID: number | null;
   readonly REGION_CODE: number | null;
   readonly DISTRICT_CODE: number | null;
-  //readonly GEOMETRY: Geometry | null;
+  readonly GEOMETRY: Geometry | null;
   readonly PROPERTY_AREA_UNIT_TYPE_CODE: string | null;
   readonly LAND_AREA: number | null;
   readonly LAND_LEGAL_DESCRIPTION: string | null;
@@ -143,4 +147,5 @@ export interface PIMS_Property_Boundary_View {
   readonly IS_ACTIVE_PAYABLE_LEASE: boolean | null;
   readonly IS_RECEIVABLE_LEASE: boolean | null;
   readonly IS_ACTIVE_RECEIVABLE_LEASE: boolean | null;
+  readonly HISTORICAL_FILE_NUMBER_STR: string | null;
 }

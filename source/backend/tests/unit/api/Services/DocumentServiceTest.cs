@@ -29,6 +29,7 @@ using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Constants;
 using Microsoft.Extensions.Configuration;
+using Pims.Core.Exceptions;
 
 namespace Pims.Api.Test.Services
 {
@@ -723,10 +724,10 @@ namespace Pims.Api.Test.Services
                 });
 
             // Act
-            await service.DownloadFileLatestAsync(1);
+            Func<Task> act = async () => await service.DownloadFileLatestAsync(1);
 
             // Assert
-            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
+            await act.Should().ThrowAsync<MayanRepositoryException>();
         }
 
         [Fact]

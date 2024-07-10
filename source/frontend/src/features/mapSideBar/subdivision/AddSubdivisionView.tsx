@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
+import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
 import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -72,7 +72,7 @@ const AddSubdivisionView: React.FunctionComponent<
 }) => {
   const getAreaValue = (area: number, unit: string): number => {
     const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
-    return Number(sqm.toFixed(3));
+    return Number(sqm.toFixed(4));
   };
   return (
     <MapSideBarLayout
@@ -147,14 +147,14 @@ const AddSubdivisionView: React.FunctionComponent<
                     const allProperties = [...values.destinationProperties];
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
-                        const formProperty = PropertyForm.fromMapProperty(property);
+                        const formProperty = PropertyForm.fromFeatureDataset(property);
                         formProperty.landArea =
-                          property.landArea && property.areaUnit
-                            ? getAreaValue(property.landArea, property.areaUnit)
+                          formProperty.landArea && formProperty.areaUnit
+                            ? getAreaValue(formProperty.landArea, formProperty.areaUnit)
                             : 0;
                         formProperty.areaUnit = AreaUnitTypes.SquareMeters;
-                        if (property.pid) {
-                          formProperty.address = await getPrimaryAddressByPid(property.pid);
+                        if (formProperty.pid) {
+                          formProperty.address = await getPrimaryAddressByPid(formProperty.pid);
                           allProperties.push(formProperty.toApi());
                         } else {
                           toast.error('Selected property must have a PID');
@@ -165,7 +165,7 @@ const AddSubdivisionView: React.FunctionComponent<
                   }}
                   selectedComponentId="destination-property-selector"
                   modifiedProperties={values.destinationProperties.map(dp =>
-                    PropertyForm.fromPropertyApi(dp),
+                    PropertyForm.fromPropertyApi(dp).toFeatureDataset(),
                   )}
                 />
                 <FieldArray name="destinationProperties">
@@ -229,7 +229,7 @@ const StyledFormWrapper = styled.div`
   background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
-const StyledSubdivideConsolidateIcon = styled(ConsolidateSubdivideIcon)`
+const StyledSubdivideConsolidateIcon = styled(SubdivisionIcon)`
   width: 3rem;
   height: 3rem;
   margin-right: 1rem;

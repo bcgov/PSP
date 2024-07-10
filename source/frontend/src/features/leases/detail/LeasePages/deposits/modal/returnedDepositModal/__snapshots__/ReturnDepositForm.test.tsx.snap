@@ -71,6 +71,12 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c8.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -272,7 +278,12 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
             class="form-label"
             for="datepicker-terminationDate"
           >
-            Termination or surrender date:
+            <span
+              class="datepicker-label"
+            >
+              Termination or surrender date:
+            </span>
+             
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -457,7 +468,12 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
             class="form-label"
             for="datepicker-returnDate"
           >
-            Returned date:
+            <span
+              class="datepicker-label"
+            >
+              Returned date:
+            </span>
+             
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -633,6 +649,12 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
   height: 3.8rem;
 }
 
+.c8.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -834,7 +856,12 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
             class="form-label"
             for="datepicker-terminationDate"
           >
-            Termination or surrender date:
+            <span
+              class="datepicker-label"
+            >
+              Termination or surrender date:
+            </span>
+             
           </label>
           <div
             class="react-datepicker-wrapper d-block"
@@ -1019,7 +1046,12 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
             class="form-label"
             for="datepicker-returnDate"
           >
-            Returned date:
+            <span
+              class="datepicker-label"
+            >
+              Returned date:
+            </span>
+             
           </label>
           <div
             class="react-datepicker-wrapper d-block"

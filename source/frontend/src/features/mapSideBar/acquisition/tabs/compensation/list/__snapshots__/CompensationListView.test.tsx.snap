@@ -29,6 +29,7 @@ exports[`compensation list view > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c3 {
@@ -118,9 +119,7 @@ exports[`compensation list view > renders as expected 1`] = `
               />
             </svg>
             Total allowable compensation:
-            <span
-              class="ml-2"
-            >
+            <span>
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-section-field-tooltip"
@@ -195,9 +194,7 @@ exports[`compensation list view > renders as expected 1`] = `
               />
             </svg>
             Total payments made on this file:
-            <span
-              class="ml-2"
-            >
+            <span>
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-section-field-tooltip"
@@ -252,9 +249,7 @@ exports[`compensation list view > renders as expected 1`] = `
               />
             </svg>
             Drafts:
-            <span
-              class="ml-2"
-            >
+            <span>
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-section-field-tooltip"
@@ -320,7 +315,7 @@ exports[`compensation list view > renders as expected 1`] = `
           Requisitions in this file (H120)
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"

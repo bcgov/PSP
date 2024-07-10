@@ -6,407 +6,7 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  border-bottom: solid 0.5rem;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2.4rem;
-}
-
-.c3 {
-  width: 100%;
-  border-bottom: solid 0.5rem;
-}
-
-.c2 {
-  font-size: 2.4rem;
-  cursor: pointer;
-}
-
-.c1 {
-  width: 3rem;
-  height: 3rem;
-  margin-right: 1rem;
-}
-
-<div
-    class=""
-  >
-    <div
-      class="row"
-    >
-      <div
-        class="col"
-      >
-        <h1
-          class="c0 mr-auto"
-        >
-          <svg
-            class="c1"
-            data-name="Layer 2"
-            id="Layer_2"
-            viewBox="0 0 21.62 14.48"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <defs />
-            <g
-              data-name="Layer 1"
-              id="Layer_1-2"
-            >
-              <g>
-                <path
-                  d="M12.85,6.88V0H2.16C.97,0,0,.97,0,2.16v10.15c0,1.19.97,2.16,2.16,2.16h2.04l8.65-7.59Z"
-                />
-                <path
-                  d="M19.46,0h-3.18v7.24c0,.06,0,.12-.02.18.08.55-.11,1.14-.56,1.53l-6.29,5.53h10.05c1.19,0,2.16-.97,2.16-2.16V2.16C21.62.98,20.65,0,19.46,0Z"
-                />
-              </g>
-            </g>
-          </svg>
-          Create a Consolidation
-        </h1>
-      </div>
-      <div
-        class="col-auto"
-      >
-        <svg
-          class="c2"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>
-            close
-          </title>
-          <path
-            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-          />
-        </svg>
-      </div>
-    </div>
-    <div
-      class="c3"
-    />
-  </div>
-  .c4 {
-  font-family: 'BCSans-Bold';
-  font-size: 2.6rem;
-  border-bottom: solid 0.2rem;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2.4rem;
-}
-
-.c9 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
-}
-
-.c3 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c8 {
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c5 {
-  height: 100%;
-}
-
-.c5 .tab-content {
-  border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
-  overflow-y: auto;
-}
-
-.c5 .tab-content .tab-pane {
-  position: relative;
-}
-
-.c7 {
-  background-color: white;
-  font-size: 1.4rem;
-  border-color: transparent;
-}
-
-.c7 .nav-tabs {
-  height: auto;
-}
-
-.c7 .nav-item {
-  min-width: 5rem;
-  padding: 0.1rem 1.2rem;
-}
-
-.c7 .nav-item:hover {
-  border-color: transparent;
-  -webkit-text-decoration: underline;
-  text-decoration: underline;
-}
-
-.c7 .nav-item.active {
-  font-family: 'BCSans-Bold';
-  border-color: transparent;
-}
-
-.c6 {
-  height: auto;
-}
-
-.c6.tab-content {
-  height: auto;
-}
-
-.c0 {
-  width: 100%;
-  position: relative;
-  overflow: auto;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c1 {
-  height: 100%;
-  width: 100%;
-}
-
-.c10 {
-  font-size: 1.6rem;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-}
-
-<div
-    class="c0"
-  >
-    <div
-      class="c1"
-    >
-      <div
-        class="c2"
-      >
-        <form
-          class=""
-          novalidate=""
-        >
-          <div
-            class="c3 form-section"
-          >
-            <div
-              class="collapse show"
-            >
-              <h2
-                class="c4"
-              >
-                Properties in Consolidation
-                <svg
-                  class="tooltip-icon h-20"
-                  fill="currentColor"
-                  height="1rem"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1rem"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </h2>
-              <p>
-                Select two or more parent properties that were consolidated:
-              </p>
-              <div
-                class="c5 c6"
-              >
-                <nav
-                  class="c7 nav nav-tabs"
-                  role="tablist"
-                >
-                  <a
-                    aria-selected="true"
-                    class="nav-item nav-link active"
-                    data-rb-event-key="parent-property"
-                    href="#"
-                    role="tab"
-                  >
-                    Parent Property Search
-                  </a>
-                </nav>
-                <div
-                  class="tab-content"
-                >
-                  <div
-                    aria-hidden="false"
-                    class="fade tab-pane active show"
-                    role="tabpanel"
-                  >
-                    <span>
-                      Content Rendered
-                    </span>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="c8 form-section pt-4"
-              >
-                <h2
-                  class="c9"
-                >
-                  <div
-                    class="no-gutters row"
-                  >
-                    <div
-                      class="col"
-                    >
-                      Selected Parents
-                    </div>
-                  </div>
-                </h2>
-                <div
-                  class="collapse show"
-                >
-                  <div
-                    class="c10 no-gutters row"
-                  >
-                    <div
-                      class="col-md-3"
-                    >
-                      Identifier
-                    </div>
-                    <div
-                      class="col-md-2"
-                    >
-                      Plan
-                    </div>
-                    <div
-                      class="col-md-3"
-                    >
-                      Area m
-                      <sup>
-                        2
-                      </sup>
-                    </div>
-                    <div
-                      class="col-md-3"
-                    >
-                      Address
-                    </div>
-                    <div
-                      class="col-md-1"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div
-            class="c3 form-section"
-          >
-            <div
-              class="collapse show"
-            >
-              <p>
-                Select the child property to which parent properties were consolidated:
-              </p>
-              <span>
-                Content Rendered
-              </span>
-              <div
-                class="c8 form-section pt-4"
-              >
-                <h2
-                  class="c9"
-                >
-                  <div
-                    class="no-gutters row"
-                  >
-                    <div
-                      class="col"
-                    >
-                      Selected Child
-                    </div>
-                  </div>
-                </h2>
-                <div
-                  class="collapse show"
-                >
-                  <div
-                    class="c10 no-gutters row"
-                  >
-                    <div
-                      class="col-md-3"
-                    >
-                      Identifier
-                    </div>
-                    <div
-                      class="col-md-2"
-                    >
-                      Plan
-                    </div>
-                    <div
-                      class="col-md-3"
-                    >
-                      Area m
-                      <sup>
-                        2
-                      </sup>
-                    </div>
-                    <div
-                      class="col-md-3"
-                    >
-                      Address
-                    </div>
-                    <div
-                      class="col-md-1"
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
-  .c1.btn {
+  .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -437,49 +37,55 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
-.c1.btn:hover {
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c1.btn:focus {
+.c4.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c1.btn.btn-primary {
+.c4.btn.btn-primary {
   border: none;
 }
 
-.c1.btn.btn-secondary {
+.c4.btn.btn-secondary {
   background: none;
 }
 
-.c1.btn.btn-info {
+.c4.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c1.btn.btn-info:hover,
-.c1.btn.btn-info:active,
-.c1.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   background: none;
 }
 
-.c1.btn.btn-light {
+.c4.btn.btn-light {
   border: none;
 }
 
-.c1.btn.btn-dark {
+.c4.btn.btn-dark {
   border: none;
 }
 
-.c1.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -500,9 +106,9 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c1.btn.btn-link:hover,
-.c1.btn.btn-link:active,
-.c1.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -511,14 +117,14 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   outline: none;
 }
 
-.c1.btn.btn-link:disabled,
-.c1.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c1.btn:disabled,
-.c1.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -529,19 +135,188 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   opacity: 0.65;
 }
 
-.c1.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c1.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c1.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
+.c1 {
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c13 {
+  font-family: 'BCSans-Bold';
+  font-size: 2.6rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c6 {
+  border-left: 0.1rem solid;
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
+}
+
+.c18 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c12 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c17 {
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c14 {
+  height: 100%;
+}
+
+.c14 .tab-content {
+  border-radius: 0 0.4rem 0.4rem 0.4rem;
+  height: calc(100% - 2.5rem);
+  overflow-y: auto;
+}
+
+.c14 .tab-content .tab-pane {
+  position: relative;
+}
+
+.c16 {
+  background-color: white;
+  font-size: 1.4rem;
+  border-color: transparent;
+}
+
+.c16 .nav-tabs {
+  height: auto;
+}
+
+.c16 .nav-item {
+  min-width: 5rem;
+  padding: 0.1rem 1.2rem;
+}
+
+.c16 .nav-item:hover {
+  border-color: transparent;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c16 .nav-item.active {
+  font-family: 'BCSans-Bold';
+  border-color: transparent;
+}
+
+.c15 {
+  height: auto;
+}
+
+.c15.tab-content {
+  height: auto;
+}
+
+.c5.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid;
+  background-color: white;
+}
+
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
+  background-color: white;
+}
+
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
 .c0 {
+  min-width: 90rem;
+  height: 100%;
+  position: relative;
+  padding: 1.6rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c3 {
+  gap: 1.5rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c9 {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c10 {
+  height: 100%;
+  width: 100%;
+}
+
+.c8 {
+  width: 100%;
+  border-bottom: solid 0.5rem;
+}
+
+.c7 {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
+.c19 {
+  font-size: 1.6rem;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c20 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -550,42 +325,356 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   z-index: 10;
 }
 
+.c11 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+  padding-right: 1rem;
+  padding-bottom: 1rem;
+}
+
+.c2 {
+  width: 3rem;
+  height: 3rem;
+  margin-right: 1rem;
+}
+
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+      class="row"
     >
       <div
-        class="pr-3 col-auto"
-      />
-      <div
-        class="pr-6 col-auto"
+        class="col"
       >
-        <button
-          class="c1 Button btn btn-secondary"
-          type="button"
+        <h1
+          class="c1 mr-auto"
         >
-          <div
-            class="Button__value"
+          <span
+            class="mr-2"
           >
-            Cancel
-          </div>
-        </button>
+            <svg
+              class="c2"
+              fill="none"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14.5455 11.4112V0H2.56725C1.15289 0 0 1.60885 0 3.58259V20.4174C0 22.3912 1.15289 24 2.56725 24H4.99186L14.5455 11.4112Z"
+              />
+              <path
+                d="M21.6022 0H18.0722V12C18.0722 12.0994 18.0611 12.1989 18.05 12.2983L9.45459 24L21.6022 24C22.9232 24 24 22.3923 24 20.4199V3.58011C24 1.62431 22.9232 0 21.6022 0Z"
+              />
+            </svg>
+          </span>
+          Create a Consolidation
+        </h1>
       </div>
       <div
-        class="col-auto"
+        class="c3 d-flex col-auto"
       >
-        <button
-          class="c1 Button mr-9 btn btn-primary"
-          type="button"
-        >
-          <div
-            class="Button__value"
+        <span>
+          <button
+            class="c4 Button Button--icon-only c5 btn btn-light"
+            title="collapse"
+            type="button"
           >
-            Create Consolidation
-          </div>
-        </button>
+            <div
+              class="Button__icon"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"
+                />
+                <path
+                  d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"
+                />
+              </svg>
+            </div>
+          </button>
+        </span>
+        <div
+          class="c6"
+        />
+        <svg
+          class="c7"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>
+            close
+          </title>
+          <path
+            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="c8"
+    />
+    <div
+      class="c9"
+    >
+      <div
+        class="c10"
+      >
+        <div
+          class="c11"
+        >
+          <form
+            class=""
+            novalidate=""
+          >
+            <div
+              class="c12 form-section"
+            >
+              <div
+                class="collapse show"
+              >
+                <h2
+                  class="c13"
+                >
+                  Properties in Consolidation
+                  <svg
+                    class="tooltip-icon h-20"
+                    fill="currentColor"
+                    height="1rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </h2>
+                <p>
+                  Select two or more parent properties that were consolidated:
+                </p>
+                <div
+                  class="c14 c15"
+                >
+                  <nav
+                    class="c16 nav nav-tabs"
+                    role="tablist"
+                  >
+                    <a
+                      aria-selected="true"
+                      class="nav-item nav-link active"
+                      data-rb-event-key="parent-property"
+                      href="#"
+                      role="tab"
+                    >
+                      Parent Property Search
+                    </a>
+                  </nav>
+                  <div
+                    class="tab-content"
+                  >
+                    <div
+                      aria-hidden="false"
+                      class="fade tab-pane active show"
+                      role="tabpanel"
+                    >
+                      <span>
+                        Content Rendered
+                      </span>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c17 form-section pt-4"
+                >
+                  <h2
+                    class="c18"
+                  >
+                    <div
+                      class="no-gutters row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        Selected Parents
+                      </div>
+                    </div>
+                  </h2>
+                  <div
+                    class="collapse show"
+                  >
+                    <div
+                      class="c19 no-gutters row"
+                    >
+                      <div
+                        class="col-md-3"
+                      >
+                        Identifier
+                      </div>
+                      <div
+                        class="col-md-2"
+                      >
+                        Plan
+                      </div>
+                      <div
+                        class="col-md-3"
+                      >
+                        Area m
+                        <sup>
+                          2
+                        </sup>
+                      </div>
+                      <div
+                        class="col-md-3"
+                      >
+                        Address
+                      </div>
+                      <div
+                        class="col-md-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c12 form-section"
+            >
+              <div
+                class="collapse show"
+              >
+                <p>
+                  Select the child property to which parent properties were consolidated:
+                </p>
+                <span>
+                  Content Rendered
+                </span>
+                <div
+                  class="c17 form-section pt-4"
+                >
+                  <h2
+                    class="c18"
+                  >
+                    <div
+                      class="no-gutters row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        Selected Child
+                      </div>
+                    </div>
+                  </h2>
+                  <div
+                    class="collapse show"
+                  >
+                    <div
+                      class="c19 no-gutters row"
+                    >
+                      <div
+                        class="col-md-3"
+                      >
+                        Identifier
+                      </div>
+                      <div
+                        class="col-md-2"
+                      >
+                        Plan
+                      </div>
+                      <div
+                        class="col-md-3"
+                      >
+                        Area m
+                        <sup>
+                          2
+                        </sup>
+                      </div>
+                      <div
+                        class="col-md-3"
+                      >
+                        Address
+                      </div>
+                      <div
+                        class="col-md-1"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="c20 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+      >
+        <div
+          class="pr-3 col-auto"
+        />
+        <div
+          class="pr-6 col-auto"
+        >
+          <button
+            class="c4 Button btn btn-secondary"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Cancel
+            </div>
+          </button>
+        </div>
+        <div
+          class="col-auto"
+        >
+          <button
+            class="c4 Button mr-9 btn btn-primary"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Create Consolidation
+            </div>
+          </button>
+        </div>
       </div>
     </div>
   </div>

@@ -108,6 +108,7 @@ export const getEmptyPropertyView = (): ApiGen_Concepts_PropertyView => ({
   isActivePayableLease: false,
   isReceivableLease: false,
   isActiveReceivableLease: false,
+  historicalFileNumberStr: '',
 });
 
 export const getMockProperties: () => IProperty[] = () => [
@@ -306,6 +307,7 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
       rowVersion: 3,
     },
     displayOrder: null,
+    location: null,
     rowVersion: null,
   },
   {
@@ -350,6 +352,7 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
     },
     displayOrder: null,
     propertyName: null,
+    location: null,
     rowVersion: null,
   },
 ];
@@ -365,6 +368,7 @@ export const getEmptyPropertyLease = (): ApiGen_Concepts_PropertyLease => {
     displayOrder: null,
     property: null,
     propertyId: 0,
+    location: null,
     rowVersion: null,
   };
 };

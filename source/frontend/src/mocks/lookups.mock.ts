@@ -914,6 +914,13 @@ export const mockLookups: ILookupCode[] = [
   },
   {
     id: 'ACTIVE',
+    name: 'Archived',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLeaseStatusType',
+  },
+  {
+    id: 'ARCHIVED',
     name: 'Active',
     isDisabled: false,
     displayOrder: 0,
@@ -966,14 +973,14 @@ export const mockLookups: ILookupCode[] = [
     name: 'Exercised',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsLeaseTermStatusType',
+    type: 'PimsLeasePeriodStatusType',
   },
   {
     id: 'NEXER',
     name: 'Not Exercised',
     isDisabled: false,
     displayOrder: 0,
-    type: 'PimsLeaseTermStatusType',
+    type: 'PimsLeasePeriodStatusType',
   },
   {
     id: 'LICONSTRC',
@@ -4761,6 +4768,27 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 0,
     type: 'PimsDispositionStatusType',
+  },
+  {
+    id: 'BASE',
+    name: 'Base Rent',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsLeasePaymentCategoryType',
+  },
+  {
+    id: 'ADDL',
+    name: 'Additional Rent',
+    isDisabled: false,
+    displayOrder: 2,
+    type: 'PimsLeasePaymentCategoryType',
+  },
+  {
+    id: 'VBL',
+    name: 'Variable Rent',
+    isDisabled: false,
+    displayOrder: 3,
+    type: 'PimsLeasePaymentCategoryType',
   },
 ];
 

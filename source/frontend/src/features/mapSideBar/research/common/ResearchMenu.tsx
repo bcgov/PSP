@@ -2,7 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import EditMapMarker from '@/assets/images/edit-map-marker.svg?react';
+import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { EditButton } from '@/components/common/EditButton';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
@@ -45,7 +45,7 @@ const ResearchMenu: React.FunctionComponent<
               {hasClaim(Claims.RESEARCH_EDIT) && (
                 <EditButton
                   title="Change properties"
-                  icon={<EditMapMarker width="2.4rem" height="2.4rem" />}
+                  icon={<EditPropertiesIcon />}
                   onClick={() => {
                     props.onEdit();
                   }}

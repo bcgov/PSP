@@ -11,7 +11,7 @@
     <id>contact</id>
   </contact>
   <charset>UTF-8</charset>
-  <numDecimals>4</numDecimals>
+  <numDecimals>8</numDecimals>
   <verbose>true</verbose>
   <verboseExceptions>false</verboseExceptions>
   <metadata>

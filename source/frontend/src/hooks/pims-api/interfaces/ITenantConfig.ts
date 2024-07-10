@@ -38,10 +38,10 @@ export interface ITenantConfig2 {
   // the url that should be used to query the PSP properties layer.
   propertiesUrl: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
-  parcelMap: ILayerConfig;
+  parcelMapFullyAttributed: ILayerConfig;
   electoralLayerUrl: string;
   municipalLayerUrl: string;
-  parcelsLayerUrl: string;
+  fullyAttributedParcelsLayerUrl: string;
   regionalLayerUrl: string;
   motiRegionLayerUrl: string;
   hwyDistrictLayerUrl: string;

@@ -32,7 +32,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileNameInput = By.Id("input-name");
         private By researchRoadNameInput = By.Id("input-roadName");
         private By researchRoadAliasInput = By.Id("input-roadAlias");
-        private By researchPurposeMultiselect = By.Id("purpose-selector");
+        private By researchPurposeMultiselect = By.Id("purpose-selector_input");
         private By researchRequestPurposeOptions = By.CssSelector("ul[class='optionContainer']");
         private By researchRequestDateInput = By.Id("datepicker-requestDate");
         private By researchRequestSourceSelect = By.Id("input-requestSourceTypeCode");
@@ -62,14 +62,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By researchFileHeaderDistrictLabel = By.XPath("//label[contains(text(),'Ministry district')]");
         private By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::strong/parent::div/following-sibling::div");
         private By researchFileHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
-        private By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File')]/parent::strong/parent::div/following-sibling::div/div");
+        private By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File')]/parent::strong/parent::div/following-sibling::div/div/span");
         private By researchFileHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
         private By researchFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
         private By researchFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
         private By researchFileHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
         private By researchFileHeaderLastUpdatedDateContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
         private By researchFileHeaderLastUpdatedByContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By researchFileHeaderStatusContent = By.XPath("//div[@class='col']/div/div[4]/div/div");
+        private By researchFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         //Research File Details Tab View Elements
         private By researchFileDetailsProjectSubtitle = By.XPath("//h2/div/div[contains(text(),'Project')]");
@@ -155,10 +155,10 @@ namespace PIMS.Tests.Automation.PageObjects
         }
         public void NavigateToCreateNewResearchFile()
         {
-            Wait(3000);
+            Wait();
             FocusAndClick(menuResearchButton);
 
-            Wait(3000);
+            Wait();
             FocusAndClick(createResearchFileButton);
         }
 
@@ -257,6 +257,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 foreach (string purpose in researchFile.ResearchPurpose)
                 {
                     webDriver.FindElement(researchPurposeMultiselect).Click();
+
+                    Wait();
                     ChooseMultiSelectSpecificOption(researchRequestPurposeOptions, purpose);
                 }
             }
@@ -724,7 +726,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchFileHeaderDistrictLabel);
 
             AssertTrueIsDisplayed(researchFileHistoricalFileLabel);
-            //AssertTrueIsDisplayed(researchFileHistoricalFileContent);
+            //Assert.True(webDriver.FindElements(researchFileHistoricalFileContent).Count > 0);
 
             AssertTrueIsDisplayed(researchFileHeaderCreatedLabel);
             AssertTrueElementContains(researchFileHeaderCreatedDateContent, GetTodayFormattedDate());

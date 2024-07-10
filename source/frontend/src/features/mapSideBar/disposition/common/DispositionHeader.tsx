@@ -10,7 +10,7 @@ import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_C
 import { exists } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
-import HistoricalNumberFieldView from '../../shared/header/HistoricalNumberSectionView';
+import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
 
 export interface IDispositionHeaderProps {
   dispositionFile?: ApiGen_Concepts_DispositionFile;
@@ -32,17 +32,13 @@ export const DispositionHeader: React.FunctionComponent<
         <HeaderField label="File:" labelWidth={leftColumnLabel} contentWidth="9">
           D-{dispositionFile?.fileNumber}
         </HeaderField>
-        <HistoricalNumbersContainer
-          propertyIds={propertyIds}
-          displayValuesOnly={false}
-          View={HistoricalNumberFieldView}
-        />
+        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
       </Col>
       <Col xs="5">
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={dispositionFile} />
           {exists(dispositionFile?.fileStatusTypeCode) && (
-            <StatusField statusCodeType={dispositionFile.fileStatusTypeCode} />
+            <StatusField preText="File:" statusCodeType={dispositionFile.fileStatusTypeCode} />
           )}
         </StyledFiller>
       </Col>

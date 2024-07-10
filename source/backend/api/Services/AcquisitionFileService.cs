@@ -13,7 +13,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -28,7 +27,6 @@ namespace Pims.Api.Services
         private readonly IAcquisitionFilePropertyRepository _acquisitionFilePropertyRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyRepository _propertyRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly ILookupRepository _lookupRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IAcquisitionFileChecklistRepository _checklistRepository;
@@ -48,7 +46,6 @@ namespace Pims.Api.Services
             IAcquisitionFilePropertyRepository acqFilePropertyRepository,
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
-            ICoordinateTransformService coordinateService,
             ILookupRepository lookupRepository,
             IEntityNoteRepository entityNoteRepository,
             IAcquisitionFileChecklistRepository checklistRepository,
@@ -67,7 +64,6 @@ namespace Pims.Api.Services
             _acquisitionFilePropertyRepository = acqFilePropertyRepository;
             _userRepository = userRepository;
             _propertyRepository = propertyRepository;
-            _coordinateService = coordinateService;
             _lookupRepository = lookupRepository;
             _entityNoteRepository = entityNoteRepository;
             _checklistRepository = checklistRepository;
@@ -124,7 +120,6 @@ namespace Pims.Api.Services
                     FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
                     FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                     FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                    //FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty, TODO: Fix mappings
                     FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name)),
@@ -159,8 +154,7 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             var properties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(id);
-            ReprojectPropertyLocationsToWgs84(properties);
-            return properties;
+            return _propertyService.TransformAllPropertiesToLatLong(properties);
         }
 
         public IEnumerable<PimsAcquisitionOwner> GetOwners(long id)
@@ -229,6 +223,12 @@ namespace Pims.Api.Services
 
             PopulateAcquisitionChecklist(acquisitionFile);
 
+            // Update file specific marker locations
+            foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
+            }
+
             acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
@@ -288,7 +288,7 @@ namespace Pims.Api.Services
 
         public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
-            _logger.LogInformation("Updating acquisition file properties...");
+            _logger.LogInformation("Updating acquisition file properties with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
 
@@ -305,7 +305,7 @@ namespace Pims.Api.Services
             }
 
             // Get the current properties in the research file
-            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
+            var currentFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -313,22 +313,37 @@ namespace Pims.Api.Services
                 // If the property is not new, check if the name has been updated.
                 if (incomingAcquisitionProperty.Internal_Id != 0)
                 {
-                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
-                    if (existingProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
+                    var needsUpdate = false;
+                    PimsPropertyAcquisitionFile existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
+                    if (existingFileProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
                     {
-                        existingProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
-                        _acquisitionFilePropertyRepository.Update(existingProperty);
+                        existingFileProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+
+                    var incomingGeom = incomingAcquisitionProperty.Location;
+                    var existingGeom = existingFileProperty.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
+                        _propertyService.UpdateFilePropertyLocation(incomingAcquisitionProperty, existingFileProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
+                        _acquisitionFilePropertyRepository.Update(existingFileProperty);
                     }
                 }
                 else
                 {
                     // New property needs to be added
-                    _acquisitionFilePropertyRepository.Add(incomingAcquisitionProperty);
+                    var newFileProperty = _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
+                    _acquisitionFilePropertyRepository.Add(newFileProperty);
                 }
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsPropertyAcquisitionFile> differenceSet = currentFileProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
@@ -386,7 +401,7 @@ namespace Pims.Api.Services
                 {
                     _checklistRepository.Add(incomingItem);
                 }
-                else if (existingItem.AcqChklstItemStatusTypeCode != incomingItem.AcqChklstItemStatusTypeCode)
+                else if (existingItem.ChklstItemStatusTypeCode != incomingItem.ChklstItemStatusTypeCode)
                 {
                     _checklistRepository.Update(incomingItem);
                 }
@@ -659,19 +674,6 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyAcquisitionFile> propertyAcquisitionFiles)
-        {
-            foreach (var acquisitionProperty in propertyAcquisitionFiles)
-            {
-                if (acquisitionProperty.Property.Location != null)
-                {
-                    var oldCoords = acquisitionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    acquisitionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
-            }
-        }
-
         private void ValidateNewTotalAllowableCompensation(long currentAcquisitionFileId, decimal? newAllowableCompensation)
         {
             if (!newAllowableCompensation.HasValue)
@@ -778,7 +780,7 @@ namespace Pims.Api.Services
                 var checklistItem = new PimsAcquisitionChecklistItem
                 {
                     AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
-                    AcqChklstItemStatusTypeCode = "INCOMP",
+                    ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                 };
 
                 acquisitionFile.PimsAcquisitionChecklistItems.Add(checklistItem);
@@ -792,7 +794,7 @@ namespace Pims.Api.Services
             {
                 return;
             }
-            var checklistStatusTypes = _lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
+            var checklistStatusTypes = _lookupRepository.GetAllChecklistItemStatusTypes();
             foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
                 if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && DateOnly.FromDateTime(acquisitionFile.AppCreateTimestamp) >= itemType.EffectiveDate)
@@ -801,9 +803,9 @@ namespace Pims.Api.Services
                     {
                         AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
                         AcqChklstItemTypeCodeNavigation = itemType,
-                        AcqChklstItemStatusTypeCode = "INCOMP",
+                        ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                         AcquisitionFileId = acquisitionFile.AcquisitionFileId,
-                        AcqChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == "INCOMP"),
+                        ChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString()),
                     };
 
                     pimsAcquisitionChecklistItems.Add(checklistItem);

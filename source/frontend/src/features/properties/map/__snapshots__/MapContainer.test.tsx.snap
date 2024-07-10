@@ -37,6 +37,12 @@ exports[`MapContainer > Renders the map 1`] = `
   height: 3.8rem;
 }
 
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -229,6 +235,11 @@ exports[`MapContainer > Renders the map 1`] = `
   font-size: 1.1rem;
 }
 
+.c3 .leaflet-container a {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c3 .leaflet-container .leaflet-popup-content-wrapper {
   border-radius: 0;
 }
@@ -336,13 +347,13 @@ exports[`MapContainer > Renders the map 1`] = `
   -webkit-flex-flow: column;
   -ms-flex-flow: column;
   flex-flow: column;
-  min-width: 93rem;
-  margin-left: -93rem;
-  padding: 1.6rem;
   overflow: hidden;
   -webkit-transition: 1s;
   transition: 1s;
-  width: 0;
+  min-width: 0rem;
+  max-width: 0rem;
+  width: 0rem;
+  padding: 0;
 }
 
 .c1 h1 {
@@ -485,6 +496,22 @@ exports[`MapContainer > Renders the map 1`] = `
             <div
               class="leaflet-pane leaflet-tile-pane"
             >
+              <div
+                class="leaflet-layer "
+                style="z-index: 18;"
+              >
+                <div
+                  class="leaflet-tile-container leaflet-zoom-animated"
+                  style="z-index: 20; left: 0px; top: 0px;"
+                >
+                  <img
+                    alt=""
+                    class="leaflet-tile"
+                    src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23E9AD34&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
+                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                  />
+                </div>
+              </div>
               <div
                 class="leaflet-layer "
                 style="z-index: 0;"

@@ -1,8 +1,8 @@
 import { AxiosError } from 'axios';
 import { useCallback } from 'react';
-import { toast } from 'react-toastify';
 
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
@@ -20,6 +20,7 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
   React.PropsWithChildren<PropertySelectorPidSearchContainerProps>
 > = ({ setSelectProperty, PropertySelectorPidSearchView }) => {
   const { getPropertyByPidWrapper } = usePimsPropertyRepository();
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const searchFunc = useCallback(
     async (layerSearch: ILayerSearchCriteria) => {
@@ -28,9 +29,15 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
           const result = await getPropertyByPidWrapper.execute(layerSearch?.pid);
           if (result) {
             if (!result.isOwned || result.isRetired) {
-              toast.warn(
-                'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
-              );
+              setModalContent({
+                variant: 'error',
+                okButtonText: 'Close',
+                title: 'Error',
+                message:
+                  'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
+                handleOk: () => setDisplayModal(false),
+              });
+              setDisplayModal(true);
             } else {
               setSelectProperty(result);
             }
@@ -38,14 +45,20 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
         } catch (e) {
           const axiosError = e as AxiosError<IApiError>;
           if (axiosError?.response?.status === 404) {
-            toast.warn(
-              'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
-            );
+            setModalContent({
+              variant: 'error',
+              okButtonText: 'Close',
+              title: 'Error',
+              message:
+                'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
+              handleOk: () => setDisplayModal(false),
+            });
+            setDisplayModal(true);
           }
         }
       }
     },
-    [getPropertyByPidWrapper, setSelectProperty],
+    [getPropertyByPidWrapper, setDisplayModal, setModalContent, setSelectProperty],
   );
 
   return (

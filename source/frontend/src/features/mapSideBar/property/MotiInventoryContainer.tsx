@@ -48,6 +48,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
       PROPERTY_TYPES.PIMS_API,
       PROPERTY_TYPES.BC_ASSESSMENT,
       PROPERTY_TYPES.PARCEL_MAP,
+      PROPERTY_TYPES.PIMS_GEOSERVER,
     ],
   });
 

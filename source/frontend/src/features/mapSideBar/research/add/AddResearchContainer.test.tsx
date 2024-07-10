@@ -10,7 +10,7 @@ import {
   useMapStateMachine,
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { RenderOptions, act, renderAsync, userEvent, waitFor } from '@/utils/test-utils';
 
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
@@ -96,6 +96,7 @@ describe('AddResearchContainer component', () => {
         ...mapMachineBaseMock,
         selectedFeatureDataset: {
           location: { lat: 0, lng: 0 },
+          fileLocation: null,
           pimsFeature: null,
           parcelFeature: selectedFeature,
           regionFeature: null,
@@ -154,7 +155,7 @@ describe('AddResearchContainer component', () => {
   });
 });
 
-const selectedFeature: Feature<Geometry, PMBC_Feature_Properties> = {
+const selectedFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> = {
   type: 'Feature',
   id: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW.fid-570f7aaf_180481054f6_-993',
   geometry: {
@@ -188,6 +189,20 @@ const selectedFeature: Feature<Geometry, PMBC_Feature_Properties> = {
     OBJECTID: 584001723,
     SE_ANNO_CAD_DATA: null,
     GLOBAL_UID: null,
+    PLAN_ID: null,
     PID_FORMATTED: null,
+    SOURCE_PARCEL_ID: null,
+    SURVEY_DESIGNATION_1: null,
+    SURVEY_DESIGNATION_2: null,
+    SURVEY_DESIGNATION_3: null,
+    LEGAL_DESCRIPTION: null,
+    IS_REMAINDER_IND: null,
+    GEOMETRY_SOURCE: null,
+    POSITIONAL_ERROR: null,
+    ERROR_REPORTED_BY: null,
+    CAPTURE_METHOD: null,
+    COMPILED_IND: null,
+    STATED_AREA: null,
+    WHEN_CREATED: null,
   },
 };

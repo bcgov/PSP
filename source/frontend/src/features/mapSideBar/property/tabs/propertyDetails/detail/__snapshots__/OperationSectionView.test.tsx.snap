@@ -46,6 +46,7 @@ exports[`Operation section view > matches snapshot 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div
@@ -99,7 +100,7 @@ exports[`Operation section view > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="col-1"
+              class="pl-8 col-auto"
             >
               <svg
                 class="c6"
@@ -465,6 +466,7 @@ exports[`Operation section view > matches snapshot 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 <div
@@ -518,7 +520,7 @@ exports[`Operation section view > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="col-1"
+              class="pl-8 col-auto"
             >
               <svg
                 class="c6"

@@ -34,6 +34,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c5 input.form-control {
@@ -55,7 +56,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           Administration
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"
@@ -346,6 +347,35 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           </div>
         </div>
       </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Primary arbitration city:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+          data-testid="primaryArbitrationCity"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-primaryArbitrationCity"
+              name="primaryArbitrationCity"
+              title="VICTORIA"
+              value="VICTORIA"
+            />
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </DocumentFragment>
@@ -385,6 +415,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c5 input.form-control {
@@ -406,7 +437,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           Administration
         </div>
         <div
-          class="col-1"
+          class="pl-8 col-auto"
         >
           <svg
             class="c2"
@@ -689,6 +720,34 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-description"
               name="description"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Primary arbitration city:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+          data-testid="primaryArbitrationCity"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-primaryArbitrationCity"
+              name="primaryArbitrationCity"
               value=""
             />
           </div>

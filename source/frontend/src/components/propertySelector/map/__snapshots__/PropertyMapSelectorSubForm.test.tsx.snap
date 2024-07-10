@@ -19,6 +19,7 @@ exports[`PropertySelectorSubForm component > renders as expected when provided n
 
 .c3 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0.c0.c0 input,
@@ -186,6 +187,24 @@ exports[`PropertySelectorSubForm component > renders as expected when provided n
           class="c4 text-left col"
         >
           2 - Vancouver Island
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col-md-12"
+        >
+          <label
+            class="form-label"
+          >
+            Legal Description:
+          </label>
+        </div>
+        <div
+          class="col-md-12"
+        >
+          Test Legal Description
         </div>
       </div>
     </div>

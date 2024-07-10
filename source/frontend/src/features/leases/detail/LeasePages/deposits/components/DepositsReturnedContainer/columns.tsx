@@ -1,10 +1,10 @@
 import { FaTrash } from 'react-icons/fa';
-import { MdEdit } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
+import { StyledRemoveLinkButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/EditButton';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
 import Claims from '@/constants/claims';
@@ -74,26 +74,14 @@ function depositActions(onEdit: (id: number) => void, onDelete: (id: number) => 
     return (
       <StyledIcons>
         {hasClaim(Claims.LEASE_EDIT) && (
-          <Button
-            title="delete deposit return"
-            icon={
-              <FaTrash
-                size={24}
-                id={`delete-depositreturn-${index}`}
-                title="delete depositreturn"
-              />
-            }
-            onClick={() => original.id && onDelete(original.id)}
-          ></Button>
+          <EditButton title="edit deposit return" onClick={() => onEdit(original.id)} />
         )}
         {hasClaim(Claims.LEASE_EDIT) && (
-          <Button
-            title="edit deposit return"
-            icon={
-              <MdEdit size={24} id={`edit-depositreturn-${index}`} title="edit depositreturn" />
-            }
-            onClick={() => onEdit(original.id)}
-          ></Button>
+          <StyledRemoveLinkButton
+            title="delete deposit return"
+            icon={<FaTrash size={20} id={`delete-deposit-${index}`} title="document deposit" />}
+            onClick={() => original?.id && onDelete(original.id)}
+          />
         )}
       </StyledIcons>
     );

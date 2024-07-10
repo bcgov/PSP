@@ -31,9 +31,9 @@ public partial class PimsDispositionChecklistItemHist
     public string DspChklstItemTypeCode { get; set; }
 
     [Required]
-    [Column("DSP_CHKLST_ITEM_STATUS_TYPE_CODE")]
+    [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string DspChklstItemStatusTypeCode { get; set; }
+    public string ChklstItemStatusTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

@@ -32,10 +32,10 @@ export const AreaForm: React.FC<IAreaFormProps> = ({
     setState(initialState);
   }, [area, areaUnitTypeCode]);
 
-  const sqMeters = round(state[AreaUnitTypes.SquareMeters], 2);
-  const sqFeet = round(state[AreaUnitTypes.SquareFeet], 2);
-  const ha = round(state[AreaUnitTypes.Hectares], 2);
-  const acres = round(state[AreaUnitTypes.Acres], 2);
+  const sqMeters = round(state[AreaUnitTypes.SquareMeters], 4);
+  const sqFeet = round(state[AreaUnitTypes.SquareFeet], 4);
+  const ha = round(state[AreaUnitTypes.Hectares], 4);
+  const acres = round(state[AreaUnitTypes.Acres], 4);
 
   // update dependent fields based on user input
   useEffect(() => {

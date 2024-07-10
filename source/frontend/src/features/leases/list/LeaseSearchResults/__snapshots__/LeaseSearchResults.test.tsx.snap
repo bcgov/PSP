@@ -39,14 +39,6 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
   border-radius: 0.4rem;
 }
 
-.c4 label {
-  display: inline-block;
-}
-
-.c4 label span {
-  font-weight: bold;
-}
-
 <div
     class="table"
     data-testid="leasesTable"
@@ -226,7 +218,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -384,12 +376,10 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <div
-              class="c4"
-            />
+            <div />
           </div>
           <div
             class="td"
@@ -497,12 +487,10 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            <div
-              class="c4"
-            />
+            <div />
           </div>
           <div
             class="td"
@@ -516,6 +504,19 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
   </div>
   .c0 {
   margin-top: 0.3rem;
+}
+
+.c1 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c1:disabled {
+  background: white;
 }
 
 <div
@@ -541,7 +542,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           class="Menu-button"
         >
           <div
-            style="display: flex;"
+            class="d-flex"
           >
             <span
               class="c0"
@@ -549,9 +550,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
               Show
             </span>
             <input
-              class="form-control form-control-sm"
-              disabled=""
-              style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
+              class="c1 form-control"
               type="number"
               value="10"
             />

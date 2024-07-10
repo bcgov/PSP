@@ -37,6 +37,12 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -141,24 +147,6 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: baseline;
-  -webkit-box-align: baseline;
-  -ms-flex-align: baseline;
-  align-items: baseline;
-  gap: 0.8rem;
-}
-
-.c3 .form-label {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-
 .c5.c5.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -191,6 +179,24 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
 .c5.c5.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c3 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
 }
 
 .c2 {

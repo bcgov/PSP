@@ -219,7 +219,7 @@ const AppRouter: FC<PropsWithChildren<unknown>> = () => {
             customComponent={LeaseAndLicenseListView}
             layout={AuthLayout}
             claim={Claims.LEASE_VIEW}
-            title={getTitle('View Lease & Licenses')}
+            title={getTitle('View Lease & Licences')}
           />
           <AppRoute
             protected

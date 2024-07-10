@@ -35,8 +35,8 @@ export const VolumeForm: React.FC<IVolumeFormProps> = ({
   const [focus, setFocus] = useState('');
   const [state, setState] = useState(initialState);
 
-  const cubicMeters = round(state[VolumeUnitTypes.CubicMeters], 2);
-  const cubicFeet = round(state[VolumeUnitTypes.CubicFeet], 2);
+  const cubicMeters = round(state[VolumeUnitTypes.CubicMeters], 4);
+  const cubicFeet = round(state[VolumeUnitTypes.CubicFeet], 4);
 
   // update dependent fields based on user input
   useEffect(() => {

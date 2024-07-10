@@ -6,7 +6,23 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  <div
+  .c0 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c1 {
+  height: 100%;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+<div
     class="no-gutters row"
   >
     <div
@@ -18,11 +34,11 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Civic Address:
-            </label>
-          </strong>
+          <label
+            class="c0"
+          >
+            Civic Address:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -36,11 +52,11 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Plan #:
-            </label>
-          </strong>
+          <label
+            class="c0"
+          >
+            Plan #:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -51,36 +67,40 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
       class="text-right col"
     >
       <div
-        class="justify-content-end row"
+        class="c1"
       >
         <div
-          class="pr-0 text-left col-auto"
+          class="justify-content-end row"
         >
-          <strong>
-            <label>
+          <div
+            class="pr-0 text-left col-auto"
+          >
+            <label
+              class="c0"
+            >
               PID:
             </label>
-          </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-auto"
+          />
         </div>
         <div
-          class="pl-1 text-left col-auto"
-        />
-      </div>
-      <div
-        class="justify-content-end row"
-      >
-        <div
-          class="pr-0 text-left col-auto"
+          class="justify-content-end row"
         >
-          <strong>
-            <label>
+          <div
+            class="pr-0 text-left col-auto"
+          >
+            <label
+              class="c0"
+            >
               Land parcel type:
             </label>
-          </strong>
+          </div>
+          <div
+            class="pl-1 text-left col-auto"
+          />
         </div>
-        <div
-          class="pl-1 text-left col-auto"
-        />
       </div>
     </div>
     <div

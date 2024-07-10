@@ -39,6 +39,7 @@ export const usePimsPropertyLayer = () => {
           PID_PADDED: params?.PID_PADDED,
           PIN: params?.PIN,
           SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
+          HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
         };
         const url = `${propertiesUrl}${
           geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
@@ -60,6 +61,7 @@ export const usePimsPropertyLayer = () => {
         latlng,
         geometryName,
         spatialReferenceId,
+        'SORTBY=IS_RETIRED%20ASC',
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types

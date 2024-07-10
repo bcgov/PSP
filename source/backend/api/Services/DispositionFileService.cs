@@ -15,7 +15,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -29,7 +28,6 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
         private readonly IDispositionFilePropertyRepository _dispositionFilePropertyRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
@@ -55,7 +53,6 @@ namespace Pims.Api.Services
             _logger = logger;
             _dispositionFileRepository = dispositionFileRepository;
             _dispositionFilePropertyRepository = dispositionFilePropertyRepository;
-            _coordinateService = coordinateService;
             _propertyRepository = propertyRepository;
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
@@ -162,8 +159,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var properties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(id);
-            ReprojectPropertyLocationsToWgs84(properties);
-            return properties;
+            return _propertyService.TransformAllPropertiesToLatLong(properties);
         }
 
         public IEnumerable<PimsDispositionFileTeam> GetTeamMembers()
@@ -422,7 +418,7 @@ namespace Pims.Api.Services
                 {
                     _checklistRepository.Add(incomingItem);
                 }
-                else if (existingItem.DspChklstItemStatusTypeCode != incomingItem.DspChklstItemStatusTypeCode)
+                else if (existingItem.ChklstItemStatusTypeCode != incomingItem.ChklstItemStatusTypeCode)
                 {
                     _checklistRepository.Update(incomingItem);
                 }
@@ -679,19 +675,6 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)
-        {
-            foreach (var dispositionProperty in dispositionPropertyFiles)
-            {
-                if (dispositionProperty.Property.Location != null)
-                {
-                    var oldCoords = dispositionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    dispositionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
-            }
-        }
-
         private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes)
         {
             foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
@@ -787,7 +770,7 @@ namespace Pims.Api.Services
             {
                 return;
             }
-            var checklistStatusTypes = _lookupRepository.GetAllDispositionChecklistItemStatusTypes();
+            var checklistStatusTypes = _lookupRepository.GetAllChecklistItemStatusTypes();
             foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
                 if (!pimsDispositionChecklistItems.Any(cli => cli.DspChklstItemTypeCode == itemType.DspChklstItemTypeCode) && DateOnly.FromDateTime(dispositionFile.AppCreateTimestamp) >= itemType.EffectiveDate)
@@ -796,9 +779,9 @@ namespace Pims.Api.Services
                     {
                         DspChklstItemTypeCode = itemType.DspChklstItemTypeCode,
                         DspChklstItemTypeCodeNavigation = itemType,
-                        DspChklstItemStatusTypeCode = "INCOMP",
+                        ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                         DispositionFileId = dispositionFile.DispositionFileId,
-                        DspChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == "INCOMP"),
+                        ChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString()),
                     };
 
                     pimsDispositionChecklistItems.Add(checklistItem);

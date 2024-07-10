@@ -19,7 +19,7 @@ const VolumeView: React.FunctionComponent<IVolumeViewProps> = ({ volume, unitCod
       <Col>
         <StyledGreenBlue>
           <Row>
-            <Col className="text-right">{formatNumber(meters)}</Col>
+            <Col className="text-right">{meters === 0 ? 0 : formatNumber(meters, 4, 4)}</Col>
             <Col>
               <span>
                 metres<sup>3</sup>
@@ -27,7 +27,7 @@ const VolumeView: React.FunctionComponent<IVolumeViewProps> = ({ volume, unitCod
             </Col>
           </Row>
           <Row>
-            <Col className="text-right">{formatNumber(feet)}</Col>
+            <Col className="text-right">{feet === 0 ? 0 : formatNumber(feet, 4, 4)}</Col>
             <Col>
               <span>
                 feet<sup>3</sup>

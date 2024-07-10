@@ -5,6 +5,7 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -28,7 +29,7 @@ namespace Pims.Api.Test.Services
     {
         public TestHelper helper;
         public ILeasePaymentService paymentService;
-        public Mock<ILeaseTermRepository> leaseTermRepository;
+        public Mock<ILeasePeriodRepository> LeasePeriodRepository;
         public Mock<ILeasePaymentRepository> leasePaymentRepository;
 
         public LeaseServicePaymentTest()
@@ -38,14 +39,14 @@ namespace Pims.Api.Test.Services
 
         public void Dispose()
         {
-            this.leaseTermRepository = null;
+            this.LeasePeriodRepository = null;
             this.leasePaymentRepository = null;
         }
 
         private void MockCommonServices()
         {
             this.paymentService = this.helper.Create<LeasePaymentService>();
-            this.leaseTermRepository = this.helper.GetService<Mock<ILeaseTermRepository>>();
+            this.LeasePeriodRepository = this.helper.GetService<Mock<ILeasePeriodRepository>>();
             this.leasePaymentRepository = this.helper.GetService<Mock<ILeasePaymentRepository>>();
         }
 
@@ -59,13 +60,13 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             // Act
-            var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
+            var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
 
             var updatedLease = this.paymentService.AddPayment(lease.Internal_Id, payment);
 
@@ -81,16 +82,16 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10), GstAmount = 1, PaymentAmount = 1 };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10), GstAmount = 1, PaymentAmount = 1 };
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             // Act
-            var unpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 0, };
-            var overpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 3 };
-            var paidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 2 };
-            var partialPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 1 };
+            var unpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 0, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
+            var overpaidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 3, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
+            var paidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 2, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
+            var partialPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 1, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
 
             this.paymentService.AddPayment(lease.Internal_Id, unpaidPayment);
             this.paymentService.AddPayment(lease.Internal_Id, overpaidPayment);
@@ -111,17 +112,17 @@ namespace Pims.Api.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
 
             var lease = EntityHelper.CreateLease(1);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             // Act
             var addPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
             var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.AddPayment(lease.Internal_Id, addPayment));
-            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the term.");
+            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the period.");
         }
         #endregion
 
@@ -134,19 +135,69 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             var originalPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             // Act
-            var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now };
+            var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
 
             var updatedLease = this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment);
 
             // Assert
             this.leasePaymentRepository.Verify(x => x.Update(payment), Times.Once);
+        }
+
+        [Fact]
+        public void UpdatePayment_Variable_Gst()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            var originalPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10), VblRentGstAmount = 1 };
+            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+
+            this.MockCommonServices();
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
+            PimsLeasePayment response = null;
+            this.leasePaymentRepository.Setup(x => x.Update(It.IsAny<PimsLeasePayment>())).Callback<PimsLeasePayment>(x => response = x);
+
+            // Act
+            var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.VBL.ToString(), PaymentAmountTotal = 1 };
+
+            var updatedLease = this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment);
+
+            // Assert
+            response.LeasePaymentStatusTypeCode.Should().Be(PimsLeasePaymentStatusTypes.PAID);
+        }
+
+        [Fact]
+        public void UpdatePayment_Addition_Gst()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            var originalPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10), AddlRentGstAmount = 1 };
+            this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
+
+            this.MockCommonServices();
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
+            PimsLeasePayment response = null;
+            this.leasePaymentRepository.Setup(x => x.Update(It.IsAny<PimsLeasePayment>())).Callback<PimsLeasePayment>(x => response = x);
+
+            // Act
+            var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.ADDL.ToString(), PaymentAmountTotal = 1 };
+
+            var updatedLease = this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment);
+
+            // Assert
+            response.LeasePaymentStatusTypeCode.Should().Be(PimsLeasePaymentStatusTypes.PAID);
         }
 
         [Fact]
@@ -157,17 +208,17 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             var originalPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
-            this.leaseTermRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(term);
+            this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(period);
 
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
             var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment));
-            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the term.");
+            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the period.");
         }
         #endregion
 
@@ -179,7 +230,7 @@ namespace Pims.Api.Test.Services
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
 
             var lease = EntityHelper.CreateLease(1);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();

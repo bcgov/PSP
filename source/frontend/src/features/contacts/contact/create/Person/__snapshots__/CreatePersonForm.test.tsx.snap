@@ -38,6 +38,12 @@ exports[`CreatePersonForm > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c9.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -200,6 +206,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
 
 .c5 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c8 {
@@ -402,27 +409,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          class="c3 form-section"
-        >
-          <h2
-            class="c4"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                Organization
-              </div>
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
             <div
               class="pb-2 row"
             >
@@ -853,7 +839,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c12"
@@ -1107,7 +1093,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                 Property Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c12"
@@ -1361,7 +1347,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                 Billing Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c12"
@@ -1664,6 +1650,12 @@ exports[`CreatePersonForm > renders as expected 1`] = `
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c2.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c2.btn:hover {

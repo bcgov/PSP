@@ -308,6 +308,49 @@ namespace Pims.Dal.Test.Repositories
             Assert.Equal(1, result.Items.Count);
         }
 
+        [Fact]
+        public void Get_Leases_Filter_Historical_File_Numbers()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", tenantLastName: "tenant", addTenant: true, addProperty: true);
+            elease.LeaseId = 1;
+            elease.OrigExpiryDate = new DateTime(2000, 1, 1);
+            elease.OrigStartDate = new DateTime(2000, 1, 1);
+            elease.PsFileNo = "111";
+            elease.LeaseProgramTypeCode = "testProgramType";
+            elease.LeaseStatusTypeCode = "testStatusType";
+            elease.LeaseDescription = "details";
+
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+
+            var fileNumber = new PimsHistoricalFileNumber();
+            fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
+            fileNumber.HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.PROPNEG.ToString();
+            fileNumber.HistoricalFileNumber = "66666";
+            fileNumber.AppCreateUserid = "tester";
+            fileNumber.AppCreateUserDirectory = "PIMS";
+            fileNumber.AppLastUpdateUserDirectory = "PIMS";
+            fileNumber.AppLastUpdateUserid = "tester";
+            fileNumber.DbCreateUserid = "tester";
+            fileNumber.DbLastUpdateUserid = "tester";
+
+            context.AddAndSaveChanges(fileNumber);
+
+            LeaseFilter filter = new LeaseFilter() { Historical = "66666" };
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            var result = service.GetPage(filter, new HashSet<short>());
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsAssignableFrom<Paged<Entity.PimsLease>>(result);
+            Assert.Equal(1, result.Items.Count);
+        }
+
         #endregion
 
         #region Add Lease
@@ -530,7 +573,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             lease.LeaseDescription = "updated";
-            Action act = () => repository.Update(null);
+            Action act = () => repository.UpdateChecklistItem(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();

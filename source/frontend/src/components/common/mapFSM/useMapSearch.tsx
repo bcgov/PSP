@@ -3,11 +3,11 @@ import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
 import { IGeoSearchParams } from '@/constants/API';
-import { useParcelMapLayer } from '@/hooks/repositories/mapLayer/useParcelMapLayer';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
-import { PMBC_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
 import {
@@ -19,7 +19,7 @@ import {
 } from './models';
 
 export const useMapSearch = () => {
-  const pmbcService = useParcelMapLayer();
+  const fullyAttributedService = useFullyAttributedParcelMapLayer();
   const pimsPropertyLayerService = usePimsPropertyLayer();
 
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -27,11 +27,11 @@ export const useMapSearch = () => {
   const logout = keycloak.obj.logout;
 
   const loadPimsProperties = pimsPropertyLayerService.loadPropertyLayer.execute;
-  const pmbcServiceFindByPin = pmbcService.findByPin;
-  const pmbcServiceFindByPid = pmbcService.findByPid;
-  const pmbcServiceFindByPlanNumber = pmbcService.findByPlanNumber;
+  const pmbcServiceFindByPin = fullyAttributedService.findByPin;
+  const pmbcServiceFindByPid = fullyAttributedService.findByPid;
+  const pmbcServiceFindByPlanNumber = fullyAttributedService.findByPlanNumber;
 
-  const pmbcServiceFindOne = pmbcService.findOne;
+  const pmbcServiceFindOne = fullyAttributedService.findOne;
   const pimsPropertyLayerServiceFindOne = pimsPropertyLayerService.findOneByBoundary;
 
   const searchOneLocation = useCallback(
@@ -69,7 +69,7 @@ export const useMapSearch = () => {
           toast.info(`Property found`);
           result = {
             ...emptyFeatureData,
-            pmbcFeatures: {
+            fullyAttributedFeatures: {
               type: 'FeatureCollection',
               features: [parcelFeature],
             },
@@ -90,7 +90,9 @@ export const useMapSearch = () => {
       let result: MapFeatureData = emptyFeatureData;
       try {
         let findByPlanNumberTask:
-          | Promise<FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined>
+          | Promise<
+              FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
+            >
           | undefined = undefined;
 
         const loadPropertiesTask = loadPimsProperties(filter);
@@ -141,7 +143,7 @@ export const useMapSearch = () => {
               features: validFeatures,
             },
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            pmbcFeatures: emptyPmbcFeatureCollection,
+            fullyAttributedFeatures: emptyPmbcFeatureCollection,
           };
 
           if (validFeatures.length === 0) {
@@ -150,7 +152,10 @@ export const useMapSearch = () => {
             toast.info(`${validFeatures.length} properties found`);
           }
         } else {
-          const attributedFeatures: FeatureCollection<Geometry, PMBC_Feature_Properties> = {
+          const attributedFeatures: FeatureCollection<
+            Geometry,
+            PMBC_FullyAttributed_Feature_Properties
+          > = {
             type: 'FeatureCollection',
             features: [...(planNumberPmbcData?.features || [])],
             bbox: planNumberPmbcData?.bbox,
@@ -159,7 +164,7 @@ export const useMapSearch = () => {
           result = {
             pimsLocationFeatures: emptyPimsLocationFeatureCollection,
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            pmbcFeatures: {
+            fullyAttributedFeatures: {
               type: attributedFeatures.type,
               bbox: attributedFeatures.bbox,
               features: validFeatures,
@@ -181,17 +186,84 @@ export const useMapSearch = () => {
     [pmbcServiceFindByPlanNumber, loadPimsProperties, logout, setDisplayModal, setModalContent],
   );
 
+  const searchByHistorical = useCallback(
+    async (filter?: IGeoSearchParams) => {
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        const loadPropertiesTask = loadPimsProperties(filter);
+
+        let historicalNumberInventoryData:
+          | FeatureCollection<Geometry, PIMS_Property_Location_View>
+          | undefined;
+        try {
+          historicalNumberInventoryData = await loadPropertiesTask;
+        } catch (err) {
+          setModalContent({
+            variant: 'error',
+            title: 'Unable to connect to PIMS Inventory',
+            message:
+              'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',
+            okButtonText: 'Log out',
+            cancelButtonText: 'Continue working',
+            handleOk: () => {
+              logout();
+            },
+            handleCancel: () => {
+              setDisplayModal(false);
+            },
+          });
+          setDisplayModal(true);
+        }
+
+        // If the property was found on the pims inventory, use that.
+        if (
+          historicalNumberInventoryData?.features &&
+          historicalNumberInventoryData?.features?.length > 0
+        ) {
+          const validFeatures = historicalNumberInventoryData.features.filter(
+            feature => !!feature?.geometry,
+          );
+
+          result = {
+            pimsLocationFeatures: {
+              type: historicalNumberInventoryData.type,
+              bbox: historicalNumberInventoryData.bbox,
+              features: validFeatures,
+            },
+            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+            fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          };
+
+          if (validFeatures.length === 0) {
+            toast.info('No search results found');
+          } else {
+            toast.info(`${validFeatures.length} properties found`);
+          }
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      }
+
+      return result;
+    },
+    [loadPimsProperties, setModalContent, setDisplayModal, logout],
+  );
+
   const searchMany = useCallback(
     async (filter?: IGeoSearchParams) => {
       let result: MapFeatureData = emptyFeatureData;
       //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
       try {
         let findByPinTask:
-          | Promise<FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined>
+          | Promise<
+              FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
+            >
           | undefined = undefined;
 
         let findByPidTask:
-          | Promise<FeatureCollection<Geometry, PMBC_Feature_Properties> | undefined>
+          | Promise<
+              FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
+            >
           | undefined = undefined;
 
         const loadPropertiesTask = loadPimsProperties(filter);
@@ -238,7 +310,7 @@ export const useMapSearch = () => {
               features: validFeatures,
             },
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            pmbcFeatures: emptyPmbcFeatureCollection,
+            fullyAttributedFeatures: emptyPmbcFeatureCollection,
           };
 
           if (validFeatures.length === 0) {
@@ -247,7 +319,10 @@ export const useMapSearch = () => {
             toast.info(`${validFeatures.length} properties found`);
           }
         } else {
-          const attributedFeatures: FeatureCollection<Geometry, PMBC_Feature_Properties> = {
+          const attributedFeatures: FeatureCollection<
+            Geometry,
+            PMBC_FullyAttributed_Feature_Properties
+          > = {
             type: 'FeatureCollection',
             features: [...(pinPmbcData?.features || []), ...(pidPmbcData?.features || [])],
             bbox: pinPmbcData?.bbox || pidPmbcData?.bbox,
@@ -257,7 +332,7 @@ export const useMapSearch = () => {
           result = {
             pimsLocationFeatures: emptyPimsLocationFeatureCollection,
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            pmbcFeatures: {
+            fullyAttributedFeatures: {
               type: attributedFeatures.type,
               bbox: attributedFeatures.bbox,
               features: validFeatures,
@@ -290,6 +365,7 @@ export const useMapSearch = () => {
     searchOneLocation,
     searchByPlanNumber,
     searchMany,
+    searchByHistorical,
     loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
     loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,
   };

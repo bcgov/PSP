@@ -89,6 +89,7 @@ describe('Disposition search results table', () => {
               displayOrder: null,
               file: null,
               propertyName: null,
+              location: null,
               rowVersion: null,
             },
             {
@@ -99,6 +100,7 @@ describe('Disposition search results table', () => {
               displayOrder: null,
               file: null,
               propertyName: null,
+              location: null,
               rowVersion: null,
             },
             {
@@ -109,6 +111,7 @@ describe('Disposition search results table', () => {
               displayOrder: null,
               file: null,
               propertyName: null,
+              location: null,
               rowVersion: null,
             },
           ],

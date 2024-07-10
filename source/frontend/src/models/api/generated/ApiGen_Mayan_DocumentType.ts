@@ -9,6 +9,10 @@ export interface ApiGen_Mayan_DocumentType {
   label: string | null;
   delete_time_period: number | null;
   delete_time_unit: string | null;
+  document_stub_expiration_interval: number | null;
+  document_stub_pruning_enabled: boolean | null;
   trash_time_period: number | null;
   trash_time_unit: string | null;
+  filename_generator_backend: string | null;
+  filename_generator_backend_arguments: string | null;
 }

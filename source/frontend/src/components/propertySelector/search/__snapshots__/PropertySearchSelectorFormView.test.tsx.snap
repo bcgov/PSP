@@ -37,6 +37,12 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
   height: 3.8rem;
 }
 
+.c5.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -254,6 +260,13 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
                         value="planNumber"
                       >
                         Plan #
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-legalDescription"
+                        value="legalDescription"
+                      >
+                        Legal Description
                       </option>
                     </select>
                   </div>

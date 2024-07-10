@@ -64,8 +64,8 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdFence title="Leases-Licenses" size="2.5rem" />}
-            title="Leases/Licenses"
+            icon={<MdFence title="Leases-Licences" size="2.5rem" />}
+            title="Leases/Licences"
             count={props.associations?.leaseAssociations?.length}
           />
         }

@@ -1,9 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -136,12 +139,58 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
+            var leaseEntity = _mapper.Map<Dal.Entities.PimsLease>(leaseModel);
             var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
             var updatedLease = _leaseService.Update(leaseEntity, userOverrides);
 
             return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
         }
+
+        /// <summary>
+        /// Get the lease checklist items.
+        /// </summary>
+        /// <returns>The checklist items.</returns>
+        [HttpGet("{id:long}/checklist")]
+        [HasPermission(Permissions.LeaseView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<FileChecklistItemModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetLeaseChecklistItems([FromRoute] long id)
+        {
+            var checklist = _leaseService.GetChecklistItems(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<FileChecklistItemModel>>(checklist));
+        }
+
+        /// <summary>
+        /// Update the lease checklist.
+        /// </summary>
+        /// <returns>Updated lease.</returns>
+        [HttpPut("{id:long}/checklist")]
+        [HasPermission(Permissions.LeaseEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(LeaseModel), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateLeaseChecklist([FromRoute] long id, [FromBody] IList<FileChecklistItemModel> checklistItems)
+        {
+            if (checklistItems.Any(x => x.FileId != id))
+            {
+                throw new BadRequestException("All checklist items file id must match the Lease's id");
+            }
+
+            if (checklistItems.Count == 0)
+            {
+                throw new BadRequestException("Checklist items must be greater than zero");
+            }
+
+            var checklistItemEntities = _mapper.Map<IList<Dal.Entities.PimsLeaseChecklistItem>>(checklistItems);
+            var updatedLease = _leaseService.UpdateChecklistItems(id, checklistItemEntities);
+
+            return new JsonResult(_mapper.Map<LeaseModel>(updatedLease));
+        }
+
         #endregion
     }
 }

@@ -11,21 +11,21 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<(Entity.PimsLeaseTerm term, Entity.PimsLease lease, Entity.PimsPropertyLease property, Entity.PimsLeaseTenant tenant), Model.LeaseModel>()
+            config.NewConfig<(Entity.PimsLeasePeriod period, Entity.PimsLease lease, Entity.PimsPropertyLease property, Entity.PimsLeaseTenant tenant), Model.LeaseModel>()
                 .AfterMapping((src, dest) =>
                 {
                     MapLease(src, dest);
                 });
         }
 
-        private static void MapLease((Entity.PimsLeaseTerm term, Entity.PimsLease lease, Entity.PimsPropertyLease property, Entity.PimsLeaseTenant tenant) src, Model.LeaseModel dest)
+        private static void MapLease((Entity.PimsLeasePeriod period, Entity.PimsLease lease, Entity.PimsPropertyLease property, Entity.PimsLeaseTenant tenant) src, Model.LeaseModel dest)
         {
             dest.LFileNo = src.lease.LFileNo;
             dest.MotiRegion = src.lease.RegionCodeNavigation?.RegionName;
             dest.StartDate = src.lease.OrigStartDate.FilterSqlMinDate().ToNullableDateOnly();
             dest.EndDate = src.lease.OrigExpiryDate?.FilterSqlMinDate().ToNullableDateOnly();
-            dest.CurrentTermStartDate = src.lease.GetCurrentTermStartDate()?.FilterSqlMinDate().ToNullableDateOnly();
-            dest.CurrentTermEndDate = src.lease.GetCurrentTermEndDate()?.FilterSqlMinDate().ToNullableDateOnly();
+            dest.CurrentPeriodStartDate = src.lease.GetCurrentPeriodStartDate()?.FilterSqlMinDate().ToNullableDateOnly();
+            dest.CurrentTermEndDate = src.lease.GetCurrentPeriodEndDate()?.FilterSqlMinDate().ToNullableDateOnly();
             dest.ProgramName = src.lease.LeaseProgramTypeCodeNavigation?.GetTypeDescriptionOther(src.lease.OtherLeaseProgramType);
             dest.PurposeType = src.lease.LeasePurposeTypeCodeNavigation?.GetTypeDescriptionOther(src.lease.OtherLeasePurposeType);
             dest.StatusType = src.lease.LeaseStatusTypeCodeNavigation?.Description;
@@ -37,15 +37,17 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
             dest.InspectionDate = src.lease.InspectionDate?.FilterSqlMinDate();
             dest.LeaseNotes = src.lease.LeaseNotes;
             dest.IsExpired = (src.lease.GetExpiryDate() < DateTime.Now).BoolToYesNo();
-            dest.LeaseAmount = src.term?.PaymentAmount;
-            dest.TermStartDate = src.term?.TermStartDate.FilterSqlMinDate().ToNullableDateOnly();
-            dest.TermExpiryDate = src.term?.TermExpiryDate?.FilterSqlMinDate().ToNullableDateOnly();
-            dest.TermRenewalDate = src.term?.TermRenewalDate?.FilterSqlMinDate().ToNullableDateOnly();
-            dest.LeasePaymentFrequencyType = src.term?.LeasePmtFreqTypeCodeNavigation?.Description;
+            dest.LeaseAmount = src.period?.PaymentAmount;
+            dest.PeriodStartDate = src.period?.PeriodStartDate.FilterSqlMinDate().ToNullableDateOnly();
+            dest.PeriodExpiryDate = src.period?.PeriodExpiryDate?.FilterSqlMinDate().ToNullableDateOnly();
+            dest.PeriodRenewalDate = src.period?.PeriodRenewalDate?.FilterSqlMinDate().ToNullableDateOnly();
+            dest.LeasePaymentFrequencyType = src.period?.LeasePmtFreqTypeCodeNavigation?.Description;
             dest.CivicAddress = src.property?.Property?.Address?.FormatAddress(true);
             dest.Pid = src.property?.Property?.Pid;
             dest.Pin = src.property?.Property?.Pin;
             dest.TenantName = src.tenant?.GetTenantName();
+            dest.FinancialGain = src.lease.IsFinancialGain.BoolToYesNoUnknown();
+            dest.PublicBenefit = src.lease.IsPublicBenefit.BoolToYesNoUnknown();
         }
     }
 }

@@ -42,6 +42,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
 
 .c5 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c7 {
@@ -73,7 +74,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
             Project Details
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c4"
@@ -137,7 +138,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
             Associated Codes
           </div>
           <div
-            class="col-1"
+            class="pl-8 col-auto"
           >
             <svg
               class="c4"
@@ -234,7 +235,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
               Associated Products
             </div>
             <div
-              class="col-1"
+              class="pl-8 col-auto"
             >
               <svg
                 class="c4"

@@ -78,7 +78,7 @@ describe('AddLeaseTenantForm component', () => {
 
   beforeEach(() => {
     vi.resetAllMocks();
-    mockKeycloak({ claims: [Claims.CONTACT_VIEW] });
+    mockKeycloak({ claims: [Claims.CONTACT_VIEW, Claims.LEASE_EDIT] });
   });
   it('renders as expected', async () => {
     const { component } = await setup({});
@@ -91,7 +91,7 @@ describe('AddLeaseTenantForm component', () => {
       component: { getByText },
     } = await setup({});
 
-    const tenantButton = getByText('Select Tenant(s)');
+    const tenantButton = getByText(/Select Tenant/i);
     await act(async () => userEvent.click(tenantButton));
 
     expect(setShowContactManager).toHaveBeenCalledWith(true);
@@ -152,7 +152,7 @@ describe('AddLeaseTenantForm component', () => {
       selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
     });
 
-    const number = screen.getByText('1 Tenants associated with this Lease/License');
+    const number = screen.getByText('1 Tenants associated with this Lease/Licence');
 
     expect(number).toBeVisible();
   });

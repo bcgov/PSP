@@ -34,50 +34,8 @@ export const StyledFormBody = styled.div`
   .form-control {
     font-family: 'BcSans';
   }
-  .required .form-label:after {
+  .required .datepicker-label:after {
     content: ' *';
-  }
-`;
-
-export const StyledTable = styled(Table)`
-  &.table {
-    min-width: 155rem;
-    .thead {
-      .tr {
-        .th {
-          padding: 0.5rem 0.5rem;
-          font-size: 1.4rem;
-          position: relative;
-          background-color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
-          color: white;
-          .tooltip-icon {
-            color: white;
-            float: right;
-            align-self: baseline;
-            margin-left: 0.5rem;
-            height: 1.1rem;
-            width: 1.1rem;
-          }
-          .sortable-column {
-            width: 100%;
-          }
-        }
-      }
-    }
-    > .tbody > .tr-wrapper > .tr > .td:nth-of-type(2) {
-      margin-right: -5rem; /** TODO: PSP-4403 prevent expander from pushing tds to the right */
-      padding-left: 0;
-    }
-    .td {
-      word-break: normal;
-    }
-    .collapse {
-      background-color: ${props => props.theme.css.highlightBackgroundColor};
-      color: ${props => props.theme.bcTokens.typographyColorSecondary};
-      .receipt {
-        color: ${props => props.theme.css.borderOutlineColor};
-      }
-    }
   }
 `;
 
@@ -92,14 +50,6 @@ export const StyledPaymentTable = styled(Table)`
           position: relative;
           background-color: transparent;
           color: ${props => props.theme.bcTokens.typographyColorPrimary};
-          .tooltip-icon {
-            color: ${props => props.theme.css.activeActionColor};
-            float: right;
-            align-self: baseline;
-            margin-left: 0.5rem;
-            height: 1.1rem;
-            width: 1.1rem;
-          }
           .sortable-column {
             width: 100%;
           }
@@ -173,6 +123,7 @@ export const AddActualButton = styled(Button)`
   &&& {
     background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
     color: white;
+    min-height: 5rem;
     &:hover {
       background-color: #3aba53;
     }

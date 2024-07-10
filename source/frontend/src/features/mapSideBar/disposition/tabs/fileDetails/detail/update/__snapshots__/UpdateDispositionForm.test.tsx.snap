@@ -37,6 +37,12 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c9.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -141,35 +147,6 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c5 button.close {
-  font-size: 2.4rem;
-}
-
-.c6 .react-datepicker__calendar-icon {
-  width: 2.4rem;
-  height: 3rem;
-  margin-top: 0.5rem;
-  margin-right: 1.2rem;
-  right: 0;
-  pointer-events: none;
-}
-
-.c6 .react-datepicker__view-calendar-icon input {
-  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
-}
-
-.c6 .react-datepicker-wrapper {
-  max-width: 17rem;
-}
-
-.c7.c7.form-control.is-valid {
-  background-image: none;
-}
-
-.c7.c7.form-control.is-invalid {
-  border-color: #d8292f !important;
-}
-
 .c11.c11.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -204,6 +181,35 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c5 button.close {
+  font-size: 2.4rem;
+}
+
+.c6 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  pointer-events: none;
+}
+
+.c6 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c6 .react-datepicker-wrapper {
+  max-width: 17rem;
+}
+
+.c7.c7.form-control.is-valid {
+  background-image: none;
+}
+
+.c7.c7.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
 .c4 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
@@ -227,6 +233,7 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c8 {
@@ -663,9 +670,7 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
               class="c2"
             >
               Reference number:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -846,9 +851,7 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
               class="c2"
             >
               Initiating document:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -931,9 +934,7 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
               class="c2"
             >
               Initiating document date:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"

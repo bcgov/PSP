@@ -127,7 +127,7 @@ export const Select: React.FC<React.PropsWithChildren<SelectProps>> = ({
     >
       {!!label && (
         <Form.Label>
-          {label}{' '}
+          <span className="control-label">{label}</span>{' '}
           {!!tooltip && (
             <TooltipIcon
               data-testid={`${field}-tooltip`}

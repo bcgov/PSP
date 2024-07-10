@@ -37,6 +37,12 @@ exports[`Note Results Table > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
+.c5.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -635,6 +641,19 @@ exports[`Note Results Table > matches snapshot 1`] = `
   margin-top: 0.3rem;
 }
 
+.c1 {
+  min-width: 5rem;
+  max-width: 5rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  text-align: center;
+  padding: 0;
+}
+
+.c1:disabled {
+  background: white;
+}
+
 <div
     class="row"
   >
@@ -658,7 +677,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
           class="Menu-button"
         >
           <div
-            style="display: flex;"
+            class="d-flex"
           >
             <span
               class="c0"
@@ -666,9 +685,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
               Show
             </span>
             <input
-              class="form-control form-control-sm"
-              disabled=""
-              style="width: 50px; margin-left: 10px; margin-right: 10px; background-color: white;"
+              class="c1 form-control"
               type="number"
               value="10"
             />

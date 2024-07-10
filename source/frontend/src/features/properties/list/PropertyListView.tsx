@@ -19,6 +19,7 @@ import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
@@ -147,12 +148,22 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
     setFilter({ ...filter, ownership: selectedIds.join(',') });
   };
 
+  const ownership = useDeepCompareMemo(
+    () =>
+      filter.ownership
+        .split(',')
+        .map<MultiSelectOption | undefined>(o => ownershipFilterOptions.find(op => op.id === o))
+        .filter((x): x is MultiSelectOption => x !== undefined),
+    [filter.ownership],
+  );
+
   return (
     <Container fluid className="PropertyListView">
       <Container fluid className="filter-container border-bottom">
         <StyledFilterContainer fluid className="px-0">
           <PropertyFilter
             useGeocoder={false}
+            propertyFilter={filter}
             defaultFilter={defaultPropertyFilter}
             onChange={handleFilterChange}
             sort={sort}
@@ -175,12 +186,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
                     id="properties-selector"
                     ref={multiselectOwnershipRef}
                     options={ownershipFilterOptions}
-                    selectedValues={filter.ownership
-                      .split(',')
-                      .map<MultiSelectOption | undefined>(o =>
-                        ownershipFilterOptions.find(op => op.id === o),
-                      )
-                      .filter((x): x is MultiSelectOption => x !== undefined)}
+                    selectedValues={ownership}
                     onSelect={onSelectedOwnershipChange}
                     onRemove={onSelectedOwnershipChange}
                     displayValue="text"

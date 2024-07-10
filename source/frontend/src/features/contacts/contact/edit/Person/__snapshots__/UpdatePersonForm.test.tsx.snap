@@ -38,6 +38,12 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c10.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -142,10 +148,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c8 button.close {
-  font-size: 2.4rem;
-}
-
 .c11.c11.btn {
   font-size: 1.3rem;
   color: #aaaaaa;
@@ -179,6 +181,10 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
 .c11.c11.btn:focus .text {
   display: inline;
   line-height: 2rem;
+}
+
+.c8 button.close {
+  font-size: 2.4rem;
 }
 
 .c2 {
@@ -219,6 +225,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c9 {
@@ -475,27 +482,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-        <div
-          class="c3 form-section"
-        >
-          <h2
-            class="c7"
-          >
-            <div
-              class="no-gutters row"
-            >
-              <div
-                class="col"
-              >
-                Organization
-              </div>
-            </div>
-          </h2>
-          <div
-            class="collapse show"
-          >
             <div
               class="pb-2 row"
             >
@@ -926,7 +912,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c13"
@@ -1180,7 +1166,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 Property Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c13"
@@ -1434,7 +1420,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 Billing Address
               </div>
               <div
-                class="col-1"
+                class="pl-8 col-auto"
               >
                 <svg
                   class="c13"
@@ -1739,6 +1725,12 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c2.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c2.btn:hover {
