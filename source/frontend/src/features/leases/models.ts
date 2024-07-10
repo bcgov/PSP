@@ -75,6 +75,7 @@ export class LeaseFormModel {
   periods: FormLeasePeriod[] = [];
   tenants: FormTenant[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
+  primaryArbitrationCity: string | null;
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -129,6 +130,7 @@ export class LeaseFormModel {
     leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
+    leaseDetail.primaryArbitrationCity = apiModel.primaryArbitrationCity;
 
     return leaseDetail;
   }
@@ -184,6 +186,7 @@ export class LeaseFormModel {
       hasPhysicalFile: formLease.hasPhysicalLicense ?? false,
       cancellationReason: stringToNull(formLease.cancellationReason),
       terminationReason: stringToNull(formLease.terminationReason),
+      primaryArbitrationCity: stringToNull(formLease.primaryArbitrationCity),
       fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
@@ -351,6 +354,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     terminationReason: null,
     isExpired: false,
     project: null,
+    primaryArbitrationCity: null,
     ...getEmptyBaseAudit(),
     fileName: null,
     fileNumber: null,
