@@ -12,7 +12,7 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "INCOMP")]
         INCOMP,
 
-        [EnumMember(Value = "NA")]
-        NA,
+        [EnumMember(Value = "NOTAPP")]
+        NOTAPP,
     }
 }

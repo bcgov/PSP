@@ -45,6 +45,7 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsLeasePayment> GetAll(DateTime startDate, DateTime endDate)
         {
             return this.Context.PimsLeasePayments
+                .Include(p => p.LeasePaymentCategoryTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(p => p.PimsPropertyLeases)

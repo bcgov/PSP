@@ -190,7 +190,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByAddressList(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 3);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
@@ -312,22 +312,37 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Go to the Property Management Tab
             propertyManagementTab.NavigateManagementTab();
-            //propertyManagementTab.VerifyInitManagementTabView();
+            propertyManagementTab.VerifyInitManagementTabView();
 
             //Click on Edit Summary
             propertyManagementTab.UpdateManagementSummaryButton();
 
-            //Insert Summary Information
+            //Insert and cancel Summary Information
+            propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
+            propertyManagementTab.CancelPropertyManagement();
+
+            //Click on Edit Summary
+            propertyManagementTab.UpdateManagementSummaryButton();
+
+            //Insert and save Summary Information
             propertyManagementTab.VerifyCreateSummaryInitForm();
             propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
             propertyManagementTab.SavePropertyManagement();
-            propertyManagementTab.VerifyInsertedSummaryForm(propertyManagement);
+            propertyManagementTab.VerifyInsertedSummaryForm(propertyManagement);   
 
             //Insert Contacts
             for (int i = 0; i < propertyManagement.ManagementPropertyContacts.Count; i++)
             {
+                if (i == 0)
+                {
+                    //Checking Initial Contact form and cancel changes
+                    propertyManagementTab.AddNewPropertyContactButton();
+                    propertyManagementTab.VerifyCreateContactsInitForm();
+                    propertyManagementTab.InsertNewPropertyContact(propertyManagement.ManagementPropertyContacts[i]);
+                    propertyManagementTab.CancelPropertyManagement();
+                }
+
                 propertyManagementTab.AddNewPropertyContactButton();
-                propertyManagementTab.VerifyCreateContactsInitForm();
                 propertyManagementTab.InsertNewPropertyContact(propertyManagement.ManagementPropertyContacts[i]);
                 propertyManagementTab.SavePropertyManagement();
                 propertyManagementTab.VerifyLastInsertedPropertyContactTable(propertyManagement.ManagementPropertyContacts[i]);
@@ -336,8 +351,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Insert Activities
             for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
             {
+                if (j == 0)
+                {
+                    //Checking Initial Activity form and cancel changes
+                    propertyManagementTab.AddNewPropertyActivityButton();
+                    propertyManagementTab.VerifyCreateActivityInitForm();
+                    propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
+                    propertyManagementTab.CancelPropertyManagement();
+                }
+
                 propertyManagementTab.AddNewPropertyActivityButton();
-                propertyManagementTab.VerifyCreateActivityInitForm();
                 propertyManagementTab.InsertNewPropertyActivity(propertyManagement.ManagementPropertyActivities[j]);
                 propertyManagementTab.SavePropertyManagement();
                 propertyManagementTab.VerifyInsertedActivity(propertyManagement.ManagementPropertyActivities[j]);

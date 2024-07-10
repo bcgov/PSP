@@ -412,7 +412,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, TransformDateFormat(acquisition.AssignedDate));
             else
             {
-                AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, DateTime.Now.ToString("MMM dd, yyyy"));
+                AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, DateTime.Now.ToString("MMM d, yyyy"));
             }
 
             AssertTrueIsDisplayed(acquisitionFileScheduleDeliveryDateLabel);

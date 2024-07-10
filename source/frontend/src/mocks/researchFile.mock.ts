@@ -65,6 +65,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
       documentReference: null,
       isLegalOpinionObtained: null,
       file: null,
+      location: null,
     },
   ],
   requestDate: '2022-04-14T00:00:00',

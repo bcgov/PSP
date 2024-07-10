@@ -1,6 +1,7 @@
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { latLngToApiLocation } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ResearchFileProjectFormModel } from '../common/models';
@@ -22,22 +23,7 @@ export class ResearchForm {
     return {
       id: this.id ?? 0,
       fileName: this.name,
-      fileProperties: this.properties.map<ApiGen_Concepts_ResearchFileProperty>(x => ({
-        id: x.id ?? 0,
-        property: x.toApi(),
-        propertyId: x.apiId ?? 0,
-        researchFile: { id: this.id },
-        propertyName: x.name ?? null,
-        rowVersion: x.rowVersion ?? null,
-        displayOrder: null,
-        documentReference: null,
-        file: null,
-        fileId: this.id ?? 0,
-        isLegalOpinionObtained: null,
-        isLegalOpinionRequired: null,
-        purposeTypes: null,
-        researchSummary: null,
-      })),
+      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
       researchFileProjects: ResearchFileProjectFormModel.toApiList(this.researchFileProjects),
       ...getEmptyBaseAudit(this.rowVersion),
       expropriationNotes: null,
@@ -58,6 +44,24 @@ export class ResearchForm {
     };
   }
 
+  private toPropertyApi(x: PropertyForm): ApiGen_Concepts_ResearchFileProperty {
+    return {
+      id: x.id ?? 0,
+      property: x.toApi(),
+      propertyId: x.apiId ?? 0,
+      propertyName: x.name ?? null,
+      rowVersion: x.rowVersion ?? null,
+      displayOrder: x.displayOrder ?? null,
+      location: latLngToApiLocation(x.fileLocation?.lat, x.fileLocation?.lng),
+      documentReference: null,
+      file: null,
+      fileId: this.id ?? 0,
+      isLegalOpinionObtained: null,
+      isLegalOpinionRequired: null,
+      purposeTypes: null,
+      researchSummary: null,
+    };
+  }
   public static fromApi(model: ApiGen_Concepts_ResearchFile): ResearchForm {
     const newForm = new ResearchForm();
     newForm.id = model.id;

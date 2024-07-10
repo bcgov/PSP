@@ -14,6 +14,7 @@ import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentR
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
@@ -251,8 +252,19 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
   );
 };
 
-export const isActualGstEligible = (periodId: number, periods: FormLeasePeriod[]) => {
-  return !!find(periods, (period: FormLeasePeriod) => period.id === periodId)?.isGstEligible;
+export const isActualGstEligible = (
+  periodId: number,
+  periods: FormLeasePeriod[],
+  category: ApiGen_CodeTypes_LeasePaymentCategoryTypes,
+) => {
+  const period = find(periods, (period: FormLeasePeriod) => period.id === periodId);
+  return (
+    (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL &&
+      period?.isVariableRentGstEligible) ||
+    (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL &&
+      period?.isAdditionalRentGstEligible) ||
+    (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE && period?.isGstEligible)
+  );
 };
 
 export default PeriodPaymentsContainer;

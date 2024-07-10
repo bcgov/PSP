@@ -27,16 +27,6 @@ namespace Pims.Api.Areas.Reports.Models.Property
         public string Description { get; set; }
 
         /// <summary>
-        /// get/set - The parent organization acronym.
-        /// </summary>
-        public string Ministry { get; set; }
-
-        /// <summary>
-        /// get/set - The owning organization full name.
-        /// </summary>
-        public string Organization { get; set; }
-
-        /// <summary>
         /// get/set - The civic address of the property.
         /// </summary>
         public string Address { get; set; }

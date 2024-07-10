@@ -32,6 +32,12 @@ exports[`login > login renders correctly 1`] = `
   height: 3.8rem;
 }
 
+.c1.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c1.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;

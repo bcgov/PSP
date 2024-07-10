@@ -13,9 +13,14 @@ namespace Pims.Api.Models.Concepts.File
         public long Id { get; set; }
 
         /// <summary>
-        /// get/set - The descriptive name of the property for this acquisition file.
+        /// get/set - The descriptive name of the property for this file.
         /// </summary>
         public string PropertyName { get; set; }
+
+        /// <summary>
+        /// get/set - The location of the property in the context of this file.
+        /// </summary>
+        public GeometryModel Location { get; set; }
 
         /// <summary>
         /// get/set - The order to display the relationship.

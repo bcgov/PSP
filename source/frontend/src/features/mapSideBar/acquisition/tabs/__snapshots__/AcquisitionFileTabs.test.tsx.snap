@@ -83,6 +83,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 
 .c6 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c8 {
@@ -274,9 +275,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                     class="c6"
                   >
                     Delivery date:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
@@ -355,9 +354,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                     class="c6"
                   >
                     Historical file number:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"

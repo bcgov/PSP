@@ -52,7 +52,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToImprovementSection()
         {
             WaitUntilClickable(licenseImprovementLink);
-            webDriver.FindElement(licenseImprovementLink).Click();
+            FocusAndClick(licenseImprovementLink);
         }
 
         //Edit Improvements section
