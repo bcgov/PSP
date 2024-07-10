@@ -137,6 +137,28 @@ jobs:
         run: dotnet run
         working-directory: ${{env.sync-directory}}
 
+  tag-release-image:
+    name: Release Tag
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-test
+      - name: tag uat image such that it can be promoted to prod
+        shell: bash
+        run: |
+          VERSION=$(make version)
+          oc project 3cd915-tools
+          oc tag pims-app:uat pims-app:v${VERSION}-master
+          oc tag pims-api:uat pims-api:v${VERSION}-master
+
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-latest
