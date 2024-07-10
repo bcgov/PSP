@@ -184,12 +184,11 @@ jobs:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
-          namespace: 3cd915-test
+          namespace: 3cd915-tools
       - name: tag uat image such that it can be promoted to prod
         shell: bash
         run: |
           VERSION=$(make version)
-          oc project 3cd915-tools
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
 
