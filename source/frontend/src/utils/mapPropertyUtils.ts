@@ -76,6 +76,16 @@ export const getLatLng = (
   return null;
 };
 
+export function latLngToApiLocation(
+  latitude?: number,
+  longitude?: number,
+): ApiGen_Concepts_Geometry | null {
+  if (isNumber(latitude) && isNumber(longitude)) {
+    return { coordinate: { x: longitude, y: latitude } };
+  }
+  return null;
+}
+
 export const getFilePropertyName = (
   fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
   skipName = false,
@@ -172,6 +182,7 @@ function toMapProperty(
     pin: feature?.properties?.PIN?.toString() ?? undefined,
     latitude: latitude,
     longitude: longitude,
+    fileLocation: { lat: latitude, lng: longitude },
     planNumber: feature?.properties?.PLAN_NUMBER?.toString() ?? undefined,
     address: address,
     legalDescription: feature?.properties?.LEGAL_DESCRIPTION,
@@ -209,6 +220,7 @@ export function featuresetToMapProperty(
     pin: pin ?? undefined,
     latitude: featureSet?.location?.lat,
     longitude: featureSet?.location?.lng,
+    fileLocation: featureSet?.fileLocation ?? featureSet?.location ?? undefined,
     polygon:
       parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
         ? (parcelFeature.geometry as Polygon)
@@ -253,4 +265,19 @@ export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | 
     featureset?.parcelFeature?.properties?.PIN?.toString() ??
     null
   );
+}
+
+export function locationFromFileProperty(
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+): ApiGen_Concepts_Geometry | null {
+  return fileProperty?.location ?? fileProperty?.property?.location ?? null;
+}
+
+export function latLngFromMapProperty(
+  mapProperty: IMapProperty | undefined | null,
+): LatLngLiteral | null {
+  return {
+    lat: Number(mapProperty?.fileLocation?.lat ?? mapProperty?.latitude ?? 0),
+    lng: Number(mapProperty?.fileLocation?.lng ?? mapProperty?.longitude ?? 0),
+  };
 }

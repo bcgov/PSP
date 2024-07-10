@@ -37,6 +37,12 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c16.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c16.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -286,6 +292,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
 
 .c10 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c15 {
