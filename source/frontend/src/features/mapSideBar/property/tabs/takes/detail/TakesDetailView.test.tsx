@@ -117,6 +117,29 @@ describe('TakesDetailView component', () => {
     expect(tooltip).toBeVisible();
   });
 
+  it('hides the edit button when the file has been completed for admins', () => {
+    const fileProperty = getMockApiPropertyFiles()[0];
+    const file: ApiGen_Concepts_File = fileProperty.file as ApiGen_Concepts_File;
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        fileProperty: {
+          ...fileProperty,
+          file: {
+            ...file,
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
+          },
+        },
+        takes: getMockApiTakes(),
+      },
+      claims: [Claims.PROPERTY_EDIT],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+    });
+    const editButton = queryByTitle('Edit take');
+    expect(editButton).toBeNull();
+    const tooltip = getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(tooltip).toBeVisible();
+  });
+
   it('hides the edit button when the take has been completed', () => {
     const { queryByTitle, getByTestId } = setup({
       props: {

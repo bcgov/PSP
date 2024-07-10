@@ -307,7 +307,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
     >
       <div
         class="c2 nav-item"
-        data-testid="nav-tooltip-home"
+        data-testid="nav-tooltip-mapview"
       >
         <a
           class="c3 nav-link"

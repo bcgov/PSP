@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Nav from 'react-bootstrap/Nav';
-import { FaQuestionCircle } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaQuestionCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { H3 } from '@/components/common/styles';
@@ -80,7 +80,7 @@ export function HelpContainer() {
                     application. You can also watch the video demos.
                   </p>
                   <LinkStyled target="_blank" href={pimsTrainingResourceUrl}>
-                    PIMS Resources
+                    PIMS Resources <FaExternalLinkAlt />
                   </LinkStyled>
                   <hr />
                   <HelpModalContentContainer setMailto={setMailto} />
@@ -132,6 +132,9 @@ const H3Styled = styled(H3)`
 
 const LinkStyled = styled.a`
   margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 `;
 
 const StyledConfirmationText = styled.p`
