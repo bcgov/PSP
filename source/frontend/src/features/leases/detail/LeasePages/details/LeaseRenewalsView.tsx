@@ -13,6 +13,8 @@ export interface ILeaseRenewalsViewProps {
 export const LeaseRenewalsView: React.FunctionComponent<
   React.PropsWithChildren<ILeaseRenewalsViewProps>
 > = ({ renewals }) => {
+  if (renewals.length === 0)
+    return <Section header="Renewal Option">No Renewal Information</Section>;
   return (
     <Section header="Renewal Option">
       {renewals.map((renewal, index) => (

@@ -16,9 +16,8 @@ export interface IRenewalSubFormProps {
 }
 
 export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ formikProps }) => {
-  const { values, setFieldValue } = formikProps;
+  const { values } = formikProps;
   const { setModalContent, setDisplayModal } = useModalContext();
-  console.log(values, setFieldValue);
 
   const fieldName = 'renewals';
 

@@ -526,12 +526,12 @@ namespace Pims.Api.Services
                 currentEndDate = agreementEnd;
                 if (DateTime.Compare(agreementEnd, agreementStart) <= 0)
                 {
-                    throw new BusinessRuleViolationException("Lease commencement date must be before its expiry date");
+                    throw new BusinessRuleViolationException("The lease commencement date must be before its expiry date");
                 }
             }
             else
             {
-                throw new BusinessRuleViolationException("Active leases must have agreement commencement expiry dates");
+                throw new BusinessRuleViolationException("Active leases must have commencement and expiry dates");
             }
 
             for (int i = 0; i < renewalDates.Count; i++)
@@ -541,12 +541,12 @@ namespace Pims.Api.Services
 
                 if (DateTime.Compare(endDate, startDate) <= 0)
                 {
-                    throw new BusinessRuleViolationException("Renewal end date must be after it's start date");
+                    throw new BusinessRuleViolationException("The expiry date of your renewal should be later than its commencement date");
                 }
 
                 if (DateTime.Compare(currentEndDate, startDate) >= 0)
                 {
-                    throw new BusinessRuleViolationException("Renewal start date must be after the last expiry date");
+                    throw new BusinessRuleViolationException("The commencement date of your renewal should be later than the previous expiry date (agreement or renewal)");
                 }
                 currentEndDate = endDate;
             }
