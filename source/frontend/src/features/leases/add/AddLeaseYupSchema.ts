@@ -114,4 +114,9 @@ export const AddLeaseYupSchema = Yup.object().shape({
   primaryArbitrationCity: Yup.string()
     .nullable()
     .max(200, 'Primary arbitration city must be at most ${max} characters'),
+  isPublicBenefit: Yup.string().nullable(),
+  isFinancialGain: Yup.string().nullable(),
+  feeDeterminationNote: Yup.string()
+    .nullable()
+    .max(1000, 'Fee determination notes must be at most ${max} characters'),
 });

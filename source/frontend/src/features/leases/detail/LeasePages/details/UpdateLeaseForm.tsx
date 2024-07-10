@@ -9,6 +9,7 @@ import LeaseDetailSubForm from '@/features/leases/add/LeaseDetailSubForm';
 import ReferenceSubForm from '@/features/leases/add/ReferenceSubForm';
 import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { LeasePropertySelector } from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
+import FeeDeterminationSubForm from '@/features/leases/add/FeeDeterminationSubForm';
 
 export interface IUpdateLeaseFormProps {
   onSubmit: (lease: LeaseFormModel) => Promise<void>;
@@ -39,6 +40,7 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
               <LeasePropertySelector formikProps={formikProps} />
               <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
               <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
+              <FeeDeterminationSubForm formikProps={formikProps}></FeeDeterminationSubForm>
               <ReferenceSubForm />
             </>
           </>

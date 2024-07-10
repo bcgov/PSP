@@ -59,7 +59,10 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
                 .Map(dest => dest.FileChecklistItems, src => src.PimsLeaseChecklistItems)
                 .Map(dest => dest.PrimaryArbitrationCity, src => src.PrimaryArbitrationCity)
-                .Map(dest => dest.Periods, src => src.PimsLeasePeriods);
+                .Map(dest => dest.Periods, src => src.PimsLeasePeriods)
+                .Map(dest => dest.IsPublicBenefit, src => src.IsPublicBenefit)
+                .Map(dest => dest.IsFinancialGain, src => src.IsFinancialGain)
+                .Map(dest => dest.FeeDeterminationNote, src => src.FeeDeterminationNote);
 
             config.NewConfig<LeaseModel, PimsLease>()
                 .PreserveReference(true)
@@ -103,6 +106,9 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.PimsLeaseChecklistItems, src => src.FileChecklistItems)
                 .Map(dest => dest.PrimaryArbitrationCity, src => src.PrimaryArbitrationCity)
                 .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
+                .Map(dest => dest.IsPublicBenefit, src => src.IsPublicBenefit)
+                .Map(dest => dest.IsFinancialGain, src => src.IsFinancialGain)
+                .Map(dest => dest.FeeDeterminationNote, src => src.FeeDeterminationNote)
                 .IgnoreNullValues(true);
         }
     }
