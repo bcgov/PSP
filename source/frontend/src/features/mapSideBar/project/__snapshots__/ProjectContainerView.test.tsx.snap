@@ -147,7 +147,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   margin-right: 0;
 }
 
-.c13 {
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -217,7 +217,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c15 {
+.c16 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -226,7 +226,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   flex: 1;
 }
 
-.c16 {
+.c17 {
   height: 100%;
   width: 100%;
 }
@@ -245,7 +245,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c17 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -262,12 +262,17 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   overflow-y: auto;
 }
 
-.c11 {
+.c12 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c14 {
+.c10 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c15 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -286,7 +291,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   background-color: undefined;
 }
 
-.c12 {
+.c13 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -300,7 +305,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c10 {
+.c11 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -311,42 +316,42 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   flex-direction: column;
 }
 
-.c18 {
+.c19 {
   height: 100%;
 }
 
-.c18 .tab-content {
+.c19 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
-.c18 .tab-content .tab-pane {
+.c19 .tab-content .tab-pane {
   position: relative;
 }
 
-.c19 {
+.c20 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c19 .nav-tabs {
+.c20 .nav-tabs {
   height: auto;
 }
 
-.c19 .nav-item {
+.c20 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 1.2rem;
 }
 
-.c19 .nav-item:hover {
+.c20 .nav-item:hover {
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c19 .nav-item.active {
+.c20 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
@@ -458,11 +463,11 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
             <div
               class="pr-0 text-left col-3"
             >
-              <strong>
-                <label>
-                  Project:
-                </label>
-              </strong>
+              <label
+                class="c10"
+              >
+                Project:
+              </label>
             </div>
             <div
               class="pl-1 text-left col-9"
@@ -476,11 +481,11 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
             <div
               class="pr-0 text-left col-3"
             >
-              <strong>
-                <label>
-                  MoTI Region:
-                </label>
-              </strong>
+              <label
+                class="c10"
+              >
+                MoTI region:
+              </label>
             </div>
             <div
               class="pl-1 text-left col-9"
@@ -493,7 +498,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
           class="col"
         >
           <div
-            class="c10"
+            class="c11"
           >
             <div
               class="no-gutters row"
@@ -502,7 +507,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
                 class="text-right col"
               >
                 <span
-                  class="c11"
+                  class="c12"
                 >
                   <strong>
                     Created: 
@@ -527,7 +532,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
                 class="text-right col"
               >
                 <span
-                  class="c11"
+                  class="c12"
                 >
                   <strong>
                     Updated: 
@@ -546,40 +551,44 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="c12 no-gutters justify-content-end align-items-end row"
+              class="c13"
             >
               <div
-                class="col"
-              />
-              <div
-                class="align-self-end d-flex col-auto"
+                class="no-gutters justify-content-end align-items-end row"
               >
-                <span
-                  class="c11"
-                >
-                  <b />
-                </span>
                 <div
-                  class="c13 c14"
+                  class="col"
+                />
+                <div
+                  class="align-self-end d-flex col-auto"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="16"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="16"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <span
+                    class="c12"
                   >
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
-                    />
-                  </svg>
-                  ACTIVE (AC)
+                    <b />
+                  </span>
+                  <div
+                    class="c14 c15"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="16"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="16"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
+                      />
+                    </svg>
+                    ACTIVE (AC)
+                  </div>
                 </div>
               </div>
             </div>
@@ -588,19 +597,19 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
       </div>
     </div>
     <div
-      class="c15"
+      class="c16"
     >
       <div
-        class="c16"
+        class="c17"
       >
         <div
-          class="c17"
+          class="c18"
         >
           <div
-            class="c18"
+            class="c19"
           >
             <nav
-              class="c19 nav nav-tabs"
+              class="c20 nav nav-tabs"
               role="tablist"
             />
             <div

@@ -36,6 +36,7 @@ export class LeaseFormModel {
   expiryDate = '';
   renewalDate = '';
   startDate = '';
+  terminationDate = '';
   responsibilityEffectiveDate = '';
   paymentReceivableTypeCode = '';
   categoryTypeCode = '';
@@ -74,6 +75,7 @@ export class LeaseFormModel {
   periods: FormLeasePeriod[] = [];
   tenants: FormTenant[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
+  primaryArbitrationCity: string | null;
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -83,8 +85,11 @@ export class LeaseFormModel {
     leaseDetail.lFileNo = apiModel?.lFileNo || '';
     leaseDetail.psFileNo = apiModel?.psFileNo || '';
     leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber || '';
-    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel!.expiryDate : '';
-    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel!.startDate : '';
+    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel.expiryDate : '';
+    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel.startDate : '';
+    leaseDetail.terminationDate = isValidIsoDateTime(apiModel?.terminationDate)
+      ? apiModel.terminationDate
+      : '';
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
     leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
@@ -125,6 +130,7 @@ export class LeaseFormModel {
     leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
+    leaseDetail.primaryArbitrationCity = apiModel.primaryArbitrationCity;
 
     return leaseDetail;
   }
@@ -137,6 +143,9 @@ export class LeaseFormModel {
       tfaFileNumber: stringToNull(formLease.tfaFileNumber),
       expiryDate: isValidIsoDateTime(formLease.expiryDate) ? formLease.expiryDate : null,
       startDate: isValidIsoDateTime(formLease.startDate) ? formLease.startDate : null,
+      terminationDate: isValidIsoDateTime(formLease.terminationDate)
+        ? formLease.terminationDate
+        : null,
       responsibilityEffectiveDate: isValidIsoDateTime(formLease.responsibilityEffectiveDate)
         ? formLease.responsibilityEffectiveDate
         : null,
@@ -177,6 +186,7 @@ export class LeaseFormModel {
       hasPhysicalFile: formLease.hasPhysicalLicense ?? false,
       cancellationReason: stringToNull(formLease.cancellationReason),
       terminationReason: stringToNull(formLease.terminationReason),
+      primaryArbitrationCity: stringToNull(formLease.primaryArbitrationCity),
       fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
@@ -304,6 +314,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     tenants: [],
     startDate: EpochIsoDateTime,
     expiryDate: EpochIsoDateTime,
+    terminationDate: null,
     lFileNo: '',
     tfaFileNumber: '',
     psFileNo: '',
@@ -343,6 +354,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     terminationReason: null,
     isExpired: false,
     project: null,
+    primaryArbitrationCity: null,
     ...getEmptyBaseAudit(),
     fileName: null,
     fileNumber: null,
