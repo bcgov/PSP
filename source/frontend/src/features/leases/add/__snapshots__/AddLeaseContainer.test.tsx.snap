@@ -832,9 +832,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         class="c13"
                       >
                         Commencement:
-                        <span
-                          class="ml-2"
-                        >
+                        <span>
                           <span
                             class="tooltip-icon"
                             data-testid="tooltip-icon-lease-commencement-tooltip"
@@ -907,9 +905,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         class="c13"
                       >
                         Expiry:
-                        <span
-                          class="ml-2"
-                        >
+                        <span>
                           <span
                             class="tooltip-icon"
                             data-testid="tooltip-icon-lease-expiry-tooltip"
@@ -2466,13 +2462,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Primary arbitration city:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col"
+                  class="c14 text-left col"
                 >
                   <div
                     class="input form-group"

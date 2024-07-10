@@ -320,9 +320,7 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
                 class="c2"
               >
                 Commencement:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-lease-commencement-tooltip"
@@ -395,9 +393,7 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
                 class="c2"
               >
                 Expiry:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-lease-expiry-tooltip"
