@@ -6,6 +6,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { IMapProperty } from '@/components/propertySelector/models';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
+import { latLngFromMapProperty } from '@/utils';
 
 /**
  * Get a list of file property markers from the current form values.
@@ -13,9 +14,7 @@ import useIsMounted from '@/hooks/util/useIsMounted';
  * @param modifiedProperties the current form values to extract lat/lngs from.
  */
 const getFilePropertyLocations = (modifiedProperties: IMapProperty[]): LatLngLiteral[] => {
-  return modifiedProperties.map<LatLngLiteral>((property: IMapProperty) => {
-    return { lat: Number(property?.latitude ?? 0), lng: Number(property?.longitude ?? 0) };
-  });
+  return modifiedProperties.map((property: IMapProperty) => latLngFromMapProperty(property));
 };
 
 /**

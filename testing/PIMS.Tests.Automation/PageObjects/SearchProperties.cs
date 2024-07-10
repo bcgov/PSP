@@ -9,8 +9,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyByPIDPINInput = By.Id("input-pinOrPid");
         private By searchPropertyByAddressInput = By.Id("input-address");
         private By searchPropertyByPlanInput = By.Id("input-planNumber");
-        private By searchPropertyAddressSuggestionsGroup = By.CssSelector("div[class='suggestionList']");
-        private By searchPropertyAddressSuggestions1stOption = By.CssSelector("div[class='suggestionList'] option:nth-child(1)");
+        private By searchPropertyAddressSuggestionsGroup = By.CssSelector("ul[class='suggestionList']");
+        private By searchPropertyAddressSuggestions1stOption = By.CssSelector("ul[class='suggestionList'] li:nth-child(1)");
         private By searchPropertySearchBttn = By.Id("search-button");
         private By searchPropertyResetBttn = By.Id("reset-button");
 
@@ -75,7 +75,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchPropertyAddressSuggestionsGroup);
             FocusAndClick(searchPropertyAddressSuggestions1stOption);
-            
+
+            WaitUntilClickable(searchPropertySearchBttn);
             webDriver.FindElement(searchPropertySearchBttn).Click();
             WaitUntilSpinnerDisappear();
         }

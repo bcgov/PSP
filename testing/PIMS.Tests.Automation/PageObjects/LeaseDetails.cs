@@ -42,11 +42,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsLeaseDateStartContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]/parent::div/div/label[contains(text(),'Start date')]/following-sibling::div");
         private By licenseDetailsLeaseDateEndLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]/parent::div/div/label[contains(text(),'Expiry')]");
         private By licenseDetailsLeaseDateEndContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]/parent::div/div/label[contains(text(),'Expiry')]/following-sibling::div");
-        private By licenseDetailsCurrentTermSubtitle = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Term')]");
-        private By licenseDetailsCurrentTermStartLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Term')]/parent::div/div/label[contains(text(),'Start date')]");
-        private By licenseDetailsCurrentTermStartContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Term')]/parent::div/div/label[contains(text(),'Start date')]/following-sibling::div");
-        private By licenseDetailsCurrentTermEndLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Term')]/parent::div/div/label[contains(text(),'Expiry')]");
-        private By licenseDetailsCurrentTermEndContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Term')]/parent::div/div/label[contains(text(),'Expiry')]/following-sibling::div");
+        private By licenseDetailsCurrentTermSubtitle = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Period')]");
+        private By licenseDetailsCurrentTermStartLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Period')]/parent::div/div/label[contains(text(),'Start date')]");
+        private By licenseDetailsCurrentTermStartContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Period')]/parent::div/div/label[contains(text(),'Start date')]/following-sibling::div");
+        private By licenseDetailsCurrentTermEndLabel = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Period')]/parent::div/div/label[contains(text(),'Expiry')]");
+        private By licenseDetailsCurrentTermEndContent = By.XPath("//form/div/div/div/div/h4[contains(text(),'Current Period')]/parent::div/div/label[contains(text(),'Expiry')]/following-sibling::div");
 
         //Property Information Elements
         private By licenseDetailsPropertyInformationSubtitle = By.XPath("//h2/div/div[contains(text(),'Property Information')]");

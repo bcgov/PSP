@@ -4,12 +4,14 @@
  */
 import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
 import { ApiGen_Concepts_File } from './ApiGen_Concepts_File';
+import { ApiGen_Concepts_Geometry } from './ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from './ApiGen_Concepts_Property';
 
 // LINK: @backend/apimodels/Models/Concepts/File/FilePropertyModel.cs
 export interface ApiGen_Concepts_FileProperty extends ApiGen_Base_BaseConcurrent {
   id: number;
   propertyName: string | null;
+  location: ApiGen_Concepts_Geometry | null;
   displayOrder: number | null;
   property: ApiGen_Concepts_Property | null;
   propertyId: number;

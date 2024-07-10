@@ -6,9 +6,14 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
     class="Toastify"
   />
   <div />
-  .c2 {
+  .c3 {
   font-size: 0.87em;
   line-height: 1.9;
+}
+
+.c1 {
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 {
@@ -19,7 +24,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
   border-bottom-width: 0.1rem;
 }
 
-.c1 {
+.c2 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -42,11 +47,11 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              File:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            File:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -60,11 +65,11 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Ministry project:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            Ministry project:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -76,11 +81,11 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Ministry product:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            Ministry product:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -93,11 +98,11 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Historical File #:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            Historical file #:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -110,7 +115,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
       class="col"
     >
       <div
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -119,7 +124,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
             class="text-right col"
           >
             <span
-              class="c2"
+              class="c3"
             >
               <strong>
                 Created: 
@@ -144,7 +149,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
             class="text-right col"
           >
             <span
-              class="c2"
+              class="c3"
             >
               <strong>
                 Updated: 

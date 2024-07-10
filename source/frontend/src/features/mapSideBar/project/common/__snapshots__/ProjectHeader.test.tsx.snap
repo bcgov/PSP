@@ -6,12 +6,17 @@ exports[`ProjectHeader component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c2 {
+  .c3 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c4 {
+.c1 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -21,7 +26,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c5 {
+.c6 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -40,7 +45,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   background-color: undefined;
 }
 
-.c3 {
+.c4 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -54,7 +59,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c1 {
+.c2 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -77,11 +82,11 @@ exports[`ProjectHeader component > renders as expected 1`] = `
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Project:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            Project:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -95,11 +100,11 @@ exports[`ProjectHeader component > renders as expected 1`] = `
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              MoTI Region:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            MoTI region:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -112,7 +117,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
       class="col"
     >
       <div
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -121,7 +126,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
             class="text-right col"
           >
             <span
-              class="c2"
+              class="c3"
             >
               <strong>
                 Created: 
@@ -146,7 +151,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
             class="text-right col"
           >
             <span
-              class="c2"
+              class="c3"
             >
               <strong>
                 Updated: 
@@ -165,40 +170,44 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c3 no-gutters justify-content-end align-items-end row"
+          class="c4"
         >
           <div
-            class="col"
-          />
-          <div
-            class="align-self-end d-flex col-auto"
+            class="no-gutters justify-content-end align-items-end row"
           >
-            <span
-              class="c2"
-            >
-              <b />
-            </span>
             <div
-              class="c4 c5"
+              class="col"
+            />
+            <div
+              class="align-self-end d-flex col-auto"
             >
-              <svg
-                fill="currentColor"
-                height="16"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 24 24"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
+              <span
+                class="c3"
               >
-                <path
-                  d="M0 0h24v24H0z"
-                  fill="none"
-                />
-                <path
-                  d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
-                />
-              </svg>
-              ACTIVE (AC)
+                <b />
+              </span>
+              <div
+                class="c5 c6"
+              >
+                <svg
+                  fill="currentColor"
+                  height="16"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
+                  />
+                </svg>
+                ACTIVE (AC)
+              </div>
             </div>
           </div>
         </div>

@@ -50,7 +50,6 @@ export const StyledPaymentTable = styled(Table)`
           position: relative;
           background-color: transparent;
           color: ${props => props.theme.bcTokens.typographyColorPrimary};
-
           .sortable-column {
             width: 100%;
           }

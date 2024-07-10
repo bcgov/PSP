@@ -2,6 +2,7 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { latLngToApiLocation } from '@/utils';
 import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidIsoDateTime } from '@/utils/utils';
 
@@ -83,22 +84,26 @@ export class DispositionFormModel implements WithDispositionTeam {
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
         .filter(exists),
-      fileProperties: this.fileProperties.map<ApiGen_Concepts_DispositionFileProperty>(ap => ({
-        id: ap.id ?? 0,
-        propertyName: ap.name ?? null,
-        displayOrder: ap.displayOrder ?? null,
-        rowVersion: ap.rowVersion ?? null,
-        property: ap.toApi(),
-        propertyId: ap.apiId ?? 0,
-        file: null,
-        fileId: 0,
-      })),
-
+      fileProperties: this.fileProperties.map(x => this.toPropertyApi(x)),
       dispositionOffers: this.offers.map(x => x.toApi()),
       dispositionSale: this.sale ? this.sale.toApi() : null,
       dispositionAppraisal: this.appraisal ? this.appraisal.toApi() : null,
       fileChecklistItems: this.fileChecklist.map(x => x.toApi()),
       ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+
+  private toPropertyApi(x: PropertyForm): ApiGen_Concepts_DispositionFileProperty {
+    return {
+      id: x.id ?? 0,
+      fileId: this.id ?? 0,
+      property: x.toApi(),
+      propertyId: x.apiId ?? 0,
+      propertyName: x.name ?? null,
+      location: latLngToApiLocation(x.fileLocation?.lat, x.fileLocation?.lng),
+      displayOrder: x.displayOrder ?? null,
+      rowVersion: x.rowVersion ?? null,
+      file: null,
     };
   }
 

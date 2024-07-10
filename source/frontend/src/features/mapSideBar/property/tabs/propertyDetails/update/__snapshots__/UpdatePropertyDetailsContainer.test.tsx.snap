@@ -37,6 +37,12 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c6.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -278,6 +284,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
+  white-space: nowrap;
 }
 
 .c9 {

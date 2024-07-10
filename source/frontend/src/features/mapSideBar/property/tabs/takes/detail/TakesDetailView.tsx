@@ -65,11 +65,11 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
 
   const canEditTakes = (take: ApiGen_Concepts_Take) => {
     if (
-      (statusSolver.canEditTakes() &&
-        take.takeStatusTypeCode.id !==
-          ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString() &&
+      statusSolver.canEditTakes() &&
+      ((take.takeStatusTypeCode.id !==
+        ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString() &&
         hasClaim(Claims.ACQUISITION_EDIT)) ||
-      hasRole(Roles.SYSTEM_ADMINISTRATOR)
+        hasRole(Roles.SYSTEM_ADMINISTRATOR))
     ) {
       return true;
     }

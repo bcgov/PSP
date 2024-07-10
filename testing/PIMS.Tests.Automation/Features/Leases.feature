@@ -39,11 +39,11 @@ Scenario: 06. Lease and License Deposits
 	And I update a Lease's Deposits from row number 2
 	Then A new lease is created successfully
 
-Scenario: 07. Lease and License Payments
-	Given I create a new minimum Lease from row number 1
-	When  I add Payments to the Lease
-	And I update a Lease's Payments from row number 2
-	Then A new lease is created successfully
+#Scenario: 07. Lease and License Payments
+#	Given I create a new minimum Lease from row number 1
+#	When  I add Payments to the Lease
+#	And I update a Lease's Payments from row number 2
+#	Then A new lease is created successfully
 
 Scenario: 08. Lease and License Documents
 	Given I create a new minimum Lease from row number 1

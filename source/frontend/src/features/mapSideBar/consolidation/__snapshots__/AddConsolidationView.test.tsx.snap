@@ -37,6 +37,12 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -339,8 +345,8 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
 }
 
 .c2 {
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 3rem;
+  height: 3rem;
   margin-right: 1rem;
 }
 
@@ -361,27 +367,18 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
           >
             <svg
               class="c2"
-              data-name="Layer 2"
-              height="24px"
-              id="Layer_2"
-              viewBox="0 0 22 14"
-              width="24px"
+              fill="none"
+              height="24"
+              viewBox="0 0 24 24"
+              width="24"
               xmlns="http://www.w3.org/2000/svg"
             >
-              <defs />
-              <g
-                data-name="Layer 1"
-                id="Layer_1-2"
-              >
-                <g>
-                  <path
-                    d="M12.85,6.88V0H2.16C.97,0,0,.97,0,2.16v10.15c0,1.19.97,2.16,2.16,2.16h2.04l8.65-7.59Z"
-                  />
-                  <path
-                    d="M19.46,0h-3.18v7.24c0,.06,0,.12-.02.18.08.55-.11,1.14-.56,1.53l-6.29,5.53h10.05c1.19,0,2.16-.97,2.16-2.16V2.16C21.62.98,20.65,0,19.46,0Z"
-                  />
-                </g>
-              </g>
+              <path
+                d="M14.5455 11.4112V0H2.56725C1.15289 0 0 1.60885 0 3.58259V20.4174C0 22.3912 1.15289 24 2.56725 24H4.99186L14.5455 11.4112Z"
+              />
+              <path
+                d="M21.6022 0H18.0722V12C18.0722 12.0994 18.0611 12.1989 18.05 12.2983L9.45459 24L21.6022 24C22.9232 24 24 22.3923 24 20.4199V3.58011C24 1.62431 22.9232 0 21.6022 0Z"
+              />
             </svg>
           </span>
           Create a Consolidation

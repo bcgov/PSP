@@ -1,8 +1,8 @@
 import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
-import { MdFence } from 'react-icons/md';
 import * as Yup from 'yup';
 
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -245,7 +245,15 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       showCloseButton
       onClose={close}
       title={containerState.isEditing ? 'Update Lease / Licence' : 'Lease / Licence'}
-      icon={<MdFence title="Lease file icon" size={26} />}
+      icon={
+        <LeaseIcon
+          title="Lease file icon"
+          width="2.6rem"
+          height="2.6rem"
+          fill="currentColor"
+          className="mr-2"
+        />
+      }
       header={<LeaseHeader lease={lease} lastUpdatedBy={lastUpdatedBy} />}
       footer={
         containerState.isEditing && (
