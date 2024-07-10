@@ -58,7 +58,7 @@ namespace Pims.Api.Services
         {
             if (!Enum.TryParse(payment.LeasePaymentCategoryTypeCode, out LeasePaymentCategoryTypes leasePaymentCategoryType))
             {
-                throw new InvalidOperationException();
+                payment.LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString();
             }
             decimal? expectedTotal;
             switch (leasePaymentCategoryType)
