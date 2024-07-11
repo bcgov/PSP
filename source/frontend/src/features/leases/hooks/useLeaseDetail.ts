@@ -33,6 +33,7 @@ export function useLeaseDetail(leaseId?: number) {
   const {
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
     getLeaseChecklist: { execute: getLeaseChecklist, loading: getLeaseChecklistLoading },
+    getLeaseRenewals: { execute: getLeaseRenewals, loading: getLeaseRenewalsLoading },
   } = useLeaseRepository();
 
   const getApiLeaseById = useApiRequestWrapper({
@@ -50,15 +51,23 @@ export function useLeaseDetail(leaseId?: number) {
       const propertyLeasesPromise = getPropertyLeases(leaseId);
       const leasePeriodsPromise = getLeasePeriods(leaseId);
       const leaseChecklistPromise = getLeaseChecklist(leaseId);
+      const leaseRenewalsPromise = getLeaseRenewals(leaseId);
 
-      const [lease, leaseTenants, propertyLeases, leasePeriods, leaseChecklistItems] =
-        await Promise.all([
-          leasePromise,
-          leaseTenantsPromise,
-          propertyLeasesPromise,
-          leasePeriodsPromise,
-          leaseChecklistPromise,
-        ]);
+      const [
+        lease,
+        leaseTenants,
+        propertyLeases,
+        leasePeriods,
+        leaseChecklistItems,
+        leaseRenewals,
+      ] = await Promise.all([
+        leasePromise,
+        leaseTenantsPromise,
+        propertyLeasesPromise,
+        leasePeriodsPromise,
+        leaseChecklistPromise,
+        leaseRenewalsPromise,
+      ]);
       if (lease) {
         const mergedLeases: ApiGen_Concepts_Lease = {
           ...lease,
@@ -66,6 +75,7 @@ export function useLeaseDetail(leaseId?: number) {
           fileProperties: propertyLeases ?? [],
           periods: leasePeriods ?? [],
           fileChecklistItems: leaseChecklistItems ?? [],
+          renewals: leaseRenewals,
         };
         setLease(mergedLeases);
         return mergedLeases;
@@ -79,6 +89,7 @@ export function useLeaseDetail(leaseId?: number) {
     getPropertyLeases,
     getLeasePeriods,
     getLeaseChecklist,
+    getLeaseRenewals,
     setLease,
   ]);
 
@@ -105,6 +116,7 @@ export function useLeaseDetail(leaseId?: number) {
     leaseTenantsLoading ||
     leasePeriodsLoading ||
     getLastUpdatedByLoading ||
+    getLeaseRenewalsLoading ||
     getLeaseChecklistLoading;
 
   useDeepCompareEffect(() => {

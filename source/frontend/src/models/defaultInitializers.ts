@@ -71,6 +71,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   fileNumber: null,
   cancellationReason: null,
   terminationReason: null,
+  renewals: [],
   primaryArbitrationCity: null,
   fileChecklistItems: [],
   ...getEmptyBaseAudit(),

@@ -7,6 +7,7 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -61,6 +62,8 @@ export const useApiLeases = () => {
             Accept: 'application/vnd.ms-excel',
           },
         }),
+      getLeaseRenewals: (leaseId: number) =>
+        api.get<ApiGen_Concepts_LeaseRenewal[]>(`/leases/${leaseId}/renewals`),
       getLeaseChecklist: (leaseId: number) =>
         api.get<ApiGen_Concepts_FileChecklistItem[]>(`/leases/${leaseId}/checklist`),
       putLeaseChecklist: (lease: ApiGen_Concepts_FileWithChecklist) =>
