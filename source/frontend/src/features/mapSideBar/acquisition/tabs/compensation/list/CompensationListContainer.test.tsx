@@ -1,6 +1,4 @@
 import { createMemoryHistory } from 'history';
-
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
@@ -10,7 +8,6 @@ import {
   getMockDefaultCreateCompenReq,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -155,6 +152,37 @@ describe('compensation list view container', () => {
     });
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(1, getMockDefaultCreateCompenReq());
+  });
+
+  it('Creates the Compensation Requisition with all the properties selected from the file', async () => {
+    mockPostApi.execute.mockResolvedValue(getMockApiDefaultCompensation());
+
+    await setup({
+      file: mockAcquisitionFileResponse(),
+    });
+
+    await act(async () => {
+      viewProps?.onAdd();
+    });
+
+    const mockNewCompensationRequisition = {
+      ...getMockDefaultCreateCompenReq(),
+      compensationRequisitionProperties: [
+        {
+          compensationRequisitionPropertyId: null,
+          compensationRequisitionId: null,
+          propertyAcquisitionFileId: 1,
+          acquisitionFileProperty: null,
+        },
+        {
+          compensationRequisitionPropertyId: null,
+          compensationRequisitionId: null,
+          propertyAcquisitionFileId: 2,
+          acquisitionFileProperty: null,
+        },
+      ]
+    };
+    expect(mockPostApi.execute).toHaveBeenCalledWith(1, mockNewCompensationRequisition);
   });
 
   it('returns an updated total allowable compensation if the update operation was successful', async () => {
