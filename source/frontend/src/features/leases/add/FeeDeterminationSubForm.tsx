@@ -43,7 +43,7 @@ const FeeDeterminationSubForm: React.FunctionComponent<IFeeDeterminationSubFormP
         labelWidth="2"
         contentWidth="8"
       >
-        {fee}
+        <span data-testid="suggestedFee">{fee}</span>
       </SectionField>
 
       <SectionField

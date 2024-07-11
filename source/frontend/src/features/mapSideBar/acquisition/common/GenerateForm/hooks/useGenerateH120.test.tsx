@@ -126,7 +126,9 @@ describe('useGenerateH120 functions', () => {
   beforeEach(() => {
     findElectoralDistrictFn.mockResolvedValue({ properties: { ED_NAME: 'MOCK DISTRICT' } });
     getAcquisitionPropertiesFn.mockResolvedValue(mockAcquisitionFileResponse().fileProperties);
-    getCompensationRequisitionPropertiesFn.mockResolvedValue(mockAcquisitionFileResponse().fileProperties);
+    getCompensationRequisitionPropertiesFn.mockResolvedValue(
+      mockAcquisitionFileResponse().fileProperties,
+    );
     getInterestHoldersFn.mockResolvedValue([]);
   });
 

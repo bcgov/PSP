@@ -75,6 +75,9 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   primaryArbitrationCity: null,
   fileChecklistItems: [],
   ...getEmptyBaseAudit(),
+  isPublicBenefit: null,
+  isFinancialGain: null,
+  feeDeterminationNote: null,
 });
 
 /**
