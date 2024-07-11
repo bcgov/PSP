@@ -288,7 +288,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 DateTime.Now);
             _logger.LogInformation($"Dispatching to service: {_acquisitionService.GetType()}");
 
-            var compensationReqEntity = _mapper.Map<Dal.Entities.PimsCompensationRequisition>(compensationRequisition);
+            var compensationReqEntity = _mapper.Map<PimsCompensationRequisition>(compensationRequisition);
             var newCompensationRequisition = _acquisitionService.AddCompensationRequisition(id, compensationReqEntity);
 
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(newCompensationRequisition));

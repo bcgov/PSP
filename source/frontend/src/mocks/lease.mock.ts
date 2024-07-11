@@ -53,12 +53,13 @@ const emptyLease: ApiGen_Concepts_Lease = {
   project: null,
   cancellationReason: null,
   terminationReason: null,
-  primaryArbitrationCity: null,
-  ...getEmptyBaseAudit(),
   fileName: null,
   fileNumber: null,
   periods: null,
   fileChecklistItems: [],
+  renewals: [],
+  primaryArbitrationCity: null,
+  ...getEmptyBaseAudit(),
 };
 
 export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({

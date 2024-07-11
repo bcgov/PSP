@@ -92,6 +92,7 @@ export class PayeeOption {
       advancedPaymentServedDate: null,
       generationDate: null,
       financials: [],
+      compensationRequisitionProperties: [],
       legacyPayee: null,
       finalizedDate: null,
       specialInstruction: null,

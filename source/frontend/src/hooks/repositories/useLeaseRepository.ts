@@ -6,6 +6,7 @@ import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiLeases } from '../pims-api/useApiLeases';
@@ -14,7 +15,13 @@ import { useApiLeases } from '../pims-api/useApiLeases';
  * hook that interacts with the Lease API.
  */
 export const useLeaseRepository = () => {
-  const { getLastUpdatedByApi, getApiLease, putLeaseChecklist, getLeaseChecklist } = useApiLeases();
+  const {
+    getLastUpdatedByApi,
+    getApiLease,
+    putLeaseChecklist,
+    getLeaseChecklist,
+    getLeaseRenewals,
+  } = useApiLeases();
 
   const getLastUpdatedBy = useApiRequestWrapper<
     (leaseId: number) => Promise<AxiosResponse<Api_LastUpdatedBy, any>>
@@ -38,6 +45,18 @@ export const useLeaseRepository = () => {
     requestName: 'getApiLease',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to retreive lease.'),
+  });
+
+  const getLeaseRenewalsApi = useApiRequestWrapper<
+    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_LeaseRenewal[], any>>
+  >({
+    requestFunction: useCallback(
+      async (leaseId: number) => await getLeaseRenewals(leaseId),
+      [getLeaseRenewals],
+    ),
+    requestName: 'getLeaseRenewalsApi',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retreive lease renewals.'),
   });
 
   const getLeaseChecklistApi = useApiRequestWrapper<
@@ -68,9 +87,16 @@ export const useLeaseRepository = () => {
     () => ({
       getLastUpdatedBy: getLastUpdatedBy,
       getLease: getLease,
+      getLeaseRenewals: getLeaseRenewalsApi,
       getLeaseChecklist: getLeaseChecklistApi,
       putLeaseChecklist: updateLeaseChecklistApi,
     }),
-    [getLastUpdatedBy, getLease, getLeaseChecklistApi, updateLeaseChecklistApi],
+    [
+      getLastUpdatedBy,
+      getLease,
+      getLeaseRenewalsApi,
+      getLeaseChecklistApi,
+      updateLeaseChecklistApi,
+    ],
   );
 };

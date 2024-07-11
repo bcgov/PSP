@@ -82,6 +82,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IDispositionFileChecklistRepository, Repositories.DispositionFileChecklistRepository>();
             repositories.AddScoped<Repositories.IPropertyOperationRepository, Repositories.PropertyOperationRepository>();
             repositories.AddScoped<Repositories.IHistoricalNumberRepository, Repositories.HistoricalNumberRepository>();
+            repositories.AddScoped<Repositories.ILeaseRenewalRepository, Repositories.LeaseRenewalRepostory>();
             return repositories;
         }
 

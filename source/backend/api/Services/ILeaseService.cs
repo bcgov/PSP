@@ -33,6 +33,8 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsLeaseTenant> UpdateTenantsByLeaseId(long leaseId, IEnumerable<PimsLeaseTenant> pimsLeaseTenants);
 
+        IEnumerable<PimsLeaseRenewal> GetRenewalsByLeaseId(long leaseId);
+
         IEnumerable<PimsLeaseChecklistItem> GetChecklistItems(long id);
 
         PimsLease UpdateChecklistItems(long leaseId, IList<PimsLeaseChecklistItem> checklistItems);
