@@ -30,7 +30,6 @@ namespace Pims.Api.Services
         private readonly IPropertyActivityRepository _propertyActivityRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
-        private readonly ILeaseRepository _leaseRepository;
         private readonly IMapper _mapper;
         private readonly ILookupRepository _lookupRepository;
 
@@ -44,8 +43,7 @@ namespace Pims.Api.Services
             ICoordinateTransformService coordinateService,
             IPropertyLeaseRepository propertyLeaseRepository,
             IMapper mapper,
-            ILookupRepository lookupRepository,
-            ILeaseRepository leaseRepository)
+            ILookupRepository lookupRepository)
         {
             _user = user;
             _logger = logger;
@@ -57,7 +55,6 @@ namespace Pims.Api.Services
             _propertyLeaseRepository = propertyLeaseRepository;
             _mapper = mapper;
             _lookupRepository = lookupRepository;
-            _leaseRepository = leaseRepository;
         }
 
         public PimsProperty GetById(long id)
