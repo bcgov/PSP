@@ -4,14 +4,16 @@ import { useCallback, useMemo } from 'react';
 import {
   deleteCompensationRequisitionApi,
   getCompensationRequisitionApi,
+  getCompensationRequisitionPropertiesApi,
   putCompensationRequisitionApi,
 } from '@/hooks/pims-api/useApiRequisitionCompensations';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
- * hook that interacts with the Compensation API.
+ * hook that interacts with the Compensation Requisition Endpoint.
  */
 export const useCompensationRequisitionRepository = () => {
   const getCompensationRequisition = useApiRequestWrapper<
@@ -55,12 +57,35 @@ export const useCompensationRequisitionRepository = () => {
     ),
   });
 
+  const getCompensationRequisitionProperties = useApiRequestWrapper<
+    (
+      compensationId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFileProperty[], any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number) =>
+        await getCompensationRequisitionPropertiesApi(compensationId),
+      [],
+    ),
+    requestName: 'getCompensationRequisitionProperties',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(
+      'Failed to get compensation requisition properties. Refresh the page to try again.',
+    ),
+  });
+
   return useMemo(
     () => ({
       deleteCompensation: deleteCompensation,
       updateCompensationRequisition: updateCompensationRequisition,
       getCompensationRequisition: getCompensationRequisition,
+      getCompensationRequisitionProperties: getCompensationRequisitionProperties,
     }),
-    [deleteCompensation, getCompensationRequisition, updateCompensationRequisition],
+    [
+      deleteCompensation,
+      getCompensationRequisition,
+      getCompensationRequisitionProperties,
+      updateCompensationRequisition,
+    ],
   );
 };

@@ -98,6 +98,11 @@ namespace Pims.Dal.Repositories
             return propertyAcquisitionFile;
         }
 
+        public bool AcquisitionFilePropertyInCompensationReq(long propertyAcquisitionFileId)
+        {
+            return Context.PimsPropAcqFlCompReqs.Where(x => x.PropertyAcquisitionFileId == propertyAcquisitionFileId).AsNoTracking().Any();
+        }
+
         #endregion
     }
 }

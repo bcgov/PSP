@@ -97,7 +97,7 @@ namespace Pims.Api.Services
 
         public bool DeleteCompensation(long compensationId)
         {
-            _logger.LogInformation("Deleting compensation with id ...", compensationId);
+            _logger.LogInformation("Deleting compensation with id: {compensationId}", compensationId);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionDelete, Permissions.AcquisitionFileEdit);
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationId);
@@ -113,6 +113,14 @@ namespace Pims.Api.Services
             _compensationRequisitionRepository.CommitTransaction();
 
             return fileFormToDelete;
+        }
+
+        public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)
+        {
+            _logger.LogInformation("Getting properties for Compensation Requisition with id {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            return _compensationRequisitionRepository.GetPropertiesByCompRequisitionId(id);
         }
 
         private static string GetCompensationRequisitionStatusText(bool? isDraft)

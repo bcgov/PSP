@@ -351,6 +351,12 @@ namespace Pims.Api.Services
                 {
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
+
+                if (_acquisitionFilePropertyRepository.AcquisitionFilePropertyInCompensationReq(deletedProperty.PropertyAcquisitionFileId))
+                {
+                    throw new BusinessRuleViolationException("Acquisition File property can not be removed since it's assigned as a property for a compensation requisition");
+                }
+
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
 
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
@@ -359,7 +365,6 @@ namespace Pims.Api.Services
                     _acqFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
                     _propertyRepository.Delete(deletedProperty.Property);
                 }
-
             }
 
             _acqFileRepository.CommitTransaction();
