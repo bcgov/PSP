@@ -377,6 +377,7 @@ namespace Pims.Api.Services
             }
         }
 
+        /// <inheritdoc />
         public T PopulateNewFileProperty<T>(T fileProperty)
             where T : IFilePropertyEntity
         {
@@ -391,6 +392,7 @@ namespace Pims.Api.Services
             return fileProperty;
         }
 
+        /// <inheritdoc />
         public void UpdateFilePropertyLocation<T>(T incomingFileProperty, T filePropertyToUpdate)
             where T : IFilePropertyEntity
         {

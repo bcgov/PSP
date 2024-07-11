@@ -75,6 +75,12 @@ namespace Pims.Api.Services
             MatchProperties(dispositionFile, userOverrides);
             ValidatePropertyRegions(dispositionFile);
 
+            // Update marker locations in the context of this file
+            foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
+            {
+                _propertyService.PopulateNewFileProperty(incomingDispositionProperty);
+            }
+
             var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
             _dispositionFileRepository.CommitTransaction();
 
@@ -479,7 +485,7 @@ namespace Pims.Api.Services
 
         public PimsDispositionFile UpdateProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
-            _logger.LogInformation("Updating disposition file properties...");
+            _logger.LogInformation("Updating disposition file properties with DispositionFile id: {id}", dispositionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.DispositionEdit, Permissions.PropertyView, Permissions.PropertyAdd);
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFile.Internal_Id);
 
@@ -489,8 +495,8 @@ namespace Pims.Api.Services
 
             ValidatePropertyRegions(dispositionFile);
 
-            // Get the current properties in the research file
-            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
+            // Get the current properties in the disposition file
+            var currentFileProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
@@ -498,22 +504,37 @@ namespace Pims.Api.Services
                 // If the property is not new, check if the name has been updated.
                 if (incomingDispositionProperty.Internal_Id != 0)
                 {
-                    PimsDispositionFileProperty existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingDispositionProperty.Internal_Id);
+                    var needsUpdate = false;
+                    PimsDispositionFileProperty existingProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingDispositionProperty.Internal_Id);
                     if (existingProperty.PropertyName != incomingDispositionProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incomingDispositionProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+
+                    var incomingGeom = incomingDispositionProperty.Location;
+                    var existingGeom = existingProperty.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
+                        _propertyService.UpdateFilePropertyLocation(incomingDispositionProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
                         _dispositionFilePropertyRepository.Update(existingProperty);
                     }
                 }
                 else
                 {
                     // New property needs to be added
-                    _dispositionFilePropertyRepository.Add(incomingDispositionProperty);
+                    var newFileProperty = _propertyService.PopulateNewFileProperty(incomingDispositionProperty);
+                    _dispositionFilePropertyRepository.Add(newFileProperty);
                 }
             }
 
             // The ones not on the new set should be deleted
-            List<PimsDispositionFileProperty> differenceSet = currentProperties.Where(x => !dispositionFile.PimsDispositionFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsDispositionFileProperty> differenceSet = currentFileProperties.Where(x => !dispositionFile.PimsDispositionFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 _dispositionFilePropertyRepository.Delete(deletedProperty);

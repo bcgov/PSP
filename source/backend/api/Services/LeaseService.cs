@@ -180,11 +180,17 @@ namespace Pims.Api.Services
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
-            var leasesWithProperties = AssociatePropertyLeases(lease, userOverrides);
+            var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
 
             lease.PimsLeaseChecklistItems = GetActiveChecklistItemsForLease();
 
-            return _leaseRepository.Add(leasesWithProperties);
+            // Update marker locations in the context of this file
+            foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
+            {
+                _propertyService.PopulateNewFileProperty(incomingLeaseProperty);
+            }
+
+            return _leaseRepository.Add(leaseWithProperties);
         }
 
         public IEnumerable<PimsPropertyLease> GetPropertiesByLeaseId(long leaseId)
@@ -209,8 +215,8 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
-            var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
-            var newPropertiesAdded = lease.PimsPropertyLeases.Where(x => !currentProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
+            var newPropertiesAdded = lease.PimsPropertyLeases.Where(x => !currentFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
 
             if (newPropertiesAdded.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
             {
@@ -228,13 +234,37 @@ namespace Pims.Api.Services
 
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
+
+            // Update marker locations in the context of this file
+            foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
+            {
+                // If the property is not new, check if the marker location has been updated.
+                if (incomingLeaseProperty.Internal_Id != 0)
+                {
+                    var existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingLeaseProperty.Internal_Id);
+
+                    var incomingGeom = incomingLeaseProperty.Location;
+                    var existingGeom = existingFileProperty.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
+                        _propertyService.UpdateFilePropertyLocation(incomingLeaseProperty, existingFileProperty);
+                        incomingLeaseProperty.Location = existingFileProperty.Location;
+                    }
+                }
+                else
+                {
+                    // New property needs to be added
+                    _propertyService.PopulateNewFileProperty(incomingLeaseProperty);
+                }
+            }
+
             _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
             _leaseRepository.UpdateLeaseConsultations(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseConsultations);
 
             _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
 
-            List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
