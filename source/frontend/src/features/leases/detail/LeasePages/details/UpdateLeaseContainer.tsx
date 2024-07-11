@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikProps } from 'formik/dist/types';
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext } from 'react';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -11,10 +11,10 @@ import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
 import { LeaseFormModel } from '@/features/leases/models';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useModalContext } from '@/hooks/useModalContext';
-import { IApiError } from '@/interfaces/IApiError';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { isValidId } from '@/utils';
