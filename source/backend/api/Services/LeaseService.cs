@@ -243,12 +243,12 @@ namespace Pims.Api.Services
                 {
                     var existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingLeaseProperty.Internal_Id);
 
-                    var incomingGeom = incomingLeaseProperty.Location;
-                    var existingGeom = existingFileProperty.Location;
+                    var incomingGeom = incomingLeaseProperty?.Location;
+                    var existingGeom = existingFileProperty?.Location;
                     if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingLeaseProperty, existingFileProperty);
-                        incomingLeaseProperty.Location = existingFileProperty.Location;
+                        incomingLeaseProperty.Location = existingFileProperty?.Location;
                     }
                 }
                 else
