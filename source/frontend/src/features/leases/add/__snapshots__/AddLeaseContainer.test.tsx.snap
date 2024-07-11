@@ -398,7 +398,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c18 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
