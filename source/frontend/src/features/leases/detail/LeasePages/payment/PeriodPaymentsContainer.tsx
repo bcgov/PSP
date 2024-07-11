@@ -137,6 +137,8 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         values = {
           ...values,
           isGstEligible: isReceivableLease ? true : false,
+          isAdditionalRentGstEligible: isReceivableLease ? true : false,
+          isVariableRentGstEligible: isReceivableLease ? true : false,
         };
       }
 

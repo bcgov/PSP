@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
 using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
@@ -22,7 +21,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
         {
-            return _leasePaymentRepository.GetAll(startDate, endDate);
+            return _leasePaymentRepository.GetAllTracking(startDate, endDate);
         }
 
         public bool DeletePayment(long leaseId, PimsLeasePayment payment)
@@ -58,7 +57,7 @@ namespace Pims.Api.Services
         {
             if (!Enum.TryParse(payment.LeasePaymentCategoryTypeCode, out LeasePaymentCategoryTypes leasePaymentCategoryType))
             {
-                throw new InvalidOperationException();
+                payment.LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString();
             }
             decimal? expectedTotal;
             switch (leasePaymentCategoryType)
