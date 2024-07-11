@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -9,5 +10,7 @@ namespace Pims.Api.Services
         PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition);
 
         bool DeleteCompensation(long compensationId);
+
+        IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id);
     }
 }
