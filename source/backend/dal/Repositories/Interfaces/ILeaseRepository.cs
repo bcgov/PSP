@@ -35,6 +35,8 @@ namespace Pims.Dal.Repositories
 
         PimsLease UpdateLeaseConsultations(long leaseId, long? rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations);
 
+        PimsLease UpdateLeaseRenewals(long leaseId, long? rowVersion, ICollection<PimsLeaseRenewal> renewals);
+
         IEnumerable<PimsLeaseChklstItemType> GetAllChecklistItemTypes();
 
         List<PimsLeaseChecklistItem> GetAllChecklistItemsByLeaseId(long leaseId);
