@@ -62,6 +62,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
             setFieldValue('cancellationReason', '');
           } else if (statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED) {
             setFieldValue('terminationReason', '');
+            setFieldValue('terminationDate', '');
           }
           setDisplayModal(false);
         },
@@ -78,7 +79,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   };
 
   return (
-    <Section header="Original Aggreement">
+    <Section header="Original Agreement">
       <SectionField label="Ministry project" labelWidth="3">
         <ProjectSelector field="project" />
       </SectionField>

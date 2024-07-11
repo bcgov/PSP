@@ -585,7 +585,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 <div
                   class="col"
                 >
-                  Original Aggreement
+                  Original Agreement
                 </div>
               </div>
             </h2>

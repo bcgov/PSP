@@ -54,9 +54,9 @@ export const useLeaseRepository = () => {
       async (leaseId: number) => await getLeaseRenewals(leaseId),
       [getLeaseRenewals],
     ),
-    requestName: 'getApiLeaseChecklist',
+    requestName: 'getLeaseRenewalsApi',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retreive lease checklist.'),
+    onError: useAxiosErrorHandler('Failed to retreive lease renewals.'),
   });
 
   const getLeaseChecklistApi = useApiRequestWrapper<

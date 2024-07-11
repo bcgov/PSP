@@ -74,31 +74,6 @@ namespace Pims.Api.Areas.Lease.Controllers
 
             return new JsonResult(_mapper.Map<IEnumerable<LeaseRenewalModel>>(leaseRenewals));
         }
-
-        /// <summary>
-        /// Update the specified tenants on the passed lease.
-        /// </summary>
-        /// <returns></returns>
-        [HttpPut("{leaseId:long}/tenants")]
-        [HasPermission(Permissions.LeaseEdit)]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseTenantModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "lease" })]
-        [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateTenants(long leaseId, IEnumerable<LeaseTenantModel> tenants)
-        {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(LeaseRenewalController),
-                nameof(UpdateTenants),
-                User.GetUsername(),
-                DateTime.Now);
-
-            var tenantEntities = _mapper.Map<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>(tenants);
-            var updatedLease = _leaseService.UpdateTenantsByLeaseId(leaseId, tenantEntities);
-
-            return new JsonResult(_mapper.Map<IEnumerable<LeaseTenantModel>>(updatedLease));
-        }
         #endregion
     }
 }

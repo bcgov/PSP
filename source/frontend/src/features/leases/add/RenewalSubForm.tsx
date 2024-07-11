@@ -7,6 +7,7 @@ import { FastDatePicker, TextArea } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 
 import { FormLeaseRenewal, LeaseFormModel } from '../models';
@@ -44,6 +45,13 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                           label="Commencement"
                           labelWidth="6"
                           required={renewal.isExercised === true}
+                          tooltip={
+                            <TooltipIcon
+                              toolTipId="lease-renewal-commencement-tooltip"
+                              toolTip="The start date defined in the original agreement or renewal, as applicable"
+                              placement="right"
+                            />
+                          }
                         >
                           <FastDatePicker
                             field={`${fieldName}.${index}.commencementDt`}
@@ -56,6 +64,13 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                           label="Expiry"
                           labelWidth="4"
                           required={renewal.isExercised === true}
+                          tooltip={
+                            <TooltipIcon
+                              toolTipId="lease-renewal-expiry-tooltip"
+                              toolTip="The end date specified in the original agreement or renewal, as applicable."
+                              placement="right"
+                            />
+                          }
                         >
                           <FastDatePicker
                             field={`${fieldName}.${index}.expiryDt`}

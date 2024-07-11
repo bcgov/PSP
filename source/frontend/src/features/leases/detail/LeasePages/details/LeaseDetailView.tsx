@@ -48,7 +48,7 @@ export const LeaseDetailView: React.FunctionComponent<
       {lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
         <>
           <SectionField label="Termination" labelWidth="3">
-            {lease.terminationDate}
+            {prettyFormatDate(lease.terminationDate)}
           </SectionField>
           <SectionField label="Termination reason" labelWidth="3">
             {lease.terminationReason}
