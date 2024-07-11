@@ -11,6 +11,7 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_ChecklistItemStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ChecklistItemStatusTypes';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { prettyFormatUTCDate } from '@/utils';
 import { isDefaultState, lastModifiedBy, sortByDisplayOrder } from '@/utils/fileUtils';
@@ -119,9 +120,9 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
 
 function mapStatusToColor(status: string | null | undefined): string | undefined {
   switch (status) {
-    case 'COMPLT':
+    case ApiGen_CodeTypes_ChecklistItemStatusTypes.COMPLT:
       return '#2E8540';
-    case 'NOTAPP':
+    case ApiGen_CodeTypes_ChecklistItemStatusTypes.NOTAPP:
       return '#aaaaaa';
     default:
       return undefined;
@@ -131,13 +132,13 @@ function mapStatusToColor(status: string | null | undefined): string | undefined
 const StatusIcon: React.FC<{ status: string | null | undefined }> = ({ status }) => {
   const color = mapStatusToColor(status);
   switch (status) {
-    case 'INCOMP':
+    case ApiGen_CodeTypes_ChecklistItemStatusTypes.INCOMP:
       return <FiX size="2rem" color={color} />;
 
-    case 'COMPLT':
+    case ApiGen_CodeTypes_ChecklistItemStatusTypes.COMPLT:
       return <FiCheck size="2rem" color={color} />;
 
-    case 'NOTAPP':
+    case ApiGen_CodeTypes_ChecklistItemStatusTypes.NOTAPP:
       return <FiMinus size="2rem" color={color} />;
 
     default:
