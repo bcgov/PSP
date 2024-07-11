@@ -9,6 +9,7 @@ import { defaultApiLease } from '@/models/defaultInitializers';
 import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';
 import DetailDocumentation from './DetailDocumentation';
+import { DetailFeeDetermination } from './DetailFeeDetermination';
 import DetailPeriodInformation from './DetailPeriodInformation';
 import PropertiesInformation from './PropertiesInformation';
 
@@ -25,6 +26,7 @@ export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<u
         <PropertiesInformation disabled={true} />
         <DetailAdministration disabled={true} />
         <DetailConsultation />
+        <DetailFeeDetermination disabled={true} />
         <DetailDocumentation disabled={true} />
       </StyledDetails>
     </Formik>

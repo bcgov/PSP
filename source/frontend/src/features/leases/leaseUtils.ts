@@ -15,3 +15,11 @@ export const getAllNames = (tenants: ApiGen_Concepts_LeaseTenant[]): string[] =>
       .concat(organizations?.map(o => o?.name ?? '')) ?? [];
   return allNames;
 };
+
+export const getSuggestedFee = (isPublicBenefit: boolean, isFinancialGain: boolean): string => {
+  if (isPublicBenefit == null || isFinancialGain == null) return 'Unknown';
+  else if (isPublicBenefit && isFinancialGain) return 'Licence Administration Fee (LAF) *';
+  else if (isPublicBenefit && !isFinancialGain) return 'Fair Market Value (FMV)';
+  else if (!isPublicBenefit && isFinancialGain) return '$1 - Nominal';
+  else return '$1 / Fair Market Value / Licence Administration Fee';
+};

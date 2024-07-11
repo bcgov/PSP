@@ -1,21 +1,32 @@
-import { FormikProps } from 'formik';
+import { FormikProps, getIn } from 'formik';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { Input, TextArea } from '@/components/common/form';
+import { TextArea } from '@/components/common/form';
 import { InlineYesNoSelect } from '@/components/common/form/styles';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 
+import { getSuggestedFee } from '../leaseUtils';
 import { LeaseFormModel } from '../models';
 
 export interface IFeeDeterminationSubFormProps {
   formikProps: FormikProps<LeaseFormModel>;
 }
 
-const FeeDeterminationSubForm: React.FunctionComponent<
-  React.PropsWithChildren<IFeeDeterminationSubFormProps>
-> = ({ formikProps }) => {
-  const { values, setFieldValue } = formikProps;
+const FeeDeterminationSubForm: React.FunctionComponent<IFeeDeterminationSubFormProps> = ({
+  formikProps,
+}) => {
+  const { values } = formikProps;
+  const isPublicBenefit = getIn(values, 'isPublicBenefit');
+  const financialGain = getIn(values, 'isFinancialGain');
+
+  const [fee, setFee] = useState('');
+
+  useEffect(() => {
+    setFee(getSuggestedFee(isPublicBenefit, financialGain));
+  }, [isPublicBenefit, financialGain]);
+
   return (
     <Section header="Fee Determination">
       <SectionField label="Public benefit" labelWidth="2" contentWidth="8">
@@ -32,7 +43,7 @@ const FeeDeterminationSubForm: React.FunctionComponent<
         labelWidth="2"
         contentWidth="8"
       >
-        <Input disabled={true} field="suggestedFee" />
+        {fee}
       </SectionField>
 
       <SectionField

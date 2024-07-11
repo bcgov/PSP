@@ -76,9 +76,9 @@ export class LeaseFormModel {
   tenants: FormTenant[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
   primaryArbitrationCity: string | null;
-  IsPublicBenefit: boolean;
-  IsFinancialGain: boolean;
-  FeeDeterminationNote: string | null = null;
+  isPublicBenefit: boolean;
+  isFinancialGain: boolean;
+  feeDeterminationNote: string | null = null;
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -134,9 +134,9 @@ export class LeaseFormModel {
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
     leaseDetail.primaryArbitrationCity = apiModel.primaryArbitrationCity;
-    leaseDetail.IsPublicBenefit = apiModel.isPublicBenefit;
-    leaseDetail.IsFinancialGain = apiModel.isFinancialGain;
-    leaseDetail.FeeDeterminationNote = apiModel.feeDeterminationNote;
+    leaseDetail.isPublicBenefit = apiModel.isPublicBenefit;
+    leaseDetail.isFinancialGain = apiModel.isFinancialGain;
+    leaseDetail.feeDeterminationNote = apiModel.feeDeterminationNote;
 
     return leaseDetail;
   }
@@ -193,9 +193,9 @@ export class LeaseFormModel {
       cancellationReason: stringToNull(formLease.cancellationReason),
       terminationReason: stringToNull(formLease.terminationReason),
       primaryArbitrationCity: stringToNull(formLease.primaryArbitrationCity),
-      isPublicBenefit: formLease.IsPublicBenefit ?? null,
-      isFinancialGain: formLease.IsFinancialGain ?? null,
-      feeDeterminationNote: stringToNull(formLease.FeeDeterminationNote),
+      isPublicBenefit: formLease.isPublicBenefit ?? null,
+      isFinancialGain: formLease.isFinancialGain ?? null,
+      feeDeterminationNote: stringToNull(formLease.feeDeterminationNote),
       fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,

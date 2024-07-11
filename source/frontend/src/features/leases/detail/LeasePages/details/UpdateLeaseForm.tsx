@@ -5,11 +5,11 @@ import styled from 'styled-components';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
 import AdministrationSubForm from '@/features/leases/add/AdministrationSubForm';
 import ConsultationSubForm from '@/features/leases/add/ConsultationSubForm';
+import FeeDeterminationSubForm from '@/features/leases/add/FeeDeterminationSubForm';
 import LeaseDetailSubForm from '@/features/leases/add/LeaseDetailSubForm';
 import ReferenceSubForm from '@/features/leases/add/ReferenceSubForm';
 import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { LeasePropertySelector } from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
-import FeeDeterminationSubForm from '@/features/leases/add/FeeDeterminationSubForm';
 
 export interface IUpdateLeaseFormProps {
   onSubmit: (lease: LeaseFormModel) => Promise<void>;
