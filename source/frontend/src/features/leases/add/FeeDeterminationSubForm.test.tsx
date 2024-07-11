@@ -17,45 +17,45 @@ const storeState = {
 };
 
 describe('LeaseFeeDeterminationSubForm component', () => {
-    const setup = async (
-        renderOptions: RenderOptions & Partial<IFeeDeterminationSubFormProps> = {},
-      ) => {
-        // render component under test
-        const component = await renderAsync(
-          <Formik onSubmit={noop} initialValues={getDefaultFormLease()}>
-            {formikProps => <FeeDeterminationSubForm formikProps={formikProps} />}
-          </Formik>,
-          {
-            ...renderOptions,
-            claims: [],
-            store: storeState,
-            history,
-          },
-        );
+  const setup = async (
+    renderOptions: RenderOptions & Partial<IFeeDeterminationSubFormProps> = {},
+  ) => {
+    // render component under test
+    const component = await renderAsync(
+      <Formik onSubmit={noop} initialValues={getDefaultFormLease()}>
+        {formikProps => <FeeDeterminationSubForm formikProps={formikProps} />}
+      </Formik>,
+      {
+        ...renderOptions,
+        claims: [],
+        store: storeState,
+        history,
+      },
+    );
 
-        return {
-          component,
-        };
-      };
-      it('renders as expected', async () => {
-        const { component } = await setup({});
-        expect(component.asFragment()).toMatchSnapshot();
-      });
+    return {
+      component,
+    };
+  };
+  it('renders as expected', async () => {
+    const { component } = await setup({});
+    expect(component.asFragment()).toMatchSnapshot();
+  });
 
-      it('displays expected suggested fee', async () => {
-        const {
-          component: { container, getByText },
-        } = await setup({});
+  it('displays expected suggested fee', async () => {
+    const {
+      component: { container, getByText },
+    } = await setup({});
 
-        let suggestedFeeField = await container.querySelector("span[data-testid='suggestedFee']");
+    let suggestedFeeField = await container.querySelector("span[data-testid='suggestedFee']");
 
-        expect(suggestedFeeField).toHaveTextContent('Unknown');
+    expect(suggestedFeeField).toHaveTextContent('Unknown');
 
-        await act(async () => {
-            await fillInput(container, 'isPublicBenefit', 'true', 'select');
-            await fillInput(container, 'isFinancialGain', 'true', 'select');
-        });
+    await act(async () => {
+      await fillInput(container, 'isPublicBenefit', 'true', 'select');
+      await fillInput(container, 'isFinancialGain', 'true', 'select');
+    });
 
-        expect(suggestedFeeField).toHaveTextContent('Licence Administration Fee (LAF) *');
-      });
+    expect(suggestedFeeField).toHaveTextContent('Licence Administration Fee (LAF) *');
+  });
 });
