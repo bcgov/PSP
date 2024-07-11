@@ -30,6 +30,7 @@ namespace Pims.Api.Services
         private readonly IPropertyActivityRepository _propertyActivityRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
+        private readonly ILeaseRepository _leaseRepository;
         private readonly IMapper _mapper;
         private readonly ILookupRepository _lookupRepository;
 
@@ -43,7 +44,8 @@ namespace Pims.Api.Services
             ICoordinateTransformService coordinateService,
             IPropertyLeaseRepository propertyLeaseRepository,
             IMapper mapper,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            ILeaseRepository leaseRepository)
         {
             _user = user;
             _logger = logger;
@@ -55,6 +57,7 @@ namespace Pims.Api.Services
             _propertyLeaseRepository = propertyLeaseRepository;
             _mapper = mapper;
             _lookupRepository = lookupRepository;
+            _leaseRepository = leaseRepository;
         }
 
         public PimsProperty GetById(long id)
@@ -209,7 +212,68 @@ namespace Pims.Api.Services
             propertyManagement.RelatedLeases = leaseCount;
             propertyManagement.LeaseExpiryDate = leaseExpiryDate.HasValue ? DateOnly.FromDateTime(leaseExpiryDate.Value) : null;
 
+            PropertyHasActiveLease(propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate);
+            propertyManagement.HasActiveLease = hasActiveLease;
+            propertyManagement.ActiveLeaseHasExpiryDate = hasActiveExpiryDate;
+
             return propertyManagement;
+        }
+
+        private static void PropertyHasActiveLease(IEnumerable<PimsPropertyLease> propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate)
+        {
+            hasActiveLease = false;
+            hasActiveExpiryDate = false;
+
+            List<PimsLease> activeAgreementsList = propertyLeases.Select(x => x.Lease).ToList();
+            var activeLease = activeAgreementsList.FirstOrDefault(x => x.LeaseStatusTypeCode == LeaseStatusTypes.ACTIVE.ToString());
+
+            // No Active Lease
+            if (activeLease is not null)
+            {
+                // Lease is Active but has termination Date.
+                if (activeLease.TerminationDate.HasValue)
+                {
+                    return;
+                }
+                else
+                {
+                    var latestRemewal = activeLease.PimsLeaseRenewals.Where(x => x.IsExercised.HasValue && x.IsExercised.Value).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
+                    if (latestRemewal is null) // No Renewal - Check only Lease dates.
+                    {
+                        if(activeLease.OrigExpiryDate.HasValue && activeLease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date)
+                        {
+                            hasActiveLease = hasActiveExpiryDate = true;
+                        }
+                        else if(activeLease.OrigExpiryDate.HasValue && activeLease.OrigExpiryDate.Value.Date < DateTime.UtcNow.Date)
+                        {
+                            return;
+                        }
+                        else if (!activeLease.OrigExpiryDate.HasValue)
+                        {
+                            hasActiveLease = true;
+                        }
+                    }
+                    else
+                    {
+                        if(activeLease.OrigExpiryDate.HasValue && latestRemewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = hasActiveExpiryDate = activeLease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date || latestRemewal.ExpiryDt.Value.Date >= DateTime.UtcNow.Date;
+                        }
+                        else if(activeLease.OrigExpiryDate.HasValue && !latestRemewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = true;
+                        }
+                        else if (!activeLease.OrigExpiryDate.HasValue && latestRemewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = latestRemewal.ExpiryDt.Value.Date >= DateTime.UtcNow.Date;
+                        }
+                        else
+                        {
+                            hasActiveLease = true;
+                        }
+                    }
+                }
+            }
         }
 
         public PropertyManagementModel UpdatePropertyManagement(PimsProperty property)
