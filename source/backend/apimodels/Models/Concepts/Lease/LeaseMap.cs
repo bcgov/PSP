@@ -62,7 +62,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Periods, src => src.PimsLeasePeriods)
                 .Map(dest => dest.IsPublicBenefit, src => src.IsPublicBenefit)
                 .Map(dest => dest.IsFinancialGain, src => src.IsFinancialGain)
-                .Map(dest => dest.FeeDeterminationNote, src => src.FeeDeterminationNote);
+                .Map(dest => dest.FeeDeterminationNote, src => src.FeeDeterminationNote)
                 .Map(dest => dest.Renewals, src => src.PimsLeaseRenewals);
 
             config.NewConfig<LeaseModel, PimsLease>()
