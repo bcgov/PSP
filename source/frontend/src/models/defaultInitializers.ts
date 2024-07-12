@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { prettyFormatDate } from '@/utils';
+import { isValidId, prettyFormatDate } from '@/utils';
 
 import { ApiGen_Base_BaseAudit } from './api/generated/ApiGen_Base_BaseAudit';
 import { ApiGen_Concepts_AcquisitionFile } from './api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -17,7 +17,7 @@ export const getEmptyBaseAudit = (rowVersion?: number | null): ApiGen_Base_BaseA
   appCreateUserid: null,
   appLastUpdateUserGuid: null,
   appCreateUserGuid: null,
-  rowVersion: rowVersion ?? null,
+  rowVersion: isValidId(rowVersion) ? rowVersion : null,
 });
 
 /**
