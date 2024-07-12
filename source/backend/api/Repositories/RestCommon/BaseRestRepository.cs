@@ -154,6 +154,7 @@ namespace Pims.Api.Repositories.Rest
                 switch (response.StatusCode)
                 {
                     case HttpStatusCode.OK:
+                    case HttpStatusCode.Accepted:
                         _logger.LogTrace("Response payload: {payload}", payload);
                         result.Status = ExternalResponseStatus.Success;
                         break;
