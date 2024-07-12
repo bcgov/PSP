@@ -142,7 +142,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c14 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -248,7 +248,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c16 {
+.c17 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -350,12 +350,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   white-space: nowrap;
 }
 
-.c12 {
+.c13 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c15 {
+.c11 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c16 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -374,7 +379,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   background-color: undefined;
 }
 
-.c13 {
+.c14 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -388,7 +393,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c11 {
+.c12 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -583,11 +588,11 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="pr-0 text-left col-3"
                 >
-                  <strong>
-                    <label>
-                      File #:
-                    </label>
-                  </strong>
+                  <label
+                    class="c11"
+                  >
+                    File #:
+                  </label>
                 </div>
                 <div
                   class="pl-1 text-left col-9"
@@ -601,11 +606,11 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="pr-0 text-left col-3"
                 >
-                  <strong>
-                    <label>
-                      File name:
-                    </label>
-                  </strong>
+                  <label
+                    class="c11"
+                  >
+                    File name:
+                  </label>
                 </div>
                 <div
                   class="pl-1 text-left col-9"
@@ -619,11 +624,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="pr-0 text-left col-3"
                 >
-                  <strong>
-                    <label>
+                  <label
+                    class="c11"
                       MOTI region:
-                    </label>
-                  </strong>
+                  </label>
                 </div>
                 <div
                   class="pl-1 text-left col-9"
@@ -635,11 +639,11 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="pr-0 text-left col-3"
                 >
-                  <strong>
-                    <label>
-                      Ministry district:
-                    </label>
-                  </strong>
+                  <label
+                    class="c11"
+                  >
+                    Ministry district:
+                  </label>
                 </div>
                 <div
                   class="pl-1 text-left col-9"
@@ -651,11 +655,11 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="pr-0 text-left col-3"
                 >
-                  <strong>
-                    <label>
-                      Historical File #:
-                    </label>
-                  </strong>
+                  <label
+                    class="c11"
+                  >
+                    Historical file #:
+                  </label>
                 </div>
                 <div
                   class="pl-1 text-left col-9"
@@ -668,7 +672,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
               class="col"
             >
               <div
-                class="c11"
+                class="c12"
               >
                 <div
                   class="no-gutters row"
@@ -677,7 +681,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     class="text-right col"
                   >
                     <span
-                      class="c12"
+                      class="c13"
                     >
                       <strong>
                         Created: 
@@ -704,7 +708,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     class="text-right col"
                   >
                     <span
-                      class="c12"
+                      class="c13"
                     >
                       <strong>
                         Updated: 
@@ -726,42 +730,46 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c13 no-gutters justify-content-end align-items-end row"
+                  class="c14"
                 >
                   <div
-                    class="col"
-                  />
-                  <div
-                    class="align-self-end d-flex col-auto"
+                    class="no-gutters justify-content-end align-items-end row"
                   >
-                    <span
-                      class="c12"
-                    >
-                      <b>
-                        File:
-                      </b>
-                    </span>
                     <div
-                      class="c14 c15"
+                      class="col"
+                    />
+                    <div
+                      class="align-self-end d-flex col-auto"
                     >
-                      <svg
-                        fill="currentColor"
-                        height="16"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <span
+                        class="c13"
                       >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
-                        />
-                      </svg>
-                      ACTIVE
+                        <b>
+                          File:
+                        </b>
+                      </span>
+                      <div
+                        class="c15 c16"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
+                          />
+                        </svg>
+                        ACTIVE
+                      </div>
                     </div>
                   </div>
                 </div>

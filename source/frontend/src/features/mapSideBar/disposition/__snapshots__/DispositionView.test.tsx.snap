@@ -163,7 +163,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   width: 100%;
 }
 
-.c14 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -236,7 +236,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c16 {
+.c17 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -360,12 +360,17 @@ exports[`DispositionView component > renders as expected 1`] = `
   display: block;
 }
 
-.c12 {
+.c13 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c15 {
+.c11 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c16 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -384,7 +389,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   background-color: undefined;
 }
 
-.c13 {
+.c14 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
@@ -398,7 +403,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c11 {
+.c12 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -591,11 +596,11 @@ exports[`DispositionView component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-3"
               >
-                <strong>
-                  <label>
-                    File:
-                  </label>
-                </strong>
+                <label
+                  class="c11"
+                >
+                  File:
+                </label>
               </div>
               <div
                 class="pl-1 text-left col-9"
@@ -609,11 +614,11 @@ exports[`DispositionView component > renders as expected 1`] = `
               <div
                 class="pr-0 text-left col-3"
               >
-                <strong>
-                  <label>
-                    Historical File #:
-                  </label>
-                </strong>
+                <label
+                  class="c11"
+                >
+                  Historical file #:
+                </label>
               </div>
               <div
                 class="pl-1 text-left col-9"
@@ -626,7 +631,7 @@ exports[`DispositionView component > renders as expected 1`] = `
             class="col-5"
           >
             <div
-              class="c11"
+              class="c12"
             >
               <div
                 class="no-gutters row"
@@ -635,7 +640,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                   class="text-right col"
                 >
                   <span
-                    class="c12"
+                    class="c13"
                   >
                     <strong>
                       Created: 
@@ -660,7 +665,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                   class="text-right col"
                 >
                   <span
-                    class="c12"
+                    class="c13"
                   >
                     <strong>
                       Updated: 
@@ -679,42 +684,46 @@ exports[`DispositionView component > renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="c13 no-gutters justify-content-end align-items-end row"
+                class="c14"
               >
                 <div
-                  class="col"
-                />
-                <div
-                  class="align-self-end d-flex col-auto"
+                  class="no-gutters justify-content-end align-items-end row"
                 >
-                  <span
-                    class="c12"
-                  >
-                    <b>
-                      File:
-                    </b>
-                  </span>
                   <div
-                    class="c14 c15"
+                    class="col"
+                  />
+                  <div
+                    class="align-self-end d-flex col-auto"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="16"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="16"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <span
+                      class="c13"
                     >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                      />
-                    </svg>
-                    DRAFT
+                      <b>
+                        File:
+                      </b>
+                    </span>
+                    <div
+                      class="c15 c16"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="16"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                        />
+                      </svg>
+                      DRAFT
+                    </div>
                   </div>
                 </div>
               </div>
