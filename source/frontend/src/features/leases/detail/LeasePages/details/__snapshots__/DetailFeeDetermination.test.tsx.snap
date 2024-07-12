@@ -202,7 +202,11 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
         <div
           class="c4 text-left col"
         >
-          $1 - Nominal
+          <span
+            data-testid="suggestedFee"
+          >
+            $1 - Nominal
+          </span>
         </div>
       </div>
       <div
@@ -452,7 +456,11 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
         <div
           class="c4 text-left col"
         >
-          Unknown
+          <span
+            data-testid="suggestedFee"
+          >
+            Unknown
+          </span>
         </div>
       </div>
       <div

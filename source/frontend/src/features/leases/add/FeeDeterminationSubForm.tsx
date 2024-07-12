@@ -1,6 +1,5 @@
 import { FormikProps, getIn } from 'formik';
 import { useEffect, useState } from 'react';
-import styled from 'styled-components';
 
 import { TextArea } from '@/components/common/form';
 import { InlineYesNoSelect } from '@/components/common/form/styles';
@@ -39,7 +38,7 @@ const FeeDeterminationSubForm: React.FunctionComponent<IFeeDeterminationSubFormP
 
       <SectionField
         label="Sugested fee"
-        tooltip="If the financial gain far outweighs the public benefit, Fair Market Value should be considered over Licence Administration Fee."
+        tooltip="Licence Administration Fee (LAF) *: If the financial gain far outweighs the public benefit, Fair Market Value should be considered over Licence Administration Fee."
         labelWidth="2"
         contentWidth="8"
       >
@@ -52,18 +51,10 @@ const FeeDeterminationSubForm: React.FunctionComponent<IFeeDeterminationSubFormP
         labelWidth="2"
         contentWidth="8"
       >
-        <MediumTextArea field="feeDeterminationNote" />
+        <TextArea field="feeDeterminationNote" />
       </SectionField>
     </Section>
   );
 };
 
 export default FeeDeterminationSubForm;
-
-const MediumTextArea = styled(TextArea)`
-  textarea.form-control {
-    min-width: 100%;
-    height: 7rem;
-    resize: none;
-  }
-`;

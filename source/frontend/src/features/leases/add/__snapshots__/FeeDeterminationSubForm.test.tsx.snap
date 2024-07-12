@@ -50,12 +50,6 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
   white-space: nowrap;
 }
 
-.c5 textarea.form-control {
-  min-width: 100%;
-  height: 7rem;
-  resize: none;
-}
-
 <div
     class="c0 form-section"
   >
@@ -241,7 +235,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
           class="c3 text-left col-8"
         >
           <div
-            class="c5 textarea input form-group"
+            class="textarea input form-group"
           >
             <textarea
               class="form-control"

@@ -40,17 +40,6 @@ describe('DetailFeeDetermination component', () => {
     const { component } = setup({
       lease: {
         ...getEmptyLease(),
-        fileProperties: [
-          {
-            ...getEmptyPropertyLease(),
-            property: {
-              ...mockApiProperty,
-              areaUnit: toTypeCode('test'),
-              landArea: 123,
-            },
-            fileId: 1,
-          },
-        ],
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -60,59 +49,18 @@ describe('DetailFeeDetermination component', () => {
     const { component } = setup({
       lease: {
         ...getEmptyLease(),
-        fileProperties: [
-          {
-            ...getEmptyPropertyLease(),
-            property: {
-              ...mockApiProperty,
-              areaUnit: toTypeCode('test'),
-              landArea: 123,
-            },
-          },
-        ],
-        amount: 1,
-        description: 'a test description',
-        programName: 'A program',
+        startDate: '2020-01-01',
         lFileNo: '222',
-        tfaFileNumber: '333',
-        psFileNo: '444',
         motiName: 'test moti name',
-        note: 'a test note',
-        expiryDate: '2022-01-01',
         isPublicBenefit: true,
         isFinancialGain: false,
         feeDeterminationNote: 'fee determination test note',
-        startDate: '2020-01-01',
       },
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
 
-  it('renders the Public Benefit exists field', () => {
-    const {
-      component: { getByDisplayValue },
-    } = setup({
-      lease: {
-        ...getEmptyLease(),
-        isPublicBenefit: true,
-      },
-    });
-    expect(getByDisplayValue('Yes')).toBeVisible();
-  });
-
-  it('renders Financial Gain exists field', () => {
-    const {
-      component: { getByDisplayValue },
-    } = setup({
-      lease: {
-        ...getEmptyLease(),
-        isFinancialGain: true,
-      },
-    });
-    expect(getByDisplayValue('Yes')).toBeVisible();
-  });
-
-  it('renders the suggested Fee field', () => {
+  it('renders the suggested Fee field with nominal calculation', () => {
     const {
       component: { getByText },
     } = setup({
@@ -125,15 +73,57 @@ describe('DetailFeeDetermination component', () => {
     expect(getByText('$1 - Nominal')).toBeVisible();
   });
 
-  it('renders the Fee Notes field', () => {
+  it('renders the suggested Fee field with LAF calculation', () => {
     const {
       component: { getByText },
     } = setup({
       lease: {
         ...getEmptyLease(),
-        feeDeterminationNote: 'fee determination test note',
+        isPublicBenefit: true,
+        isFinancialGain: true,
       },
     });
-    expect(getByText('fee determination test note')).toBeVisible();
+    expect(getByText('Licence Administration Fee (LAF) *')).toBeVisible();
+  });
+
+  it('renders the suggested Fee field with FMV calculation', () => {
+    const {
+      component: { getByText },
+    } = setup({
+      lease: {
+        ...getEmptyLease(),
+        isPublicBenefit: false,
+        isFinancialGain: true,
+      },
+    });
+    expect(getByText('Fair Market Value (FMV) - (Licence Administration Fee Minimum)')).toBeVisible();
+  });
+
+  it('renders the suggested Fee field with non-defined calculation', () => {
+    const {
+      component: { getByText },
+    } = setup({
+      lease: {
+        ...getEmptyLease(),
+        isPublicBenefit: false,
+        isFinancialGain: false,
+      },
+    });
+    expect(getByText('$1 / Fair Market Value / Licence Administration Fee')).toBeVisible();
+  });
+
+  it('renders the suggested Fee field with unknown calculation', async () => {
+    const {
+      component: { container },
+    } = setup({
+      lease: {
+        ...getEmptyLease(),
+        isPublicBenefit: null,
+        isFinancialGain: null,
+      },
+    });
+    let suggestedFeeField = await container.querySelector("span[data-testid='suggestedFee']");
+
+    expect(suggestedFeeField).toHaveTextContent('Unknown');
   });
 });

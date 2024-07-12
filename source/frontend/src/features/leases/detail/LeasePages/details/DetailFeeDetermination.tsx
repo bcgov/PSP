@@ -40,10 +40,10 @@ export const DetailFeeDetermination: React.FunctionComponent<
 
       <SectionField
         label="Suggested fee"
-        tooltip="If the financial gain far outweighs the public benefit, Fair Market Value should be considered over Licence Administration Fee."
+        tooltip="Licence Administration Fee (LAF) *: If the financial gain far outweighs the public benefit, Fair Market Value should be considered over Licence Administration Fee."
         labelWidth="3"
       >
-        {getSuggestedFee(isPublicBenefit, isFinancialGain)}
+        <span data-testid="suggestedFee">{getSuggestedFee(isPublicBenefit, isFinancialGain)}</span>
       </SectionField>
 
       <SectionField
