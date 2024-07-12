@@ -165,6 +165,37 @@ namespace Pims.Api.Test.Controllers.Reports
             result.InspectionNotes.Should().Be("inspection note");
         }
 
+        public static IEnumerable<object[]> Financial_Public_Values = new List<object[]>()
+        {
+            new object [] { null, "Unknown" },
+            new object [] { true, "Yes" },
+            new object [] { false, "No" },
+        };
+
+        [Theory]
+        [MemberData(nameof(Financial_Public_Values))]
+        public void ExportLeases_Lease_Mapping_Financial_Public(bool? actualValue, string expectedValue)
+        {
+            // Arrange
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.IsPublicBenefit = actualValue;
+            lease.IsFinancialGain = actualValue;
+            var leases = new[] { lease };
+
+            var page = new Paged<Entity.PimsLease>(leases);
+            this._leaseService.Setup(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false)).Returns(page);
+
+            // Act
+            var result = this._controller.GetCrossJoinLeases(new LeaseFilterModel()).FirstOrDefault();
+
+            // Assert
+            this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
+            result.PublicBenefit.Should().Be(expectedValue);
+            result.FinancialGain.Should().Be(expectedValue);
+        }
+
         [Fact]
         public void ExportLeases_LeasePeriod_Mapping()
         {

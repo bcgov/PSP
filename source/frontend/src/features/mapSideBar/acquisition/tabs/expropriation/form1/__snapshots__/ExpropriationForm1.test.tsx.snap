@@ -37,6 +37,12 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -549,6 +555,12 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c1.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c1.btn:hover {

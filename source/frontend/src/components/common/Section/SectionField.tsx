@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import TooltipIcon from '@/components/common/TooltipIcon';
+import { renderTooltip } from '@/utils/formUtils';
 
 interface ISectionFieldProps {
   label: React.ReactNode | string | null;
@@ -42,17 +42,6 @@ export const SectionField: React.FunctionComponent<
     </Row>
   );
 };
-
-function renderTooltip(tooltip?: React.ReactNode): React.ReactNode {
-  if (tooltip === undefined) {
-    return null;
-  }
-  if (typeof tooltip === 'string' || typeof tooltip === 'number') {
-    return <TooltipIcon toolTipId="section-field-tooltip" toolTip={tooltip} placement="auto" />;
-  }
-  // we got a custom tooltip - render that
-  return tooltip;
-}
 
 export const ContentCol = styled(Col)`
   &.required::before {

@@ -5,13 +5,21 @@ import { HistoricalNumberFieldView } from './HistoricalNumberFieldView';
 
 export interface IHistoricalNumbersViewProps {
   historicalNumbers: ApiGen_Concepts_HistoricalFileNumber[];
+  labelWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
+  contentWidth?: '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9' | '10' | '11' | '12' | 'auto';
 }
 
 export const HistoricalNumberSectionView: React.FC<IHistoricalNumbersViewProps> = ({
   historicalNumbers,
+  labelWidth,
+  contentWidth,
 }) => {
   return (
-    <HeaderField label="Historical File #:" labelWidth="3" contentWidth="9">
+    <HeaderField
+      label="Historical file #:"
+      labelWidth={labelWidth ?? '3'}
+      contentWidth={contentWidth ?? '9'}
+    >
       <HistoricalNumberFieldView historicalNumbers={historicalNumbers} />
     </HeaderField>
   );

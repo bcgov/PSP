@@ -32,6 +32,12 @@ exports[`SideNavbar display and logic > renders 1`] = `
   height: 3.8rem;
 }
 
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -301,7 +307,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
     >
       <div
         class="c2 nav-item"
-        data-testid="nav-tooltip-home"
+        data-testid="nav-tooltip-mapview"
       >
         <a
           class="c3 nav-link"

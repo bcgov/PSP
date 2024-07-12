@@ -27,6 +27,16 @@ namespace Pims.Api.Models.Concepts.Lease
         public decimal? GstAmount { get; set; }
 
         /// <summary>
+        /// get/set - The stored calculated additional gst amount based on the total payment and the system gst constant.
+        /// </summary>
+        public decimal? AdditionalRentGstAmount { get; set; }
+
+        /// <summary>
+        /// get/set - The stored calculated variable gst amount based on the total payment and the system gst constant.
+        /// </summary>
+        public decimal? VariableRentGstAmount { get; set; }
+
+        /// <summary>
         /// get/set - The expected payment amount of the period, less GST.
         /// </summary>
         public decimal? PaymentAmount { get; set; }
@@ -85,6 +95,36 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - True if this period has flexible payments. False for base rent payments only.
         /// </summary>
         public bool IsVariable { get; set; }
+
+        /// <summary>
+        /// get/set - Additional rent payment amount
+        /// </summary>
+        public decimal? AdditionalRentPaymentAmount { get; set; }
+
+        /// <summary>
+        /// get/set - Is the additional rent subject to GST.
+        /// </summary>
+        public bool? IsAdditionalRentGstEligible { get; set; }
+
+        /// <summary>
+        /// get/set - Frequency type code for additional rent.
+        /// </summary>
+        public CodeTypeModel<string> AdditionalRentFreqTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - Variable rent payment amount
+        /// </summary>
+        public decimal? VariableRentPaymentAmount { get; set; }
+
+        /// <summary>
+        /// get/set - Is the variable rent subject to GST.
+        /// </summary>
+        public bool? IsVariableRentGstEligible { get; set; }
+
+        /// <summary>
+        /// get/set - Frequency type code for variable rent.
+        /// </summary>
+        public CodeTypeModel<string> VariableRentFreqTypeCode { get; set; }
 
         /// <summary>
         /// get/set - An (optional) list of payments associated to this period. Should only be set if the period is excercised.

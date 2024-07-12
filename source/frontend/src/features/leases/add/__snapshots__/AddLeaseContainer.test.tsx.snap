@@ -37,6 +37,12 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -141,11 +147,11 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c14 button.close {
+.c15 button.close {
   font-size: 2.4rem;
 }
 
-.c15 .react-datepicker__calendar-icon {
+.c16 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -154,19 +160,19 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c15 .react-datepicker__view-calendar-icon input {
+.c16 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c15 .react-datepicker-wrapper {
+.c16 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c16.c16.form-control.is-valid {
+.c17.c17.form-control.is-valid {
   background-image: none;
 }
 
-.c16.c16.form-control.is-invalid {
+.c17.c17.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -335,7 +341,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c17 {
+.c12 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
@@ -353,14 +359,14 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c13.required::before {
+.c14.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c12 {
+.c13 {
   font-weight: bold;
   white-space: nowrap;
 }
@@ -570,6 +576,19 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
           <div
             class="c11 form-section"
           >
+            <h2
+              class="c12"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Original Agreement
+                </div>
+              </div>
+            </h2>
             <div
               class="collapse show"
             >
@@ -577,19 +596,19 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-2"
+                  class="pr-0 text-left col-3"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Ministry project:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col"
+                  class="c14 text-left col"
                 >
                   <div
-                    class="c14 form-group"
+                    class="c15 form-group"
                     data-testid="typeahead-project"
                   >
                     <div
@@ -649,10 +668,10 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-2"
+                  class="pr-0 text-left col-3"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Status:
                     <span>
@@ -680,7 +699,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c13 required text-left col-4"
+                  class="c14 required text-left col-4"
                 >
                   <div
                     class="required form-group"
@@ -753,16 +772,16 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-2"
+                  class="pr-0 text-left col-3"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Account type:
                   </label>
                 </div>
                 <div
-                  class="c13 required text-left col-5"
+                  class="c14 required text-left col-5"
                 >
                   <div
                     class="form-group"
@@ -807,19 +826,41 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                     class="pb-2 row"
                   >
                     <div
-                      class="pr-0 text-left col-4"
+                      class="pr-0 text-left col-6"
                     >
                       <label
-                        class="c12"
+                        class="c13"
                       >
-                        Start date:
+                        Commencement:
+                        <span>
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon-lease-commencement-tooltip"
+                            id="lease-commencement-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c14 text-left col"
                     >
                       <div
-                        class="c15 form-group"
+                        class="c16 form-group"
                       >
                         <div
                           class="react-datepicker-wrapper d-block"
@@ -838,7 +879,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             </svg>
                             <input
                               autocomplete="off"
-                              class="c16 form-control date-picker"
+                              class="c17 form-control date-picker"
                               id="datepicker-startDate"
                               name="startDate"
                               placeholder="MMM DD, YYYY"
@@ -861,16 +902,38 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c13"
                       >
-                        Expiry date:
+                        Expiry:
+                        <span>
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon-lease-expiry-tooltip"
+                            id="lease-expiry-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c14 text-left col"
                     >
                       <div
-                        class="c15 form-group"
+                        class="c16 form-group"
                       >
                         <div
                           class="react-datepicker-wrapper d-block"
@@ -889,7 +952,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             </svg>
                             <input
                               autocomplete="off"
-                              class="c16 form-control date-picker"
+                              class="c17 form-control date-picker"
                               id="datepicker-expiryDate"
                               name="expiryDate"
                               placeholder="MMM DD, YYYY"
@@ -909,7 +972,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
             class="c11 form-section"
           >
             <h2
-              class="c17"
+              class="c12"
             >
               <div
                 class="no-gutters row"
@@ -1043,13 +1106,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                     class="pr-0 text-left col-4"
                                   >
                                     <label
-                                      class="c12"
+                                      class="c13"
                                     >
                                       PID:
                                     </label>
                                   </div>
                                   <div
-                                    class="c13 text-left col"
+                                    class="c14 text-left col"
                                   />
                                 </div>
                                 <div
@@ -1059,13 +1122,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                     class="pr-0 text-left col-4"
                                   >
                                     <label
-                                      class="c12"
+                                      class="c13"
                                     >
                                       Plan #:
                                     </label>
                                   </div>
                                   <div
-                                    class="c13 text-left col"
+                                    class="c14 text-left col"
                                   />
                                 </div>
                                 <div
@@ -1075,13 +1138,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                     class="pr-0 text-left col-4"
                                   >
                                     <label
-                                      class="c12"
+                                      class="c13"
                                     >
                                       Address:
                                     </label>
                                   </div>
                                   <div
-                                    class="c13 text-left col"
+                                    class="c14 text-left col"
                                   />
                                 </div>
                                 <div
@@ -1091,13 +1154,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                     class="pr-0 text-left col-4"
                                   >
                                     <label
-                                      class="c12"
+                                      class="c13"
                                     >
                                       Region:
                                     </label>
                                   </div>
                                   <div
-                                    class="c13 text-left col"
+                                    class="c14 text-left col"
                                   />
                                 </div>
                                 <div
@@ -1107,13 +1170,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                                     class="pr-0 text-left col-4"
                                   >
                                     <label
-                                      class="c12"
+                                      class="c13"
                                     >
                                       District:
                                     </label>
                                   </div>
                                   <div
-                                    class="c13 text-left col"
+                                    class="c14 text-left col"
                                   />
                                 </div>
                                 <div
@@ -1433,7 +1496,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 class="c11 form-section"
               >
                 <h2
-                  class="c17"
+                  class="c12"
                 >
                   <div
                     class="no-gutters row"
@@ -1493,7 +1556,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
             class="c11 form-section"
           >
             <h2
-              class="c17"
+              class="c12"
             >
               <div
                 class="no-gutters row"
@@ -1515,13 +1578,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-2"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     MOTI contact:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-8"
+                  class="c14 text-left col-8"
                 >
                   <div
                     class="c30 input form-group"
@@ -1543,13 +1606,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-2"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     MOTI region:
                   </label>
                 </div>
                 <div
-                  class="c13 required text-left col-4"
+                  class="c14 required text-left col-4"
                 >
                   <div
                     class="required d-flex form-group"
@@ -1596,13 +1659,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c13"
                       >
                         Program:
                       </label>
                     </div>
                     <div
-                      class="c13 required text-left col"
+                      class="c14 required text-left col"
                     >
                       <div
                         class="required form-group"
@@ -1717,13 +1780,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c13"
                       >
                         Type:
                       </label>
                     </div>
                     <div
-                      class="c13 required text-left col"
+                      class="c14 required text-left col"
                     >
                       <div
                         class="required form-group"
@@ -1852,13 +1915,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c13"
                       >
                         Purpose:
                       </label>
                     </div>
                     <div
-                      class="c13 required text-left col"
+                      class="c14 required text-left col"
                     >
                       <div
                         class="required form-group"
@@ -2163,7 +2226,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-2"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Initiator:
                     <span>
@@ -2191,7 +2254,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-4"
+                  class="c14 text-left col-4"
                 >
                   <div
                     class="form-group"
@@ -2244,7 +2307,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c13"
                       >
                         Responsibility:
                         <span>
@@ -2272,7 +2335,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c14 text-left col"
                     >
                       <div
                         class="form-group"
@@ -2323,16 +2386,16 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c13"
                       >
                         Effective date:
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c14 text-left col"
                     >
                       <div
-                        class="c15 form-group"
+                        class="c16 form-group"
                       >
                         <div
                           class="react-datepicker-wrapper d-block"
@@ -2351,7 +2414,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                             </svg>
                             <input
                               autocomplete="off"
-                              class="c16 form-control date-picker"
+                              class="c17 form-control date-picker"
                               id="datepicker-responsibilityEffectiveDate"
                               name="responsibilityEffectiveDate"
                               placeholder="MMM DD, YYYY"
@@ -2372,13 +2435,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Intended use:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col"
+                  class="c14 text-left col"
                 >
                   <div
                     class="c31 textarea input form-group"
@@ -2392,13 +2455,40 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c13"
+                  >
+                    Primary arbitration city:
+                  </label>
+                </div>
+                <div
+                  class="c14 text-left col"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-primaryArbitrationCity"
+                      name="primaryArbitrationCity"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div
             class="c11 form-section"
           >
             <h2
-              class="c17"
+              class="c12"
             >
               <div
                 class="no-gutters row"
@@ -2445,13 +2535,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     First nation:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-8"
+                  class="c14 text-left col-8"
                 >
                   <div
                     class="row"
@@ -2512,13 +2602,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Strategic Real Estate (SRE):
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-8"
+                  class="c14 text-left col-8"
                 >
                   <div
                     class="row"
@@ -2579,13 +2669,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Regional planning:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-8"
+                  class="c14 text-left col-8"
                 >
                   <div
                     class="row"
@@ -2646,13 +2736,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Regional property services:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-8"
+                  class="c14 text-left col-8"
                 >
                   <div
                     class="row"
@@ -2713,13 +2803,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     District:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-8"
+                  class="c14 text-left col-8"
                 >
                   <div
                     class="row"
@@ -2780,13 +2870,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Headquarter (HQ):
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-8"
+                  class="c14 text-left col-8"
                 >
                   <div
                     class="row"
@@ -2847,13 +2937,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Other:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-8"
+                  class="c14 text-left col-8"
                 >
                   <div
                     class="row"
@@ -2926,7 +3016,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
             class="c11 form-section"
           >
             <h2
-              class="c17"
+              class="c12"
             >
               <div
                 class="no-gutters row"
@@ -2948,13 +3038,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Physical lease/licence exists:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-5"
+                  class="c14 text-left col-5"
                 >
                   <div
                     class="c33 form-group"
@@ -2990,13 +3080,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Digital lease/licence exists:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col-5"
+                  class="c14 text-left col-5"
                 >
                   <div
                     class="c33 form-group"
@@ -3032,7 +3122,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-4"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Document location:
                     <span>
@@ -3060,7 +3150,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col"
+                  class="c14 text-left col"
                 >
                   <div
                     class="c31 textarea input form-group"
@@ -3081,13 +3171,13 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   class="pr-0 text-left col-2"
                 >
                   <label
-                    class="c12"
+                    class="c13"
                   >
                     Lease notes:
                   </label>
                 </div>
                 <div
-                  class="c13 text-left col"
+                  class="c14 text-left col"
                 >
                   <div
                     class="c31 textarea input form-group"

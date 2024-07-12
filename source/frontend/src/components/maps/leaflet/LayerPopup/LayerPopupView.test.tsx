@@ -86,6 +86,7 @@ describe('LayerPopupView component', () => {
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },
+          fileLocation: null,
           parcelFeature: null,
           regionFeature: null,
           districtFeature: null,
@@ -112,6 +113,7 @@ describe('LayerPopupView component', () => {
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },
+          fileLocation: null,
           pimsFeature: null,
           regionFeature: null,
           districtFeature: null,
@@ -139,6 +141,7 @@ describe('LayerPopupView component', () => {
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },
+          fileLocation: null,
           pimsFeature: {
             type: 'Feature',
             properties: null as any,
@@ -184,12 +187,13 @@ describe('LayerPopupView component', () => {
       expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/new');
     });
 
-    it('Hides subdivision and consolidation if not in the pims system', async () => {
+    it('hides subdivision and consolidation if not in the pims system', async () => {
       const { getByTestId, getByText, queryByText } = setup({
         layerPopup: { data: {} } as any,
         featureDataset: {
           pimsFeature: null,
           location: { lat: 0, lng: 0 },
+          fileLocation: null,
           parcelFeature: null,
           regionFeature: null,
           districtFeature: null,
@@ -206,7 +210,7 @@ describe('LayerPopupView component', () => {
       expect(consolidationLink).not.toBeInTheDocument();
     });
 
-    it('handles create create subdivision action', async () => {
+    it('handles create subdivision action', async () => {
       const propertyId = 1;
 
       const { getByTestId, getByText } = setup({
@@ -218,6 +222,7 @@ describe('LayerPopupView component', () => {
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },
+          fileLocation: null,
           parcelFeature: null,
           regionFeature: null,
           districtFeature: null,
@@ -245,6 +250,7 @@ describe('LayerPopupView component', () => {
             geometry: { type: 'Point', coordinates: [] },
           },
           location: { lat: 0, lng: 0 },
+          fileLocation: null,
           parcelFeature: null,
           regionFeature: null,
           districtFeature: null,

@@ -4,7 +4,7 @@ import {
   mockApiAcquisitionFileTeamOrganization,
   mockApiAcquisitionFileTeamPerson,
 } from '@/mocks/acquisitionFiles.mock';
-import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import { getMockApiDefaultCompensation, getMockCompensationPropertiesReq } from '@/mocks/compensations.mock';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
 import { getEmptyOrganization, getMockOrganization } from '@/mocks/organization.mock';
@@ -19,8 +19,27 @@ import {
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
 
 vi.mock('@/hooks/pims-api/useApiContacts');
+vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
+
 const getPersonConceptFn = vi.fn();
 const getOrganizationConceptFn = vi.fn();
+const setEditMode = vi.fn();
+
+const mockGetCompReqPropertiesApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
+
+vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
+  useCompensationRequisitionRepository: () => {
+    return {
+      getCompensationRequisitionProperties: mockGetCompReqPropertiesApi,
+    };
+  },
+}));
+
 vi.mocked(useApiContacts).mockImplementation(
   () =>
     ({
@@ -30,13 +49,10 @@ vi.mocked(useApiContacts).mockImplementation(
 );
 
 let viewProps: CompensationRequisitionDetailViewProps;
-
 const CompensationViewComponent = (props: CompensationRequisitionDetailViewProps) => {
   viewProps = props;
   return <></>;
 };
-
-const setEditMode = vi.fn();
 
 describe('Compensation Detail View container', () => {
   const setup = (
@@ -71,9 +87,12 @@ describe('Compensation Detail View container', () => {
         surname: 'last',
       } as ApiGen_Concepts_Person,
     });
+
     getOrganizationConceptFn.mockResolvedValue({
       data: getMockOrganization(),
     });
+
+    mockGetCompReqPropertiesApi.execute.mockResolvedValue(getMockCompensationPropertiesReq());
   });
 
   afterEach(() => {
@@ -99,6 +118,23 @@ describe('Compensation Detail View container', () => {
       firstName: 'first',
       surname: 'last',
     } as ApiGen_Concepts_Person);
+  });
+
+  it('makes request to get the properties selected for the compensation requisition', async () => {
+    const teamPerson = mockApiAcquisitionFileTeamPerson();
+    setup({
+      props: {
+        compensation: {
+          ...getMockApiDefaultCompensation(),
+          acquisitionFileTeamId: teamPerson.id ?? 1,
+          acquisitionFileTeam: teamPerson,
+        },
+      },
+    });
+
+    await waitForEffects();
+
+    expect(mockGetCompReqPropertiesApi.execute).toHaveBeenCalled();
   });
 
   it('makes request to get organization concept for acquisition team payee', async () => {

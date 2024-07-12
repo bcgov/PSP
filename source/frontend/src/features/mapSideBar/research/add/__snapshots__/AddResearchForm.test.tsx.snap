@@ -37,6 +37,12 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c9.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;

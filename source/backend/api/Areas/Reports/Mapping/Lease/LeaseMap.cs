@@ -46,6 +46,8 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
             dest.Pid = src.property?.Property?.Pid;
             dest.Pin = src.property?.Property?.Pin;
             dest.TenantName = src.tenant?.GetTenantName();
+            dest.FinancialGain = src.lease.IsFinancialGain.BoolToYesNoUnknown();
+            dest.PublicBenefit = src.lease.IsPublicBenefit.BoolToYesNoUnknown();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.Linq;
 using Mapster;
+using Pims.Api.Services;
 using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -29,12 +30,12 @@ namespace Pims.Api.Models.Report.Lease
                 .Map(dest => dest.PaymentDueString, src => src.LeasePeriod.PaymentDueDate)
                 .Map(dest => dest.ExpectedPayment, src => src.LeasePeriod.PaymentAmount)
                 .Map(dest => dest.PaymentTotal, src => src.PaymentAmountTotal)
-                .Map(dest => dest.PaymentStatus, src => src.LeasePaymentStatusTypeCodeNavigation != null ? src.LeasePaymentStatusTypeCodeNavigation.Description : string.Empty)
+                .Map(dest => dest.PaymentStatus, src => src.LeasePaymentStatusTypeCodeNavigation != null ? src.LeasePaymentStatusTypeCodeNavigation.Description : LeasePaymentService.GetPaymentStatus(src, src.LeasePeriod))
                 .Map(dest => dest.PaymentAmount, src => src.PaymentAmountPreTax)
                 .Map(dest => dest.PaymentGst, src => src.PaymentAmountGst)
                 .Map(dest => dest.PaymentReceivedDate, src => src.PaymentReceivedDate.ToString("MMMM dd, yyyy"))
-                .Map(dest => dest.LatestPaymentDate, src => src.LeasePeriod.PimsLeasePayments.OrderByDescending(lp => lp.PaymentReceivedDate).FirstOrDefault() != null ?
-                    src.LeasePeriod.PimsLeasePayments.OrderByDescending(lp => lp.PaymentReceivedDate).FirstOrDefault().PaymentReceivedDate.ToString("MMMM dd, yyyy") : string.Empty);
+                .Map(dest => dest.LatestPaymentDate, src => src.LeasePeriod.Lease.PimsLeasePeriods.SelectMany(lp => lp.PimsLeasePayments).OrderByDescending(lp => lp.PaymentReceivedDate).FirstOrDefault() != null ?
+                    src.LeasePeriod.Lease.PimsLeasePeriods.SelectMany(lp => lp.PimsLeasePayments).OrderByDescending(lp => lp.PaymentReceivedDate).FirstOrDefault().PaymentReceivedDate.ToString("MMMM dd, yyyy") : string.Empty);
         }
 
         private static string GetFallbackPropertyIdentifier(PimsPropertyLease propertyLease)

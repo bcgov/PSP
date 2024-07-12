@@ -16,6 +16,7 @@ import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocatio
 export interface LocationFeatureDataset {
   selectingComponentId: string | null;
   location: LatLngLiteral;
+  fileLocation: LatLngLiteral | null;
   pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
   parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
@@ -44,6 +45,7 @@ const useLocationFeatureLoader = () => {
       const result: LocationFeatureDataset = {
         selectingComponentId: null,
         location: latLng,
+        fileLocation: latLng,
         pimsFeature: null,
         parcelFeature: null,
         regionFeature: null,

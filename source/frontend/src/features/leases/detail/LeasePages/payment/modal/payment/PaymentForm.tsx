@@ -1,9 +1,9 @@
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
-import { toTypeCodeNullable } from '@/utils/formUtils';
 
-import { defaultFormLeasePayment, FormLeasePayment, FormLeasePeriod } from '../../models';
+import { FormLeasePayment, FormLeasePeriod } from '../../models';
 import { isActualGstEligible } from '../../PeriodPaymentsContainer';
 import PaymentFormContent from './PaymentFormContent';
 import { PaymentsYupSchema } from './PaymentsYupSchema';
@@ -33,25 +33,46 @@ export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPayme
     isGstEligible = isActualGstEligible(
       initialValues?.leasePeriodId,
       periods?.map(t => FormLeasePeriod.fromApi(t)) ?? [],
+      ApiGen_CodeTypes_LeasePaymentCategoryTypes[initialValues?.leasePaymentCategoryTypeCode?.id],
     );
   }
 
+  const currentPeriod = periods.find(t => t.id === initialValues?.leasePeriodId);
+
   return (
-    <Formik
+    <Formik<FormLeasePayment>
       innerRef={formikRef}
       enableReinitialize
-      validationSchema={PaymentsYupSchema}
+      validateOnChange={false}
+      validate={values => {
+        let errors = {};
+        try {
+          validateYupSchema(values, PaymentsYupSchema, true);
+        } catch (err) {
+          errors = yupToFormErrors(err);
+        }
+        if (values.amountTotal !== +values.amountGst + +values.amountPreTax) {
+          return {
+            ...errors,
+            form: 'Expected payment amount and GST amount must sum to the total received',
+          };
+        }
+
+        return errors;
+      }}
       onSubmit={values => {
         onSave(values);
       }}
       initialValues={{
-        ...defaultFormLeasePayment,
         ...initialValues,
-        leasePaymentMethodType: toTypeCodeNullable('CHEQ'),
         amountGst: isGstEligible ? initialValues?.amountGst ?? '' : '',
       }}
     >
-      <PaymentFormContent isReceived={!!isReceived} isGstEligible={!!isGstEligible} />
+      <PaymentFormContent
+        isReceived={!!isReceived}
+        isGstEligible={!!isGstEligible}
+        isVariable={currentPeriod?.isVariable}
+      />
     </Formik>
   );
 };
