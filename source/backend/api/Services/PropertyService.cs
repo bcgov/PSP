@@ -226,8 +226,8 @@ namespace Pims.Api.Services
             {
                 if(!agreement.TerminationDate.HasValue)
                 {
-                    var latestRemewal = agreement.PimsLeaseRenewals.Where(x => x.IsExercised == true).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
-                    if (latestRemewal is null) // No Renewal - Check only Lease dates.
+                    var latestRenewal = agreement.PimsLeaseRenewals.Where(x => x.IsExercised == true).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
+                    if (latestRenewal is null) // No Renewal - Check only Lease dates.
                     {
                         if (agreement.OrigExpiryDate.HasValue && agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date)
                         {
@@ -240,17 +240,17 @@ namespace Pims.Api.Services
                     }
                     else
                     {
-                        if (agreement.OrigExpiryDate.HasValue && latestRemewal.ExpiryDt.HasValue)
+                        if (agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
                         {
-                            hasActiveLease = hasActiveExpiryDate = agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date || latestRemewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
+                            hasActiveLease = hasActiveExpiryDate = agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date || latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
                         }
-                        else if (agreement.OrigExpiryDate.HasValue && !latestRemewal.ExpiryDt.HasValue)
+                        else if (agreement.OrigExpiryDate.HasValue && !latestRenewal.ExpiryDt.HasValue)
                         {
                             hasActiveLease = true;
                         }
-                        else if (!agreement.OrigExpiryDate.HasValue && latestRemewal.ExpiryDt.HasValue)
+                        else if (!agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
                         {
-                            hasActiveLease = latestRemewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
+                            hasActiveLease = latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
                         }
                         else
                         {
