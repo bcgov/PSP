@@ -23,7 +23,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Disposition File')]");
 
         private By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
-        private By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::strong/parent::div/following-sibling::div");
+        private By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div");
         private By dispositionFileHistoricalLabel = By.XPath("//label[contains(text(), 'Historical File')]");
         private By dispositionFileHistoricalContent = By.XPath("//label[contains(text(), 'Historical File')]/parent::strong/parent::div/following-sibling::div/div/span");
         private By dispositionFileHeaderCreatedDateLabel = By.XPath("//span/strong[contains(text(), 'Created')]");

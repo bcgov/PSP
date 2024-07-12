@@ -15,17 +15,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Lease Header Elements
         private By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/Licence #')]");
-        private By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::strong/parent::div/following-sibling::div/span[1]");
-        private By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::strong/parent::div/following-sibling::div/span[2]");
+        private By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[1]");
+        private By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[2]");
         private By licenseHeaderProperty = By.XPath("//label[contains(text(),'Property')]");
-        private By licenseHeaderPropertyContent = By.XPath("//label[contains(text(),'Property')]/parent::strong/parent::div/following-sibling::div/div/span");
+        private By licenseHeaderPropertyContent = By.XPath("//label[contains(text(),'Property')]/parent::div/following-sibling::div/div/span");
         private By licenseHeaderTenantLabel = By.XPath("//label[contains(text(),'Tenant')]");
-        private By licenseHeaderStartDateLabel = By.XPath("//label[contains(text(),'Lease Start')]");
-        private By licenseHeaderStartDateContent = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[1]");
-        private By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[2]/strong/label[contains(text(),'Expiry')]");
-        private By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[3]/span");
-        private By licenseHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
-        private By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
+        private By licenseHeaderStartDateLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div[2]/div/div/div/div/div/label[contains(text(),'Commencement')]");
+        private By licenseHeaderStartDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[1]");
+        private By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[2]/strong/label[contains(text(),'Expiry')]");
+        private By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[3]/span");
+        private By licenseHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
+        private By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
 
         private By licenseHeaderCreatedLabel = By.XPath("//span/strong[contains(text(),'Created')]");
         private By licenseHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
@@ -34,7 +34,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseHeaderLastUpdatedContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
         private By licenseHeaderLastUpdatedByContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
         private By licenseHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
-        private By licenseHeaderExpiredFlag = By.XPath("//label[contains(text(),'Lease Start')]/parent::strong/parent::div/following-sibling::div[4]/div");
+        private By licenseHeaderExpiredFlag = By.XPath("//label[contains(text(),'Commencement')]/parent::strong/parent::div/following-sibling::div[4]/div");
 
         //Lease Details Elements
         private By licenseDetailsLeaseDateSubtitle = By.XPath("//form/div/div/div/div/h4[contains(text(),'Lease / Licence')]");
@@ -76,9 +76,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDetailsCancelReasonInput = By.Id("input-cancellationReason");
         private By licenseDetailsAccountTypeLabel = By.XPath("//label[contains(text(),'Account type')]");
         private By licenseDetailsAccountTypeSelector = By.Id("input-paymentReceivableTypeCode");
-        private By licenseDetailsStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
+        private By licenseDetailsStartDateLabel = By.XPath("//h2/following-sibling::div/div/div/div/div/label[contains(text(),'Commencement')]");
         private By licenseDetailsStartDateInput = By.Id("datepicker-startDate");
-        private By licenseDetailsExpiryDateLabel = By.XPath("//label[contains(text(),'Expiry date')]");
+        private By licenseDetailsExpiryDateLabel = By.XPath("//h2/following-sibling::div/div/div/div/div/label[contains(text(),'Expiry')]");
         private By licenseDetailsExpiryDateInput = By.Id("datepicker-expiryDate");
 
         private By licenseDetailsAdmSubtitle = By.XPath("//div[contains(text(),'Administration')]");

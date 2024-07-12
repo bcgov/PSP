@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
         
         private By acquisitionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Acquisition File')]");
         private By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
-        private By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::strong/parent::div/following-sibling::div[1]");
+        private By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
 
         private By acquisitionFileHeaderProjectLabel = By.XPath("//label[contains(text(), 'Ministry project')]");
         private By acquisitionFileHeaderProjectContent = By.XPath("//label[contains(text(), 'Ministry project')]/parent::strong/parent::div/following-sibling::div[1]");
