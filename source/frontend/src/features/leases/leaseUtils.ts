@@ -34,3 +34,12 @@ export const getCalculatedExpiry = (
   }
   return calculatedExpiry;
 };
+
+export const getSuggestedFee = (isPublicBenefit: boolean, isFinancialGain: boolean): string => {
+  if (isPublicBenefit == null || isFinancialGain == null) return 'Unknown';
+  else if (isPublicBenefit && isFinancialGain) return 'Licence Administration Fee (LAF) *';
+  else if (isPublicBenefit && !isFinancialGain) return '$1 - Nominal';
+  else if (!isPublicBenefit && isFinancialGain)
+    return 'Fair Market Value (FMV) - (Licence Administration Fee Minimum)';
+  else return '$1 / Fair Market Value / Licence Administration Fee';
+};

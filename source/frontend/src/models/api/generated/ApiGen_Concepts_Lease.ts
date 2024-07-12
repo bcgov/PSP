@@ -59,4 +59,7 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   primaryArbitrationCity: string | null;
   isExpired: boolean;
   project: ApiGen_Concepts_Project | null;
+  isPublicBenefit: boolean | null;
+  isFinancialGain: boolean | null;
+  feeDeterminationNote: string | null;
 }

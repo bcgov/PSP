@@ -180,7 +180,7 @@ describe('compensation list view container', () => {
           propertyAcquisitionFileId: 2,
           acquisitionFileProperty: null,
         },
-      ]
+      ],
     };
     expect(mockPostApi.execute).toHaveBeenCalledWith(1, mockNewCompensationRequisition);
   });

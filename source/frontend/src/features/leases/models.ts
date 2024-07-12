@@ -115,6 +115,9 @@ export class LeaseFormModel {
   tenants: FormTenant[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
   primaryArbitrationCity: string | null;
+  isPublicBenefit: boolean;
+  isFinancialGain: boolean;
+  feeDeterminationNote: string | null = null;
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -150,7 +153,7 @@ export class LeaseFormModel {
     leaseDetail.isResidential = apiModel?.isResidential || false;
     leaseDetail.isCommercialBuilding = apiModel?.isCommercialBuilding || false;
     leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement || false;
-    leaseDetail.rowVersion = apiModel?.rowVersion || 0;
+    leaseDetail.rowVersion = apiModel?.rowVersion || null;
     leaseDetail.description = apiModel?.description || '';
     leaseDetail.otherCategoryTypeDescription = apiModel?.otherCategoryType || '';
     leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType || '';
@@ -171,6 +174,9 @@ export class LeaseFormModel {
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
     leaseDetail.primaryArbitrationCity = apiModel.primaryArbitrationCity;
+    leaseDetail.isPublicBenefit = apiModel.isPublicBenefit;
+    leaseDetail.isFinancialGain = apiModel.isFinancialGain;
+    leaseDetail.feeDeterminationNote = apiModel.feeDeterminationNote;
 
     return leaseDetail;
   }
@@ -228,6 +234,9 @@ export class LeaseFormModel {
       cancellationReason: stringToNull(formLease.cancellationReason),
       terminationReason: stringToNull(formLease.terminationReason),
       primaryArbitrationCity: stringToNull(formLease.primaryArbitrationCity),
+      isPublicBenefit: formLease.isPublicBenefit ?? null,
+      isFinancialGain: formLease.isFinancialGain ?? null,
+      feeDeterminationNote: stringToNull(formLease.feeDeterminationNote),
       fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
@@ -398,6 +407,9 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     fileName: null,
     fileNumber: null,
     fileChecklistItems: [],
+    isPublicBenefit: null,
+    isFinancialGain: null,
+    feeDeterminationNote: null,
     renewals: [],
     primaryArbitrationCity: null,
     ...getEmptyBaseAudit(),
