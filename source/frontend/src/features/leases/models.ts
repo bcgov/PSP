@@ -213,7 +213,9 @@ export class LeaseFormModel {
       motiName: formLease.motiName,
       hasDigitalLicense: formLease.hasDigitalLicense ?? null,
       hasPhysicalLicense: formLease.hasPhysicalLicense ?? null,
-      fileProperties: formLease.properties?.map(p => FormLeaseProperty.toApi(p)),
+      fileProperties: formLease.properties
+        ?.map(p => FormLeaseProperty.toApi(p))
+        .filter(x => exists(x)),
       isResidential: formLease.isResidential,
       isCommercialBuilding: formLease.isCommercialBuilding,
       isOtherImprovement: formLease.isOtherImprovement,
@@ -292,20 +294,24 @@ export class FormLeaseProperty {
     return model;
   }
 
-  public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease {
+  public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease | null {
+    if (!exists(formLeaseProperty?.property)) {
+      return null;
+    }
+
+    const apiFileProperty = formLeaseProperty?.property?.toFilePropertyApi(
+      formLeaseProperty.leaseId,
+    );
+
     return {
+      ...apiFileProperty,
       id: formLeaseProperty.id ?? 0,
-      fileId: formLeaseProperty.leaseId ?? 0,
       file: null,
-      property: formLeaseProperty.property?.toApi() ?? null,
-      propertyId: formLeaseProperty.property?.id ?? 0,
       propertyName: formLeaseProperty.name ?? null,
       leaseArea: isNumber(formLeaseProperty.landArea) ? formLeaseProperty.landArea : 0,
       areaUnitType: isNumber(formLeaseProperty.landArea)
         ? toTypeCodeNullable(formLeaseProperty.areaUnitTypeCode) ?? null
         : null,
-      displayOrder: null,
-      location: null, // TODO: Add proper file location values when DB schema gets added
       ...getEmptyBaseAudit(formLeaseProperty.rowVersion),
     };
   }
