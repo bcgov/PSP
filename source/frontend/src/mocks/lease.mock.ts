@@ -60,6 +60,9 @@ const emptyLease: ApiGen_Concepts_Lease = {
   renewals: [],
   primaryArbitrationCity: null,
   ...getEmptyBaseAudit(),
+  isPublicBenefit: null,
+  isFinancialGain: null,
+  feeDeterminationNote: null,
 };
 
 export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({

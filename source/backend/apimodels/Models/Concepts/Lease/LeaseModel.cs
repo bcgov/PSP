@@ -211,6 +211,21 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - The project associated with this lease.
         /// </summary>
         public ProjectModel Project { get; set; }
+
+        /// <summary>
+        /// get/set - is public benefit.
+        /// </summary>
+        public bool? IsPublicBenefit { get; set; }
+
+        /// <summary>
+        /// get/set is financial gain.
+        /// </summary>
+        public bool? IsFinancialGain { get; set; }
+
+        /// <summary>
+        /// get/set - fee determination notes.
+        /// </summary>
+        public string FeeDeterminationNote { get; set; }
         #endregion
     }
 }
