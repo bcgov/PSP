@@ -37,9 +37,22 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = null,
                 PimsLeaseRenewals = new List<PimsLeaseRenewal>() {
-                new PimsLeaseRenewal() { ExpiryDt = now }, },
+                new PimsLeaseRenewal() { IsExercised = true, ExpiryDt = now }, },
             };
             Assert.Equal(now, lease.GetExpiryDate());
+        }
+
+        [Fact]
+        public void GetExpiryDate_RenewalExpiry_NotExercised()
+        {
+            DateTime now = DateTime.Now;
+            PimsLease lease = new PimsLease()
+            {
+                OrigExpiryDate = null,
+                PimsLeaseRenewals = new List<PimsLeaseRenewal>() {
+                new PimsLeaseRenewal() { IsExercised = false, ExpiryDt = now }, },
+            };
+            Assert.Equal(null, lease.GetExpiryDate());
         }
 
         [Fact]
@@ -50,8 +63,8 @@ namespace Pims.Dal.Test.Core.Extensions
             PimsLease lease = new PimsLease()
             {
                 OrigExpiryDate = later,
-                PimsLeasePeriods = new List<PimsLeasePeriod>() {
-                new PimsLeasePeriod() { PeriodExpiryDate = now }, },
+                PimsLeaseRenewals = new List<PimsLeaseRenewal>() {
+                new PimsLeaseRenewal() { IsExercised=true, ExpiryDt = now }, },
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }
@@ -65,7 +78,7 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = now,
                 PimsLeaseRenewals =
-                new List<PimsLeaseRenewal>() { new PimsLeaseRenewal() { ExpiryDt = later } },
+                new List<PimsLeaseRenewal>() { new PimsLeaseRenewal() { IsExercised = true, ExpiryDt = later } },
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }
@@ -80,8 +93,8 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = now,
                 PimsLeaseRenewals =
-                new List<PimsLeaseRenewal>() { new PimsLeaseRenewal() { ExpiryDt = later },
-                    new PimsLeaseRenewal() { ExpiryDt = before }, },
+                new List<PimsLeaseRenewal>() { new PimsLeaseRenewal() { IsExercised=true, ExpiryDt = later },
+                    new PimsLeaseRenewal() { IsExercised=true, ExpiryDt = before }, },
             };
             Assert.Equal(later, lease.GetExpiryDate());
         }
@@ -96,10 +109,10 @@ namespace Pims.Dal.Test.Core.Extensions
             {
                 OrigExpiryDate = now,
                 PimsLeaseRenewals =
-                new List<PimsLeaseRenewal>() { new PimsLeaseRenewal() { ExpiryDt = null },
-                    new PimsLeaseRenewal() { ExpiryDt = before }, },
+                new List<PimsLeaseRenewal>() { new PimsLeaseRenewal() { IsExercised=true, ExpiryDt = null },
+                    new PimsLeaseRenewal() { IsExercised = false, ExpiryDt = before }, },
             };
-            Assert.Equal(null, lease.GetExpiryDate());
+            Assert.Equal(now, lease.GetExpiryDate());
         }
         #endregion
     }
