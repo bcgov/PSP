@@ -31,7 +31,9 @@ describe('Compensation Detail View Component', () => {
       <CompensationRequisitionDetailView
         acquisitionFile={renderOptions?.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
-        compensationProperties={renderOptions?.props?.compensationProperties ?? getMockCompensationPropertiesReq()}
+        compensationProperties={
+          renderOptions?.props?.compensationProperties ?? getMockCompensationPropertiesReq()
+        }
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
