@@ -116,7 +116,7 @@ describe('Activities list view', () => {
       propertyActivities: [PropertyActivityRow.fromApi(propertyActivity)],
     });
 
-    const firstRowDelete = queryByTestId(`activity-delete-tooltip-${propertyActivity.id}`);
+    const firstRowDelete = queryByTestId(`activity-delete-${propertyActivity.id}`);
     expect(firstRowDelete).toBeInTheDocument();
 
     await waitFor(() => {
