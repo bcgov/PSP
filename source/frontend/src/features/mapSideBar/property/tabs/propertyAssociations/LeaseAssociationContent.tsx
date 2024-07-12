@@ -6,9 +6,11 @@ import { CellProps } from 'react-table';
 
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { ColumnWithProps, renderDate, Table } from '@/components/Table';
+import { getCalculatedExpiry } from '@/features/leases/leaseUtils';
 import { ApiGen_CodeTypes_LeaseTenantTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTenantTypes';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -28,6 +30,7 @@ interface IAssociationInfo {
 export interface ILeaseAssociationContentProps {
   associationName: string;
   tenants: ApiGen_Concepts_LeaseTenant[];
+  renewals: ApiGen_Concepts_LeaseRenewal[];
   leases: ApiGen_Concepts_Lease[];
   associations?: ApiGen_Concepts_Association[];
   linkUrlMask: string;
@@ -66,6 +69,9 @@ export const LeaseAssociationContent: React.FunctionComponent<
   }
   const tableData = orderBy(
     props.associations.map<IAssociationInfo>(x => {
+      const lease = find(props.leases, lease => x.id === lease.id);
+      const leaseRenewals = props.renewals.filter(renewal => x.id === renewal.leaseId);
+      const calculatedExpiry = getCalculatedExpiry(lease, leaseRenewals);
       return {
         id: x.id?.toString() || '',
         linkUrl: props.linkUrlMask.replace('|id|', x.id?.toString() || ''),
@@ -76,9 +82,7 @@ export const LeaseAssociationContent: React.FunctionComponent<
         createdDate: x.createdDateTime || '',
         status: x.status || '',
         tenants: getFormattedTenants(props.tenants.filter(tenant => x.id === tenant.leaseId)),
-        expiryDate: find(props.leases, lease => x.id === lease.id)
-          ? find(props.leases, lease => x.id === lease.id)?.expiryDate
-          : '',
+        expiryDate: calculatedExpiry,
       };
     }),
     (association: IAssociationInfo) => {
