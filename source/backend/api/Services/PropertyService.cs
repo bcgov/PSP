@@ -221,48 +221,36 @@ namespace Pims.Api.Services
             hasActiveLease = false;
             hasActiveExpiryDate = false;
 
-            List<PimsLease> activeAgreementsList = propertyLeases.Select(x => x.Lease).ToList();
-            var activeLease = activeAgreementsList.FirstOrDefault(x => x.LeaseStatusTypeCode == LeaseStatusTypes.ACTIVE.ToString());
-
-            // No Active Lease
-            if (activeLease is not null)
+            List<PimsLease> activeLeaseList = propertyLeases.Select(x => x.Lease).Where(y => y.LeaseStatusTypeCode == LeaseStatusTypes.ACTIVE.ToString()).ToList();
+            foreach(var agreement in activeLeaseList)
             {
-                // Lease is Active but has termination Date.
-                if (activeLease.TerminationDate.HasValue)
+                if(!agreement.TerminationDate.HasValue)
                 {
-                    return;
-                }
-                else
-                {
-                    var latestRemewal = activeLease.PimsLeaseRenewals.Where(x => x.IsExercised.HasValue && x.IsExercised.Value).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
+                    var latestRemewal = agreement.PimsLeaseRenewals.Where(x => x.IsExercised == true).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
                     if (latestRemewal is null) // No Renewal - Check only Lease dates.
                     {
-                        if(activeLease.OrigExpiryDate.HasValue && activeLease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date)
+                        if (agreement.OrigExpiryDate.HasValue && agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date)
                         {
                             hasActiveLease = hasActiveExpiryDate = true;
                         }
-                        else if(activeLease.OrigExpiryDate.HasValue && activeLease.OrigExpiryDate.Value.Date < DateTime.UtcNow.Date)
-                        {
-                            return;
-                        }
-                        else if (!activeLease.OrigExpiryDate.HasValue)
+                        else if (!agreement.OrigExpiryDate.HasValue)
                         {
                             hasActiveLease = true;
                         }
                     }
                     else
                     {
-                        if(activeLease.OrigExpiryDate.HasValue && latestRemewal.ExpiryDt.HasValue)
+                        if (agreement.OrigExpiryDate.HasValue && latestRemewal.ExpiryDt.HasValue)
                         {
-                            hasActiveLease = hasActiveExpiryDate = activeLease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date || latestRemewal.ExpiryDt.Value.Date >= DateTime.UtcNow.Date;
+                            hasActiveLease = hasActiveExpiryDate = agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date || latestRemewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
                         }
-                        else if(activeLease.OrigExpiryDate.HasValue && !latestRemewal.ExpiryDt.HasValue)
+                        else if (agreement.OrigExpiryDate.HasValue && !latestRemewal.ExpiryDt.HasValue)
                         {
                             hasActiveLease = true;
                         }
-                        else if (!activeLease.OrigExpiryDate.HasValue && latestRemewal.ExpiryDt.HasValue)
+                        else if (!agreement.OrigExpiryDate.HasValue && latestRemewal.ExpiryDt.HasValue)
                         {
-                            hasActiveLease = latestRemewal.ExpiryDt.Value.Date >= DateTime.UtcNow.Date;
+                            hasActiveLease = latestRemewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
                         }
                         else
                         {
