@@ -96,7 +96,9 @@ describe('DetailFeeDetermination component', () => {
         isFinancialGain: true,
       },
     });
-    expect(getByText('Fair Market Value (FMV) - (Licence Administration Fee Minimum)')).toBeVisible();
+    expect(
+      getByText('Fair Market Value (FMV) - (Licence Administration Fee Minimum)'),
+    ).toBeVisible();
   });
 
   it('renders the suggested Fee field with non-defined calculation', () => {
