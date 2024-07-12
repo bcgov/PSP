@@ -856,6 +856,27 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Update the renewals of a lease.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="rowVersion"></param>
+        /// <param name="renewals"></param>
+        /// <returns></returns>
+        public PimsLease UpdateLeaseRenewals(long leaseId, long? rowVersion, ICollection<PimsLeaseRenewal> renewals)
+        {
+            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseRenewals).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
+                 ?? throw new KeyNotFoundException();
+            if (existingLease.ConcurrencyControlNumber != rowVersion)
+            {
+                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            }
+
+            this.Context.UpdateChild<PimsLease, long, PimsLeaseRenewal, long>(l => l.PimsLeaseRenewals, leaseId, renewals.ToArray());
+
+            return GetNoTracking(existingLease.LeaseId);
+        }
+
+        /// <summary>
         /// Generate a query for the specified 'filter'.
         /// </summary>
         /// <param name="filter"></param>

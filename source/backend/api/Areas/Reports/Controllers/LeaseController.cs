@@ -184,11 +184,11 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             DateTime startDate = fiscalYearStart.ToFiscalYearDate();
             var allPayments = _leasePaymentService.GetAllByDateRange(startDate, startDate.AddYears(1).AddDays(-1)); // Add years will give you the equivalent month, except for 29th/ 28th of leap years which is not the case here.
-            var paymentItems = _mapper.Map<IEnumerable<LeasePaymentReportModel>>(allPayments);
+            var paymentItems = _mapper.Map<IEnumerable<LeasePaymentReportModel>>(allPayments.OrderBy(p => p?.LeasePeriod?.Lease?.RegionCode).ThenBy(p => p?.LeasePeriod?.Lease?.LFileNo).ThenByDescending(p => p.PaymentReceivedDate));
 
             return acceptHeader.ToString() switch
             {
-                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv<LeasePaymentReportModel>(paymentItems.OrderBy(p => p.Region).ThenBy(p => p.LFileNumber).ThenByDescending(p => p.PaymentReceivedDate)),
+                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv<LeasePaymentReportModel>(paymentItems),
                 _ => ReportHelper.GenerateExcel(paymentItems, $"LeaseLicense_Payments")
             };
         }

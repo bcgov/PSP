@@ -597,6 +597,54 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           <div
             class="col"
           >
+            Selected File Properties
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c8"
+            >
+              Properties:
+            </label>
+          </div>
+          <div
+            class="c9 text-left col"
+          >
+            <p>
+              <label>
+                Property Test Name 1
+              </label>
+            </p>
+            <p>
+              <label>
+                Property Test Name 2
+              </label>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
             Financial Coding
           </div>
           <div
