@@ -25,6 +25,24 @@ export const PropertyActivityRouter: React.FunctionComponent<
     strict: true,
   });
 
+  const activityNewEnabled = matchPath(location.pathname, {
+    path: '/mapview/sidebar/property/*/management/activity/new',
+    exact: true,
+    strict: true,
+  });
+
+  const activityEditEnabled = matchPath(location.pathname, {
+    path: '/mapview/sidebar/property/*/management/activity/*/edit',
+    exact: true,
+    strict: true,
+  });
+
+  const activityDetailEnabled = matchPath(location.pathname, {
+    path: '/mapview/sidebar/property/*/management/activity/*',
+    exact: true,
+    strict: true,
+  });
+
   React.useEffect(() => {
     if (matched !== null) {
       props.setShowActionBar(true);
@@ -46,6 +64,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
           <PropertyActivityEditContainer
             propertyId={Number(match.params.propertyId)}
             onClose={onClose}
+            viewEnabled={activityNewEnabled.isExact}
             View={PropertyActivityEditForm}
           />
         )}
@@ -61,6 +80,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
             propertyId={Number(match.params.propertyId)}
             propertyActivityId={Number(match.params.activityId)}
             onClose={onClose}
+            viewEnabled={activityEditEnabled.isExact}
             View={PropertyActivityEditForm}
           />
         )}
@@ -76,6 +96,7 @@ export const PropertyActivityRouter: React.FunctionComponent<
             propertyId={Number(match.params.propertyId)}
             propertyActivityId={Number(match.params.activityId)}
             onClose={onClose}
+            viewEnabled={activityDetailEnabled.isExact}
             View={PropertyActivityDetailView}
           />
         )}

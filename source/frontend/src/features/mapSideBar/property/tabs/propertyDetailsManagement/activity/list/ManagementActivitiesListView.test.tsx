@@ -95,7 +95,7 @@ describe('Activities list view', () => {
     expect(firstRowDelete).toBeInTheDocument();
   });
 
-  it('Hides the delete activity button when activit has already started', async () => {
+  it('Hides the delete activity button when activity has already started', async () => {
     const apiModelList = mockGetPropertyManagementActivityList();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
@@ -116,7 +116,7 @@ describe('Activities list view', () => {
       propertyActivities: [PropertyActivityRow.fromApi(propertyActivity)],
     });
 
-    const firstRowDelete = queryByTestId(`activity-delete-${propertyActivity.id}`);
+    const firstRowDelete = queryByTestId(`activity-delete-tooltip-${propertyActivity.id}`);
     expect(firstRowDelete).toBeInTheDocument();
 
     await waitFor(() => {

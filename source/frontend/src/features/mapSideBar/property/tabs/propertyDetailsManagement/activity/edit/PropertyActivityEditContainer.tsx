@@ -15,12 +15,13 @@ export interface IPropertyActivityEditContainerProps {
   propertyId: number;
   propertyActivityId?: number;
   onClose: () => void;
+  viewEnabled: boolean;
   View: React.FunctionComponent<React.PropsWithChildren<IPropertyActivityEditFormProps>>;
 }
 
 export const PropertyActivityEditContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityEditContainerProps>
-> = ({ propertyId, propertyActivityId, onClose, View }) => {
+> = ({ propertyId, propertyActivityId, onClose, viewEnabled, View }) => {
   const { getSystemConstant } = useSystemConstants();
 
   const history = useHistory();
@@ -138,7 +139,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
         updateActivityLoading ||
         isContactLoading
       }
-      show={show}
+      show={show && viewEnabled}
       setShow={setShow}
       onSave={onSave}
     />

@@ -11,12 +11,13 @@ export interface IPropertyActivityDetailContainerProps {
   propertyId: number;
   propertyActivityId: number;
   onClose: () => void;
+  viewEnabled: boolean;
   View: React.FunctionComponent<React.PropsWithChildren<IPropertyActivityDetailViewProps>>;
 }
 
 export const PropertyActivityDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityDetailContainerProps>
-> = ({ propertyId, propertyActivityId, onClose, View }) => {
+> = ({ propertyId, propertyActivityId, onClose, viewEnabled, View }) => {
   const [show, setShow] = useState(true);
 
   const [loadedActivity, setLoadedActivity] = useState<ApiGen_Concepts_PropertyActivity | null>(
@@ -71,7 +72,7 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
       activity={loadedActivity}
       onClose={onClose}
       loading={getActivityLoading || isContactLoading}
-      show={show}
+      show={show && viewEnabled}
       setShow={setShow}
     />
   );
