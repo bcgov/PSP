@@ -209,7 +209,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         Add Base Rent
                         <TooltipIcon
                           toolTipId="base-rent-tooltip"
-                          toolTip="Fixed Amount of Rent per Payment Payment Period, excluding Operating Expenses."
+                          toolTip="Fixed Amount of Rent per Payment Period, excluding Operating Expenses."
                         />
                       </>
                     }
@@ -247,7 +247,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         Add Variable Rent
                         <TooltipIcon
                           toolTipId="variable-rent-tooltip"
-                          toolTip="Percentage Rent payable by Tenant."
+                          toolTip="Percentage Rent or Other Amount payable by Tenant."
                         />
                       </>
                     }

@@ -5,7 +5,9 @@ import { Roles } from '@/constants/index';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import {
   emptyCompensationFinancial,
+  getMockApiCompensationWithProperty,
   getMockApiDefaultCompensation,
+  getMockCompensationPropertiesReq,
 } from '@/mocks/compensations.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { toTypeCodeNullable } from '@/utils/formUtils';
@@ -29,6 +31,7 @@ describe('Compensation Detail View Component', () => {
       <CompensationRequisitionDetailView
         acquisitionFile={renderOptions?.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
+        compensationProperties={renderOptions?.props?.compensationProperties ?? getMockCompensationPropertiesReq()}
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
@@ -184,6 +187,20 @@ describe('Compensation Detail View Component', () => {
 
     const editButton = queryByTitle('Edit compensation requisition');
     expect(editButton).toBeInTheDocument();
+  });
+
+  it('displays the acquisition files properties selected', async () => {
+    const { findByText, findByTestId } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        compensation: getMockApiCompensationWithProperty(),
+        compensationProperties: getMockCompensationPropertiesReq(),
+        acquisitionFile: mockAcquisitionFileResponse(),
+      },
+    });
+
+    expect(await findByText(/Property Test Name 1/)).toBeVisible();
+    expect(await findByText(/Property Test Name 2/)).toBeVisible();
   });
 
   it('displays the compensation finalized date', async () => {

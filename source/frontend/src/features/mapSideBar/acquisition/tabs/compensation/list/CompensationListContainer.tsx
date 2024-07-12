@@ -8,7 +8,9 @@ import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRe
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_CompensationRequisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisitionProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { ICompensationListViewProps } from './CompensationListView';
@@ -83,7 +85,10 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
     return file.totalAllowableCompensation ?? null;
   };
 
-  const onAddCompensationRequisition = (fileId: number) => {
+  const onAddCompensationRequisition = (
+    fileId: number,
+    fileProperties: ApiGen_Concepts_AcquisitionFileProperty[],
+  ) => {
     const defaultCompensationRequisition: ApiGen_Concepts_CompensationRequisition = {
       id: null,
       acquisitionFileId: fileId,
@@ -116,6 +121,15 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       legacyPayee: null,
       isPaymentInTrust: null,
       gstNumber: null,
+      compensationRequisitionProperties:
+        fileProperties?.map(x => {
+          return {
+            compensationRequisitionPropertyId: null,
+            compensationRequisitionId: null,
+            propertyAcquisitionFileId: x.id,
+            acquisitionFileProperty: null,
+          } as ApiGen_Concepts_CompensationRequisitionProperty;
+        }) || [],
       ...getEmptyBaseAudit(),
     };
 
@@ -140,7 +154,7 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       onUpdateTotalCompensation={onUpdateTotalCompensation}
       acquisitionFile={file}
       compensations={compensations || []}
-      onAdd={async () => onAddCompensationRequisition(fileId)}
+      onAdd={async () => onAddCompensationRequisition(fileId, file.fileProperties)}
       onDelete={async (compensationId: number) => {
         setModalContent({
           ...getDeleteModalProps(),

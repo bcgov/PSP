@@ -103,7 +103,7 @@ exports[`ProjectHeader component > renders as expected 1`] = `
           <label
             class="c1"
           >
-            MoTI Region:
+            MoTI region:
           </label>
         </div>
         <div

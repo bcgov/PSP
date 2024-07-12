@@ -378,11 +378,48 @@ namespace Pims.Api.Test.Mappings
             var leasePaymentOlder = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(-2) };
 
             leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { leasePaymentOld, leasePayment, leasePaymentOlder } };
+            lease.PimsLeasePeriods.Add(leasePayment.LeasePeriod);
 
             // Arrange
             var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
 
             mapped.LatestPaymentDate.Should().Be(DateTime.Now.ToString("MMMM dd, yyyy"));
+        }
+
+        [Fact]
+        public void MapLeasePaymentReport_LastPaymentDate_MultiplePeriods()
+        {
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+
+            var leasePayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now };
+            var leasePaymentOld = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(-1) };
+            var leasePaymentOlder = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(-2) };
+
+            leasePaymentOlder.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { leasePaymentOld, leasePaymentOlder } };
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { leasePayment } };
+            lease.PimsLeasePeriods.Add(leasePaymentOlder.LeasePeriod);
+            lease.PimsLeasePeriods.Add(leasePayment.LeasePeriod);
+
+            // Arrange
+            var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePaymentOlder);
+
+            mapped.LatestPaymentDate.Should().Be(DateTime.Now.ToString("MMMM dd, yyyy"));
+        }
+
+        [Fact]
+        public void MapLeasePaymentReport_MissingPaymentStatus()
+        {
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+
+            var leasePayment = new PimsLeasePayment() { PaymentAmountTotal = 100 };
+
+            leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() { leasePayment }, PaymentAmount = 100 };
+            lease.PimsLeasePeriods.Add(leasePayment.LeasePeriod);
+
+            // Arrange
+            var mapped = this._mapper.Map<LeasePaymentReportModel>(leasePayment);
+
+            mapped.PaymentStatus.Should().Be("PAID");
         }
         #endregion
     }

@@ -20,7 +20,7 @@ const ProjectHeader: React.FunctionComponent<React.PropsWithChildren<IProjectHea
         <HeaderField label="Project:" labelWidth="3" contentWidth="9">
           {project?.code} {project?.description}
         </HeaderField>
-        <HeaderField label="MoTI Region:" labelWidth="3" contentWidth="9">
+        <HeaderField label="MoTI region:" labelWidth="3" contentWidth="9">
           {project?.regionCode?.description}
         </HeaderField>
       </Col>
