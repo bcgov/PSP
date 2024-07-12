@@ -1,9 +1,11 @@
 using System;
+using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.CompensationRequisition;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -87,6 +89,27 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             var compensation = _compensationRequisitionService.Update(compensationReqEntity);
 
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compensation));
+        }
+
+        [HttpGet("{id:long}/properties")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<AcquisitionFilePropertyModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetCompensationRequisitionProperties([FromRoute] long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(CompensationRequisitionController),
+                nameof(GetCompensationRequisitionProperties),
+                User.GetUsername(),
+                DateTime.Now);
+            _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
+
+            var compensationReqProperties = _compensationRequisitionService.GetProperties(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<AcquisitionFilePropertyModel>>(compensationReqProperties));
         }
 
         /// <summary>

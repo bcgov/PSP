@@ -13,6 +13,8 @@ namespace Pims.Dal.Repositories
 
         PimsPropertyAcquisitionFile Update(PimsPropertyAcquisitionFile propertyAcquisitionFile);
 
+        bool AcquisitionFilePropertyInCompensationReq(long propertyAcquisitionFileId);
+
         void Delete(PimsPropertyAcquisitionFile propertyAcquisitionFile);
     }
 }

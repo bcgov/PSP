@@ -1738,6 +1738,60 @@ namespace Pims.Api.Test.Services
             var ex = act.Should().Throw<BusinessRuleViolationException>();
             ex.WithMessage("Retired property can not be selected.");
         }
+
+        [Fact]
+        public void UpdateProperties_WithProperty_SelectedForCompensation_Should_Fail()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var property = EntityHelper.CreateProperty(12345, regionCode: 1);
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() {
+                new PimsPropertyAcquisitionFile() { PropertyAcquisitionFileId=100, Property = property },
+                new PimsPropertyAcquisitionFile() { PropertyAcquisitionFileId=101, Property = property },
+            };
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
+            propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+            filePropertyRepository.Setup(x => x.AcquisitionFilePropertyInCompensationReq(It.IsAny<long>())).Returns(true);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var property2 = EntityHelper.CreateProperty(56789, regionCode: 1);
+
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>()
+            {
+                new()
+                {
+                    PropertyAcquisitionFileId = 100,
+                    Property = property2,
+                },
+            };
+
+            // Act
+            Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>().WithMessage("Acquisition File property can not be removed since it's assigned as a property for a compensation requisition");
+        }
         #endregion
 
         #region Checklist

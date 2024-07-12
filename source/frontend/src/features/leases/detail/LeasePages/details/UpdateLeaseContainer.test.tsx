@@ -161,5 +161,5 @@ const expectedLease: ApiGen_Concepts_Lease = {
   isExpired: false,
   project: null,
   id: 0,
-  rowVersion: 0,
+  rowVersion: null,
 };
