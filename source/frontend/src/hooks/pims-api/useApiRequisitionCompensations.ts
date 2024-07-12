@@ -1,5 +1,6 @@
 import { ENVIRONMENT } from '@/constants/environment';
 import CustomAxios from '@/customAxios';
+import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 
 export const getCompensationRequisitionApi = (compensationId: number) =>
@@ -18,4 +19,9 @@ export const putCompensationRequisitionApi = (
 export const deleteCompensationRequisitionApi = (compensationId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).delete<boolean>(
     `/compensation-requisitions/${compensationId}`,
+  );
+
+export const getCompensationRequisitionPropertiesApi = (compensationId: number) =>
+  CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_AcquisitionFileProperty[]>(
+    `/compensation-requisitions/${compensationId}/properties`,
   );

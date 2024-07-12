@@ -484,7 +484,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
               <label
                 class="c10"
               >
-                MoTI Region:
+                MoTI region:
               </label>
             </div>
             <div

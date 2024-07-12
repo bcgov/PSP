@@ -60,7 +60,6 @@ export const AddLeaseContainer: React.FunctionComponent<
     const response = await addLease.execute(leaseApi, userOverrideCodes);
     formikHelpers.setSubmitting(false);
 
-    // TODO: the isValidId check is sufficient but current ts (4.3) does not see it as valid. This works correctly on 5.3
     if (exists(response) && isValidId(response?.id)) {
       if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
         toast.warn(

@@ -22,7 +22,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.TfaFileNumber, src => src.TfaFileNumber)
                 .Map(dest => dest.PsFileNo, src => src.PsFileNo)
                 .Map(dest => dest.MotiName, src => src.MotiContact)
-                .Map(dest => dest.ExpiryDate, src => src.GetExpiryDate().ToNullableDateOnly())
+                .Map(dest => dest.ExpiryDate, src => src.OrigExpiryDate.ToNullableDateOnly())
                 .Map(dest => dest.StartDate, src => src.OrigStartDate.ToNullableDateOnly())
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate.ToNullableDateOnly())
                 .Map(dest => dest.ProgramName, src => src.GetProgramName())
@@ -58,7 +58,9 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.Project, src => src.Project)
                 .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
                 .Map(dest => dest.FileChecklistItems, src => src.PimsLeaseChecklistItems)
-                .Map(dest => dest.Periods, src => src.PimsLeasePeriods);
+                .Map(dest => dest.PrimaryArbitrationCity, src => src.PrimaryArbitrationCity)
+                .Map(dest => dest.Periods, src => src.PimsLeasePeriods)
+                .Map(dest => dest.Renewals, src => src.PimsLeaseRenewals);
 
             config.NewConfig<LeaseModel, PimsLease>()
                 .PreserveReference(true)
@@ -100,7 +102,9 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.CancellationReason, src => src.CancellationReason)
                 .Map(dest => dest.TerminationReason, src => src.TerminationReason)
                 .Map(dest => dest.PimsLeaseChecklistItems, src => src.FileChecklistItems)
+                .Map(dest => dest.PrimaryArbitrationCity, src => src.PrimaryArbitrationCity)
                 .Map(dest => dest.ProjectId, src => src.Project != null ? src.Project.Id : (long?)null)
+                .Map(dest => dest.PimsLeaseRenewals, src => src.Renewals)
                 .IgnoreNullValues(true);
         }
     }
