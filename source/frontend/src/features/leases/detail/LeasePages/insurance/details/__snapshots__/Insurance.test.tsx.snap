@@ -33,7 +33,6 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c5 .react-datepicker__calendar-icon {
@@ -350,7 +349,6 @@ exports[`Lease Insurance > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c2 {

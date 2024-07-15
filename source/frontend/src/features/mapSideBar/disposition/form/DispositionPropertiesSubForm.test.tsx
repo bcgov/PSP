@@ -66,6 +66,7 @@ describe('DispositionPropertiesSubForm component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = await setup({ initialForm: testForm });
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 

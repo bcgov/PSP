@@ -37,7 +37,6 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c6 {

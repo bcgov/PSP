@@ -366,7 +366,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c14 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c24:hover {

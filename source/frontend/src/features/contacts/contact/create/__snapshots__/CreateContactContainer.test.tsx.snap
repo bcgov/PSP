@@ -285,7 +285,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
 
 .c13 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c7 {
