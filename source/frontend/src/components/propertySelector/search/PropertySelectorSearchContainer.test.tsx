@@ -104,7 +104,7 @@ describe('PropertySelectorSearchContainer component', () => {
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(4);
+      expect(mockAxios.history.get).toHaveLength(5);
       // call parcel map layer
       expect(mockAxios.history.get[0].url).toBe(
         'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+%3D+%27123456789%27',
@@ -132,7 +132,7 @@ describe('PropertySelectorSearchContainer component', () => {
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(4);
+      expect(mockAxios.history.get).toHaveLength(5);
       expect(mockAxios.history.get[0].url).toBe(
         'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%2554321%25%27',
       );
@@ -160,7 +160,7 @@ describe('PropertySelectorSearchContainer component', () => {
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(4);
+      expect(mockAxios.history.get).toHaveLength(5);
       expect(mockAxios.history.get[0].url).toBe(
         'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PLAN_NUMBER+ilike+%27%25PRP4520%25%27',
       );
@@ -192,7 +192,7 @@ describe('PropertySelectorSearchContainer component', () => {
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(4);
+      expect(mockAxios.history.get).toHaveLength(5);
       // calls the fully-attributed parcel map layer - to search by legal description
       expect(mockAxios.history.get[0].url).toBe(
         'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25SECTION+13%2C+RANGE+1%2C+SOUTH+SALT+SPRING+ISLAND%25%27',

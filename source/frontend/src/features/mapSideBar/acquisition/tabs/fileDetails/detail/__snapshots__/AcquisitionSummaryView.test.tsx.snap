@@ -37,7 +37,6 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
 
 .c4 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c7 {

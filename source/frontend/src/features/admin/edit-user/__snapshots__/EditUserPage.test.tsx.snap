@@ -223,7 +223,6 @@ exports[`Edit user page > EditUserPage renders 1`] = `
 
 .c2 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c6 {
