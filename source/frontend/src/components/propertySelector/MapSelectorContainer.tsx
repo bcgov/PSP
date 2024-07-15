@@ -39,7 +39,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
     LocationFeatureDataset | undefined
   >(
     modifiedProperties?.length === 1 &&
-      isValidId(+modifiedProperties[0]?.pimsFeature?.properties?.PROPERTY_ID) // why? Because create from map needs to show the info differently
+      (modifiedProperties[0]?.pimsFeature || modifiedProperties[0]?.parcelFeature) // why? Because create from map needs to show the info differently
       ? modifiedMapProperties[0]
       : undefined,
   );
