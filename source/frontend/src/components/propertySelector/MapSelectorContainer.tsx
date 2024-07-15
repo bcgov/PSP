@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons';
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
+import { isValidId } from '@/utils';
 import {
   featuresetToMapProperty,
   getPropertyName,
