@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Api.Models.Base;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Lease
@@ -16,8 +17,9 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.AreaUnitType, src => src.AreaUnitTypeCodeNavigation)
                 .Map(dest => dest.LeaseArea, src => src.LeaseArea)
                 .Map(dest => dest.PropertyName, src => src.Name)
-                .Map(dest => dest.RowVersion, src => src.ConcurrencyControlNumber)
-                .Map(dest => dest.Id, src => src.Internal_Id);
+                .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.Id, src => src.Internal_Id)
+                .Inherits<IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<PropertyLeaseModel, PimsPropertyLease>()
                 .PreserveReference(true)
@@ -26,8 +28,9 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.AreaUnitTypeCode, src => src.AreaUnitType.Id)
                 .Map(dest => dest.LeaseArea, src => src.LeaseArea)
                 .Map(dest => dest.Name, src => src.PropertyName)
-                .Map(dest => dest.ConcurrencyControlNumber, src => src.RowVersion)
-                .Map(dest => dest.Internal_Id, src => src.Id);
+                .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.Internal_Id, src => src.Id)
+                .Inherits<BaseConcurrentModel, IBaseEntity>();
         }
     }
 }

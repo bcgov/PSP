@@ -90,7 +90,9 @@ describe('LeaseFeeDeterminationSubForm component', () => {
       await fillInput(container, 'isFinancialGain', 'true', 'select');
     });
 
-    expect(suggestedFeeField).toHaveTextContent('Fair Market Value (FMV) - (Licence Administration Fee Minimum)');
+    expect(suggestedFeeField).toHaveTextContent(
+      'Fair Market Value (FMV) - (Licence Administration Fee Minimum)',
+    );
   });
 
   it('displays expected LAF fee', async () => {

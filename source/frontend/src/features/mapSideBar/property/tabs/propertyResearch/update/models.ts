@@ -100,7 +100,7 @@ export class UpdatePropertyFormModel {
       documentReference: this.documentReference ?? null,
       researchSummary: this.researchSummary ?? null,
       property: null,
-      location: null, // TODO: Add proper file location values when DB schema gets added
+      location: null,
       fileId: this.researchFileId ?? 0,
       file: { ...getEmptyResearchFile(), rowVersion: this.researchFileRowVersion },
       purposeTypes: this.purposeTypes?.map(x => x.toApi()) ?? null,
