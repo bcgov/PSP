@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "5.4.0-84.41",
+  "version": "5.4.0-84.42",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
