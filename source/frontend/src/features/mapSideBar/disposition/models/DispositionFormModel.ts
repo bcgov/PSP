@@ -2,7 +2,6 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { latLngToApiLocation } from '@/utils';
 import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidIsoDateTime } from '@/utils/utils';
 
@@ -94,15 +93,9 @@ export class DispositionFormModel implements WithDispositionTeam {
   }
 
   private toPropertyApi(x: PropertyForm): ApiGen_Concepts_DispositionFileProperty {
+    const apiFileProperty = x.toFilePropertyApi(this.id);
     return {
-      id: x.id ?? 0,
-      fileId: this.id ?? 0,
-      property: x.toApi(),
-      propertyId: x.apiId ?? 0,
-      propertyName: x.name ?? null,
-      location: latLngToApiLocation(x.fileLocation?.lat, x.fileLocation?.lng),
-      displayOrder: x.displayOrder ?? null,
-      rowVersion: x.rowVersion ?? null,
+      ...apiFileProperty,
       file: null,
     };
   }

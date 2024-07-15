@@ -156,11 +156,12 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
           <label
             class="c4"
           >
-            Lease/Licensed:
+            Active Lease/License:
           </label>
         </div>
         <div
           class="c5 text-left col"
+          data-testid="active-lease-information"
         >
           No
         </div>

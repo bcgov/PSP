@@ -10,6 +10,8 @@ export const getMockApiPropertyManagement = (id = 123459): ApiGen_Concepts_Prope
   isUtilitiesPayable: null,
   relatedLeases: 0,
   leaseExpiryDate: null,
+  hasActiveLease: null,
+  activeLeaseHasExpiryDate: null,
   ...getEmptyBaseAudit(1),
 });
 

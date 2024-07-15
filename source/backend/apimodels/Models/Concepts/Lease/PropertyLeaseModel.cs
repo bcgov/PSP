@@ -5,7 +5,7 @@ namespace Pims.Api.Models.Concepts.Lease
 {
     public class PropertyLeaseModel : FilePropertyModel
     {
-        #region Propertie
+        #region Properties
 
         public new LeaseModel File { get; set; }
 
