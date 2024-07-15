@@ -22,7 +22,7 @@ import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_Cod
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { exists, formatApiAddress, isValidId, pidFormatter } from '@/utils';
+import { enumFromValue, exists, formatApiAddress, isValidId, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
