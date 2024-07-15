@@ -16,4 +16,6 @@ export interface ApiGen_Concepts_PropertyManagement extends ApiGen_Base_BaseAudi
   isTaxesPayable: boolean | null;
   relatedLeases: number;
   leaseExpiryDate: UtcIsoDate | null;
+  hasActiveLease: boolean | null;
+  activeLeaseHasExpiryDate: boolean | null;
 }
