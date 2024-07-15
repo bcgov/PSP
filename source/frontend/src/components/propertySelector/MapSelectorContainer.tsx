@@ -3,7 +3,6 @@ import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons';
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
-import { isValidId } from '@/utils';
 import {
   featuresetToMapProperty,
   getPropertyName,
@@ -77,7 +76,6 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
     [addSelectedProperties, loadProperties],
   );
 
-  console.log(lastSelectedProperty, modifiedMapProperties);
   return (
     <>
       <PropertySelectorTabsView
@@ -98,8 +96,6 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
                       getPropertyName(featuresetToMapProperty(p)).value ===
                       getPropertyName(featuresetToMapProperty(lastSelectedProperty)).value,
                   )
-                : modifiedMapProperties?.length
-                ? modifiedMapProperties[0]
                 : undefined // use the property from the modified properties list from the parent, for consistency.
             }
           />
