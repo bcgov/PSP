@@ -172,7 +172,6 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -265,7 +264,6 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c3 {

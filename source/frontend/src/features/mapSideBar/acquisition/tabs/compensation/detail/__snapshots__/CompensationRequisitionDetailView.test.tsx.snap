@@ -184,7 +184,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
 
 .c8 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c2 {

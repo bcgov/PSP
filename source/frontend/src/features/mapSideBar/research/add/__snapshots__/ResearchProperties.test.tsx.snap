@@ -257,7 +257,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c9 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c6.c6.c6 input,

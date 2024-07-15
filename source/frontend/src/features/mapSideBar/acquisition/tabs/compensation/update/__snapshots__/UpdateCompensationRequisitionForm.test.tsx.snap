@@ -208,7 +208,6 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c9 {

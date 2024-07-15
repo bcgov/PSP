@@ -71,6 +71,7 @@ describe('UpdateProperties component', () => {
 
   it('renders as expected', async () => {
     setup({});
+    await act(async () => {});
     expect(document.body).toMatchSnapshot();
   });
 

@@ -15,7 +15,6 @@ exports[`LtsaDuplicateTitleSubForm component > renders charge sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -55,7 +54,6 @@ exports[`LtsaDuplicateTitleSubForm component > renders charge sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -95,7 +93,6 @@ exports[`LtsaDuplicateTitleSubForm component > renders charge sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -135,7 +132,6 @@ exports[`LtsaDuplicateTitleSubForm component > renders charge sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div

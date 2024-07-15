@@ -355,7 +355,6 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
