@@ -40,9 +40,10 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
       const result = await deleteActivity(propertyId, activityId);
       if (result === true) {
         fetchPropertyActivities();
+        history.push(`/mapview/sidebar/property/${propertyId}/management`);
       }
     },
-    [deleteActivity, fetchPropertyActivities, propertyId],
+    [deleteActivity, fetchPropertyActivities, history, propertyId],
   );
 
   useEffect(() => {
