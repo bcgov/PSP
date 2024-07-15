@@ -9,6 +9,7 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 
 import { LeaseFormModel } from '../models';
 
@@ -56,7 +57,10 @@ const ConsultationSubForm: React.FunctionComponent<
   );
 };
 
-export const getConsultations = (lease: ApiGen_Concepts_Lease, consultationTypes) => {
+export const getConsultations = (
+  lease: ApiGen_Concepts_Lease,
+  consultationTypes: ILookupCode[],
+) => {
   if (lease.consultations?.length !== consultationTypes.length) {
     const newConsultations: ApiGen_Concepts_ConsultationLease[] = [];
 
@@ -93,7 +97,7 @@ export const getConsultations = (lease: ApiGen_Concepts_Lease, consultationTypes
     });
     return newConsultations;
   }
-  return [];
+  return lease.consultations;
 };
 
 export default ConsultationSubForm;
