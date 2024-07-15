@@ -3,8 +3,7 @@ import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
-import { prettyFormatDate } from './dateUtils';
-import { isValidIsoDateTime, isValidString } from './utils';
+import { isValidString } from './utils';
 
 /**
  * The pidFormatter is used to format the specified PID value
@@ -113,19 +112,11 @@ export const formatBcaAddress = (address?: IBcAssessmentSummary['ADDRESSES'][0])
 export function formatApiPropertyManagementLease(
   base: ApiGen_Concepts_PropertyManagement | undefined | null,
 ): string {
-  const count = base?.relatedLeases || 0;
-  switch (count) {
-    case 0:
-      return 'No';
-
-    case 1: {
-      const expiryDate = isValidIsoDateTime(base?.leaseExpiryDate)
-        ? `(${prettyFormatDate(base!.leaseExpiryDate)})`
-        : '';
-      return `Yes ${expiryDate}`.trim();
-    }
-    default: {
-      return 'Multiple';
-    }
+  if (base?.hasActiveLease && base.activeLeaseHasExpiryDate) {
+    return 'Yes';
+  } else if (base?.hasActiveLease && !base.activeLeaseHasExpiryDate) {
+    return 'Yes (No Expiry Date)';
+  } else {
+    return 'No';
   }
 }

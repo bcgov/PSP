@@ -76,6 +76,9 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>())).Returns<PimsPropertyLease>(x => x);
+
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
@@ -87,7 +90,9 @@ namespace Pims.Api.Test.Services
             result.Should().BeAssignableTo<PimsLease>();
             result.LeaseId.Should().Be(1);
             result.PimsLeaseChecklistItems.Should().HaveCount(1);
+
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Once);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Once);
         }
 
         [Fact]
@@ -101,12 +106,15 @@ namespace Pims.Api.Test.Services
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
             // Act
             Action act = () => service.Add(lease, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
         }
 
         [Fact]
@@ -124,12 +132,15 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
             // Act
             Action act = () => service.Add(lease, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
         }
 
         [Fact]
@@ -164,12 +175,17 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
             // Act
             Action act = () => service.Add(lease, new List<UserOverrideCode>());
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
             ex.WithMessage("Retired property can not be selected.");
+
+            leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
         }
 
         #endregion
@@ -374,7 +390,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
@@ -402,7 +418,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
@@ -434,7 +450,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
@@ -462,7 +478,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView, Permissions.PropertyAdd, Permissions.PropertyView);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
@@ -491,6 +507,7 @@ namespace Pims.Api.Test.Services
                     newProperty.RegionCode = 1;
                 });
 
+            propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>())).Returns<PimsPropertyLease>(x => x);
 
             // Act
             var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -518,7 +535,7 @@ namespace Pims.Api.Test.Services
             var lease = EntityHelper.CreateLease(1);
             var updatedLease = EntityHelper.CreateLease(2, addProperty: false);
 
-            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
@@ -546,7 +563,7 @@ namespace Pims.Api.Test.Services
             var deletedProperty = lease.PimsPropertyLeases.FirstOrDefault().Property;
             var updatedLease = EntityHelper.CreateLease(2, addProperty: false);
 
-            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.LeaseView);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();

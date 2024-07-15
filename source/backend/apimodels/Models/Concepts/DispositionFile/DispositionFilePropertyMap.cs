@@ -10,6 +10,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
         {
             config.NewConfig<Entity.PimsDispositionFileProperty, DispositionFilePropertyModel>()
                 .Map(dest => dest.Id, src => src.DispositionFilePropertyId)
+                .Map(dest => dest.Location, src => src.Location)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
@@ -19,6 +20,7 @@ namespace Pims.Api.Models.Concepts.DispositionFile
 
             config.NewConfig<DispositionFilePropertyModel, Entity.PimsDispositionFileProperty>()
                 .Map(dest => dest.DispositionFilePropertyId, src => src.Id)
+                .Map(dest => dest.Location, src => src.Location)
                 .Map(dest => dest.PropertyName, src => src.PropertyName)
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.PropertyId, src => src.Property.Id)

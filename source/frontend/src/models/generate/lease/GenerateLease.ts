@@ -1,13 +1,15 @@
 import { first, orderBy } from 'lodash';
 import moment from 'moment';
 
+import { getCalculatedExpiry } from '@/features/leases/leaseUtils';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
+import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
-import { formatMoney, pidFormatter } from '@/utils';
+import { formatMoney, isValidIsoDateTime, pidFormatter } from '@/utils';
 
 import { Api_GenerateLeaseProperty } from './GenerateLeaseProperty';
 import { Api_GenerateSecurityDeposit } from './GenerateSecurityDeposit';
@@ -16,6 +18,7 @@ import { Api_GenerateTenant } from './GenerateTenant';
 export class Api_GenerateLease {
   file_number: string;
   commencement_date: string;
+  expiry_date: string;
   land_string: string;
   intended_use: string;
   term_end_date: string;
@@ -36,14 +39,20 @@ export class Api_GenerateLease {
     lease: ApiGen_Concepts_Lease,
     insurances: ApiGen_Concepts_Insurance[],
     tenants: ApiGen_Concepts_LeaseTenant[],
+    renewals: ApiGen_Concepts_LeaseRenewal[],
     securityDeposits: ApiGen_Concepts_SecurityDeposit[],
     propertyLeases: ApiGen_Concepts_PropertyLease[],
     periods: ApiGen_Concepts_LeasePeriod[],
   ) {
     const firstPeriod = first(orderBy(periods, (t: ApiGen_Concepts_LeasePeriod) => t.id));
+
     this.file_number = lease.lFileNo ?? '';
-    this.commencement_date = firstPeriod?.startDate
-      ? moment.utc(firstPeriod?.startDate).format('MMMM DD, YYYY')
+    this.commencement_date = isValidIsoDateTime(lease?.startDate)
+      ? moment.utc(lease.startDate).format('MMMM DD, YYYY')
+      : '';
+    this.expiry_date = getCalculatedExpiry(lease, renewals);
+    this.term_end_date = isValidIsoDateTime(this.expiry_date)
+      ? moment.utc(this.expiry_date).format('MMMM DD, YYYY') ?? ''
       : '';
     this.land_string =
       propertyLeases
@@ -56,9 +65,6 @@ export class Api_GenerateLease {
         )
         .join('\n\n') ?? '';
     this.intended_use = lease.description ?? '';
-    this.term_end_date = firstPeriod?.expiryDate
-      ? moment.utc(firstPeriod?.expiryDate).format('MMMM DD, YYYY') ?? ''
-      : '';
     this.payment_amount = formatMoney(firstPeriod?.paymentAmount ?? 0);
     this.payment_due_date = firstPeriod?.paymentDueDateStr ?? '';
     this.security_amount =

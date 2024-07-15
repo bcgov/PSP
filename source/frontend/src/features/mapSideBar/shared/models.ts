@@ -45,24 +45,10 @@ export class FileForm {
     return {
       id: this.id ?? 0,
       fileName: this.name,
-      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
+      fileProperties: this.properties.map(x => x.toFilePropertyApi(this.id)),
       fileNumber: null,
       fileStatusTypeCode: null,
       ...getEmptyBaseAudit(this.rowVersion),
-    };
-  }
-
-  private toPropertyApi(x: PropertyForm): ApiGen_Concepts_FileProperty {
-    return {
-      id: x.id ?? 0,
-      fileId: this.id ?? 0,
-      property: x.toApi(),
-      propertyId: x.apiId ?? 0,
-      propertyName: x.name ?? null,
-      location: latLngToApiLocation(x.fileLocation?.lat, x.fileLocation?.lng),
-      rowVersion: x.rowVersion ?? null,
-      displayOrder: null,
-      file: null,
     };
   }
 
@@ -298,6 +284,20 @@ export class PropertyForm {
       : undefined;
 
     return newForm;
+  }
+
+  public toFilePropertyApi(fileId?: number): ApiGen_Concepts_FileProperty {
+    return {
+      id: this.id ?? 0,
+      fileId: fileId ?? this.fileId ?? 0,
+      file: null,
+      property: this.toApi(),
+      propertyId: this.apiId ?? 0,
+      propertyName: this.name ?? null,
+      location: latLngToApiLocation(this.fileLocation?.lat, this.fileLocation?.lng),
+      displayOrder: this.displayOrder ?? null,
+      rowVersion: this.rowVersion ?? null,
+    };
   }
 
   public toApi(): ApiGen_Concepts_Property {
