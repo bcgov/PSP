@@ -82,7 +82,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
           <label
             class="c1"
           >
-            MoTI region:
+            MOTI region:
           </label>
         </div>
         <div

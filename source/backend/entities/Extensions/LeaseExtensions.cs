@@ -14,7 +14,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static string GetProgramName(this Pims.Dal.Entities.PimsLease lease)
+        public static string GetProgramName(this PimsLease lease)
         {
             return lease?.LeaseProgramTypeCodeNavigation?.Description;
         }
@@ -24,7 +24,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static PimsLeasePeriod GetCurrentPeriod(this Pims.Dal.Entities.PimsLease lease)
+        public static PimsLeasePeriod GetCurrentActivePeriod(this PimsLease lease)
         {
             return lease.PimsLeasePeriods.FirstOrDefault(period => period != null && DateTime.Now > period.PeriodStartDate && DateTime.Now <= period.PeriodExpiryDate);
         }
@@ -34,9 +34,9 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static DateTime? GetCurrentPeriodStartDate(this Pims.Dal.Entities.PimsLease lease)
+        public static DateTime? GetCurrentPeriodStartDate(this PimsLease lease)
         {
-            return GetCurrentPeriod(lease)?.PeriodStartDate;
+            return GetCurrentActivePeriod(lease)?.PeriodStartDate;
         }
 
         /// <summary>
@@ -44,9 +44,9 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static DateTime? GetCurrentPeriodEndDate(this Pims.Dal.Entities.PimsLease lease)
+        public static DateTime? GetCurrentPeriodEndDate(this PimsLease lease)
         {
-            return GetCurrentPeriod(lease)?.PeriodExpiryDate;
+            return GetCurrentActivePeriod(lease)?.PeriodExpiryDate;
         }
 
         /// <summary>
@@ -54,7 +54,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static string GetTenantName(this Pims.Dal.Entities.PimsLeaseTenant lease)
+        public static string GetTenantName(this PimsLeaseTenant lease)
         {
             return lease?.Person?.GetFullName() ?? lease?.Organization?.Name;
         }
@@ -64,7 +64,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// </summary>
         /// <param name="lease"></param>
         /// <returns></returns>
-        public static DateTime? GetExpiryDate(this Pims.Dal.Entities.PimsLease lease)
+        public static DateTime? GetExpiryDate(this PimsLease lease)
         {
             var expiryDate = lease.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(fr => fr.ExpiryDt).Append(lease.OrigExpiryDate).Max();
             return expiryDate;

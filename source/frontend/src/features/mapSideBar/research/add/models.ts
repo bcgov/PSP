@@ -1,7 +1,6 @@
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { latLngToApiLocation } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ResearchFileProjectFormModel } from '../common/models';
@@ -45,23 +44,18 @@ export class ResearchForm {
   }
 
   private toPropertyApi(x: PropertyForm): ApiGen_Concepts_ResearchFileProperty {
+    const apiFileProperty = x.toFilePropertyApi(this.id);
     return {
-      id: x.id ?? 0,
-      property: x.toApi(),
-      propertyId: x.apiId ?? 0,
-      propertyName: x.name ?? null,
-      rowVersion: x.rowVersion ?? null,
-      displayOrder: x.displayOrder ?? null,
-      location: latLngToApiLocation(x.fileLocation?.lat, x.fileLocation?.lng),
-      documentReference: null,
+      ...apiFileProperty,
       file: null,
-      fileId: this.id ?? 0,
+      documentReference: null,
       isLegalOpinionObtained: null,
       isLegalOpinionRequired: null,
       purposeTypes: null,
       researchSummary: null,
     };
   }
+
   public static fromApi(model: ApiGen_Concepts_ResearchFile): ResearchForm {
     const newForm = new ResearchForm();
     newForm.id = model.id;
