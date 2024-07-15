@@ -70,7 +70,6 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
     [addSelectedProperties, loadProperties],
   );
 
-  console.log(lastSelectedProperty, modifiedMapProperties);
   return (
     <>
       <PropertySelectorTabsView
