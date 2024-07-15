@@ -650,7 +650,7 @@ namespace Pims.Api.Services
                         acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
-                else if (acquisitionProperty.Property.Pin.HasValue)
+                else if (acquisitionProperty.Property.Pin.HasValue && acquisitionProperty.Property.Pin != 0)
                 {
                     var pin = acquisitionProperty.Property.Pin.Value;
                     try
