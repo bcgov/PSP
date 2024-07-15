@@ -223,7 +223,7 @@ namespace Pims.Api.Services
 
             PopulateAcquisitionChecklist(acquisitionFile);
 
-            // Update file specific marker locations
+            // Update marker locations in the context of this file
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
                 _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
@@ -304,7 +304,7 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            // Get the current properties in the research file
+            // Get the current properties in the acquisition file
             var currentFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
@@ -650,7 +650,7 @@ namespace Pims.Api.Services
                         acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
-                else if (acquisitionProperty.Property.Pin.HasValue)
+                else if (acquisitionProperty.Property.Pin.HasValue && acquisitionProperty.Property.Pin != 0)
                 {
                     var pin = acquisitionProperty.Property.Pin.Value;
                     try

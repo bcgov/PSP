@@ -184,10 +184,10 @@ describe('Compensation Requisition UpdateForm component', () => {
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
     });
 
-    expect(await findByTestId("selectrow-1")).not.toBeChecked();
+    expect(await findByTestId('selectrow-1')).not.toBeChecked();
     expect(await findByText(/PID: 023-214-937/)).toBeVisible();
 
-    expect(await findByTestId("selectrow-2")).not.toBeChecked();
+    expect(await findByTestId('selectrow-2')).not.toBeChecked();
     expect(await findByText(/PID: 024-996-777/)).toBeVisible();
   });
 

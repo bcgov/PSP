@@ -44,5 +44,15 @@ namespace Pims.Api.Models.Concepts.Property
         /// This field is null when the lease does not expire.
         /// </summary>
         public DateOnly? LeaseExpiryDate { get; set; }
+
+        /// <summary>
+        /// The property has at least one active lease.
+        /// </summary>
+        public bool? HasActiveLease { get; set; }
+
+        /// <summary>
+        /// The active lease has expiry date.
+        /// </summary>
+        public bool? ActiveLeaseHasExpiryDate { get; set; }
     }
 }

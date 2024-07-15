@@ -61,6 +61,7 @@ describe('PropertyAssociationTabView component', () => {
         isLoading={renderOptions.isLoading}
         associations={renderOptions.associations}
         associatedLeaseTenants={renderOptions.associatedLeaseTenants}
+        associatedLeaseRenewals={renderOptions.associatedLeaseRenewals}
         associatedLeases={renderOptions.associatedLeases}
       />,
       {
@@ -78,6 +79,7 @@ describe('PropertyAssociationTabView component', () => {
       isLoading: false,
       associations: fakeAssociations,
       associatedLeases: [],
+      associatedLeaseRenewals: [],
       associatedLeaseTenants: [],
     });
     expect(asFragment()).toMatchSnapshot();
@@ -102,6 +104,7 @@ describe('PropertyAssociationTabView component', () => {
           lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
         } as ApiGen_Concepts_LeaseTenant,
       ],
+      associatedLeaseRenewals: [],
     });
     expect(getByText('John Doe')).toBeVisible();
     expect(queryByText('John2 Doe2')).toBeNull();
@@ -126,6 +129,7 @@ describe('PropertyAssociationTabView component', () => {
           lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
         } as ApiGen_Concepts_LeaseTenant,
       ],
+      associatedLeaseRenewals: [],
     });
     expect(getByText('John Doe', { exact: false })).toBeVisible();
     expect(getByText('John2 Doe2', { exact: false })).toBeVisible();
@@ -150,6 +154,7 @@ describe('PropertyAssociationTabView component', () => {
           lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
         } as ApiGen_Concepts_LeaseTenant,
       ],
+      associatedLeaseRenewals: [],
     });
     expect(getByText('Org', { exact: false })).toBeVisible();
     expect(getByText('John2 Doe2', { exact: false })).toBeVisible();
@@ -161,7 +166,25 @@ describe('PropertyAssociationTabView component', () => {
       associations: fakeAssociations,
       associatedLeases: [{ id: 34, expiryDate: '2024-01-01' } as ApiGen_Concepts_Lease],
       associatedLeaseTenants: [],
+      associatedLeaseRenewals: [
+        {
+          id: 1,
+          leaseId: 34,
+          commencementDt: '',
+          expiryDt: '2030-07-07',
+          isExercised: true,
+          renewalNote: '',
+          lease: undefined,
+          appCreateTimestamp: '',
+          appLastUpdateTimestamp: '',
+          appLastUpdateUserid: '',
+          appCreateUserid: '',
+          appLastUpdateUserGuid: '',
+          appCreateUserGuid: '',
+          rowVersion: 0,
+        },
+      ],
     });
-    expect(getByText('Jan 1, 2024')).toBeVisible();
+    expect(getByText('Jul 7, 2030')).toBeVisible();
   });
 });

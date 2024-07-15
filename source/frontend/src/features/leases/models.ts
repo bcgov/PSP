@@ -115,6 +115,9 @@ export class LeaseFormModel {
   tenants: FormTenant[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
   primaryArbitrationCity: string | null;
+  isPublicBenefit: boolean;
+  isFinancialGain: boolean;
+  feeDeterminationNote: string | null = null;
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -150,7 +153,7 @@ export class LeaseFormModel {
     leaseDetail.isResidential = apiModel?.isResidential || false;
     leaseDetail.isCommercialBuilding = apiModel?.isCommercialBuilding || false;
     leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement || false;
-    leaseDetail.rowVersion = apiModel?.rowVersion || 0;
+    leaseDetail.rowVersion = apiModel?.rowVersion || null;
     leaseDetail.description = apiModel?.description || '';
     leaseDetail.otherCategoryTypeDescription = apiModel?.otherCategoryType || '';
     leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType || '';
@@ -171,6 +174,9 @@ export class LeaseFormModel {
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
     leaseDetail.primaryArbitrationCity = apiModel.primaryArbitrationCity;
+    leaseDetail.isPublicBenefit = apiModel.isPublicBenefit;
+    leaseDetail.isFinancialGain = apiModel.isFinancialGain;
+    leaseDetail.feeDeterminationNote = apiModel.feeDeterminationNote;
 
     return leaseDetail;
   }
@@ -207,7 +213,9 @@ export class LeaseFormModel {
       motiName: formLease.motiName,
       hasDigitalLicense: formLease.hasDigitalLicense ?? null,
       hasPhysicalLicense: formLease.hasPhysicalLicense ?? null,
-      fileProperties: formLease.properties?.map(p => FormLeaseProperty.toApi(p)),
+      fileProperties: formLease.properties
+        ?.map(p => FormLeaseProperty.toApi(p))
+        .filter(x => exists(x)),
       isResidential: formLease.isResidential,
       isCommercialBuilding: formLease.isCommercialBuilding,
       isOtherImprovement: formLease.isOtherImprovement,
@@ -228,6 +236,9 @@ export class LeaseFormModel {
       cancellationReason: stringToNull(formLease.cancellationReason),
       terminationReason: stringToNull(formLease.terminationReason),
       primaryArbitrationCity: stringToNull(formLease.primaryArbitrationCity),
+      isPublicBenefit: formLease.isPublicBenefit ?? null,
+      isFinancialGain: formLease.isFinancialGain ?? null,
+      feeDeterminationNote: stringToNull(formLease.feeDeterminationNote),
       fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
@@ -283,20 +294,24 @@ export class FormLeaseProperty {
     return model;
   }
 
-  public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease {
+  public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease | null {
+    if (!exists(formLeaseProperty?.property)) {
+      return null;
+    }
+
+    const apiFileProperty = formLeaseProperty?.property?.toFilePropertyApi(
+      formLeaseProperty.leaseId,
+    );
+
     return {
+      ...apiFileProperty,
       id: formLeaseProperty.id ?? 0,
-      fileId: formLeaseProperty.leaseId ?? 0,
       file: null,
-      property: formLeaseProperty.property?.toApi() ?? null,
-      propertyId: formLeaseProperty.property?.id ?? 0,
       propertyName: formLeaseProperty.name ?? null,
       leaseArea: isNumber(formLeaseProperty.landArea) ? formLeaseProperty.landArea : 0,
       areaUnitType: isNumber(formLeaseProperty.landArea)
         ? toTypeCodeNullable(formLeaseProperty.areaUnitTypeCode) ?? null
         : null,
-      displayOrder: null,
-      location: null, // TODO: Add proper file location values when DB schema gets added
       ...getEmptyBaseAudit(formLeaseProperty.rowVersion),
     };
   }
@@ -398,6 +413,9 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     fileName: null,
     fileNumber: null,
     fileChecklistItems: [],
+    isPublicBenefit: null,
+    isFinancialGain: null,
+    feeDeterminationNote: null,
     renewals: [],
     primaryArbitrationCity: null,
     ...getEmptyBaseAudit(),

@@ -121,7 +121,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 50,
   },
   {
-    Header: 'Update/View',
+    Header: 'Edit/View',
     accessor: 'controls' as any, // this column is not part of the data model
     width: 50,
     maxWidth: 50,

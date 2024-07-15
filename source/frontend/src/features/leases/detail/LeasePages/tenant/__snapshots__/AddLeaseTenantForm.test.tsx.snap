@@ -274,7 +274,7 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
           >
             here
           </a>
-          , then you will be able to see them on the "Add "Add a Tenant" list.
+          , then you will be able to see them on the "Add a Tenant" list.
         </span>
         <div
           class="c6"
@@ -301,13 +301,13 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
                   <div
                     class="tr"
                     role="row"
-                    style="display: flex; flex: 1 0 auto; min-width: 410px;"
+                    style="display: flex; flex: 1 0 auto; min-width: 416px;"
                   >
                     <div
                       class="th"
                       colspan="1"
                       role="columnheader"
-                      style="box-sizing: border-box; flex: 10 0 auto; min-width: 10px; width: 10px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                      style="box-sizing: border-box; flex: 16 0 auto; min-width: 16px; width: 16px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                     >
                       <div
                         class="sortable-column"

@@ -141,7 +141,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 required text-left col-4"
+          class="c3 required text-left col-auto"
         >
           <div
             class="required d-flex form-group"
