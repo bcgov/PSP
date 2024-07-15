@@ -19,6 +19,7 @@ using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -204,9 +205,13 @@ namespace Pims.Api.Areas.Reports.Controllers
         public IEnumerable<LeaseModel> GetCrossJoinLeases(Lease.Models.Search.LeaseFilterModel filter, bool all = false)
         {
             var page = _leaseService.GetPage((LeaseFilter)filter, all);
-            var allLeases = page.Items.SelectMany(l => l.PimsLeasePeriods.DefaultIfEmpty(), (lease, period) => (lease, period))
+            var expiryDate = page.Items.Select(l => l.GetExpiryDate());
+
+            var allLeases = page.Items
+                .SelectMany(l => l.PimsLeasePeriods.DefaultIfEmpty(), (lease, period) => (lease, period))
                 .SelectMany(lt => lt.lease.PimsPropertyLeases.DefaultIfEmpty(), (leasePeriod, property) => (leasePeriod.period, leasePeriod.lease, property))
-                .SelectMany(ltp => ltp.lease.PimsLeaseTenants.DefaultIfEmpty(), (leasePeriodProperty, tenant) => (leasePeriodProperty.period, leasePeriodProperty.lease, leasePeriodProperty.property, tenant));
+                .SelectMany(ltp => ltp.lease.PimsLeaseTenants.DefaultIfEmpty(), (leasePeriodProperty, tenant) => (leasePeriodProperty.period, leasePeriodProperty.lease, leasePeriodProperty.property, tenant))
+                .SelectMany(ltpr => expiryDate, (leasePeriodPropertyTenant, expiryDate) => (leasePeriodPropertyTenant.period, leasePeriodPropertyTenant.lease, leasePeriodPropertyTenant.property, leasePeriodPropertyTenant.tenant, expiryDate));
             var flatLeases = _mapper.Map<IEnumerable<LeaseModel>>(allLeases);
             return flatLeases;
         }
