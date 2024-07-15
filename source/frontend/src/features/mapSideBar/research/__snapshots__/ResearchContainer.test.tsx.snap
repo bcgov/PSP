@@ -620,7 +620,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <label
                   class="c10"
                 >
-                  MoTI region:
+                  MOTI region:
                 </label>
               </div>
               <div
