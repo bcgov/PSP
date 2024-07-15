@@ -52,9 +52,11 @@ export const PropertyFileContainer: React.FunctionComponent<
 
   const { getLease } = useLeaseRepository();
   const { getLeaseTenants } = useLeaseTenantRepository();
+  const { getLeaseRenewals } = useLeaseRepository();
   const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
     leaseDetails: [],
     leaseTenants: [],
+    leaseRenewals: [],
     loading: false,
   });
 
@@ -66,9 +68,10 @@ export const PropertyFileContainer: React.FunctionComponent<
         leaseAssociations,
         getLease.execute,
         getLeaseTenants.execute,
+        getLeaseRenewals.execute,
         setLeaseAssociationInfo,
       ),
-    [setLeaseAssociationInfo, leaseAssociations, getLeaseTenants.execute, getLease.execute],
+    [leaseAssociations, getLease.execute, getLeaseTenants.execute, getLeaseRenewals.execute],
   );
 
   // After API property object has been received, we query relevant map layers to find
@@ -141,6 +144,7 @@ export const PropertyFileContainer: React.FunctionComponent<
           }
           associations={composedProperties.propertyAssociationWrapper?.response}
           associatedLeaseTenants={LeaseAssociationInfo.leaseTenants}
+          associatedLeaseRenewals={LeaseAssociationInfo.leaseRenewals}
           associatedLeases={LeaseAssociationInfo.leaseDetails}
         />
       ),

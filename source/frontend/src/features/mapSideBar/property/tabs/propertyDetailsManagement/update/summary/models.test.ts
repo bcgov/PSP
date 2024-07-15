@@ -40,17 +40,26 @@ describe('Property management model tests', () => {
     });
 
     it.each([
-      ['NO lease found', 0, null, 'No'],
-      ['ONE lease with expiry date', 1, '2020-03-15', 'Yes (Mar 15, 2020)'],
-      ['ONE lease with no expiry date', 1, null, 'Yes'],
-      ['MULTIPLE leases', 5, null, 'Multiple'],
+      ['NO lease found', 0, null, null, null, 'No'],
+      ['ONE lease with no expiry date', 1, null, true, true, 'Yes'],
+      ['No Active Lease', 1, null, false, false, 'No'],
+      ['Active Lease has no expiry date', 1, null, true, false, 'Yes (No Expiry Date)'],
     ])(
       'returns lease information as expected - %s',
-      (_: string, leaseCount: number, expiryDate: string | null, expectedResult: string) => {
+      (
+        _: string,
+        leaseCount: number,
+        expiryDate: string | null,
+        activeLease: boolean | null,
+        activeLeaseHasExpiryDate: boolean | null,
+        expectedResult: string,
+      ) => {
         let apiManagement: ApiGen_Concepts_PropertyManagement = {
           ...getMockApiPropertyManagement(),
           relatedLeases: leaseCount,
           leaseExpiryDate: expiryDate,
+          hasActiveLease: activeLease,
+          activeLeaseHasExpiryDate: activeLeaseHasExpiryDate,
         };
         const model = PropertyManagementFormModel.fromApi(apiManagement);
         expect(model.formattedLeaseInformation).toBe(expectedResult);

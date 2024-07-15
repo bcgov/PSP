@@ -209,7 +209,56 @@ namespace Pims.Api.Services
             propertyManagement.RelatedLeases = leaseCount;
             propertyManagement.LeaseExpiryDate = leaseExpiryDate.HasValue ? DateOnly.FromDateTime(leaseExpiryDate.Value) : null;
 
+            PropertyHasActiveLease(propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate);
+            propertyManagement.HasActiveLease = hasActiveLease;
+            propertyManagement.ActiveLeaseHasExpiryDate = hasActiveExpiryDate;
+
             return propertyManagement;
+        }
+
+        private static void PropertyHasActiveLease(IEnumerable<PimsPropertyLease> propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate)
+        {
+            hasActiveLease = false;
+            hasActiveExpiryDate = false;
+
+            List<PimsLease> activeLeaseList = propertyLeases.Select(x => x.Lease).Where(y => y.LeaseStatusTypeCode == LeaseStatusTypes.ACTIVE.ToString()).ToList();
+            foreach(var agreement in activeLeaseList)
+            {
+                if(!agreement.TerminationDate.HasValue)
+                {
+                    var latestRenewal = agreement.PimsLeaseRenewals.Where(x => x.IsExercised == true).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
+                    if (latestRenewal is null) // No Renewal - Check only Lease dates.
+                    {
+                        if (agreement.OrigExpiryDate.HasValue && agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date)
+                        {
+                            hasActiveLease = hasActiveExpiryDate = true;
+                        }
+                        else if (!agreement.OrigExpiryDate.HasValue)
+                        {
+                            hasActiveLease = true;
+                        }
+                    }
+                    else
+                    {
+                        if (agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = hasActiveExpiryDate = agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date || latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
+                        }
+                        else if (agreement.OrigExpiryDate.HasValue && !latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = true;
+                        }
+                        else if (!agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
+                        }
+                        else
+                        {
+                            hasActiveLease = true;
+                        }
+                    }
+                }
+            }
         }
 
         public PropertyManagementModel UpdatePropertyManagement(PimsProperty property)
