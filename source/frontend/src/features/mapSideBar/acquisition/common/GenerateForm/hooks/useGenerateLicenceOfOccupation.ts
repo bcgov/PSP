@@ -3,6 +3,7 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
@@ -23,6 +24,10 @@ export const useGenerateLicenceOfOccupation = () => {
   const {
     getLeaseTenants: { execute: getLeaseTenants },
   } = useLeaseTenantRepository();
+
+  const {
+    getLeaseRenewals: { execute: getLeaseRenewals },
+  } = useLeaseRepository();
 
   const {
     getSecurityDeposits: { execute: getLeaseDeposits },
@@ -56,18 +61,27 @@ export const useGenerateLicenceOfOccupation = () => {
       const updatedLeasePromise = getLease(lease.id);
       const insurancesPromise = getInsurances(lease.id);
       const tenantsPromise = getLeaseTenants(lease.id);
+      const renewalsPromise = getLeaseRenewals(lease.id);
       const securityDepositsPromise = getLeaseDeposits(lease.id);
       const periodsPromise = getLeasePeriods(lease.id);
       const propertyLeasesPromise = getPropertyLeases(lease.id);
-      const [updatedLease, insurances, tenants, securityDeposits, periods, propertyLeases] =
-        await Promise.all([
-          updatedLeasePromise,
-          insurancesPromise,
-          tenantsPromise,
-          securityDepositsPromise,
-          periodsPromise,
-          propertyLeasesPromise,
-        ]);
+      const [
+        updatedLease,
+        insurances,
+        tenants,
+        renewals,
+        securityDeposits,
+        periods,
+        propertyLeases,
+      ] = await Promise.all([
+        updatedLeasePromise,
+        insurancesPromise,
+        tenantsPromise,
+        renewalsPromise,
+        securityDepositsPromise,
+        periodsPromise,
+        propertyLeasesPromise,
+      ]);
 
       if (!exists(updatedLease)) {
         throw new Error('Failed to load lease, reload this page to try again.');
@@ -81,6 +95,7 @@ export const useGenerateLicenceOfOccupation = () => {
         updatedLease,
         insurances ?? [],
         tenants ?? [],
+        renewals ?? [],
         securityDeposits ?? [],
         propertyLeases ?? [],
         periods ?? [],

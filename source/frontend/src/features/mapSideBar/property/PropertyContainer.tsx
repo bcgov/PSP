@@ -18,6 +18,7 @@ import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRep
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { isValidId } from '@/utils';
 
@@ -30,6 +31,7 @@ export interface IPropertyContainerProps {
 export interface LeaseAssociationInfo {
   leaseDetails: ApiGen_Concepts_Lease[];
   leaseTenants: ApiGen_Concepts_LeaseTenant[];
+  leaseRenewals: ApiGen_Concepts_LeaseRenewal[];
   loading: boolean;
 }
 
@@ -37,6 +39,7 @@ export const getLeaseInfo = async (
   leasesAssociations: ApiGen_Concepts_Association[],
   getLease: (leaseId: number) => Promise<ApiGen_Concepts_Lease>,
   getLeaseTenants: (leaseId: number) => Promise<ApiGen_Concepts_LeaseTenant[]>,
+  getLeaseRenewals: (leaseId: number) => Promise<ApiGen_Concepts_LeaseRenewal[]>,
   setLeaseAssociationInfo: (info) => void,
 ) => {
   if (!leasesAssociations) return;
@@ -47,12 +50,17 @@ export const getLeaseInfo = async (
   const leaseTenantPromises = leasesAssociations?.map(leaseAssociation =>
     getLeaseTenants(leaseAssociation.id),
   );
+  const leaseRenewalPromises = leasesAssociations?.map(leaseAssociation =>
+    getLeaseRenewals(leaseAssociation.id),
+  );
 
   const leaseDetails = (await Promise.all(leaseDetailPromises)).flat();
   const leaseTenants = (await Promise.all(leaseTenantPromises)).flat();
+  const leaseRenewals = (await Promise.all(leaseRenewalPromises)).flat();
   setLeaseAssociationInfo({
     leaseDetails: leaseDetails,
     leaseTenants: leaseTenants,
+    leaseRenewals: leaseRenewals,
     loading: false,
   });
 };
@@ -67,9 +75,11 @@ export const PropertyContainer: React.FunctionComponent<
   const { hasClaim } = useKeycloakWrapper();
   const { getLease } = useLeaseRepository();
   const { getLeaseTenants } = useLeaseTenantRepository();
+  const { getLeaseRenewals } = useLeaseRepository();
   const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
     leaseDetails: [],
     leaseTenants: [],
+    leaseRenewals: [],
     loading: false,
   });
 
@@ -81,9 +91,16 @@ export const PropertyContainer: React.FunctionComponent<
         leaseAssociations,
         getLease.execute,
         getLeaseTenants.execute,
+        getLeaseRenewals.execute,
         setLeaseAssociationInfo,
       ),
-    [setLeaseAssociationInfo, leaseAssociations, getLeaseTenants.execute, getLease.execute],
+    [
+      setLeaseAssociationInfo,
+      leaseAssociations,
+      getLeaseTenants.execute,
+      getLeaseRenewals.execute,
+      getLease.execute,
+    ],
   );
 
   const tabViews: TabInventoryView[] = [];
@@ -150,6 +167,7 @@ export const PropertyContainer: React.FunctionComponent<
           associations={composedPropertyState.propertyAssociationWrapper?.response}
           associatedLeases={LeaseAssociationInfo?.leaseDetails ?? []}
           associatedLeaseTenants={LeaseAssociationInfo?.leaseTenants ?? []}
+          associatedLeaseRenewals={LeaseAssociationInfo?.leaseRenewals ?? []}
         />
       ),
       key: InventoryTabNames.pims,
@@ -164,7 +182,6 @@ export const PropertyContainer: React.FunctionComponent<
   ) {
     // After API property object has been received, we query relevant map layers to find
     // additional information which we store in a different model (IPropertyDetailsForm)
-
     tabViews.push({
       content: (
         <PropertyManagementTabView

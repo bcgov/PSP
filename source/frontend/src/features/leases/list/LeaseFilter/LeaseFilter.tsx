@@ -9,6 +9,7 @@ import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { FastDatePicker, Input } from '@/components/common/form';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { SelectInput } from '@/components/common/List/SelectInput';
+import { SectionField } from '@/components/common/Section/SectionField';
 import { FilterBoxForm } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES } from '@/constants/API';
@@ -107,9 +108,9 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xl="6">
+            <Col xs="6">
               <Row>
-                <Col xl="auto">
+                <Col xs="auto">
                   <strong>Search by:</strong>
                 </Col>
                 <Col>
@@ -206,48 +207,45 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                 </Col>
               </Row>
             </Col>
-            <Col xl="5">
-              <Row>
-                <Col xl="auto">
-                  <strong>Expiry date:</strong>
-                </Col>
-                <Col>
-                  <Row>
-                    <Col>
-                      <FastDatePicker
-                        field="expiryStartDate"
-                        formikProps={formikProps}
-                        placeholderText="from date"
-                      />
-                    </Col>
-                    <Col>
-                      <FastDatePicker
-                        field="expiryEndDate"
-                        formikProps={formikProps}
-                        placeholderText="to date"
-                      />
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col>
-                      <UserRegionSelectContainer field="regionType" placeholder="All Regions" />
-                    </Col>
-                    <Col>
-                      <Row>
-                        <Col xs="10" className="pr-0 mr-0">
-                          <Input field="details" placeholder="Keyword" />
-                        </Col>
-                        <Col xs="1" className="pl-0 ml-0">
-                          <TooltipIcon
-                            toolTipId="lease-search-keyword-tooltip"
-                            toolTip="Search 'Lease description' and 'Notes' fields"
-                          />
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Row>
-                </Col>
-              </Row>
+            <Col xs="5">
+              <SectionField label="Expiry date" labelWidth="2">
+                <Row>
+                  <Col>
+                    <FastDatePicker
+                      field="expiryStartDate"
+                      formikProps={formikProps}
+                      placeholderText="from date"
+                    />
+                  </Col>
+                  <Col>
+                    <FastDatePicker
+                      field="expiryEndDate"
+                      formikProps={formikProps}
+                      placeholderText="to date"
+                    />
+                  </Col>
+                </Row>
+              </SectionField>
+              <SectionField label="" labelWidth="2">
+                <Row>
+                  <Col>
+                    <UserRegionSelectContainer field="regionType" placeholder="All Regions" />
+                  </Col>
+                  <Col>
+                    <Row noGutters>
+                      <Col xs="9">
+                        <Input field="details" placeholder="Keyword" />
+                      </Col>
+                      <Col xs="1">
+                        <TooltipIcon
+                          toolTipId="lease-search-keyword-tooltip"
+                          toolTip="Search 'Lease description' and 'Notes' fields"
+                        />
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </SectionField>
             </Col>
             <ColButtons xl="1">
               <Row>

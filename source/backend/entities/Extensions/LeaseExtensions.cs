@@ -66,19 +66,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static DateTime? GetExpiryDate(this PimsLease lease)
         {
-            if (lease.PimsLeasePeriods != null && lease.PimsLeasePeriods.Any(p => p.PeriodExpiryDate == null && !p.IsFlexibleDuration))
-            {
-                return null;
-            }
-            if (lease.OrigExpiryDate != null)
-            {
-                if (lease.PimsLeasePeriods != null && lease.PimsLeasePeriods.Any(p => p.PeriodExpiryDate > lease.OrigExpiryDate && !p.IsFlexibleDuration))
-                {
-                    return lease.PimsLeasePeriods.OrderByDescending(p => p.PeriodExpiryDate).FirstOrDefault().PeriodExpiryDate;
-                }
-                return lease.OrigExpiryDate;
-            }
-            return lease.PimsLeasePeriods?.OrderByDescending(p => p.PeriodExpiryDate).FirstOrDefault(p => !p.IsFlexibleDuration)?.PeriodExpiryDate;
+            var expiryDate = lease.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(fr => fr.ExpiryDt).Append(lease.OrigExpiryDate).Max();
+            return expiryDate;
         }
     }
 }
