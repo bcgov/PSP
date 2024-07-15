@@ -15,6 +15,10 @@ export interface IPropertyActivityDetailContainerProps {
   View: React.FunctionComponent<React.PropsWithChildren<IPropertyActivityDetailViewProps>>;
 }
 
+/**
+ * Modal displaying form allowing add/update lease deposits. Save button triggers internal formik validation and submit.
+ * @param viewEnabled defines the condition for the PopupTray to show based on the route exact match
+ */
 export const PropertyActivityDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityDetailContainerProps>
 > = ({ propertyId, propertyActivityId, onClose, viewEnabled, View }) => {
