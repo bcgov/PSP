@@ -48,6 +48,7 @@ const defaultLeaseWithPeriodsPayments: LeaseFormModel = {
     {
       ...defaultFormLeasePeriod,
       expiryDate: '2020-01-01',
+      startDate: '2020-01-01',
       statusTypeCode: toTypeCodeNullable(LeasePeriodStatusTypes.EXERCISED),
       payments: [{ ...defaultTestFormLeasePayment }],
     },
@@ -144,17 +145,23 @@ describe('PeriodsPaymentsContainer component', () => {
 
   describe('period logic tests', () => {
     it('when adding a new initial period, the start date is set to the start date of the lease', async () => {
-      const {
-        component: { getAllByText, getByDisplayValue },
-      } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
-      mockAxios.onPost().reply(200, { id: 1 });
+      const temp = mockGetLeasePeriods.response;
+      try {
+        mockGetLeasePeriods.response = [];
+        const {
+          component: { getAllByText, getByDisplayValue },
+        } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
+        mockAxios.onPost().reply(200, { id: 1 });
 
-      const addButton = getAllByText('Add a Period')[0];
-      await act(async () => {
-        userEvent.click(addButton);
-      });
+        const addButton = getAllByText('Add a Period')[0];
+        await act(async () => {
+          userEvent.click(addButton);
+        });
 
-      expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
+        expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
+      } finally {
+        mockGetLeasePeriods.response = temp;
+      }
     });
 
     it(`doesn't make any request when cancelling the period modal`, async () => {
