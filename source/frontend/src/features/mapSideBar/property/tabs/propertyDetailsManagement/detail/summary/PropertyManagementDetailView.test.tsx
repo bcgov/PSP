@@ -109,7 +109,7 @@ describe('PropertyManagementDetailView component', () => {
       managementPurposes: [getMockApiPropertyManagementPurpose()],
     };
     const { queryByTestId } = setup({ props: { propertyManagement: apiManagement } });
-    expect(queryByTestId("active-lease-information")).toHaveTextContent("No");
+    expect(queryByTestId('active-lease-information')).toHaveTextContent('No');
   });
 
   it('displays lease information for active lease', () => {
@@ -120,7 +120,7 @@ describe('PropertyManagementDetailView component', () => {
       managementPurposes: [getMockApiPropertyManagementPurpose()],
     };
     const { queryByTestId } = setup({ props: { propertyManagement: apiManagement } });
-    expect(queryByTestId("active-lease-information")).toHaveTextContent("Yes (No Expiry Date)");
+    expect(queryByTestId('active-lease-information')).toHaveTextContent('Yes (No Expiry Date)');
   });
 
   it('displays lease information for active lease with expiry date', () => {
@@ -131,6 +131,6 @@ describe('PropertyManagementDetailView component', () => {
       managementPurposes: [getMockApiPropertyManagementPurpose()],
     };
     const { queryByTestId } = setup({ props: { propertyManagement: apiManagement } });
-    expect(queryByTestId("active-lease-information")).toHaveTextContent("Yes");
+    expect(queryByTestId('active-lease-information')).toHaveTextContent('Yes');
   });
 });
