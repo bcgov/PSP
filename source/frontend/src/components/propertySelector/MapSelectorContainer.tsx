@@ -55,10 +55,17 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
         }
         const pid = pidFromFeatureSet(property);
         const pin = pinFromFeatureSet(property);
-        if (!pid || !pin) {
+        if (!pid && !pin) {
           return property;
         }
-        const pimsProperty = await loadProperties({ PID: pid, PIN: pin });
+        const queryObject = {};
+        if (pid.length > 0) {
+          queryObject['PID'] = pid;
+        }
+        if (isValidId(+pin)) {
+          queryObject['PIN'] = pin;
+        }
+        const pimsProperty = await loadProperties(queryObject);
         if (pimsProperty.features.length > 0) {
           property.pimsFeature = pimsProperty.features[0];
         }

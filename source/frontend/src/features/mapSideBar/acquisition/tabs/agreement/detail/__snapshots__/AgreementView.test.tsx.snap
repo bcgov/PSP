@@ -179,7 +179,6 @@ exports[`AgreementView component > renders as expected 1`] = `
 
 .c9 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c3 {
