@@ -15,7 +15,6 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -55,7 +54,6 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -94,7 +92,6 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -134,7 +131,6 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -174,7 +170,6 @@ exports[`LtsaTransferSubForm component > renders transfer sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div

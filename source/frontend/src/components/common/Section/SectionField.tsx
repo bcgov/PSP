@@ -54,5 +54,4 @@ export const ContentCol = styled(Col)`
 
 export const StyledFieldLabel = styled.label`
   font-weight: bold;
-  white-space: nowrap;
 `;
