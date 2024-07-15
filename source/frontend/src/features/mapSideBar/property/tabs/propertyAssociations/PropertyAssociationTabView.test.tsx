@@ -166,22 +166,24 @@ describe('PropertyAssociationTabView component', () => {
       associations: fakeAssociations,
       associatedLeases: [{ id: 34, expiryDate: '2024-01-01' } as ApiGen_Concepts_Lease],
       associatedLeaseTenants: [],
-      associatedLeaseRenewals: [{
-        id: 1,
-        leaseId: 34,
-        commencementDt: '',
-        expiryDt: '2030-07-07',
-        isExercised: true,
-        renewalNote: '',
-        lease: undefined,
-        appCreateTimestamp: '',
-        appLastUpdateTimestamp: '',
-        appLastUpdateUserid: '',
-        appCreateUserid: '',
-        appLastUpdateUserGuid: '',
-        appCreateUserGuid: '',
-        rowVersion: 0
-      }]
+      associatedLeaseRenewals: [
+        {
+          id: 1,
+          leaseId: 34,
+          commencementDt: '',
+          expiryDt: '2030-07-07',
+          isExercised: true,
+          renewalNote: '',
+          lease: undefined,
+          appCreateTimestamp: '',
+          appLastUpdateTimestamp: '',
+          appLastUpdateUserid: '',
+          appCreateUserid: '',
+          appLastUpdateUserGuid: '',
+          appCreateUserGuid: '',
+          rowVersion: 0,
+        },
+      ],
     });
     expect(getByText('Jul 7, 2030')).toBeVisible();
   });

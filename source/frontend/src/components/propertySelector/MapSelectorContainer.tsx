@@ -70,6 +70,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
     [addSelectedProperties, loadProperties],
   );
 
+  console.log(lastSelectedProperty, modifiedMapProperties);
   return (
     <>
       <PropertySelectorTabsView
@@ -90,6 +91,8 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
                       getPropertyName(featuresetToMapProperty(p)).value ===
                       getPropertyName(featuresetToMapProperty(lastSelectedProperty)).value,
                   )
+                : modifiedMapProperties?.length
+                ? modifiedMapProperties[0]
                 : undefined // use the property from the modified properties list from the parent, for consistency.
             }
           />

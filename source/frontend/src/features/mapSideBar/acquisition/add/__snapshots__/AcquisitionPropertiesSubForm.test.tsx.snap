@@ -409,7 +409,9 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
                       </div>
                       <div
                         class="c9 text-left col"
-                      />
+                      >
+                        123-456-789
+                      </div>
                     </div>
                     <div
                       class="pb-2 row"
@@ -457,7 +459,9 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
                       </div>
                       <div
                         class="c9 text-left col"
-                      />
+                      >
+                        4 - Cannot determine
+                      </div>
                     </div>
                     <div
                       class="pb-2 row"
@@ -473,7 +477,9 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
                       </div>
                       <div
                         class="c9 text-left col"
-                      />
+                      >
+                        12 - Cannot determine
+                      </div>
                     </div>
                     <div
                       class="row"
