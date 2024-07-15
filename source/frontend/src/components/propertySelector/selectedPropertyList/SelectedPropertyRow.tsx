@@ -1,4 +1,5 @@
 import { getIn, useFormikContext } from 'formik';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { RemoveButton } from '@/components/common/buttons';
@@ -20,9 +21,12 @@ export const SelectedPropertyRow: React.FunctionComponent<
   React.PropsWithChildren<ISelectedPropertyRowProps>
 > = ({ nameSpace, onRemove, index, property }) => {
   const { setFieldTouched, touched } = useFormikContext();
-  if (getIn(touched, `${nameSpace}.name`) !== true) {
-    setFieldTouched(`${nameSpace}.name`);
-  }
+  useEffect(() => {
+    if (getIn(touched, `${nameSpace}.name`) !== true) {
+      setFieldTouched(`${nameSpace}.name`);
+    }
+  }, [nameSpace, setFieldTouched, touched]);
+
   const propertyName = getPropertyName(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
