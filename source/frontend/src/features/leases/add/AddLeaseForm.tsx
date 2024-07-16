@@ -28,15 +28,16 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
   propertyInfo,
 }) => {
   const defaultFormLease = getDefaultFormLease();
-  const apiFormLease = LeaseFormModel.toApi(defaultFormLease);
+
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
-  apiFormLease.consultations = getConsultations(apiFormLease, consultationTypes);
   if (propertyInfo) {
     defaultFormLease.properties = [];
     defaultFormLease.properties.push(FormLeaseProperty.fromMapProperty(propertyInfo));
     defaultFormLease.regionId = propertyInfo.region ? propertyInfo.region.toString() : '';
   }
+  const apiFormLease = LeaseFormModel.toApi(defaultFormLease);
+  apiFormLease.consultations = getConsultations(apiFormLease, consultationTypes);
 
   const handleSubmit = async (
     values: LeaseFormModel,
