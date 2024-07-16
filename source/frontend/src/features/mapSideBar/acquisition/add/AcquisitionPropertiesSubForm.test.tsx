@@ -3,7 +3,6 @@ import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
