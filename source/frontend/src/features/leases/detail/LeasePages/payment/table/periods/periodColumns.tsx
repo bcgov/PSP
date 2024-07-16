@@ -29,7 +29,7 @@ import { formatMoney } from '@/utils/numberFormatUtils';
 
 import { FormLeasePeriod, LeasePeriodByCategoryProjection } from '../../models';
 
-export interface IPaymentColumnProps {
+export interface IPeriodColumnProps {
   onEdit: (values: FormLeasePeriod) => void;
   onDelete: (values: FormLeasePeriod) => void;
   onGenerate: () => void;
@@ -37,12 +37,12 @@ export interface IPaymentColumnProps {
   gstConstant?: ISystemConstant;
 }
 
-export const getLeasePaymentColumns = ({
+export const getLeasePeriodColumns = ({
   onEdit,
   onDelete,
   onGenerate,
   leaseTypeCode,
-}: IPaymentColumnProps): ColumnWithProps<FormLeasePeriod>[] => {
+}: IPeriodColumnProps): ColumnWithProps<FormLeasePeriod>[] => {
   return [
     {
       Header: '',

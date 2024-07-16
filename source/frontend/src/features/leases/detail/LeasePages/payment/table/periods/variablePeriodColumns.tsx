@@ -11,7 +11,7 @@ import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generat
 import { formatMoney, stringToFragment } from '@/utils';
 
 import { LeasePeriodByCategoryProjection } from '../../models';
-import { renderExpectedTotal } from './paymentColumns';
+import { renderExpectedTotal } from './periodColumns';
 
 export const getLeaseVariablePeriodColumns =
   (): ColumnWithProps<LeasePeriodByCategoryProjection>[] => [
