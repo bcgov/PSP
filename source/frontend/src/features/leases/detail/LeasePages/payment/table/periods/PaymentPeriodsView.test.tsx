@@ -19,7 +19,6 @@ import { createRef } from 'react';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './PaymentPeriodsView';
 import { defaultFormLeasePeriod, FormLeasePayment } from '../../models';
-import { LEASE_PAYMENT_CATEGORY_TYPES } from '@/constants/API';
 import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 
 const history = createMemoryHistory();

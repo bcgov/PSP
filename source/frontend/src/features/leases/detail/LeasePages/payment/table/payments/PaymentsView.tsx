@@ -12,10 +12,10 @@ import {
   defaultFormLeasePayment,
   FormLeasePayment,
   FormLeasePeriod,
-  FormLeasePeriodWithCategory,
+  LeasePeriodByCategoryProjection,
 } from '../../models';
 import * as PaymentStyles from '../../styles';
-import { getLeaseVariablePeriodColumns } from '../periods/columns';
+import { getLeaseVariablePeriodColumns } from '../periods/variablePeriodColumns';
 import { getActualsColumns } from './paymentsColumns';
 
 export interface IPaymentsViewProps {
@@ -39,24 +39,10 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
   period,
 }) => {
   const variablePaymentColumns = getLeaseVariablePeriodColumns();
-  const variablePaymentData: FormLeasePeriodWithCategory[] = [
-    { category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE, ...period },
-    {
-      category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL,
-      ...period,
-      isGstEligible: period?.isAdditionalRentGstEligible,
-      paymentAmount: period?.additionalRentPaymentAmount ?? 0,
-      leasePmtFreqTypeCode: period?.additionalRentFreqTypeCode,
-      gstAmount: period?.additionalRentGstAmount,
-    },
-    {
-      category: ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL,
-      ...period,
-      isGstEligible: period?.isVariableRentGstEligible,
-      paymentAmount: period?.variableRentPaymentAmount ?? 0,
-      leasePmtFreqTypeCode: period?.variableRentFreqTypeCode,
-      gstAmount: period?.variableRentGstAmount,
-    },
+  const variablePaymentData: LeasePeriodByCategoryProjection[] = [
+    new LeasePeriodByCategoryProjection(period, ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE),
+    new LeasePeriodByCategoryProjection(period, ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL),
+    new LeasePeriodByCategoryProjection(period, ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL),
   ];
   const columns = useMemo(
     () =>
@@ -75,7 +61,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
     <>
       {period?.isVariable === 'true' && (
         <Section className="ml-10 p-0">
-          <PaymentStyles.StyledPaymentTable<React.FC<TableProps<FormLeasePeriodWithCategory>>>
+          <PaymentStyles.StyledPaymentTable<React.FC<TableProps<LeasePeriodByCategoryProjection>>>
             name="variablePeriodTable"
             columns={variablePaymentColumns}
             data={variablePaymentData ?? []}

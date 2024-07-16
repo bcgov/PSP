@@ -14,7 +14,7 @@ import { prettyFormatDate } from '@/utils';
 
 import { defaultFormLeasePeriod, FormLeasePayment, FormLeasePeriod } from '../../models';
 import PaymentsView from '../payments/PaymentsView';
-import { getLeasePeriodColumns } from './columns';
+import { getLeasePaymentColumns } from './paymentColumns';
 
 export interface IPeriodPaymentsViewProps {
   onEdit: (values: FormLeasePeriod) => void;
@@ -42,7 +42,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
 }) => {
   const columns = useMemo(
     () =>
-      getLeasePeriodColumns({
+      getLeasePaymentColumns({
         onEdit,
         onDelete: onDelete,
         onGenerate,
