@@ -120,7 +120,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   }, [activitiesUpdated]);
 
   const handleSubmit = async (values: CompensationRequisitionFormModel) => {
-    if (values.status === 'final') {
+    if (initialValues.status !== 'final' && values.status === 'final') {
       setShowModal(true);
     } else {
       await onSave(values);
