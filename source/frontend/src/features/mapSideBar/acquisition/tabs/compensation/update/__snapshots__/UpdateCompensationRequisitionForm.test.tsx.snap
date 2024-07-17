@@ -208,7 +208,6 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c9 {
@@ -651,8 +650,8 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                 </span>
                 <span
                   class="tooltip-icon"
-                  data-testid="tooltip-icon-contactInfoToolTip"
-                  id="contactInfoToolTip"
+                  data-testid="tooltip-icon-select-properties"
+                  id="select-properties"
                 >
                   <svg
                     class="tooltip-icon ml-4 mb-1"

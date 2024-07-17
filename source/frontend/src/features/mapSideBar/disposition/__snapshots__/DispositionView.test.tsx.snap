@@ -352,7 +352,6 @@ exports[`DispositionView component > renders as expected 1`] = `
 
 .c32 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c35 {

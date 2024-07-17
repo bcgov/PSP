@@ -353,7 +353,6 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
 
 .c27 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c25:hover {

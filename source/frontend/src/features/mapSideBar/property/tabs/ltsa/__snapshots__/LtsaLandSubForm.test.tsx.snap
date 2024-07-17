@@ -15,7 +15,6 @@ exports[`LtsaLandSubForm component > renders charge sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -55,7 +54,6 @@ exports[`LtsaLandSubForm component > renders charge sub form 1`] = `
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -90,7 +88,6 @@ PLAN 24843
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -170,7 +167,6 @@ PLAN 24843
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -204,7 +200,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -284,7 +279,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -317,7 +311,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -397,7 +390,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div

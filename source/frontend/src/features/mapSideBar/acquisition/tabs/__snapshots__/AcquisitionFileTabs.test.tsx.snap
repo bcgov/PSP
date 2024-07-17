@@ -82,7 +82,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 
 .c6 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c8 {
