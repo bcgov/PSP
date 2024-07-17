@@ -208,8 +208,39 @@ export class FormLeasePayment {
   }
 }
 
-export class FormLeasePeriodWithCategory extends FormLeasePeriod {
-  category: ApiGen_CodeTypes_LeasePaymentCategoryTypes;
+export class LeasePeriodByCategoryProjection {
+  readonly leasePmtFreqTypeCode: ApiGen_Base_CodeType<string> | null;
+  readonly paymentAmount: NumberFieldValue;
+  readonly isGstEligible: boolean | undefined;
+  readonly gstAmount: NumberFieldValue;
+  readonly payments: FormLeasePayment[];
+  readonly isTermExercised: boolean | undefined;
+  readonly category: ApiGen_CodeTypes_LeasePaymentCategoryTypes;
+
+  constructor(
+    leasePeriod: FormLeasePeriod | undefined,
+    category: ApiGen_CodeTypes_LeasePaymentCategoryTypes,
+  ) {
+    this.leasePmtFreqTypeCode = leasePeriod?.leasePmtFreqTypeCode ?? null;
+    this.paymentAmount = leasePeriod?.paymentAmount ?? 0;
+    this.isGstEligible = leasePeriod?.isGstEligible;
+    this.gstAmount = leasePeriod?.gstAmount ?? 0;
+    this.payments = leasePeriod?.payments ?? [];
+    this.isTermExercised = leasePeriod?.isTermExercised;
+    this.category = category ?? ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE;
+
+    if (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL) {
+      this.isGstEligible = leasePeriod?.isAdditionalRentGstEligible;
+      this.paymentAmount = leasePeriod?.additionalRentPaymentAmount ?? 0;
+      this.leasePmtFreqTypeCode = leasePeriod?.additionalRentFreqTypeCode ?? null;
+      this.gstAmount = leasePeriod?.additionalRentGstAmount ?? 0;
+    } else if (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL) {
+      this.isGstEligible = leasePeriod?.isVariableRentGstEligible;
+      this.paymentAmount = leasePeriod?.variableRentPaymentAmount ?? 0;
+      this.leasePmtFreqTypeCode = leasePeriod?.variableRentFreqTypeCode ?? null;
+      this.gstAmount = leasePeriod?.variableRentGstAmount ?? 0;
+    }
+  }
 }
 
 export const defaultFormLeasePayment: FormLeasePayment = {
