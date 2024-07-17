@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import TooltipIcon from '@/components/common/TooltipIcon';
+import { renderTooltip } from '@/utils/formUtils';
 
 interface ISectionFieldProps {
   label: React.ReactNode | string | null;
@@ -25,12 +25,11 @@ export const SectionField: React.FunctionComponent<
       <Col xs={props.labelWidth ?? '4'} className="pr-0 text-left">
         {props.label && (
           <StyledFieldLabel>
-            {props.label}:
-            {props.tooltip && <span className="ml-2">{renderTooltip(props.tooltip)}</span>}
+            {props.label}:{props.tooltip && <span>{renderTooltip(props.tooltip)}</span>}
           </StyledFieldLabel>
         )}
       </Col>
-      <StyledCol
+      <ContentCol
         xs={props.contentWidth ?? true}
         className={cx(props.valueClassName, {
           required: props.required,
@@ -39,23 +38,12 @@ export const SectionField: React.FunctionComponent<
         data-testid={props.valueTestId}
       >
         {props.children}
-      </StyledCol>
+      </ContentCol>
     </Row>
   );
 };
 
-function renderTooltip(tooltip?: React.ReactNode): React.ReactNode {
-  if (tooltip === undefined) {
-    return null;
-  }
-  if (typeof tooltip === 'string' || typeof tooltip === 'number') {
-    return <TooltipIcon toolTipId="section-field-tooltip" toolTip={tooltip} placement="auto" />;
-  }
-  // we got a custom tooltip - render that
-  return tooltip;
-}
-
-export const StyledCol = styled(Col)`
+export const ContentCol = styled(Col)`
   &.required::before {
     content: '*';
     position: absolute;

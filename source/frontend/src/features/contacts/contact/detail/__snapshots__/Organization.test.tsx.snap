@@ -234,15 +234,13 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
             class="pb-2 row"
           >
             <div
-              class="pr-0 text-left col-3"
+              class="pr-0 text-left col-auto"
             >
               <label
                 class="c3"
               >
                 Connected to this organization:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"

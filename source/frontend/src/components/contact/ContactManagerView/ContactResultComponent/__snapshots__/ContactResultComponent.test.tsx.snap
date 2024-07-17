@@ -37,6 +37,12 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
+.c6.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -544,7 +550,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Update/View
+            Edit/View
           </div>
         </div>
       </div>

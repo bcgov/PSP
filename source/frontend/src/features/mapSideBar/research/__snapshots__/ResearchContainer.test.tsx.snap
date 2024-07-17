@@ -32,6 +32,12 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -136,7 +142,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c13 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -162,7 +168,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   margin: auto;
 }
 
-.c25 {
+.c26 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -179,17 +185,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c17 {
+.c18 {
   height: 100%;
 }
 
-.c18 {
+.c19 {
   overflow: auto;
   height: 100%;
   width: 100%;
 }
 
-.c24 {
+.c25 {
   overflow: auto;
   height: 100%;
   width: 100%;
@@ -217,10 +223,13 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 }
 
 .c0 {
+  padding: 1.6rem;
+}
+
+.c0.expanded {
   min-width: 90rem;
   height: 100%;
   position: relative;
-  padding: 1.6rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -239,7 +248,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c15 {
+.c17 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -248,12 +257,13 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   flex: 1;
 }
 
-.c16 {
-  height: 100%;
+.c8 {
   width: 100%;
+  height: 100%;
+  display: contents;
 }
 
-.c8 {
+.c9 {
   position: relative;
 }
 
@@ -267,61 +277,60 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c26 {
+.c27 {
   height: 100%;
 }
 
-.c26 .tab-content {
+.c27 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
-.c26 .tab-content .tab-pane {
+.c27 .tab-content .tab-pane {
   position: relative;
 }
 
-.c27 {
+.c28 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c27 .nav-tabs {
+.c28 .nav-tabs {
   height: auto;
 }
 
-.c27 .nav-item {
+.c28 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 1.2rem;
 }
 
-.c27 .nav-item:hover {
+.c28 .nav-item:hover {
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c27 .nav-item.active {
+.c28 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
-.c28 {
+.c29 {
   padding-top: 1rem;
 }
 
-.c29 {
+.c30 {
   text-align: right;
 }
 
-.c31 {
+.c32 {
   font-weight: bold;
   border-bottom: 0.2rem solid;
   margin-bottom: 2rem;
 }
 
-.c30 {
+.c31 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -329,23 +338,28 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c33.required::before {
+.c34.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c32 {
+.c33 {
   font-weight: bold;
 }
 
-.c11 {
+.c13 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c14 {
+.c11 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c16 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -364,13 +378,13 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   background-color: undefined;
 }
 
-.c12 {
+.c14 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.c9 {
+.c10 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -378,7 +392,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c10 {
+.c12 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -389,25 +403,25 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   flex-direction: column;
 }
 
-.c19 {
+.c20 {
   text-align: left;
   padding: 0px;
   margin: 0px;
   width: 100%;
 }
 
-.c20 {
+.c21 {
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
 }
 
-.c20.selected {
+.c21.selected {
   font-weight: bold;
   cursor: default;
 }
 
-.c23 {
+.c24 {
   font-size: 1.5rem;
   border-radius: 50%;
   opacity: 0.8;
@@ -428,7 +442,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c21 {
+.c22 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -445,7 +459,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-bottom: 1px solid;
 }
 
-.c22 {
+.c23 {
   font-size: 1.4rem;
   line-height: 2.2rem;
 }
@@ -457,7 +471,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
     />
     <div />
     <div
-      class="c0"
+      class="c0 expanded"
     >
       <div
         class="row"
@@ -559,220 +573,224 @@ exports[`ResearchContainer component > renders as expected 1`] = `
         class="c8"
       >
         <div
-          class="c9 no-gutters row"
+          class="c9"
         >
           <div
-            class="col-7"
+            class="c10 no-gutters row"
           >
             <div
-              class="row"
+              class="col-7"
             >
               <div
-                class="pr-0 text-left col-3"
+                class="row"
               >
-                <strong>
-                  <label>
+                <div
+                  class="pr-0 text-left col-3"
+                >
+                  <label
+                    class="c11"
+                  >
                     File #:
                   </label>
-                </strong>
+                </div>
+                <div
+                  class="pl-1 text-left col-9"
+                >
+                  R-109
+                </div>
               </div>
               <div
-                class="pl-1 text-left col-9"
+                class="row"
               >
-                R-109
-              </div>
-            </div>
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <strong>
-                  <label>
+                <div
+                  class="pr-0 text-left col-3"
+                >
+                  <label
+                    class="c11"
+                  >
                     File name:
                   </label>
-                </strong>
+                </div>
+                <div
+                  class="pl-1 text-left col-9"
+                >
+                  fsdgsdf
+                </div>
               </div>
               <div
-                class="pl-1 text-left col-9"
+                class="row"
               >
-                fsdgsdf
-              </div>
-            </div>
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <strong>
-                  <label>
-                    MoTI region:
+                <div
+                  class="pr-0 text-left col-3"
+                >
+                  <label
+                    class="c11"
+                  >
+                    MOTI region:
                   </label>
-                </strong>
+                </div>
+                <div
+                  class="pl-1 text-left col-9"
+                />
               </div>
               <div
-                class="pl-1 text-left col-9"
-              />
-            </div>
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
+                class="row"
               >
-                <strong>
-                  <label>
+                <div
+                  class="pr-0 text-left col-3"
+                >
+                  <label
+                    class="c11"
+                  >
                     Ministry district:
                   </label>
-                </strong>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              />
-            </div>
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <strong>
-                  <label>
-                    Historical File #:
-                  </label>
-                </strong>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                <div />
-              </div>
-            </div>
-          </div>
-          <div
-            class="col"
-          >
-            <div
-              class="c10"
-            >
-              <div
-                class="no-gutters row"
-              >
-                <div
-                  class="text-right col"
-                >
-                  <span
-                    class="c11"
-                  >
-                    <strong>
-                      Created: 
-                    </strong>
-                    Sep 2, 2022
-                     by
-                     
-                    <span
-                      class="tooltip-icon"
-                      data-testid="tooltip-icon-userNameTooltip"
-                      id="userNameTooltip"
-                    >
-                      <strong>
-                        admin
-                      </strong>
-                    </span>
-                  </span>
                 </div>
-              </div>
-              <div
-                class="no-gutters row"
-              >
                 <div
-                  class="text-right col"
-                >
-                  <span
-                    class="c11"
-                  >
-                    <strong>
-                      Updated: 
-                    </strong>
-                    Sep 2, 2022
-                     
-                    by
-                     
-                    <span
-                      class="tooltip-icon"
-                      data-testid="tooltip-icon-userNameTooltip"
-                      id="userNameTooltip"
-                    >
-                      <strong>
-                        admin
-                      </strong>
-                    </span>
-                  </span>
-                </div>
-              </div>
-              <div
-                class="c12 no-gutters justify-content-end align-items-end row"
-              >
-                <div
-                  class="col"
+                  class="pl-1 text-left col-9"
                 />
+              </div>
+              <div
+                class="row"
+              >
                 <div
-                  class="align-self-end d-flex col-auto"
+                  class="pr-0 text-left col-3"
                 >
-                  <span
+                  <label
                     class="c11"
                   >
-                    <b>
-                      File:
-                    </b>
-                  </span>
+                    Historical file #:
+                  </label>
+                </div>
+                <div
+                  class="pl-1 text-left col-9"
+                >
+                  <div />
+                </div>
+              </div>
+            </div>
+            <div
+              class="col"
+            >
+              <div
+                class="c12"
+              >
+                <div
+                  class="no-gutters row"
+                >
                   <div
-                    class="c13 c14"
+                    class="text-right col"
                   >
-                    <svg
-                      fill="currentColor"
-                      height="16"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="16"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <span
+                      class="c13"
                     >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
-                      />
-                    </svg>
-                    ACTIVE
+                      <strong>
+                        Created: 
+                      </strong>
+                      Sep 2, 2022
+                       by
+                       
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-userNameTooltip"
+                        id="userNameTooltip"
+                      >
+                        <strong>
+                          admin
+                        </strong>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="text-right col"
+                  >
+                    <span
+                      class="c13"
+                    >
+                      <strong>
+                        Updated: 
+                      </strong>
+                      Sep 2, 2022
+                       
+                      by
+                       
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-userNameTooltip"
+                        id="userNameTooltip"
+                      >
+                        <strong>
+                          admin
+                        </strong>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="c14"
+                >
+                  <div
+                    class="no-gutters justify-content-end align-items-end row"
+                  >
+                    <div
+                      class="col"
+                    />
+                    <div
+                      class="align-self-end d-flex col-auto"
+                    >
+                      <span
+                        class="c13"
+                      >
+                        <b>
+                          File:
+                        </b>
+                      </span>
+                      <div
+                        class="c15 c16"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
+                          />
+                        </svg>
+                        ACTIVE
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-      <div
-        class="c15"
-      >
         <div
-          class="c16"
+          class="c17"
         >
           <div
-            class="c17 no-gutters row"
+            class="c18 no-gutters row"
           >
             <div
-              class="c18 d-flex flex-column col-3"
+              class="c19 d-flex flex-column col-3"
             >
               <div
-                class="c19"
+                class="c20"
               >
                 <div
-                  class="c20 no-gutters selected row"
+                  class="c21 no-gutters selected row"
                   data-testid="menu-item-row-0"
                 >
                   <div
@@ -798,17 +816,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     File Summary
                   </div>
                   <div
-                    class="c21"
+                    class="c22"
                   >
                     <span
-                      class="c22"
+                      class="c23"
                     >
                       Properties
                     </span>
                   </div>
                 </div>
                 <div
-                  class="c20 no-gutters  row"
+                  class="c21 no-gutters  row"
                   data-testid="menu-item-row-1"
                 >
                   <div
@@ -818,7 +836,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     class="pr-2 col-auto"
                   >
                     <div
-                      class="c23"
+                      class="c24"
                     >
                       1
                     </div>
@@ -832,16 +850,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c24 col-9"
+              class="c25 col-9"
             >
               <div
-                class="c25"
+                class="c26"
               >
                 <div
-                  class="c26"
+                  class="c27"
                 >
                   <nav
-                    class="c27 nav nav-tabs"
+                    class="c28 nav nav-tabs"
                     role="tablist"
                   >
                     <a
@@ -863,16 +881,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       role="tabpanel"
                     >
                       <div
-                        class="c28"
+                        class="c29"
                       >
                         <div
-                          class="c29 mr-3 my-1"
+                          class="c30 mr-3 my-1"
                         />
                         <div
-                          class="c30 form-section"
+                          class="c31 form-section"
                         >
                           <h2
-                            class="c31"
+                            class="c32"
                           >
                             <div
                               class="no-gutters row"
@@ -894,14 +912,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Ministry project
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               >
                                 <div>
                                   00048 CLAIMS
@@ -911,10 +929,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c30 form-section"
+                          class="c31 form-section"
                         >
                           <h2
-                            class="c31"
+                            class="c32"
                           >
                             <div
                               class="no-gutters row"
@@ -936,14 +954,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Road name
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               >
                                 Test road name
                               </div>
@@ -955,14 +973,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Road alias
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               >
                                 Test road alias
                               </div>
@@ -970,10 +988,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c30 form-section"
+                          class="c31 form-section"
                         >
                           <h2
-                            class="c31"
+                            class="c32"
                           >
                             <div
                               class="no-gutters row"
@@ -995,14 +1013,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Research purpose
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               />
                             </div>
                             <div
@@ -1012,14 +1030,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Request date
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               >
                                  
                                 Apr 14, 2022
@@ -1032,14 +1050,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Source of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               >
                                 Headquarters (HQ)
                               </div>
@@ -1051,14 +1069,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Requester
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               >
                                 Dairy Queen Forever! Property Management
                               </div>
@@ -1070,24 +1088,24 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Description of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               />
                             </div>
                             a request description
                           </div>
                         </div>
                         <div
-                          class="c30 form-section"
+                          class="c31 form-section"
                         >
                           <h2
-                            class="c31"
+                            class="c32"
                           >
                             <div
                               class="no-gutters row"
@@ -1109,14 +1127,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Research completed on
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               >
                                 Mar 30, 2022
                               </div>
@@ -1128,24 +1146,24 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Result of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               />
                             </div>
                             A research result
                           </div>
                         </div>
                         <div
-                          class="c30 form-section"
+                          class="c31 form-section"
                         >
                           <h2
-                            class="c31"
+                            class="c32"
                           >
                             <div
                               class="no-gutters row"
@@ -1167,14 +1185,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Expropriation?
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               >
                                 No
                               </div>
@@ -1186,14 +1204,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c32"
+                                  class="c33"
                                 >
                                   Expropriation notes
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c33 text-left col"
+                                class="c34 text-left col"
                               />
                             </div>
                             An expropriation note

@@ -8,9 +8,9 @@ namespace Pims.Dal.Entities;
 
 [Table("PIMS_ACQUISITION_CHECKLIST_ITEM")]
 [Index("AcquisitionFileId", Name = "ACQCKI_ACQUISITION_FILE_ID_IDX")]
-[Index("AcqChklstItemStatusTypeCode", Name = "ACQCKI_ACQ_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
 [Index("AcqChklstItemTypeCode", Name = "ACQCKI_ACQ_CHKLST_ITEM_TYPE_CODE_IDX")]
 [Index("AcquisitionFileId", "AcqChklstItemTypeCode", Name = "ACQCKI_ACQ_FILE_CHKLST_ITEM_UK_IDX", IsUnique = true)]
+[Index("ChklstItemStatusTypeCode", Name = "ACQCKI_CHKLST_ITEM_STATUS_TYPE_CODE_IDX")]
 public partial class PimsAcquisitionChecklistItem
 {
     [Key]
@@ -24,10 +24,13 @@ public partial class PimsAcquisitionChecklistItem
     [StringLength(20)]
     public string AcqChklstItemTypeCode { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_CHKLST_ITEM_STATUS_TYPE table.
+    /// </summary>
     [Required]
-    [Column("ACQ_CHKLST_ITEM_STATUS_TYPE_CODE")]
+    [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string AcqChklstItemStatusTypeCode { get; set; }
+    public string ChklstItemStatusTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -80,10 +83,6 @@ public partial class PimsAcquisitionChecklistItem
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("AcqChklstItemStatusTypeCode")]
-    [InverseProperty("PimsAcquisitionChecklistItems")]
-    public virtual PimsAcqChklstItemStatusType AcqChklstItemStatusTypeCodeNavigation { get; set; }
-
     [ForeignKey("AcqChklstItemTypeCode")]
     [InverseProperty("PimsAcquisitionChecklistItems")]
     public virtual PimsAcqChklstItemType AcqChklstItemTypeCodeNavigation { get; set; }
@@ -91,4 +90,8 @@ public partial class PimsAcquisitionChecklistItem
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsAcquisitionChecklistItems")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+
+    [ForeignKey("ChklstItemStatusTypeCode")]
+    [InverseProperty("PimsAcquisitionChecklistItems")]
+    public virtual PimsChklstItemStatusType ChklstItemStatusTypeCodeNavigation { get; set; }
 }

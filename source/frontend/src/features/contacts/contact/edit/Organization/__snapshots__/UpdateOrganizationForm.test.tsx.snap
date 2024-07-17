@@ -38,6 +38,12 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c8.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -753,15 +759,13 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="pb-2 row"
             >
               <div
-                class="pr-0 text-left col-3"
+                class="pr-0 text-left col-auto"
               >
                 <label
                   class="c4"
                 >
                   Connected to this organization:
-                  <span
-                    class="ml-2"
-                  >
+                  <span>
                     <span
                       class="tooltip-icon"
                       data-testid="tooltip-icon-section-field-tooltip"
@@ -1619,6 +1623,12 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c2.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c2.btn:hover {

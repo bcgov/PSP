@@ -74,6 +74,12 @@ namespace Pims.Api.Services
 
             MatchProperties(researchFile, userOverrideCodes);
 
+            // Update marker locations in the context of this file
+            foreach (var incomingResearchProperty in researchFile.PimsPropertyResearchFiles)
+            {
+                _propertyService.PopulateNewFileProperty(incomingResearchProperty);
+            }
+
             var newResearchFile = _researchFileRepository.Add(researchFile);
             _researchFileRepository.CommitTransaction();
             return newResearchFile;
@@ -96,14 +102,15 @@ namespace Pims.Api.Services
 
         public PimsResearchFile UpdateProperties(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
-            _logger.LogInformation("Updating research file properties...");
-            _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
+            _logger.LogInformation("Updating research file properties with ResearchFile id: {id}", researchFile.Internal_Id);
+            _user.ThrowIfNotAllAuthorized(Permissions.ResearchFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
             MatchProperties(researchFile, userOverrideCodes);
 
             // Get the current properties in the research file
-            var currentProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Internal_Id);
+            var currentFileProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingResearchProperty in researchFile.PimsPropertyResearchFiles)
@@ -111,22 +118,37 @@ namespace Pims.Api.Services
                 // If the property is not new, check if the name has been updated.
                 if (incomingResearchProperty.Internal_Id != 0)
                 {
-                    PimsPropertyResearchFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingResearchProperty.Internal_Id);
+                    var needsUpdate = false;
+                    PimsPropertyResearchFile existingProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingResearchProperty.Internal_Id);
                     if (existingProperty.PropertyName != incomingResearchProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incomingResearchProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+
+                    var incomingGeom = incomingResearchProperty.Location;
+                    var existingGeom = existingProperty.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
+                        _propertyService.UpdateFilePropertyLocation(incomingResearchProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
                         _researchFilePropertyRepository.Update(existingProperty);
                     }
                 }
                 else
                 {
                     // New property needs to be added
-                    _researchFilePropertyRepository.Add(incomingResearchProperty);
+                    var newFileProperty = _propertyService.PopulateNewFileProperty(incomingResearchProperty);
+                    _researchFilePropertyRepository.Add(newFileProperty);
                 }
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyResearchFile> differenceSet = currentProperties.Where(x => !researchFile.PimsPropertyResearchFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsPropertyResearchFile> differenceSet = currentFileProperties.Where(x => !researchFile.PimsPropertyResearchFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 _researchFilePropertyRepository.Delete(deletedProperty);

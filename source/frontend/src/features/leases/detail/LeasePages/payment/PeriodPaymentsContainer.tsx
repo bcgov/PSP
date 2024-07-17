@@ -14,6 +14,7 @@ import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentR
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
@@ -69,7 +70,12 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
     setDeleteModalWarning,
     setConfirmDeleteModalValues,
     comfirmDeleteModalValues,
-  } = useDeletePeriodsPayments(deleteLeasePeriod, refreshLeasePeriods, onSuccess);
+  } = useDeletePeriodsPayments(
+    deleteLeasePeriod,
+    refreshLeasePeriods,
+    getLeasePeriods.response,
+    onSuccess,
+  );
 
   /**
    * Send the save request (either an update or an add). Use the response to update the parent lease.
@@ -122,7 +128,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
 
   const onEdit = useCallback(
     (values: FormLeasePeriod) => {
-      if (lease?.periods?.length === 0) {
+      if (getLeasePeriods?.response?.length === 0) {
         values = {
           ...values,
           startDate: isValidIsoDateTime(lease?.startDate) ? lease.startDate : '',
@@ -136,12 +142,14 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         values = {
           ...values,
           isGstEligible: isReceivableLease ? true : false,
+          isAdditionalRentGstEligible: isReceivableLease ? true : false,
+          isVariableRentGstEligible: isReceivableLease ? true : false,
         };
       }
 
       setEditModalValues(values);
     },
-    [lease],
+    [getLeasePeriods?.response?.length, lease?.paymentReceivableType?.id, lease.startDate],
   );
 
   const onEditPayment = useCallback((values: FormLeasePayment) => {
@@ -251,8 +259,19 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
   );
 };
 
-export const isActualGstEligible = (periodId: number, periods: FormLeasePeriod[]) => {
-  return !!find(periods, (period: FormLeasePeriod) => period.id === periodId)?.isGstEligible;
+export const isActualGstEligible = (
+  periodId: number,
+  periods: FormLeasePeriod[],
+  category: ApiGen_CodeTypes_LeasePaymentCategoryTypes,
+) => {
+  const period = find(periods, (period: FormLeasePeriod) => period.id === periodId);
+  return (
+    (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL &&
+      period?.isVariableRentGstEligible) ||
+    (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL &&
+      period?.isAdditionalRentGstEligible) ||
+    (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE && period?.isGstEligible)
+  );
 };
 
 export default PeriodPaymentsContainer;

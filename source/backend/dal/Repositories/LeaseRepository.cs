@@ -6,11 +6,9 @@ using System.Security.Claims;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
@@ -858,6 +856,27 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Update the renewals of a lease.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="rowVersion"></param>
+        /// <param name="renewals"></param>
+        /// <returns></returns>
+        public PimsLease UpdateLeaseRenewals(long leaseId, long? rowVersion, ICollection<PimsLeaseRenewal> renewals)
+        {
+            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseRenewals).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
+                 ?? throw new KeyNotFoundException();
+            if (existingLease.ConcurrencyControlNumber != rowVersion)
+            {
+                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
+            }
+
+            this.Context.UpdateChild<PimsLease, long, PimsLeaseRenewal, long>(l => l.PimsLeaseRenewals, leaseId, renewals.ToArray());
+
+            return GetNoTracking(existingLease.LeaseId);
+        }
+
+        /// <summary>
         /// Generate a query for the specified 'filter'.
         /// </summary>
         /// <param name="filter"></param>
@@ -874,7 +893,7 @@ namespace Pims.Dal.Repositories
                             .ThenInclude(p => p.Address)
                         .Include(l => l.PimsPropertyLeases)
                             .ThenInclude(p => p.AreaUnitTypeCodeNavigation)
-                        .Include(pl => pl.PimsPropertyLeases)
+                        .Include(l => l.PimsPropertyLeases)
                             .ThenInclude(p => p.Property)
                             .ThenInclude(n => n.PimsHistoricalFileNumbers)
                             .ThenInclude(t => t.HistoricalFileNumberTypeCodeNavigation)
@@ -887,8 +906,9 @@ namespace Pims.Dal.Repositories
                             .ThenInclude(t => t.Person)
                         .Include(l => l.PimsLeaseTenants)
                             .ThenInclude(t => t.Organization)
-                        .Include(p => p.RegionCodeNavigation)
+                        .Include(l => l.RegionCodeNavigation)
                         .Include(l => l.PimsLeasePeriods)
+                        .Include(l => l.PimsLeaseRenewals)
                         .AsNoTracking();
 
             if (loadPayments)
@@ -948,7 +968,7 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsLeaseChecklistItems
                 .Where(ci => ci.LeaseId == leaseId)
-                .Include(ci => ci.LeaseChklstItemStatusTypeCodeNavigation)
+                .Include(ci => ci.ChklstItemStatusTypeCodeNavigation)
                 .Include(ci => ci.LeaseChklstItemTypeCodeNavigation)
                     .ThenInclude(it => it.LeaseChklstSectionTypeCodeNavigation)
                 .AsNoTracking()
@@ -1079,17 +1099,25 @@ namespace Pims.Dal.Repositories
 
             var expiryStartDate = filter.ExpiryStartDate.ToNullableDateTime();
             var expiryEndDate = filter.ExpiryEndDate.ToNullableDateTime();
-            if (filter.ExpiryStartDate != null && filter.ExpiryEndDate != null)
+            if (expiryStartDate != null && expiryEndDate != null)
             {
-                predicateBuilder.And(l => l.OrigExpiryDate >= expiryStartDate && l.OrigExpiryDate <= expiryEndDate);
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max().HasValue ?
+                        l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max() >= expiryStartDate &&
+                          l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max() <= expiryEndDate :
+                        l.OrigExpiryDate >= expiryStartDate &&
+                          l.OrigExpiryDate <= expiryEndDate);
             }
-            else if (filter.ExpiryStartDate != null)
+            else if (expiryStartDate != null)
             {
-                predicateBuilder = predicateBuilder.And(l => l.OrigExpiryDate >= expiryStartDate);
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max().HasValue ?
+                        l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max() >= expiryStartDate :
+                        l.OrigExpiryDate >= expiryStartDate);
             }
-            else if (filter.ExpiryEndDate != null)
+            else if (expiryEndDate != null)
             {
-                predicateBuilder = predicateBuilder.And(l => l.OrigExpiryDate <= expiryEndDate);
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max().HasValue ?
+                        l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max() <= expiryEndDate :
+                        l.OrigExpiryDate <= expiryEndDate);
             }
 
             if (filter.RegionType.HasValue)

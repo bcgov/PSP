@@ -106,8 +106,10 @@ export const StyledAddButton = styled(Button)`
   &.btn.btn-primary:active {
     background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
   }
-  &.btn.btn-primary:hover {
+  &.btn.btn-primary:hover,
+  &.btn.btn-primary:focus {
     background-color: ${props => props.theme.css.pimsGreen80};
+    outline-color: ${props => props.theme.css.pimsGreen80};
   }
 `;
 

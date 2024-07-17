@@ -37,6 +37,12 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c18.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c18.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -279,7 +285,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 
 .c8 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -1322,9 +1327,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
               class="c3"
             >
               Historical file number:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"

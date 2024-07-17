@@ -37,6 +37,12 @@ exports[`AgreementView component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c7.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -544,9 +550,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                     class="c9"
                   >
                     Deposit due no later than:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
@@ -853,9 +857,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                     class="c9"
                   >
                     Deposit due no later than:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"

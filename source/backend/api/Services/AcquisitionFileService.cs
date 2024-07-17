@@ -120,7 +120,6 @@ namespace Pims.Api.Services
                     FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
                     FileAssignedDate = fileProperty.file.AssignedDate.HasValue ? fileProperty.file.AssignedDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                     FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
-                    //FileAcquisitionCompleted = fileProperty.file.CompletionDate.HasValue ? fileProperty.file.CompletionDate.Value.ToString("dd-MMM-yyyy") : string.Empty, TODO: Fix mappings
                     FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name)),
@@ -224,6 +223,12 @@ namespace Pims.Api.Services
 
             PopulateAcquisitionChecklist(acquisitionFile);
 
+            // Update marker locations in the context of this file
+            foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
+            {
+                _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
+            }
+
             acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
@@ -283,7 +288,7 @@ namespace Pims.Api.Services
 
         public PimsAcquisitionFile UpdateProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
-            _logger.LogInformation("Updating acquisition file properties...");
+            _logger.LogInformation("Updating acquisition file properties with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
 
@@ -299,8 +304,8 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            // Get the current properties in the research file
-            var currentProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
+            // Get the current properties in the acquisition file
+            var currentFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -308,22 +313,37 @@ namespace Pims.Api.Services
                 // If the property is not new, check if the name has been updated.
                 if (incomingAcquisitionProperty.Internal_Id != 0)
                 {
-                    PimsPropertyAcquisitionFile existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
-                    if (existingProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
+                    var needsUpdate = false;
+                    PimsPropertyAcquisitionFile existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingAcquisitionProperty.Internal_Id);
+                    if (existingFileProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
                     {
-                        existingProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
-                        _acquisitionFilePropertyRepository.Update(existingProperty);
+                        existingFileProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+
+                    var incomingGeom = incomingAcquisitionProperty.Location;
+                    var existingGeom = existingFileProperty.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
+                        _propertyService.UpdateFilePropertyLocation(incomingAcquisitionProperty, existingFileProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
+                        _acquisitionFilePropertyRepository.Update(existingFileProperty);
                     }
                 }
                 else
                 {
                     // New property needs to be added
-                    _acquisitionFilePropertyRepository.Add(incomingAcquisitionProperty);
+                    var newFileProperty = _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
+                    _acquisitionFilePropertyRepository.Add(newFileProperty);
                 }
             }
 
             // The ones not on the new set should be deleted
-            List<PimsPropertyAcquisitionFile> differenceSet = currentProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsPropertyAcquisitionFile> differenceSet = currentFileProperties.Where(x => !acquisitionFile.PimsPropertyAcquisitionFiles.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
@@ -331,6 +351,12 @@ namespace Pims.Api.Services
                 {
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
+
+                if (_acquisitionFilePropertyRepository.AcquisitionFilePropertyInCompensationReq(deletedProperty.PropertyAcquisitionFileId))
+                {
+                    throw new BusinessRuleViolationException("Acquisition File property can not be removed since it's assigned as a property for a compensation requisition");
+                }
+
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
 
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
@@ -339,7 +365,6 @@ namespace Pims.Api.Services
                     _acqFileRepository.CommitTransaction(); // TODO: this can only be removed if cascade deletes are implemented. EF executes deletes in alphabetic order.
                     _propertyRepository.Delete(deletedProperty.Property);
                 }
-
             }
 
             _acqFileRepository.CommitTransaction();
@@ -381,7 +406,7 @@ namespace Pims.Api.Services
                 {
                     _checklistRepository.Add(incomingItem);
                 }
-                else if (existingItem.AcqChklstItemStatusTypeCode != incomingItem.AcqChklstItemStatusTypeCode)
+                else if (existingItem.ChklstItemStatusTypeCode != incomingItem.ChklstItemStatusTypeCode)
                 {
                     _checklistRepository.Update(incomingItem);
                 }
@@ -625,7 +650,7 @@ namespace Pims.Api.Services
                         acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
-                else if (acquisitionProperty.Property.Pin.HasValue)
+                else if (acquisitionProperty.Property.Pin.HasValue && acquisitionProperty.Property.Pin != 0)
                 {
                     var pin = acquisitionProperty.Property.Pin.Value;
                     try
@@ -760,7 +785,7 @@ namespace Pims.Api.Services
                 var checklistItem = new PimsAcquisitionChecklistItem
                 {
                     AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
-                    AcqChklstItemStatusTypeCode = "INCOMP",
+                    ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                 };
 
                 acquisitionFile.PimsAcquisitionChecklistItems.Add(checklistItem);
@@ -774,7 +799,7 @@ namespace Pims.Api.Services
             {
                 return;
             }
-            var checklistStatusTypes = _lookupRepository.GetAllAcquisitionChecklistItemStatusTypes();
+            var checklistStatusTypes = _lookupRepository.GetAllChecklistItemStatusTypes();
             foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
                 if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && DateOnly.FromDateTime(acquisitionFile.AppCreateTimestamp) >= itemType.EffectiveDate)
@@ -783,9 +808,9 @@ namespace Pims.Api.Services
                     {
                         AcqChklstItemTypeCode = itemType.AcqChklstItemTypeCode,
                         AcqChklstItemTypeCodeNavigation = itemType,
-                        AcqChklstItemStatusTypeCode = "INCOMP",
+                        ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                         AcquisitionFileId = acquisitionFile.AcquisitionFileId,
-                        AcqChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == "INCOMP"),
+                        ChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString()),
                     };
 
                     pimsAcquisitionChecklistItems.Add(checklistItem);

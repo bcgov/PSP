@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
@@ -20,7 +21,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
         {
-            return _leasePaymentRepository.GetAll(startDate, endDate);
+            return _leasePaymentRepository.GetAllTracking(startDate, endDate);
         }
 
         public bool DeletePayment(long leaseId, PimsLeasePayment payment)
@@ -52,22 +53,40 @@ namespace Pims.Api.Services
             return updatedPayment;
         }
 
-        private static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
+        public static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
         {
-            decimal? expectedTotal = (parent.PaymentAmount ?? 0) + (parent.GstAmount ?? 0);
-            if (payment.PaymentAmountTotal == 0)
+            if (!Enum.TryParse(payment.LeasePaymentCategoryTypeCode, out LeasePaymentCategoryTypes leasePaymentCategoryType))
+            {
+                payment.LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString();
+            }
+            decimal? expectedTotal;
+            switch (leasePaymentCategoryType)
+            {
+                case LeasePaymentCategoryTypes.VBL:
+                    expectedTotal = (parent?.VblRentAgreedPmt ?? 0) + (parent?.VblRentGstAmount ?? 0);
+                    break;
+                case LeasePaymentCategoryTypes.ADDL:
+                    expectedTotal = (parent?.AddlRentAgreedPmt ?? 0) + (parent?.AddlRentGstAmount ?? 0);
+                    break;
+                case LeasePaymentCategoryTypes.BASE:
+                    expectedTotal = (parent?.PaymentAmount ?? 0) + (parent?.GstAmount ?? 0);
+                    break;
+                default:
+                    throw new InvalidOperationException();
+            }
+            if (payment?.PaymentAmountTotal == 0)
             {
                 return PimsLeasePaymentStatusTypes.UNPAID;
             }
-            else if (payment.PaymentAmountTotal < expectedTotal)
+            else if (payment?.PaymentAmountTotal < expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.PARTIAL;
             }
-            else if (payment.PaymentAmountTotal == expectedTotal)
+            else if (payment?.PaymentAmountTotal == expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.PAID;
             }
-            else if (payment.PaymentAmountTotal > expectedTotal)
+            else if (payment?.PaymentAmountTotal > expectedTotal)
             {
                 return PimsLeasePaymentStatusTypes.OVERPAID;
             }

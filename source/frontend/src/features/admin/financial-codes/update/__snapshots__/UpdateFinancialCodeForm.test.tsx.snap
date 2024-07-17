@@ -37,6 +37,12 @@ exports[`UpdateFinancialCode form > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c5.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -280,9 +286,7 @@ exports[`UpdateFinancialCode form > renders as expected 1`] = `
           class="c1"
         >
           Effective date:
-          <span
-            class="ml-2"
-          >
+          <span>
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-section-field-tooltip"
@@ -351,9 +355,7 @@ exports[`UpdateFinancialCode form > renders as expected 1`] = `
           class="c1"
         >
           Expiry date:
-          <span
-            class="ml-2"
-          >
+          <span>
             <span
               class="tooltip-icon"
               data-testid="tooltip-icon-section-field-tooltip"

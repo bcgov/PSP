@@ -157,8 +157,9 @@ const expectedLease: ApiGen_Concepts_Lease = {
   hasDigitalFile: false,
   hasPhysicalLicense: null,
   hasDigitalLicense: null,
+  primaryArbitrationCity: null,
   isExpired: false,
   project: null,
   id: 0,
-  rowVersion: 0,
+  rowVersion: null,
 };

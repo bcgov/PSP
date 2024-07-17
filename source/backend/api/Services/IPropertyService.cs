@@ -47,6 +47,12 @@ namespace Pims.Api.Services
 
         void UpdateLocation(PimsProperty incomingProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes);
 
+        T PopulateNewFileProperty<T>(T fileProperty)
+            where T : IFilePropertyEntity;
+
+        void UpdateFilePropertyLocation<T>(T incomingFileProperty, T filePropertyToUpdate)
+            where T : IFilePropertyEntity;
+
         IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId);
 
         IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers);
@@ -66,6 +72,6 @@ namespace Pims.Api.Services
         /// <param name="fileProperties">The file properties to re-project.</param>
         /// <returns>The file properties with transformed spatial locations.</returns>
         List<T> TransformAllPropertiesToLatLong<T>(List<T> fileProperties)
-            where T : IWithPropertyEntity;
+            where T : IFilePropertyEntity;
     }
 }

@@ -51,7 +51,6 @@ public partial class PimsPropertyActivityHist
     public DateOnly? CompletionDt { get; set; }
 
     [Column("DESCRIPTION")]
-    [StringLength(2000)]
     public string Description { get; set; }
 
     [Column("REQUEST_SOURCE")]

@@ -304,9 +304,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
               class="c4"
             >
               Completion date:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -476,9 +474,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                       class="c4"
                     >
                       Is there a new highway dedication? *:
-                      <span
-                        class="ml-2"
-                      >
+                      <span>
                         <span
                           class="tooltip-icon"
                           data-testid="tooltip-icon-section-field-tooltip"
@@ -691,9 +687,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                       class="c4"
                     >
                       Is this being acquired for MoTI inventory? *:
-                      <span
-                        class="ml-2"
-                      >
+                      <span>
                         <span
                           class="tooltip-icon"
                           data-testid="tooltip-icon-section-field-tooltip"

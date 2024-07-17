@@ -14,7 +14,9 @@ import StatusField from '@/components/common/HeaderField/StatusField';
 import { StyledFiller } from '@/components/common/HeaderField/styles';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
+import { getCalculatedExpiry } from '@/features/leases/leaseUtils';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 
@@ -28,40 +30,46 @@ export interface ILeaseHeaderProps {
 }
 
 export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy }) => {
-  const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
-
   const propertyIds = lease?.fileProperties?.map(fp => fp.propertyId) ?? [];
+
+  const calculatedExpiry = exists(lease) ? getCalculatedExpiry(lease, lease.renewals || []) : '';
+
+  const isExpired = moment().isAfter(moment(calculatedExpiry, 'YYYY-MM-DD'), 'day');
 
   return (
     <Container>
       <Row className="no-gutters">
         <Col xs="8">
-          <HeaderField label="Lease/Licence #" labelWidth="3" contentWidth="9">
+          <HeaderField label="Lease/Licence #" labelWidth="4" contentWidth="8">
             <span className="pr-4">{lease?.lFileNo ?? ''}</span>
             <StyledGreenText>{lease?.paymentReceivableType?.description ?? ''}</StyledGreenText>
           </HeaderField>
-          <HeaderField label="Property:" labelWidth="3" contentWidth="9">
+          <HeaderField label="Property:" labelWidth="4" contentWidth="8">
             <LeaseHeaderAddresses
               propertyLeases={lease?.fileProperties ?? []}
               maxCollapsedLength={1}
               delimiter={<br />}
             />
           </HeaderField>
-          <HeaderField label="Tenant:" labelWidth="3" contentWidth="9">
+          <HeaderField label="Tenant:" labelWidth="4" contentWidth="8">
             <LeaseHeaderTenants
               tenants={lease?.tenants ?? []}
               maxCollapsedLength={1}
               delimiter={<br />}
             />
           </HeaderField>
-          <Row>
-            <HeaderLabelCol label="Lease Start:" labelWidth="3" />
+          <Row className="flex-nowrap">
+            <HeaderLabelCol
+              label="Commencement:"
+              labelWidth="4"
+              tooltip="The start date defined in the agreement."
+            />
             <HeaderContentCol contentWidth="3">
               {prettyFormatDate(lease?.startDate)}
             </HeaderContentCol>
-            <HeaderLabelCol label="Expiry:" />
+            <HeaderLabelCol label="Expiry:" tooltip="The end date specified in the agreement." />
             <HeaderContentCol>
-              <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
+              <span className="pl-2">{prettyFormatDate(calculatedExpiry)}</span>
             </HeaderContentCol>
             <HeaderContentCol>
               {isExpired && (
@@ -74,6 +82,8 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           </Row>
           <HistoricalNumbersContainer
             propertyIds={propertyIds}
+            labelWidth="4"
+            contentWidth="8"
             View={HistoricalNumberSectionView}
           />
         </Col>
@@ -82,7 +92,15 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           <StyledFiller>
             <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={lease} />
             {exists(lease?.fileStatusTypeCode) && (
-              <StatusField preText="File:" statusCodeType={lease.fileStatusTypeCode} />
+              <StatusField
+                preText="File:"
+                statusCodeType={lease.fileStatusTypeCode}
+                statusCodeDate={
+                  lease?.fileStatusTypeCode?.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED
+                    ? lease?.terminationDate
+                    : undefined
+                }
+              />
             )}
           </StyledFiller>
         </Col>

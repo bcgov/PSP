@@ -71,13 +71,13 @@ namespace Pims.Dal.Test.Repositories
             this._context.AddAndSaveChanges(checklistItem);
 
             // Act
-            checklistItem.DspChklstItemStatusTypeCode = "updated";
+            checklistItem.ChklstItemStatusTypeCode = "updated";
             var result = this._repository.Update(checklistItem);
 
             // Assert
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsDispositionChecklistItem>();
-            result.DspChklstItemStatusTypeCode.Should().Be("updated");
+            result.ChklstItemStatusTypeCode.Should().Be("updated");
         }
 
         [Fact]

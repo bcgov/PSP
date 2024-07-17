@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
+using Pims.Api.Services.Interfaces;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
@@ -436,6 +438,231 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetPropertyManagement_HasNoActiveLease_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.TERMINATED.ToString()
+                    }
+                },
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.DRAFT.ToString()
+                    }
+                },
+            });
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            Assert.False(result.HasActiveLease);
+            Assert.False(result.ActiveLeaseHasExpiryDate);
+
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPropertyManagement_HasActiveLease_NoRenewal_HasTerminationDate_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.EXPIRED.ToString()
+                    }
+                },
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString(),
+                        PimsLeaseRenewals = new List<PimsLeaseRenewal>(),
+                        TerminationDate = DateTime.UtcNow.AddDays(30).Date,
+                    }
+                },
+            });
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            Assert.False(result.HasActiveLease);
+            Assert.False(result.ActiveLeaseHasExpiryDate);
+
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPropertyManagement_HasActiveLease_NoRenewal_HasNoTerminationDate_Expired_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.EXPIRED.ToString()
+                    }
+                },
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString(),
+                        PimsLeaseRenewals = new List<PimsLeaseRenewal>(),
+                        TerminationDate = null,
+                        OrigExpiryDate = DateTime.UtcNow.AddDays(-1).Date,
+                    }
+                },
+            }); ;
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            Assert.False(result.HasActiveLease);
+            Assert.False(result.ActiveLeaseHasExpiryDate);
+
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPropertyManagement_HasActiveLease_NoRenewal_HasNoTerminationDate_Valid_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.EXPIRED.ToString()
+                    }
+                },
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString(),
+                        PimsLeaseRenewals = new List<PimsLeaseRenewal>(),
+                        TerminationDate = null,
+                        OrigExpiryDate = DateTime.UtcNow.Date,
+                    }
+                },
+            }); ;
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            Assert.True(result.HasActiveLease);
+            Assert.True(result.ActiveLeaseHasExpiryDate);
+
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
+
+        [Fact]
         public void Update_PropertyManagement_Success()
         {
             // Arrange
@@ -525,7 +752,6 @@ namespace Pims.Api.Test.Services
             activity.PropMgmtActivityStatusTypeCode.Should().Be("NOTSTARTED");
             repository.Verify(x => x.Create(It.IsAny<PimsPropertyActivity>()), Times.Once);
         }
-
 
         [Fact]
         public void Get_PropertyManagement_Activities_NoPermission()

@@ -31,6 +31,11 @@ namespace Pims.Api.Models.Concepts.Lease
         public CodeTypeModel<string> LeasePaymentStatusTypeCode { get; set; }
 
         /// <summary>
+        /// get/set - The category of the payment: base, variable or additional.
+        /// </summary>
+        public CodeTypeModel<string> LeasePaymentCategoryTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The date the payment was or will be received.
         /// </summary>
         public DateOnly ReceivedDate { get; set; }
