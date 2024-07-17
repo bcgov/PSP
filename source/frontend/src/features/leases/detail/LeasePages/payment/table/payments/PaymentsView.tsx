@@ -26,7 +26,7 @@ export interface IPaymentsViewProps {
   isGstEligible?: boolean;
   isReceivable?: boolean;
   periodId?: number;
-  period: FormLeasePeriod;
+  period: FormLeasePeriod | undefined;
 }
 
 export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaymentsViewProps>> = ({

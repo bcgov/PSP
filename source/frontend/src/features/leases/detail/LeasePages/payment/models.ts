@@ -217,25 +217,28 @@ export class LeasePeriodByCategoryProjection {
   readonly isTermExercised: boolean | undefined;
   readonly category: ApiGen_CodeTypes_LeasePaymentCategoryTypes;
 
-  constructor(leasePeriod: FormLeasePeriod, category: ApiGen_CodeTypes_LeasePaymentCategoryTypes) {
-    this.leasePmtFreqTypeCode = leasePeriod.leasePmtFreqTypeCode;
-    this.paymentAmount = leasePeriod.paymentAmount;
-    this.isGstEligible = leasePeriod.isGstEligible;
-    this.gstAmount = leasePeriod.gstAmount;
-    this.payments = leasePeriod.payments;
-    this.isTermExercised = leasePeriod.isTermExercised;
-    this.category = category;
+  constructor(
+    leasePeriod: FormLeasePeriod | undefined,
+    category: ApiGen_CodeTypes_LeasePaymentCategoryTypes,
+  ) {
+    this.leasePmtFreqTypeCode = leasePeriod?.leasePmtFreqTypeCode ?? null;
+    this.paymentAmount = leasePeriod?.paymentAmount ?? 0;
+    this.isGstEligible = leasePeriod?.isGstEligible;
+    this.gstAmount = leasePeriod?.gstAmount ?? 0;
+    this.payments = leasePeriod?.payments ?? [];
+    this.isTermExercised = leasePeriod?.isTermExercised;
+    this.category = category ?? ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE;
 
     if (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL) {
       this.isGstEligible = leasePeriod?.isAdditionalRentGstEligible;
       this.paymentAmount = leasePeriod?.additionalRentPaymentAmount ?? 0;
-      this.leasePmtFreqTypeCode = leasePeriod?.additionalRentFreqTypeCode;
-      this.gstAmount = leasePeriod?.additionalRentGstAmount;
+      this.leasePmtFreqTypeCode = leasePeriod?.additionalRentFreqTypeCode ?? null;
+      this.gstAmount = leasePeriod?.additionalRentGstAmount ?? 0;
     } else if (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL) {
       this.isGstEligible = leasePeriod?.isVariableRentGstEligible;
       this.paymentAmount = leasePeriod?.variableRentPaymentAmount ?? 0;
-      this.leasePmtFreqTypeCode = leasePeriod?.variableRentFreqTypeCode;
-      this.gstAmount = leasePeriod?.variableRentGstAmount;
+      this.leasePmtFreqTypeCode = leasePeriod?.variableRentFreqTypeCode ?? null;
+      this.gstAmount = leasePeriod?.variableRentGstAmount ?? 0;
     }
   }
 }
