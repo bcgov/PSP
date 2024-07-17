@@ -72,7 +72,6 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c7 textarea.form-control {

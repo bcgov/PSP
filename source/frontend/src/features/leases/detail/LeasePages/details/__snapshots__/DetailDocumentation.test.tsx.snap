@@ -34,7 +34,6 @@ exports[`DetailDocumentation component > renders a complete lease as expected 1`
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -238,7 +237,6 @@ exports[`DetailDocumentation component > renders minimally as expected 1`] = `
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div

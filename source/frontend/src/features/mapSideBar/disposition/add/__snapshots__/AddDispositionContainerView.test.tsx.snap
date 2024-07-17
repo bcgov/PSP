@@ -344,7 +344,6 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
 
 .c14 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c24:hover {

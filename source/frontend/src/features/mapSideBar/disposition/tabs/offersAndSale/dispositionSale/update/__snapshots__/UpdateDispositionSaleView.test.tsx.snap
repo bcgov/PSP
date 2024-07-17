@@ -270,7 +270,6 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c11 {

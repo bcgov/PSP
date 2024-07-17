@@ -14,7 +14,7 @@ import { prettyFormatDate } from '@/utils';
 
 import { defaultFormLeasePeriod, FormLeasePayment, FormLeasePeriod } from '../../models';
 import PaymentsView from '../payments/PaymentsView';
-import { getLeasePeriodColumns } from './columns';
+import { getLeasePeriodColumns } from './periodColumns';
 
 export interface IPeriodPaymentsViewProps {
   onEdit: (values: FormLeasePeriod) => void;

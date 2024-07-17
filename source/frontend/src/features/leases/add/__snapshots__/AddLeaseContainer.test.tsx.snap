@@ -372,7 +372,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c13 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c22.c22.c22 input,

@@ -15,7 +15,6 @@ exports[`LtsaOwnershipInformationForm component > renders ownership information 
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c5 {

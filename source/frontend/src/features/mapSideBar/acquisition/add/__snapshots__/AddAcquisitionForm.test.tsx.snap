@@ -252,7 +252,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c13:hover {

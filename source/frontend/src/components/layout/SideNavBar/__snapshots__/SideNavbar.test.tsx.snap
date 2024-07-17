@@ -167,6 +167,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
   height: calc( 100vh - -  );
   overflow-y: auto;
   overflow-x: hidden;
+  padding-top: 1.5rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;

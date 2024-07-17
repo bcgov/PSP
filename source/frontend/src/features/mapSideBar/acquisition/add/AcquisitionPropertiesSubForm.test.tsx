@@ -65,8 +65,9 @@ describe('AcquisitionProperties component', () => {
     customSetFilePropertyLocations.mockReset();
   });
 
-  it('renders as expected', () => {
+  it('renders as expected', async () => {
     const { asFragment } = setup({ initialForm: testForm });
+    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 

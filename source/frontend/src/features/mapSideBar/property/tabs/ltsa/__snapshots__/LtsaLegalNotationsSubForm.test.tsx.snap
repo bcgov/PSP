@@ -15,7 +15,6 @@ exports[`LtsaLegalNotationsSubForm component > renders legal notations form 1`] 
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -95,7 +94,6 @@ exports[`LtsaLegalNotationsSubForm component > renders legal notations form 1`] 
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -129,7 +127,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -209,7 +206,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -242,7 +238,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div
@@ -322,7 +317,6 @@ DEPOSITED JULY 30TH, 1974.
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div

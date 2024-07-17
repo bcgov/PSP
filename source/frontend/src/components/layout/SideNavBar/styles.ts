@@ -15,6 +15,7 @@ export const SideNavBar = styled.div`
   );
   overflow-y: auto;
   overflow-x: hidden;
+  padding-top: 1.5rem;
   display: flex;
   flex-direction: column;
   position: relative;

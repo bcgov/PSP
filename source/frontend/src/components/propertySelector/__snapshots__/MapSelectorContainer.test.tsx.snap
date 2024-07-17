@@ -199,7 +199,6 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 
 .c8 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c5.c5.c5 input,
