@@ -38,7 +38,6 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
 
 .c4 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 <div

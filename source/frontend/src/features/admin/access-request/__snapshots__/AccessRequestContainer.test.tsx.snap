@@ -220,7 +220,6 @@ exports[`AccessRequestContainer component > makes a request based on the access 
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c4 {
@@ -951,7 +950,6 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
 
 .c0 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c4 {

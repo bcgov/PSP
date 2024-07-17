@@ -69,15 +69,15 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       minWidth: 150,
       width: 120,
       Cell: (props: CellProps<FormTenant>) => {
-        const original = props.row.original;
+        const tenant = props.row.original;
         const persons =
-          original.original !== undefined && isValidId(props?.row?.original?.organizationId)
-            ? original?.original.organization.organizationPersons?.map(op => op.person)
-            : original?.organizationPersons?.map(op => op.person);
-        let primaryContact = original.initialPrimaryContact;
-        if (original.primaryContactId !== original.initialPrimaryContact?.id) {
-          primaryContact = original.primaryContactId
-            ? getPrimaryContact(original.primaryContactId, original) ?? undefined
+          tenant.original !== undefined && isValidId(tenant.organizationId)
+            ? tenant?.original.organization.organizationPersons?.map(op => op.person)
+            : tenant?.organizationPersons?.map(op => op.person);
+        let initialPrimaryContact = tenant.initialPrimaryContact;
+        if (Number(tenant.primaryContactId) !== initialPrimaryContact?.id) {
+          initialPrimaryContact = tenant.primaryContactId
+            ? getPrimaryContact(Number(tenant.primaryContactId), tenant) ?? undefined
             : undefined;
         }
         const primaryContactOptions: SelectOption[] =
@@ -85,7 +85,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
             label: formatApiPersonNames(person),
             value: person?.id ?? 0,
           })) ?? [];
-        if (isValidId(props?.row?.original?.personId)) {
+        if (isValidId(tenant?.personId)) {
           return <p>Not applicable</p>;
         } else if (persons?.length && persons?.length > 1) {
           return (
@@ -100,7 +100,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
         } else if (persons?.length === 1) {
           return (
             <p key={`tenants.primaryContact.${persons[0]?.id ?? props?.row?.index}`}>
-              {formatApiPersonNames(primaryContact ?? persons[0])}
+              {formatApiPersonNames(initialPrimaryContact ?? persons[0])}
             </p>
           );
         } else {

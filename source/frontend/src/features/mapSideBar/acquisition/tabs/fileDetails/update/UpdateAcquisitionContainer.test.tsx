@@ -14,6 +14,7 @@ import {
   screen,
   userEvent,
   waitFor,
+  within,
 } from '@/utils/test-utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
@@ -132,13 +133,17 @@ describe('UpdateAcquisition container', () => {
         errorCode: UserOverrideCode.UPDATE_REGION,
       }),
     );
-    const { formikRef, findByText } = setup();
+    const { formikRef, findByRole } = setup();
 
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await findByText(/The Ministry region has been changed/i);
+    // The region confirmation popup has custom look-and-feel. The variant should be "info" instead of default "warning".
+    const popup = await findByRole('dialog');
+
     expect(popup).toBeVisible();
+    expect(popup).toHaveClass('info-variant');
+    expect(await within(popup).findByText(/The Ministry region has been changed/i)).toBeVisible();
   });
 
   it(`triggers the modal for contractor self-removal`, async () => {
@@ -164,7 +169,7 @@ describe('UpdateAcquisition container', () => {
 
   it(`triggers popup when deleting a selected payee`, async () => {
     mockUpdateAcquisitionFile.mockRejectedValue(
-      createAxiosError(409, 'Acquisition File Owner Reperesentative can not be removed', {
+      createAxiosError(409, 'Acquisition File Owner Representative can not be removed', {
         errorCode: null,
       }),
     );
@@ -173,7 +178,7 @@ describe('UpdateAcquisition container', () => {
     expect(formikRef.current).not.toBeNull();
     await act(async () => formikRef.current?.submitForm());
 
-    const popup = await findByText(/Acquisition File Owner Reperesentative can not be removed/i);
+    const popup = await findByText(/Acquisition File Owner Representative can not be removed/i);
     expect(popup).toBeVisible();
   });
 

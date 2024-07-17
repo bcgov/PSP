@@ -163,7 +163,6 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
 
 .c1 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c6 {

@@ -233,7 +233,6 @@ exports[`UpdateDispositionForm component > renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c8 {

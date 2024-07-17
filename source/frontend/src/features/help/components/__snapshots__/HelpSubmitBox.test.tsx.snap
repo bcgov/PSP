@@ -15,7 +15,6 @@ exports[`HelpSubmitBox component > renders properly 1`] = `
 
 .c1 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c0 {
