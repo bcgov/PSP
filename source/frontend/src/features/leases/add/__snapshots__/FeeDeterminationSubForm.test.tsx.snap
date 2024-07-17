@@ -161,7 +161,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
           <label
             class="c2"
           >
-            Sugested fee:
+            Suggested fee:
             <span>
               <span
                 class="tooltip-icon"

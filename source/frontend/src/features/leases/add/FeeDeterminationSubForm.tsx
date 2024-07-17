@@ -37,7 +37,7 @@ const FeeDeterminationSubForm: React.FunctionComponent<IFeeDeterminationSubFormP
       </SectionField>
 
       <SectionField
-        label="Sugested fee"
+        label="Suggested fee"
         tooltip="Licence Administration Fee (LAF) *: If the financial gain far outweighs the public benefit, Fair Market Value should be considered over Licence Administration Fee."
         labelWidth="2"
         contentWidth="8"
