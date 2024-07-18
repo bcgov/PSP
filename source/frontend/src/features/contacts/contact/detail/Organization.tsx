@@ -79,7 +79,7 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
               label="Connected to this organization"
               labelWidth="auto"
               valueTestId="contact-organization-person-list"
-              tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page."
+              tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page"
             >
               {organization.persons &&
                 organization.persons.map((person: IContactPerson, index: number) => (

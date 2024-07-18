@@ -199,7 +199,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
             label="Lease Transaction"
             labelWidth="12"
             contentWidth="12"
-            tooltip="Selecting the Payable and Receivable lease transaction option will display properties that have both a payable and a receivable lease on them."
+            tooltip="Selecting the Payable and Receivable lease transaction option will display properties that have both a payable and a receivable lease on them"
           >
             <Select
               field="leasePayRcvblType"

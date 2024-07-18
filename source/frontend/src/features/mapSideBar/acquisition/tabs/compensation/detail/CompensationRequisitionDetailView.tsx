@@ -264,7 +264,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             <TooltipIcon
               toolTipId="selected-properties"
               innerClassName="ml-4 mb-1"
-              toolTip="Select the properties that will be displayed on the generated document."
+              toolTip="Select the properties that will be displayed on the generated document"
             />
           </div>
         }
