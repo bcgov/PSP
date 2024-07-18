@@ -5,50 +5,67 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="ARIMA-DELL"
   DTS:CreatorName="ARIMA-DELL\smart"
-  DTS:DTSID="{806442FF-3728-462C-9F7D-F38801B60975}"
+  DTS:DTSID="{92D27593-698C-4BB5-8BB5-8001785E9FE5}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="16.0.5270.0"
   DTS:LocaleID="1033"
-  DTS:ObjectName="Package"
+  DTS:ObjectName="FIX_LISDB_PIMS_HISTORICAL_NUMBERS_LOAD"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="46"
-  DTS:VersionGUID="{F3D2757D-C68F-4466-AB65-C96C314483E1}">
+  DTS:VersionBuild="51"
+  DTS:VersionGUID="{426D616B-2AFB-4521-ACD7-E382B67CD386}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[LIS]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{DBB4D96E-81A2-46B7-A647-2DCDB2E8F3BB}"
+      DTS:DTSID="{6E138D4D-5928-4153-B7B1-8ED15468E452}"
       DTS:ObjectName="LIS">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=LIS_Tst;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{DBB4D96E-81A2-46B7-A647-2DCDB2E8F3BB}sqldevtst.th.gov.bc.ca.LIS_Dev;" />
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=LIS_Tst;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{6E138D4D-5928-4153-B7B1-8ED15468E452}sqldevtst.th.gov.bc.ca.LIS_Dev;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
       DTS:refId="Package.ConnectionManagers[PIMS]"
       DTS:CreationName="OLEDB"
-      DTS:DTSID="{CDB87A68-CDAF-43B6-83B1-6BD4EAC1295A}"
+      DTS:DTSID="{975C7104-883A-4E26-86EA-45A2E0D5C9C3}"
       DTS:ObjectName="PIMS">
       <DTS:ObjectData>
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_TST;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{CDB87A68-CDAF-43B6-83B1-6BD4EAC1295A}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_TST;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{975C7104-883A-4E26-86EA-45A2E0D5C9C3}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
   <DTS:Variables />
   <DTS:Executables>
     <DTS:Executable
+      DTS:refId="Package\CLEANUP PIMS_HISTORICAL_NUMBERS TABLE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{84E37CDA-F055-4EBB-AFEE-4938407B8F7C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CLEANUP PIMS_HISTORICAL_NUMBERS TABLE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{975C7104-883A-4E26-86EA-45A2E0D5C9C3}"
+          SQLTask:SqlStatementSource="DELETE FROM dbo.PIMS_HISTORICAL_FILE_NUMBER WHERE  APP_LAST_UPDATE_USERID LIKE 'PIMS%' ;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
       DTS:refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS"
       DTS:CreationName="Microsoft.Pipeline"
       DTS:Description="Data Flow Task"
-      DTS:DTSID="{D84CFC3F-30D2-4947-8C44-0FDDCAA317EA}"
+      DTS:DTSID="{2276AD24-FB5D-4CE7-94DB-30F14B36CDF0}"
       DTS:ExecutableType="Microsoft.Pipeline"
       DTS:LocaleID="-1"
       DTS:ObjectName="STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS"
@@ -209,6 +226,103 @@
                       refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
                       dataType="i4"
                       lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
+                      name="APP_CREATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      name="APP_LAST_UPDATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -587,9 +701,9 @@
                   description="The SQL command to be executed."
                   expressionType="Notify"
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">INSERT INTO dbo.PIMS_HISTORICAL_FILE_NUMBER (PROPERTY_ID, DATA_SOURCE_TYPE_CODE,HISTORICAL_FILE_NUMBER_TYPE_CODE,HISTORICAL_FILE_NUMBER )
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">INSERT INTO dbo.PIMS_HISTORICAL_FILE_NUMBER (PROPERTY_ID, DATA_SOURCE_TYPE_CODE,HISTORICAL_FILE_NUMBER_TYPE_CODE,HISTORICAL_FILE_NUMBER,APP_CREATE_USERID, APP_LAST_UPDATE_USERID )
 VALUES
-(?,?,?,?);</property>
+(?,?,?,?,?,?);</property>
                 <property
                   dataType="System.Int32"
                   description="Specifies the column code page to use when code page information is unavailable from the data source."
@@ -638,6 +752,20 @@ VALUES
                       cachedName="Copy of HISTORICAL_FILE_NUMBER"
                       externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
                       lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].Columns[APP_CREATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="APP_CREATE_USERID"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].Columns[APP_LAST_UPDATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="APP_LAST_UPDATE_USERID"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_5]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -681,6 +809,30 @@ VALUES
                       dataType="wstr"
                       length="500"
                       name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      dataType="wstr"
+                      length="30"
+                      name="Param_4">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_5]"
+                      dataType="wstr"
+                      length="30"
+                      name="Param_5">
                       <properties>
                         <property
                           dataType="System.Int32"
@@ -748,19 +900,15 @@ VALUES
                   dataType="System.String"
                   description="The SQL command to be executed."
                   name="SqlCommand"
-                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
-
-DISTINCT
-fsub.PID
-     , CAST(main.TFA_File_Number AS NVARCHAR) AS HISTORICAL_FILE_NUMBER
-     , 'LISNO'                                AS HISTORICAL_FILE_NUMBER_TYPE_CODE
-     , 'LIS'                                  AS DATA_SOURCE_TYPE_CODE
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT fsub.PID
+     , RIGHT('0000' + convert(NVARCHAR(4), main.TFA_File_Number), 4) + '-' + RIGHT('000' + convert(NVARCHAR(3), fsub.Subfile_Sequence_Code), 3) AS HISTORICAL_FILE_NUMBER
+     , 'LISNO' AS HISTORICAL_FILE_NUMBER_TYPE_CODE
+     , 'LIS'   AS DATA_SOURCE_TYPE_CODE
 FROM   t_fileSub             fsub                                                  JOIN
        t_fileSubLookup       lkup ON lkup.FileSubLookup_Id = fsub.FileSubLookup_Id JOIN
        t_fileMain            main ON main.FileMain_SKey    = lkup.FileMain_SKey
 WHERE  fsub.PID             IS NOT NULL
-   AND main.TFA_File_Number IS NOT NULL
-order by fsub.PID</property>
+   AND main.TFA_File_Number IS NOT NULL</property>
                 <property
                   dataType="System.String"
                   description="The variable that contains the SQL command to be executed."
@@ -847,7 +995,7 @@ order by fsub.PID</property>
                     <externalMetadataColumn
                       refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[HISTORICAL_FILE_NUMBER]"
                       dataType="wstr"
-                      length="30"
+                      length="8"
                       name="HISTORICAL_FILE_NUMBER" />
                     <externalMetadataColumn
                       refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
@@ -876,7 +1024,7 @@ order by fsub.PID</property>
                     <outputColumn
                       refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[HISTORICAL_FILE_NUMBER]"
                       dataType="wstr"
-                      length="30"
+                      length="8"
                       lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[HISTORICAL_FILE_NUMBER]"
                       name="HISTORICAL_FILE_NUMBER" />
                     <outputColumn
@@ -911,11 +1059,11 @@ order by fsub.PID</property>
               </outputs>
             </component>
             <component
-              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY"
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER"
               componentClassID="Microsoft.Lookup"
               contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
               description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
-              name="Lookup PIMS PROPERTY"
+              name="Lookup PIMS HISTORICAL FILE NUMBER"
               usesDispositions="true"
               version="6">
               <properties>
@@ -979,7 +1127,7 @@ where [refTable].[PROPERTY_ID] = ? and [refTable].[HISTORICAL_FILE_NUMBER] = ? a
               </properties>
               <connections>
                 <connection
-                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Connections[OleDbConnection]"
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Connections[OleDbConnection]"
                   connectionManagerID="Package.ConnectionManagers[PIMS]"
                   connectionManagerRefId="Package.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
@@ -987,11 +1135,11 @@ where [refTable].[PROPERTY_ID] = ? and [refTable].[HISTORICAL_FILE_NUMBER] = ? a
               </connections>
               <inputs>
                 <input
-                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input]"
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]"
                   name="Lookup Input">
                   <inputColumns>
                     <inputColumn
-                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input].Columns[PROPERTY_ID]"
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input].Columns[PROPERTY_ID]"
                       cachedDataType="i8"
                       cachedName="PROPERTY_ID"
                       lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[PROPERTY_ID]">
@@ -1007,7 +1155,7 @@ where [refTable].[PROPERTY_ID] = ? and [refTable].[HISTORICAL_FILE_NUMBER] = ? a
                       </properties>
                     </inputColumn>
                     <inputColumn
-                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input].Columns[Copy of HISTORICAL_FILE_NUMBER]"
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input].Columns[Copy of HISTORICAL_FILE_NUMBER]"
                       cachedDataType="wstr"
                       cachedLength="30"
                       cachedName="Copy of HISTORICAL_FILE_NUMBER"
@@ -1024,7 +1172,7 @@ where [refTable].[PROPERTY_ID] = ? and [refTable].[HISTORICAL_FILE_NUMBER] = ? a
                       </properties>
                     </inputColumn>
                     <inputColumn
-                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]"
                       cachedDataType="wstr"
                       cachedLength="5"
                       cachedName="Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE"
@@ -1041,7 +1189,7 @@ where [refTable].[PROPERTY_ID] = ? and [refTable].[HISTORICAL_FILE_NUMBER] = ? a
                       </properties>
                     </inputColumn>
                     <inputColumn
-                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input].Columns[Copy of DATA_SOURCE_TYPE_CODE]"
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input].Columns[Copy of DATA_SOURCE_TYPE_CODE]"
                       cachedDataType="wstr"
                       cachedLength="3"
                       cachedName="Copy of DATA_SOURCE_TYPE_CODE"
@@ -1063,38 +1211,38 @@ where [refTable].[PROPERTY_ID] = ? and [refTable].[HISTORICAL_FILE_NUMBER] = ? a
               </inputs>
               <outputs>
                 <output
-                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Outputs[Lookup Match Output]"
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Match Output]"
                   errorOrTruncationOperation="Lookup"
                   exclusionGroup="1"
                   name="Lookup Match Output"
-                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input]">
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]">
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Outputs[Lookup No Match Output]"
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup No Match Output]"
                   description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
                   exclusionGroup="1"
                   name="Lookup No Match Output"
-                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input]">
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]">
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Outputs[Lookup Error Output]"
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output]"
                   exclusionGroup="1"
                   isErrorOut="true"
                   name="Lookup Error Output"
-                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input]">
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -1641,7 +1789,7 @@ ORDER BY PID</property>
           <paths>
             <path
               refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Data Conversion Output]"
-              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Inputs[Lookup Input]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]"
               name="Data Conversion Output"
               startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output]" />
             <path
@@ -1650,10 +1798,15 @@ ORDER BY PID</property>
               name="Derived Column Output"
               startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output]" />
             <path
-              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Lookup No Match Output]"
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Derived Column Output1]"
               endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input]"
+              name="Derived Column Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Lookup No Match Output]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Inputs[Derived Column Input]"
               name="Lookup No Match Output"
-              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY.Outputs[Lookup No Match Output]" />
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup No Match Output]" />
             <path
               refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Merge Join Output]"
               endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input]"
@@ -1689,6 +1842,16 @@ ORDER BY PID</property>
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6F3433A1-B0A5-415B-896B-8F2F0AF92B4D}"
+      DTS:From="Package\CLEANUP PIMS_HISTORICAL_NUMBERS TABLE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS" />
+  </DTS:PrecedenceConstraints>
   <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
 <!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
 <!--If you manually edit this section and make a mistake, you can delete it. -->
@@ -1700,11 +1863,37 @@ ORDER BY PID</property>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="325.333333333334,42.6666666666667"
+          Id="Package\CLEANUP PIMS_HISTORICAL_NUMBERS TABLE"
+          TopLeft="248.124996302649,205.263161758307" />
         <NodeLayout
           Size="350.666666666667,42.6666666666667"
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS"
-          TopLeft="233.124996526167,175.842108572949" />
+          TopLeft="659.999990165234,198.421056366363" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="573.458329635983,223.175442395668">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="86.541660529251,0"
+              Start="0,0"
+              End="79.041660529251,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="79.041660529251,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -1746,9 +1935,9 @@ ORDER BY PID</property>
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join"
           TopLeft="468.749993015081,101.263159800765" />
         <NodeLayout
-          Size="205.333333333334,42.6666666666667"
-          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY"
-          TopLeft="775.624988442287,241.526320335607" />
+          Size="285.333333333334,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER"
+          TopLeft="861.874987157062,153.263160779535" />
         <NodeLayout
           Size="193.333333333334,42.6666666666667"
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields"
@@ -1885,7 +2074,7 @@ ORDER BY PID</property>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-70.70890625,23.5067170326178,141.4178125,11.609375"
+              BoundingBox="-70.70890625,23.5067170326179,141.4178125,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -1924,42 +2113,6 @@ ORDER BY PID</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Lookup No Match Output]"
-          TopLeft="878.291655108954,284.192987002274">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="149.708332001542,62.0175458300703"
-              Start="0,0"
-              End="149.708332001542,54.5175458300703">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,27.0087729150352" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,27.0087729150352"
-                    Point2="0,31.0087729150352"
-                    Point3="4,31.0087729150352" />
-                  <mssgle:LineSegment
-                    End="145.708332001542,31.0087729150352" />
-                  <mssgle:CubicBezierSegment
-                    Point1="145.708332001542,31.0087729150352"
-                    Point2="149.708332001542,31.0087729150352"
-                    Point3="149.708332001542,35.0087729150352" />
-                  <mssgle:LineSegment
-                    End="149.708332001542,54.5175458300703" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="19.0477792820212,36.0087729150352,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Derived Column Output]"
           TopLeft="1025.6874864446,497.666675230913">
           <EdgeLayout.Curve>
@@ -1983,18 +2136,104 @@ ORDER BY PID</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Data Conversion Output]"
-          TopLeft="712.083325603356,261.833337860149">
+          TopLeft="646.305547825579,239.473688718025">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="63.5416628389306,0"
+              EndConnector="312.013883775928,-43.5438612718232"
               Start="0,0"
-              End="56.0416628389306,0">
+              End="312.013883775928,-36.0438612718232">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="56.0416628389306,0" />
+                    End="0,-17.843311753824" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-17.843311753824"
+                    Point2="0,-21.843311753824"
+                    Point3="4,-21.843311753824" />
+                  <mssgle:LineSegment
+                    End="308.013883775928,-21.843311753824" />
+                  <mssgle:CubicBezierSegment
+                    Point1="308.013883775928,-21.843311753824"
+                    Point2="312.013883775928,-21.843311753824"
+                    Point3="312.013883775928,-25.843311753824" />
+                  <mssgle:LineSegment
+                    End="312.013883775928,-36.0438612718232" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column"
+          TopLeft="1179.99998241663,239.298249992747" />
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Lookup No Match Output]"
+          TopLeft="1050.76387604595,195.929827446202">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="207.236106370679,43.3684225465457"
+              Start="0,0"
+              End="207.236106370679,35.8684225465457">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.4924678301123" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.4924678301123"
+                    Point2="0,17.4924678301123"
+                    Point3="4,17.4924678301123" />
+                  <mssgle:LineSegment
+                    End="203.236106370679,17.4924678301123" />
+                  <mssgle:CubicBezierSegment
+                    Point1="203.236106370679,17.4924678301123"
+                    Point2="207.236106370679,17.4924678301123"
+                    Point3="207.236106370679,21.4924678301123" />
+                  <mssgle:LineSegment
+                    End="207.236106370679,35.8684225465457" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="47.8116664665895,22.4924678301123,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Derived Column Output1]"
+          TopLeft="1257.99998241663,281.964916659414">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-229.999995306134,64.2456161729298"
+              Start="0,0"
+              End="-229.999995306134,56.7456161729298">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.1228080864649" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.1228080864649"
+                    Point2="0,32.1228080864649"
+                    Point3="-4,32.1228080864649" />
+                  <mssgle:LineSegment
+                    End="-225.999995306134,32.1228080864649" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-225.999995306134,32.1228080864649"
+                    Point2="-229.999995306134,32.1228080864649"
+                    Point3="-229.999995306134,36.1228080864649" />
+                  <mssgle:LineSegment
+                    End="-229.999995306134,56.7456161729298" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2015,6 +2254,14 @@ ORDER BY PID</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
+    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
     design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG">
     <Properties>
       <Property>
@@ -2028,15 +2275,7 @@ ORDER BY PID</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY">
+    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER">
     <Properties>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
