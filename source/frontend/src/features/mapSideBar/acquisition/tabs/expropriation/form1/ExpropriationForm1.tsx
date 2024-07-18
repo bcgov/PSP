@@ -74,7 +74,7 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
           <SectionField
             label="Impacted properties"
             required
-            tooltip="For the selected properties - corresponding property and interest details will be captured on the form."
+            tooltip="For the selected properties - corresponding property and interest details will be captured on the form"
           >
             <FormItem field="impactedProperties">
               <FilePropertiesTable

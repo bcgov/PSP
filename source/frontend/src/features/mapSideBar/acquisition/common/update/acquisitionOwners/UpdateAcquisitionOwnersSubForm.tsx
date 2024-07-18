@@ -151,7 +151,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC = () => {
                   {owner.isOrganization === 'true' && (
                     <SectionField
                       label="Registration number"
-                      tooltip="The number used for tax purposes, (like GST)."
+                      tooltip="The number used for tax purposes, (like GST)"
                     >
                       <Input
                         field={`owners[${index}].registrationNumber`}

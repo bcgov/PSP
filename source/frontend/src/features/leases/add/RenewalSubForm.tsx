@@ -67,7 +67,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                           tooltip={
                             <TooltipIcon
                               toolTipId="lease-renewal-expiry-tooltip"
-                              toolTip="The end date specified in the original agreement or renewal, as applicable."
+                              toolTip="The end date specified in the original agreement or renewal, as applicable"
                               placement="right"
                             />
                           }

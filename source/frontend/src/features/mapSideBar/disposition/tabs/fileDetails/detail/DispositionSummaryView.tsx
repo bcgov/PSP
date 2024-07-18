@@ -89,7 +89,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         </SectionField>
         <SectionField
           label="Reference number"
-          tooltip="Provide available reference number for historic program or file number (e.g.  RAEG, Acquisition File, etc.)."
+          tooltip="Provide available reference number for historic program or file number (e.g.  RAEG, Acquisition File, etc.)"
           labelWidth="5"
         >
           {dispositionFile?.fileReference}
@@ -107,7 +107,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         )}
         <SectionField
           label="Initiating document"
-          tooltip="Provide the type of document that has initiated the disposition process."
+          tooltip="Provide the type of document that has initiated the disposition process"
           labelWidth="5"
         >
           {dispositionFile?.initiatingDocumentTypeCode?.description}
@@ -119,7 +119,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         )}
         <SectionField
           label="Initiating document date"
-          tooltip="Provide the date initiating document was signed off."
+          tooltip="Provide the date initiating document was signed off"
           labelWidth="5"
         >
           {prettyFormatDate(dispositionFile?.initiatingDocumentDate)}

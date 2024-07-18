@@ -174,7 +174,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
               <SectionField
                 labelWidth="6"
                 label="Deposit due no later than"
-                tooltip="Generally, if applicable, this is number of days from the execution of the agreement."
+                tooltip="Generally, if applicable, this is number of days from the execution of the agreement"
               >
                 {agreement.noLaterThanDays ? (
                   <span>

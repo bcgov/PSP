@@ -47,7 +47,7 @@ const DownloadDocumentButton: React.FunctionComponent<
       <TooltipIcon
         toolTipId="document-not-available-tooltip"
         data-testid="document-not-available-tooltip"
-        toolTip="This document is still being processed and is not yet available to view or download. Please try again in a few minutes. If you continue to see this error, please contact the system administrator."
+        toolTip="This document is still being processed and is not yet available to view or download. Please try again in a few minutes. If you continue to see this error, please contact the system administrator"
       ></TooltipIcon>
     );
   }
