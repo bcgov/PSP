@@ -70,8 +70,8 @@ export const LeaseAssociationContent: React.FunctionComponent<
   const tableData = orderBy(
     props.associations.map<IAssociationInfo>(x => {
       const lease = find(props.leases, lease => x.id === lease.id);
-      const leaseRenewals = props.renewals.filter(renewal => x.id === renewal.leaseId);
-      const calculatedExpiry = getCalculatedExpiry(lease, leaseRenewals);
+      const leaseRenewals = props.renewals?.filter(renewal => x.id === renewal.leaseId);
+      const calculatedExpiry = getCalculatedExpiry(lease, leaseRenewals ?? []);
       return {
         id: x.id?.toString() || '',
         linkUrl: props.linkUrlMask.replace('|id|', x.id?.toString() || ''),
@@ -81,7 +81,7 @@ export const LeaseAssociationContent: React.FunctionComponent<
         createdByGuid: x.createdByGuid || '',
         createdDate: x.createdDateTime || '',
         status: x.status || '',
-        tenants: getFormattedTenants(props.tenants.filter(tenant => x.id === tenant.leaseId)),
+        tenants: getFormattedTenants(props.tenants?.filter(tenant => x.id === tenant.leaseId)),
         expiryDate: calculatedExpiry,
       };
     }),
