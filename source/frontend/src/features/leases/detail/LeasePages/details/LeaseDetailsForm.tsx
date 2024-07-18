@@ -5,15 +5,22 @@ import styled from 'styled-components';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { defaultApiLease } from '@/models/defaultInitializers';
+import { exists } from '@/utils';
 
 import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';
 import DetailDocumentation from './DetailDocumentation';
-import DetailPeriodInformation from './DetailPeriodInformation';
+import { DetailFeeDetermination } from './DetailFeeDetermination';
+import LeaseDetailView from './LeaseDetailView';
+import { LeaseRenewalsView } from './LeaseRenewalsView';
 import PropertiesInformation from './PropertiesInformation';
 
 export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { lease } = React.useContext(LeaseStateContext);
+  if (!exists(lease)) {
+    return <></>;
+  }
+
   return (
     <Formik
       initialValues={{ ...defaultApiLease(), ...lease }}
@@ -21,10 +28,12 @@ export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<u
       onSubmit={noop}
     >
       <StyledDetails>
-        <DetailPeriodInformation />
+        <LeaseDetailView lease={lease} />
+        <LeaseRenewalsView renewals={lease.renewals} />
         <PropertiesInformation disabled={true} />
         <DetailAdministration disabled={true} />
         <DetailConsultation />
+        <DetailFeeDetermination disabled={true} />
         <DetailDocumentation disabled={true} />
       </StyledDetails>
     </Formik>

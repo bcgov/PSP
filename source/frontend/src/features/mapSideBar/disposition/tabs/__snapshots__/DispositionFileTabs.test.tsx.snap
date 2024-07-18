@@ -12,7 +12,6 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
 
 .c0 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -347,9 +346,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                     class="c5"
                   >
                     Reference number:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
@@ -423,9 +420,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                     class="c5"
                   >
                     Initiating document:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
@@ -465,9 +460,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                     class="c5"
                   >
                     Initiating document date:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"

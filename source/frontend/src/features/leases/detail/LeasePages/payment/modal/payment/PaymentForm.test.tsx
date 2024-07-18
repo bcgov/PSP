@@ -7,11 +7,17 @@ import noop from 'lodash/noop';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants';
-import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { act, fillInput, findByText, renderAsync, RenderOptions } from '@/utils/test-utils';
 
-import { defaultFormLeasePayment } from '../../models';
+import {
+  defaultFormLeasePayment,
+  defaultFormLeasePeriod,
+  FormLeasePayment,
+  FormLeasePeriod,
+} from '../../models';
 import { isActualGstEligible as isActualGstEligibleOriginal } from '../../PeriodPaymentsContainer';
 import PaymentForm, { IPaymentFormProps } from './PaymentForm';
+import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 
 const isActualGstEligible = vi.mocked(isActualGstEligibleOriginal);
 const history = createMemoryHistory();
@@ -30,14 +36,15 @@ describe('PaymentForm component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<IPaymentFormProps> & {
-        initialValues?: any;
+        initialValues?: FormLeasePayment;
+        periods?: ApiGen_Concepts_LeasePeriod[];
       } = {},
   ) => {
     // render component under test
     const component = await renderAsync(
       <Formik initialValues={renderOptions.initialValues ?? {}} onSubmit={noop}>
         <PaymentForm
-          periods={[]}
+          periods={renderOptions.periods ?? []}
           initialValues={renderOptions.initialValues}
           onSave={onSave}
           formikRef={{ current: { submitForm } } as any}
@@ -71,6 +78,33 @@ describe('PaymentForm component', () => {
 
     expect(component.asFragment()).toMatchSnapshot();
   });
+
+  it('Non-variable payments do not display payment category', async () => {
+    isActualGstEligible.mockReturnValue(true);
+    const {
+      component: { container, queryByLabelText },
+    } = await setup({
+      initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1 },
+      periods: [{ ...FormLeasePeriod.toApi(defaultFormLeasePeriod), isVariable: false, id: 1 }],
+    });
+
+    const category = queryByLabelText('Payment category:');
+    expect(category).toBeNull();
+  });
+
+  it('Variable payments do not display payment category', async () => {
+    isActualGstEligible.mockReturnValue(true);
+    const {
+      component: { container, queryByLabelText },
+    } = await setup({
+      initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1 },
+      periods: [{ ...FormLeasePeriod.toApi(defaultFormLeasePeriod), isVariable: true, id: 1 }],
+    });
+
+    const category = queryByLabelText('Payment category:');
+    expect(category).toBeVisible();
+  });
+
   it('Entering a total amount results in a calculated gst amount and pre tax amount', async () => {
     isActualGstEligible.mockReturnValue(true);
     const {
@@ -84,6 +118,22 @@ describe('PaymentForm component', () => {
     const amountGst = await findByLabelText('GST ($)');
     expect(amountPreTax).toHaveValue('$1,000.00');
     expect(amountGst).toHaveValue('$50.00');
+  });
+
+  it('Entering a total amount results and a mismatched gst amount results in an error', async () => {
+    isActualGstEligible.mockReturnValue(true);
+    const {
+      component: { container, findByText, findByDisplayValue },
+    } = await setup({ initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1 } });
+
+    await act(async () => {
+      await fillInput(container, 'amountGst', '50');
+    });
+    await findByDisplayValue('$50.00');
+    const warningMessage = await findByText(
+      'Expected payment amount and GST amount must sum to the total received',
+    );
+    expect(warningMessage).toBeVisible();
   });
 
   it('Entering a total amount results in a calculated pre tax amount when gst is not enabled', async () => {

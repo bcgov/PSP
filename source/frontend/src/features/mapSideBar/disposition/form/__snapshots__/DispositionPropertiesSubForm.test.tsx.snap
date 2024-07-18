@@ -42,6 +42,12 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c13.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -227,7 +233,6 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 
 .c0 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -811,6 +816,12 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   letter-spacing: 0.1rem;
   cursor: pointer;
   height: 3.8rem;
+}
+
+.c7.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 .c7.btn:hover {

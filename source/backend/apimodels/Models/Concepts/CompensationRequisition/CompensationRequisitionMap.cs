@@ -1,6 +1,5 @@
 using Mapster;
 using Pims.Api.Models.Base;
-using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.CompensationRequisition
@@ -42,6 +41,7 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
+                .Map(dest => dest.CompensationRequisitionProperties, src => src.PimsPropAcqFlCompReqs)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
@@ -70,6 +70,7 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
+                .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompensationRequisitionProperties)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

@@ -245,6 +245,7 @@ namespace Pims.Api.Test.Services
             var dspFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
             // Act
             Action act = () => service.Add(null, new List<UserOverrideCode>());
@@ -252,6 +253,7 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<ArgumentNullException>();
             repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>()), Times.Never);
         }
 
         [Fact]
@@ -263,11 +265,16 @@ namespace Pims.Api.Test.Services
             dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 1, DspFlTeamProfileTypeCode = "LISTAGENT" });
             dispFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam() { PersonId = 2, DspFlTeamProfileTypeCode = "LISTAGENT" });
 
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
             // Act
             Action act = () => service.Add(dispFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
 
             // Assert
             act.Should().Throw<BadRequestException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>()), Times.Never);
         }
 
         [Fact]
@@ -282,11 +289,16 @@ namespace Pims.Api.Test.Services
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
             // Act
             Action act = () => service.Add(dispositionFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
             // Assert
             var ex = act.Should().Throw<ContractorNotInTeamException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>()), Times.Never);
         }
 
         [Fact]
@@ -319,6 +331,39 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_Success_FileMarkerLocation()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionAdd);
+
+            var dispositionFile = EntityHelper.CreateDispositionFile();
+            var property = EntityHelper.CreateProperty(1000, regionCode: 1);
+
+            dispositionFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = property } };
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
+            // Act
+            var result = service.Add(dispositionFile, new List<UserOverrideCode>());
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Once);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
+        }
+
+        [Fact]
         public void Add_WithRetiredProperty_Should_Fail()
         {
             // Arrange
@@ -345,12 +390,16 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(pimsProperty);
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
             // Act
             Action act = () => service.Add(dispositionFile, new List<UserOverrideCode>());
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
             ex.WithMessage("Retired property can not be selected.");
+            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>()), Times.Never);
         }
 
         #endregion
@@ -929,7 +978,7 @@ namespace Pims.Api.Test.Services
             dspFile.ConcurrencyControlNumber = 1;
 
             var property = EntityHelper.CreateProperty(12345, regionCode: 1);
-            dspFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = property } };
+            dspFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Internal_Id = 1, Property = property } };
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
@@ -947,13 +996,16 @@ namespace Pims.Api.Test.Services
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()));
+            propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()));
 
             // Act
             service.UpdateProperties(dspFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             filePropertyRepository.Verify(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
             propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()), Times.Once);
         }
 
         [Fact]
@@ -968,8 +1020,9 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(12345, regionCode: 1);
             dspFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = property } };
 
-            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             PimsDispositionFileProperty updatedDispositionFileProperty = null;
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
 
@@ -979,9 +1032,6 @@ namespace Pims.Api.Test.Services
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
-
-            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
-            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(924046.3314288399, 1088892.9140135897));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
@@ -994,6 +1044,7 @@ namespace Pims.Api.Test.Services
                 SurplusDeclarationTypeCode = "UNKNOWN",
                 RegionCode = 1
             });
+            propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>())).Returns<PimsDispositionFileProperty>(x => x);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
@@ -1018,8 +1069,9 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(12345, regionCode: 1);
             dspFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = property } };
 
-            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             PimsDispositionFileProperty updatedDispositionFileProperty = null;
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
 
@@ -1044,6 +1096,7 @@ namespace Pims.Api.Test.Services
                 SurplusDeclarationTypeCode = "UNKNOWN",
                 RegionCode = 1
             });
+            propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>())).Returns<PimsDispositionFileProperty>(x => x);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
@@ -1063,7 +1116,9 @@ namespace Pims.Api.Test.Services
             updatedProperty.IsOwned.Should().Be(false);
 
             filePropertyRepository.Verify(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.Add(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
             propertyService.Verify(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>()), Times.Once);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
         }
 
         [Fact]
@@ -1089,6 +1144,8 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
             propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
@@ -1097,6 +1154,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()), Times.Once);
         }
 
         [Fact]
@@ -1115,7 +1173,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
 
             var filePropertyRepository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = property } });
+            filePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Internal_Id = 1, Property = property } });
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Throws<KeyNotFoundException>();
@@ -1177,15 +1235,15 @@ namespace Pims.Api.Test.Services
             var dspFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dspFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
 
             // Act
             Action act = () => service.UpdateProperties(dspFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
-            repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Never);
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -1197,21 +1255,19 @@ namespace Pims.Api.Test.Services
             var dspFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dspFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
-            var dspFileRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-            dspFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
-
             // Act
             Action act = () => service.UpdateProperties(dspFile, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -1411,7 +1467,7 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()), Times.Once);
             result.Count().Should().Be(1);
             result.FirstOrDefault().DspChklstItemTypeCode.Should().Be("TEST");
-            result.FirstOrDefault().DspChklstItemStatusTypeCode.Should().Be("INCOMP");
+            result.FirstOrDefault().ChklstItemStatusTypeCode.Should().Be(ChecklistItemStatusTypes.INCOMP.ToString());
         }
 
         [Fact]
@@ -1481,7 +1537,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
 
-            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "COMPLT" } };
+            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, ChklstItemStatusTypeCode = ChecklistItemStatusTypes.COMPLT.ToString() } };
             var dspFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
@@ -1489,7 +1545,7 @@ namespace Pims.Api.Test.Services
 
             var fileChecklistRepository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
             fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "INCOMP" } });
+                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString() } });
 
             // Act
             service.UpdateChecklistItems(checklistItems);
@@ -1508,14 +1564,14 @@ namespace Pims.Api.Test.Services
 
             var dspFile = EntityHelper.CreateDispositionFile();
             dspFile.DispositionFileStatusTypeCode = "ACTIV";
-            dspFile.PimsDispositionChecklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 999, DspChklstItemStatusTypeCode = "COMPLT" } };
+            dspFile.PimsDispositionChecklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 999, ChklstItemStatusTypeCode = ChecklistItemStatusTypes.COMPLT.ToString() } };
 
             var acqRepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             acqRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
 
             var fileChecklistRepository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
             fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "INCOMP" } });
+                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString() } });
 
             // Act
             Action act = () => service.UpdateChecklistItems(new List<PimsDispositionChecklistItem>());
@@ -1533,7 +1589,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit);
 
-            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 999, DspChklstItemStatusTypeCode = "COMPLT" } };
+            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 999, ChklstItemStatusTypeCode = ChecklistItemStatusTypes.COMPLT.ToString() } };
             var acqFile = EntityHelper.CreateDispositionFile();
             acqFile.DispositionFileStatusTypeCode = "ACTIV";
 
@@ -1542,7 +1598,7 @@ namespace Pims.Api.Test.Services
 
             var fileChecklistRepository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();
             fileChecklistRepository.Setup(x => x.GetAllChecklistItemsByDispositionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "INCOMP" } });
+                .Returns(new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString() } });
 
             // Act
             Action act = () => service.UpdateChecklistItems(checklistItems);
@@ -1560,7 +1616,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions();
 
-            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, DspChklstItemStatusTypeCode = "COMPLT" } };
+            var checklistItems = new List<PimsDispositionChecklistItem>() { new PimsDispositionChecklistItem() { Internal_Id = 1, ChklstItemStatusTypeCode = ChecklistItemStatusTypes.COMPLT.ToString() } };
             var dspFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFileChecklistRepository>>();

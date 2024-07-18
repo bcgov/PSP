@@ -140,7 +140,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c3 required text-left col-4"
+          class="c3 required text-left col-auto"
         >
           <div
             class="required d-flex form-group"
@@ -750,9 +750,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
             class="c2"
           >
             Initiator:
-            <span
-              class="ml-2"
-            >
+            <span>
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-section-field-tooltip"
@@ -833,9 +831,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                 class="c2"
               >
                 Responsibility:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -976,6 +972,33 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               id="input-description"
               name="description"
               title=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c2"
+          >
+            Primary arbitration city:
+          </label>
+        </div>
+        <div
+          class="c3 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-primaryArbitrationCity"
+              name="primaryArbitrationCity"
+              value=""
             />
           </div>
         </div>

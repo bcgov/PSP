@@ -5,7 +5,7 @@ import noop from 'lodash/noop';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import SelectedPropertyRow, { ISelectedPropertyRowProps } from './SelectedPropertyRow';
 
@@ -45,6 +45,7 @@ describe('SelectedPropertyRow component', () => {
   };
   it('renders as expected', async () => {
     const { component } = await setup({});
+    await act(async () => {});
     expect(component.asFragment()).toMatchSnapshot();
   });
 
@@ -52,6 +53,7 @@ describe('SelectedPropertyRow component', () => {
     const {
       component: { getByTitle },
     } = await setup({});
+    await act(async () => {});
     const removeButton = getByTitle('remove');
     userEvent.click(removeButton);
     expect(onRemove).toHaveBeenCalled();
@@ -69,6 +71,7 @@ describe('SelectedPropertyRow component', () => {
         properties: mapProperties,
       },
     } as any);
+    await act(async () => {});
     expect(getByText('PID: 111-111-111')).toBeVisible();
   });
   it('falls back to pin', async () => {
@@ -81,6 +84,7 @@ describe('SelectedPropertyRow component', () => {
     } = await setup({
       values: { properties: mapProperties },
     });
+    await act(async () => {});
     expect(getByText('PIN: 1234')).toBeVisible();
   });
 
@@ -91,6 +95,7 @@ describe('SelectedPropertyRow component', () => {
     } = await setup({
       values: { properties: mapProperties },
     } as any);
+    await act(async () => {});
     expect(getByText('Plan #: plan')).toBeVisible();
   });
 
@@ -101,6 +106,7 @@ describe('SelectedPropertyRow component', () => {
     } = await setup({
       values: { properties: mapProperties },
     } as any);
+    await act(async () => {});
     expect(getByText('5.000000, 4.000000')).toBeVisible();
   });
 
@@ -111,6 +117,7 @@ describe('SelectedPropertyRow component', () => {
     } = await setup({
       values: { properties: mapProperties },
     } as any);
+    await act(async () => {});
     expect(getByText('Address: a test address')).toBeVisible();
   });
 });

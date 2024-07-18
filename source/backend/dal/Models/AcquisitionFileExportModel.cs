@@ -43,9 +43,6 @@ namespace Pims.Dal.Entities.Models
         [DisplayName("Delivery Date")]
         public string FileDeliveryDate { get; set; }
 
-        [DisplayName("Acquisition Completed")]
-        public string FileAcquisitionCompleted { get; set; }
-
         [DisplayName("Physical File Status")]
         public string FilePhysicalStatus { get; set; }
 

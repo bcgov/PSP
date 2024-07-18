@@ -100,4 +100,37 @@ describe('PropertyManagementDetailView component', () => {
     await act(async () => userEvent.click(editButton));
     expect(history.location.search).toBe('?edit=true');
   });
+
+  it('displays lease information for no active lease', () => {
+    const apiManagement: ApiGen_Concepts_PropertyManagement = {
+      ...getMockApiPropertyManagement(),
+      hasActiveLease: false,
+      activeLeaseHasExpiryDate: false,
+      managementPurposes: [getMockApiPropertyManagementPurpose()],
+    };
+    const { queryByTestId } = setup({ props: { propertyManagement: apiManagement } });
+    expect(queryByTestId('active-lease-information')).toHaveTextContent('No');
+  });
+
+  it('displays lease information for active lease', () => {
+    const apiManagement: ApiGen_Concepts_PropertyManagement = {
+      ...getMockApiPropertyManagement(),
+      hasActiveLease: true,
+      activeLeaseHasExpiryDate: false,
+      managementPurposes: [getMockApiPropertyManagementPurpose()],
+    };
+    const { queryByTestId } = setup({ props: { propertyManagement: apiManagement } });
+    expect(queryByTestId('active-lease-information')).toHaveTextContent('Yes (No Expiry Date)');
+  });
+
+  it('displays lease information for active lease with expiry date', () => {
+    const apiManagement: ApiGen_Concepts_PropertyManagement = {
+      ...getMockApiPropertyManagement(),
+      hasActiveLease: true,
+      activeLeaseHasExpiryDate: true,
+      managementPurposes: [getMockApiPropertyManagementPurpose()],
+    };
+    const { queryByTestId } = setup({ props: { propertyManagement: apiManagement } });
+    expect(queryByTestId('active-lease-information')).toHaveTextContent('Yes');
+  });
 });

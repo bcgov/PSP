@@ -37,6 +37,12 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c9.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -266,7 +272,6 @@ exports[`AddResearchForm component > renders as expected 1`] = `
 
 .c10 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 

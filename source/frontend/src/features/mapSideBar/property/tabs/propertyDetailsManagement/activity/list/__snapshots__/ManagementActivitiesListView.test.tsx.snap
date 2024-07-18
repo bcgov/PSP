@@ -6,7 +6,7 @@ exports[`Activities list view > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,49 +37,55 @@ exports[`Activities list view > renders as expected 1`] = `
   height: 3.8rem;
 }
 
-.c7.btn:hover {
+.c8.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c8.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c8.btn.btn-primary {
   border: none;
 }
 
-.c7.btn.btn-secondary {
+.c8.btn.btn-secondary {
   background: none;
 }
 
-.c7.btn.btn-info {
+.c8.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   background: none;
 }
 
-.c7.btn.btn-light {
+.c8.btn.btn-light {
   border: none;
 }
 
-.c7.btn.btn-dark {
+.c8.btn.btn-dark {
   border: none;
 }
 
-.c7.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +106,9 @@ exports[`Activities list view > renders as expected 1`] = `
   padding: 0;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +117,14 @@ exports[`Activities list view > renders as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,15 +135,15 @@ exports[`Activities list view > renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c7.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -189,11 +195,11 @@ exports[`Activities list view > renders as expected 1`] = `
   height: 1.6rem;
 }
 
-.c8 {
+.c9 {
   margin-top: 0.3rem;
 }
 
-.c9 {
+.c10 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -202,7 +208,7 @@ exports[`Activities list view > renders as expected 1`] = `
   padding: 0;
 }
 
-.c9:disabled {
+.c10:disabled {
   background: white;
 }
 
@@ -220,6 +226,26 @@ exports[`Activities list view > renders as expected 1`] = `
 
 .c2 .btn {
   margin: 0;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.25rem;
+  width: 80%;
 }
 
 <div
@@ -478,7 +504,7 @@ exports[`Activities list view > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -533,43 +559,53 @@ exports[`Activities list view > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
-                  class="no-gutters row"
+                  class="c7"
                 >
-                  <div
-                    class="col"
+                  <button
+                    class="c8 Button Button--icon-only btn btn-link"
+                    data-testid="activity-view-1"
+                    type="button"
                   >
-                    <button
-                      class="c7 Button Button--icon-only btn btn-link"
-                      data-testid="activity-view-1"
-                      type="button"
+                    <div
+                      class="Button__icon"
                     >
-                      <div
-                        class="Button__icon"
+                      <svg
+                        fill="currentColor"
+                        height="2rem"
+                        id="activity-view-0"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 576 512"
+                        width="2rem"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <svg
-                          fill="currentColor"
-                          height="2rem"
-                          id="activity-view-0"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 576 512"
-                          width="2rem"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <title>
-                            property-activity view details
-                          </title>
-                          <path
-                            d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                  </div>
+                        <title>
+                          property-activity view details
+                        </title>
+                        <path
+                          d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <svg
+                    class="tooltip-icon h-24"
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
                 </div>
               </div>
             </div>
@@ -615,43 +651,53 @@ exports[`Activities list view > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <div
-                  class="no-gutters row"
+                  class="c7"
                 >
-                  <div
-                    class="col"
+                  <button
+                    class="c8 Button Button--icon-only btn btn-link"
+                    data-testid="activity-view-2"
+                    type="button"
                   >
-                    <button
-                      class="c7 Button Button--icon-only btn btn-link"
-                      data-testid="activity-view-2"
-                      type="button"
+                    <div
+                      class="Button__icon"
                     >
-                      <div
-                        class="Button__icon"
+                      <svg
+                        fill="currentColor"
+                        height="2rem"
+                        id="activity-view-1"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 576 512"
+                        width="2rem"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
-                        <svg
-                          fill="currentColor"
-                          height="2rem"
-                          id="activity-view-1"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 576 512"
-                          width="2rem"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <title>
-                            property-activity view details
-                          </title>
-                          <path
-                            d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
-                          />
-                        </svg>
-                      </div>
-                    </button>
-                  </div>
+                        <title>
+                          property-activity view details
+                        </title>
+                        <path
+                          d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <svg
+                    class="tooltip-icon h-24"
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
                 </div>
               </div>
             </div>
@@ -684,17 +730,17 @@ exports[`Activities list view > renders as expected 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c8"
+                  class="c9"
                 >
                   Show
                 </span>
                 <input
-                  class="c9 form-control"
+                  class="c10 form-control"
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c8"
+                  class="c9"
                 >
                   Entries
                 </span>

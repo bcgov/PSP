@@ -71,6 +71,7 @@ describe('UpdateProperties component', () => {
 
   it('renders as expected', async () => {
     setup({});
+    await act(async () => {});
     expect(document.body).toMatchSnapshot();
   });
 
@@ -123,6 +124,7 @@ describe('UpdateProperties component', () => {
             displayOrder: null,
             fileId: 1,
             propertyName: null,
+            location: null,
             file: null,
           },
         ],

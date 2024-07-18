@@ -32,6 +32,12 @@ exports[`SideNavbar display and logic > renders 1`] = `
   height: 3.8rem;
 }
 
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -161,6 +167,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
   height: calc( 100vh - -  );
   overflow-y: auto;
   overflow-x: hidden;
+  padding-top: 1.5rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -253,6 +260,13 @@ exports[`SideNavbar display and logic > renders 1`] = `
 
 .c2 {
   width: 100%;
+  margin-bottom: 2rem;
+}
+
+.c2 svg {
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
 }
 
 .c3 {
@@ -267,12 +281,6 @@ exports[`SideNavbar display and logic > renders 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-}
-
-.c3 svg {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
 }
 
 @media (max-width:1225px) {
@@ -300,7 +308,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
     >
       <div
         class="c2 nav-item"
-        data-testid="nav-tooltip-home"
+        data-testid="nav-tooltip-mapview"
       >
         <a
           class="c3 nav-link"
@@ -308,20 +316,17 @@ exports[`SideNavbar display and logic > renders 1`] = `
           role="button"
         >
           <svg
-            fill="currentColor"
+            fill="none"
             height="24"
-            stroke="currentColor"
-            stroke-width="0"
             viewBox="0 0 24 24"
             width="24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
+              d="M12 12.6826C10.7569 12.6826 9.75 13.6907 9.75 14.9326C9.75 16.1746 10.7569 17.1826 12 17.1826C13.2431 17.1826 14.25 16.1746 14.25 14.9326C14.25 13.6907 13.2431 12.6826 12 12.6826Z"
             />
             <path
-              d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"
+              d="M12.1725 0L0 12.825L3.075 12.7725V24H20.925V12.54L24 12.4875L12.1725 0ZM12.375 24C12 24 11.625 24 11.625 24C7.65 18.18 6.75 17.1375 6.75 15C6.75 12.0675 9.0975 9.6975 12 9.6975C14.9025 9.6975 17.25 12.075 17.25 15C17.25 17.1375 16.35 18.18 12.375 24Z"
             />
           </svg>
         </a>
@@ -336,16 +341,14 @@ exports[`SideNavbar display and logic > renders 1`] = `
           role="button"
         >
           <svg
-            fill="currentColor"
+            fill="none"
             height="24"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
+            viewBox="0 0 24 24"
             width="24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"
+              d="M24 14.3972H15V15.9905C15 16.8726 14.3333 17.5839 13.5067 17.5839H10.5067C9.68 17.5839 9.01333 16.8726 9.01333 15.9905V14.3972H0V20.7991C0 22.5631 1.34667 24 3 24H21C22.6533 24 24 22.5631 24 20.7991V14.3972ZM6 2.8026V4.80853H3C1.34667 4.80853 0 6.2454 0 8.00948V12.018H24V8.00948C24 6.2454 22.6533 4.80853 21 4.80853H18V2.8026C18 1.25192 16.8267 0 15.3733 0H8.62667C7.17333 0 6 1.25192 6 2.8026ZM8.62667 2.40427H15.3733C15.5733 2.40427 15.7467 2.58921 15.7467 2.8026V4.80853H8.25333V2.8026C8.25333 2.58921 8.42667 2.40427 8.62667 2.40427Z"
             />
           </svg>
         </a>
@@ -360,23 +363,15 @@ exports[`SideNavbar display and logic > renders 1`] = `
           role="button"
         >
           <svg
-            enable-background="new 0 0 24 24"
-            fill="#FFFFFF"
-            height="24px"
+            fill="none"
+            height="24"
             viewBox="0 0 24 24"
-            width="24px"
+            width="24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g>
-              <rect
-                fill="none"
-                height="24"
-                width="24"
-              />
-              <path
-                d="M20,6h-8l-2-2H4C2.9,4,2.01,4.9,2.01,6L2,18c0,1.1,0.9,2,2,2h16c1.1,0,2-0.9,2-2V8C22,6.9,21.1,6,20,6z M20,18L4,18V6h5.17 l2,2H20V18z M18,12H6v-2h12V12z M14,16H6v-2h8V16z"
-              />
-            </g>
+            <path
+              d="M19.2118 13.0611H4.80296V10.1458H19.2118V13.0611ZM14.4089 19.7098H4.80296V16.7765H14.4089V19.7098ZM21.6059 4.75623H16.803H12L9.60591 0H2.39409C0 0 0 3.1546 0 4.75623V21.0847C0 22.6863 1.06404 24 2.39409 24H21.6059C22.9212 24 24 22.6863 24 21.0847V7.67157C24 6.06993 22.9212 4.75623 21.6059 4.75623Z"
+            />
           </svg>
         </a>
       </div>
@@ -390,20 +385,14 @@ exports[`SideNavbar display and logic > renders 1`] = `
           role="button"
         >
           <svg
-            enable-background="new 0 0 24 24"
-            fill="#FFFFFF"
-            height="24px"
+            fill="none"
+            height="24"
             viewBox="0 0 24 24"
-            width="24px"
+            width="24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <rect
-              fill="none"
-              height="24"
-              width="24"
-            />
             <path
-              d="M21,6.5V14h-2V7.5L14,4L9,7.5V9H7V6.5l7-5L21,6.5z M15.5,7h-1v1h1V7z M13.5,7h-1v1h1V7z M15.5,9h-1v1h1V9z M13.5,9h-1v1h1V9 z M19,16h-2c0-1.2-0.75-2.28-1.87-2.7L8.97,11H1v11h6v-1.44l7,1.94l8-2.5v-1C22,17.34,20.66,16,19,16z M3,20v-7h2v7H3z M13.97,20.41 L7,18.48V13h1.61l5.82,2.17C14.77,15.3,15,15.63,15,16c0,0-1.99-0.05-2.3-0.15l-2.38-0.79l-0.63,1.9l2.38,0.79 c0.51,0.17,1.04,0.26,1.58,0.26H19c0.39,0,0.74,0.23,0.9,0.56L13.97,20.41z"
+              d="M16.5896 7.61509H15.446V6.44474H16.5896V7.61509ZM16.5896 9.95579H15.446V8.78544H16.5896V9.95579ZM14.3024 7.61509H13.1588V6.44474H14.3024V7.61509ZM14.3024 9.95579H13.1588V8.78544H14.3024V9.95579ZM14.8666 0L6.8615 5.85175V8.78544H9.14867L18.4498 12.6086C19.7306 13.1391 20.5845 14.4031 20.5845 15.8075H22.8717V5.85175L14.8666 0ZM21.7281 18.1482H13.723L11.3291 17.29L11.7103 16.1821L13.723 16.9623H16.9403C17.6874 16.9623 18.2973 16.3381 18.2973 15.5735C18.2973 14.9961 17.9466 14.4812 17.413 14.2783L9.10292 11.1105H6.84625V21.6593L14.8513 23.9844L24 20.4734C24 19.1782 22.9784 18.1327 21.7128 18.1327L21.7281 18.1482ZM0 24H5.32433V11.1261H0V24Z"
             />
           </svg>
         </a>
@@ -418,20 +407,14 @@ exports[`SideNavbar display and logic > renders 1`] = `
           role="button"
         >
           <svg
-            fill="currentColor"
+            fill="none"
             height="24"
-            stroke="currentColor"
-            stroke-width="0"
             viewBox="0 0 24 24"
             width="24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M21 12v-2h-2V7l-3-3-2 2-2-2-2 2-2-2-3 3v3H3v2h2v2H3v2h2v4h14v-4h2v-2h-2v-2h2zm-5-5.17 1 1V10h-2V7.83l.41-.41.59-.59zm-4 0 .59.59.41.41V10h-2V7.83l.41-.41.59-.59zM11 14v-2h2v2h-2zm2 2v2h-2v-2h2zM7 7.83l1-1 .59.59.41.41V10H7V7.83zM7 12h2v2H7v-2zm0 4h2v2H7v-2zm10 2h-2v-2h2v2zm0-4h-2v-2h2v2z"
+              d="M18.6667 15H16V12H18.6667V15ZM18.6667 21H16V18H18.6667V21ZM5.33333 18H8V21H5.33333V18ZM5.33333 12H8V15H5.33333V12ZM5.33333 5.72331L6.66667 4.22329L7.45333 5.11164L8 5.72331V8.98544H5.33333V5.72331ZM13.3333 18V21H10.6667V18H13.3333ZM10.6667 15V12H13.3333V15H10.6667ZM12 4.22329L12.7867 5.11164L13.3333 5.72331V8.98544H10.6667V5.72331L11.2133 5.11164L12 4.22329ZM17.3333 4.22329L18.6667 5.72331V8.98544H16V5.72331L16.5467 5.11164L17.3333 4.22329ZM24 12V9.00001H21.3333V4.5L17.3333 0L14.6667 3L12 0L9.33333 3L6.66667 0L2.66667 4.5V9.00001H0V12H2.66667V15H0V18H2.66667V24H21.3333V18H24V15H21.3333V12H24Z"
             />
           </svg>
         </a>
@@ -446,27 +429,14 @@ exports[`SideNavbar display and logic > renders 1`] = `
           role="button"
         >
           <svg
-            color="white"
             fill="none"
-            fill-opacity="0"
             height="24"
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            style="color: white;"
             viewBox="0 0 24 24"
             width="24"
             xmlns="http://www.w3.org/2000/svg"
           >
             <path
-              d="M10 18h4"
-            />
-            <path
-              d="M3 8a9 9 0 0 1 9 9v1l1.428 -4.285a12 12 0 0 1 6.018 -6.938l.554 -.277"
-            />
-            <path
-              d="M15 6h5v5"
+              d="M21.3987 5.625C18.1918 7.77086 14.3226 15.3433 14.3226 21.1389H16.9566V24H7.59054V21.1389H10.4516C10.4516 15 6 6.75 0 6.75V3.61114C6.75 3.61114 10.4516 9 12.2598 14.25C13.875 9 15.871 5.625 19.7419 2.84712H14.8748V0H24V9.98597H21.3987V6V5.625Z"
             />
           </svg>
         </a>
@@ -481,28 +451,18 @@ exports[`SideNavbar display and logic > renders 1`] = `
           role="button"
         >
           <svg
-            class="mr-1"
-            data-name="Layer 2"
-            height="24px"
-            id="Layer_2"
-            viewBox="0 0 22 14"
-            width="24px"
+            fill="none"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <defs />
-            <g
-              data-name="Layer 1"
-              id="Layer_1-2"
-            >
-              <g>
-                <path
-                  d="M12.85,6.88V0H2.16C.97,0,0,.97,0,2.16v10.15c0,1.19.97,2.16,2.16,2.16h2.04l8.65-7.59Z"
-                />
-                <path
-                  d="M19.46,0h-3.18v7.24c0,.06,0,.12-.02.18.08.55-.11,1.14-.56,1.53l-6.29,5.53h10.05c1.19,0,2.16-.97,2.16-2.16V2.16C21.62.98,20.65,0,19.46,0Z"
-                />
-              </g>
-            </g>
+            <path
+              d="M14.5455 11.4112V0H2.56725C1.15289 0 0 1.60885 0 3.58259V20.4174C0 22.3912 1.15289 24 2.56725 24H4.99186L14.5455 11.4112Z"
+            />
+            <path
+              d="M21.6022 0H18.0722V12C18.0722 12.0994 18.0611 12.1989 18.05 12.2983L9.45459 24L21.6022 24C22.9232 24 24 22.3923 24 20.4199V3.58011C24 1.62431 22.9232 0 21.6022 0Z"
+            />
           </svg>
         </a>
       </div>

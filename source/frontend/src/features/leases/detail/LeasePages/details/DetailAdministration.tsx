@@ -78,6 +78,13 @@ export const DetailAdministration: React.FunctionComponent<
         <SectionField label="Intended use" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'description')} />
         </SectionField>
+        <SectionField
+          label="Primary arbitration city"
+          labelWidth="3"
+          valueTestId="primaryArbitrationCity"
+        >
+          <Input disabled={disabled} field={withNameSpace(nameSpace, 'primaryArbitrationCity')} />
+        </SectionField>
       </Section>
     </>
   );

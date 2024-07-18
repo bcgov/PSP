@@ -9,6 +9,7 @@ import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
+import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
@@ -31,6 +32,9 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
   const [layerSearch, setLayerSearch] = useState<ILayerSearchCriteria | undefined>();
   const [searchResults, setSearchResults] = useState<LocationFeatureDataset[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
+
+  const pimsPropertyLayerService = usePimsPropertyLayer();
+  const loadPimsProperties = pimsPropertyLayerService.loadPropertyLayer.execute;
 
   const {
     getSitePids,
@@ -87,17 +91,28 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
           );
         });
 
+        const getPimsTasks = result.features.map(p => {
+          return loadPimsProperties({
+            PID: p?.properties?.PID_NUMBER?.toString(),
+            PIN: p?.properties?.PIN?.toString(),
+          });
+        });
+
         const addressResults = await Promise.all(getAddressTasks);
         const regionDistrictResults = await Promise.all(matchTasks);
+        const pimsResults = await Promise.all(getPimsTasks);
+
         const locations = result.features.map((p, i) => {
           const foundProperty = featureToLocationFeatureDataset(p);
           foundProperty.regionFeature = regionDistrictResults[i]?.regionFeature;
           foundProperty.districtFeature = regionDistrictResults[i]?.districtFeature;
-          foundProperty.pimsFeature = {
-            properties: {
-              STREET_ADDRESS_1: addressResults[i]?.fullAddress,
-            },
-          } as Feature<Geometry, PIMS_Property_Location_View>;
+          foundProperty.pimsFeature = pimsResults[i]?.features?.length
+            ? pimsResults[i]?.features[0]
+            : ({
+                properties: {
+                  STREET_ADDRESS_1: addressResults[i]?.fullAddress,
+                },
+              } as Feature<Geometry, PIMS_Property_Location_View>);
           return foundProperty;
         }) as LocationFeatureDataset[];
         setSearchResults(locations);
@@ -116,6 +131,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
     layerSearch,
     findRegion,
     findDistrict,
+    loadPimsProperties,
   ]);
 
   const handleOnAddressSelect = async (selectedItem: IGeocoderResponse) => {
@@ -207,14 +223,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
   );
 };
 
-export const featureToLocationFeatureDataset = (
-  feature: Feature<
-    Geometry,
-    {
-      [name: string]: any;
-    }
-  >,
-) => {
+export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJsonProperties>) => {
   const center = getFeatureBoundedCenter(feature);
   return {
     parcelFeature: feature,

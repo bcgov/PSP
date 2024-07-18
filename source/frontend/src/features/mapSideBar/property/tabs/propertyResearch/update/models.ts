@@ -1,8 +1,7 @@
 import { ApiGen_Concepts_PropertyPurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyPurpose';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { getEmptyResearchFile } from '@/models/defaultInitializers';
 import { exists } from '@/utils/utils';
-
-import { getEmptyResearchFile } from './../../../../../../models/defaultInitializers';
 
 export class PropertyResearchFilePurposeFormModel {
   public id?: number;
@@ -101,6 +100,7 @@ export class UpdatePropertyFormModel {
       documentReference: this.documentReference ?? null,
       researchSummary: this.researchSummary ?? null,
       property: null,
+      location: null,
       fileId: this.researchFileId ?? 0,
       file: { ...getEmptyResearchFile(), rowVersion: this.researchFileRowVersion },
       purposeTypes: this.purposeTypes?.map(x => x.toApi()) ?? null,

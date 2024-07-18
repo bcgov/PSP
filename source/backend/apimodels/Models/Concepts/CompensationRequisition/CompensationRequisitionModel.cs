@@ -71,5 +71,7 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
         public long? AlternateProjectId { get; set; }
 
         public ProjectModel AlternateProject { get; set; }
+
+        public IEnumerable<CompensationRequisitionPropertyModel> CompensationRequisitionProperties { get; set; }
     }
 }

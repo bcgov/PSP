@@ -1,4 +1,5 @@
 import { MultiPolygon, Polygon } from 'geojson';
+import { LatLngLiteral } from 'leaflet';
 import { isNumber } from 'lodash';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
@@ -21,6 +22,9 @@ import {
   exists,
   formatApiAddress,
   formatBcaAddress,
+  getLatLng,
+  isValidId,
+  latLngToApiLocation,
   pidFromFeatureSet,
   pidParser,
   pinFromFeatureSet,
@@ -41,23 +45,10 @@ export class FileForm {
     return {
       id: this.id ?? 0,
       fileName: this.name,
-      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
+      fileProperties: this.properties.map(x => x.toFilePropertyApi(this.id)),
       fileNumber: null,
       fileStatusTypeCode: null,
       ...getEmptyBaseAudit(this.rowVersion),
-    };
-  }
-
-  private toPropertyApi(x: PropertyForm): ApiGen_Concepts_FileProperty {
-    return {
-      id: x.id ?? 0,
-      fileId: this.id ?? 0,
-      property: x.toApi(),
-      propertyId: x.apiId ?? 0,
-      propertyName: x.name ?? null,
-      rowVersion: x.rowVersion ?? null,
-      displayOrder: null,
-      file: null,
     };
   }
 
@@ -80,6 +71,7 @@ export class PropertyForm {
   public pin?: string;
   public latitude?: number;
   public longitude?: number;
+  public fileLocation?: LatLngLiteral;
   public polygon?: Polygon | MultiPolygon;
   public planNumber?: string;
   public name?: string;
@@ -106,9 +98,10 @@ export class PropertyForm {
     return new PropertyForm({
       apiId: model.propertyId,
       pid: model.pid,
-      pin: model.pin,
+      pin: isValidId(Number(model.pin)) ? model.pin : undefined,
       latitude: model.latitude,
       longitude: model.longitude,
+      fileLocation: model.fileLocation,
       polygon: model.polygon,
       planNumber: model.planNumber,
       region: model.region,
@@ -124,14 +117,15 @@ export class PropertyForm {
 
   public static fromFeatureDataset(model: LocationFeatureDataset): PropertyForm {
     return new PropertyForm({
-      apiId: +(model.pimsFeature?.properties?.PROPERTY_ID ?? 0),
+      apiId: +(model?.pimsFeature?.properties?.PROPERTY_ID ?? 0),
       pid: pidFromFeatureSet(model),
       pin: pinFromFeatureSet(model),
-      latitude: model.location?.lat,
-      longitude: model.location?.lng,
+      latitude: model?.location?.lat,
+      longitude: model?.location?.lng,
+      fileLocation: model?.fileLocation ?? model?.location ?? undefined,
       planNumber:
-        model.pimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
-        model.parcelFeature?.properties?.PLAN_NUMBER ??
+        model?.pimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
+        model?.parcelFeature?.properties?.PLAN_NUMBER ??
         '',
       polygon:
         model?.parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
@@ -162,9 +156,10 @@ export class PropertyForm {
   public toMapProperty(): IMapProperty {
     return {
       pid: this.pid,
-      pin: this.pin,
+      pin: isValidId(Number(this.pin)) ? this.pin : null,
       latitude: this.latitude,
       longitude: this.longitude,
+      fileLocation: this.fileLocation,
       planNumber: this.planNumber,
       polygon: this.polygon,
       region: this.region,
@@ -205,6 +200,7 @@ export class PropertyForm {
         geometry: this.polygon ? this.polygon : null,
       },
       location: { lat: this.latitude, lng: this.longitude },
+      fileLocation: this.fileLocation ?? { lat: this.latitude, lng: this.longitude },
       regionFeature: {
         properties: {
           REGION_NAME: this.regionName,
@@ -245,6 +241,7 @@ export class PropertyForm {
     newForm.pin = model.property?.pin?.toString();
     newForm.latitude = model.property?.latitude ?? undefined;
     newForm.longitude = model.property?.longitude ?? undefined;
+    newForm.fileLocation = getLatLng(model.location) ?? undefined;
     newForm.planNumber = model.property?.planNumber ?? undefined;
     newForm.region = model.property?.region?.id ?? undefined;
     newForm.district = model.property?.district?.id ?? undefined;
@@ -289,13 +286,27 @@ export class PropertyForm {
     return newForm;
   }
 
+  public toFilePropertyApi(fileId?: number): ApiGen_Concepts_FileProperty {
+    return {
+      id: this.id ?? 0,
+      fileId: fileId ?? this.fileId ?? 0,
+      file: null,
+      property: this.toApi(),
+      propertyId: this.apiId ?? 0,
+      propertyName: this.name ?? null,
+      location: latLngToApiLocation(this.fileLocation?.lat, this.fileLocation?.lng),
+      displayOrder: this.displayOrder ?? null,
+      rowVersion: this.rowVersion ?? null,
+    };
+  }
+
   public toApi(): ApiGen_Concepts_Property {
     return {
       id: this.apiId ?? 0,
       pid: pidParser(this.pid) ?? null,
-      pin: this.pin !== undefined ? Number(this.pin) : null,
+      pin: isValidId(Number(this.pin)) ? Number(this.pin) : null,
       planNumber: this.planNumber ?? null,
-      location: { coordinate: { x: this.longitude ?? 0, y: this.latitude ?? 0 } },
+      location: latLngToApiLocation(this.latitude, this.longitude),
       boundary: this.polygon ? this.polygon : null,
       region: toTypeCodeNullable(this.region),
       district: toTypeCodeNullable(this.district),

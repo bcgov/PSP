@@ -94,11 +94,14 @@ namespace Pims.Api.Areas.Persons.Controllers
         {
             // Business rule - support country free-form value if country code is "Other". Ignore field otherwise.
             var otherCountry = _lookupRepository.GetAllCountries().FirstOrDefault(x => x.Code == Dal.Entities.CountryCodes.Other);
-            foreach (var personAddress in model?.PersonAddresses)
+            if (model?.PersonAddresses != null)
             {
-                if (otherCountry != null && personAddress != null && personAddress.Address.CountryId != otherCountry.CountryId)
+                foreach (var personAddress in model?.PersonAddresses)
                 {
-                    personAddress.Address.CountryOther = null;
+                    if (otherCountry != null && personAddress != null && personAddress.Address.CountryId != otherCountry.CountryId)
+                    {
+                        personAddress.Address.CountryOther = null;
+                    }
                 }
             }
 

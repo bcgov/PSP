@@ -109,6 +109,7 @@ describe('AddLeaseContainer component', () => {
   it('cancels the form', async () => {
     const { getByTitle, getCloseButton } = await setup({});
 
+    await act(async () => selectOptions('regionId', '1'));
     await act(async () => userEvent.click(getCloseButton()));
     await act(async () => userEvent.click(getByTitle('ok-modal')));
 
@@ -211,7 +212,7 @@ describe('AddLeaseContainer component', () => {
 
 const leaseData: ApiGen_Concepts_Lease = {
   ...getEmptyLease(),
-  rowVersion: 0,
+  rowVersion: null,
   startDate: '2020-01-01',
   amount: 0,
   paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),

@@ -48,6 +48,7 @@ const defaultLeaseWithPeriodsPayments: LeaseFormModel = {
     {
       ...defaultFormLeasePeriod,
       expiryDate: '2020-01-01',
+      startDate: '2020-01-01',
       statusTypeCode: toTypeCodeNullable(LeasePeriodStatusTypes.EXERCISED),
       payments: [{ ...defaultTestFormLeasePayment }],
     },
@@ -81,7 +82,7 @@ const TermsView = (props: IPeriodPaymentsViewProps) => {
   );
 };
 
-describe('TermsPaymentsContainer component', () => {
+describe('PeriodsPaymentsContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions &
       Partial<LeasePageProps<IPeriodPaymentsViewProps>> & {
@@ -144,17 +145,23 @@ describe('TermsPaymentsContainer component', () => {
 
   describe('period logic tests', () => {
     it('when adding a new initial period, the start date is set to the start date of the lease', async () => {
-      const {
-        component: { getAllByText, getByDisplayValue },
-      } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
-      mockAxios.onPost().reply(200, { id: 1 });
+      const temp = mockGetLeasePeriods.response;
+      try {
+        mockGetLeasePeriods.response = [];
+        const {
+          component: { getAllByText, getByDisplayValue },
+        } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
+        mockAxios.onPost().reply(200, { id: 1 });
 
-      const addButton = getAllByText('Add a Period')[0];
-      await act(async () => {
-        userEvent.click(addButton);
-      });
+        const addButton = getAllByText('Add a Period')[0];
+        await act(async () => {
+          userEvent.click(addButton);
+        });
 
-      expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
+        expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
+      } finally {
+        mockGetLeasePeriods.response = temp;
+      }
     });
 
     it(`doesn't make any request when cancelling the period modal`, async () => {
@@ -371,12 +378,14 @@ describe('TermsPaymentsContainer component', () => {
 
       const expander = await findByTestId('table-row-expander-');
       await act(async () => userEvent.click(expander));
-      const addButton = await findByText('Record a Payment');
+
+      const addButton = await findByText('Add a Payment');
       await act(async () => {
         userEvent.click(addButton);
       });
 
       await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
+      await fillInput(document.body, 'amountTotal', '1200');
       const saveButton = getByText('Save payment');
       await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.post.length).toBe(1);
@@ -398,7 +407,7 @@ describe('TermsPaymentsContainer component', () => {
 
       const expander = await findByTestId('table-row-expander-');
       await act(async () => userEvent.click(expander));
-      const addButton = await findByText('Record a Payment');
+      const addButton = await findByText('Add a Payment');
       await act(async () => {
         userEvent.click(addButton);
       });
@@ -430,7 +439,8 @@ describe('TermsPaymentsContainer component', () => {
         userEvent.click(editButton[0]);
       });
 
-      await fillInput(document.body, 'startDate', '2020-01-01', 'datepicker');
+      await fillInput(document.body, 'receivedDate', '2020-01-01', 'datepicker');
+      await fillInput(document.body, 'amountTotal', '1200');
       const saveButton = getByText('Save payment');
       await act(async () => userEvent.click(saveButton));
       expect(mockAxios.history.put.length).toBe(1);

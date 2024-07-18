@@ -19,6 +19,7 @@ using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -184,11 +185,11 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             DateTime startDate = fiscalYearStart.ToFiscalYearDate();
             var allPayments = _leasePaymentService.GetAllByDateRange(startDate, startDate.AddYears(1).AddDays(-1)); // Add years will give you the equivalent month, except for 29th/ 28th of leap years which is not the case here.
-            var paymentItems = _mapper.Map<IEnumerable<LeasePaymentReportModel>>(allPayments);
+            var paymentItems = _mapper.Map<IEnumerable<LeasePaymentReportModel>>(allPayments.OrderBy(p => p?.LeasePeriod?.Lease?.RegionCode).ThenBy(p => p?.LeasePeriod?.Lease?.LFileNo).ThenByDescending(p => p.PaymentReceivedDate));
 
             return acceptHeader.ToString() switch
             {
-                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv<LeasePaymentReportModel>(paymentItems.OrderBy(p => p.Region).ThenBy(p => p.LFileNumber).ThenByDescending(p => p.PaymentReceivedDate)),
+                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv<LeasePaymentReportModel>(paymentItems),
                 _ => ReportHelper.GenerateExcel(paymentItems, $"LeaseLicense_Payments")
             };
         }
@@ -204,9 +205,13 @@ namespace Pims.Api.Areas.Reports.Controllers
         public IEnumerable<LeaseModel> GetCrossJoinLeases(Lease.Models.Search.LeaseFilterModel filter, bool all = false)
         {
             var page = _leaseService.GetPage((LeaseFilter)filter, all);
-            var allLeases = page.Items.SelectMany(l => l.PimsLeasePeriods.DefaultIfEmpty(), (lease, period) => (lease, period))
+            var expiryDate = page.Items.Select(l => l.GetExpiryDate());
+
+            var allLeases = page.Items
+                .SelectMany(l => l.PimsLeasePeriods.DefaultIfEmpty(), (lease, period) => (lease, period))
                 .SelectMany(lt => lt.lease.PimsPropertyLeases.DefaultIfEmpty(), (leasePeriod, property) => (leasePeriod.period, leasePeriod.lease, property))
-                .SelectMany(ltp => ltp.lease.PimsLeaseTenants.DefaultIfEmpty(), (leasePeriodProperty, tenant) => (leasePeriodProperty.period, leasePeriodProperty.lease, leasePeriodProperty.property, tenant));
+                .SelectMany(ltp => ltp.lease.PimsLeaseTenants.DefaultIfEmpty(), (leasePeriodProperty, tenant) => (leasePeriodProperty.period, leasePeriodProperty.lease, leasePeriodProperty.property, tenant))
+                .SelectMany(ltpr => expiryDate, (leasePeriodPropertyTenant, expiryDate) => (leasePeriodPropertyTenant.period, leasePeriodPropertyTenant.lease, leasePeriodPropertyTenant.property, leasePeriodPropertyTenant.tenant, expiryDate));
             var flatLeases = _mapper.Map<IEnumerable<LeaseModel>>(allLeases);
             return flatLeases;
         }
