@@ -12,7 +12,6 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<(Entity.PimsLeasePeriod period, Entity.PimsLease lease, Entity.PimsPropertyLease property, Entity.PimsLeaseTenant tenant ), Model.LeaseModel>()
-            //config.NewConfig<(Entity.PimsLeasePeriod period, Entity.PimsLease lease, Entity.PimsPropertyLease property, Entity.PimsLeaseTenant tenant, DateTime? expiryDate), Model.LeaseModel>()
                 .AfterMapping((src, dest) =>
                 {
                     MapLease(src, dest);
