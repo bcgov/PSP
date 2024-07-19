@@ -149,8 +149,8 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
             <Section header="Individual Contacts">
               <SectionField
                 label="Connected to this organization"
-                labelWidth="3"
-                tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page."
+                labelWidth="auto"
+                tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page"
               >
                 {persons &&
                   persons.map((person, index: number) => (

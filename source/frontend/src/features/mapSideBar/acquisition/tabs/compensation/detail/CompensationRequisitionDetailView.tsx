@@ -257,7 +257,18 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         </SectionField>
       </Section>
 
-      <Section header="Selected File Properties">
+      <Section
+        header={
+          <div className="d-flex align-items-center">
+            <span>Selected File Properties</span>
+            <TooltipIcon
+              toolTipId="selected-properties"
+              innerClassName="ml-4 mb-1"
+              toolTip="Select the properties that will be displayed on the generated document"
+            />
+          </div>
+        }
+      >
         <SectionField label="Properties" labelWidth="4">
           {compensationProperties.map(x => {
             const propertyName = getFilePropertyName(x);

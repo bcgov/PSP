@@ -221,7 +221,6 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c7 {
@@ -760,7 +759,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
               class="pb-2 row"
             >
               <div
-                class="pr-0 text-left col-3"
+                class="pr-0 text-left col-auto"
               >
                 <label
                   class="c4"

@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PropertiesInformation component > renders as expected 1`] = `
+exports[`LeasePropertiesInformation component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -34,7 +34,6 @@ exports[`PropertiesInformation component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c6 {

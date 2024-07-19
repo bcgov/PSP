@@ -7,7 +7,7 @@ import { Section } from '@/components/common/Section/Section';
 import { PropertyInformation } from '@/features/leases';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
-import { exists } from '@/utils';
+import { exists, getLatLng, locationFromFileProperty } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IPropertiesInformationProps {
@@ -32,17 +32,14 @@ export const PropertiesInformation: React.FunctionComponent<
   const { setFilePropertyLocations } = useMapStateMachine();
 
   const locations: LatLngLiteral[] = useMemo(() => {
-    return (
-      properties
-        .map<LatLngLiteral | undefined>(x => {
-          if (exists(x.property?.latitude) && exists(x.property?.longitude)) {
-            return { lat: x.property!.latitude, lng: x.property!.longitude };
-          } else {
-            return undefined;
-          }
-        })
-        .filter(exists) || []
-    );
+    if (exists(properties)) {
+      return properties
+        .map(x => locationFromFileProperty(x))
+        .map(y => getLatLng(y))
+        .filter(exists);
+    } else {
+      return [];
+    }
   }, [properties]);
 
   useEffect(() => {

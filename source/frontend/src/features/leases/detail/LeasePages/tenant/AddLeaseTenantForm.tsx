@@ -82,7 +82,7 @@ export const AddLeaseTenantForm: React.FunctionComponent<
           Note: If the tenants you are trying to find were never added to the &quot;contact
           list&quot; it will not show up. Please add them to the contact list{' '}
           {<Link to="/contact/list">here</Link>}, then you will be able to see them on the &quot;Add
-          &quot;Add a Tenant&quot; list.
+          a Tenant&quot; list.
         </span>
 
         <Formik

@@ -257,7 +257,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c9 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c6.c6.c6 input,
@@ -287,7 +286,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c2 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 

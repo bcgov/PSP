@@ -120,7 +120,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   }, [activitiesUpdated]);
 
   const handleSubmit = async (values: CompensationRequisitionFormModel) => {
-    if (values.status === 'final') {
+    if (initialValues.status !== 'final' && values.status === 'final') {
       setShowModal(true);
     } else {
       await onSave(values);
@@ -212,9 +212,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <div className="d-flex align-items-center">
                     <span>Select File Properties</span>
                     <TooltipIcon
-                      toolTipId="contactInfoToolTip"
+                      toolTipId="select-properties"
                       innerClassName="ml-4 mb-1"
-                      toolTip="Select the properties for this compensation requisition."
+                      toolTip="Select the properties that will be displayed on the generated document"
                     />
                   </div>
                 }

@@ -204,7 +204,6 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 
 .c8 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c5.c5.c5 input,
@@ -234,7 +233,6 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 
 .c0 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 

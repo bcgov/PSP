@@ -4,7 +4,6 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { latLngToApiLocation } from '@/utils';
 import { fromTypeCode, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
@@ -87,15 +86,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   }
 
   private toPropertyApi(x: PropertyForm): ApiGen_Concepts_AcquisitionFileProperty {
+    const apiFileProperty = x.toFilePropertyApi(this.id);
     return {
-      id: x.id ?? 0,
-      fileId: this.id ?? 0,
-      property: x.toApi(),
-      propertyId: x.apiId ?? 0,
-      propertyName: x.name ?? null,
-      location: latLngToApiLocation(x.fileLocation?.lat, x.fileLocation?.lng),
-      displayOrder: x.displayOrder ?? null,
-      rowVersion: x.rowVersion ?? null,
+      ...apiFileProperty,
       file: null,
     };
   }

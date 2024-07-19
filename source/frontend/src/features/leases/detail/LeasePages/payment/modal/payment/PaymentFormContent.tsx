@@ -92,7 +92,7 @@ const PaymentFormContent: React.FunctionComponent<
             <Styled.FlexRight>
               <TooltipIcon
                 toolTipId="actual-calculation-tooltip"
-                toolTip="If left blank, these values are calculated based on the total received. Enter values here only to override the system calculation."
+                toolTip="If left blank, these values are calculated based on the total received. Enter values here only to override the system calculation"
               />
             </Styled.FlexRight>
             <InlineFlexDiv>

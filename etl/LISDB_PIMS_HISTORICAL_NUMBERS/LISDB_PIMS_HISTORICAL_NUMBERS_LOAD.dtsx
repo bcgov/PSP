@@ -12,8 +12,8 @@
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="44"
-  DTS:VersionGUID="{59DCA95F-8073-4668-929B-0F74AC3FDE5C}">
+  DTS:VersionBuild="46"
+  DTS:VersionGUID="{F3D2757D-C68F-4466-AB65-C96C314483E1}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1714,9 +1714,17 @@ ORDER BY PID</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data"
+          TopLeft="330.624995073304,34.8947374989121" />
+        <NodeLayout
           Size="110.666666666667,42.6666666666667"
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB"
           TopLeft="153.125001071021,238" />
+        <NodeLayout
+          Size="242.666666666667,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG"
+          TopLeft="907.499986477196,548.59649949611" />
         <NodeLayout
           Size="149.333333333334,42.6666666666667"
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data"
@@ -1730,21 +1738,21 @@ ORDER BY PID</property>
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER"
           TopLeft="864.999987110496,346.210532832344" />
         <NodeLayout
-          Size="205.333333333334,42.6666666666667"
-          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY"
-          TopLeft="775.624988442287,241.526320335607" />
+          Size="221.333333333334,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION"
+          TopLeft="911.874986412004,455.000008564246" />
         <NodeLayout
           Size="132,42.6666666666667"
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join"
           TopLeft="468.749993015081,101.263159800765" />
         <NodeLayout
+          Size="205.333333333334,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS PROPERTY"
+          TopLeft="775.624988442287,241.526320335607" />
+        <NodeLayout
           Size="193.333333333334,42.6666666666667"
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields"
           TopLeft="518.749992270023,239.473688718025" />
-        <NodeLayout
-          Size="160,42.6666666666667"
-          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data"
-          TopLeft="330.624995073304,34.8947374989121" />
         <EdgeLayout
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Sort Output1]"
           TopLeft="399.041661833103,240.842109796413">
@@ -1858,6 +1866,30 @@ ORDER BY PID</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[OLE DB Command Error Output]"
+          TopLeft="1025.27082009458,388.877199499011">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66.1228090652357"
+              Start="0,0"
+              End="0,58.6228090652357">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.6228090652357" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-70.70890625,23.5067170326178,141.4178125,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Merge Join Output]"
           TopLeft="555.416659681748,143.929826467432">
           <EdgeLayout.Curve>
@@ -1883,28 +1915,6 @@ ORDER BY PID</property>
                     Point3="59.9999992549421,42.9040876229961" />
                   <mssgle:LineSegment
                     End="59.9999992549421,88.0438622505933" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Data Conversion Output]"
-          TopLeft="712.083325603356,261.833337860149">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="63.5416628389306,0"
-              Start="0,0"
-              End="56.0416628389306,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="56.0416628389306,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -1949,38 +1959,6 @@ ORDER BY PID</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="221.333333333334,42.6666666666667"
-          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION"
-          TopLeft="911.874986412004,455.000008564246" />
-        <NodeLayout
-          Size="242.666666666667,42.6666666666667"
-          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG"
-          TopLeft="907.499986477196,548.59649949611" />
-        <EdgeLayout
-          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[OLE DB Command Error Output]"
-          TopLeft="1025.27082009458,388.877199499011">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,66.1228090652357"
-              Start="0,0"
-              End="0,58.6228090652357">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,58.6228090652357" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-70.70890625,23.5067170326178,141.4178125,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Derived Column Output]"
           TopLeft="1025.6874864446,497.666675230913">
@@ -1995,6 +1973,28 @@ ORDER BY PID</property>
                   Capacity="5">
                   <mssgle:LineSegment
                     End="0,43.4298242651965" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Data Conversion Output]"
+          TopLeft="712.083325603356,261.833337860149">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="63.5416628389306,0"
+              Start="0,0"
+              End="56.0416628389306,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="56.0416628389306,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>

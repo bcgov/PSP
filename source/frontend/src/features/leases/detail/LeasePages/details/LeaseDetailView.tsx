@@ -2,6 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { prettyFormatDate } from '@/utils';
@@ -22,7 +23,33 @@ export const LeaseDetailView: React.FunctionComponent<
   return (
     <Section header="Details">
       <SectionField label="Ministry project">{projectName}</SectionField>
-      <SectionField label="Status" labelWidth="3" contentWidth="4">
+      <SectionField
+        label="Status"
+        labelWidth="3"
+        contentWidth="4"
+        tooltip={
+          <TooltipIcon
+            toolTipId="lease-status-tooltip"
+            toolTip={
+              <ul>
+                <li>Draft: In progress but not finalized.</li>
+                <li>
+                  Active: Finalized and all requirements met. Lease/Licence being actively managed.
+                </li>
+                <li>
+                  Terminated: The expiry date of the last agreement if by effluxion of time or the
+                  early termination date for cause.
+                </li>
+                <li>Cancelled: Request cancelled by requestor or MOTI.</li>
+                <li>Duplicate: Duplicate file created by accident or data transfer.</li>
+                <li>Hold: Agreement in progress but will not be immediately addressed.</li>
+                <li>Archived: File to be archived as per ARCS/ORCS.</li>
+              </ul>
+            }
+            placement="right"
+          ></TooltipIcon>
+        }
+      >
         {lease.fileStatusTypeCode.description}
       </SectionField>
 

@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
-import useApiUserOverride from '@/hooks/useApiUserOverride';
+import useApiUserOverride, { CustomModalOptions } from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -45,9 +45,14 @@ export const UpdateAcquisitionContainer = React.forwardRef<
     updateAcquisitionFile: { execute: updateAcquisitionFile },
   } = useAcquisitionProvider();
 
+  // Customize the look and feel of the user-override modal. For region change confirmation, the modal should be of type "info" (blue)
+  const customModalOptions = new Map<UserOverrideCode, CustomModalOptions>([
+    [UserOverrideCode.UPDATE_REGION, { variant: 'info', title: 'Different Ministry region' }],
+  ]);
+
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_AcquisitionFile | void>
-  >('Failed to update Acquisition File');
+  >('Failed to update Acquisition File', { modalOptions: customModalOptions });
 
   const handleSubmit = async (
     values: UpdateAcquisitionSummaryFormModel,

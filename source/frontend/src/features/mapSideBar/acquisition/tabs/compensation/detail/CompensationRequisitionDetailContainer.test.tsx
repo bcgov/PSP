@@ -4,7 +4,10 @@ import {
   mockApiAcquisitionFileTeamOrganization,
   mockApiAcquisitionFileTeamPerson,
 } from '@/mocks/acquisitionFiles.mock';
-import { getMockApiDefaultCompensation, getMockCompensationPropertiesReq } from '@/mocks/compensations.mock';
+import {
+  getMockApiDefaultCompensation,
+  getMockCompensationPropertiesReq,
+} from '@/mocks/compensations.mock';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
 import { getEmptyOrganization, getMockOrganization } from '@/mocks/organization.mock';

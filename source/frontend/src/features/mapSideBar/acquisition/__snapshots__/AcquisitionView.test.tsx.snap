@@ -153,7 +153,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c27 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -203,7 +202,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   width: 100%;
 }
 
-.c14 {
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -277,10 +276,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c0 {
+  padding: 1.6rem;
+}
+
+.c0.expanded {
   min-width: 90rem;
   height: 100%;
   position: relative;
-  padding: 1.6rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -299,7 +301,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c16 {
+.c17 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -308,12 +310,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   flex: 1;
 }
 
-.c17 {
-  height: 100%;
+.c8 {
   width: 100%;
+  height: 100%;
+  display: contents;
 }
 
-.c8 {
+.c9 {
   position: relative;
 }
 
@@ -375,20 +378,19 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c33 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
-.c12 {
+.c13 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c10 {
+.c11 {
   font-weight: bold;
   white-space: nowrap;
 }
 
-.c15 {
+.c16 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -407,13 +409,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   background-color: undefined;
 }
 
-.c13 {
+.c14 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.c9 {
+.c10 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -421,7 +423,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c11 {
+.c12 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -505,7 +507,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 <div
-    class="c0"
+    class="c0 expanded"
   >
     <div
       class="row"
@@ -599,181 +601,185 @@ exports[`AcquisitionView component > renders as expected 1`] = `
       class="c8"
     >
       <div
-        class="c9 no-gutters row"
+        class="c9"
       >
         <div
-          class="col-8"
+          class="c10 no-gutters row"
         >
           <div
-            class="row"
+            class="col-8"
           >
             <div
-              class="pr-0 text-left col-3"
-            >
-              <label
-                class="c10"
-              >
-                File:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              1-12345-01 - Test ACQ File
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <label
-                class="c10"
-              >
-                Ministry project:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <label
-                class="c10"
-              >
-                Ministry product:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-              data-testid="acq-header-product-val"
-            >
-              00048 - MISCELLANEOUS CLAIMS
-            </div>
-          </div>
-          <div
-            class="row"
-          >
-            <div
-              class="pr-0 text-left col-3"
-            >
-              <label
-                class="c10"
-              >
-                Historical file #:
-              </label>
-            </div>
-            <div
-              class="pl-1 text-left col-9"
-            >
-              <div />
-            </div>
-          </div>
-        </div>
-        <div
-          class="col"
-        >
-          <div
-            class="c11"
-          >
-            <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="text-right col"
+                class="pr-0 text-left col-3"
               >
-                <span
-                  class="c12"
+                <label
+                  class="c11"
                 >
-                  <strong>
-                    Created: 
-                  </strong>
-                  May 27, 2022 by 
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon-userNameTooltip"
-                    id="userNameTooltip"
-                  >
-                    <strong>
-                      admin
-                    </strong>
-                  </span>
-                </span>
+                  File:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                1-12345-01 - Test ACQ File
               </div>
             </div>
             <div
-              class="no-gutters row"
+              class="row"
             >
               <div
-                class="text-right col"
+                class="pr-0 text-left col-3"
               >
-                <span
-                  class="c12"
+                <label
+                  class="c11"
                 >
-                  <strong>
-                    Updated: 
-                  </strong>
-                  Oct 6, 2023 by 
-                  <span
-                    class="tooltip-icon"
-                    data-testid="tooltip-icon-userNameTooltip"
-                    id="userNameTooltip"
-                  >
-                    <strong>
-                      MARODRIG
-                    </strong>
-                  </span>
-                </span>
+                  Ministry project:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
               </div>
             </div>
             <div
-              class="c13"
+              class="row"
             >
               <div
-                class="no-gutters justify-content-end align-items-end row"
+                class="pr-0 text-left col-3"
+              >
+                <label
+                  class="c11"
+                >
+                  Ministry product:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+                data-testid="acq-header-product-val"
+              >
+                00048 - MISCELLANEOUS CLAIMS
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label
+                  class="c11"
+                >
+                  Historical file #:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                <div />
+              </div>
+            </div>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="c12"
+            >
+              <div
+                class="no-gutters row"
               >
                 <div
-                  class="col"
-                />
-                <div
-                  class="align-self-end d-flex col-auto"
+                  class="text-right col"
                 >
                   <span
-                    class="c12"
+                    class="c13"
                   >
-                    <b>
-                      File:
-                    </b>
-                  </span>
-                  <div
-                    class="c14 c15"
-                  >
-                    <svg
-                      fill="currentColor"
-                      height="16"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 24 24"
-                      width="16"
-                      xmlns="http://www.w3.org/2000/svg"
+                    <strong>
+                      Created: 
+                    </strong>
+                    May 27, 2022 by 
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
                     >
-                      <path
-                        d="M0 0h24v24H0z"
-                        fill="none"
-                      />
-                      <path
-                        d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
-                      />
-                    </svg>
-                    ACTIVE
+                      <strong>
+                        admin
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="text-right col"
+                >
+                  <span
+                    class="c13"
+                  >
+                    <strong>
+                      Updated: 
+                    </strong>
+                    Oct 6, 2023 by 
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        MARODRIG
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="c14"
+              >
+                <div
+                  class="no-gutters justify-content-end align-items-end row"
+                >
+                  <div
+                    class="col"
+                  />
+                  <div
+                    class="align-self-end d-flex col-auto"
+                  >
+                    <span
+                      class="c13"
+                    >
+                      <b>
+                        File:
+                      </b>
+                    </span>
+                    <div
+                      class="c15 c16"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="16"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
+                        />
+                      </svg>
+                      ACTIVE
+                    </div>
                   </div>
                 </div>
               </div>
@@ -781,10 +787,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
           </div>
         </div>
       </div>
-    </div>
-    <div
-      class="c16"
-    >
       <div
         class="c17"
       >

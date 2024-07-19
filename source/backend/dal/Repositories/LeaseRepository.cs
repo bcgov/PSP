@@ -6,11 +6,9 @@ using System.Security.Claims;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
@@ -895,7 +893,7 @@ namespace Pims.Dal.Repositories
                             .ThenInclude(p => p.Address)
                         .Include(l => l.PimsPropertyLeases)
                             .ThenInclude(p => p.AreaUnitTypeCodeNavigation)
-                        .Include(pl => pl.PimsPropertyLeases)
+                        .Include(l => l.PimsPropertyLeases)
                             .ThenInclude(p => p.Property)
                             .ThenInclude(n => n.PimsHistoricalFileNumbers)
                             .ThenInclude(t => t.HistoricalFileNumberTypeCodeNavigation)
@@ -908,8 +906,9 @@ namespace Pims.Dal.Repositories
                             .ThenInclude(t => t.Person)
                         .Include(l => l.PimsLeaseTenants)
                             .ThenInclude(t => t.Organization)
-                        .Include(p => p.RegionCodeNavigation)
+                        .Include(l => l.RegionCodeNavigation)
                         .Include(l => l.PimsLeasePeriods)
+                        .Include(l => l.PimsLeaseRenewals)
                         .AsNoTracking();
 
             if (loadPayments)
@@ -1100,17 +1099,25 @@ namespace Pims.Dal.Repositories
 
             var expiryStartDate = filter.ExpiryStartDate.ToNullableDateTime();
             var expiryEndDate = filter.ExpiryEndDate.ToNullableDateTime();
-            if (filter.ExpiryStartDate != null && filter.ExpiryEndDate != null)
+            if (expiryStartDate != null && expiryEndDate != null)
             {
-                predicateBuilder.And(l => l.OrigExpiryDate >= expiryStartDate && l.OrigExpiryDate <= expiryEndDate);
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max().HasValue ?
+                        l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max() >= expiryStartDate &&
+                          l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max() <= expiryEndDate :
+                        l.OrigExpiryDate >= expiryStartDate &&
+                          l.OrigExpiryDate <= expiryEndDate);
             }
-            else if (filter.ExpiryStartDate != null)
+            else if (expiryStartDate != null)
             {
-                predicateBuilder = predicateBuilder.And(l => l.OrigExpiryDate >= expiryStartDate);
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max().HasValue ?
+                        l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max() >= expiryStartDate :
+                        l.OrigExpiryDate >= expiryStartDate);
             }
-            else if (filter.ExpiryEndDate != null)
+            else if (expiryEndDate != null)
             {
-                predicateBuilder = predicateBuilder.And(l => l.OrigExpiryDate <= expiryEndDate);
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max().HasValue ?
+                        l.PimsLeaseRenewals.Where(r => r.IsExercised == true).Select(rf => rf.ExpiryDt).Max() <= expiryEndDate :
+                        l.OrigExpiryDate <= expiryEndDate);
             }
 
             if (filter.RegionType.HasValue)

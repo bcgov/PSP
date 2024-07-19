@@ -209,7 +209,56 @@ namespace Pims.Api.Services
             propertyManagement.RelatedLeases = leaseCount;
             propertyManagement.LeaseExpiryDate = leaseExpiryDate.HasValue ? DateOnly.FromDateTime(leaseExpiryDate.Value) : null;
 
+            PropertyHasActiveLease(propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate);
+            propertyManagement.HasActiveLease = hasActiveLease;
+            propertyManagement.ActiveLeaseHasExpiryDate = hasActiveExpiryDate;
+
             return propertyManagement;
+        }
+
+        private static void PropertyHasActiveLease(IEnumerable<PimsPropertyLease> propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate)
+        {
+            hasActiveLease = false;
+            hasActiveExpiryDate = false;
+
+            List<PimsLease> activeLeaseList = propertyLeases.Select(x => x.Lease).Where(y => y.LeaseStatusTypeCode == LeaseStatusTypes.ACTIVE.ToString()).ToList();
+            foreach(var agreement in activeLeaseList)
+            {
+                if(!agreement.TerminationDate.HasValue)
+                {
+                    var latestRenewal = agreement.PimsLeaseRenewals.Where(x => x.IsExercised == true).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
+                    if (latestRenewal is null) // No Renewal - Check only Lease dates.
+                    {
+                        if (agreement.OrigExpiryDate.HasValue && agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date)
+                        {
+                            hasActiveLease = hasActiveExpiryDate = true;
+                        }
+                        else if (!agreement.OrigExpiryDate.HasValue)
+                        {
+                            hasActiveLease = true;
+                        }
+                    }
+                    else
+                    {
+                        if (agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = hasActiveExpiryDate = agreement.OrigExpiryDate.Value.Date >= DateTime.Now.Date || latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
+                        }
+                        else if (agreement.OrigExpiryDate.HasValue && !latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = true;
+                        }
+                        else if (!agreement.OrigExpiryDate.HasValue && latestRenewal.ExpiryDt.HasValue)
+                        {
+                            hasActiveLease = latestRenewal.ExpiryDt.Value.Date >= DateTime.Now.Date;
+                        }
+                        else
+                        {
+                            hasActiveLease = true;
+                        }
+                    }
+                }
+            }
         }
 
         public PropertyManagementModel UpdatePropertyManagement(PimsProperty property)
@@ -377,37 +426,31 @@ namespace Pims.Api.Services
             }
         }
 
+        /// <inheritdoc />
         public T PopulateNewFileProperty<T>(T fileProperty)
+            where T : IFilePropertyEntity
         {
-            // TODO: Remove this casting when LOCATION gets added to all remaining file-property types (research, disposition, lease)
-            if (fileProperty is PimsPropertyAcquisitionFile acquisitionFileProperty)
+            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+            var geom = fileProperty.Location;
+            if (geom is not null && geom.SRID != SpatialReference.BCALBERS)
             {
-                // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                var geom = acquisitionFileProperty.Location;
-                if (geom is not null && geom.SRID != SpatialReference.BCALBERS)
-                {
-                    var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                    acquisitionFileProperty.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                }
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                fileProperty.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
 
             return fileProperty;
         }
 
+        /// <inheritdoc />
         public void UpdateFilePropertyLocation<T>(T incomingFileProperty, T filePropertyToUpdate)
-            where T : IWithPropertyEntity
+            where T : IFilePropertyEntity
         {
-            // TODO: Remove this casting when LOCATION gets added to all remaining file-property types (research, disposition, lease)
-            if (incomingFileProperty is PimsPropertyAcquisitionFile incomingAcquisitionProperty
-                && filePropertyToUpdate is PimsPropertyAcquisitionFile acquisitionPropertyToUpdate)
+            // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
+            var geom = incomingFileProperty.Location;
+            if (geom is not null && geom.SRID != SpatialReference.BCALBERS)
             {
-                // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                var geom = incomingAcquisitionProperty.Location;
-                if (geom is not null && geom.SRID != SpatialReference.BCALBERS)
-                {
-                    var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                    acquisitionPropertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                }
+                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                filePropertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
         }
 
@@ -445,14 +488,13 @@ namespace Pims.Api.Services
 
         /// <inheritdoc />
         public List<T> TransformAllPropertiesToLatLong<T>(List<T> fileProperties)
-            where T : IWithPropertyEntity
+            where T : IFilePropertyEntity
         {
             foreach (var fileProperty in fileProperties)
             {
-                // TODO: Remove this casting when LOCATION gets added to all remaining file-property types (research, disposition, lease)
-                if (fileProperty is PimsPropertyAcquisitionFile acquisitionFileProperty && acquisitionFileProperty.Location is not null)
+                if (fileProperty.Location is not null)
                 {
-                    acquisitionFileProperty.Location = TransformCoordinates(acquisitionFileProperty.Location);
+                    fileProperty.Location = TransformCoordinates(fileProperty.Location);
                 }
 
                 TransformPropertyToLatLong(fileProperty.Property);

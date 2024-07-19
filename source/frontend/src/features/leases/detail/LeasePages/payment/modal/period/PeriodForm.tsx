@@ -89,7 +89,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                   <SectionField
                     label="Select payment type"
                     labelWidth="12"
-                    tooltip="Predetermined Payment Period only accept fixed payment amounts. Select Variable payment type to track variable payments."
+                    tooltip="Predetermined Payment Period only accept fixed payment amounts. Select Variable payment type to track variable payments"
                   >
                     <StyledRadioGroup
                       field="isVariable"
@@ -105,7 +105,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                   <Select
                     label="Period duration:"
                     field="isFlexible"
-                    tooltip="Fixed Payment Period Duration has end date. Select Flexible payment period duration to track hold over payments."
+                    tooltip="Fixed Payment Period Duration has end date. Select Flexible payment period duration to track hold over payments"
                     options={flexiblePeriodOptions}
                   />
                 </Col>
@@ -117,7 +117,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                     label="Start date:"
                     field="startDate"
                     formikProps={formikProps}
-                    tooltip="Start Date: The start date defined for the period."
+                    tooltip="Start Date: The start date defined for the period"
                   />
                 </Col>
                 <Col>
@@ -129,7 +129,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                     }
                     field="expiryDate"
                     formikProps={formikProps}
-                    tooltip="End Date: The end date specified for the period."
+                    tooltip="End Date: The end date specified for the period"
                     required={formikProps.values.isFlexible === 'false'}
                   />
                 </Col>
@@ -174,9 +174,10 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                   <Row>
                     <Col md={6}>
                       <Select
-                        label="Term status"
+                        label="Period status"
                         field="statusTypeCode.id"
                         options={leasePeriodStatusOptions}
+                        tooltip="Exercise period to add payments"
                       />
                     </Col>
                   </Row>
@@ -195,9 +196,10 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                   <Row>
                     <Col md={6}>
                       <Select
-                        label="Term status"
+                        label="Period status"
                         field="statusTypeCode.id"
                         options={leasePeriodStatusOptions}
+                        tooltip="Exercise period to add payments"
                       />
                     </Col>
                   </Row>
@@ -209,7 +211,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         Add Base Rent
                         <TooltipIcon
                           toolTipId="base-rent-tooltip"
-                          toolTip="Fixed Amount of Rent per Payment Period, excluding Operating Expenses."
+                          toolTip="Fixed Amount of Rent per Payment Period, excluding Operating Expenses"
                         />
                       </>
                     }
@@ -228,7 +230,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         Add Additional Rent
                         <TooltipIcon
                           toolTipId="additional-rent-tooltip"
-                          toolTip="Operating Expenses and Taxes Payable by the Tenant."
+                          toolTip="Operating Expenses and Taxes Payable by the Tenant"
                         />
                       </>
                     }
@@ -247,7 +249,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         Add Variable Rent
                         <TooltipIcon
                           toolTipId="variable-rent-tooltip"
-                          toolTip="Percentage Rent or Other Amount payable by Tenant."
+                          toolTip="Percentage Rent or Other Amount payable by Tenant"
                         />
                       </>
                     }

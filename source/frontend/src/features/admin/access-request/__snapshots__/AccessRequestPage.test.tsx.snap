@@ -223,7 +223,6 @@ exports[`AccessRequestPage > renders correctly 1`] = `
 
 .c2 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c6 {

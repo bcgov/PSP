@@ -1,10 +1,11 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { FaEye, FaTrash } from 'react-icons/fa';
+import { FaEye, FaInfoCircle, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
+import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
 import { StyledRemoveIconButton } from '@/components/common/buttons/RemoveButton';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { ColumnWithProps, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
@@ -76,7 +77,7 @@ export function createTableColumns(
     },
     {
       Header: 'Actions',
-      align: 'left',
+      align: 'center',
       sortable: false,
       width: 20,
       maxWidth: 20,
@@ -84,37 +85,40 @@ export function createTableColumns(
         const { hasClaim } = useKeycloakWrapper();
         const activityRow = cellProps.row.original;
         return (
-          <Row className="no-gutters">
+          <StyledDiv>
             {hasClaim(Claims.MANAGEMENT_VIEW) && (
-              <Col>
-                <LinkButton
-                  data-testid={`activity-view-${activityRow.id}`}
-                  icon={
-                    <FaEye
-                      size="2rem"
-                      id={`activity-view-${cellProps.row.id}`}
-                      title="property-activity view details"
-                    />
-                  }
-                  onClick={() => activityRow?.id && onView(activityRow.activityId)}
-                />
-              </Col>
+              <LinkButton
+                data-testid={`activity-view-${activityRow.id}`}
+                icon={
+                  <FaEye
+                    size="2rem"
+                    id={`activity-view-${cellProps.row.id}`}
+                    title="property-activity view details"
+                  />
+                }
+                onClick={() => activityRow?.id && onView(activityRow.activityId)}
+              />
             )}
             {hasClaim(Claims.MANAGEMENT_DELETE) &&
             activityRow?.activityStatusType?.id ===
               PropertyManagementActivityStatusTypes.NOTSTARTED ? (
-              <Col>
-                <StyledRemoveIconButton
-                  id={`activity-delete-${cellProps.row.id}`}
-                  data-testid={`activity-delete-${activityRow.id}`}
-                  onClick={() => activityRow.id && onDelete(activityRow.id)}
-                  title="Delete"
-                >
-                  <FaTrash size="2rem" />
-                </StyledRemoveIconButton>
-              </Col>
-            ) : null}
-          </Row>
+              <StyledRemoveIconButton
+                id={`activity-delete-${cellProps.row.id}`}
+                data-testid={`activity-delete-${activityRow.id}`}
+                onClick={() => activityRow.id && onDelete(activityRow.id)}
+                title="Delete"
+              >
+                <FaTrash size="2rem" />
+              </StyledRemoveIconButton>
+            ) : (
+              <TooltipWrapper
+                tooltipId={`activity-delete-tooltip-${activityRow.id}`}
+                tooltip="Only activity that is not started can be deleted"
+              >
+                <FaInfoCircle className="tooltip-icon h-24" size="2rem" />
+              </TooltipWrapper>
+            )}
+          </StyledDiv>
         );
       },
     },
@@ -150,3 +154,12 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
 };
 
 export default ManagementActivitiesList;
+
+const StyledDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+  width: 80%;
+`;

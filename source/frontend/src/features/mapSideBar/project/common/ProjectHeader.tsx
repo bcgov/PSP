@@ -27,8 +27,8 @@ const ProjectHeader: React.FunctionComponent<React.PropsWithChildren<IProjectHea
       <Col>
         <StyledFiller>
           <AuditSection baseAudit={project} />
-          {exists(project.projectStatusTypeCode) && (
-            <StatusField statusCodeType={project.projectStatusTypeCode} />
+          {exists(project?.projectStatusTypeCode) && (
+            <StatusField statusCodeType={project?.projectStatusTypeCode} />
           )}
         </StyledFiller>
       </Col>

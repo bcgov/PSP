@@ -14,6 +14,7 @@ import StatusField from '@/components/common/HeaderField/StatusField';
 import { StyledFiller } from '@/components/common/HeaderField/styles';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
+import { getCalculatedExpiry } from '@/features/leases/leaseUtils';
 import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -29,9 +30,11 @@ export interface ILeaseHeaderProps {
 }
 
 export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy }) => {
-  const isExpired = moment().isAfter(moment(lease?.expiryDate, 'YYYY-MM-DD'), 'day');
-
   const propertyIds = lease?.fileProperties?.map(fp => fp.propertyId) ?? [];
+
+  const calculatedExpiry = exists(lease) ? getCalculatedExpiry(lease, lease.renewals || []) : '';
+
+  const isExpired = moment().isAfter(moment(calculatedExpiry, 'YYYY-MM-DD'), 'day');
 
   return (
     <Container>
@@ -59,14 +62,14 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
             <HeaderLabelCol
               label="Commencement:"
               labelWidth="4"
-              tooltip="The start date defined in the agreement."
+              tooltip="The start date defined in the agreement"
             />
             <HeaderContentCol contentWidth="3">
               {prettyFormatDate(lease?.startDate)}
             </HeaderContentCol>
-            <HeaderLabelCol label="Expiry:" tooltip="The end date specified in the agreement." />
+            <HeaderLabelCol label="Expiry:" tooltip="The end date specified in the agreement" />
             <HeaderContentCol>
-              <span className="pl-2">{prettyFormatDate(lease?.expiryDate)}</span>
+              <span className="pl-2">{prettyFormatDate(calculatedExpiry)}</span>
             </HeaderContentCol>
             <HeaderContentCol>
               {isExpired && (

@@ -13,6 +13,7 @@ export const useDeletePeriodsPayments = (
     (period: ApiGen_Concepts_LeasePeriod) => Promise<AxiosResponse<boolean, any>>
   >,
   getLeasePeriods: (leaseId: number) => Promise<void>,
+  leasePeriods: ApiGen_Concepts_LeasePeriod[],
   onSuccess: () => void,
 ) => {
   const [comfirmDeleteModalValues, setConfirmDeleteModalValues] = useState<
@@ -55,16 +56,16 @@ export const useDeletePeriodsPayments = (
         setDeleteModalWarning({ title: 'Delete Period', message: deleteWithPayments });
         return false;
       } else if (
-        lease?.periods?.length !== undefined &&
-        lease.periods.length > 1 &&
-        leasePeriod.id === lease?.periods[0].id
+        leasePeriods?.length !== undefined &&
+        leasePeriods.length > 1 &&
+        leasePeriod.id === leasePeriods[0].id
       ) {
         setDeleteModalWarning({ title: 'Delete Period', message: deleteInitialWithRenewals });
         return false;
       }
       return true;
     },
-    [lease?.periods],
+    [leasePeriods],
   );
 
   /**

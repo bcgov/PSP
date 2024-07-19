@@ -198,7 +198,6 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
 
 .c14 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -262,10 +261,13 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
 }
 
 .c0 {
+  padding: 1.6rem;
+}
+
+.c0.expanded {
   min-width: 90rem;
   height: 100%;
   position: relative;
-  padding: 1.6rem;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -284,7 +286,7 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c9 {
+.c10 {
   width: 100%;
   position: relative;
   overflow: auto;
@@ -293,9 +295,10 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
   flex: 1;
 }
 
-.c10 {
-  height: 100%;
+.c9 {
   width: 100%;
+  height: 100%;
+  display: contents;
 }
 
 .c8 {
@@ -351,7 +354,7 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
 }
 
 <div
-    class="c0"
+    class="c0 expanded"
   >
     <div
       class="row"
@@ -637,43 +640,43 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
           </form>
         </div>
       </div>
-    </div>
-    <div
-      class=""
-    >
       <div
-        class="c20 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+        class=""
       >
         <div
-          class="pr-3 col-auto"
-        />
-        <div
-          class="pr-6 col-auto"
+          class="c20 justify-content-end mb-12 mt-12 p-0 no-gutters row"
         >
-          <button
-            class="c4 Button btn btn-secondary"
-            type="button"
+          <div
+            class="pr-3 col-auto"
+          />
+          <div
+            class="pr-6 col-auto"
           >
-            <div
-              class="Button__value"
+            <button
+              class="c4 Button btn btn-secondary"
+              type="button"
             >
-              Cancel
-            </div>
-          </button>
-        </div>
-        <div
-          class="col-auto"
-        >
-          <button
-            class="c4 Button mr-9 btn btn-primary"
-            type="button"
+              <div
+                class="Button__value"
+              >
+                Cancel
+              </div>
+            </button>
+          </div>
+          <div
+            class="col-auto"
           >
-            <div
-              class="Button__value"
+            <button
+              class="c4 Button mr-9 btn btn-primary"
+              type="button"
             >
-              Create Consolidation
-            </div>
-          </button>
+              <div
+                class="Button__value"
+              >
+                Create Consolidation
+              </div>
+            </button>
+          </div>
         </div>
       </div>
     </div>

@@ -23,6 +23,7 @@ import {
   formatApiAddress,
   formatBcaAddress,
   getLatLng,
+  isValidId,
   latLngToApiLocation,
   pidFromFeatureSet,
   pidParser,
@@ -44,24 +45,10 @@ export class FileForm {
     return {
       id: this.id ?? 0,
       fileName: this.name,
-      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
+      fileProperties: this.properties.map(x => x.toFilePropertyApi(this.id)),
       fileNumber: null,
       fileStatusTypeCode: null,
       ...getEmptyBaseAudit(this.rowVersion),
-    };
-  }
-
-  private toPropertyApi(x: PropertyForm): ApiGen_Concepts_FileProperty {
-    return {
-      id: x.id ?? 0,
-      fileId: this.id ?? 0,
-      property: x.toApi(),
-      propertyId: x.apiId ?? 0,
-      propertyName: x.name ?? null,
-      location: latLngToApiLocation(x.fileLocation?.lat, x.fileLocation?.lng),
-      rowVersion: x.rowVersion ?? null,
-      displayOrder: null,
-      file: null,
     };
   }
 
@@ -111,7 +98,7 @@ export class PropertyForm {
     return new PropertyForm({
       apiId: model.propertyId,
       pid: model.pid,
-      pin: model.pin,
+      pin: isValidId(Number(model.pin)) ? model.pin : undefined,
       latitude: model.latitude,
       longitude: model.longitude,
       fileLocation: model.fileLocation,
@@ -169,7 +156,7 @@ export class PropertyForm {
   public toMapProperty(): IMapProperty {
     return {
       pid: this.pid,
-      pin: this.pin,
+      pin: isValidId(Number(this.pin)) ? this.pin : null,
       latitude: this.latitude,
       longitude: this.longitude,
       fileLocation: this.fileLocation,
@@ -299,11 +286,25 @@ export class PropertyForm {
     return newForm;
   }
 
+  public toFilePropertyApi(fileId?: number): ApiGen_Concepts_FileProperty {
+    return {
+      id: this.id ?? 0,
+      fileId: fileId ?? this.fileId ?? 0,
+      file: null,
+      property: this.toApi(),
+      propertyId: this.apiId ?? 0,
+      propertyName: this.name ?? null,
+      location: latLngToApiLocation(this.fileLocation?.lat, this.fileLocation?.lng),
+      displayOrder: this.displayOrder ?? null,
+      rowVersion: this.rowVersion ?? null,
+    };
+  }
+
   public toApi(): ApiGen_Concepts_Property {
     return {
       id: this.apiId ?? 0,
       pid: pidParser(this.pid) ?? null,
-      pin: this.pin !== undefined ? Number(this.pin) : null,
+      pin: isValidId(Number(this.pin)) ? Number(this.pin) : null,
       planNumber: this.planNumber ?? null,
       location: latLngToApiLocation(this.latitude, this.longitude),
       boundary: this.polygon ? this.polygon : null,

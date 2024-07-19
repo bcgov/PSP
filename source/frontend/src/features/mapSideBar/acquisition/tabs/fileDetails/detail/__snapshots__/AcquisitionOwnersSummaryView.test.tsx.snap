@@ -26,7 +26,6 @@ exports[`Acquisition File Owners View component > Renders Component as expected 
 
 .c1 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c2 {
@@ -197,7 +196,6 @@ Canada
 
 .c1 {
   font-weight: bold;
-  white-space: nowrap;
 }
 
 .c2 {

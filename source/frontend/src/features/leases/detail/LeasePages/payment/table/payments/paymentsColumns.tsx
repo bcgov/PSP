@@ -116,7 +116,7 @@ export const getActualsColumns = ({
           {isReceivable ? 'Received payment ($)' : 'Sent payment ($)'}
           <TooltipIcon
             toolTipId="actualReceivedPaymentTooltip"
-            toolTip="Actual payment amount, not including GST. This calculation can be overridden by editing the payment row."
+            toolTip="Actual payment amount, not including GST. This calculation can be overridden by editing the payment row"
           />
         </>
       ),
@@ -133,7 +133,7 @@ export const getActualsColumns = ({
           GST ($)
           <TooltipIcon
             toolTipId="actualGstTooltip"
-            toolTip="GST is calculated as (expected amount) x GST rate (5%). This calculation can be overridden by editing the payment row."
+            toolTip="GST is calculated as (expected amount) x GST rate (5%). This calculation can be overridden by editing the payment row"
           />
         </>
       ),
@@ -159,7 +159,7 @@ export const getActualsColumns = ({
           Total ($)
           <TooltipIcon
             toolTipId="receivedTotalTooltip"
-            toolTip="Actual payment amount, including GST if applicable."
+            toolTip="Actual payment amount, including GST if applicable"
           />
         </>
       ),
@@ -180,7 +180,7 @@ export const getActualsColumns = ({
           Payment status
           <TooltipIcon
             toolTipId="paymentStatusTooltip"
-            toolTip="Variance between expected and actual payment."
+            toolTip="Variance between expected and actual payment"
           />
         </>
       ),

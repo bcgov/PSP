@@ -70,7 +70,12 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
     setDeleteModalWarning,
     setConfirmDeleteModalValues,
     comfirmDeleteModalValues,
-  } = useDeletePeriodsPayments(deleteLeasePeriod, refreshLeasePeriods, onSuccess);
+  } = useDeletePeriodsPayments(
+    deleteLeasePeriod,
+    refreshLeasePeriods,
+    getLeasePeriods.response,
+    onSuccess,
+  );
 
   /**
    * Send the save request (either an update or an add). Use the response to update the parent lease.
@@ -123,7 +128,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
 
   const onEdit = useCallback(
     (values: FormLeasePeriod) => {
-      if (lease?.periods?.length === 0) {
+      if (getLeasePeriods?.response?.length === 0) {
         values = {
           ...values,
           startDate: isValidIsoDateTime(lease?.startDate) ? lease.startDate : '',
@@ -144,7 +149,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
 
       setEditModalValues(values);
     },
-    [lease],
+    [getLeasePeriods?.response?.length, lease?.paymentReceivableType?.id, lease.startDate],
   );
 
   const onEditPayment = useCallback((values: FormLeasePayment) => {
