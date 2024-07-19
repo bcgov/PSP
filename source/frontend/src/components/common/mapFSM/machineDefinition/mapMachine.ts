@@ -18,6 +18,12 @@ const featureViewStates = {
             assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
           ],
         },
+        START_RELOCATION: {
+          target: 'relocating',
+          actions: [
+            assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
+          ],
+        },
         TOGGLE_FILTER: {
           target: 'filtering',
         },
@@ -32,6 +38,17 @@ const featureViewStates = {
     selecting: {
       on: {
         FINISH_SELECTION: { target: 'browsing' },
+        SET_FILE_PROPERTY_LOCATIONS: {
+          actions: [
+            assign({ filePropertyLocations: (_, event: any) => event.locations }),
+            raise('REQUEST_FIT_BOUNDS'),
+          ],
+        },
+      },
+    },
+    relocating: {
+      on: {
+        FINISH_RELOCATION: { target: 'browsing' },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({ filePropertyLocations: (_, event: any) => event.locations }),

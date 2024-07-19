@@ -1,3 +1,4 @@
+import { FaExclamationCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
@@ -25,6 +26,21 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<unknown>> = ()
           >
             Selecting Properties...
             <br /> Click here to exit property selection.
+          </StyledSelectingText>
+        </StyledBackdrop>
+      )}
+      {mapMachine.isRelocating && (
+        <StyledBackdrop parentScreen onClick={() => mapMachine.finishRelocation()}>
+          <StyledSelectingText
+            style={{ color: 'white', fontFamily: 'BCSans-Bold', fontSize: '2.5rem' }}
+          >
+            Relocating property marker...
+            <br />
+            <FaExclamationCircle size={56} />
+            <br />
+            Click on the new location within the property boundary to move the marker.
+            <br />
+            Click here to exit property selection.
           </StyledSelectingText>
         </StyledBackdrop>
       )}
