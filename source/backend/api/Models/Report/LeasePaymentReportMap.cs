@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mapster;
 using Pims.Api.Services;
@@ -15,8 +17,7 @@ namespace Pims.Api.Models.Report.Lease
             config.NewConfig<Entity.PimsLeasePayment, LeasePaymentReportModel>()
                 .Map(dest => dest.Region, src => src.LeasePeriod.Lease.RegionCodeNavigation != null ? src.LeasePeriod.Lease.RegionCodeNavigation.Description : string.Empty)
                 .Map(dest => dest.LFileNumber, src => src.LeasePeriod.Lease.LFileNo)
-                .Map(dest => dest.LisNumber, src => src.LeasePeriod.Lease.TfaFileNumber)
-                .Map(dest => dest.PsFileNumber, src => src.LeasePeriod.Lease.PsFileNo)
+                .Map(dest => dest.HistoricalFiles, src => GetHistoricalFileNumbers(src.LeasePeriod.Lease))
                 .Map(dest => dest.LeaseStatus, src => src.LeasePeriod.Lease.LeaseStatusTypeCodeNavigation.Description)
                 .Map(dest => dest.PropertyList, src => string.Join(",", src.LeasePeriod.Lease.PimsPropertyLeases.Select(x => GetFallbackPropertyIdentifier(x))))
                 .Map(dest => dest.TenantList, src => string.Join(",", src.LeasePeriod.Lease.PimsLeaseTenants.Where(t => t != null && t.TenantTypeCode == "TEN").Select(x => x != null && x.Person != null ? x.Person.GetFullName(false) : x != null && x.Organization != null ? x.Organization.OrganizationName : string.Empty)))
@@ -28,6 +29,8 @@ namespace Pims.Api.Models.Report.Lease
                 .Map(dest => dest.IsPeriodExercised, src => src.LeasePeriod.LeasePeriodStatusTypeCode == "EXER" ? "Yes" : "No")
                 .Map(dest => dest.PaymentFrequency, src => src.LeasePeriod.LeasePmtFreqTypeCodeNavigation != null ? src.LeasePeriod.LeasePmtFreqTypeCodeNavigation.Description : string.Empty)
                 .Map(dest => dest.PaymentDueString, src => src.LeasePeriod.PaymentDueDate)
+                .Map(dest => dest.PaymentType, src => src.LeasePeriod.IsVariablePayment ? "Variable" : "Predeterminded")
+                .Map(dest => dest.RentCategory, src => src.LeasePaymentCategoryTypeCodeNavigation.Description)
                 .Map(dest => dest.ExpectedPayment, src => src.LeasePeriod.PaymentAmount)
                 .Map(dest => dest.PaymentTotal, src => src.PaymentAmountTotal)
                 .Map(dest => dest.PaymentStatus, src => src.LeasePaymentStatusTypeCodeNavigation != null ? src.LeasePaymentStatusTypeCodeNavigation.Description : LeasePaymentService.GetPaymentStatus(src, src.LeasePeriod))
@@ -66,6 +69,30 @@ namespace Pims.Api.Models.Report.Lease
             {
                 return "No Property Identifier";
             }
+        }
+
+        private static string GetHistoricalFileNumbers(PimsLease lease)
+        {
+            var properties = lease.PimsPropertyLeases.Select(pl => pl.Property);
+            var historicalDictionary = new Dictionary<string, PimsHistoricalFileNumberType>();
+            foreach (var property in properties)
+            {
+                foreach (var historical in property.PimsHistoricalFileNumbers)
+                {
+                    var historicalType = historical.HistoricalFileNumberTypeCodeNavigation.Description;
+                    if (historical.HistoricalFileNumberTypeCodeNavigation.HistoricalFileNumberTypeCode == "OTHER")
+                    {
+                        historicalType = historical.OtherHistFileNumberTypeCode;
+                    }
+
+                    var identifier = $"{historicalType}: {historical.HistoricalFileNumber}";
+                    historicalDictionary[identifier] = historical.HistoricalFileNumberTypeCodeNavigation;
+                }
+            }
+
+            var historicalList = historicalDictionary.ToList();
+            historicalList.Sort((a, b) => a.Value.DisplayOrder.GetValueOrDefault() - b.Value.DisplayOrder.GetValueOrDefault());
+            return string.Join("; ", historicalList.Select(a => a.Key));
         }
     }
 }

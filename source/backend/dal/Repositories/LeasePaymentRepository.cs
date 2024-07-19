@@ -50,6 +50,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(p => p.PimsPropertyLeases)
                     .ThenInclude(p => p.Property)
+                    .ThenInclude(p => p.PimsHistoricalFileNumbers)
+                    .ThenInclude(h => h.HistoricalFileNumberTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(p => p.RegionCodeNavigation)
