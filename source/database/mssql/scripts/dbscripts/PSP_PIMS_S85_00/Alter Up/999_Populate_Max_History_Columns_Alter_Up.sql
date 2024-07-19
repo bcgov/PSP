@@ -1,0 +1,186 @@
+/*******************************************************************************
+Copy the contents of the former NVARCHAR(max) columns to their most recent 
+counterpart in their associated history table.
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Author        Date         Comment
+------------  -----------  -----------------------------------------------------
+Doug Filteau  2024-Jul-16  Initial version.
+----------------------------------------------------------------------------- */
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_ACCESS_REQUEST_HIST
+PRINT N'Alter table dbo.PIMS_ACCESS_REQUEST_HIST'
+GO
+;WITH CTE (_ACCESS_REQUEST_HIST_ID, ACCESS_REQUEST_ID, EFFECTIVE_DATE_HIST, RANK)
+AS
+  (SELECT _ACCESS_REQUEST_HIST_ID
+        , ACCESS_REQUEST_ID
+        , EFFECTIVE_DATE_HIST
+        , RANK() OVER (PARTITION BY ACCESS_REQUEST_ID
+                       ORDER BY     EFFECTIVE_DATE_HIST DESC) AS RANK
+   FROM   PIMS_ACCESS_REQUEST_HIST)
+UPDATE hist
+SET    hist.NOTE = prnt.NOTE
+FROM   CTE                      temp                                                                JOIN
+       PIMS_ACCESS_REQUEST_HIST hist ON hist._ACCESS_REQUEST_HIST_ID = temp._ACCESS_REQUEST_HIST_ID JOIN
+       PIMS_ACCESS_REQUEST      prnt ON prnt.ACCESS_REQUEST_ID       = temp.ACCESS_REQUEST_ID
+WHERE  temp.RANK = 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_ACQUISITION_FILE_FORM_HIST
+PRINT N'Alter table dbo.PIMS_ACQUISITION_FILE_FORM_HIST'
+GO
+;WITH CTE (_ACQUISITION_FILE_FORM_HIST_ID, ACQUISITION_FILE_FORM_ID, EFFECTIVE_DATE_HIST, RANK)
+AS
+  (SELECT _ACQUISITION_FILE_FORM_HIST_ID
+        , ACQUISITION_FILE_FORM_ID
+        , EFFECTIVE_DATE_HIST
+        , RANK() OVER (PARTITION BY ACQUISITION_FILE_FORM_ID
+                       ORDER BY     EFFECTIVE_DATE_HIST DESC) AS RANK
+   FROM   PIMS_ACQUISITION_FILE_FORM_HIST)
+UPDATE hist
+SET    hist.FORM_JSON = prnt.FORM_JSON
+FROM   CTE                             temp                                                                              JOIN
+       PIMS_ACQUISITION_FILE_FORM_HIST hist ON hist._ACQUISITION_FILE_FORM_HIST_ID = temp._ACQUISITION_FILE_FORM_HIST_ID JOIN
+       PIMS_ACQUISITION_FILE_FORM      prnt ON prnt.ACQUISITION_FILE_FORM_ID       = temp.ACQUISITION_FILE_FORM_ID
+WHERE  temp.RANK = 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_LEASE_HIST
+PRINT N'Alter table dbo.PIMS_LEASE_HIST'
+GO
+;WITH CTE (_LEASE_HIST_ID, LEASE_ID, EFFECTIVE_DATE_HIST, RANK)
+AS
+  (SELECT _LEASE_HIST_ID
+        , LEASE_ID
+        , EFFECTIVE_DATE_HIST
+        , RANK() OVER (PARTITION BY LEASE_ID
+                       ORDER BY     EFFECTIVE_DATE_HIST DESC) AS RANK
+   FROM   PIMS_LEASE_HIST)
+UPDATE hist
+SET    hist.INSPECTION_NOTES  = prnt.INSPECTION_NOTES
+     , hist.LEASE_DESCRIPTION = prnt.LEASE_DESCRIPTION
+     , hist.LEASE_NOTES       = prnt.LEASE_NOTES
+     , hist.RETURN_NOTES      = prnt.RETURN_NOTES
+FROM   CTE             temp                                              JOIN
+       PIMS_LEASE_HIST hist ON hist._LEASE_HIST_ID = temp._LEASE_HIST_ID JOIN
+       PIMS_LEASE      prnt ON prnt.LEASE_ID       = temp.LEASE_ID
+WHERE  temp.RANK = 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_PROPERTY_HIST
+PRINT N'Alter table dbo.PIMS_PROPERTY_HIST'
+GO
+;WITH CTE (_PROPERTY_HIST_ID, PROPERTY_ID, EFFECTIVE_DATE_HIST, RANK)
+AS
+  (SELECT _PROPERTY_HIST_ID
+        , PROPERTY_ID
+        , EFFECTIVE_DATE_HIST
+        , RANK() OVER (PARTITION BY PROPERTY_ID
+                       ORDER BY     EFFECTIVE_DATE_HIST DESC) AS RANK
+   FROM   PIMS_PROPERTY_HIST)
+UPDATE hist
+SET    hist.LAND_LEGAL_DESCRIPTION = prnt.LAND_LEGAL_DESCRIPTION
+     , hist.NOTES                  = prnt.NOTES
+FROM   CTE                temp                                                    JOIN
+       PIMS_PROPERTY_HIST hist ON hist._PROPERTY_HIST_ID = temp._PROPERTY_HIST_ID JOIN
+       PIMS_PROPERTY      prnt ON prnt.PROPERTY_ID       = temp.PROPERTY_ID
+WHERE  temp.RANK = 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_PROPERTY_ACTIVITY_HIST
+PRINT N'Alter table dbo.PIMS_PROPERTY_ACTIVITY_HIST'
+GO
+;WITH CTE (_PROPERTY_ACTIVITY_HIST_ID, PIMS_PROPERTY_ACTIVITY_ID, EFFECTIVE_DATE_HIST, RANK)
+AS
+  (SELECT _PROPERTY_ACTIVITY_HIST_ID
+        , PIMS_PROPERTY_ACTIVITY_ID
+        , EFFECTIVE_DATE_HIST
+        , RANK() OVER (PARTITION BY PIMS_PROPERTY_ACTIVITY_ID
+                       ORDER BY     EFFECTIVE_DATE_HIST DESC) AS RANK
+   FROM   dbo.PIMS_PROPERTY_ACTIVITY_HIST)
+UPDATE hist
+SET    hist.DESCRIPTION = prnt.DESCRIPTION
+FROM   CTE                         temp                                                    JOIN
+       PIMS_PROPERTY_ACTIVITY_HIST hist ON hist._PROPERTY_ACTIVITY_HIST_ID = temp._PROPERTY_ACTIVITY_HIST_ID JOIN
+       PIMS_PROPERTY_ACTIVITY      prnt ON prnt.PIMS_PROPERTY_ACTIVITY_ID  = temp.PIMS_PROPERTY_ACTIVITY_ID
+WHERE  temp.RANK = 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_PROPERTY_RESEARCH_FILE_HIST
+PRINT N'Alter table dbo.PIMS_PROPERTY_RESEARCH_FILE_HIST'
+GO
+;WITH CTE (_PROPERTY_RESEARCH_FILE_HIST_ID, PROPERTY_RESEARCH_FILE_ID, EFFECTIVE_DATE_HIST, RANK)
+AS
+  (SELECT _PROPERTY_RESEARCH_FILE_HIST_ID
+        , PROPERTY_RESEARCH_FILE_ID
+        , EFFECTIVE_DATE_HIST
+        , RANK() OVER (PARTITION BY PROPERTY_RESEARCH_FILE_ID
+                       ORDER BY     EFFECTIVE_DATE_HIST DESC) AS RANK
+   FROM   dbo.PIMS_PROPERTY_RESEARCH_FILE_HIST)
+UPDATE hist
+SET    hist.RESEARCH_SUMMARY = prnt.RESEARCH_SUMMARY
+FROM   CTE                              temp                                                                                JOIN
+       PIMS_PROPERTY_RESEARCH_FILE_HIST hist ON hist._PROPERTY_RESEARCH_FILE_HIST_ID = temp._PROPERTY_RESEARCH_FILE_HIST_ID JOIN
+       PIMS_PROPERTY_RESEARCH_FILE      prnt ON prnt.PROPERTY_RESEARCH_FILE_ID       = temp.PROPERTY_RESEARCH_FILE_ID
+WHERE  temp.RANK = 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter table dbo.PIMS_RESEARCH_FILE_HIST
+PRINT N'Alter table dbo.PIMS_RESEARCH_FILE_HIST'
+GO
+;WITH CTE (_RESEARCH_FILE_HIST_ID, RESEARCH_FILE_ID, EFFECTIVE_DATE_HIST, RANK)
+AS
+  (SELECT _RESEARCH_FILE_HIST_ID
+        , RESEARCH_FILE_ID
+        , EFFECTIVE_DATE_HIST
+        , RANK() OVER (PARTITION BY RESEARCH_FILE_ID
+                       ORDER BY     EFFECTIVE_DATE_HIST DESC) AS RANK
+   FROM   dbo.PIMS_RESEARCH_FILE_HIST)
+UPDATE hist
+SET    hist.EXPROPRIATION_NOTES = prnt.EXPROPRIATION_NOTES
+     , hist.REQUEST_DESCRIPTION = prnt.REQUEST_DESCRIPTION
+     , hist.RESEARCH_RESULT     = prnt.RESEARCH_RESULT
+     , hist.ROAD_ALIAS          = prnt.ROAD_ALIAS
+     , hist.ROAD_NAME           = prnt.ROAD_NAME
+FROM   CTE                     temp                                                              JOIN
+       PIMS_RESEARCH_FILE_HIST hist ON hist._RESEARCH_FILE_HIST_ID = temp._RESEARCH_FILE_HIST_ID JOIN
+       PIMS_RESEARCH_FILE      prnt ON prnt.RESEARCH_FILE_ID       = temp.RESEARCH_FILE_ID
+WHERE  temp.RANK = 1
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+   PRINT 'The database update failed'
+END
+GO
