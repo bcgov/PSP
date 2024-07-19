@@ -69,7 +69,7 @@ export const PropertyManagementUpdateForm = React.forwardRef<
               <SectionField
                 label="Additional details"
                 contentWidth="12"
-                tooltip="Describe the purpose of the property for the Ministry."
+                tooltip="Describe the purpose of the property for the Ministry"
               >
                 <TextArea field="additionalDetails" />
               </SectionField>

@@ -85,7 +85,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
           <SectionField
             labelWidth="8"
             label="Takes for this property in the current file"
-            tooltip="The number of takes in completed, In-progress or cancelled state for this property in this acquisition file."
+            tooltip="The number of takes in completed, In-progress or cancelled state for this property in this acquisition file"
           >
             {takes?.length ?? 0}
           </SectionField>
@@ -128,7 +128,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                       {!canEditTakes(take) && (
                         <TooltipIcon
                           toolTipId={`${fileProperty?.fileId || 0}-summary-cannot-edit-tooltip`}
-                          toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion."
+                          toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion"
                         />
                       )}
                     </StyledEditWrapper>
@@ -183,7 +183,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   <SectionField
                     label="Is there a new highway dedication? *"
                     labelWidth="9"
-                    tooltip="The term new highway dedication includes municipal road or provincial public highway."
+                    tooltip="The term new highway dedication includes municipal road or provincial public highway"
                   >
                     {booleanToYesNoUnknownString(take.isNewHighwayDedication ?? undefined)}
                   </SectionField>
@@ -195,7 +195,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   <SectionField
                     label="Is this being acquired for MoTI inventory? *"
                     labelWidth="9"
-                    tooltip="The property will be added to inventory."
+                    tooltip="The property will be added to inventory"
                     className="pt-4"
                   >
                     {booleanToYesNoUnknownString(take.isAcquiredForInventory ?? undefined)}

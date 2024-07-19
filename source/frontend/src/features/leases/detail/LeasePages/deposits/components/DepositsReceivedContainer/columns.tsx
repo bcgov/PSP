@@ -72,7 +72,7 @@ function depositActions(
         {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount > 0 && (
           <TooltipIcon
             toolTipId={`no-delete-tooltip-${original.id}`}
-            toolTip="A deposit with associated return(s) cannot be deleted. To delete this deposit first delete any associated return(s)."
+            toolTip="A deposit with associated return(s) cannot be deleted. To delete this deposit first delete any associated return(s)"
             innerClassName="mt-3"
           />
         )}

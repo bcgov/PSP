@@ -171,7 +171,7 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
 
                         <SectionField
                           label="Impacted properties"
-                          tooltip="The non-interest payee will show on the Compensation Request form relevant to these properties."
+                          tooltip="The non-interest payee will show on the Compensation Request form relevant to these properties"
                         >
                           <FilePropertiesTable
                             fileProperties={file.fileProperties ?? []}
