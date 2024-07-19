@@ -35,11 +35,21 @@ export const getCalculatedExpiry = (
   return calculatedExpiry;
 };
 
-export const getSuggestedFee = (isPublicBenefit: boolean, isFinancialGain: boolean): string => {
-  if (isPublicBenefit == null || isFinancialGain == null) return 'Unknown';
-  else if (isPublicBenefit && isFinancialGain) return 'Licence Administration Fee (LAF) *';
-  else if (isPublicBenefit && !isFinancialGain) return '$1 - Nominal';
-  else if (!isPublicBenefit && isFinancialGain)
-    return 'Fair Market Value (FMV) - (Licence Administration Fee Minimum)';
-  else return '$1 / Fair Market Value / Licence Administration Fee';
+export enum SuggestedFeeCode {
+  LAF = 'Licence Administration Fee (LAF) *',
+  FMV = 'Fair Market Value (FMV) - (Licence Administration Fee Minimum)',
+  ANY = '$1 / Fair Market Value / Licence Administration Fee',
+  NOMINAL = '$1 - Nominal',
+  UNKNOWN = 'Unknown',
+}
+
+export const getSuggestedFee = (
+  isPublicBenefit: boolean,
+  isFinancialGain: boolean,
+): SuggestedFeeCode => {
+  if (isPublicBenefit == null || isFinancialGain == null) return SuggestedFeeCode.UNKNOWN;
+  else if (isPublicBenefit && isFinancialGain) return SuggestedFeeCode.LAF;
+  else if (isPublicBenefit && !isFinancialGain) return SuggestedFeeCode.NOMINAL;
+  else if (!isPublicBenefit && isFinancialGain) return SuggestedFeeCode.FMV;
+  else return SuggestedFeeCode.ANY;
 };
