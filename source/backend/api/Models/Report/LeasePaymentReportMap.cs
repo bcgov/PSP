@@ -73,7 +73,7 @@ namespace Pims.Api.Models.Report.Lease
 
         private static string GetHistoricalFileNumbers(PimsLease lease)
         {
-            var properties = lease.PimsPropertyLeases.Select(pl => pl.Property);
+            var properties = lease.PimsPropertyLeases.Select(pl => pl.Property).Where(p => p != null);
             var historicalDictionary = new Dictionary<string, PimsHistoricalFileNumberType>();
             foreach (var property in properties)
             {
