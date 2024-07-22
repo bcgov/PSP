@@ -34,11 +34,16 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<unknown>> = ()
           <StyledSelectingText
             style={{ color: 'white', fontFamily: 'BCSans-Bold', fontSize: '2.5rem' }}
           >
-            Relocating property marker...
+            <p>Relocating property marker...</p>
             <br />
-            <FaExclamationCircle size={56} />
-            <br />
-            Click on the new location within the property boundary to move the marker.
+            <p>
+              <FaExclamationCircle size={56} />
+            </p>
+            <p>
+              Click on the new location within the property
+              <br />
+              boundary to move the marker.
+            </p>
             <br />
             Click here to exit property selection.
           </StyledSelectingText>

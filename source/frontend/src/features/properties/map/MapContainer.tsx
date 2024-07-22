@@ -4,6 +4,7 @@ import { MapContainerProps } from 'react-leaflet';
 import styled from 'styled-components';
 
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
+import RelocationSvg from '@/assets/images/pins/icon-relocate.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FilterContentContainer } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentContainer';
 import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentForm';
@@ -18,15 +19,26 @@ import RightSideLayout from '@/features/rightSideLayout/RightSideLayout';
 
 enum MapCursors {
   DRAFT = 'draft-cursor',
+  RELOCATION = 'relocation-cursor',
   DEFAULT = 'default',
 }
 
 const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
   const [showActionBar, setShowActionBar] = useState(false);
-  const { isSelecting, isFiltering, isShowingMapLayers, toggleMapFilter, toggleMapLayer } =
-    useMapStateMachine();
+  const {
+    isSelecting,
+    isFiltering,
+    isShowingMapLayers,
+    isRelocating,
+    toggleMapFilter,
+    toggleMapLayer,
+  } = useMapStateMachine();
 
-  const cursorClass = isSelecting ? MapCursors.DRAFT : MapCursors.DEFAULT;
+  const cursorClass = isSelecting
+    ? MapCursors.DRAFT
+    : isRelocating
+    ? MapCursors.RELOCATION
+    : MapCursors.DEFAULT;
 
   return (
     <StyleMapView className={clsx(cursorClass)}>
@@ -73,6 +85,14 @@ const StyleMapView = styled.div`
     // when passing a URL of SVG to a manually constructed url(), the variable should be wrapped within double quotes.
     // ref: https://vitejs.dev/guide/assets
     cursor: url("${DraftSvg}") 15 45, pointer;
+  }
+
+  &.relocation-cursor,
+  &.relocation-cursor .leaflet-grab,
+  &.relocation-cursor .leaflet-interactive {
+    // when passing a URL of SVG to a manually constructed url(), the variable should be wrapped within double quotes.
+    // ref: https://vitejs.dev/guide/assets
+    cursor: url("${RelocationSvg}") 20 20, pointer;
   }
 `;
 
