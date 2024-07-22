@@ -196,7 +196,7 @@ PRINT N'Alter table dbo.PIMS_LEASE'
 GO
 ALTER TABLE [dbo].[PIMS_LEASE]
 	ADD [LEASE_CATEGORY_TYPE_CODE] nvarchar(20) NULL, 
-	[LEASE_PURPOSE_TYPE_CODE] nvarchar(20) NOT NULL DEFAULT 999999, 
+	[LEASE_PURPOSE_TYPE_CODE] nvarchar(20) NULL, 
 	[LEASE_CATEGORY_OTHER_DESC] nvarchar(200) NULL, 
 	[LEASE_PURPOSE_OTHER_DESC] nvarchar(200) NULL
 GO
@@ -223,24 +223,6 @@ EXEC sp_addextendedproperty
 	@level0type = N'Schema', @level0name = N'dbo', 
 	@level1type = N'Table', @level1name = N'PIMS_LEASE', 
 	@level2type = N'Column', @level2name = N'LEASE_PURPOSE_OTHER_DESC'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- Drop dynamically-named default constraint
-PRINT N'Drop dynamically-named default constraint'
-GO
-DECLARE @sqlQry  VARCHAR(1000)
-DECLARE @defName VARCHAR(100)
-SET @defName = (SELECT obj.NAME
-                FROM   SYSOBJECTS obj                          INNER JOIN
-                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
-                       SYSOBJECTS tbl on col.ID = tbl.ID
-                WHERE  obj.XTYPE = 'D'
-                   AND tbl.NAME = 'PIMS_LEASE' 
-                   AND col.NAME = 'LEASE_PURPOSE_TYPE_CODE')
-SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_LEASE] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
-EXEC (@sqlQry)
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -272,33 +254,7 @@ GO
 -- Alter table dbo.PIMS_LEASE_HIST
 PRINT N'Alter table dbo.PIMS_LEASE_HIST'
 GO
-UPDATE [dbo].[PIMS_LEASE_HIST] SET [LEASE_PURPOSE_TYPE_CODE] = 999999 WHERE [LEASE_PURPOSE_TYPE_CODE] IS NULL
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-ALTER TABLE [dbo].[PIMS_LEASE_HIST] ALTER COLUMN [LEASE_PURPOSE_TYPE_CODE] nvarchar(20) NOT NULL
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-ALTER TABLE [dbo].[PIMS_LEASE_HIST] ADD DEFAULT 999999 FOR [LEASE_PURPOSE_TYPE_CODE]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- Drop dynamically-named default constraint
-PRINT N'Drop dynamically-named default constraint'
-GO
-DECLARE @sqlQry  VARCHAR(1000)
-DECLARE @defName VARCHAR(100)
-SET @defName = (SELECT obj.NAME
-                FROM   SYSOBJECTS obj                          INNER JOIN
-                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
-                       SYSOBJECTS tbl on col.ID = tbl.ID
-                WHERE  obj.XTYPE = 'D'
-                   AND tbl.NAME = 'PIMS_LEASE_HIST' 
-                   AND col.NAME = 'LEASE_PURPOSE_TYPE_CODE')
-SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_LEASE_HIST] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
-EXEC (@sqlQry)
+ALTER TABLE [dbo].[PIMS_LEASE_HIST] ALTER COLUMN [LEASE_PURPOSE_TYPE_CODE] nvarchar(20) NULL
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
