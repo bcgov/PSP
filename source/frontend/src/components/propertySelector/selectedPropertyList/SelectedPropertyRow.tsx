@@ -67,8 +67,9 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
         />
       </Col>
-      <Col md={2}>
+      <Col md={1} className="pl-3">
         <StyledIconButton
+          title="Move pin location"
           onClick={() => {
             mapMachine.startRelocation();
           }}
@@ -77,7 +78,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
         </StyledIconButton>
       </Col>
       <Col md={2}>
-        <RemoveButton onRemove={onRemove} />
+        <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
       </Col>
     </Row>
   );
