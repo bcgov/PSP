@@ -120,6 +120,7 @@ describe('PeriodsPaymentsContainer component', () => {
 
     return {
       component,
+      periodStartDateInput: () => document.querySelector('#datepicker-startDate') as HTMLElement,
     };
   };
 
@@ -149,7 +150,8 @@ describe('PeriodsPaymentsContainer component', () => {
       try {
         mockGetLeasePeriods.response = [];
         const {
-          component: { getAllByText, getByDisplayValue },
+          component: { getAllByText },
+          periodStartDateInput,
         } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
         mockAxios.onPost().reply(200, { id: 1 });
 
@@ -158,7 +160,48 @@ describe('PeriodsPaymentsContainer component', () => {
           userEvent.click(addButton);
         });
 
-        expect(getByDisplayValue('Jan 01, 2020')).toBeVisible();
+        expect(periodStartDateInput()).toHaveValue('Jan 01, 2020');
+      } finally {
+        mockGetLeasePeriods.response = temp;
+      }
+    });
+
+    it('when adding a new sequential period, the start date is set to one day after the previous period expiry date', async () => {
+      const {
+        component: { getAllByText },
+        periodStartDateInput,
+      } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
+
+      const addButton = getAllByText('Add a Period')[0];
+      await act(async () => {
+        userEvent.click(addButton);
+      });
+
+      expect(periodStartDateInput()).toHaveValue('Jan 02, 2020');
+    });
+
+    it('when adding a new seqquential period, the start date is set to empty when previous period is flexible and no expiry date', async () => {
+      const temp = mockGetLeasePeriods.response;
+      try {
+        mockGetLeasePeriods.response = [
+          FormLeasePeriod.toApi({
+            ...defaultFormLeasePeriod,
+            isFlexible: 'true',
+            expiryDate: null,
+            payments: [],
+          }),
+        ];
+        const {
+          component: { getAllByText },
+          periodStartDateInput,
+        } = await setup({ claims: [Claims.LEASE_EDIT, Claims.LEASE_ADD] });
+
+        const addButton = getAllByText('Add a Period')[0];
+        await act(async () => {
+          userEvent.click(addButton);
+        });
+
+        expect(periodStartDateInput()).toHaveValue('');
       } finally {
         mockGetLeasePeriods.response = temp;
       }
