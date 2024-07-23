@@ -355,8 +355,9 @@ namespace Pims.Api.Test.Mappings
         public void MapLeasePaymentReport_PurposeType()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
-            lease.LeasePurposeTypeCode = "OTHER";
-            lease.LeasePurposeTypeCodeNavigation = new PimsLeasePurposeType() { Description = "OTHER" };
+            // TODO: Fix Mappings
+            //lease.LeasePurposeTypeCode = "OTHER";
+            //lease.LeasePurposeTypeCodeNavigation = new PimsLeasePurposeType() { Description = "OTHER" };
             lease.OtherLeasePurposeType = "DESC";
             var leasePayment = new PimsLeasePayment() { };
 
