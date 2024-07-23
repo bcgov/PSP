@@ -71,7 +71,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
         <StyledIconButton
           title="Move pin location"
           onClick={() => {
-            mapMachine.startRelocation();
+            mapMachine.startReposition();
           }}
         >
           <RiDragMove2Line size={22} />

@@ -38,7 +38,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
     }
 
     if (
-      mapMachine.isRelocating &&
+      mapMachine.isRepositioning &&
       mapMachine.mapLocationFeatureDataset &&
       previous !== mapMachine.mapLocationFeatureDataset &&
       previous !== undefined &&
@@ -50,7 +50,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
   }, [
     addProperty,
     mapMachine.isSelecting,
-    mapMachine.isRelocating,
+    mapMachine.isRepositioning,
     mapMachine.mapLocationFeatureDataset,
     previous,
   ]);

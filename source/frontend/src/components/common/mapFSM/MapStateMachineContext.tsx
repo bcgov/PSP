@@ -35,7 +35,7 @@ export interface IMapStateMachineContext {
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
-  isRelocating: boolean;
+  isRepositioning: boolean;
   selectingComponentId: string | null;
   isFiltering: boolean;
   isShowingMapLayers: boolean;
@@ -61,8 +61,8 @@ export interface IMapStateMachineContext {
   prepareForCreation: () => void;
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
-  startRelocation: (selectingComponentId?: string) => void;
-  finishRelocation: () => void;
+  startReposition: (selectingComponentId?: string) => void;
+  finishReposition: () => void;
   toggleMapFilter: () => void;
   toggleMapLayer: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
@@ -258,15 +258,15 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'FINISH_SELECTION' });
   }, [serviceSend]);
 
-  const startRelocation = useCallback(
+  const startReposition = useCallback(
     (selectingComponentId?: string) => {
-      serviceSend({ type: 'START_RELOCATION', selectingComponentId });
+      serviceSend({ type: 'START_REPOSITION', selectingComponentId });
     },
     [serviceSend],
   );
 
-  const finishRelocation = useCallback(() => {
-    serviceSend({ type: 'FINISH_RELOCATION' });
+  const finishReposition = useCallback(() => {
+    serviceSend({ type: 'FINISH_REPOSITION' });
   }, [serviceSend]);
 
   const setFilePropertyLocations = useCallback(
@@ -361,7 +361,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
-        isRelocating: state.matches({ mapVisible: { featureView: 'relocating' } }),
+        isRepositioning: state.matches({ mapVisible: { featureView: 'repositioning' } }),
         selectingComponentId: state.context.selectingComponentId,
         isFiltering: isFiltering,
         isShowingMapLayers: isShowingMapLayers,
@@ -384,8 +384,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         prepareForCreation,
         startSelection,
         finishSelection,
-        startRelocation,
-        finishRelocation,
+        startReposition,
+        finishReposition,
         toggleMapFilter,
         toggleMapLayer,
         toggleSidebarDisplay,

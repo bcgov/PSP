@@ -19,7 +19,7 @@ import RightSideLayout from '@/features/rightSideLayout/RightSideLayout';
 
 enum MapCursors {
   DRAFT = 'draft-cursor',
-  RELOCATION = 'relocation-cursor',
+  REPOSITION = 'reposition-cursor',
   DEFAULT = 'default',
 }
 
@@ -29,15 +29,15 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
     isSelecting,
     isFiltering,
     isShowingMapLayers,
-    isRelocating,
+    isRepositioning,
     toggleMapFilter,
     toggleMapLayer,
   } = useMapStateMachine();
 
   const cursorClass = isSelecting
     ? MapCursors.DRAFT
-    : isRelocating
-    ? MapCursors.RELOCATION
+    : isRepositioning
+    ? MapCursors.REPOSITION
     : MapCursors.DEFAULT;
 
   return (
@@ -87,9 +87,9 @@ const StyleMapView = styled.div`
     cursor: url("${DraftSvg}") 15 45, pointer;
   }
 
-  &.relocation-cursor,
-  &.relocation-cursor .leaflet-grab,
-  &.relocation-cursor .leaflet-interactive {
+  &.reposition-cursor,
+  &.reposition-cursor .leaflet-grab,
+  &.reposition-cursor .leaflet-interactive {
     // when passing a URL of SVG to a manually constructed url(), the variable should be wrapped within double quotes.
     // ref: https://vitejs.dev/guide/assets
     cursor: url("${RelocationSvg}") 20 20, pointer;

@@ -29,8 +29,8 @@ const MapSideBar: React.FunctionComponent<React.PropsWithChildren<unknown>> = ()
           </StyledSelectingText>
         </StyledBackdrop>
       )}
-      {mapMachine.isRelocating && (
-        <StyledBackdrop parentScreen onClick={() => mapMachine.finishRelocation()}>
+      {mapMachine.isRepositioning && (
+        <StyledBackdrop parentScreen onClick={() => mapMachine.finishReposition()}>
           <StyledSelectingText
             style={{ color: 'white', fontFamily: 'BCSans-Bold', fontSize: '2.5rem' }}
           >

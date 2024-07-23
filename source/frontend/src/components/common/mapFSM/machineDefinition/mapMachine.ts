@@ -18,8 +18,8 @@ const featureViewStates = {
             assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
           ],
         },
-        START_RELOCATION: {
-          target: 'relocating',
+        START_REPOSITION: {
+          target: 'repositioning',
           actions: [
             assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
           ],
@@ -46,9 +46,9 @@ const featureViewStates = {
         },
       },
     },
-    relocating: {
+    repositioning: {
       on: {
-        FINISH_RELOCATION: { target: 'browsing' },
+        FINISH_REPOSITION: { target: 'browsing' },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({ filePropertyLocations: (_, event: any) => event.locations }),
