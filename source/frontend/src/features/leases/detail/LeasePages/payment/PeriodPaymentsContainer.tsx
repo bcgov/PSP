@@ -1,5 +1,6 @@
 import { FormikProps } from 'formik/dist/types';
 import { find, noop } from 'lodash';
+import moment from 'moment';
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { FaExclamationCircle, FaPlusCircle } from 'react-icons/fa';
 
@@ -57,6 +58,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
     },
     [getLeasePeriodsFunc],
   );
+
   useDeepCompareEffect(() => {
     if (isValidId(leaseId)) {
       refreshLeasePeriods(leaseId);
@@ -145,11 +147,20 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
           isAdditionalRentGstEligible: isReceivableLease ? true : false,
           isVariableRentGstEligible: isReceivableLease ? true : false,
         };
+
+        if (getLeasePeriods?.response?.length > 0) {
+          const lastPeriod = getLeasePeriods?.response.slice(-1)[0];
+          const startDate = isValidIsoDateTime(lastPeriod.expiryDate)
+            ? moment(lastPeriod.expiryDate).add(1, 'days')
+            : '';
+
+          values.startDate = startDate ? startDate.toISOString() : '';
+        }
       }
 
       setEditModalValues(values);
     },
-    [getLeasePeriods?.response?.length, lease?.paymentReceivableType?.id, lease.startDate],
+    [getLeasePeriods?.response, lease?.paymentReceivableType?.id, lease.startDate],
   );
 
   const onEditPayment = useCallback((values: FormLeasePayment) => {
@@ -178,6 +189,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
     ),
     [editModalValues, formikRef, onSavePeriod, lease],
   );
+
   useEffect(() => {
     if (editModalValues) {
       setModalContent({
