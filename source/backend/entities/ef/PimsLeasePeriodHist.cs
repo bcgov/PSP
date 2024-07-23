@@ -80,11 +80,17 @@ public partial class PimsLeasePeriodHist
     [Column("ADDL_RENT_AGREED_PMT", TypeName = "money")]
     public decimal? AddlRentAgreedPmt { get; set; }
 
+    [Column("ADDL_RENT_GST_AMOUNT", TypeName = "money")]
+    public decimal? AddlRentGstAmount { get; set; }
+
     [Column("IS_ADDL_RENT_SUBJECT_TO_GST")]
     public bool? IsAddlRentSubjectToGst { get; set; }
 
     [Column("VBL_RENT_AGREED_PMT", TypeName = "money")]
     public decimal? VblRentAgreedPmt { get; set; }
+
+    [Column("VBL_RENT_GST_AMOUNT", TypeName = "money")]
+    public decimal? VblRentGstAmount { get; set; }
 
     [Column("IS_VBL_RENT_SUBJECT_TO_GST")]
     public bool? IsVblRentSubjectToGst { get; set; }
@@ -139,10 +145,4 @@ public partial class PimsLeasePeriodHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("ADDL_RENT_GST_AMOUNT", TypeName = "money")]
-    public decimal? AddlRentGstAmount { get; set; }
-
-    [Column("VBL_RENT_GST_AMOUNT", TypeName = "money")]
-    public decimal? VblRentGstAmount { get; set; }
 }
