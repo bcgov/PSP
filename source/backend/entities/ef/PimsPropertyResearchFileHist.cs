@@ -46,6 +46,10 @@ public partial class PimsPropertyResearchFileHist
     [StringLength(2000)]
     public string DocumentReference { get; set; }
 
+    [Column("RESEARCH_SUMMARY")]
+    [StringLength(1000)]
+    public string ResearchSummary { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 

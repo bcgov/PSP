@@ -10,12 +10,10 @@ namespace Pims.Dal.Entities;
 /// Details of a lease that is inventoried in PIMS system.
 /// </summary>
 [Table("PIMS_LEASE")]
-[Index("LeaseCategoryTypeCode", Name = "LEASE_LEASE_CATEGORY_TYPE_CODE_IDX")]
 [Index("LeaseInitiatorTypeCode", Name = "LEASE_LEASE_INITIATOR_TYPE_CODE_IDX")]
 [Index("LeaseLicenseTypeCode", Name = "LEASE_LEASE_LICENSE_TYPE_CODE_IDX")]
 [Index("LeasePayRvblTypeCode", Name = "LEASE_LEASE_PAY_RVBL_TYPE_CODE_IDX")]
 [Index("LeaseProgramTypeCode", Name = "LEASE_LEASE_PROGRAM_TYPE_CODE_IDX")]
-[Index("LeasePurposeTypeCode", Name = "LEASE_LEASE_PURPOSE_TYPE_CODE_IDX")]
 [Index("LeaseResponsibilityTypeCode", Name = "LEASE_LEASE_RESPONSIBILITY_TYPE_CODE_IDX")]
 [Index("LeaseStatusTypeCode", Name = "LEASE_LEASE_STATUS_TYPE_CODE_IDX")]
 [Index("LFileNo", Name = "LEASE_L_FILE_NO_IDX")]
@@ -48,21 +46,6 @@ public partial class PimsLease
     [Column("LEASE_LICENSE_TYPE_CODE")]
     [StringLength(20)]
     public string LeaseLicenseTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_LEASE_CATEGORY_TYPE table.
-    /// </summary>
-    [Column("LEASE_CATEGORY_TYPE_CODE")]
-    [StringLength(20)]
-    public string LeaseCategoryTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_LEASE_PURPOSE_TYPE table.
-    /// </summary>
-    [Required]
-    [Column("LEASE_PURPOSE_TYPE_CODE")]
-    [StringLength(20)]
-    public string LeasePurposeTypeCode { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_LEASE_PROGRAM_TYPE table.
@@ -137,26 +120,14 @@ public partial class PimsLease
     /// Manually etered lease description, not the legal description
     /// </summary>
     [Column("LEASE_DESCRIPTION")]
+    [StringLength(2000)]
     public string LeaseDescription { get; set; }
-
-    /// <summary>
-    /// User-specified lease category description not included in standard set of lease purposes
-    /// </summary>
-    [Column("LEASE_CATEGORY_OTHER_DESC")]
-    [StringLength(200)]
-    public string LeaseCategoryOtherDesc { get; set; }
-
-    /// <summary>
-    /// User-specified lease purpose description not included in standard set of lease purposes
-    /// </summary>
-    [Column("LEASE_PURPOSE_OTHER_DESC")]
-    [StringLength(200)]
-    public string LeasePurposeOtherDesc { get; set; }
 
     /// <summary>
     /// Notes accompanying lease
     /// </summary>
     [Column("LEASE_NOTES")]
+    [StringLength(4000)]
     public string LeaseNotes { get; set; }
 
     /// <summary>
@@ -177,6 +148,7 @@ public partial class PimsLease
     /// Notes accompanying lease
     /// </summary>
     [Column("RETURN_NOTES")]
+    [StringLength(1000)]
     public string ReturnNotes { get; set; }
 
     /// <summary>
@@ -213,6 +185,12 @@ public partial class PimsLease
     public DateTime? OrigExpiryDate { get; set; }
 
     /// <summary>
+    /// Date that the lease was terminated.
+    /// </summary>
+    [Column("TERMINATION_DATE", TypeName = "datetime")]
+    public DateTime? TerminationDate { get; set; }
+
+    /// <summary>
     /// Lease/licence amount
     /// </summary>
     [Column("LEASE_AMOUNT", TypeName = "money")]
@@ -234,6 +212,7 @@ public partial class PimsLease
     /// Notes accompanying inspection
     /// </summary>
     [Column("INSPECTION_NOTES")]
+    [StringLength(1000)]
     public string InspectionNotes { get; set; }
 
     /// <summary>
@@ -297,6 +276,32 @@ public partial class PimsLease
     [Column("TERMINATION_REASON")]
     [StringLength(500)]
     public string TerminationReason { get; set; }
+
+    /// <summary>
+    /// Is there an associated public benefit with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
+    /// </summary>
+    [Column("IS_PUBLIC_BENEFIT")]
+    public bool? IsPublicBenefit { get; set; }
+
+    /// <summary>
+    /// Is there an associated financial gain with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
+    /// </summary>
+    [Column("IS_FINANCIAL_GAIN")]
+    public bool? IsFinancialGain { get; set; }
+
+    /// <summary>
+    /// Note associated with fee determination.
+    /// </summary>
+    [Column("FEE_DETERMINATION_NOTE")]
+    [StringLength(1000)]
+    public string FeeDeterminationNote { get; set; }
+
+    /// <summary>
+    /// The location in which primary arbtration of the lease occurred.
+    /// </summary>
+    [Column("PRIMARY_ARBITRATION_CITY")]
+    [StringLength(200)]
+    public string PrimaryArbitrationCity { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -388,42 +393,6 @@ public partial class PimsLease
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    /// <summary>
-    /// Date that the lease was terminated.
-    /// </summary>
-    [Column("TERMINATION_DATE", TypeName = "datetime")]
-    public DateTime? TerminationDate { get; set; }
-
-    /// <summary>
-    /// Is there an associated public benefit with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
-    /// </summary>
-    [Column("IS_PUBLIC_BENEFIT")]
-    public bool? IsPublicBenefit { get; set; }
-
-    /// <summary>
-    /// Is there an associated financial gain with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
-    /// </summary>
-    [Column("IS_FINANCIAL_GAIN")]
-    public bool? IsFinancialGain { get; set; }
-
-    /// <summary>
-    /// Note associated with fee determination.
-    /// </summary>
-    [Column("FEE_DETERMINATION_NOTE")]
-    [StringLength(1000)]
-    public string FeeDeterminationNote { get; set; }
-
-    /// <summary>
-    /// The location in which primary arbtration of the lease occurred.
-    /// </summary>
-    [Column("PRIMARY_ARBITRATION_CITY")]
-    [StringLength(200)]
-    public string PrimaryArbitrationCity { get; set; }
-
-    [ForeignKey("LeaseCategoryTypeCode")]
-    [InverseProperty("PimsLeases")]
-    public virtual PimsLeaseCategoryType LeaseCategoryTypeCodeNavigation { get; set; }
-
     [ForeignKey("LeaseInitiatorTypeCode")]
     [InverseProperty("PimsLeases")]
     public virtual PimsLeaseInitiatorType LeaseInitiatorTypeCodeNavigation { get; set; }
@@ -439,10 +408,6 @@ public partial class PimsLease
     [ForeignKey("LeaseProgramTypeCode")]
     [InverseProperty("PimsLeases")]
     public virtual PimsLeaseProgramType LeaseProgramTypeCodeNavigation { get; set; }
-
-    [ForeignKey("LeasePurposeTypeCode")]
-    [InverseProperty("PimsLeases")]
-    public virtual PimsLeasePurposeType LeasePurposeTypeCodeNavigation { get; set; }
 
     [ForeignKey("LeaseResponsibilityTypeCode")]
     [InverseProperty("PimsLeases")]
@@ -463,6 +428,9 @@ public partial class PimsLease
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsLeaseDocument> PimsLeaseDocuments { get; set; } = new List<PimsLeaseDocument>();
+
+    [InverseProperty("Lease")]
+    public virtual ICollection<PimsLeaseLeasePurpose> PimsLeaseLeasePurposes { get; set; } = new List<PimsLeaseLeasePurpose>();
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();

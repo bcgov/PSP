@@ -27,6 +27,7 @@ public partial class PimsAcquisitionFileForm
     public string FormTypeCode { get; set; }
 
     [Column("FORM_JSON")]
+    [StringLength(4000)]
     public string FormJson { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
