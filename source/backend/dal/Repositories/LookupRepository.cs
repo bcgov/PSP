@@ -164,7 +164,8 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsLeaseCategoryType> GetAllLeaseCategoryTypes()
         {
-            return this.Context.PimsLeaseCategoryTypes.AsNoTracking().OrderBy(a => a.LeaseCategoryTypeCode).ToArray();
+            //return this.Context.PimsLeaseCategoryTypes.AsNoTracking().OrderBy(a => a.LeaseCategoryTypeCode).ToArray(); TODO: Fix Mapings
+            return new List<PimsLeaseCategoryType>();
         }
 
         public IEnumerable<PimsLeasePurposeType> GetAllLeasePurposeTypes()
