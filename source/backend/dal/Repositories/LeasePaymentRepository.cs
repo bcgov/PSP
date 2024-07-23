@@ -50,6 +50,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(p => p.PimsPropertyLeases)
                     .ThenInclude(p => p.Property)
+                    .ThenInclude(p => p.PimsHistoricalFileNumbers)
+                    .ThenInclude(h => h.HistoricalFileNumberTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(p => p.RegionCodeNavigation)
@@ -68,7 +70,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.LeaseProgramTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
-                    .ThenInclude(t => t.LeasePurposeTypeCodeNavigation)
+                    //.ThenInclude(t => t.LeasePurposeTypeCodeNavigation) TODO: fix mappings
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.LeasePeriodStatusTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)

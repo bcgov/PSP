@@ -41,6 +41,10 @@ public partial class PimsAccessRequestHist
     [Column("REGION_CODE")]
     public short RegionCode { get; set; }
 
+    [Column("NOTE")]
+    [StringLength(1000)]
+    public string Note { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 

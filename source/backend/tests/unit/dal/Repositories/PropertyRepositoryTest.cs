@@ -218,7 +218,7 @@ namespace Pims.Dal.Test.Repositories
             property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { ResearchFile = new PimsResearchFile() {
                 Name = "Research", RfileNumber = "1234", ResearchFileStatusTypeCodeNavigation = new PimsResearchFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
             property.PimsPropertyLeases = new List<PimsPropertyLease>() { new PimsPropertyLease() { Lease = new PimsLease() {
-                LeaseLicenseTypeCode = "TYPE", LeasePayRvblTypeCode = "RCVBL", LeaseProgramTypeCode = "PROGRAM", LeasePurposeTypeCode = "PURPOSE",
+                LeaseLicenseTypeCode = "TYPE", LeasePayRvblTypeCode = "RCVBL", LeaseProgramTypeCode = "PROGRAM", //LeasePurposeTypeCode = "PURPOSE",
                 LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType () { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
             property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = new PimsDispositionFile() {
                 DispositionStatusTypeCode = "DRAFT", DispositionTypeCode = "TYPE", DispositionFileStatusTypeCodeNavigation = new PimsDispositionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };

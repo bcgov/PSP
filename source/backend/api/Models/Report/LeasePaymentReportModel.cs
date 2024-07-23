@@ -17,31 +17,20 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - PIMS L File Number.
         /// </summary>
-        ///
         [DisplayName("L-File Number")]
         [CsvHelper.Configuration.Attributes.Name("L-File Number")]
         public string LFileNumber { get; set; }
 
         /// <summary>
-        /// get/set - legacy lis number.
+        /// get/set - The set of historical files numbers as a contatenated string.
         /// </summary>
-        ///
-        [DisplayName("LIS number")]
-        [CsvHelper.Configuration.Attributes.Name("LIS number")]
-        public string LisNumber { get; set; }
-
-        /// <summary>
-        /// get/set - legacy ps file name.
-        /// </summary>
-        ///
-        [DisplayName("PS File number")]
-        [CsvHelper.Configuration.Attributes.Name("PS File number")]
-        public string PsFileNumber { get; set; }
+        [DisplayName("Historical files")]
+        [CsvHelper.Configuration.Attributes.Name("Historical files")]
+        public string HistoricalFiles { get; set; }
 
         /// <summary>
         /// get/set - Lease status description.
         /// </summary>
-        ///
         [DisplayName("Lease status")]
         [CsvHelper.Configuration.Attributes.Name("Lease status")]
         public string LeaseStatus { get; set; }
@@ -49,7 +38,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - The value of the program name.
         /// </summary>
-        ///
         [DisplayName("Properties")]
         [CsvHelper.Configuration.Attributes.Name("Properties")]
         public string PropertyList { get; set; }
@@ -57,7 +45,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - Tenant list, separated by commas. Only display if type is "tenant".
         /// </summary>
-        ///
         [DisplayName("Tenant(s)")]
         [CsvHelper.Configuration.Attributes.Name("Tenant(s)")]
         public string TenantList { get; set; }
@@ -65,7 +52,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - Either Payable or Receivable.
         /// </summary>
-        ///
         [DisplayName("Payable/Receivable")]
         [CsvHelper.Configuration.Attributes.Name("Payable/Receivable")]
         public string PayableOrReceivable { get; set; }
@@ -83,7 +69,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - Start date of the period parent for this lease.
         /// </summary>
-        ///
         [DisplayName("Period start")]
         [CsvHelper.Configuration.Attributes.Name("Period start")]
         public string PeriodStart { get; set; }
@@ -91,7 +76,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - Expiry date of the period parent for this lease.
         /// </summary>
-        ///
         [DisplayName("Period expiry")]
         [CsvHelper.Configuration.Attributes.Name("Period expiry")]
         public string PeriodExpiry { get; set; }
@@ -99,7 +83,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - Whether or not this period is exercised (Yes/No).
         /// </summary>
-        ///
         [DisplayName("Period exercised")]
         [CsvHelper.Configuration.Attributes.Name("Period exercised")]
         public string IsPeriodExercised { get; set; }
@@ -107,7 +90,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - How often this payment occurs within the period.
         /// </summary>
-        ///
         [DisplayName("Payment frequency")]
         [CsvHelper.Configuration.Attributes.Name("Payment frequency")]
         public string PaymentFrequency { get; set; }
@@ -115,15 +97,27 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - A text description of when the payment is due.
         /// </summary>
-        ///
         [DisplayName("Payment due")]
         [CsvHelper.Configuration.Attributes.Name("Payment due")]
         public string PaymentDueString { get; set; }
 
         /// <summary>
+        /// get/set - The payment type
+        /// </summary>
+        [DisplayName("Payment type")]
+        [CsvHelper.Configuration.Attributes.Name("Payment type")]
+        public string PaymentType { get; set; }
+
+        /// <summary>
+        /// get/set - The payment type
+        /// </summary>
+        [DisplayName("Rent category")]
+        [CsvHelper.Configuration.Attributes.Name("Rent category")]
+        public string RentCategory { get; set; }
+
+        /// <summary>
         /// get/set - The expected payment total, including GST.
         /// </summary>
-        ///
         [DisplayName("Expected payment")]
         [CsvHelper.Configuration.Attributes.Name("Expected payment")]
         public decimal ExpectedPayment { get; set; }
@@ -131,7 +125,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - The actual payment total, including GST.
         /// </summary>
-        ///
         [DisplayName("Payment total")]
         [CsvHelper.Configuration.Attributes.Name("Payment total")]
         public decimal PaymentTotal { get; set; }
@@ -139,7 +132,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - For this payment, if the payment is partial, complete, etc.
         /// </summary>
-        ///
         [DisplayName("Payment status")]
         [CsvHelper.Configuration.Attributes.Name("Payment status")]
         public string PaymentStatus { get; set; }
@@ -147,7 +139,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - The payment amount, not including GST.
         /// </summary>
-        ///
         [DisplayName("Payment amount (pretax)")]
         [CsvHelper.Configuration.Attributes.Name("Payment amount (pretax)")]
         public decimal PaymentAmount { get; set; }
@@ -155,7 +146,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - The GST portion of the payment.
         /// </summary>
-        ///
         [DisplayName("Payment GST")]
         [CsvHelper.Configuration.Attributes.Name("Payment GST")]
         public decimal PaymentGst { get; set; }
@@ -163,7 +153,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - The date the payment was received.
         /// </summary>
-        ///
         [DisplayName("Payment received date")]
         [CsvHelper.Configuration.Attributes.Name("Payment received date")]
         public string PaymentReceivedDate { get; set; }
@@ -171,7 +160,6 @@ namespace Pims.Api.Models.Report.Lease
         /// <summary>
         /// get/set - Most recent payment made for the file.
         /// </summary>
-        ///
         [DisplayName("Latest payment date")]
         [CsvHelper.Configuration.Attributes.Name("Latest payment date")]
         public string LatestPaymentDate { get; set; }

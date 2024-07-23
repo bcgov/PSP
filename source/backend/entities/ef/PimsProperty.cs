@@ -177,6 +177,7 @@ public partial class PimsProperty
     /// Legal description of property
     /// </summary>
     [Column("LAND_LEGAL_DESCRIPTION")]
+    [StringLength(2000)]
     public string LandLegalDescription { get; set; }
 
     /// <summary>
@@ -229,6 +230,7 @@ public partial class PimsProperty
     /// Notes about the property
     /// </summary>
     [Column("NOTES")]
+    [StringLength(4000)]
     public string Notes { get; set; }
 
     /// <summary>

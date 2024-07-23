@@ -118,6 +118,7 @@ public partial class PimsPropertyVw
     public float? LandArea { get; set; }
 
     [Column("LAND_LEGAL_DESCRIPTION")]
+    [StringLength(2000)]
     public string LandLegalDescription { get; set; }
 
     [Column("SURVEY_PLAN_NUMBER")]

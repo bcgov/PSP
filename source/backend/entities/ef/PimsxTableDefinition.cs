@@ -23,5 +23,6 @@ public partial class PimsxTableDefinition
     public string HistRequired { get; set; }
 
     [Column("DESCRIPTION")]
+    [StringLength(500)]
     public string Description { get; set; }
 }
