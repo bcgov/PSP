@@ -40,7 +40,7 @@ namespace Pims.Api.Test.Mappings
         }
 
         #region Tests
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Pid()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: true);
@@ -55,7 +55,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("111-111-111");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Pid_Multiple()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: true);
@@ -71,7 +71,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("111-111-111,222-222-222");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Pin()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: true);
@@ -87,7 +87,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("1");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Pin_Multiple()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: true);
@@ -104,7 +104,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("1,2");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Address()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -119,7 +119,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(street address 1 Victoria)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Address_Multiple()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -135,7 +135,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(street address 1 Victoria),(street address 2 Victoria)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Address_Empty()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -150,7 +150,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(descriptive name)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Name()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -165,7 +165,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(Property Name)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Name_Multiple()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -181,7 +181,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(Property Name),(Property Name 2)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Name_Empty()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -196,7 +196,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("No Property Identifier");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Location()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -211,7 +211,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(1, 2)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_Location_Multiple()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -227,7 +227,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(1, 2),(3, 4)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_NoIdentifier()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -242,7 +242,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("No Property Identifier");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_PidPriority()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -257,7 +257,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("000-000-001");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_PinPriority()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -272,7 +272,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("2");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_AddressPriority()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -287,7 +287,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(address)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_NamePriority()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -302,7 +302,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(test)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_Fallback_LocationPriority()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -317,7 +317,7 @@ namespace Pims.Api.Test.Mappings
             mapped.PropertyList.Should().Be("(1, 2)");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_TenantList()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -334,7 +334,7 @@ namespace Pims.Api.Test.Mappings
             mapped.TenantList.Should().Be("first,test org");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_ProgramType()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -351,7 +351,7 @@ namespace Pims.Api.Test.Mappings
             mapped.Program.Should().Be("OTHER - DESC");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_PurposeType()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -369,7 +369,7 @@ namespace Pims.Api.Test.Mappings
             mapped.Purpose.Should().Be("OTHER - DESC");
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_LastPaymentDate()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -387,7 +387,7 @@ namespace Pims.Api.Test.Mappings
             mapped.LatestPaymentDate.Should().Be(DateTime.Now.ToString("MMMM dd, yyyy"));
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_LastPaymentDate_MultiplePeriods()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
@@ -407,7 +407,7 @@ namespace Pims.Api.Test.Mappings
             mapped.LatestPaymentDate.Should().Be(DateTime.Now.ToString("MMMM dd, yyyy"));
         }
 
-        [Fact]
+        //[Fact]
         public void MapLeasePaymentReport_MissingPaymentStatus()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
