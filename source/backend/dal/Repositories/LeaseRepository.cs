@@ -88,8 +88,8 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
                 .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
                 .Include(l => l.LeaseInitiatorTypeCodeNavigation)
-                .Include(l => l.LeasePurposeTypeCodeNavigation)
-                .Include(l => l.LeaseCategoryTypeCodeNavigation)
+                //.Include(l => l.LeasePurposeTypeCodeNavigation)
+                //.Include(l => l.LeaseCategoryTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseTenants)
                 .Include(t => t.PimsPropertyImprovements)
@@ -103,7 +103,7 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.Project)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
-            lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
+            //lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
             lease.PimsLeasePeriods = lease.PimsLeasePeriods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>
             {
@@ -612,8 +612,8 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
                 .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
                 .Include(l => l.LeaseInitiatorTypeCodeNavigation)
-                .Include(l => l.LeasePurposeTypeCodeNavigation)
-                .Include(l => l.LeaseCategoryTypeCodeNavigation)
+                //.Include(l => l.LeasePurposeTypeCodeNavigation)
+                //.Include(l => l.LeaseCategoryTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
 
                 .Include(l => l.PimsLeaseTenants)
@@ -697,7 +697,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.ConsultationStatusTypeCodeNavigation)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
-            lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
+            //lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
             lease.PimsLeasePeriods = lease.PimsLeasePeriods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>
             {
@@ -899,7 +899,7 @@ namespace Pims.Dal.Repositories
                             .ThenInclude(t => t.HistoricalFileNumberTypeCodeNavigation)
                         .Include(l => l.PimsPropertyImprovements)
                         .Include(l => l.LeaseProgramTypeCodeNavigation)
-                        .Include(l => l.LeasePurposeTypeCodeNavigation)
+                        //.Include(l => l.LeasePurposeTypeCodeNavigation)
                         .Include(l => l.LeaseStatusTypeCodeNavigation)
                         .Include(l => l.LeaseLicenseTypeCodeNavigation)
                         .Include(l => l.PimsLeaseTenants)
