@@ -7,14 +7,18 @@ import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
 import { LocationFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
 
 interface IMapClickMonitorProps {
-  addProperty: (property: LocationFeatureDataset) => void; // TODO: This should be a featureDataset
+  addProperty: (property: LocationFeatureDataset) => void;
+  repositionProperty: (property: LocationFeatureDataset) => void;
   modifiedProperties: LocationFeatureDataset[]; // TODO: this should be just a list of lat longs
   selectedComponentId: string | null;
 }
 
-export const MapClickMonitor: React.FunctionComponent<
-  React.PropsWithChildren<IMapClickMonitorProps>
-> = ({ addProperty, modifiedProperties, selectedComponentId }) => {
+export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = ({
+  addProperty,
+  repositionProperty,
+  modifiedProperties,
+  selectedComponentId,
+}) => {
   const mapMachine = useMapStateMachine();
 
   const previous = usePrevious(mapMachine.mapLocationFeatureDataset);
@@ -32,7 +36,24 @@ export const MapClickMonitor: React.FunctionComponent<
     ) {
       addProperty(mapMachine.mapLocationFeatureDataset);
     }
-  }, [addProperty, mapMachine.isSelecting, mapMachine.mapLocationFeatureDataset, previous]);
+
+    if (
+      mapMachine.isRelocating &&
+      mapMachine.mapLocationFeatureDataset &&
+      previous !== mapMachine.mapLocationFeatureDataset &&
+      previous !== undefined &&
+      (!selectedComponentId ||
+        selectedComponentId === mapMachine.mapLocationFeatureDataset.selectingComponentId)
+    ) {
+      repositionProperty(mapMachine.mapLocationFeatureDataset);
+    }
+  }, [
+    addProperty,
+    mapMachine.isSelecting,
+    mapMachine.isRelocating,
+    mapMachine.mapLocationFeatureDataset,
+    previous,
+  ]);
   return <></>;
 };
 

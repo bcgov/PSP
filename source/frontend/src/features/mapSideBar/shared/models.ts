@@ -90,7 +90,7 @@ export class PropertyForm {
   public areaUnit?: AreaUnitTypes;
   public isRetired?: boolean;
 
-  private constructor(baseModel?: Partial<PropertyForm>) {
+  public constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
   }
 
