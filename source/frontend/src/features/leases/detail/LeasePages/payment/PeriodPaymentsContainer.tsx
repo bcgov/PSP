@@ -185,9 +185,10 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         initialValues={editModalValues}
         onSave={onSavePeriod}
         lease={lease}
+        gstConstant={gstConstant}
       />
     ),
-    [editModalValues, formikRef, onSavePeriod, lease],
+    [formikRef, editModalValues, onSavePeriod, lease, gstConstant],
   );
 
   useEffect(() => {

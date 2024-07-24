@@ -20,7 +20,9 @@ import * as API from '@/constants/API';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { round } from '@/utils';
+import { ISystemConstant } from '@/store/slices/systemConstants';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { formatMoney, round } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { defaultFormLeasePeriod, FormLeasePeriod } from '../../models';
@@ -33,6 +35,7 @@ export interface IPeriodFormProps {
   onSave: (values: FormLeasePeriod) => void;
   initialValues?: FormLeasePeriod;
   lease: ApiGen_Concepts_Lease | undefined;
+  gstConstant: ISystemConstant;
 }
 
 /**
@@ -45,6 +48,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   formikRef,
   onSave,
   lease,
+  gstConstant,
 }) => {
   const [displayWarningModal, setDisplayWarningModal] = useState(false);
   const lookups = useLookupCodeHelpers();
@@ -65,21 +69,25 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
     },
   ];
 
+  const initialGstAmount = initialValues.gstAmount;
+
   const onGstCheckChange = (
     formikState: FormikProps<FormLeasePeriod>,
     field: string,
     values: boolean,
   ) => {
-    console.log(field, values);
     if (values === true) {
-      const gstConstant = 8;
-      const calculated = round((formikState.values.paymentAmount as number) * (gstConstant / 100));
+      const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
+      const calculated = round((formikState.values.paymentAmount as number) * (gstDecimal / 100));
       formikState.setFieldValue('gstAmount', calculated);
-      console.log(calculated);
-      console.log(formikRef);
     } else {
-      formikState.setFieldValue('gstAmount', null);
+      formikState.setFieldValue('gstAmount', '');
     }
+  };
+
+  const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
+    const total = Number(amount) + Number(gstAmount);
+    return isNaN(total) ? 0 : total;
   };
 
   return (
@@ -166,7 +174,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                     <Col>
                       <FastCurrencyInput
                         formikProps={formikProps}
-                        label="Agreed payment ($)"
+                        label="Payment (before tax)"
                         field="paymentAmount"
                       />
                     </Col>
@@ -188,15 +196,34 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         type="radio"
                         handleChange={(field, value) => onGstCheckChange(formikProps, field, value)}
                       />
+                      {initialGstAmount !== formikProps.values.gstAmount &&
+                        formikProps.values.isGstEligible === false && (
+                          <StyledRedCol className="pt-4">
+                            You have selected to remove subject to GST. GST amount previously added
+                            will be removed.
+                          </StyledRedCol>
+                        )}
                     </Col>
                   </Row>
                   {formikProps.values.isGstEligible === true && (
                     <Row>
                       <Col xs="6">
-                        <Input label="Gst Ammount" field="gstAmount" />
+                        <FastCurrencyInput
+                          formikProps={formikProps}
+                          label="GST Ammount"
+                          field="gstAmount"
+                        />
                       </Col>
                     </Row>
                   )}
+                  <SectionField label="Total Payment" labelWidth="auto">
+                    {formatMoney(
+                      calculateTotal(
+                        formikProps.values.paymentAmount,
+                        formikProps.values.gstAmount,
+                      ),
+                    )}
+                  </SectionField>
                   <Row>
                     <Col md={6}>
                       <Select
@@ -246,6 +273,8 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       frequencyField="leasePmtFreqTypeCode"
                       isGstEligibleField="isGstEligible"
                       paymentAmountField="paymentAmount"
+                      gstAmountField="gstAmount"
+                      gstConstant={gstConstant}
                     />
                   </StyledSection>
                   <StyledSection
@@ -265,6 +294,8 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       frequencyField="additionalRentFreqTypeCode"
                       isGstEligibleField="isAdditionalRentGstEligible"
                       paymentAmountField="additionalRentPaymentAmount"
+                      gstAmountField="additionalGstAmount"
+                      gstConstant={gstConstant}
                     />
                   </StyledSection>
                   <StyledSection
@@ -284,6 +315,8 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       frequencyField="variableRentFreqTypeCode"
                       isGstEligibleField="isVariableRentGstEligible"
                       paymentAmountField="variableRentPaymentAmount"
+                      gstAmountField="variableGstAmount"
+                      gstConstant={gstConstant}
                     />
                   </StyledSection>
                 </>
@@ -328,6 +361,10 @@ const StyledRadioGroup = styled(RadioGroup)`
   .radio-group div:first-child .form-check {
     padding-left: 0;
   }
+`;
+
+const StyledRedCol = styled(Col)`
+  color: red;
 `;
 
 export default PeriodForm;
