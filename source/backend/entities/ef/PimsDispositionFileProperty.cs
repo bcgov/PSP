@@ -43,6 +43,12 @@ public partial class PimsDispositionFileProperty
     public string PropertyName { get; set; }
 
     /// <summary>
+    /// Geospatial location (pin) of property
+    /// </summary>
+    [Column("LOCATION", TypeName = "geometry")]
+    public Geometry Location { get; set; }
+
+    /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -131,12 +137,6 @@ public partial class PimsDispositionFileProperty
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// Geospatial location (pin) of property
-    /// </summary>
-    [Column("LOCATION", TypeName = "geometry")]
-    public Geometry Location { get; set; }
 
     [ForeignKey("DispositionFileId")]
     [InverseProperty("PimsDispositionFileProperties")]
