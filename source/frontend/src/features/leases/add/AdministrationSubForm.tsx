@@ -226,7 +226,10 @@ const AdministrationSubForm: React.FunctionComponent<
         </Col>
       </Row>
 
-      <SectionField label="Intended use">
+      <SectionField
+        label="Intended use"
+        tooltip="The purpose for which the license is issued, as per the agreement"
+      >
         <Styled.MediumTextArea field="description" />
       </SectionField>
       <SectionField label="Primary arbitration city">
