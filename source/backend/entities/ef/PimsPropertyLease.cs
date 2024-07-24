@@ -40,6 +40,12 @@ public partial class PimsPropertyLease
     [Column("LEASE_AREA")]
     public float? LeaseArea { get; set; }
 
+    /// <summary>
+    /// Geospatial location (pin) of property
+    /// </summary>
+    [Column("LOCATION", TypeName = "geometry")]
+    public Geometry Location { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
@@ -90,12 +96,6 @@ public partial class PimsPropertyLease
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// Geospatial location (pin) of property
-    /// </summary>
-    [Column("LOCATION", TypeName = "geometry")]
-    public Geometry Location { get; set; }
 
     [ForeignKey("AreaUnitTypeCode")]
     [InverseProperty("PimsPropertyLeases")]

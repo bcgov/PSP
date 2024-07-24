@@ -100,6 +100,10 @@ public partial class PimsPropertyHist
     [Column("LAND_AREA")]
     public float? LandArea { get; set; }
 
+    [Column("LAND_LEGAL_DESCRIPTION")]
+    [StringLength(2000)]
+    public string LandLegalDescription { get; set; }
+
     [Column("GENERAL_LOCATION")]
     [StringLength(2000)]
     public string GeneralLocation { get; set; }
@@ -118,6 +122,10 @@ public partial class PimsPropertyHist
 
     [Column("SURPLUS_DECLARATION_DATE", TypeName = "datetime")]
     public DateTime? SurplusDeclarationDate { get; set; }
+
+    [Column("NOTES")]
+    [StringLength(4000)]
+    public string Notes { get; set; }
 
     [Column("MUNICIPAL_ZONING")]
     [StringLength(100)]

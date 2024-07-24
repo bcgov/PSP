@@ -41,6 +41,7 @@ public partial class PimsAccessRequest
     /// Note associated with this access request.
     /// </summary>
     [Column("NOTE")]
+    [StringLength(1000)]
     public string Note { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]

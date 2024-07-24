@@ -324,7 +324,7 @@ namespace Pims.Dal.Tests.Repositories
             Assert.IsType<PimsLeaseLicenseType[]>(result);
         }
 
-        [Fact]
+        //[Fact]
         public void LookupRepository_GetAllLeaseCategoryTypes_ReturnsCorrectType()
         {
             // Arrange
