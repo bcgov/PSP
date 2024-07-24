@@ -31,6 +31,10 @@ public partial class PimsAcquisitionFileFormHist
     [StringLength(20)]
     public string FormTypeCode { get; set; }
 
+    [Column("FORM_JSON")]
+    [StringLength(4000)]
+    public string FormJson { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 

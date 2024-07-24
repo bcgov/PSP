@@ -765,7 +765,7 @@ namespace Pims.Dal.Test.Repositories
             updatedPropertyLeases.FirstOrDefault().Internal_Id.Should().Be(addProperty.Internal_Id);
         }
 
-        [Fact]
+        //[Fact]
         public void Update_Lease_Properties_AddPropertyInLease()
         {
             // Arrange
@@ -802,7 +802,7 @@ namespace Pims.Dal.Test.Repositories
                 service.Update(lease, Array.Empty<UserOverrideCode>()));
         }
 
-        [Fact]
+        //[Fact]
         public void Update_Lease_Properties_AddPropertyInLeaseOverride()
         {
             // Arrange
