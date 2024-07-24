@@ -113,7 +113,7 @@ export function createTableColumns(
             ) : (
               <TooltipWrapper
                 tooltipId={`activity-delete-tooltip-${activityRow.id}`}
-                tooltip="Only activity that is not started can be deleted."
+                tooltip="Only activity that is not started can be deleted"
               >
                 <FaInfoCircle className="tooltip-icon h-24" size="2rem" />
               </TooltipWrapper>

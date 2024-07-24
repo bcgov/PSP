@@ -71,6 +71,11 @@ describe('DetailFeeDetermination component', () => {
       },
     });
     expect(getByText('$1 - Nominal')).toBeVisible();
+    expect(
+      getByText('No or nominal fee determinations should include justification in the', {
+        exact: false,
+      }),
+    ).toBeVisible();
   });
 
   it('renders the suggested Fee field with LAF calculation', () => {
@@ -84,6 +89,11 @@ describe('DetailFeeDetermination component', () => {
       },
     });
     expect(getByText('Licence Administration Fee (LAF) *')).toBeVisible();
+    expect(
+      getByText('License administration fees are charged when there is either: a financial', {
+        exact: false,
+      }),
+    ).toBeVisible();
   });
 
   it('renders the suggested Fee field with FMV calculation', () => {
@@ -99,6 +109,11 @@ describe('DetailFeeDetermination component', () => {
     expect(
       getByText('Fair Market Value (FMV) - (Licence Administration Fee Minimum)'),
     ).toBeVisible();
+    expect(
+      getByText('Fair market value fee determination should include the square footage rate', {
+        exact: false,
+      }),
+    ).toBeVisible();
   });
 
   it('renders the suggested Fee field with non-defined calculation', () => {
@@ -112,6 +127,21 @@ describe('DetailFeeDetermination component', () => {
       },
     });
     expect(getByText('$1 / Fair Market Value / Licence Administration Fee')).toBeVisible();
+    expect(
+      getByText('No or nominal fee determinations should include justification in the', {
+        exact: false,
+      }),
+    ).toBeVisible();
+    expect(
+      getByText('Fair market value fee determination should include the square footage rate', {
+        exact: false,
+      }),
+    ).toBeVisible();
+    expect(
+      getByText('License administration fees are charged when there is either: a financial', {
+        exact: false,
+      }),
+    ).toBeVisible();
   });
 
   it('renders the suggested Fee field with unknown calculation', async () => {

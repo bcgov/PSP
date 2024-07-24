@@ -49,6 +49,11 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c5 {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+}
+
 <div
     class="c0 form-section"
   >
@@ -161,7 +166,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
           <label
             class="c2"
           >
-            Sugested fee:
+            Suggested fee:
             <span>
               <span
                 class="tooltip-icon"
@@ -193,6 +198,9 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
             data-testid="suggestedFee"
           >
             Unknown
+            <div
+              class="c5"
+            />
           </span>
         </div>
       </div>

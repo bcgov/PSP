@@ -77,7 +77,7 @@ export const getLeasePeriodColumns = ({
           Expected payment ($)
           <TooltipIcon
             toolTipId="expectedPaymentTooltip"
-            toolTip="This is the amount agreed to be paid per interval, ie: the amount of a monthly payment if the lease is paid monthly."
+            toolTip="This is the amount agreed to be paid per interval, ie: the amount of a monthly payment if the lease is paid monthly"
           />
         </>
       ),
@@ -99,7 +99,7 @@ export const getLeasePeriodColumns = ({
           GST ($)
           <TooltipIcon
             toolTipId="gstAmountTooltip"
-            toolTip="GST is calculated as (expected amount) x GST rate (5%)."
+            toolTip="GST is calculated as (expected amount) x GST rate (5%)"
           />
         </>
       ),
@@ -114,7 +114,7 @@ export const getLeasePeriodColumns = ({
           Expected total ($)
           <TooltipIcon
             toolTipId="expectedTotalTooltip"
-            toolTip="This is the expected payment amount plus GST if applicable."
+            toolTip="This is the expected payment amount plus GST if applicable"
           />
         </>
       ),
@@ -129,7 +129,7 @@ export const getLeasePeriodColumns = ({
           Expected period ($)
           <TooltipIcon
             toolTipId="expectedPeriodTooltip"
-            toolTip="This is the full payment amount expected in the duration of the period."
+            toolTip="This is the full payment amount expected in the duration of the period"
           />
         </>
       ),
@@ -142,7 +142,7 @@ export const getLeasePeriodColumns = ({
       Header: () => (
         <>
           Actual total ($)
-          <TooltipIcon toolTipId="actualTotalTooltip" toolTip="Amount paid this period." />
+          <TooltipIcon toolTipId="actualTotalTooltip" toolTip="Amount paid this period" />
         </>
       ),
       id: 'actualTotal',
@@ -154,7 +154,7 @@ export const getLeasePeriodColumns = ({
       Header: () => (
         <>
           Exercised?
-          <TooltipIcon toolTipId="exercisedTooltip" toolTip="Exercised period to add payments." />
+          <TooltipIcon toolTipId="exercisedTooltip" toolTip="Exercise period to add payments" />
         </>
       ),
       align: 'left',
@@ -227,7 +227,7 @@ const paymentActions = (
             original.statusTypeCode?.id === LeasePeriodStatusTypes.EXERCISED) && (
             <TooltipIcon
               toolTipId={`no-delete-tooltip-period-${original.id}`}
-              toolTip="An exercised period cannot be deleted. To delete this period ensure that there are no payments recorded for it, and the period has not been exercised."
+              toolTip="An exercised period cannot be deleted. To delete this period ensure that there are no payments recorded for it, and the period has not been exercised"
             />
           )}
       </StyledIcons>

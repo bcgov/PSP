@@ -125,7 +125,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
       <SectionField
         label="Notes"
         labelWidth="4"
-        tooltip="Provide any additional details such as offer terms or conditions, and any commentary on why the offer was accepted/countered/rejected."
+        tooltip="Provide any additional details such as offer terms or conditions, and any commentary on why the offer was accepted/countered/rejected"
         valueTestId={`offer[${index}].notes`}
       >
         {dispositionOffer.offerNote}

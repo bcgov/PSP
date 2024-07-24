@@ -127,7 +127,7 @@ const DispositionSaleForm: React.FunctionComponent<
         label="Last condition removal date"
         labelWidth="5"
         contentWidth="5"
-        tooltip="For general sales, provide the date when the last condition(s) are to be removed. For road closures enter the condition precedent date."
+        tooltip="For general sales, provide the date when the last condition(s) are to be removed. For road closures enter the condition precedent date"
       >
         <FastDatePicker field="finalConditionRemovalDate" formikProps={formikProps} />
       </SectionField>
@@ -167,7 +167,7 @@ const DispositionSaleForm: React.FunctionComponent<
           label="GST collected ($)"
           labelWidth="5"
           contentWidth="5"
-          tooltip="GST collected is calculated based upon Final Sales Price."
+          tooltip="GST collected is calculated based upon Final Sales Price"
         >
           <FastCurrencyInput allowNegative formikProps={formikProps} field="gstCollectedAmount" />
         </SectionField>
@@ -181,7 +181,7 @@ const DispositionSaleForm: React.FunctionComponent<
         label="Total cost of sales ($)"
         labelWidth="5"
         contentWidth="5"
-        tooltip="Sum of all costs incurred to prepare property for sale (e.g., appraisal, environmental and other consultants, legal fees, First Nations accommodation, etc.)."
+        tooltip="Sum of all costs incurred to prepare property for sale (e.g., appraisal, environmental and other consultants, legal fees, First Nations accommodation, etc.)"
       >
         <FastCurrencyInput formikProps={formikProps} field="totalCostAmount" />
       </SectionField>
@@ -190,7 +190,7 @@ const DispositionSaleForm: React.FunctionComponent<
         label="Net proceeds before SPP cost ($)"
         labelWidth="5"
         contentWidth="5"
-        tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, GST Total Cost of Sales, and Net Book Value."
+        tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, GST Total Cost of Sales, and Net Book Value"
       >
         <FastCurrencyInput
           formikProps={formikProps}
@@ -203,7 +203,7 @@ const DispositionSaleForm: React.FunctionComponent<
         label="SPP Amount ($)"
         labelWidth="5"
         contentWidth="5"
-        tooltip="Surplus Property Program (SPP) fee to be paid to CITZ."
+        tooltip="Surplus Property Program (SPP) fee to be paid to CITZ"
       >
         <FastCurrencyInput formikProps={formikProps} field="sppAmount" />
       </SectionField>
@@ -212,7 +212,7 @@ const DispositionSaleForm: React.FunctionComponent<
         label="Net proceeds after SPP cost ($)"
         labelWidth="5"
         contentWidth="5"
-        tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount."
+        tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount"
       >
         <FastCurrencyInput
           formikProps={formikProps}

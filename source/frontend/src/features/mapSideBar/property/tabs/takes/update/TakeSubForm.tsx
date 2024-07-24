@@ -138,7 +138,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           <SectionField
             label="Is there a new highway dedication? *"
             labelWidth="8"
-            tooltip="The term new highway dedication includes municipal road or provincial public highway."
+            tooltip="The term new highway dedication includes municipal road or provincial public highway"
           >
             <RadioGroup
               field="isNewHighwayDedication"
@@ -173,7 +173,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           <SectionField
             label="Is this being acquired for MoTI inventory? *"
             labelWidth="8"
-            tooltip="Selecting Yes for this option will result in the property being added to inventory."
+            tooltip="Selecting Yes for this option will result in the property being added to inventory"
             className="pt-4"
           >
             <RadioGroup

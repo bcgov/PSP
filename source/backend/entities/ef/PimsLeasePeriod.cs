@@ -133,6 +133,12 @@ public partial class PimsLeasePeriod
     public decimal? AddlRentAgreedPmt { get; set; }
 
     /// <summary>
+    /// GST dollar amount for the additional rent.
+    /// </summary>
+    [Column("ADDL_RENT_GST_AMOUNT", TypeName = "money")]
+    public decimal? AddlRentGstAmount { get; set; }
+
+    /// <summary>
     /// Is the variable additional rent payment subject to GST?
     /// </summary>
     [Column("IS_ADDL_RENT_SUBJECT_TO_GST")]
@@ -143,6 +149,12 @@ public partial class PimsLeasePeriod
     /// </summary>
     [Column("VBL_RENT_AGREED_PMT", TypeName = "money")]
     public decimal? VblRentAgreedPmt { get; set; }
+
+    /// <summary>
+    /// GST dollar amount for the variable rent.
+    /// </summary>
+    [Column("VBL_RENT_GST_AMOUNT", TypeName = "money")]
+    public decimal? VblRentGstAmount { get; set; }
 
     /// <summary>
     /// Is the variable rent payment subject to GST?
@@ -239,18 +251,6 @@ public partial class PimsLeasePeriod
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// GST dollar amount for the additional rent.
-    /// </summary>
-    [Column("ADDL_RENT_GST_AMOUNT", TypeName = "money")]
-    public decimal? AddlRentGstAmount { get; set; }
-
-    /// <summary>
-    /// GST dollar amount for the variable rent.
-    /// </summary>
-    [Column("VBL_RENT_GST_AMOUNT", TypeName = "money")]
-    public decimal? VblRentGstAmount { get; set; }
 
     [ForeignKey("AddlRentFreq")]
     [InverseProperty("PimsLeasePeriodAddlRentFreqNavigations")]

@@ -80,7 +80,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         {hasClaim(Claims.PROPERTY_EDIT) && propertyIsRetired ? (
           <TooltipIcon
             toolTipId="property-retired-tooltip"
-            toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted."
+            toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted"
           />
         ) : null}
       </StyledEditWrapper>

@@ -500,8 +500,9 @@ namespace Pims.Dal.Repositories
 
             if (filter.LeasePurposes != null && filter.LeasePurposes.Count > 0)
             {
-                predicate.And(p =>
-                    p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
+                //predicate.And(p => 
+                //    p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
+                // TODO: Fix Mappings
             }
 
             if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))

@@ -82,6 +82,7 @@ namespace Pims.Dal.Repositories
         {
             var deletedEntity = Context.PimsCompensationRequisitions
                 .Include(fa => fa.PimsCompReqFinancials)
+                .Include(p => p.PimsPropAcqFlCompReqs)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
 
@@ -90,6 +91,11 @@ namespace Pims.Dal.Repositories
                 foreach (var financial in deletedEntity.PimsCompReqFinancials)
                 {
                     Context.PimsCompReqFinancials.Remove(new PimsCompReqFinancial() { CompReqFinancialId = financial.CompReqFinancialId });
+                }
+
+                foreach(var propAcqFile in deletedEntity.PimsPropAcqFlCompReqs)
+                {
+                    Context.PimsPropAcqFlCompReqs.Remove(new PimsPropAcqFlCompReq() { PropAcqFlCompReqId = propAcqFile.PropAcqFlCompReqId });
                 }
 
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.

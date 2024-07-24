@@ -144,7 +144,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
             tooltip={
               <TooltipIcon
                 toolTipId="lease-commencement-tooltip"
-                toolTip="The start date defined in the original agreement."
+                toolTip="The start date defined in the original agreement"
                 placement="right"
               />
             }
@@ -163,7 +163,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
             tooltip={
               <TooltipIcon
                 toolTipId="lease-expiry-tooltip"
-                toolTip="The end date specified in the original agreement."
+                toolTip="The end date specified in the original agreement"
                 placement="right"
               />
             }
@@ -181,7 +181,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
             tooltip={
               <TooltipIcon
                 toolTipId="lease-termination-tooltip"
-                toolTip="The expiry date of the last agreement if by effluxion of time or the early termination date for cause."
+                toolTip="The expiry date of the last agreement if by effluxion of time or the early termination date for cause"
                 placement="right"
               />
             }
