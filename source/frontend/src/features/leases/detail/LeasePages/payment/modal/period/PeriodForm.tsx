@@ -20,6 +20,7 @@ import * as API from '@/constants/API';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { round } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { defaultFormLeasePeriod, FormLeasePeriod } from '../../models';
@@ -63,6 +64,23 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
       radioLabel: 'Variable',
     },
   ];
+
+  const onGstCheckChange = (
+    formikState: FormikProps<FormLeasePeriod>,
+    field: string,
+    values: boolean,
+  ) => {
+    console.log(field, values);
+    if (values === true) {
+      const gstConstant = 8;
+      const calculated = round((formikState.values.paymentAmount as number) * (gstConstant / 100));
+      formikState.setFieldValue('gstAmount', calculated);
+      console.log(calculated);
+      console.log(formikRef);
+    } else {
+      formikState.setFieldValue('gstAmount', null);
+    }
+  };
 
   return (
     <>
@@ -168,9 +186,17 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         radioLabelOne="Y"
                         radioLabelTwo="N"
                         type="radio"
+                        handleChange={(field, value) => onGstCheckChange(formikProps, field, value)}
                       />
                     </Col>
                   </Row>
+                  {formikProps.values.isGstEligible === true && (
+                    <Row>
+                      <Col xs="6">
+                        <Input label="Gst Ammount" field="gstAmount" />
+                      </Col>
+                    </Row>
+                  )}
                   <Row>
                     <Col md={6}>
                       <Select
