@@ -27,6 +27,7 @@ export interface IMapStateMachineContext {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   selectedFeatureDataset: LocationFeatureDataset | null;
+  repositioningFeatureDataset: LocationFeatureDataset | null;
   showPopup: boolean;
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
@@ -61,7 +62,10 @@ export interface IMapStateMachineContext {
   prepareForCreation: () => void;
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
-  startReposition: (selectingComponentId?: string) => void;
+  startReposition: (
+    repositioningFeatureDataset: LocationFeatureDataset | null,
+    selectingComponentId?: string,
+  ) => void;
   finishReposition: () => void;
   toggleMapFilter: () => void;
   toggleMapLayer: () => void;
@@ -259,8 +263,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   }, [serviceSend]);
 
   const startReposition = useCallback(
-    (selectingComponentId?: string) => {
-      serviceSend({ type: 'START_REPOSITION', selectingComponentId });
+    (repositioningFeatureDataset: LocationFeatureDataset | null, selectingComponentId?: string) => {
+      serviceSend({ type: 'START_REPOSITION', repositioningFeatureDataset, selectingComponentId });
     },
     [serviceSend],
   );
@@ -353,6 +357,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapLocationSelected: state.context.mapLocationSelected,
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         selectedFeatureDataset: state.context.selectedFeatureDataset,
+        repositioningFeatureDataset: state.context.repositioningFeatureDataset,
         showPopup: showPopup,
         isLoading: state.context.isLoading,
         mapSearchCriteria: state.context.searchCriteria,

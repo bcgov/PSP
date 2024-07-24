@@ -21,7 +21,10 @@ const featureViewStates = {
         START_REPOSITION: {
           target: 'repositioning',
           actions: [
-            assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
+            assign({
+              selectingComponentId: (_, event: any) => event.selectingComponentId,
+              repositioningFeatureDataset: (_, event: any) => event.repositioningFeatureDataset,
+            }),
           ],
         },
         TOGGLE_FILTER: {
@@ -48,7 +51,10 @@ const featureViewStates = {
     },
     repositioning: {
       on: {
-        FINISH_REPOSITION: { target: 'browsing' },
+        FINISH_REPOSITION: {
+          target: 'browsing',
+          actions: [assign({ repositioningFeatureDataset: () => null })],
+        },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({ filePropertyLocations: (_, event: any) => event.locations }),
@@ -399,6 +405,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
     selectedFeatureDataset: null,
+    repositioningFeatureDataset: null,
     selectingComponentId: null,
     isLoading: false,
     searchCriteria: null,
