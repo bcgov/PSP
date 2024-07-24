@@ -35,15 +35,15 @@ namespace PIMS.Tests.Automation.PageObjects
         //Property Information Header Elements
         private By propertyInformationHeaderTitle = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]");
         private By propertyInformationHeaderAddressLabel = By.XPath("//label[contains(text(),'Civic Address')]");
-        private By propertyInformationHeaderAddressContent = By.XPath("//label[contains(text(),'Civic Address')]/parent::strong/parent::div/following-sibling::div");
+        private By propertyInformationHeaderAddressContent = By.XPath("//label[contains(text(),'Civic Address')]/parent::div/following-sibling::div");
         private By propertyInformationHeaderPlanLabel = By.XPath("//label[contains(text(),'Plan')]");
-        private By propertyInformationHeaderPlanContent = By.XPath("//label[contains(text(),'Plan #')]/parent::strong/parent::div/following-sibling::div");
-        private By propertyInformationHeaderHistoricFileLabel = By.XPath("//label[contains(text(),'Historical File #:')]");
-        private By propertyInformationHeaderHistoricFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
+        private By propertyInformationHeaderPlanContent = By.XPath("//label[contains(text(),'Plan #')]/parent::div/following-sibling::div");
+        private By propertyInformationHeaderHistoricFileLabel = By.XPath("//label[contains(text(),'Historical file #:')]");
+        private By propertyInformationHeaderHistoricFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
         private By propertyInformationHeaderPIDLabel = By.XPath("//label[contains(text(),'PID')]");
-        private By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::strong/parent::div/following-sibling::div");
-        private By propertyInformationHeaderLandTypeLabel = By.XPath("//strong/label[contains(text(),'Land parcel type')]");
-        private By propertyInformationHeaderLandTypeContent = By.XPath("//label[contains(text(),'Land parcel type')]/parent::strong/parent::div/following-sibling::div");
+        private By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
+        private By propertyInformationHeaderLandTypeLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div/div/div/div[2]/div/div/div/label[contains(text(),'Land parcel type')]");
+        private By propertyInformationHeaderLandTypeContent = By.XPath("//h1/parent::div/parent::div/following-sibling::div/div/div/div[2]/div/div/div/label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
         private By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Zoom Map']");
 
         //Title Tab Elements

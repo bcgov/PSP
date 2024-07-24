@@ -662,7 +662,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             var compensationsAfterDelete = h120.TotalCompensationCount();
 
-
             Assert.True(compensationsBeforeDelete - compensationsAfterDelete == 1);
         }
 
@@ -1043,7 +1042,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.PIN = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PIN");
                 acquisitionFile.AcquisitionSearchProperties.Address = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "Address");
                 acquisitionFile.AcquisitionSearchProperties.PlanNumber = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "PlanNumber");
-                //acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
+                acquisitionFile.AcquisitionSearchProperties.LegalDescription = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "LegalDescription");
                 acquisitionFile.AcquisitionSearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "MultiplePIDS"));
             }
 

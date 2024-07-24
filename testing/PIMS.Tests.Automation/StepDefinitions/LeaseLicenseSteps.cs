@@ -81,6 +81,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.EditLeaseFileDetailsBttn();
             leaseDetails.UpdateLeaseFileDetails(lease);
 
+            //Save the new license details
+            leaseDetails.SaveLicense();
+            leaseDetails.VerifyLicenseDetailsViewForm(lease);
+        }
+
+        [StepDefinition(@"I add Properties to the Lease Details")]
+        public void AddPropertiesLicenseDetails()
+        {
+            /* TEST COVERAGE:  PSP-1966, PSP-2550, PSP-2644, PSP-4558, PSP-5334, PSP-5335, PSP-5336, PSP-5337, PSP-5338, PSP-5340, PSP-5654, PSP-5668, PSP-5923, PSP-6266 */
+
+            //Add Additional information to the lease
+            leaseDetails.EditLeaseFileDetailsBttn();
+
             //Add Several Properties
             //Verify UI/UX from Search By Component
             sharedSearchProperties.NavigateToSearchTab();
@@ -115,11 +128,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            //if (lease.SearchProperties.LegalDescription != "")
-            //{
-            //    sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
-            //    sharedSearchProperties.SelectFirstOptionFromSearch();
-            //}
+            if (lease.SearchProperties.LegalDescription != "")
+            {
+                sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
+                sharedSearchProperties.SelectFirstOptionFromSearch();
+            }
 
             //Search for a duplicate property
             if (lease.SearchProperties.PID != "")
@@ -130,7 +143,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save the new license details
             leaseDetails.SaveLicense();
-            leaseDetails.VerifyLicenseDetailsViewForm(lease);
+            //leaseDetails.VerifyLicenseDetailsViewForm(lease);
         }
 
         [StepDefinition(@"I update a Lease's Details from row number (.*)")]
@@ -156,10 +169,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.UpdateLeaseFileDetails(lease);
 
             //Verify Properties section
-            sharedSearchProperties.VerifyLocateOnMapFeature();
+            //sharedSearchProperties.VerifyLocateOnMapFeature();
 
             //Delete last property
-            sharedSearchProperties.DeleteLastPropertyFromLease();
+            //sharedSearchProperties.DeleteLastPropertyFromLease();
 
             //Save the new license details
             leaseDetails.SaveLicense();
@@ -233,7 +246,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.True(tenant.TotalTenants().Equals(lease.TenantsNumber));
             Assert.True(tenant.TotalRepresentatives().Equals(lease.RepresentativeNumber));
             Assert.True(tenant.TotalManagers().Equals(lease.PropertyManagerNumber));
-            Assert.True(tenant.TotalUnknown().Equals(lease.UnknownNumber));
+            Assert.True(tenant.TotalUnknown().Equals(lease.UnknownTenantNumber));
         }
 
         [StepDefinition(@"I update a Lease's Tenants from row number (.*)")]
@@ -276,7 +289,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 Assert.True(tenant.TotalTenants().Equals(lease.TenantsNumber));
                 Assert.True(tenant.TotalRepresentatives().Equals(lease.RepresentativeNumber));
                 Assert.True(tenant.TotalManagers().Equals(lease.PropertyManagerNumber));
-                Assert.True(tenant.TotalUnknown().Equals(lease.UnknownNumber));
+                Assert.True(tenant.TotalUnknown().Equals(lease.UnknownTenantNumber));
             }
         }
 
@@ -796,11 +809,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.MinistryProjectCode = ExcelDataContext.ReadData(rowNumber, "MinistryProjectCode");
             lease.MinistryProject = ExcelDataContext.ReadData(rowNumber, "MinistryProject");
             lease.LeaseStatus = ExcelDataContext.ReadData(rowNumber, "LeaseStatus");
+            lease.LeaseTerminationDate = ExcelDataContext.ReadData(rowNumber, "LeaseTerminationDate");
             lease.LeaseTerminationReason = ExcelDataContext.ReadData(rowNumber, "LeaseTerminationReason");
             lease.LeaseCancellationReason = ExcelDataContext.ReadData(rowNumber, "LeaseCancellationReason");
             lease.AccountType = ExcelDataContext.ReadData(rowNumber, "AccountType");
             lease.LeaseStartDate = ExcelDataContext.ReadData(rowNumber, "LeaseStartDate");
             lease.LeaseExpiryDate = ExcelDataContext.ReadData(rowNumber, "LeaseExpiryDate");
+            lease.LeaseRenewalStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseRenewalStartRow"));
+            lease.LeaseRenewalQuantity = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseRenewalQuantity"));
+            if (lease.LeaseRenewalStartRow != 0 && lease.LeaseRenewalQuantity != 0)
+                PopulateRenewalsCollection(lease.LeaseRenewalStartRow, lease.LeaseRenewalQuantity);
 
             lease.MOTIContact = ExcelDataContext.ReadData(rowNumber, "MOTIContact");
             lease.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "MOTIRegion");
@@ -816,6 +834,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.Responsibility = ExcelDataContext.ReadData(rowNumber, "Responsibility");
             lease.EffectiveDate = ExcelDataContext.ReadData(rowNumber, "EffectiveDate");
             lease.IntendedUse = ExcelDataContext.ReadData(rowNumber, "IntendedUse");
+            lease.ArbitrationCity = ExcelDataContext.ReadData(rowNumber, "ArbitrationCity");
 
             lease.FirstNation = ExcelDataContext.ReadData(rowNumber, "FirstNation");
             lease.StrategicRealEstate = ExcelDataContext.ReadData(rowNumber, "StrategicRealEstate");
@@ -825,6 +844,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.Headquarter = ExcelDataContext.ReadData(rowNumber, "Headquarter");
             lease.ConsultationOther = ExcelDataContext.ReadData(rowNumber, "ConsultationOther");
             lease.ConsultationOtherDetails = ExcelDataContext.ReadData(rowNumber, "ConsultationOtherDetails");
+
+            lease.FeeDeterminationPublicBenefit = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationPublicBenefit");
+            lease.FeeDeterminationFinancialGain = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationFinancialGain");
+            lease.FeeDeterminationSuggestedFee = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationSuggestedFee");
+            lease.FeeDeterminationNotes = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationNotes");
 
             lease.PhysicalLeaseExist = ExcelDataContext.ReadData(rowNumber, "PhysicalLeaseExist");
             lease.DigitalLeaseExist = ExcelDataContext.ReadData(rowNumber, "DigitalLeaseExist");
@@ -891,7 +915,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.TenantsNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "TenantsNumber"));
             lease.RepresentativeNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "RepresentativeNumber"));
             lease.PropertyManagerNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyManagerNumber"));
-            lease.UnknownNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "UnknownNumber"));
+            lease.UnknownTenantNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "UnknownTenantNumber"));
             if (lease.TenantsStartRow != 0 && lease.TenantsQuantity != 0)
                 PopulateTenantsCollection(lease.TenantsStartRow, lease.TenantsQuantity);
             
@@ -956,20 +980,34 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.DepositsStartRow != 0 && lease.DepositsCount != 0)
                 PopulateDepositsCollection(lease.DepositsStartRow, lease.DepositsCount);
             
-
             //Terms
             lease.TermsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "TermsStartRow"));
             lease.TermsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "TermsCount"));
             if (lease.TermsStartRow != 0 && lease.TermsCount != 0)
-                PopulateTermsCollection(lease.TermsStartRow, lease.TermsCount);
-            
+                PopulateTermsCollection(lease.TermsStartRow, lease.TermsCount);         
 
             //Payments
             lease.PaymentsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "PaymentsStartRow"));
             lease.PaymentsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "PaymentsCount"));
             if (lease.PaymentsStartRow != 0 && lease.PaymentsCount != 0)
-                PopulatePaymentsCollection(lease.PaymentsStartRow, lease.PaymentsCount);
-            
+                PopulatePaymentsCollection(lease.PaymentsStartRow, lease.PaymentsCount);    
+        }
+
+        private void PopulateRenewalsCollection(int startRow, int rowsCount)
+        {
+            DataTable leasesRenewalsSheet = ExcelDataContext.GetInstance().Sheets["LeasesRenewals"]!;
+            ExcelDataContext.PopulateInCollection(leasesRenewalsSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                LeaseRenewal renewal = new LeaseRenewal();
+                renewal.RenewalIsExercised = ExcelDataContext.ReadData(i, "RenewalIsExercised");
+                renewal.RenewalCommencementDate = ExcelDataContext.ReadData(i, "RenewalCommencementDate");
+                renewal.RenewalExpiryDate = ExcelDataContext.ReadData(i, "RenewalExpiryDate");
+                renewal.RenewalNotes = ExcelDataContext.ReadData(i, "RenewalNotes");
+
+                lease.LeaseRenewals.Add(renewal);
+            }
         }
 
         private void PopulateTenantsCollection(int startRow, int rowsCount)

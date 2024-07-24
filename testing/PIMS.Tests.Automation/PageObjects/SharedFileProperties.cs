@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 
-
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class SharedFileProperties : PageObjectBase

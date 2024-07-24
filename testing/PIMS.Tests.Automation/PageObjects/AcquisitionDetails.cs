@@ -8,30 +8,30 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Acquisition Files Menu Elements
         private readonly By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
-        private By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
+        private readonly By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
-        private By acquisitionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
-        private By acquisitionFileDetailsTab = By.XPath("//a[contains(text(),'File details')]");
+        private readonly By acquisitionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
+        private readonly By acquisitionFileDetailsTab = By.XPath("//a[contains(text(),'File details')]");
 
         //Acquisition File Details View Form Elements
-        private By acquisitionFileViewTitle = By.XPath("//h1[contains(text(),'Acquisition File')]");
+        private readonly By acquisitionFileViewTitle = By.XPath("//h1[contains(text(),'Acquisition File')]");
         
-        private By acquisitionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Acquisition File')]");
-        private By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
-        private By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
+        private readonly By acquisitionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Acquisition File')]");
+        private readonly By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
+        private readonly By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
 
-        private By acquisitionFileHeaderProjectLabel = By.XPath("//label[contains(text(), 'Ministry project')]");
-        private By acquisitionFileHeaderProjectContent = By.XPath("//label[contains(text(), 'Ministry project')]/parent::div/following-sibling::div[1]");
-        private By acquisitionFileHeaderProductLabel = By.XPath("//label[contains(text(), 'Ministry product')]");
-        private By acquisitionFileHeaderProductContent = By.XPath("//label[contains(text(), 'Ministry product')]/parent::div/following-sibling::div[1]");
-        private By acquisitionFileHeaderCreatedDateLabel = By.XPath("//strong[contains(text(), 'Created')]");
-        private By acquisitionFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(), 'Created')]/parent::span");
+        private readonly By acquisitionFileHeaderProjectLabel = By.XPath("//label[contains(text(), 'Ministry project')]");
+        private readonly By acquisitionFileHeaderProjectContent = By.XPath("//label[contains(text(), 'Ministry project')]/parent::div/following-sibling::div[1]");
+        private readonly By acquisitionFileHeaderProductLabel = By.XPath("//label[contains(text(), 'Ministry product')]");
+        private readonly By acquisitionFileHeaderProductContent = By.XPath("//label[contains(text(), 'Ministry product')]/parent::div/following-sibling::div[1]");
+        private readonly By acquisitionFileHeaderCreatedDateLabel = By.XPath("//strong[contains(text(), 'Created')]");
+        private readonly By acquisitionFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(), 'Created')]/parent::span");
         private By acquisitionFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@id='userNameTooltip']/strong");
         private By acquisitionFileHeaderLastUpdateLabel = By.XPath("//strong[contains(text(), 'Updated')]");
         private By acquisitionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
         private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
-        private By acquisitionFileHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
-        private By acquisitionFileHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::div/following-sibling::div/div/span");
+        private By acquisitionFileHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
+        private By acquisitionFileHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
         private By acquisitionHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         private By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");

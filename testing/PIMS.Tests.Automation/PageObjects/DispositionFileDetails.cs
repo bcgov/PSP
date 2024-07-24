@@ -24,12 +24,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
         private By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div");
-        private By dispositionFileHistoricalLabel = By.XPath("//label[contains(text(), 'Historical File')]");
-        private By dispositionFileHistoricalContent = By.XPath("//label[contains(text(), 'Historical File')]/parent::strong/parent::div/following-sibling::div/div/span");
-        private By dispositionFileHeaderCreatedDateLabel = By.XPath("//span/strong[contains(text(), 'Created')]");
+        private By dispositionFileHistoricalLabel = By.XPath("//label[contains(text(), 'Historical file')]");
+        private By dispositionFileHistoricalContent = By.XPath("//label[contains(text(), 'Historical file')]/parent::div/following-sibling::div/div/span");
+        private By dispositionFileHeaderCreatedDateLabel = By.XPath("//strong[contains(text(), 'Created')]");
         private By dispositionFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(), 'Created')]/parent::span");
         private By dispositionFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@id='userNameTooltip']/strong");
-        private By dispositionFileHeaderLastUpdateLabel = By.XPath("//span/strong[contains(text(), 'Updated')]");
+        private By dispositionFileHeaderLastUpdateLabel = By.XPath("//strong[contains(text(), 'Updated')]");
         private By dispositionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
         private By dispositionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
         private By dispositionFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");

@@ -31,7 +31,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchContactTableCityColumn = By.XPath("//div[contains(text(),'City')]");
         private By searchContactOrderByCityBttn = By.CssSelector("div[data-testid='sort-column-municipalityName']");
         private By searchContactTableProvinceColumn = By.XPath("//div[contains(text(),'Prov')]");
-        private By searchContactTableUpdateViewColumn = By.XPath("//div[contains(text(),'Update/View')]");
+        private By searchContactTableUpdateViewColumn = By.XPath("//div[contains(text(),'Edit/View')]");
         private By searchContactNoResults = By.CssSelector("div[class='no-rows-message']");
 
         private By searchContactMenuItems = By.CssSelector("div[class='Menu-root']");
