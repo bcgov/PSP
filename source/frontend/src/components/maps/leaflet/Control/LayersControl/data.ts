@@ -95,7 +95,7 @@ export const layersTree: ILayerItem[] = [
     nodes: [
       {
         key: 'firstNationsReserves',
-        label: 'First Nations reserves',
+        label: 'First Nations Reserves',
         on: false,
         url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/ows?',
         layers: 'pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP',
