@@ -86,8 +86,8 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
   const onSavePeriod = useCallback(
     async (values: FormLeasePeriod) => {
       const updatedPeriod = isValidId(values.id)
-        ? await updateLeasePeriod.execute(FormLeasePeriod.toApi(values, gstDecimal))
-        : await addLeasePeriod.execute(FormLeasePeriod.toApi(values, gstDecimal));
+        ? await updateLeasePeriod.execute(FormLeasePeriod.toApi(values))
+        : await addLeasePeriod.execute(FormLeasePeriod.toApi(values));
 
       if (isValidId(updatedPeriod?.id) && isValidId(leaseId)) {
         await getLeasePeriods.execute(leaseId);
@@ -96,15 +96,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         onSuccess();
       }
     },
-    [
-      addLeasePeriod,
-      getLeasePeriods,
-      gstDecimal,
-      leaseId,
-      updateLeasePeriod,
-      onSuccess,
-      setDisplayModal,
-    ],
+    [addLeasePeriod, getLeasePeriods, leaseId, updateLeasePeriod, onSuccess, setDisplayModal],
   );
 
   /**

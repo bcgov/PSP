@@ -115,10 +115,10 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
             onChange={() => {
               if (type !== 'radio') {
                 setFieldValue(field, !checked);
-                handleChange(field, !checked);
+                handleChange && handleChange(field, !checked);
               } else {
                 setFieldValue(field, true);
-                handleChange(field, true);
+                handleChange && handleChange(field, true);
               }
             }}
             onBlur={handleBlur}
@@ -141,7 +141,7 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
               checked={checked === false}
               onChange={() => {
                 setFieldValue(field, false);
-                handleChange(field, false);
+                handleChange && handleChange(field, false);
               }}
               onBlur={handleBlur}
             />
