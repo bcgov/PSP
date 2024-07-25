@@ -10,9 +10,9 @@ const REGIONAL_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_REGIONAL_DISTRICTS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.ABMS_REGIONAL_DISTRICTS_SP';
 
 const MOTI_REGION_LAYER_URL =
-  'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY&styles=PSP_DSA_REGION_BOUNDARY';
+  'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_REGION_BOUNDARY';
 const HWY_DISTRICT_LAYER_URL =
-  'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY&styles=PSP_DSA_DISTRICT_BOUNDARY';
+  'https://maps.th.gov.bc.ca/geoV05/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=hwy:DSA_DISTRICT_BOUNDARY';
 const ALR_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS';
 const INDIAN_RESERVES_LAYER_URL =
