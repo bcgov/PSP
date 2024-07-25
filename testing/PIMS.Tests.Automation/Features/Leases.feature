@@ -3,18 +3,18 @@ Feature: Leases and Licenses
 
 This feature tests all test cases related to Leases and Licenses.
 
-Scenario: 01. Lease and License File Details and Surplus Declaration
+Scenario: 01. Lease and License File Details
 	Given I create a new minimum Lease from row number 1
 	When  I add additional Information to the Lease Details
 	And I update a Lease's Details from row number 2
 	Then A new lease is created successfully
 
-Scenario: 02. Leases Properties
+Scenario: 02. Leases Properties and Surplus Declaration
 	Given I create a new minimum Lease from row number 3
 	When I add Properties to the Lease Details
-	
-	#And I verify the Surplus section
-	#Then A new lease is created successfully
+	And I update a Lease's Properties from row number 4
+	And I verify the Surplus section
+	Then A new lease is created successfully
 
 Scenario: 03. Lease Checklist Tab
 	Given I create a new minimum Lease from row number 5

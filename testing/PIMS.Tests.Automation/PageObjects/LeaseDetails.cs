@@ -2,6 +2,7 @@
 using OpenQA.Selenium.DevTools.V123.DOM;
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
+using Sprache;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -80,19 +81,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsRenewalTitle = By.XPath("//h2/div/div[contains(text(),'Renewal Option')]");
         private readonly By licenseDetailsAddRenewButton = By.XPath("//div[contains(text(),'+ Add a Renew')]/parent::button");
         private readonly By licenceDetailsFirstRenewalDeleteBttn = By.XPath("//*[@data-testid='renewal.0.remove-button']/parent::div/parent::button");
-
-        //Property Information Elements
-        private readonly By licenseDetailsPropertyInformationSubtitle = By.XPath("//h2/div/div[contains(text(),'Property Information')]");
-        private readonly By licenseDetailsPropertiesCount = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By licenseDetailsProperty1DescriptiveNameLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Descriptive name')]");
-        private readonly By licenseDetailsProperty1DescriptiveNameContent = By.Id("input-properties.0.propertyName");
-        private readonly By licenseDetailsProperty1AreaIncludedLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Area included')]");
-        private readonly By licenseDetailsProperty1AreaIncludedContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Area included')]/parent::div/following-sibling::div");
-        private readonly By licenseDetailsProperty1AddressLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div[1]/label[contains(text(),'Address')]");
-        private readonly By licenseDetailsProperty1AddressNoContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div[1]/label[contains(text(),'Address')]/parent::div/following-sibling::div/label");
-        private readonly By licenseDetailsProperty1AddressContent = By.Id("input-fileProperties.0.property.address.streetAddress1");
-        private readonly By licenseDetailsProperty1LegalDescripLabel = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Legal description')]");
-        private readonly By licenseDetailsProperty1LegalDescripContent = By.XPath("//h2/div/div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div/div/label[contains(text(),'Legal description')]/parent::div/following-sibling::div");
 
         //Create/View Administration Elements
         private readonly By licenseDetailsAdmSubtitle = By.XPath("//div[contains(text(),'Administration')]");
@@ -201,6 +189,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By licenseDetailsModalPIDAttached = By.CssSelector("div[class='modal-content']");
 
+        //Lease Property Section Elements
+        private readonly By leasePropertiesSubtitle = By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2");
+        private readonly By leasePropertiesUpdateSubtitle = By.XPath("//div[contains(text(),'Selected properties')]/parent::div/parent::h2");
+        private readonly By leasePropertiesTotalCount = By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div");
+
         //Leases Modal Element
         private readonly By licenseDetailsConfirmationModal = By.CssSelector("div[class='modal-content']");
         private readonly By licenseDetailsConfirmationContent = By.CssSelector("div[class='modal-content'] p");
@@ -279,7 +272,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Purpose
-            if(lease.LeasePurpose != "")
+            if (lease.LeasePurpose != "")
                 ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.LeasePurpose);
 
             //If other Purpose is selected, insert input
@@ -769,6 +762,20 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsNotesTextarea);
         }
 
+        public void VerifyLicensePropertiesUpdateForm(List<LeaseProperty> properties)
+        {
+            AssertTrueIsDisplayed(leasePropertiesUpdateSubtitle);
+
+            for (var i = 0; i < properties.Count; i++)
+            {
+                if (properties[i].DescriptiveName != "")
+                    webDriver.FindElement(By.Id("input-properties."+ i +".name")).SendKeys(properties[i].DescriptiveName);
+
+                if (properties[i].Area != "")
+                    webDriver.FindElement(By.XPath("//input[@id='input-properties."+ i +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[1]/div/div[1]/div/input")).SendKeys(properties[i].Area);
+            }
+        }
+
         public void VerifyLicenseHeader(Lease lease)
         {
             AssertTrueIsDisplayed(licenseHeaderNbrLabel);
@@ -802,6 +809,36 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueIsDisplayed(licenseHeaderExpiredFlag);
                 }
             }  
+        }
+
+        public void VerifyLicensePropertiesHeader()
+        {
+            AssertTrueIsDisplayed(licenseHeaderNbrLabel);
+            AssertTrueContentNotEquals(licenseHeaderNbrContent, "");
+            AssertTrueContentNotEquals(licenseHeaderAccountType, "");
+            AssertTrueIsDisplayed(licenseHeaderProperty);
+            AssertTrueIsDisplayed(licenseHeaderPropertyContent);
+            AssertTrueIsDisplayed(licenseHeaderTenantLabel);
+            AssertTrueIsDisplayed(licenseHeaderStartDateLabel);
+            AssertTrueIsDisplayed(licenseHeaderExpiryDateLabel);
+            AssertTrueIsDisplayed(licenseHeaderHistoricalFileLabel);
+            Assert.True(webDriver.FindElements(licenseHeaderHistoricalFileContent).Count > 0);
+            AssertTrueIsDisplayed(licenseHeaderCreatedLabel);
+            AssertTrueContentNotEquals(licenseHeaderCreatedContent, "");
+            AssertTrueContentEquals(licenseHeaderCreatedByContent, "TRANPSP1");
+            AssertTrueIsDisplayed(licenseHeaderLastUpdatedLabel);
+            AssertTrueContentNotEquals(licenseHeaderLastUpdatedContent, "");
+            AssertTrueContentEquals(licenseHeaderLastUpdatedByContent, "TRANPSP1");
+
+            //Verify Expired Flag on Header
+            if (webDriver.FindElement(licenseHeaderExpiryDateContent).Text != "")
+            {
+                var expiryDateInput = Convert.ToDateTime(webDriver.FindElement(licenseHeaderExpiryDateContent).Text);
+                if (expiryDateInput < DateTime.Now)
+                {
+                    AssertTrueIsDisplayed(licenseHeaderExpiredFlag);
+                }
+            }
         }
 
         public void VerifyLicenseDetailsViewForm(Lease lease)
@@ -1043,9 +1080,67 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(licenseDetailsNotesContent, lease.LeaseNotes) ;
         }
 
-        public void VerifyLicensePropertyViewForm()
+        public void VerifyLicensePropertyViewForm(List<LeaseProperty> properties)
         {
+            VerifyLicensePropertiesHeader();
 
+            AssertTrueIsDisplayed(leasePropertiesSubtitle);
+            Assert.Equal(properties.Count, webDriver.FindElements(leasePropertiesTotalCount).Count);
+
+            for (var i = 0; i < properties.Count; i++)
+            {
+                var elementIdx = i + 1;
+                AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/label[contains(text(),'PID')]"));
+                AssertTrueElementContains(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[1]/div[2]"), "PID: " + properties[i].PID);
+
+                AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/label[contains(text(),'Descriptive name')]"));
+                if (properties[i].DescriptiveName != "")
+                    AssertTrueElementContains(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[2]/div[2]"), properties[i].DescriptiveName);
+
+                AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/label[contains(text(),'Area included')]"));
+                if (properties[i].Area != "")
+                {
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[1]/div/div[1]/div[1]"), properties[i].Area);
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div[3]/div/div/div[1]/div/div[1]/div[contains(text(),'sq. metres')]"));
+
+                    AssertTrueDoublesEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[1]/div/div[2]/div[1]"), TransformSqMtToHectares(properties[i].Area));
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[1]/div/div[2]/div[contains(text(),'hectares')]"));
+
+                    AssertTrueDoublesEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[2]/div/div[1]/div[1]"), TransformSqMtToSqFt(properties[i].Area));
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[2]/div/div[1]/div[contains(text(),'sq. feet')]"));
+
+                    AssertTrueDoublesEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[2]/div/div[2]/div[1]"), TransformSqMtToAcres(properties[i].Area));
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[2]/div/div[2]/div[contains(text(),'acres')]"));
+                }
+
+                AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[1]/label[contains(text(),'Address')]"));
+                if (properties[i].Address.AddressLine1 != "")
+                {
+                    AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress1"), properties[i].Address.AddressLine1);
+
+                    if(properties[i].Address.AddressLine2 != "")
+                        AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress2"), properties[i].Address.AddressLine2);
+
+                    if (properties[i].Address.AddressLine3 != "")
+                        AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress3"), properties[i].Address.AddressLine3);
+
+                    if (properties[i].Address.City != "")
+                        AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.municipality"), properties[i].Address.City);
+
+                    if (properties[i].Address.PostalCode != "")
+                        AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.postal"), properties[i].Address.PostalCode);
+                }
+                else
+                {
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/label[contains(text(),'Address')]"));
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/p[contains(text(),'Address not available in PIMS')]"));
+                }
+
+                AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[5]//div/label[contains(text(),'Legal Description')]"));
+                if (properties[i].LegalDescription != "")
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[5]/div[2]"), properties[i].LegalDescription);
+
+            }
         }
 
         private string CalculateExpiryCurrentDate(string originExpiryDate, List<LeaseRenewal> renewals)

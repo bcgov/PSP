@@ -53,6 +53,9 @@
 
         public int SearchPropertiesIndex { get; set; } = 0;
         public SearchProperty SearchProperties { get; set; } = new SearchProperty() { };
+        public int LeasePropertyDetailsStartRow { get; set; } = 0;
+        public int LeasePropertyDetailsQuantity { get; set; } = 0;
+        public List<LeaseProperty> LeasePropertiesDetails { get; set; } = new List<LeaseProperty>() { };
 
         public int LeaseChecklistIndex { get; set; } = 0;
         public LeaseChecklist LeaseChecklist { get; set; } = new LeaseChecklist() { };

@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
+using PIMS.Tests.Automation.Classes;
 using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -258,6 +259,39 @@ namespace PIMS.Tests.Automation.PageObjects
                 decimal value = decimal.Parse(area);
                 return value.ToString("#,##0.####") + " m\r\n2";
             }
+        }
+
+        protected double TransformSqMtToSqFt(string sqmt)
+        {
+            double sqmtNbr = double.Parse(sqmt) * 10.76391041671;
+            double sqftRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
+
+            if (sqftRounded.Equals(0.0000))
+                return 0;
+            else
+                return sqftRounded;
+        }
+
+        protected double TransformSqMtToHectares(string sqmt)
+        {
+            double sqmtNbr = double.Parse(sqmt) * 0.0001;
+            double hectaresRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
+
+            if (hectaresRounded.Equals(0.0000))
+                return 0;
+            else
+                return hectaresRounded;
+        }
+
+        protected double TransformSqMtToAcres(string sqmt)
+        {
+            double sqmtNbr = double.Parse(sqmt) * 0.000247110891123302;
+            double acresRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
+
+            if (acresRounded.Equals(0.0000))
+                return 0;
+            else
+                return acresRounded;
         }
 
         protected string TransformProjectFormat(string project)

@@ -204,14 +204,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Search for a property by Legal Description
-            //if (acquisitionFile.SearchProperties.LegalDescription != "")
-            //{
-            //    sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            //    sharedSearchProperties.SelectFirstOption();
-            //}
+            if (acquisitionFile.AcquisitionSearchProperties.LegalDescription != "")
+            {
+                sharedFileProperties.SelectPropertyByLegalDescription(acquisitionFile.AcquisitionSearchProperties.LegalDescription);
+                sharedFileProperties.SelectFirstOptionFromSearch();
+            }
 
             //Search for Multiple PIDs
-            if(acquisitionFile.AcquisitionSearchProperties.MultiplePIDS.First() != "")
+            if (acquisitionFile.AcquisitionSearchProperties.MultiplePIDS.First() != "")
             {
                 foreach (string prop in acquisitionFile.AcquisitionSearchProperties.MultiplePIDS)
                 {

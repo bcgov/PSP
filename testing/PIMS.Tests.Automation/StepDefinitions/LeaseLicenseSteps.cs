@@ -141,9 +141,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
+            //Update Properties
+            leaseDetails.VerifyLicensePropertiesUpdateForm(lease.LeasePropertiesDetails);
+
             //Save the new license details
             leaseDetails.SaveLicense();
-            //leaseDetails.VerifyLicenseDetailsViewForm(lease);
+
+            //Verify File Details Form
+            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails);
         }
 
         [StepDefinition(@"I update a Lease's Details from row number (.*)")]
@@ -168,17 +173,49 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Make some changes on the Details Form
             leaseDetails.UpdateLeaseFileDetails(lease);
 
-            //Verify Properties section
-            //sharedSearchProperties.VerifyLocateOnMapFeature();
-
-            //Delete last property
-            //sharedSearchProperties.DeleteLastPropertyFromLease();
-
             //Save the new license details
             leaseDetails.SaveLicense();
 
             //Verify File Details Form
             leaseDetails.VerifyLicenseDetailsViewForm(lease);
+        }
+
+        [StepDefinition(@"I update a Lease's Properties from row number (.*)")]
+        public void UpdateLeaseProperties(int rowNumber)
+        {
+            /* TEST COVERAGE: PSP-2096, PSP-2642, PSP-4558, PSP-5161, PSP-5245, PSP-5342, PSP-5667, PSP-5924 */
+
+            //Navigate to Search Leases
+            PopulateLeaseLicense(rowNumber);
+            searchLeases.NavigateToSearchLicense();
+
+            //Look for the previously created lease
+            searchLeases.SearchLicenseByLFile(leaseCode);
+            searchLeases.SelectFirstOption();
+
+            //Edit File Details Section
+            leaseDetails.EditLeaseFileDetailsBttn();
+
+            //Verify Properties section
+            sharedSearchProperties.VerifyLocateOnMapFeature();
+
+            //Update Properties
+            leaseDetails.VerifyLicensePropertiesUpdateForm(lease.LeasePropertiesDetails);
+
+            //Save the new license details
+            leaseDetails.SaveLicense();
+
+            //Verify File Details Form
+            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails);
+
+            //Edit File Details Section
+            leaseDetails.EditLeaseFileDetailsBttn();
+
+            //Delete last property
+            sharedSearchProperties.DeleteLastPropertyFromLease();
+
+            //Save the new license details
+            leaseDetails.SaveLicense();
         }
 
         [StepDefinition(@"I insert Checklist information to a Lease")]
@@ -868,6 +905,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 lease.SearchProperties.LegalDescription = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "LegalDescription");
             }
 
+            lease.LeasePropertyDetailsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeasePropertyDetailsStartRow"));
+            lease.LeasePropertyDetailsQuantity = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeasePropertyDetailsQuantity"));
+            if (lease.LeasePropertyDetailsStartRow != 0 && lease.LeasePropertyDetailsQuantity != 0)
+                PopulatePropertiesCollection(lease.LeasePropertyDetailsStartRow, lease.LeasePropertyDetailsQuantity);
+
             //Leases File Checklist
             lease.LeaseChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseChecklistIndex"));
             if (lease.LeaseChecklistIndex > 0)
@@ -1007,6 +1049,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 renewal.RenewalNotes = ExcelDataContext.ReadData(i, "RenewalNotes");
 
                 lease.LeaseRenewals.Add(renewal);
+            }
+        }
+
+        private void PopulatePropertiesCollection(int startRow, int rowsCount)
+        {
+            DataTable propertiesSheet = ExcelDataContext.GetInstance().Sheets["LeasesProperties"]!;
+            ExcelDataContext.PopulateInCollection(propertiesSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+
+                var property = new LeaseProperty();
+
+                property.PID = ExcelDataContext.ReadData(i, "LeasePropPID");
+                property.HistoricalFile = ExcelDataContext.ReadData(i, "LeasePropHistoricalFile");
+                property.DescriptiveName = ExcelDataContext.ReadData(i, "LeasePropDescriptiveName");
+                property.Area = ExcelDataContext.ReadData(i, "LeasePropArea");
+                property.Address.AddressLine1 = ExcelDataContext.ReadData(i, "LeasePropAddressLine1");
+                property.Address.AddressLine2 = ExcelDataContext.ReadData(i, "LeasePropAddressLine2");
+                property.Address.AddressLine3 = ExcelDataContext.ReadData(i, "LeasePropAddressLine3");
+                property.Address.City = ExcelDataContext.ReadData(i, "LeasePropAddressCity");
+                property.Address.PostalCode = ExcelDataContext.ReadData(i, "LeasePropPostalCode");
+                property.LegalDescription = ExcelDataContext.ReadData(i, "LeasePropLegalDescription");
+
+                lease.LeasePropertiesDetails.Add(property);
             }
         }
 

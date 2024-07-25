@@ -82,14 +82,14 @@ namespace PIMS.Tests.Automation.Features
             this.TestTearDown();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="01. Lease and License File Details and Surplus Declaration")]
+        [Xunit.SkippableFactAttribute(DisplayName="01. Lease and License File Details")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "01. Lease and License File Details and Surplus Declaration")]
-        public void _01_LeaseAndLicenseFileDetailsAndSurplusDeclaration()
+        [Xunit.TraitAttribute("Description", "01. Lease and License File Details")]
+        public void _01_LeaseAndLicenseFileDetails()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Lease and License File Details and Surplus Declaration", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("01. Lease and License File Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 6
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -116,14 +116,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Leases Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="02. Leases Properties and Surplus Declaration")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "02. Leases Properties")]
-        public void _02_LeasesProperties()
+        [Xunit.TraitAttribute("Description", "02. Leases Properties and Surplus Declaration")]
+        public void _02_LeasesPropertiesAndSurplusDeclaration()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Leases Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Leases Properties and Surplus Declaration", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 12
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -139,6 +139,15 @@ this.ScenarioInitialize(scenarioInfo);
 #line hidden
 #line 14
  testRunner.When("I add Properties to the Lease Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 15
+ testRunner.And("I update a Lease\'s Properties from row number 4", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 16
+ testRunner.And("I verify the Surplus section", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 17
+ testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

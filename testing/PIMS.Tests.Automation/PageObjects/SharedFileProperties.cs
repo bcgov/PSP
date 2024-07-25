@@ -84,7 +84,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToSearchTab()
         {
             WaitUntilClickable(searchByTab);
-            webDriver.FindElement(searchByTab).Click();
+            FocusAndClick(searchByTab);
         }
 
         public void SelectPropertyByPID(string PID)
