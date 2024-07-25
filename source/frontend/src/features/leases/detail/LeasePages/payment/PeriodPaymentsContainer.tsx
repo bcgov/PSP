@@ -46,7 +46,6 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
   const { updateLeasePayment, addLeasePayment } = useLeasePaymentRepository();
   const { getSystemConstant } = useSystemConstants();
   const gstConstant = getSystemConstant(SystemConstants.GST);
-  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
 
   const leaseId = lease?.id;
   const getLeasePeriodsFunc = getLeasePeriods.execute;
