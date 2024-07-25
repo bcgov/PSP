@@ -24,6 +24,7 @@ const featureViewStates = {
             assign({
               selectingComponentId: (_, event: any) => event.selectingComponentId,
               repositioningFeatureDataset: (_, event: any) => event.repositioningFeatureDataset,
+              repositioningPropertyIndex: (_, event: any) => event.repositioningPropertyIndex,
             }),
           ],
         },
@@ -53,7 +54,12 @@ const featureViewStates = {
       on: {
         FINISH_REPOSITION: {
           target: 'browsing',
-          actions: [assign({ repositioningFeatureDataset: () => null })],
+          actions: [
+            assign({
+              repositioningFeatureDataset: () => null,
+              repositioningPropertyIndex: () => null,
+            }),
+          ],
         },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
@@ -406,6 +412,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapLocationFeatureDataset: null,
     selectedFeatureDataset: null,
     repositioningFeatureDataset: null,
+    repositioningPropertyIndex: null,
     selectingComponentId: null,
     isLoading: false,
     searchCriteria: null,

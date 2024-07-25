@@ -8,7 +8,7 @@ import PropertyMapSelectorSubForm from './PropertyMapSelectorSubForm';
 
 export interface IPropertyMapSelectorFormViewProps {
   onSelectedProperty: (property: LocationFeatureDataset) => void;
-  onRepositionedProperty: (property: LocationFeatureDataset) => void;
+  onRepositionedProperty: (property: LocationFeatureDataset, propertyIndex: number | null) => void;
   lastSelectedProperty?: LocationFeatureDataset;
   selectedProperties: LocationFeatureDataset[];
   selectedComponentId?: string | null;

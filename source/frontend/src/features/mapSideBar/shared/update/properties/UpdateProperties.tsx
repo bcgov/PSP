@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
+import isNumber from 'lodash/isNumber';
 import { useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -17,7 +18,7 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { featuresetToMapProperty, getPropertyName, isValidId } from '@/utils';
+import { isValidId } from '@/utils';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -192,15 +193,12 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                             });
                           }, Promise.resolve());
                         }}
-                        repositionSelectedProperty={(property: LocationFeatureDataset) => {
-                          const index = formikProps.values.properties.findIndex(
-                            p =>
-                              getPropertyName(p.toMapProperty()).value ===
-                              getPropertyName(featuresetToMapProperty(property)).value,
-                          );
-
+                        repositionSelectedProperty={(
+                          property: LocationFeatureDataset,
+                          index: number | null,
+                        ) => {
                           // Find property within formik values and reposition it based on incoming file marker position
-                          if (index >= 0) {
+                          if (isNumber(index) && index >= 0) {
                             const formProperty = formikProps.values.properties[index];
                             const newFormProperty = new PropertyForm(formProperty);
                             newFormProperty.fileLocation = property.fileLocation;

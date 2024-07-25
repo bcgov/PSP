@@ -8,7 +8,7 @@ import { LocationFeatureDataset } from '../common/mapFSM/useLocationFeatureLoade
 
 interface IMapClickMonitorProps {
   addProperty: (property: LocationFeatureDataset) => void;
-  repositionProperty: (property: LocationFeatureDataset) => void;
+  repositionProperty: (property: LocationFeatureDataset, propertyIndex: number | null) => void;
   modifiedProperties: LocationFeatureDataset[]; // TODO: this should be just a list of lat longs
   selectedComponentId: string | null;
 }
@@ -45,7 +45,10 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
       (!selectedComponentId ||
         selectedComponentId === mapMachine.mapLocationFeatureDataset.selectingComponentId)
     ) {
-      repositionProperty(mapMachine.mapLocationFeatureDataset);
+      repositionProperty(
+        mapMachine.mapLocationFeatureDataset,
+        mapMachine.repositioningPropertyIndex,
+      );
     }
   }, [
     addProperty,

@@ -243,6 +243,9 @@ export class PropertyForm {
     newForm.latitude = model.property?.latitude ?? undefined;
     newForm.longitude = model.property?.longitude ?? undefined;
     newForm.fileLocation = getLatLng(model.location) ?? undefined;
+    newForm.polygon = exists(model.property?.boundary)
+      ? (model.property?.boundary as Polygon | MultiPolygon)
+      : undefined;
     newForm.planNumber = model.property?.planNumber ?? undefined;
     newForm.region = model.property?.region?.id ?? undefined;
     newForm.district = model.property?.district?.id ?? undefined;

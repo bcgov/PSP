@@ -19,7 +19,10 @@ import PropertySelectorSearchContainer from './search/PropertySelectorSearchCont
 
 export interface IMapSelectorContainerProps {
   addSelectedProperties: (properties: LocationFeatureDataset[]) => void; // TODO: This component should be providing the featureDataset instead of the IMapProperty.
-  repositionSelectedProperty: (property: LocationFeatureDataset) => void;
+  repositionSelectedProperty: (
+    property: LocationFeatureDataset,
+    propertyIndex: number | null,
+  ) => void;
   modifiedProperties: LocationFeatureDataset[]; // TODO: Figure out if this component really needs the entire propertyForm. It could be that only the lat long are needed.
   selectedComponentId?: string;
 }
@@ -90,9 +93,12 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
               setLastSelectedProperty(property);
               addProperties([property], modifiedMapProperties, addWithPimsFeature);
             }}
-            onRepositionedProperty={(property: LocationFeatureDataset) => {
+            onRepositionedProperty={(
+              property: LocationFeatureDataset,
+              propertyIndex: number | null,
+            ) => {
               setLastSelectedProperty(property);
-              repositionSelectedProperty(property);
+              repositionSelectedProperty(property, propertyIndex);
             }}
             selectedProperties={modifiedMapProperties}
             selectedComponentId={selectedComponentId}
