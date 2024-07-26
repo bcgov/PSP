@@ -1,5 +1,8 @@
+import { booleanPointInPolygon, point } from '@turf/turf';
 import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
+import { MultiPolygon, Polygon } from 'geojson';
+import { LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
 import { useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -18,7 +21,7 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -195,14 +198,26 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                         }}
                         repositionSelectedProperty={(
                           property: LocationFeatureDataset,
+                          latLng: LatLngLiteral,
                           index: number | null,
                         ) => {
-                          // Find property within formik values and reposition it based on incoming file marker position
-                          if (isNumber(index) && index >= 0) {
-                            const formProperty = formikProps.values.properties[index];
-                            const newFormProperty = new PropertyForm(formProperty);
-                            newFormProperty.fileLocation = property.fileLocation;
-                            replace(index, newFormProperty);
+                          if (exists(property?.pimsFeature?.geometry)) {
+                            const location = point([latLng.lng, latLng.lat]);
+                            const boundary = property?.pimsFeature?.geometry as
+                              | Polygon
+                              | MultiPolygon;
+
+                            // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
+                            if (booleanPointInPolygon(location, boundary)) {
+                              if (isNumber(index) && index >= 0) {
+                                const formProperty = formikProps.values.properties[index];
+                                const updatedFormProperty = new PropertyForm(formProperty);
+                                updatedFormProperty.fileLocation = latLng;
+
+                                // Find property within formik values and reposition it based on incoming file marker position
+                                replace(index, updatedFormProperty);
+                              }
+                            }
                           }
                         }}
                         modifiedProperties={formikProps.values.properties.map(p =>

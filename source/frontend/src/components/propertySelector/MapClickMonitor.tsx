@@ -1,3 +1,5 @@
+import { LatLngLiteral } from 'leaflet';
+
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from '@/hooks/usePrevious';
@@ -8,7 +10,11 @@ import { LocationFeatureDataset } from '../common/mapFSM/useLocationFeatureLoade
 
 interface IMapClickMonitorProps {
   addProperty: (property: LocationFeatureDataset) => void;
-  repositionProperty: (property: LocationFeatureDataset, propertyIndex: number | null) => void;
+  repositionProperty: (
+    property: LocationFeatureDataset,
+    latLng: LatLngLiteral,
+    propertyIndex: number | null,
+  ) => void;
   modifiedProperties: LocationFeatureDataset[]; // TODO: this should be just a list of lat longs
   selectedComponentId: string | null;
 }
@@ -39,6 +45,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
 
     if (
       mapMachine.isRepositioning &&
+      mapMachine.repositioningFeatureDataset &&
       mapMachine.mapLocationFeatureDataset &&
       previous !== mapMachine.mapLocationFeatureDataset &&
       previous !== undefined &&
@@ -46,7 +53,8 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         selectedComponentId === mapMachine.mapLocationFeatureDataset.selectingComponentId)
     ) {
       repositionProperty(
-        mapMachine.mapLocationFeatureDataset,
+        mapMachine.repositioningFeatureDataset,
+        mapMachine.mapLocationFeatureDataset.location,
         mapMachine.repositioningPropertyIndex,
       );
     }
@@ -55,6 +63,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
     mapMachine.isSelecting,
     mapMachine.isRepositioning,
     mapMachine.mapLocationFeatureDataset,
+    mapMachine.repositioningFeatureDataset,
     previous,
   ]);
   return <></>;
