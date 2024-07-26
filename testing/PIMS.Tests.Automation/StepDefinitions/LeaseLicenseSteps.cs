@@ -567,11 +567,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < lease.LeaseTerms.Count; i++)
             {
                 //Verify Create Term Form
-                payments.AddTermBttn();
+                payments.AddPeriodBttn();
                 payments.VerifyCreateTermForm();
 
                 //Inserting first term
-                payments.AddTerm(lease.LeaseTerms[i]);
+                payments.AddPeriod(lease.LeaseTerms[i]);
 
                 //Verify inserted Term
                 payments.VerifyInsertedTermTable(lease.LeaseTerms[i]);
@@ -1128,14 +1128,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                Term term = new Term();
-                term.TermStartDate = ExcelDataContext.ReadData(i, "TermStartDate");
-                term.TermEndDate = ExcelDataContext.ReadData(i, "TermEndDate");
-                term.TermPaymentFrequency = ExcelDataContext.ReadData(i, "TermPaymentFrequency");
-                term.TermAgreedPayment = ExcelDataContext.ReadData(i, "TermAgreedPayment");
-                term.TermPaymentsDue = ExcelDataContext.ReadData(i, "TermPaymentsDue");
+                Period term = new Period();
+                term.PeriodStartDate = ExcelDataContext.ReadData(i, "TermStartDate");
+                term.PeriodEndDate = ExcelDataContext.ReadData(i, "TermEndDate");
+                term.PeriodPaymentFrequency = ExcelDataContext.ReadData(i, "TermPaymentFrequency");
+                term.PeriodAgreedPayment = ExcelDataContext.ReadData(i, "TermAgreedPayment");
+                term.PeriodPaymentsDue = ExcelDataContext.ReadData(i, "TermPaymentsDue");
                 term.IsGSTEligible = bool.Parse(ExcelDataContext.ReadData(i, "IsGSTEligible"));
-                term.TermStatus = ExcelDataContext.ReadData(i, "TermStatus");
+                term.PeriodStatus = ExcelDataContext.ReadData(i, "TermStatus");
 
                 lease.LeaseTerms.Add(term);
             }

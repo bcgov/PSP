@@ -117,7 +117,7 @@
 
         public int TermsStartRow { get; set; } = 0;
         public int TermsCount { get; set; } = 0;
-        public List<Term> LeaseTerms { get; set; } = new List<Term>();
+        public List<Period> LeaseTerms { get; set; } = new List<Period>();
         public int PaymentsStartRow { get; set; } = 0;
         public int PaymentsCount { get; set; } = 0;
         public List<Payment> TermPayments { get; set; } = new List<Payment>();
@@ -191,15 +191,23 @@
         public string ReturnPayeeName { get; set; } = null!;
     }
 
-    public class Term
+    public class Period
     {
-        public string TermStartDate { get; set; } = null!;
-        public string TermEndDate { get; set; } = null!;
-        public string TermPaymentFrequency { get; set;} = null!;
-        public string TermAgreedPayment { get; set; } = null!;
-        public string TermPaymentsDue { get; set; } = null!;
-        public bool IsGSTEligible { get; set; } = false;
-        public string TermStatus { get; set; } = null!;
+        public string PaymentType { get; set; } = null!;
+        public string PeriodDuration { get; set; } = null!;
+        public string PeriodStartDate { get; set; } = null!;
+        public string PeriodEndDate { get; set; } = null!;
+        public string PeriodPaymentsDue { get; set; } = null!;
+        public string PeriodStatus { get; set; } = null!;
+        public string PeriodBasePaymentFrequency { get; set;} = null!;
+        public string PeriodBaseAgreedPayment { get; set; } = null!;
+        public bool PeriodBaseIsGSTEligible { get; set; } = false;
+        public string PeriodAdditionalPaymentFrequency { get; set; } = null!;
+        public string PeriodAdditionalAgreedPayment { get; set; } = null!;
+        public bool PeriodAdditionalIsGSTEligible { get; set; } = false;
+        public string PeriodVariablePaymentFrequency { get; set; } = null!;
+        public string PeriodVariableAgreedPayment { get; set; } = null!;
+        public bool PeriodVariableIsGSTEligible { get; set; } = false;
     }
 
     public class Payment

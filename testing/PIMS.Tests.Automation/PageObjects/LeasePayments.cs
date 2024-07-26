@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
-using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -11,90 +9,138 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licensePaymentsLink = By.XPath("//a[contains(text(),'Payments')]");
 
         //Payment Init screen Elements
-        private By licencePaymentsSubtitle = By.XPath("//div[contains(text(),'Payments by Term')]");
-        private By licencePaymentAddBttn = By.XPath("//div[contains(text(),'Add a Term')]/parent::button");
-        private By licencePaymentColumnStartEndDate = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Start date - End date')]");
-        private By licensePaymentColumnPaymentFreq = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment frequency')]");
-        private By licencePaymentColumnPaymentDue = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment due')]");
-        private By licensePaymentColumnExpectedPay = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expected payment ($)')]");
-        private By licensePaymentExpectedPayTooltip = By.Id("expectedPaymentTooltip");
-        private By licencePaymentColumnGSTBoolean = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST?')]");
-        private By licensePaymentColumnGSTTotal = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST ($)')]");
-        private By licensePaymentGSTTotalTooltip = By.Id("gstAmountTooltip");
-        private By licencePaymentColumnExpectedTotal = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expected total ($)')]");
-        private By licensePaymentExpectedTotalTooltip = By.Id("expectedTotalTooltip");
-        private By licensePaymentColumnExpectedTerm = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expected term ($)')]");
-        private By licensePaymentExpectedTermTooltip = By.Id("expectedTermTooltip");
-        private By licencePaymentColumnActualTotal = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actual total ($)')]");
-        private By licensePaymentActualTotalTooltip = By.Id("actualTotalTooltip");
-        private By licensePaymentColumnExercised = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Exercised?')]");
-        private By licencePaymentColumnActions = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
-        private By licencePaymentsNoRows = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='no-rows-message']");
+        private readonly By licencePaymentsSubtitle = By.XPath("//div[contains(text(),'Payment Periods')]");
+        private readonly By licencePaymentAddBttn = By.XPath("//div[contains(text(),'Payment Periods')]/following-sibling::div/button");
+
+        private readonly By licencePaymentColumnStartEndDate = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Start date - end date')]");
+        private readonly By licensePaymentColumnPaymentFreq = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment frequency')]");
+        private readonly By licencePaymentColumnPaymentDue = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment due')]");
+        private readonly By licensePaymentColumnExpectedPay = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expected payment ($)')]");
+        private readonly By licensePaymentExpectedPayTooltip = By.Id("expectedPaymentTooltip");
+        private readonly By licencePaymentColumnGSTBoolean = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST?')]");
+        private readonly By licensePaymentColumnGSTTotal = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST ($)')]");
+        private readonly By licensePaymentGSTTotalTooltip = By.Id("gstAmountTooltip");
+        private readonly By licencePaymentColumnExpectedTotal = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expected total ($)')]");
+        private readonly By licensePaymentExpectedTotalTooltip = By.Id("expectedTotalTooltip");
+        private readonly By licensePaymentColumnExpectedTerm = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expected period ($)')]");
+        private readonly By licensePaymentExpectedTermTooltip = By.Id("expectedTermTooltip");
+        private readonly By licencePaymentColumnActualTotal = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actual total ($)')]");
+        private readonly By licensePaymentActualTotalTooltip = By.Id("actualTotalTooltip");
+        private readonly By licensePaymentColumnExercised = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Exercised?')]");
+        private readonly By licencePaymentColumnActions = By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
+        private readonly By licencePaymentsNoRows = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='no-rows-message']");
+
+        //Category Table Header Elements
+        private readonly By licenceCategoryPaymentsCategoryColumn = By.XPath("//div[@data-testid='variablePeriodTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Category')]");
+        private readonly By licenceCategoryPaymentsPaymentFrequencyColumn = By.XPath("//div[@data-testid='variablePeriodTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment Fequency')]");
+        private readonly By licenceCategoryPaymentsExpectedPaymentColumn = By.XPath("//div[@data-testid='variablePeriodTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expected Payment ($)')]");
+        private readonly By licenceCategoryPaymentsIsGSTColumn = By.XPath("//div[@data-testid='variablePeriodTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST?')]");
+        private readonly By licenceCategoryPaymentsGSTColumn = By.XPath("//div[@data-testid='variablePeriodTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST ($)')]");
+        private readonly By licenceCategoryPaymentsExpectedPeriodColumn = By.XPath("//div[@data-testid='variablePeriodTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expected total ($)')]");
+        private readonly By licenceCategoryPaymentsActualTotalColumn = By.XPath("//div[@data-testid='variablePeriodTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actual total ($)')]");
 
         //Payments Table Headers Elements
-        private By licensePaymentsReceivedDateColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Received date')]");
-        private By licensePaymentsSendDateColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Sent date')]");
-        private By licensePaymentsPaymentMethodColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment method')]");
-        private By licensePaymentsReceivedPaymentColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Received payment ($)')]");
-        private By licensePaymentsSentPaymentColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Sent payment ($)')]");
-        private By licensePaymentsSendPaymentTooltip = By.Id("actualReceivedPaymentTooltip");
-        private By licensePaymentsGSTColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST ($)')]");
-        private By licensePaymentsGSTTooltip = By.Id("actualGstTooltip");
-        private By licensePaymentsReceivedTotalColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Received total ($)')]");
-        private By licensePaymentsSentTotalColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Sent total ($)')]");
-        private By licensePaymentsSendTotalTooltip = By.Id("receivedTotalTooltip");
-        private By licensePaymentsPaymentStatusColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment status')]");
-        private By licensePaymentsPaymentStatusTooltip = By.Id("paymentStatusTooltip");
-        private By licensePaymentsNotesColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Notes')]");
-        private By licensePaymentsActionsColumn = By.XPath("//div[@data-testid='leasePaymentsTable']/div/div/div/div/div/div[@data-testid='securityDepositsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
+        private readonly By licensePaymentsReceivedDateColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Date')]");
+        private readonly By licensePaymentsSendDateColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Rent category')]");
+        private readonly By licensePaymentsPaymentMethodColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment method')]");
+        private readonly By licensePaymentsReceivedPaymentColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Received payment ($)')]");
+        private readonly By licensePaymentsReceivedPaymentTooltip = By.Id("actualReceivedPaymentTooltip");
+        private readonly By licensePaymentsGSTColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST ($)')]");
+        private readonly By licensePaymentsGSTTooltip = By.Id("actualGstTooltip");
+        private readonly By licensePaymentsTotalColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Total ($)')]");
+        private readonly By licensePaymentsTotalTooltip = By.Id("receivedTotalTooltip");
+        private readonly By licensePaymentsPaymentStatusColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment status')]");
+        private readonly By licensePaymentsPaymentStatusTooltip = By.Id("paymentStatusTooltip");
+        private readonly By licensePaymentsNotesColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Notes')]");
+        private readonly By licensePaymentsActionsColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
 
         //Payments Modal Element
-        private By licensePaymentsModal = By.CssSelector("div[class='modal-content']");
-        private By licensePaymentAddTermBttn = By.XPath("//button/div[contains(text(),'Add a Term')]");
+        private readonly By licensePaymentsModal = By.CssSelector("div[class='modal-content']");
 
-        //Create Term Elements
-        private By licensePaymentTermStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
-        private By licensePaymentTermStartDateInput = By.CssSelector("input[id='datepicker-startDate']");
-        private By licensePaymentTermEndDateLabel = By.XPath("//label[contains(text(),'End date')]");
-        private By licensePaymentTermEndDateInput = By.Id("datepicker-expiryDate");
-        private By licensePaymentTermFrequencySelectLabel = By.XPath("//label[contains(text(),'Payment frequency')]");
-        private By licensePaymentTermFrequencySelect = By.Id("input-leasePmtFreqTypeCode.id");
-        private By licensePaymentTermAgreedPaymentLabel = By.XPath("//label[contains(text(),'Agreed payment ($)')]");
-        private By licensePaymentTermAgreedPaymentInput = By.Id("input-paymentAmount");
-        private By licensePaymentTermDueLabel = By.XPath("//label[contains(text(),'Payments due')]");
-        private By licensePaymentTermDueTooltip = By.Id("paymentDueDateStr-tooltip");
-        private By licensePaymentTermDueInput = By.Id("input-paymentDueDateStr");
-        private By licensePaymentTermGSTLabel = By.XPath("//label[contains(text(),'Subject to GST?')]");
-        private By licensePaymentTermGSTRadioBttns = By.Name("isGstEligible");
-        private By licencePyamentTermGSTTrueRadioBttn = By.Id("input-isGstEligible");
-        private By licencePyamentTermGSTFalseRadioBttn = By.Id("input-isGstEligible-2");
-        private By licensePaymentTermLabel = By.XPath("//label[contains(text(),'Term Status')]");
-        private By licensePaymentTermSelect = By.Id("input-statusTypeCode.id");
+        //Create Period Modal Elements
+        private readonly By licensePaymentPeriodSelectTypeLabel = By.XPath("//label[contains(text(),'Select payment type')]");
+        private readonly By licensePaymentPeriodSelectTooltip = By.Id("section-field-tooltip");
+        private readonly By licensePaymentPredefinedRadioInput = By.CssSelector("input[data-testid='radio-isvariable-predetermined']");
+        private readonly By licensePaymentVariableRadioInput = By.CssSelector("input[data-testid='radio-isvariable-variable']");
+
+        private readonly By licensePaymentPeriodDurationLabel = By.XPath("//label[contains(text(),'Period duration')]");
+        private readonly By licensePaymentPeriodDurationTooltip = By.Id("isFlexible-tooltip");
+        private readonly By licensePaymentPeriodDurationSelect = By.Id("input-isFlexible");
+
+        //Create Predefined Period Modal Elements
+        private readonly By licensePaymentPeriodStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
+        private readonly By licensePaymentPeriodStartDateTooltip = By.Id("startDate-tooltip");
+        private readonly By licensePaymentPeriodStartDateInput = By.CssSelector("input[id='datepicker-startDate']");
+        private readonly By licensePaymentPeriodEndDateLabel = By.XPath("//label[contains(text(),'End date')]");
+        private readonly By licensePaymentPeriodEndDateInput = By.Id("datepicker-expiryDate");
+        private readonly By licensePaymentPeriodFrequencySelectLabel = By.XPath("//label[contains(text(),'Payment frequency')]");
+        private readonly By licensePaymentPeriodFrequencySelect = By.Id("input-leasePmtFreqTypeCode.id");
+        private readonly By licensePaymentPeriodAgreedPaymentLabel = By.XPath("//label[contains(text(),'Agreed payment ($)')]");
+        private readonly By licensePaymentPeriodAgreedPaymentInput = By.Id("input-paymentAmount");
+        private readonly By licensePaymentPeriodDueLabel = By.XPath("//label[contains(text(),'Payments due')]");
+        private readonly By licensePaymentPeriodDueTooltip = By.Id("paymentDueDateStr-tooltip");
+        private readonly By licensePaymentPeriodDueInput = By.Id("input-paymentDueDateStr");
+        private readonly By licensePaymentPeriodGSTLabel = By.XPath("//label[contains(text(),'Subject to GST?')]");
+        private readonly By licensePaymentPeriodGSTRadioBttns = By.Name("isGstEligible");
+        private readonly By licencePaymentPeriodGSTTrueRadioBttn = By.Id("input-isGstEligible");
+        private readonly By licencePaymentPeriodGSTFalseRadioBttn = By.Id("input-isGstEligible-2");
+        private readonly By licensePaymentPeriodLabel = By.XPath("//label[contains(text(),'Period Status')]");
+        private readonly By licensePaymentPeriodSelect = By.Id("input-statusTypeCode.id");
+
+        //Create Variable Period Modal Elements
+        private readonly By licensePaymentPeriodVariableBaseSubtitle = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2");
+        private readonly By licensePaymentPeriodVariableBaseSubtitleTooltip = By.Id("base-rent-tooltip");
+        private readonly By licensePaymentPeriodBaseFrequencyLabel = By.XPath("//label[@for='input-leasePmtFreqTypeCode.id']/span[contains(text(),'Payment frequency')]");
+        private readonly By licensePaymentPeriodBaseSelect = By.Id("input-leasePmtFreqTypeCode.id");
+        private readonly By licensePaymentPeriodBaseAgreedPaymentLabel = By.XPath("//label[@for='input-paymentAmount']/span[contains(text(),'Agreed payment ($)')]");
+        private readonly By licensePaymentPeriodBaseAgreedPaymentInput = By.Id("input-paymentAmount");
+        private readonly By licensePaymentPeriodBaseGSTLabel = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
+        private readonly By licensePaymentPeriodBaseGSTYesRadioBttn = By.Id("input-isGstEligible");
+        private readonly By licensePaymentPeriodBaseGSTNoRadioBttn = By.Id("input-isGstEligible-2");
+
+        private readonly By licensePaymentPeriodVariableAdditionalSubtitle = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2");
+        private readonly By licensePaymentPeriodVariableAdditionalTooltip = By.Id("additional-rent-tooltip");
+        private readonly By licensePaymentPeriodAdditionalFrequencyLabel = By.XPath("//label[@for='input-additionalRentFreqTypeCode.id']/span[contains(text(),'Payment frequency')]");
+        private readonly By licensePaymentPeriodAdditionalSelect = By.Id("input-additionalRentFreqTypeCode.id");
+        private readonly By licensePaymentPeriodAdditionalAgreedPaymentLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'Agreed payment ($)')]");
+        private readonly By licensePaymentPeriodAdditionalAgreedPaymentInput = By.Id("input-additionalRentPaymentAmount");
+        private readonly By licensePaymentPeriodAdditionalGSTLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
+        private readonly By licensePaymentPeriodAdditionalYesRadioBttn = By.Id("input-isAdditionalRentGstEligible");
+        private readonly By licensePaymentPeriodAdditionalGSTNoRadioBttn = By.Id("input-isAdditionalRentGstEligible-2");
+
+        private readonly By licensePaymentPeriodVariableVariableSubtitle = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2");
+        private readonly By licensePaymentPeriodVariableVariableTooltip = By.Id("variable-rent-tooltip");
+        private readonly By licensePaymentPeriodVariableFrequencyLabel = By.XPath("//label[@for='input-variableRentFreqTypeCode.id']/span[contains(text(),'Payment frequency')]");
+        private readonly By licensePaymentPeriodVariableSelect = By.Id("input-variableRentFreqTypeCode.id");
+        private readonly By licensePaymentPeriodVariableAgreedPaymentLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'Agreed payment ($)')]");
+        private readonly By licensePaymentPeriodVariableAgreedPaymentInput = By.Id("input-variableRentPaymentAmount");
+        private readonly By licensePaymentPeriodVariableGSTLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
+        private readonly By licensePaymentPeriodVariableYesRadioBttn = By.Id("input-isVariableRentGstEligible");
+        private readonly By licensePaymentPeriodVariableGSTNoRadioBttn = By.Id("input-isVariableRentGstEligible-2");
 
         //Create Payment Elements
-        private By licensePaymentSendDateLabel = By.XPath("//label[contains(text(),'Sent date')]");
-        private By licensePaymentSendDateInput = By.Id("datepicker-receivedDate");
-        private By licensePaymentMethodLabel = By.XPath("//label[contains(text(),'Method')]");
-        private By licensePaymentMethodSelect = By.Id("input-leasePaymentMethodType.id");
-        private By licensePaymentAmountReceivedLabel = By.XPath("//label[contains(text(),'Total received ($)')]");
-        private By licensePaymentAmountReceivedInput = By.Id("input-amountTotal");
-        private By licensePaymentExpPaymentLabel = By.XPath("//label[contains(text(),'Expected payment ($)')]");
-        private By licensePaymentExpPaymentInput = By.Id("input-amountPreTax");
-        private By licensePaymentGSTLabel = By.XPath("//label[contains(text(),'GST ($)')]");
-        private By licensePaymentExpPaymentTolltip = By.Id("actual-calculation-tooltip");
-        private By licensePaymentGSTInput = By.Id("input-amountGst");
-        private By licensePaymentRecordBttn = By.XPath("//button/div[contains(text(),'Record a Payment')]");
-        private By licensePaymentSaveBttn = By.XPath("//button/div[contains(text(),'Save payment')]");
+        private readonly By licensePaymentSendDateLabel = By.XPath("//label[contains(text(),'Sent date')]");
+        private readonly By licensePaymentSendDateInput = By.Id("datepicker-receivedDate");
+        private readonly By licensePaymentMethodLabel = By.XPath("//label[contains(text(),'Method')]");
+        private readonly By licensePaymentMethodSelect = By.Id("input-leasePaymentMethodType.id");
+        private readonly By licensePaymentAmountReceivedLabel = By.XPath("//label[contains(text(),'Total received ($)')]");
+        private readonly By licensePaymentAmountReceivedInput = By.Id("input-amountTotal");
+        private readonly By licensePaymentExpPaymentLabel = By.XPath("//label[contains(text(),'Expected payment ($)')]");
+        private readonly By licensePaymentExpPaymentInput = By.Id("input-amountPreTax");
+        private readonly By licensePaymentGSTLabel = By.XPath("//label[contains(text(),'GST ($)')]");
+        private readonly By licensePaymentExpPaymentTolltip = By.Id("actual-calculation-tooltip");
+        private readonly By licensePaymentGSTInput = By.Id("input-amountGst");
+        private readonly By licensePaymentRecordBttn = By.XPath("//button/div[contains(text(),'Record a Payment')]");
+        private readonly By licensePaymentSaveBttn = By.XPath("//button/div[contains(text(),'Save payment')]");
 
         //Last Term Table Elements
         private int totalTermsInLease;
-        private By licenseTermsTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper'] div[class='td expander svg-btn']");
-        
+        private readonly By licenseTermsTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper'] div[class='td expander svg-btn']");
 
         //Last Payment Elements
         private int totalPaymentInTerm;
-        private By licensePaymentsTableTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']");
-        private By licensePaymentDeleteTermBttn = By.CssSelector("button[title='delete term']");
+        private readonly By licensePaymentsTableTotal = By.CssSelector("div[data-testid='leasePaymentsTable'] div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By licensePaymentDeleteTermBttn = By.CssSelector("button[title='delete term']");
 
         
         private SharedModals sharedModals;
@@ -115,42 +161,105 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(licensePaymentsLink).Click();
         }
 
-        public void AddTermBttn()
-        {
-            ButtonElement(licensePaymentAddTermBttn);
-        }
+        public void AddPeriodBttn() => ButtonElement(licencePaymentAddBttn);
 
-        public void AddTerm(Term term)
+        public void AddPeriod(Period period)    
         {
-            WaitUntilClickable(licensePaymentTermStartDateInput);
+        
+        //private readonly By licensePaymentPeriodStartDateInput = By.CssSelector("input[id='datepicker-startDate']");
+        //private readonly By licensePaymentPeriodEndDateLabel = By.XPath("//label[contains(text(),'End date')]");
+        //private readonly By licensePaymentPeriodEndDateInput = By.Id("datepicker-expiryDate");
+        //private readonly By licensePaymentPeriodFrequencySelectLabel = By.XPath("//label[contains(text(),'Payment frequency')]");
+        //private readonly By licensePaymentPeriodFrequencySelect = By.Id("input-leasePmtFreqTypeCode.id");
+        //private readonly By licensePaymentPeriodAgreedPaymentLabel = By.XPath("//label[contains(text(),'Agreed payment ($)')]");
+        //private readonly By licensePaymentPeriodAgreedPaymentInput = By.Id("input-paymentAmount");
+        //private readonly By licensePaymentPeriodDueLabel = By.XPath("//label[contains(text(),'Payments due')]");
+        //private readonly By licensePaymentPeriodDueTooltip = By.Id("paymentDueDateStr-tooltip");
+        //private readonly By licensePaymentPeriodDueInput = By.Id("input-paymentDueDateStr");
+        //private readonly By licensePaymentPeriodGSTLabel = By.XPath("//label[contains(text(),'Subject to GST?')]");
+        //private readonly By licensePaymentPeriodGSTRadioBttns = By.Name("isGstEligible");
+        //private readonly By licencePaymentPeriodGSTTrueRadioBttn = By.Id("input-isGstEligible");
+        //private readonly By licencePaymentPeriodGSTFalseRadioBttn = By.Id("input-isGstEligible-2");
+        //private readonly By licensePaymentPeriodLabel = By.XPath("//label[contains(text(),'Period Status')]");
+        //private readonly By licensePaymentPeriodSelect = By.Id("input-statusTypeCode.id");
 
-            var startDateInputElement = webDriver.FindElement(licensePaymentTermStartDateInput);
+        ////Create Variable Period Modal Elements
+        //private readonly By licensePaymentPeriodVariableBaseSubtitle = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2");
+        //private readonly By licensePaymentPeriodVariableBaseSubtitleTooltip = By.Id("base-rent-tooltip");
+        //private readonly By licensePaymentPeriodBaseFrequencyLabel = By.XPath("//label[@for='input-leasePmtFreqTypeCode.id']/span[contains(text(),'Payment frequency')]");
+        //private readonly By licensePaymentPeriodBaseSelect = By.Id("input-leasePmtFreqTypeCode.id");
+        //private readonly By licensePaymentPeriodBaseAgreedPaymentLabel = By.XPath("//label[@for='input-paymentAmount']/span[contains(text(),'Agreed payment ($)')]");
+        //private readonly By licensePaymentPeriodBaseAgreedPaymentInput = By.Id("input-paymentAmount");
+        //private readonly By licensePaymentPeriodBaseGSTLabel = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
+        //private readonly By licensePaymentPeriodBaseGSTYesRadioBttn = By.Id("input-isGstEligible");
+        //private readonly By licensePaymentPeriodBaseGSTNoRadioBttn = By.Id("input-isGstEligible-2");
+
+        //private readonly By licensePaymentPeriodVariableAdditionalSubtitle = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2");
+        //private readonly By licensePaymentPeriodVariableAdditionalTooltip = By.Id("additional-rent-tooltip");
+        //private readonly By licensePaymentPeriodAdditionalFrequencyLabel = By.XPath("//label[@for='input-additionalRentFreqTypeCode.id']/span[contains(text(),'Payment frequency')]");
+        //private readonly By licensePaymentPeriodAdditionalSelect = By.Id("input-additionalRentFreqTypeCode.id");
+        //private readonly By licensePaymentPeriodAdditionalAgreedPaymentLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'Agreed payment ($)')]");
+        //private readonly By licensePaymentPeriodAdditionalAgreedPaymentInput = By.Id("input-additionalRentPaymentAmount");
+        //private readonly By licensePaymentPeriodAdditionalGSTLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
+        //private readonly By licensePaymentPeriodAdditionalYesRadioBttn = By.Id("input-isAdditionalRentGstEligible");
+        //private readonly By licensePaymentPeriodAdditionalGSTNoRadioBttn = By.Id("input-isAdditionalRentGstEligible-2");
+
+        //private readonly By licensePaymentPeriodVariableVariableSubtitle = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2");
+        //private readonly By licensePaymentPeriodVariableVariableTooltip = By.Id("variable-rent-tooltip");
+        //private readonly By licensePaymentPeriodVariableFrequencyLabel = By.XPath("//label[@for='input-variableRentFreqTypeCode.id']/span[contains(text(),'Payment frequency')]");
+        //private readonly By licensePaymentPeriodVariableSelect = By.Id("input-variableRentFreqTypeCode.id");
+        //private readonly By licensePaymentPeriodVariableAgreedPaymentLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'Agreed payment ($)')]");
+        //private readonly By licensePaymentPeriodVariableAgreedPaymentInput = By.Id("input-variableRentPaymentAmount");
+        //private readonly By licensePaymentPeriodVariableGSTLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
+        //private readonly By licensePaymentPeriodVariableYesRadioBttn = By.Id("input-isVariableRentGstEligible");
+        //private readonly By licensePaymentPeriodVariableGSTNoRadioBttn = By.Id("input-isVariableRentGstEligible-2");
+
+
+            //Periods Baseline
+            WaitUntilClickable(licensePaymentPeriodDurationSelect);
+
+            //Payment Type
+            AssertTrueIsDisplayed(licensePaymentPeriodSelectTypeLabel);
+            AssertTrueIsDisplayed(licensePaymentPeriodSelectTooltip);
+            if (period.PaymentType == "Predetermined")
+                webDriver.FindElement(licensePaymentPredefinedRadioInput).Click();
+            else
+                webDriver.FindElement(licensePaymentVariableRadioInput).Click();
+
+            //Period Duration
+            AssertTrueIsDisplayed(licensePaymentPeriodDurationLabel);
+            AssertTrueIsDisplayed(licensePaymentPeriodDurationTooltip);
+            ChooseSpecificSelectOption(licensePaymentPeriodDurationSelect, period.PeriodDuration);
+
+            //Start Date
+            AssertTrueIsDisplayed(licensePaymentPeriodStartDateLabel);
+            AssertTrueIsDisplayed(licensePaymentPeriodStartDateTooltip);
+            var startDateInputElement = webDriver.FindElement(licensePaymentPeriodStartDateInput);
 
             if (startDateInputElement.GetAttribute("value") != "")
-            {
-                ClearInput(licensePaymentTermStartDateInput);
-            }
-
+                ClearInput(licensePaymentPeriodStartDateInput);
+            
             startDateInputElement.Click();
-            startDateInputElement.SendKeys(term.TermStartDate);
+            startDateInputElement.SendKeys(period.PeriodStartDate);
 
+            //End Date
             WaitUntilClickable(licensePaymentTermEndDateInput);
 
             webDriver.FindElement(licensePaymentTermEndDateInput).Click();
-            webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(term.TermEndDate);
+            webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(period.PeriodEndDate);
             webDriver.FindElement(licensePaymentTermEndDateInput).SendKeys(Keys.Enter);
 
-            ChooseSpecificSelectOption(licensePaymentTermFrequencySelect, term.TermPaymentFrequency);
+            ChooseSpecificSelectOption(licensePaymentTermFrequencySelect, period.PeriodPaymentFrequency);
 
-            webDriver.FindElement(licensePaymentTermAgreedPaymentInput).SendKeys(term.TermAgreedPayment);
-            webDriver.FindElement(licensePaymentTermDueInput).SendKeys(term.TermPaymentsDue);
+            webDriver.FindElement(licensePaymentTermAgreedPaymentInput).SendKeys(period.PeriodAgreedPayment);
+            webDriver.FindElement(licensePaymentTermDueInput).SendKeys(period.PeriodPaymentsDue);
 
-            if (term.IsGSTEligible)
+            if (period.IsGSTEligible)
                 webDriver.FindElement(licencePyamentTermGSTTrueRadioBttn).Click();
             else
             webDriver.FindElement(licencePyamentTermGSTFalseRadioBttn).Click();
 
-            ChooseSpecificSelectOption(licensePaymentTermSelect, term.TermStatus);
+            ChooseSpecificSelectOption(licensePaymentTermSelect, period.PeriodStatus);
 
             sharedModals.ModalClickOKBttn();
 
@@ -167,10 +276,7 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedExpander.Click();
         }
 
-        public void AddPaymentBttn()
-        {
-            ButtonElement(licensePaymentRecordBttn);
-        }
+        public void AddPaymentBttn() => ButtonElement(licensePaymentRecordBttn);
 
         public void AddPayment(Payment payment)
         {
@@ -231,37 +337,12 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(licensePaymentsTableTotal).Count;
         }
 
-        public void VerifyPaymentsInitForm()
-        {
-            Wait(2000);
-
-            AssertTrueIsDisplayed(licencePaymentsSubtitle);
-            AssertTrueIsDisplayed(licencePaymentAddBttn);
-            AssertTrueIsDisplayed(licencePaymentColumnStartEndDate);
-            AssertTrueIsDisplayed(licensePaymentColumnPaymentFreq);
-            AssertTrueIsDisplayed(licencePaymentColumnPaymentDue);
-            AssertTrueIsDisplayed(licensePaymentColumnExpectedPay);
-            AssertTrueIsDisplayed(licensePaymentExpectedPayTooltip);
-            AssertTrueIsDisplayed(licencePaymentColumnGSTBoolean);
-            AssertTrueIsDisplayed(licensePaymentColumnGSTTotal);
-            AssertTrueIsDisplayed(licensePaymentGSTTotalTooltip);
-            AssertTrueIsDisplayed(licencePaymentColumnExpectedTotal);
-            AssertTrueIsDisplayed(licensePaymentExpectedTotalTooltip);
-            AssertTrueIsDisplayed(licensePaymentColumnExpectedTerm);
-            AssertTrueIsDisplayed(licensePaymentExpectedTermTooltip);
-            AssertTrueIsDisplayed(licencePaymentColumnActualTotal);
-            AssertTrueIsDisplayed(licensePaymentActualTotalTooltip);
-            AssertTrueIsDisplayed(licensePaymentColumnExercised);
-            AssertTrueIsDisplayed(licencePaymentColumnActions);
-            AssertTrueIsDisplayed(licencePaymentsNoRows);
-        }
-
         public void VerifyCreateTermForm()
         {
             WaitUntilVisible(licensePaymentTermStartDateInput);
             Assert.True(sharedModals.ModalHeader() == "Add a Term");
 
-            AssertTrueIsDisplayed(licensePaymentTermStartDateLabel);
+            AssertTrueIsDisplayed(licensePaymentPeriodStartDateLabel);
             AssertTrueIsDisplayed(licensePaymentTermStartDateInput);
             AssertTrueIsDisplayed(licensePaymentTermEndDateLabel);
             AssertTrueIsDisplayed(licensePaymentTermEndDateInput);
@@ -280,31 +361,31 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.VerifyButtonsPresence();
         }
 
-        public void VerifyInsertedTermTable(Term term)
+        public void VerifyInsertedTermTable(Period term)
         {
             Wait();
             WaitUntilVisible(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]"));
 
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]"), ConcatenateDates(term.TermStartDate, term.TermEndDate));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[3]"), term.TermPaymentFrequency);
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[4]"), term.TermPaymentsDue);
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[5]"), TransformCurrencyFormat(term.TermAgreedPayment));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]"), ConcatenateDates(term.PeriodStartDate, term.PeriodEndDate));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[3]"), term.PeriodPaymentFrequency);
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[4]"), term.PeriodPaymentsDue);
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[5]"), TransformCurrencyFormat(term.PeriodAgreedPayment));
             AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[6]"), TransformBooleanLeaseFormat(term.IsGSTEligible));
 
             if (term.IsGSTEligible)
             {
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalTermsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]"), CalculateGST(term.TermAgreedPayment, term.IsGSTEligible));
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalTermsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[8]"), CalculateExpectedTotal(term.TermAgreedPayment));
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalTermsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]"), CalculateGST(term.PeriodAgreedPayment, term.IsGSTEligible));
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalTermsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[8]"), CalculateExpectedTotal(term.PeriodAgreedPayment));
             }
             else
             {
                 AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalTermsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]"), "-");
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalTermsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[8]"), TransformCurrencyFormat(term.TermAgreedPayment));
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalTermsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[8]"), TransformCurrencyFormat(term.PeriodAgreedPayment));
             }
 
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[9]"), CalculateExpectedTerm(term.TermPaymentFrequency, term.IsGSTEligible, term.TermAgreedPayment, term.TermStartDate, term.TermEndDate));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[9]"), CalculateExpectedTerm(term.PeriodPaymentFrequency, term.IsGSTEligible, term.PeriodAgreedPayment, term.PeriodStartDate, term.PeriodEndDate));
             AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[10]"), DisplayActualTotal(term.IsGSTEligible));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[11]"), DisplayTerm(term.TermStatus));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalTermsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[11]"), DisplayTerm(term.PeriodStatus));
         }
 
         public void VerifyCreatePaymentForm()
@@ -340,12 +421,12 @@ namespace PIMS.Tests.Automation.PageObjects
             else
             {
                 AssertTrueIsDisplayed(licensePaymentsSendDateColumn);
-                AssertTrueIsDisplayed(licensePaymentsSentPaymentColumn);
+                AssertTrueIsDisplayed(licensePaymentsGSTColumn);
                 AssertTrueIsDisplayed(licensePaymentsSentTotalColumn);
             }
 
             AssertTrueIsDisplayed(licensePaymentsPaymentMethodColumn);
-            AssertTrueIsDisplayed(licensePaymentsSendPaymentTooltip);
+            AssertTrueIsDisplayed(licensePaymentsGSTTooltip);
             AssertTrueIsDisplayed(licensePaymentsGSTColumn);
             AssertTrueIsDisplayed(licensePaymentsGSTTooltip);
             AssertTrueIsDisplayed(licensePaymentsSendTotalTooltip);
