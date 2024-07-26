@@ -1,4 +1,5 @@
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseTenantTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTenantTypes';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -20,9 +21,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   lFileNo: null,
   tfaFileNumber: null,
   psFileNo: null,
-  otherCategoryType: null,
   otherProgramType: null,
-  otherPurposeType: null,
   otherType: null,
   expiryDate: null,
   startDate: EpochIsoDateTime,
@@ -32,8 +31,6 @@ const emptyLease: ApiGen_Concepts_Lease = {
   type: null,
   initiatorType: null,
   responsibilityType: null,
-  categoryType: null,
-  purposeType: null,
   fileStatusTypeCode: null,
   region: null,
   programType: null,
@@ -63,6 +60,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   isPublicBenefit: null,
   isFinancialGain: null,
   feeDeterminationNote: null,
+  leasePurposes: [],
 };
 
 export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
@@ -75,13 +73,6 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   persons: [],
   organizations: [],
   paymentReceivableType: null,
-  categoryType: null,
-  purposeType: {
-    id: 'BCFERRIES',
-    description: 'BC Ferries',
-    displayOrder: null,
-    isDisabled: false,
-  },
   responsibilityType: null,
   initiatorType: null,
   statusType: null,
@@ -392,6 +383,44 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   ],
   properties: [],
   insurances: [],
+  leasePurposes: [
+    {
+      id: 10,
+      leaseId: 1,
+      leasePurposeTypeCode: {
+        id: ApiGen_CodeTypes_LeasePurposeTypes.BCTRANSIT,
+        description: 'BC Transit',
+        isDisabled: false,
+        displayOrder: 5,
+      },
+      purposeOtherDescription: null,
+      appCreateTimestamp: '2024-07-25T21:18:52.71',
+      appLastUpdateTimestamp: '2024-07-25T21:18:52.71',
+      appLastUpdateUserid: 'EHERRERA',
+      appCreateUserid: 'EHERRERA',
+      appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+      appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+      rowVersion: 1,
+    },
+    {
+      id: 11,
+      leaseId: 1,
+      leasePurposeTypeCode: {
+        id: ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
+        description: 'Other*',
+        isDisabled: false,
+        displayOrder: 5,
+      },
+      purposeOtherDescription: 'OTHERPURSOSEVALUE',
+      appCreateTimestamp: '2024-07-25T21:18:52.71',
+      appLastUpdateTimestamp: '2024-07-25T21:18:52.71',
+      appLastUpdateUserid: 'EHERRERA',
+      appCreateUserid: 'EHERRERA',
+      appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+      appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+      rowVersion: 1,
+    },
+  ],
   improvements: [],
   securityDeposits: [],
   consultations: [],

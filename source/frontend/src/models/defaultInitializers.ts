@@ -35,9 +35,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   lFileNo: null,
   tfaFileNumber: null,
   psFileNo: null,
-  otherCategoryType: null,
   otherProgramType: null,
-  otherPurposeType: null,
   otherType: null,
   expiryDate: null,
   startDate: EpochIsoDateTime,
@@ -47,8 +45,6 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   type: null,
   initiatorType: null,
   responsibilityType: null,
-  categoryType: null,
-  purposeType: null,
   fileStatusTypeCode: null,
   region: null,
   programType: null,
@@ -78,6 +74,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   isPublicBenefit: null,
   isFinancialGain: null,
   feeDeterminationNote: null,
+  leasePurposes: [],
 });
 
 /**
@@ -93,8 +90,6 @@ export const defaultApiLease = (): ApiGen_Concepts_Lease => ({
   programType: null,
   startDate: prettyFormatDate(moment()),
   paymentReceivableType: null,
-  categoryType: null,
-  purposeType: null,
   responsibilityType: null,
   initiatorType: null,
   type: null,
@@ -106,9 +101,8 @@ export const defaultApiLease = (): ApiGen_Concepts_Lease => ({
   consultations: [],
   tenants: [],
   periods: [],
-  otherCategoryType: null,
+  leasePurposes: [],
   otherProgramType: null,
-  otherPurposeType: null,
   otherType: null,
 });
 
