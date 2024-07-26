@@ -71,13 +71,10 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
 
   const initialGstAmount = initialValues.gstAmount;
 
-  const onGstCheckChange = (
-    formikState: FormikProps<FormLeasePeriod>,
-    field: string,
-    values: boolean,
-  ) => {
+  const onGstCheckChange = (formikState: FormikProps<FormLeasePeriod>, values: boolean) => {
     if (values === true) {
-      const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
+      const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : 5;
+
       const calculated = round((formikState.values.paymentAmount as number) * (gstDecimal / 100));
       formikState.setFieldValue('gstAmount', calculated);
     } else {
@@ -194,7 +191,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         radioLabelOne="Y"
                         radioLabelTwo="N"
                         type="radio"
-                        handleChange={(field, value) => onGstCheckChange(formikProps, field, value)}
+                        handleChange={(field, value) => onGstCheckChange(formikProps, value)}
                       />
                       {initialGstAmount !== formikProps.values.gstAmount &&
                         formikProps.values.isGstEligible === false && (

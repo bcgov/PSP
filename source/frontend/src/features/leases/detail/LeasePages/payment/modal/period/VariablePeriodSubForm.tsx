@@ -34,7 +34,7 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
 
   const onGstCheckChange = (field: string, values: boolean) => {
     if (values === true) {
-      const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
+      const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : 5;
       const calculated = round(
         (getIn(formikProps.values, paymentAmountField) as number) * (gstDecimal / 100),
       );
