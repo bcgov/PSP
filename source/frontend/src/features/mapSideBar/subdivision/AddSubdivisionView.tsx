@@ -1,4 +1,5 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
+import noop from 'lodash/noop';
 import { Tab } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -167,6 +168,7 @@ const AddSubdivisionView: React.FunctionComponent<
                   modifiedProperties={values.destinationProperties.map(dp =>
                     PropertyForm.fromPropertyApi(dp).toFeatureDataset(),
                   )}
+                  repositionSelectedProperty={noop}
                 />
                 <FieldArray name="destinationProperties">
                   {({ remove }) => (

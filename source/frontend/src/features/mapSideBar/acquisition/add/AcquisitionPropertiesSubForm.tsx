@@ -107,7 +107,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
                   onRemove={() => remove(index)}
                   nameSpace={`properties.${index}`}
                   index={index}
-                  property={property.toMapProperty()}
+                  property={property.toFeatureDataset()}
                 />
               ))}
               {formikProps.values.properties.length === 0 && <span>No Properties selected</span>}

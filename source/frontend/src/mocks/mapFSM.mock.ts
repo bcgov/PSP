@@ -32,6 +32,8 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   mapFeatureSelected: null,
   mapLocationSelected: null,
   mapLocationFeatureDataset: null,
+  repositioningFeatureDataset: null,
+  repositioningPropertyIndex: null,
   selectingComponentId: null,
   selectedFeatureDataset: null,
   showPopup: false,
