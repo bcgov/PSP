@@ -41,8 +41,10 @@ describe('payments model tests', () => {
         variableRentPaymentAmount: 1,
         additionalRentPaymentAmount: 1,
         paymentAmount: 1,
+        gstAmount: 7,
+        variableRentGstAmount: 8,
+        additionalRentGstAmount: 9
       } as FormLeasePeriod,
-      5,
     );
     expect(model.gstAmount).toBe(null);
     expect(model.variableRentGstAmount).toBe(null);
@@ -59,11 +61,13 @@ describe('payments model tests', () => {
         variableRentPaymentAmount: 1,
         additionalRentPaymentAmount: 1,
         paymentAmount: 1,
+        gstAmount: 7,
+        variableRentGstAmount: 8,
+        additionalRentGstAmount: 9
       } as FormLeasePeriod,
-      5,
     );
-    expect(model.gstAmount).toBe(0.05);
-    expect(model.variableRentGstAmount).toBe(0.05);
-    expect(model.additionalRentGstAmount).toBe(0.05);
+    expect(model.gstAmount).toBe(7);
+    expect(model.variableRentGstAmount).toBe(8);
+    expect(model.additionalRentGstAmount).toBe(9);
   });
 });

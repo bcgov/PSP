@@ -104,7 +104,11 @@ export const DetailAdministration: React.FunctionComponent<
         <SectionField label="MoTI contact" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'motiName')} />
         </SectionField>
-        <SectionField label="Intended use" labelWidth="3">
+        <SectionField
+          label="Intended use"
+          labelWidth="3"
+          tooltip="The purpose for which the license is issued, as per the agreement"
+        >
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'description')} />
         </SectionField>
         <SectionField

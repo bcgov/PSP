@@ -35,7 +35,9 @@ const ParentNode = styled(ListGroup.Item)`
 
 const LayerNode = styled(ListGroup.Item)`
   display: flex;
-  padding-left: 2.5rem;
+  font-size: 1.4rem;
+  text-align: left;
+  padding-left: 5rem;
   border: none;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -72,6 +74,7 @@ const LayerColor = styled.div<{ color: string }>`
   height: 1.4rem;
   background-color: ${({ color }) => color};
   margin-right: 0.5rem;
+  padding-right: 1.4rem;
 `;
 
 /**
