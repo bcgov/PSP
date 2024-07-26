@@ -26,6 +26,7 @@ import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer'
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -92,6 +93,8 @@ describe('AddLeaseContainer component', () => {
     return {
       ...utils,
       getCloseButton: () => utils.getByTitle('close'),
+      getPurposeMultiSelect: () =>
+        utils.container.querySelector(`#multiselect-purposes_input`) as HTMLElement,
     };
   };
 
@@ -118,7 +121,7 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('saves the form with minimal data', async () => {
-    const { getByText, container } = await setup({});
+    const { getByText, getPurposeMultiSelect, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
     await act(async () =>
@@ -127,16 +130,30 @@ describe('AddLeaseContainer component', () => {
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
     await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
+
+    const multiSelectPurposes = getPurposeMultiSelect();
+    await act(async () => {
+      expect(multiSelectPurposes).not.toBeNull();
+      userEvent.click(multiSelectPurposes);
+    });
+
+    await act(async () => {
+      userEvent.type(multiSelectPurposes, 'BC Ferries');
+      userEvent.click(multiSelectPurposes);
+
+      const firstOption = container.querySelector(`div ul li.option`);
+      userEvent.click(firstOption);
+    });
+
     await act(async () => userEvent.click(getByText(/Save/i)));
 
-    expect(addLease).toBeCalledWith(leaseData, []);
+    expect(addLease).toHaveBeenCalledWith(leaseData, []);
   });
 
   it('triggers the confirm popup', async () => {
@@ -146,7 +163,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, findByText, container } = await setup({});
+    const { getByText, findByText, getPurposeMultiSelect, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
     await act(async () =>
@@ -155,13 +172,28 @@ describe('AddLeaseContainer component', () => {
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
     await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
+
+    const multiSelectPurposes = getPurposeMultiSelect();
+    await act(async () => {
+      expect(multiSelectPurposes).not.toBeNull();
+      userEvent.click(multiSelectPurposes);
+    });
+
+    await act(async () => {
+      userEvent.type(multiSelectPurposes, 'BC Ferries');
+      userEvent.click(multiSelectPurposes);
+
+      const firstOption = container.querySelector(`div ul li.option`);
+      userEvent.click(firstOption);
+    });
+
+
     await act(async () => userEvent.click(getByText(/Save/i)));
 
     expect(await findByText('test message')).toBeVisible();
@@ -175,7 +207,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, container } = await setup({});
+    const { getByText, getPurposeMultiSelect, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
     await act(async () =>
@@ -184,13 +216,27 @@ describe('AddLeaseContainer component', () => {
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
     await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
+
+    const multiSelectPurposes = getPurposeMultiSelect();
+    await act(async () => {
+      expect(multiSelectPurposes).not.toBeNull();
+      userEvent.click(multiSelectPurposes);
+    });
+
+    await act(async () => {
+      userEvent.type(multiSelectPurposes, 'BC Ferries');
+      userEvent.click(multiSelectPurposes);
+
+      const firstOption = container.querySelector(`div ul li.option`);
+      userEvent.click(firstOption);
+    });
+
     await act(async () => userEvent.click(getByText(/Save/i)));
 
     expect(addLease).toBeCalledWith(leaseData, []);
@@ -216,7 +262,6 @@ const leaseData: ApiGen_Concepts_Lease = {
   startDate: '2020-01-01',
   amount: 0,
   paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
-  purposeType: toTypeCodeNullable('BCFERRIES'),
   fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
   type: toTypeCodeNullable('LIOCCTTLD'),
   region: toTypeCodeNullable(1),
@@ -228,12 +273,9 @@ const leaseData: ApiGen_Concepts_Lease = {
   isCommercialBuilding: false,
   isOtherImprovement: false,
   responsibilityType: null,
-  categoryType: null,
   initiatorType: null,
   otherType: null,
-  otherCategoryType: null,
   otherProgramType: null,
-  otherPurposeType: null,
   tfaFileNumber: null,
   responsibilityEffectiveDate: null,
   psFileNo: null,
@@ -301,5 +343,14 @@ const leaseData: ApiGen_Concepts_Lease = {
       otherDescription: null,
       ...getEmptyBaseAudit(),
     },
+  ],
+  leasePurposes: [
+    {
+      id: 0,
+      leaseId: 0,
+      leasePurposeTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeasePurposeTypes.BCFERRIES),
+      purposeOtherDescription: null,
+      ...getEmptyBaseAudit(),
+    }
   ],
 };

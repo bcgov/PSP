@@ -5,6 +5,7 @@ import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants/index';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -29,6 +30,7 @@ import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseD
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
 import { FormLeasePeriod } from './detail/LeasePages/payment/models';
 import { FormTenant } from './detail/LeasePages/tenant/models';
+import { LeasePurposeModel } from './models/LeasePurposeModel';
 
 export class FormLeaseRenewal {
   id = 0;
@@ -78,8 +80,8 @@ export class LeaseFormModel {
   terminationDate = '';
   responsibilityEffectiveDate = '';
   paymentReceivableTypeCode = '';
-  categoryTypeCode = '';
-  purposeTypeCode = '';
+  purposes: LeasePurposeModel[] = [];
+  purposeOtherDescription: string | null = '';
   responsibilityTypeCode = '';
   initiatorTypeCode = '';
   leaseTypeCode = '';
@@ -89,7 +91,6 @@ export class LeaseFormModel {
   otherLeaseTypeDescription = '';
   otherProgramTypeDescription = '';
   otherCategoryTypeDescription = '';
-  otherPurposeTypeDescription = '';
   note = '';
   programName = '';
   motiName = '';
@@ -135,8 +136,13 @@ export class LeaseFormModel {
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
     leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
-    leaseDetail.categoryTypeCode = fromTypeCode(apiModel?.categoryType) || '';
-    leaseDetail.purposeTypeCode = fromTypeCode(apiModel?.purposeType) || '';
+    leaseDetail.purposes = apiModel.leasePurposes?.map(x => LeasePurposeModel.fromApi(x)) ?? [];
+    const otherPurpose =
+      apiModel.leasePurposes?.find(
+        x => x.leasePurposeTypeCode.id === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
+      ) ?? null;
+    leaseDetail.purposeOtherDescription = otherPurpose ? otherPurpose.purposeOtherDescription : '';
+
     leaseDetail.responsibilityTypeCode = fromTypeCode(apiModel?.responsibilityType) || '';
     leaseDetail.initiatorTypeCode = fromTypeCode(apiModel?.initiatorType) || '';
     leaseDetail.statusTypeCode = fromTypeCode(apiModel?.fileStatusTypeCode) || '';
@@ -155,9 +161,7 @@ export class LeaseFormModel {
     leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement || false;
     leaseDetail.rowVersion = apiModel?.rowVersion || null;
     leaseDetail.description = apiModel?.description || '';
-    leaseDetail.otherCategoryTypeDescription = apiModel?.otherCategoryType || '';
     leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType || '';
-    leaseDetail.otherPurposeTypeDescription = apiModel?.otherPurposeType || '';
     leaseDetail.otherLeaseTypeDescription = apiModel?.otherType || '';
     leaseDetail.project = apiModel?.project
       ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
@@ -197,10 +201,7 @@ export class LeaseFormModel {
         : null,
       amount: parseFloat(formLease.amount?.toString() ?? '') || 0.0,
       paymentReceivableType: toTypeCodeNullable(formLease.paymentReceivableTypeCode) ?? null,
-      categoryType: formLease.categoryTypeCode
-        ? toTypeCodeNullable(formLease.categoryTypeCode) ?? null
-        : null,
-      purposeType: toTypeCodeNullable(formLease.purposeTypeCode) ?? null,
+      leasePurposes: formLease.purposes.map(x => x.toApi(formLease.id ?? 0)),
       responsibilityType: toTypeCodeNullable(formLease.responsibilityTypeCode) ?? null,
       initiatorType: toTypeCodeNullable(formLease.initiatorTypeCode) ?? null,
       fileStatusTypeCode: toTypeCodeNullable(formLease.statusTypeCode) ?? null,
@@ -220,9 +221,7 @@ export class LeaseFormModel {
       isCommercialBuilding: formLease.isCommercialBuilding,
       isOtherImprovement: formLease.isOtherImprovement,
       description: stringToNull(formLease.description),
-      otherCategoryType: stringToNull(formLease.otherCategoryTypeDescription),
       otherProgramType: stringToNull(formLease.otherProgramTypeDescription),
-      otherPurposeType: stringToNull(formLease.otherPurposeTypeDescription),
       otherType: stringToNull(formLease.otherLeaseTypeDescription),
       project: isValidId(formLease.project?.id) ? ({ id: formLease.project?.id } as any) : null,
       consultations: formLease.consultations.map(x => x.toApi()),
@@ -384,16 +383,13 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     hasPhysicalLicense: null,
     fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
     paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
-    categoryType: null,
-    purposeType: null,
+    leasePurposes: [],
     programType: null,
     type: null,
     initiatorType: null,
     responsibilityType: null,
     region: null,
     otherType: null,
-    otherCategoryType: null,
-    otherPurposeType: null,
     otherProgramType: null,
     consultations: [],
     periods: [],

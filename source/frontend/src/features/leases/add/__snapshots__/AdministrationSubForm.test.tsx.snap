@@ -445,293 +445,233 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               class="c3 required text-left col"
             >
               <div
-                class="required form-group"
+                class="form-group"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-purposeTypeCode"
-                  name="purposeTypeCode"
-                  required=""
-                >
-                  <option
-                    value=""
+                <div>
+                  <div
+                    class="multiselect-container multiSelectContainer  "
+                    id="multiselect-purposes"
+                    style="width: auto; color: black;"
                   >
-                    Select purpose
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-ACCCCOM"
-                    value="ACCCCOM"
-                  >
-                    Access (Industrial/Commercial)
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-ACCRES"
-                    value="ACCRES"
-                  >
-                    Access (Residential)
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-AGRIC"
-                    value="AGRIC"
-                  >
-                    Agricultural
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-BCFERRIES"
-                    value="BCFERRIES"
-                  >
-                    BC Ferries
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-CAMPING"
-                    value="CAMPING"
-                  >
-                    Camping
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-COMMBLDG"
-                    value="COMMBLDG"
-                  >
-                    Commercial Building
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-EMERGSVCS"
-                    value="EMERGSVCS"
-                  >
-                    Emergency Services
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-ENCROACH"
-                    value="ENCROACH"
-                  >
-                    Encroachment
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-FENCEGATE"
-                    value="FENCEGATE"
-                  >
-                    Fencing/Gate
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-GARDENING"
-                    value="GARDENING"
-                  >
-                    Gardening
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-GRAVEL"
-                    value="GRAVEL"
-                  >
-                    Gravel
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-GRAZING"
-                    value="GRAZING"
-                  >
-                    Grazing
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-LOGGING"
-                    value="LOGGING"
-                  >
-                    Logging/Timber Harvest
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-MARINEFAC"
-                    value="MARINEFAC"
-                  >
-                    Marine Facility
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-MOBILEHM"
-                    value="MOBILEHM"
-                  >
-                    Mobile Home Pad
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-MTCYARD"
-                    value="MTCYARD"
-                  >
-                    Maintenance Yard
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-OTHER"
-                    value="OTHER"
-                  >
-                    Other*
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PARK"
-                    value="PARK"
-                  >
-                    Park
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PARKING"
-                    value="PARKING"
-                  >
-                    Parking
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PARKNRID"
-                    value="PARKNRID"
-                  >
-                    Park and Ride
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PIPELINE"
-                    value="PIPELINE"
-                  >
-                    Pipeline
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PRELOAD"
-                    value="PRELOAD"
-                  >
-                    Preload
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-PRVTRANS"
-                    value="PRVTRANS"
-                  >
-                    Private transportation
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-RAILWAY"
-                    value="RAILWAY"
-                  >
-                    Railway
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-RESTAREA"
-                    value="RESTAREA"
-                  >
-                    Rest Area/Pullout
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-SIDEWALK"
-                    value="SIDEWALK"
-                  >
-                    Sidewalks/Landscaping
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-SIGNAGE"
-                    value="SIGNAGE"
-                  >
-                    Signage
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-SPCLEVNT"
-                    value="SPCLEVNT"
-                  >
-                    Special Event
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-STGNGAREA"
-                    value="STGNGAREA"
-                  >
-                    Staging Area
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-STKPILING"
-                    value="STKPILING"
-                  >
-                    Stockpiling
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-STORAGE"
-                    value="STORAGE"
-                  >
-                    Storage
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-TOURINFO"
-                    value="TOURINFO"
-                  >
-                    Tourist Info
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-TRAIL"
-                    value="TRAIL"
-                  >
-                    Trail
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-UTILINFRA"
-                    value="UTILINFRA"
-                  >
-                    Utilities-infrastructure
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-UTILOHDXG"
-                    value="UTILOHDXG"
-                  >
-                    Utilities-overhead xing
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-UTILUGDXG"
-                    value="UTILUGDXG"
-                  >
-                    Utilities-underground xing
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-WATERRES"
-                    value="WATERRES"
-                  >
-                    Water Reservoir
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-WEIGHSCL"
-                    value="WEIGHSCL"
-                  >
-                    Weigh Scale
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-XING"
-                    value="XING"
-                  >
-                    Crossing
-                  </option>
-                </select>
+                    <div
+                      class="search-wrapper searchWrapper "
+                      style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="searchBox "
+                        id="multiselect-purposes_input"
+                        name="search_name_input"
+                        placeholder=""
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="optionListContainer displayNone"
+                    >
+                      <ul
+                        class="optionContainer"
+                      >
+                        <li
+                          class="option  highlightOption highlight  "
+                        >
+                          Access (Industrial/Commercial)
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Access (Residential)
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Agricultural
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          BC Ferries
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Camping
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Commercial Building
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Emergency Services
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Encroachment
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Fencing/Gate
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Gardening
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Gravel
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Grazing
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Logging/Timber Harvest
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Marine Facility
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Mobile Home Pad
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Maintenance Yard
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Other*
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Park
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Parking
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Park and Ride
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Pipeline
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Preload
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Private transportation
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Railway
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Rest Area/Pullout
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Sidewalks/Landscaping
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Signage
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Special Event
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Staging Area
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Stockpiling
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Storage
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Tourist Info
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Trail
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Utilities-infrastructure
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Utilities-overhead xing
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Utilities-underground xing
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Water Reservoir
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Weigh Scale
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Crossing
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

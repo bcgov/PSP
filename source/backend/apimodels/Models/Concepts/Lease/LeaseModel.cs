@@ -59,19 +59,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public string PsFileNo { get; set; }
 
         /// <summary>
-        /// get/set - The text description if the lease category type is set to "other".
-        /// </summary>
-        public string OtherCategoryType { get; set; }
-
-        /// <summary>
         /// get/set - The text description if the lease program type is set to "other".
         /// </summary>
         public string OtherProgramType { get; set; }
-
-        /// <summary>
-        /// get/set - The text description if the lease purpose type is set to "other".
-        /// </summary>
-        public string OtherPurposeType { get; set; }
 
         /// <summary>
         /// get/set - The text description if the lease type is set to "other".
@@ -119,14 +109,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public CodeTypeModel<string> ResponsibilityType { get; set; }
 
         /// <summary>
-        /// get/set - The entity responsible for this lease.
+        /// get/set - The list of purposes for this lease.
         /// </summary>
-        public CodeTypeModel<string> CategoryType { get; set; }
-
-        /// <summary>
-        /// get/set - The entity responsible for this lease.
-        /// </summary>
-        public CodeTypeModel<string> PurposeType { get; set; }
+        public IList<LeasePurposeModel> LeasePurposes { get; set; }
 
         /// <summary>
         /// get/set - The region of this lease within PIMS.

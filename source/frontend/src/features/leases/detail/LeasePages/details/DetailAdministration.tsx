@@ -1,12 +1,17 @@
 import { getIn, useFormikContext } from 'formik';
+import Multiselect from 'multiselect-react-dropdown';
 import styled from 'styled-components';
 
-import { Input } from '@/components/common/form';
+import { Input, readOnlyMultiSelectStyle } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { prettyFormatDate } from '@/utils';
+import { ApiGen_Concepts_LeasePurpose } from '@/models/api/generated/ApiGen_Concepts_LeasePurpose';
+import { exists, prettyFormatDate } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
+
 export interface IDetailAdministrationProps {
   nameSpace?: string;
   disabled?: boolean;
@@ -18,9 +23,22 @@ export interface IDetailAdministrationProps {
  */
 export const DetailAdministration: React.FunctionComponent<
   React.PropsWithChildren<IDetailAdministrationProps>
-> = ({ nameSpace, disabled }) => {
+> = ({ nameSpace, disabled }: IDetailAdministrationProps) => {
   const { values } = useFormikContext<ApiGen_Concepts_Lease>();
   const responsibilityDate = getIn(values, withNameSpace(nameSpace, 'responsibilityEffectiveDate'));
+
+  const leasePurposes: ApiGen_Concepts_LeasePurpose[] = getIn(
+    values,
+    withNameSpace(nameSpace, 'leasePurposes'),
+  );
+
+  const selectedPurposes: ApiGen_Base_CodeType<string>[] =
+    leasePurposes?.map(x => x.leasePurposeTypeCode).filter(exists) ?? [];
+
+  const otherPurposeIndex = leasePurposes.findIndex(
+    x => x.leasePurposeTypeCode.id === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
+  );
+
   return (
     <>
       <Section initiallyExpanded={true} isCollapsable={true} header="Administration">
@@ -45,16 +63,27 @@ export const DetailAdministration: React.FunctionComponent<
             field={withNameSpace(nameSpace, 'paymentReceivableType.description')}
           />
         </SectionField>
-        <SectionField label="Category" labelWidth="3">
-          <Input disabled={disabled} field={withNameSpace(nameSpace, 'categoryType.description')} />
-          {values?.categoryType?.id === 'OTHER' && values.otherCategoryType && (
-            <Input disabled={disabled} field={withNameSpace(nameSpace, 'otherCategoryType')} />
-          )}
-        </SectionField>
-        <SectionField label="Purpose" labelWidth="3">
-          <Input disabled={disabled} field={withNameSpace(nameSpace, 'purposeType.description')} />
-          {values?.purposeType?.id === 'OTHER' && values.otherPurposeType && (
-            <Input disabled={disabled} field={withNameSpace(nameSpace, 'otherPurposeType')} />
+
+        <SectionField label="Purpose(s)" labelWidth="3">
+          <Multiselect
+            disable
+            disablePreSelectedValues
+            hidePlaceholder
+            placeholder=""
+            selectedValues={selectedPurposes}
+            displayValue="description"
+            style={readOnlyMultiSelectStyle}
+          />
+          {leasePurposes.some(
+            x => x.leasePurposeTypeCode.id === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
+          ) && (
+            <Input
+              disabled={disabled}
+              field={withNameSpace(
+                nameSpace,
+                `leasePurposes[${otherPurposeIndex}].purposeOtherDescription`,
+              )}
+            />
           )}
         </SectionField>
         <SectionField label="Initiator" labelWidth="3">
@@ -95,4 +124,5 @@ const LargeTextInput = styled(Input)`
     font-size: 1.8rem;
   }
 `;
+
 export default DetailAdministration;
