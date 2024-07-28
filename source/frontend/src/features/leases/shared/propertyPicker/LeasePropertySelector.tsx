@@ -1,6 +1,4 @@
-import { booleanPointInPolygon, point } from '@turf/turf';
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
-import { MultiPolygon, Polygon } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
 import { useCallback, useContext, useRef, useState } from 'react';
@@ -20,7 +18,7 @@ import { useProperties } from '@/hooks/repositories/useProperties';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
-import { exists, isValidId, isValidString } from '@/utils';
+import { exists, isLatLngInFeatureSetBoundary, isValidId, isValidString } from '@/utils';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
@@ -207,28 +205,23 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                     <MapSelectorContainer
                       addSelectedProperties={processAddedProperties}
                       repositionSelectedProperty={(
-                        property: LocationFeatureDataset,
+                        featureset: LocationFeatureDataset,
                         latLng: LatLngLiteral,
                         index: number | null,
                       ) => {
-                        if (exists(property?.pimsFeature?.geometry)) {
-                          const location = point([latLng.lng, latLng.lat]);
-                          const boundary = property?.pimsFeature?.geometry as
-                            | Polygon
-                            | MultiPolygon;
+                        // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
+                        if (
+                          isNumber(index) &&
+                          index >= 0 &&
+                          isLatLngInFeatureSetBoundary(latLng, featureset)
+                        ) {
+                          const formProperty = formikProps.values.properties[index];
+                          const updatedFormProperty =
+                            FormLeaseProperty.fromFormLeaseProperty(formProperty);
+                          updatedFormProperty.property.fileLocation = latLng;
 
-                          // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
-                          if (booleanPointInPolygon(location, boundary)) {
-                            if (isNumber(index) && index >= 0) {
-                              const formProperty = formikProps.values.properties[index];
-                              const updatedFormProperty =
-                                FormLeaseProperty.fromFormLeaseProperty(formProperty);
-                              updatedFormProperty.property.fileLocation = latLng;
-
-                              // Find property within formik values and reposition it based on incoming file marker position
-                              arrayHelpers.replace(index, updatedFormProperty);
-                            }
-                          }
+                          // Find property within formik values and reposition it based on incoming file marker position
+                          arrayHelpers.replace(index, updatedFormProperty);
                         }
                       }}
                       modifiedProperties={LeaseFormModel.getPropertiesAsForm(values).map(p =>

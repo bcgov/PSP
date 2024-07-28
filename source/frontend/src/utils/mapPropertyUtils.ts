@@ -1,3 +1,4 @@
+import { booleanPointInPolygon, point } from '@turf/turf';
 import {
   Feature,
   FeatureCollection,
@@ -278,4 +279,24 @@ export function latLngFromMapProperty(
     lat: Number(mapProperty?.fileLocation?.lat ?? mapProperty?.latitude ?? 0),
     lng: Number(mapProperty?.fileLocation?.lng ?? mapProperty?.longitude ?? 0),
   };
+}
+
+/**
+ * Takes a (Lat, Long) value and a FeatureSet and determines if the point resides inside the polygon.
+ * The polygon can be convex or concave. The function accounts for holes.
+ *
+ * @param latLng The input lat/long
+ * @param featureset The input featureset
+ * @returns true if the Point is inside the FeatureSet boundary; false if the Point is not inside the boundary
+ */
+export function isLatLngInFeatureSetBoundary(
+  latLng: LatLngLiteral,
+  featureset: LocationFeatureDataset,
+): boolean {
+  const location = point([latLng.lng, latLng.lat]);
+  const boundary = (featureset?.pimsFeature?.geometry ?? featureset?.parcelFeature?.geometry) as
+    | Polygon
+    | MultiPolygon;
+
+  return exists(boundary) && booleanPointInPolygon(location, boundary);
 }
