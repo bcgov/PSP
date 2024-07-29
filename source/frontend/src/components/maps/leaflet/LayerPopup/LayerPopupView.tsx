@@ -189,8 +189,8 @@ const StyledScrollable = styled(Scrollable)`
 
 const StyledFlyoutContainer = styled.div`
   position: absolute;
-  bottom: -21.5rem;
-  left: 100.5%;
+  bottom: -18.5rem;
+  left: 100.9%;
   border: 2px solid #bcbec5;
   box-shadow: 6px 6px 12px rgb(0 0 0 / 40%);
   min-width: 20rem;

@@ -171,18 +171,25 @@ exports[`LayerPopupView component > renders as expected with layer popup content
 }
 
 .c5 {
-  height: 3.1rem;
+  float: right;
+  cursor: pointer;
+  padding: 0rem;
+  margin: 0rem;
 }
 
 .c6 {
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+  float: right;
+  cursor: pointer;
+}
+
+.c7 {
+  margin-bottom: 1rem;
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -200,7 +207,7 @@ exports[`LayerPopupView component > renders as expected with layer popup content
 }
 
 .c4 {
-  font-size: 1.6rem;
+  font-size: 2rem;
   cursor: pointer;
 }
 
@@ -245,47 +252,77 @@ exports[`LayerPopupView component > renders as expected with layer popup content
         </svg>
       </div>
     </button>
-    <div
-      class="c5"
+    <ul
+      class="simple-pagination-container"
     >
-      <ul
-        class="pagination"
+      <li
+        class="simple-pagination-previous disabled"
       >
-        <li
-          class="page-item disabled"
+        <a
+          aria-disabled="true"
+          aria-label="Previous page"
+          class="simple-pagination-previous-link "
+          rel="prev"
+          role="button"
+          tabindex="-1"
         >
-          <a
-            aria-disabled="true"
-            aria-label="Previous page"
-            class="page-link "
-            rel="prev"
-            role="button"
-            tabindex="-1"
+          <svg
+            class="c5"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            &lt;
-          </a>
-        </li>
-        <li
-          class="page-item"
+            <path
+              d="m14 7-5 5 5 5V7z"
+            />
+            <path
+              d="M24 0v24H0V0h24z"
+              fill="none"
+            />
+          </svg>
+        </a>
+      </li>
+      <li
+        class="simple-pagination-next"
+      >
+        <a
+          aria-disabled="false"
+          aria-label="Next page"
+          class="simple-pagination-next-link"
+          rel="next"
+          role="button"
+          tabindex="0"
         >
-          <a
-            aria-disabled="false"
-            aria-label="Next page"
-            class="page-link"
-            rel="next"
-            role="button"
-            tabindex="0"
+          <svg
+            class="c6"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
           >
-            &gt;
-          </a>
-        </li>
-      </ul>
-    </div>
-    <div
-      class="c6"
-    />
+            <path
+              d="m10 17 5-5-5-5v10z"
+            />
+            <path
+              d="M0 24V0h24v24H0z"
+              fill="none"
+            />
+          </svg>
+        </a>
+      </li>
+    </ul>
     <div
       class="c7"
+    />
+    <div
+      class="c8"
     >
       <button
         class="c1 Button btn btn-link"

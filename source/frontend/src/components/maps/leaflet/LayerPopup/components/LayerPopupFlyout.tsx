@@ -34,7 +34,7 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
     <StyledFlyerWrapper>
       <StyledLinkSection>
         <StyledLinkWrapper>
-          <LinkButton onClick={onViewPropertyInfo}>View Property info</LinkButton>
+          <LinkButton onClick={onViewPropertyInfo}>View Property Info</LinkButton>
         </StyledLinkWrapper>
       </StyledLinkSection>
       {!isRetiredProperty && (
@@ -108,12 +108,12 @@ const StyledLinkSection = styled.div`
 const StyledSubheading = styled.div`
   padding-top: 0.5rem;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 1.5rem;
 `;
 
 const StyledLinkWrapper = styled.div`
-  padding: 0.5rem 1rem 0 0rem !important;
   .btn {
     width: 100%;
+    font-size: 1.4rem !important;
   }
 `;

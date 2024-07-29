@@ -1,4 +1,7 @@
+import './SimplePagination.scss';
+
 import { useCallback, useEffect, useState } from 'react';
+import { MdArrowLeft, MdArrowRight } from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
 
@@ -24,29 +27,31 @@ export const SimplePagination = <T extends object>(props: ISimplePaginationProps
 
   return (
     <>
-      <StyledWrapper>
-        <ReactPaginate
-          previousLabel={'<'}
-          nextLabel={'>'}
-          breakLabel={'...'}
-          pageCount={props.items.length}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handleChangePage}
-          //forcePage={pageIndex}
-          // css
-          activeClassName="active"
-          breakClassName="page-item"
-          breakLinkClassName="page-link"
-          containerClassName="pagination"
-          pageClassName="page-item"
-          pageLinkClassName="page-link"
-          previousClassName="page-item"
-          previousLinkClassName="page-link"
-          nextClassName="page-item"
-          nextLinkClassName="page-link"
-        />
-      </StyledWrapper>
+      <ReactPaginate
+        previousLabel={<ArrowLeftIcon />}
+        nextLabel={<ArrowRightIcon />}
+        breakLabel={'...'}
+        pageCount={props.items.length}
+        marginPagesDisplayed={0}
+        pageRangeDisplayed={0}
+        onPageChange={handleChangePage}
+        // css
+        activeClassName="simple-pagination-active"
+        breakClassName="simple-pagination-break"
+        breakLinkClassName="simple-pagination-break-link"
+        containerClassName="simple-pagination-container"
+        pageClassName="simple-pagination-page"
+        pageLinkClassName="simple-pagination-page-link"
+        previousClassName="simple-pagination-previous"
+        previousLinkClassName="simple-pagination-previous-link"
+        nextClassName="simple-pagination-next"
+        nextLinkClassName="simple-pagination-next-link"
+        pageLabelBuilder={currentPage => (
+          <>
+            <strong>{currentPage}</strong> of <span>{props.items.length}</span>
+          </>
+        )}
+      />
       <StyledDivider />
       <>{children(currentItem)}</>
     </>
@@ -55,13 +60,19 @@ export const SimplePagination = <T extends object>(props: ISimplePaginationProps
 
 export default SimplePagination;
 
-const StyledWrapper = styled.div`
-  height: 3.1rem;
+export const ArrowLeftIcon = styled(MdArrowLeft)`
+  float: right;
+  cursor: pointer;
+  padding: 0rem;
+  margin: 0rem;
+`;
+export const ArrowRightIcon = styled(MdArrowRight)`
+  float: right;
+  cursor: pointer;
 `;
 
-const StyledDivider = styled.div`
-  margin-top: 0.5rem;
-  margin-bottom: 0.5rem;
+export const StyledDivider = styled.div`
+  margin-bottom: 1rem;
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;

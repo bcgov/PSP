@@ -88,11 +88,6 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           layersData.push(parcelData);
         }
 
-        setLayerPopup({
-          latlng: mapMachine.mapLocationFeatureDataset.location,
-          layers: layersData,
-        });
-
         if (featureSet.highwayFeature !== null) {
           const parcelData: LayerData = {
             title: 'Highway Research',

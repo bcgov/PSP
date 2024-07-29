@@ -45,12 +45,12 @@ export const highwayLayerPopupConfig: PopupContentConfig = {
   },
   MOTI_PLAN: { label: 'MOTI plan', display: (data: { [key: string]: any }) => data.MOTI_PLAN },
   VETTING_STATUS: {
-    label: 'Venting Status',
+    label: 'Vetting Status',
     display: (data: { [key: string]: any }) => data.VETTING_STATUS,
   },
   SHAPE_TYPE: { label: 'Shape type', display: (data: { [key: string]: any }) => data.SHAPE_TYPE },
   PENDING_CLASSIFICATION: {
-    label: 'Pending clasification',
+    label: 'Pending classification',
     display: (data: { [key: string]: any }) => data.PENDING_CLASSIFICATION,
   },
   MOTI_FILE: { label: 'MOTI file', display: (data: { [key: string]: any }) => data.MOTI_FILE },

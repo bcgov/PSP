@@ -63,7 +63,7 @@ describe('LayerPopupView component', () => {
         },
         featureDataset: null,
       });
-      expect(queryByText('View Property info')).toBeNull();
+      expect(queryByText('View Property Info')).toBeNull();
     });
 
     it('opens fly out when ellipsis is clicked', async () => {
@@ -76,7 +76,7 @@ describe('LayerPopupView component', () => {
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
-      expect(getByText('View Property info')).toBeVisible();
+      expect(getByText('View Property Info')).toBeVisible();
     });
 
     it('handles view property action for inventory properties', async () => {
@@ -112,7 +112,7 @@ describe('LayerPopupView component', () => {
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
-      const link = getByText('View Property info');
+      const link = getByText('View Property Info');
       await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(`/mapview/sidebar/property/${propertyId}`);
     });
@@ -147,7 +147,7 @@ describe('LayerPopupView component', () => {
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
-      const link = getByText('View Property info');
+      const link = getByText('View Property Info');
       await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(
         `/mapview/sidebar/non-inventory-property/${parsedPid}`,
@@ -187,7 +187,7 @@ describe('LayerPopupView component', () => {
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
-      const link = getByText('View Property info');
+      const link = getByText('View Property Info');
       await act(async () => userEvent.click(link));
     });
 

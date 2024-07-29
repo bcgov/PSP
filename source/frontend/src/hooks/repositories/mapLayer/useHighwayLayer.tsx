@@ -7,7 +7,7 @@ import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import { TenantContext } from '@/tenants';
 
 /**
- * API wrapper to centralize all AJAX requests to WFS endpoints for the pims property location.
+ * API wrapper to centralize all AJAX requests to WFS endpoints for the highway layer location.
  * @returns Object containing functions to make requests to the WFS layer.
  * Note: according to the view ISS_ProvincialPublicHighway
  */
