@@ -20,7 +20,6 @@ export const LayerPopupLinks: React.FC<React.PropsWithChildren<ILayerPopupLinksP
   const { requestFlyToBounds } = useMapStateMachine();
 
   const onZoomToBounds = useCallback(() => {
-    debugger;
     if (bounds !== undefined) {
       requestFlyToBounds(bounds);
     }

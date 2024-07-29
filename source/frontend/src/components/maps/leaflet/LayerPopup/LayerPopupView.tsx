@@ -110,7 +110,6 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
   };
 
   const getFirstBounds = (layers: LayerData[]) => {
-    debugger;
     return layers.find(layer => exists(layer?.bounds))?.bounds;
   };
 
@@ -161,7 +160,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
 
 const CloseIcon = styled(FaWindowClose)`
   color: ${props => props.theme.css.textColor};
-  font-size: 1.6rem;
+  font-size: 2rem;
   cursor: pointer;
 `;
 
@@ -185,6 +184,7 @@ const StyledScrollable = styled(Scrollable)`
   background-color: ${props => props.theme.css.highlightBackgroundColor};
   height: 25rem;
   overflow: auto;
+  font-size: 1.4rem;
 `;
 
 const StyledFlyoutContainer = styled.div`
