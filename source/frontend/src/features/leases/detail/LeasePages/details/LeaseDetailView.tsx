@@ -74,7 +74,17 @@ export const LeaseDetailView: React.FunctionComponent<
       </Row>
       {lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
         <>
-          <SectionField label="Termination" labelWidth="3">
+          <SectionField
+            label="Termination"
+            labelWidth="3"
+            tooltip={
+              <TooltipIcon
+                toolTipId="lease-termination-tooltip"
+                toolTip="The expiry date of the last agreement if by effluxion of time or the early termination date for cause"
+                placement="right"
+              />
+            }
+          >
             {prettyFormatDate(lease.terminationDate)}
           </SectionField>
           <SectionField label="Termination reason" labelWidth="3">
