@@ -1,6 +1,6 @@
 import './SimplePagination.scss';
 
-import { useCallback, useEffect, useState } from 'react';
+import { ReactNode, useCallback, useEffect, useState } from 'react';
 import { MdArrowLeft, MdArrowRight } from 'react-icons/md';
 import ReactPaginate from 'react-paginate';
 import styled from 'styled-components';
@@ -8,6 +8,8 @@ import styled from 'styled-components';
 export interface ISimplePaginationProps<T extends object> {
   items: T[];
   children?: (item: T) => JSX.Element;
+  onZeroItemsPagination?: ReactNode;
+  onZeroItemsContent?: ReactNode;
 }
 
 export const SimplePagination = <T extends object>(props: ISimplePaginationProps<T>) => {
@@ -25,40 +27,60 @@ export const SimplePagination = <T extends object>(props: ISimplePaginationProps
 
   const children = props.children;
 
-  return (
-    <>
-      <ReactPaginate
-        previousLabel={<ArrowLeftIcon />}
-        nextLabel={<ArrowRightIcon />}
-        breakLabel={'...'}
-        pageCount={props.items.length}
-        marginPagesDisplayed={0}
-        pageRangeDisplayed={0}
-        onPageChange={handleChangePage}
-        // css
-        activeClassName="simple-pagination-active"
-        breakClassName="simple-pagination-break"
-        breakLinkClassName="simple-pagination-break-link"
-        containerClassName="simple-pagination-container"
-        pageClassName="simple-pagination-page"
-        pageLinkClassName="simple-pagination-page-link"
-        previousClassName="simple-pagination-previous"
-        previousLinkClassName="simple-pagination-previous-link"
-        nextClassName="simple-pagination-next"
-        nextLinkClassName="simple-pagination-next-link"
-        pageLabelBuilder={currentPage => (
-          <>
-            <strong>{currentPage}</strong> of <span>{props.items.length}</span>
-          </>
-        )}
-      />
-      <StyledDivider />
-      <>{children(currentItem)}</>
-    </>
-  );
+  const emptyTitleMessage = props.onZeroItemsPagination ?? '0 of 0';
+  const emptyContentMessage = props.onZeroItemsContent ?? 'No data';
+
+  if (props.items.length === 0) {
+    return (
+      <>
+        <StyledEmptyTitle>{emptyTitleMessage}</StyledEmptyTitle>
+        <StyledDivider />
+        {emptyContentMessage}
+      </>
+    );
+  } else {
+    return (
+      <>
+        <ReactPaginate
+          previousLabel={<ArrowLeftIcon />}
+          nextLabel={<ArrowRightIcon />}
+          breakLabel={'...'}
+          pageCount={props.items.length}
+          marginPagesDisplayed={0}
+          pageRangeDisplayed={0}
+          onPageChange={handleChangePage}
+          pageLabelBuilder={currentPage => (
+            <>
+              <strong>{currentPage}</strong> of <span>{props.items.length}</span>
+            </>
+          )}
+          // css
+          activeClassName="simple-pagination-active"
+          breakClassName="simple-pagination-break"
+          breakLinkClassName="simple-pagination-break-link"
+          containerClassName="simple-pagination-container"
+          pageClassName="simple-pagination-page"
+          pageLinkClassName="simple-pagination-page-link"
+          previousClassName="simple-pagination-previous"
+          previousLinkClassName="simple-pagination-previous-link"
+          nextClassName="simple-pagination-next"
+          nextLinkClassName="simple-pagination-next-link"
+        />
+        <StyledDivider />
+        <>{children(currentItem)}</>
+      </>
+    );
+  }
 };
 
 export default SimplePagination;
+
+const StyledEmptyTitle = styled.div`
+  font-size: 1.6rem;
+  padding-top: 1rem;
+  font-weight: bold;
+  height: 3.6rem;
+`;
 
 export const ArrowLeftIcon = styled(MdArrowLeft)`
   float: right;

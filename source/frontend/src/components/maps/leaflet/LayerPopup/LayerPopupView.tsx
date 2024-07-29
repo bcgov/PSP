@@ -120,7 +120,11 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
           <CloseIcon />
         </StyledCloseButton>
       </TooltipWrapper>
-      <SimplePagination<LayerData> items={layerPopup.layers}>
+      <SimplePagination<LayerData>
+        items={layerPopup.layers}
+        onZeroItemsPagination={'Location Information'}
+        onZeroItemsContent={'No layer information at this location'}
+      >
         {item =>
           exists(item) ? (
             <>
