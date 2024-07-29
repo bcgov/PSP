@@ -243,6 +243,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
+        highwayFeature: null,
         selectingComponentId: null,
       },
     };
@@ -272,6 +273,7 @@ describe('AddAcquisitionContainer component', () => {
         },
         districtFeature: null,
         municipalityFeature: null,
+        highwayFeature: null,
         selectingComponentId: null,
       },
     };

@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "5.5.0-85.13",
+  "version": "5.5.0-85.15",
   "private": true,
   "dependencies": {
     "@bcgov/bc-sans": "1.0.1",
@@ -79,7 +79,7 @@
     "@types/node": "20.11.25",
     "@types/pretty": "2.0.0",
     "@types/pretty-quick": "3.1.6",
-    "@types/react": "18.3.3",
+    "@types/react": "18.2.0",
     "@types/react-bootstrap": "0.32.25",
     "@types/react-bootstrap-typeahead": "5.1.13",
     "@types/react-datepicker": "3.1.8",

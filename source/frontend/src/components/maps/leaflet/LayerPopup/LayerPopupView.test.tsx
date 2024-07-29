@@ -91,6 +91,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
       });
@@ -118,6 +119,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
       });
@@ -150,6 +152,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
       });
@@ -198,6 +201,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
         claims: [Claims.PROPERTY_ADD],
@@ -227,6 +231,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
         claims: [Claims.PROPERTY_ADD],
@@ -255,6 +260,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
         claims: [Claims.PROPERTY_ADD],
