@@ -228,6 +228,7 @@ export class PropertyForm {
         geometry: null,
       },
       municipalityFeature: null,
+      highwayFeature: null,
     };
   }
 

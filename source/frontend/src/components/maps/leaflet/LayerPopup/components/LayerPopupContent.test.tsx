@@ -21,7 +21,6 @@ const map: Partial<L.Map> = {
 vi.mocked(useMap).mockReturnValue(map as unknown as ReturnType<typeof useMap>);
 
 const mockLayer: IPopupContentProps = {
-  layerPopup: {
     config: {},
     data: {
       feature_area_sqm: '10000',
@@ -41,10 +40,6 @@ const mockLayer: IPopupContentProps = {
       se_anno_cad_data: '',
       when_updated: '2020-01-01',
     },
-    latlng: new LatLng(48, -123),
-    title: 'Foo Bar',
-    feature: undefined,
-  },
 };
 
 const renderPopup = (props: IPopupContentProps) => {
