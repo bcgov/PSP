@@ -1,6 +1,6 @@
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
-import fakeISSResult from './fakeISSResult';
+import getFakeISSResult from './fakeISSResult';
 
 export const getMockLocationFeatureDataset = (): LocationFeatureDataset =>
   ({
@@ -115,5 +115,5 @@ export const getMockLocationFeatureDataset = (): LocationFeatureDataset =>
         SE_ANNO_CAD_DATA: null,
       },
     },
-    highwayFeature: fakeISSResult,
+    highwayFeature: getFakeISSResult(),
   } as unknown as LocationFeatureDataset);

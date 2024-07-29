@@ -2,7 +2,7 @@ import { FeatureCollection, Geometry } from 'geojson';
 
 import { ISS_ProvincialPublicHighway } from '../models/layers/pimsHighwayLayer';
 
-const fakeISSResult: FeatureCollection<Geometry, ISS_ProvincialPublicHighway> = {
+const getFakeISSResult: () => FeatureCollection<Geometry, ISS_ProvincialPublicHighway> = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -188,6 +188,6 @@ const fakeISSResult: FeatureCollection<Geometry, ISS_ProvincialPublicHighway> = 
     },
   },*/
   bbox: [-123.3881267, 48.51076903, -123.38290524, 48.53152436],
-};
+});
 
-export default fakeISSResult;
+export default getFakeISSResult;
