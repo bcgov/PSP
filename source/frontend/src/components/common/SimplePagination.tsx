@@ -4,12 +4,10 @@ import styled from 'styled-components';
 
 export interface ISimplePaginationProps<T extends object> {
   items: T[];
-  children?: (props: T) => JSX.Element;
+  children?: (item: T) => JSX.Element;
 }
 
-export const SimplePagination = <T extends object>(
-  props: React.PropsWithChildren<ISimplePaginationProps<T>>,
-) => {
+export const SimplePagination = <T extends object>(props: ISimplePaginationProps<T>) => {
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [currentItem, setCurrentItem] = useState<T | null>(null);
 

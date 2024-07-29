@@ -109,6 +109,11 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
     history.push('/mapview/sidebar/consolidation/new');
   };
 
+  const getFirstBounds = (layers: LayerData[]) => {
+    debugger;
+    return layers.find(layer => exists(layer?.bounds))?.bounds;
+  };
+
   return (
     <StyledContainer>
       <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
@@ -124,16 +129,16 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
                 <LayerPopupTitle>{item.title}</LayerPopupTitle>
                 <LayerPopupContent data={item.data} config={item.config} />
               </StyledScrollable>
-              <LayerPopupLinks
-                bounds={item.bounds}
-                onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
-              />
             </>
           ) : (
             <></>
           )
         }
       </SimplePagination>
+      <LayerPopupLinks
+        bounds={getFirstBounds(layerPopup.layers)}
+        onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
+      />
 
       {showFlyout && (
         <StyledFlyoutContainer>

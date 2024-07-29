@@ -1,4 +1,5 @@
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+
 import fakeISSResult from './fakeISSResult';
 
 export const getMockLocationFeatureDataset = (): LocationFeatureDataset =>
