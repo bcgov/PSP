@@ -1,5 +1,4 @@
 import React from 'react';
-import { ListGroup } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
@@ -32,80 +31,77 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
   const keycloak = useKeycloakWrapper();
 
   return (
-    <ListGroup variant="flush">
+    <StyledFlyerWrapper>
       <StyledLinkSection>
-        <ListGroup.Item>
+        <StyledLinkWrapper>
           <LinkButton onClick={onViewPropertyInfo}>View Property info</LinkButton>
-        </ListGroup.Item>
+        </StyledLinkWrapper>
       </StyledLinkSection>
       {!isRetiredProperty && (
         <StyledLinkSection>
-          <ListGroup.Item>
+          <StyledLinkWrapper>
             <StyledSubheading>Create:</StyledSubheading>
-          </ListGroup.Item>
+          </StyledLinkWrapper>
           {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
-            <ListGroup.Item>
+            <StyledLinkWrapper>
               <LinkButton onClick={onCreateResearchFile}>Research File</LinkButton>
-            </ListGroup.Item>
+            </StyledLinkWrapper>
           )}
           {keycloak.hasClaim(Claims.ACQUISITION_ADD) && (
-            <ListGroup.Item>
+            <StyledLinkWrapper>
               <LinkButton onClick={onCreateAcquisitionFile}>Acquisition File</LinkButton>
-            </ListGroup.Item>
+            </StyledLinkWrapper>
           )}
           {keycloak.hasClaim(Claims.LEASE_ADD) && (
-            <ListGroup.Item>
-              <LinkButton onClick={onCreateLeaseLicense}>Lease/Licence</LinkButton>
-            </ListGroup.Item>
+            <StyledLinkWrapper>
+              <LinkButton onClick={onCreateLeaseLicense}>Lease/Licence File</LinkButton>
+            </StyledLinkWrapper>
           )}
           {keycloak.hasClaim(Claims.DISPOSITION_ADD) && (
-            <ListGroup.Item>
+            <StyledLinkWrapper>
               <LinkButton onClick={onCreateDispositionFile}>Disposition File</LinkButton>
-            </ListGroup.Item>
+            </StyledLinkWrapper>
           )}
         </StyledLinkSection>
       )}
 
       {isRetiredProperty && (
         <StyledLinkSection>
-          <ListGroup.Item>
+          <StyledLinkWrapper>
             <StyledSubheading>Create:</StyledSubheading>
-          </ListGroup.Item>
+          </StyledLinkWrapper>
           {keycloak.hasClaim(Claims.RESEARCH_ADD) && (
-            <ListGroup.Item>
+            <StyledLinkWrapper>
               <LinkButton onClick={onCreateResearchFile}>Research File</LinkButton>
-            </ListGroup.Item>
+            </StyledLinkWrapper>
           )}
         </StyledLinkSection>
       )}
 
       {keycloak.hasClaim(Claims.PROPERTY_ADD) && isInPims && !isRetiredProperty && (
         <StyledLinkSection>
-          <ListGroup.Item>
+          <StyledLinkWrapper>
             <LinkButton onClick={onCreateSubdivision}>Create Subdivision</LinkButton>
-          </ListGroup.Item>
-          <ListGroup.Item>
+          </StyledLinkWrapper>
+          <StyledLinkWrapper>
             <LinkButton onClick={onCreateConsolidation}>Create Consolidation</LinkButton>
-          </ListGroup.Item>
+          </StyledLinkWrapper>
         </StyledLinkSection>
       )}
-    </ListGroup>
+    </StyledFlyerWrapper>
   );
 };
 
-const StyledLinkSection = styled.span`
+const StyledFlyerWrapper = styled.div`
+  padding-left: 0.8rem;
+`;
+
+const StyledLinkSection = styled.div`
   border-bottom: 1px solid #bcbec5 !important;
   margin: 0rem 1rem 0rem 1rem !important;
   &:last-of-type {
     border-bottom: none !important;
     padding-bottom: 0.5rem !important;
-  }
-
-  .list-group-item {
-    padding: 0.5rem 1rem 0 0rem !important;
-    .btn {
-      width: 100%;
-    }
   }
 `;
 
@@ -113,4 +109,11 @@ const StyledSubheading = styled.div`
   padding-top: 0.5rem;
   font-weight: bold;
   font-size: 16px;
+`;
+
+const StyledLinkWrapper = styled.div`
+  padding: 0.5rem 1rem 0 0rem !important;
+  .btn {
+    width: 100%;
+  }
 `;
