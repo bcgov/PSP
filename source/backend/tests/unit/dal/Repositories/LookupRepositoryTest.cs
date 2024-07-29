@@ -324,23 +324,6 @@ namespace Pims.Dal.Tests.Repositories
             Assert.IsType<PimsLeaseLicenseType[]>(result);
         }
 
-        //[Fact]
-        public void LookupRepository_GetAllLeaseCategoryTypes_ReturnsCorrectType()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var context = helper.CreatePimsContext(user, true);
-
-            var lookupRepository = helper.CreateRepository<LookupRepository>(user);
-
-            // Act
-            var result = lookupRepository.GetAllLeaseCategoryTypes();
-
-            // Assert
-            Assert.IsType<PimsLeaseCategoryType[]>(result);
-        }
-
         [Fact]
         public void LookupRepository_GetAllLeasePurposeTypes_ReturnsCorrectType()
         {

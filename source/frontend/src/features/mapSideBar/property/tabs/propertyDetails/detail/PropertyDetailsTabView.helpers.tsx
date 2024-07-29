@@ -43,24 +43,6 @@ export function toFormValues(apiData?: ApiGen_Concepts_Property): IPropertyDetai
   };
 }
 
-export const readOnlyMultiSelectStyle = {
-  multiselectContainer: {
-    opacity: 1,
-  },
-  searchBox: {
-    border: 'none',
-    padding: 0,
-  },
-  chips: {
-    opacity: 1,
-    background: '#F2F2F2',
-    borderRadius: '4px',
-    color: 'black',
-    fontSize: '16px',
-    marginRight: '1em',
-  },
-};
-
 export const defaultPropertyInfo: Partial<ApiGen_Concepts_Property> = {
   anomalies: [],
   tenures: [],
