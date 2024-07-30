@@ -63,7 +63,7 @@ const useLocationFeatureLoader = () => {
       const fullyAttributedTask = fullyAttributedServiceFindOne(latLng);
       const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
       const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
-      const highwayTask = highwayLayerServiceFindOne(latLng, 'GEOMERTY');
+      const highwayTask = highwayLayerServiceFindOne(latLng, 'GEOMETRY');
 
       const [parcelFeature, regionFeature, districtFeature, highwayFeature] = await Promise.all([
         fullyAttributedTask,
