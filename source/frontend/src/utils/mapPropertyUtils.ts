@@ -262,6 +262,8 @@ export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | 
 
 export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
   return isValidId(featureset?.pimsFeature?.properties?.PIN)
+    ? featureset?.pimsFeature?.properties?.PIN?.toString()
+    : isValidId(featureset?.parcelFeature?.properties?.PIN)
     ? featureset?.parcelFeature?.properties?.PIN?.toString()
     : null;
 }
