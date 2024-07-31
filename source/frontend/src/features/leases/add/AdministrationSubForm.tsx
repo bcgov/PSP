@@ -2,7 +2,7 @@ import { FormikProps } from 'formik/dist/types';
 import { ReactNode, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { FastDatePicker, Input, Select } from '@/components/common/form';
+import { FastDatePicker, Input, Multiselect, Select } from '@/components/common/form';
 import FormGuideContainer from '@/components/common/form/FormGuide/FormGuideContainer';
 import { InlineInput } from '@/components/common/form/styles';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
@@ -10,9 +10,11 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { isValidString } from '@/utils';
 
 import { LeaseFormModel } from '../models';
+import { LeasePurposeModel } from '../models/LeasePurposeModel';
 import * as Styled from './styles';
 
 export interface IAdministrationSubFormProps {
@@ -23,40 +25,41 @@ const AdministrationSubForm: React.FunctionComponent<
   React.PropsWithChildren<IAdministrationSubFormProps>
 > = ({ formikProps }) => {
   const { values, setFieldValue } = formikProps;
-  const { categoryTypeCode, leaseTypeCode, purposeTypeCode, programTypeCode } = values;
-  const { getOptionsByType } = useLookupCodeHelpers();
+  const { leaseTypeCode, programTypeCode, purposes, purposeOtherDescription } = values;
+
+  const { getByType, getOptionsByType } = useLookupCodeHelpers();
   const programTypes = getOptionsByType(API.LEASE_PROGRAM_TYPES);
   const types = getOptionsByType(API.LEASE_TYPES);
-  const categoryTypes = getOptionsByType(API.LEASE_CATEGORY_TYPES);
-  const purposeTypes = getOptionsByType(API.LEASE_PURPOSE_TYPES);
   const initiatorTypes = getOptionsByType(API.LEASE_INITIATOR_TYPES);
   const responsibilityTypes = getOptionsByType(API.LEASE_RESPONSIBILITY_TYPES);
 
+  const leasePurposeOptions = getByType(API.LEASE_PURPOSE_TYPES).map(x =>
+    LeasePurposeModel.fromLookup(x),
+  );
+
   //clear the associated other fields if the corresponding type has its value changed from other to something else.
   useEffect(() => {
-    if (isValidString(categoryTypeCode) && categoryTypeCode !== 'OTHER') {
-      setFieldValue('otherCategoryTypeDescription', '');
-    }
     if (isValidString(leaseTypeCode) && leaseTypeCode !== 'OTHER') {
       setFieldValue('otherLeaseTypeDescription', '');
     }
-    if (isValidString(leaseTypeCode) && !isLeaseCategoryVisible(leaseTypeCode)) {
-      setFieldValue('otherCategoryTypeDescription', '');
-      setFieldValue('categoryTypeCode', '');
-    }
-    if (isValidString(purposeTypeCode) && purposeTypeCode !== 'OTHER') {
-      setFieldValue('otherPurposeTypeDescription', '');
-    }
+
     if (isValidString(programTypeCode) && programTypeCode !== 'OTHER') {
       setFieldValue('otherProgramTypeDescription', '');
     }
-  }, [categoryTypeCode, leaseTypeCode, purposeTypeCode, programTypeCode, setFieldValue]);
 
-  useEffect(() => {
-    if (isValidString(leaseTypeCode) && !isLeaseCategoryVisible(leaseTypeCode)) {
-      setFieldValue('categoryTypeCode', '');
+    if (purposes.length > 0) {
+      if (!purposes?.some(x => x.purposeTypeCode === ApiGen_CodeTypes_LeasePurposeTypes.OTHER)) {
+        setFieldValue('purposeOtherDescription', null);
+      } else {
+        const otherIndex = purposes?.findIndex(
+          x => x.purposeTypeCode === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
+        );
+        if (otherIndex >= 0) {
+          setFieldValue(`purposes[${otherIndex}].purposeOtherDescription`, purposeOtherDescription);
+        }
+      }
     }
-  }, [leaseTypeCode, setFieldValue]);
+  }, [leaseTypeCode, programTypeCode, purposeOtherDescription, purposes, setFieldValue]);
 
   const guideBodyContent = (): ReactNode => {
     return (
@@ -113,7 +116,7 @@ const AdministrationSubForm: React.FunctionComponent<
   return (
     <Section header="Administration">
       <FormGuideContainer
-        tittle="Help with this section"
+        tittle="Help with choosing the agreement Program, Type and Purpose"
         guideBody={guideBodyContent()}
       ></FormGuideContainer>
       <SectionField label="MOTI contact" labelWidth="2" contentWidth="8">
@@ -157,43 +160,22 @@ const AdministrationSubForm: React.FunctionComponent<
         </Col>
       </Row>
 
-      {isLeaseCategoryVisible(values?.leaseTypeCode) && (
-        <Row>
-          <Col>
-            <SectionField label="Category" required>
-              <Select
-                field="categoryTypeCode"
-                options={categoryTypes}
-                placeholder="Select category"
-                required
-              />
-            </SectionField>
-          </Col>
-          <Col>
-            {values?.categoryTypeCode === 'OTHER' && (
-              <SectionField label="Describe other" required>
-                <Input field="otherCategoryTypeDescription" required />
-              </SectionField>
-            )}
-          </Col>
-        </Row>
-      )}
-
       <Row>
         <Col>
           <SectionField label="Purpose" required>
-            <Select
-              required
-              field="purposeTypeCode"
-              options={purposeTypes}
-              placeholder="Select purpose"
+            <Multiselect
+              field="purposes"
+              displayValue="purposeTypeCodeDescription"
+              placeholder=""
+              options={leasePurposeOptions}
+              hidePlaceholder
             />
           </SectionField>
         </Col>
         <Col>
-          {values?.purposeTypeCode === 'OTHER' && (
+          {purposes?.some(x => x.purposeTypeCode === ApiGen_CodeTypes_LeasePurposeTypes.OTHER) && (
             <SectionField label="Describe other" required>
-              <Input field="otherPurposeTypeDescription" required />
+              <Input field="purposeOtherDescription" required />
             </SectionField>
           )}
         </Col>
@@ -226,7 +208,10 @@ const AdministrationSubForm: React.FunctionComponent<
         </Col>
       </Row>
 
-      <SectionField label="Intended use">
+      <SectionField
+        label="Intended use"
+        tooltip="The purpose for which the license is issued, as per the agreement"
+      >
         <Styled.MediumTextArea field="description" />
       </SectionField>
       <SectionField label="Primary arbitration city">
@@ -234,11 +219,6 @@ const AdministrationSubForm: React.FunctionComponent<
       </SectionField>
     </Section>
   );
-};
-
-export const isLeaseCategoryVisible = (typeId?: string) => {
-  const visibleCategoryTypes = ['LSGRND', 'LSREG', 'LSUNREG'];
-  return !!typeId && visibleCategoryTypes.includes(typeId);
 };
 
 export default AdministrationSubForm;

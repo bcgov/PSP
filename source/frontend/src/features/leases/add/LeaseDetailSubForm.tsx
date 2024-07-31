@@ -177,7 +177,6 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
           <SectionField
             label="Termination"
             labelWidth="3"
-            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED}
             tooltip={
               <TooltipIcon
                 toolTipId="lease-termination-tooltip"

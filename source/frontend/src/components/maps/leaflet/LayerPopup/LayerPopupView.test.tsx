@@ -46,7 +46,10 @@ describe('LayerPopupView component', () => {
 
   it('renders as expected with layer popup content', async () => {
     const { asFragment } = setup({
-      layerPopup: {} as any,
+      layerPopup: {
+        latlng: undefined,
+        layers: [],
+      },
       featureDataset: null,
     });
     expect(asFragment()).toMatchSnapshot();
@@ -54,20 +57,26 @@ describe('LayerPopupView component', () => {
   describe('fly out behaviour', () => {
     it('fly out is hidden by default', async () => {
       const { queryByText } = setup({
-        layerPopup: {} as any,
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
         featureDataset: null,
       });
-      expect(queryByText('View Property info')).toBeNull();
+      expect(queryByText('View Property Info')).toBeNull();
     });
 
     it('opens fly out when ellipsis is clicked', async () => {
       const { getByTestId, getByText } = setup({
-        layerPopup: {} as any,
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
         featureDataset: null,
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
-      expect(getByText('View Property info')).toBeVisible();
+      expect(getByText('View Property Info')).toBeVisible();
     });
 
     it('handles view property action for inventory properties', async () => {
@@ -76,9 +85,15 @@ describe('LayerPopupView component', () => {
 
       const { getByTestId, getByText } = setup({
         layerPopup: {
-          pimsProperty: { properties: { PROPERTY_ID: 1 } },
-          data: { PID: pid },
-        } as any,
+          latlng: undefined,
+          layers: [
+            {
+              title: '',
+              data: { PID: pid },
+              config: {},
+            },
+          ],
+        },
         featureDataset: {
           pimsFeature: {
             type: 'Feature',
@@ -91,12 +106,13 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
-      const link = getByText('View Property info');
+      const link = getByText('View Property Info');
       await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(`/mapview/sidebar/property/${propertyId}`);
     });
@@ -105,7 +121,14 @@ describe('LayerPopupView component', () => {
       const pid = '123456789';
       const parsedPid = pidParser(pid);
       const { getByTestId, getByText } = setup({
-        layerPopup: { data: { PID: pid } } as any,
+        layerPopup: {
+          layers: [{
+            data: { PID: pid },
+            title: '',
+            config: {}
+          }],
+          latlng: undefined
+        },
         featureDataset: {
           parcelFeature: {
             type: 'Feature',
@@ -118,12 +141,13 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
-      const link = getByText('View Property info');
+      const link = getByText('View Property Info');
       await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(
         `/mapview/sidebar/non-inventory-property/${parsedPid}`,
@@ -133,7 +157,14 @@ describe('LayerPopupView component', () => {
     it('handles view property action for non-inventory properties where the properties object is null', async () => {
       const pid = '123456789';
       const { getByTestId, getByText } = setup({
-        layerPopup: { data: { PID: pid } } as any,
+        layerPopup: {
+          layers: [{
+            data: { PID: pid },
+            title: '',
+            config: {}
+          }],
+          latlng: undefined
+        },
         featureDataset: {
           parcelFeature: {
             type: 'Feature',
@@ -150,18 +181,22 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
-      const link = getByText('View Property info');
+      const link = getByText('View Property Info');
       await act(async () => userEvent.click(link));
     });
 
     it('handles create research file action', async () => {
       const { getByTestId, getByText } = setup({
-        layerPopup: {} as any,
+        layerPopup: {
+          latlng: undefined,
+          layers: []
+        },
         featureDataset: null,
 
         claims: [Claims.RESEARCH_ADD],
@@ -175,7 +210,10 @@ describe('LayerPopupView component', () => {
 
     it('handles create acquisition file action', async () => {
       const { getByTestId, getByText } = setup({
-        layerPopup: {} as any,
+        layerPopup: {
+          latlng: undefined,
+          layers: []
+        },
         featureDataset: null,
 
         claims: [Claims.ACQUISITION_ADD],
@@ -189,7 +227,10 @@ describe('LayerPopupView component', () => {
 
     it('hides subdivision and consolidation if not in the pims system', async () => {
       const { getByTestId, getByText, queryByText } = setup({
-        layerPopup: { data: {} } as any,
+        layerPopup: {
+          latlng: undefined,
+          layers: []
+        } ,
         featureDataset: {
           pimsFeature: null,
           location: { lat: 0, lng: 0 },
@@ -198,6 +239,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
         claims: [Claims.PROPERTY_ADD],
@@ -214,7 +256,10 @@ describe('LayerPopupView component', () => {
       const propertyId = 1;
 
       const { getByTestId, getByText } = setup({
-        layerPopup: { data: {} } as any,
+        layerPopup: {
+          latlng: undefined,
+          layers: []
+        } ,
         featureDataset: {
           pimsFeature: {
             type: 'Feature',
@@ -227,6 +272,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
         claims: [Claims.PROPERTY_ADD],
@@ -242,7 +288,10 @@ describe('LayerPopupView component', () => {
       const propertyId = 1;
 
       const { getByTestId, getByText } = setup({
-        layerPopup: { data: {} } as any,
+        layerPopup: {
+          latlng: undefined,
+          layers: []
+        },
         featureDataset: {
           pimsFeature: {
             type: 'Feature',
@@ -255,6 +304,7 @@ describe('LayerPopupView component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
         claims: [Claims.PROPERTY_ADD],

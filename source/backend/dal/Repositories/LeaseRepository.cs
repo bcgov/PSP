@@ -72,8 +72,9 @@ namespace Pims.Dal.Repositories
 
         public long GetRowVersion(long id)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
-            return this.Context.PimsLeases.Where(l => l.LeaseId == id)?.Select(l => l.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
+            User.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            return Context.PimsLeases.Where(l => l.LeaseId == id)?.Select(l => l.ConcurrencyControlNumber)?.FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 
         public PimsLease Get(long id)
@@ -88,8 +89,8 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
                 .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
                 .Include(l => l.LeaseInitiatorTypeCodeNavigation)
-                //.Include(l => l.LeasePurposeTypeCodeNavigation)
-                //.Include(l => l.LeaseCategoryTypeCodeNavigation)
+                .Include(l => l.PimsLeaseLeasePurposes)
+                    .ThenInclude(p => p.LeasePurposeTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseTenants)
                 .Include(t => t.PimsPropertyImprovements)
@@ -103,7 +104,6 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.Project)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
-            //lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
             lease.PimsLeasePeriods = lease.PimsLeasePeriods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>
             {
@@ -612,8 +612,8 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
                 .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
                 .Include(l => l.LeaseInitiatorTypeCodeNavigation)
-                //.Include(l => l.LeasePurposeTypeCodeNavigation)
-                //.Include(l => l.LeaseCategoryTypeCodeNavigation)
+                .Include(l => l.PimsLeaseLeasePurposes)
+                    .ThenInclude(p => p.LeasePurposeTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
 
                 .Include(l => l.PimsLeaseTenants)
@@ -697,13 +697,13 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.ConsultationStatusTypeCodeNavigation)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
-            //lease.LeasePurposeTypeCodeNavigation = this.Context.PimsLeasePurposeTypes.Single(type => type.LeasePurposeTypeCode == lease.LeasePurposeTypeCode);
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
             lease.PimsLeasePeriods = lease.PimsLeasePeriods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>
             {
                 t.PimsLeasePayments = t.PimsLeasePayments.OrderBy(p => p.PaymentReceivedDate).ThenBy(p => p.LeasePaymentId).ToArray();
                 return t;
             }).ToArray();
+
             return lease;
         }
 
@@ -826,11 +826,15 @@ namespace Pims.Dal.Repositories
             this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var existingLease = this.Context.PimsLeases.Where(l => l.LeaseId == lease.LeaseId).FirstOrDefault()
                  ?? throw new KeyNotFoundException();
+
             Context.Entry(existingLease).CurrentValues.SetValues(lease);
+            Context.UpdateChild<PimsLease, long, PimsLeaseLeasePurpose, long>(p => p.PimsLeaseLeasePurposes, lease.LeaseId, lease.PimsLeaseLeasePurposes.ToArray());
+
             if (commitTransaction)
             {
                 this.Context.CommitTransaction();
             }
+
             return existingLease;
         }
 

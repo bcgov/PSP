@@ -82,9 +82,7 @@ describe('Update lease container component', () => {
     await setup({});
 
     mockAxios.onPut().reply(200, {});
-    await act(async () =>
-      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
-    );
+    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
 
     expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
   });
@@ -93,9 +91,7 @@ describe('Update lease container component', () => {
     await setup({});
 
     mockAxios.onPut().reply(409, { error: 'test message' });
-    await act(async () =>
-      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
-    );
+    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
 
     expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
   });
@@ -107,9 +103,7 @@ describe('Update lease container component', () => {
       error: 'test message',
       errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
     });
-    await act(async () =>
-      viewProps.onSubmit({ ...getDefaultFormLease(), purposeTypeCode: 'BCFERRIES' }),
-    );
+    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
     const button = await screen.findByText('Yes');
     await act(async () => userEvent.click(button));
 
@@ -122,7 +116,6 @@ const expectedLease: ApiGen_Concepts_Lease = {
   startDate: null,
   amount: 0,
   paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
-  purposeType: toTypeCodeNullable('BCFERRIES'),
   fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
   type: null,
   region: null,
@@ -134,12 +127,9 @@ const expectedLease: ApiGen_Concepts_Lease = {
   isCommercialBuilding: false,
   isOtherImprovement: false,
   responsibilityType: null,
-  categoryType: null,
   initiatorType: null,
   otherType: null,
-  otherCategoryType: null,
   otherProgramType: null,
-  otherPurposeType: null,
   tfaFileNumber: null,
   responsibilityEffectiveDate: null,
   psFileNo: null,

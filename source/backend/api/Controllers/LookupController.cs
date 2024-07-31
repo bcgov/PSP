@@ -80,7 +80,6 @@ namespace Pims.Api.Controllers
                 var countries = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllCountries());
                 var districts = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDistricts());
                 var insuranceTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllInsuranceTypes());
-                var leaseCategoryTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseCategoryTypes());
                 var leaseInitiatorTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseInitiatorTypes());
                 var leasePaymentFrequencyTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePmtFreqTypes());
                 var leasePaymentMethodTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePaymentMethodTypes());
@@ -156,7 +155,6 @@ namespace Pims.Api.Controllers
                 codes.AddRange(countries);
                 codes.AddRange(districts);
                 codes.AddRange(insuranceTypes);
-                codes.AddRange(leaseCategoryTypes);
                 codes.AddRange(leaseInitiatorTypes);
                 codes.AddRange(leasePaymentFrequencyTypes);
                 codes.AddRange(leasePaymentMethodTypes);
