@@ -22,7 +22,9 @@ export const LeaseDetailView: React.FunctionComponent<
 
   return (
     <Section header="Details">
-      <SectionField label="Ministry project">{projectName}</SectionField>
+      <SectionField label="Ministry project" labelWidth="3">
+        {projectName}
+      </SectionField>
       <SectionField
         label="Status"
         labelWidth="3"
