@@ -49,10 +49,7 @@ export const useGenerateLicenceOfOccupation = () => {
   });
 
   const VALID_LICENCE_TYPES = [
-    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
-    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD.toString(),
-    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE.toString(),
-    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL.toString(),
+    ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA.toString(),
     ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY.toString(),
   ];
 
@@ -103,10 +100,7 @@ export const useGenerateLicenceOfOccupation = () => {
 
       let formTemplateType: ApiGen_CodeTypes_FormTypes;
       switch (updatedLease.type.id) {
-        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS:
-        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD:
-        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE:
-        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL:
+        case ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA:
           formTemplateType = ApiGen_CodeTypes_FormTypes.H1005A;
           break;
         case ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY:

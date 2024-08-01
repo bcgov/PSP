@@ -12,9 +12,6 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "ACCRES")]
         ACCRES,
 
-        [EnumMember(Value = "AGRIC")]
-        AGRIC,
-
         [EnumMember(Value = "ARCHEOLGY")]
         ARCHEOLGY,
 
