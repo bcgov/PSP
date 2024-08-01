@@ -608,7 +608,7 @@ describe('PeriodsForm component', () => {
     const { findFirstRow, findCell } = await setup({
       initialValues: {
         ...new LeaseFormModel(),
-        leaseTypeCode: 'LIOCCUTIL',
+        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA,
         periods: [
           {
             ...defaultTestFormLeasePeriod,
@@ -633,7 +633,7 @@ describe('PeriodsForm component', () => {
     } = await setup({
       initialValues: {
         ...new LeaseFormModel(),
-        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL,
+        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA,
         periods: [
           {
             ...defaultTestFormLeasePeriod,

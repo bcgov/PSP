@@ -79,7 +79,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   programType: null,
   region: null,
   type: {
-    id: ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
+    id: ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA.toString(),
     description: 'License of Occupation (access)',
     isDisabled: false,
     displayOrder: 1,
