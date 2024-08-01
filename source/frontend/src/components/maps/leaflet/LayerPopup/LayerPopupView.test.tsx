@@ -122,12 +122,14 @@ describe('LayerPopupView component', () => {
       const parsedPid = pidParser(pid);
       const { getByTestId, getByText } = setup({
         layerPopup: {
-          layers: [{
-            data: { PID: pid },
-            title: '',
-            config: {}
-          }],
-          latlng: undefined
+          layers: [
+            {
+              data: { PID: pid },
+              title: '',
+              config: {},
+            },
+          ],
+          latlng: undefined,
         },
         featureDataset: {
           parcelFeature: {
@@ -158,12 +160,14 @@ describe('LayerPopupView component', () => {
       const pid = '123456789';
       const { getByTestId, getByText } = setup({
         layerPopup: {
-          layers: [{
-            data: { PID: pid },
-            title: '',
-            config: {}
-          }],
-          latlng: undefined
+          layers: [
+            {
+              data: { PID: pid },
+              title: '',
+              config: {},
+            },
+          ],
+          latlng: undefined,
         },
         featureDataset: {
           parcelFeature: {
@@ -195,7 +199,7 @@ describe('LayerPopupView component', () => {
       const { getByTestId, getByText } = setup({
         layerPopup: {
           latlng: undefined,
-          layers: []
+          layers: [],
         },
         featureDataset: null,
 
@@ -212,7 +216,7 @@ describe('LayerPopupView component', () => {
       const { getByTestId, getByText } = setup({
         layerPopup: {
           latlng: undefined,
-          layers: []
+          layers: [],
         },
         featureDataset: null,
 
@@ -229,8 +233,8 @@ describe('LayerPopupView component', () => {
       const { getByTestId, getByText, queryByText } = setup({
         layerPopup: {
           latlng: undefined,
-          layers: []
-        } ,
+          layers: [],
+        },
         featureDataset: {
           pimsFeature: null,
           location: { lat: 0, lng: 0 },
@@ -258,8 +262,8 @@ describe('LayerPopupView component', () => {
       const { getByTestId, getByText } = setup({
         layerPopup: {
           latlng: undefined,
-          layers: []
-        } ,
+          layers: [],
+        },
         featureDataset: {
           pimsFeature: {
             type: 'Feature',
@@ -290,7 +294,7 @@ describe('LayerPopupView component', () => {
       const { getByTestId, getByText } = setup({
         layerPopup: {
           latlng: undefined,
-          layers: []
+          layers: [],
         },
         featureDataset: {
           pimsFeature: {
