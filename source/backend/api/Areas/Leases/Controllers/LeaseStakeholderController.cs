@@ -15,7 +15,7 @@ using Swashbuckle.AspNetCore.Annotations;
 namespace Pims.Api.Areas.Lease.Controllers
 {
     /// <summary>
-    /// LeaseTenantController class, provides endpoints for interacting with lease tenants.
+    /// LeaseStakeholderController class, provides endpoints for interacting with lease stakeholder.
     /// </summary>
     [Authorize]
     [ApiController]
@@ -23,7 +23,7 @@ namespace Pims.Api.Areas.Lease.Controllers
     [Area("leases")]
     [Route("v{version:apiVersion}/[area]")]
     [Route("[area]")]
-    public class LeaseTenantController : ControllerBase
+    public class LeaseStakeholderController : ControllerBase
     {
         #region Variables
         private readonly ILeaseService _leaseService;
@@ -34,13 +34,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a LeaseTenantController class, initializes it with the specified arguments.
+        /// Creates a new instance of a LeaseStakeholderController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="leaseService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public LeaseTenantController(ILeaseService leaseService, IMapper mapper, ILogger<PropertyImprovementController> logger)
+        public LeaseStakeholderController(ILeaseService leaseService, IMapper mapper, ILogger<PropertyImprovementController> logger)
         {
             _leaseService = leaseService;
             _mapper = mapper;
@@ -51,52 +51,52 @@ namespace Pims.Api.Areas.Lease.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get the specified tenants on the passed lease.
+        /// Get the specified stakeholders on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpGet("{leaseId:long}/tenants")]
+        [HttpGet("{leaseId:long}/stakeholders")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseTenantModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<LeaseStakeholderModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetTenants(long leaseId)
+        public IActionResult GetStakeholders(long leaseId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(LeaseTenantController),
-                nameof(GetTenants),
+                nameof(LeaseStakeholderController),
+                nameof(GetStakeholders),
                 User.GetUsername(),
                 DateTime.Now);
 
-            var updatedLease = _leaseService.GetTenantsByLeaseId(leaseId);
+            var updatedLease = _leaseService.GetStakeholdersByLeaseId(leaseId);
 
-            return new JsonResult(_mapper.Map<IEnumerable<LeaseTenantModel>>(updatedLease));
+            return new JsonResult(_mapper.Map<IEnumerable<LeaseStakeholderModel>>(updatedLease));
         }
 
         /// <summary>
-        /// Update the specified tenants on the passed lease.
+        /// Update the specified stakeholders on the passed lease.
         /// </summary>
         /// <returns></returns>
-        [HttpPut("{leaseId:long}/tenants")]
+        [HttpPut("{leaseId:long}/stakeholders")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<LeaseTenantModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<LeaseStakeholderModel>), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateTenants(long leaseId, IEnumerable<LeaseTenantModel> tenants)
+        public IActionResult UpdateStakeholders(long leaseId, IEnumerable<LeaseStakeholderModel> stakeholders)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(LeaseTenantController),
-                nameof(UpdateTenants),
+                nameof(LeaseStakeholderController),
+                nameof(UpdateStakeholders),
                 User.GetUsername(),
                 DateTime.Now);
 
-            var tenantEntities = _mapper.Map<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>(tenants);
-            var updatedLease = _leaseService.UpdateTenantsByLeaseId(leaseId, tenantEntities);
+            var stakeholderEntities = _mapper.Map<ICollection<Pims.Dal.Entities.PimsLeaseStakeholder>>(stakeholders);
+            var updatedLease = _leaseService.UpdateStakeholdersByLeaseId(leaseId, stakeholderEntities);
 
-            return new JsonResult(_mapper.Map<IEnumerable<LeaseTenantModel>>(updatedLease));
+            return new JsonResult(_mapper.Map<IEnumerable<LeaseStakeholderModel>>(updatedLease));
         }
         #endregion
     }

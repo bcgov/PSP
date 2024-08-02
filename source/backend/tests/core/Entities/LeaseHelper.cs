@@ -15,8 +15,8 @@ namespace Pims.Core.Test
         /// Create a new instance of a Lease.
         /// </summary>
         /// <returns></returns>
-        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addTenant = false, bool addProperty = true,
-            PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeasePurposeType pimsLeasePurposeType = null, PimsLeaseStatusType pimsLeaseStatusType = null, PimsLeasePayRvblType pimsLeasePayRvblType = null, PimsLeaseCategoryType pimsLeaseCategoryType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null)
+        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholserLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true,
+            PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeasePurposeType pimsLeasePurposeType = null, PimsLeaseStatusType pimsLeaseStatusType = null, PimsLeasePayRvblType pimsLeasePayRvblType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null)
         {
             var lease = new Entity.PimsLease()
             {
@@ -24,7 +24,7 @@ namespace Pims.Core.Test
                 LFileNo = lFileNo,
                 ConcurrencyControlNumber = 1,
             };
-            var person = new Entity.PimsPerson() { FirstName = tenantFirstName ?? "first", Surname = tenantLastName ?? "last" };
+            var person = new Entity.PimsPerson() { FirstName = stakeholderFirstName ?? "first", Surname = stakeholserLastName ?? "last" };
             person.PimsPersonAddresses.Add(new PimsPersonAddress() { Person = person, Address = address, AddressUsageTypeCode = AddressUsageTypes.Mailing });
             var organization = new Entity.PimsOrganization() { OrganizationName = "Lease organization" };
             organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address, AddressUsageTypeCode = AddressUsageTypes.Mailing });
@@ -52,9 +52,9 @@ namespace Pims.Core.Test
             {
                 lease.RegionCodeNavigation = region;
             }
-            if (addTenant)
+            if (addStakeholder)
             {
-                lease.PimsLeaseTenants.Add(new PimsLeaseTenant(lease, person, organization, new PimsLessorType("tst") { DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, new PimsTenantType("TENANT") { DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }));
+                lease.PimsLeaseStakeholders.Add(new PimsLeaseStakeholder(lease, person, organization, new PimsLessorType("tst") { DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }, new PimsLeaseStakeholderType("TENANT") { DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" }));
             }
             return lease;
         }
@@ -63,20 +63,19 @@ namespace Pims.Core.Test
         /// Create a new instance of a Lease.
         /// </summary>
         /// <returns></returns>
-        public static Entity.PimsLease CreateLease(this PimsContext context, int pid, string lFileNo = null, string tenantFirstName = null, string tenantLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addTenant = false, bool addProperty = true)
+        public static Entity.PimsLease CreateLease(this PimsContext context, int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true)
         {
             var programType = context.PimsLeaseProgramTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease program type.");
             var leasePurposeType = context.PimsLeasePurposeTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease purpose type.");
             var leaseStatusType = context.PimsLeaseStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease status type.");
             var leasePayRvblType = context.PimsLeasePayRvblTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease rvbl type.");
             //var leaseCategoryType = context.PimsLeaseCategoryTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease category type.");
-            var leaseCategoryType = new PimsLeaseCategoryType();
                         // TODO: Fix Mappings
             var leaseInitiatorType = context.PimsLeaseInitiatorTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease initiator type.");
             var leaseResponsibilityType = context.PimsLeaseResponsibilityTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease reponsibility type.");
             var leaseLicenseType = context.PimsLeaseLicenseTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease license type.");
 
-            var lease = EntityHelper.CreateLease(pid, lFileNo, tenantFirstName, tenantLastName, motiFirstName, motiLastName, address, addTenant, addProperty, programType, leasePurposeType, leaseStatusType, leasePayRvblType, leaseCategoryType, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
+            var lease = EntityHelper.CreateLease(pid, lFileNo, stakeholderFirstName, stakeholderLastName, motiFirstName, motiLastName, address, addStakeholder, addProperty, programType, leasePurposeType, leaseStatusType, leasePayRvblType, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
             context.PimsLeases.Add(lease);
             return lease;
         }

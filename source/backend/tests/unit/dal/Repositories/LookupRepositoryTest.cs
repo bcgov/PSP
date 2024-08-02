@@ -750,7 +750,7 @@ namespace Pims.Dal.Tests.Repositories
         }
 
         [Fact]
-        public void LookupRepository_GetAllTenantTypes_ReturnsCorrectType()
+        public void LookupRepository_GetAllLeaseStakeholderTypes_ReturnsCorrectType()
         {
             // Arrange
             var helper = new TestHelper();
@@ -760,10 +760,10 @@ namespace Pims.Dal.Tests.Repositories
             var lookupRepository = helper.CreateRepository<LookupRepository>(user);
 
             // Act
-            var result = lookupRepository.GetAllTenantTypes();
+            var result = lookupRepository.GetAllLeaseStakeholderTypes();
 
             // Assert
-            Assert.IsType<PimsTenantType[]>(result);
+            Assert.IsType<PimsLeaseStakeholderType[]>(result);
         }
 
         [Fact]

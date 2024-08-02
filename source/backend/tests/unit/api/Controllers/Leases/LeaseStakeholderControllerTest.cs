@@ -20,17 +20,17 @@ namespace Pims.Api.Test.Controllers.Lease
     [Trait("category", "api")]
     [Trait("group", "lease")]
     [ExcludeFromCodeCoverage]
-    public class LeaseTenantControllerTest
+    public class LeaseStakeholderControllerTest
     {
         private Mock<ILeaseService> _repository;
-        private LeaseTenantController _controller;
+        private LeaseStakeholderController _controller;
         private IMapper _mapper;
         private TestHelper _helper;
 
-        public LeaseTenantControllerTest()
+        public LeaseStakeholderControllerTest()
         {
             this._helper = new TestHelper();
-            this._controller = this._helper.CreateController<LeaseTenantController>(Permissions.LeaseView);
+            this._controller = this._helper.CreateController<LeaseStakeholderController>(Permissions.LeaseView);
             this._mapper = this._helper.GetService<IMapper>();
             this._repository = this._helper.GetService<Mock<ILeaseService>>();
         }
@@ -41,18 +41,18 @@ namespace Pims.Api.Test.Controllers.Lease
         /// Make a successful request.
         /// </summary>
         [Fact]
-        public void UpdateLeaseTenants_Success()
+        public void UpdateLeaseStakeholders_Success()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
 
-            this._repository.Setup(m => m.UpdateTenantsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>())).Returns(lease.PimsLeaseTenants);
+            this._repository.Setup(m => m.UpdateStakeholdersByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseStakeholder>>())).Returns(lease.PimsLeaseStakeholders);
 
             // Act
-            var result = this._controller.UpdateTenants(lease.LeaseId, this._mapper.Map<IEnumerable<LeaseTenantModel>>(new List<LeaseTenantModel>()));
+            var result = this._controller.UpdateStakeholders(lease.LeaseId, this._mapper.Map<IEnumerable<LeaseStakeholderModel>>(new List<LeaseStakeholderModel>()));
 
             // Assert
-            this._repository.Verify(m => m.UpdateTenantsByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseTenant>>()), Times.Once());
+            this._repository.Verify(m => m.UpdateStakeholdersByLeaseId(It.IsAny<long>(), It.IsAny<ICollection<Pims.Dal.Entities.PimsLeaseStakeholder>>()), Times.Once());
         }
         #endregion
         #endregion
