@@ -70,7 +70,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.LeaseProgramTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
-                    //.ThenInclude(t => t.LeasePurposeTypeCodeNavigation) TODO: fix mappings
+                    .ThenInclude(p => p.PimsLeaseLeasePurposes)
+                    .ThenInclude(c => c.LeasePurposeTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.LeasePeriodStatusTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
