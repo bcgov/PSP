@@ -16,6 +16,7 @@ namespace Pims.Dal.Entities;
 [Index("AlternateProjectId", Name = "CMPREQ_ALTERNATE_PROJECT_ID_IDX")]
 [Index("ChartOfAccountsId", Name = "CMPREQ_CHART_OF_ACCOUNTS_ID_IDX")]
 [Index("InterestHolderId", Name = "CMPREQ_INTEREST_HOLDER_ID_IDX")]
+[Index("LeaseId", Name = "CMPREQ_LEASE_ID_IDX")]
 [Index("ResponsibilityId", Name = "CMPREQ_RESPONSIBILITY_ID_IDX")]
 [Index("YearlyFinancialId", Name = "CMPREQ_YEARLY_FINANCIAL_ID_IDX")]
 public partial class PimsCompensationRequisition
@@ -24,8 +25,17 @@ public partial class PimsCompensationRequisition
     [Column("COMPENSATION_REQUISITION_ID")]
     public long CompensationRequisitionId { get; set; }
 
+    /// <summary>
+    /// Foreign key to the PIMS_ACQUISITION_FILE table.
+    /// </summary>
     [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    public long? AcquisitionFileId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_LEASE table.
+    /// </summary>
+    [Column("LEASE_ID")]
+    public long? LeaseId { get; set; }
 
     [Column("ACQUISITION_OWNER_ID")]
     public long? AcquisitionOwnerId { get; set; }
@@ -215,11 +225,21 @@ public partial class PimsCompensationRequisition
     [InverseProperty("PimsCompensationRequisitions")]
     public virtual PimsInterestHolder InterestHolder { get; set; }
 
+    [ForeignKey("LeaseId")]
+    [InverseProperty("PimsCompensationRequisitions")]
+    public virtual PimsLease Lease { get; set; }
+
     [InverseProperty("CompensationRequisition")]
     public virtual ICollection<PimsCompReqFinancial> PimsCompReqFinancials { get; set; } = new List<PimsCompReqFinancial>();
 
     [InverseProperty("CompensationRequisition")]
+    public virtual ICollection<PimsLeaseStakeholderCompReq> PimsLeaseStakeholderCompReqs { get; set; } = new List<PimsLeaseStakeholderCompReq>();
+
+    [InverseProperty("CompensationRequisition")]
     public virtual ICollection<PimsPropAcqFlCompReq> PimsPropAcqFlCompReqs { get; set; } = new List<PimsPropAcqFlCompReq>();
+
+    [InverseProperty("CompensationRequisition")]
+    public virtual ICollection<PimsPropLeaseCompReq> PimsPropLeaseCompReqs { get; set; } = new List<PimsPropLeaseCompReq>();
 
     [ForeignKey("ResponsibilityId")]
     [InverseProperty("PimsCompensationRequisitions")]

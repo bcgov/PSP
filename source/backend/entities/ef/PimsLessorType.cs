@@ -60,5 +60,5 @@ public partial class PimsLessorType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("LessorTypeCodeNavigation")]
-    public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; } = new List<PimsLeaseTenant>();
+    public virtual ICollection<PimsLeaseStakeholder> PimsLeaseStakeholders { get; set; } = new List<PimsLeaseStakeholder>();
 }

@@ -100,10 +100,6 @@ public partial class PimsLeaseHist
     [StringLength(200)]
     public string OtherLeaseLicenseType { get; set; }
 
-    [Column("OTHER_LEASE_PURPOSE_TYPE")]
-    [StringLength(200)]
-    public string OtherLeasePurposeType { get; set; }
-
     [Column("ORIG_START_DATE", TypeName = "datetime")]
     public DateTime? OrigStartDate { get; set; }
 

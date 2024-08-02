@@ -24,7 +24,10 @@ public partial class PimsCompensationRequisitionHist
     public long CompensationRequisitionId { get; set; }
 
     [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    public long? AcquisitionFileId { get; set; }
+
+    [Column("LEASE_ID")]
+    public long? LeaseId { get; set; }
 
     [Column("ACQUISITION_OWNER_ID")]
     public long? AcquisitionOwnerId { get; set; }

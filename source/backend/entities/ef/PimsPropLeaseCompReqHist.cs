@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_LEASE_TENANT_HIST")]
-[Index("LeaseTenantHistId", "EndDateHist", Name = "PIMS_TENANT_H_UK", IsUnique = true)]
-public partial class PimsLeaseTenantHist
+[Table("PIMS_PROP_LEASE_COMP_REQ_HIST")]
+[Index("PropLeaseCompReqHistId", "EndDateHist", Name = "PIMS_PLCMRQ_H_UK", IsUnique = true)]
+public partial class PimsPropLeaseCompReqHist
 {
     [Key]
-    [Column("_LEASE_TENANT_HIST_ID")]
-    public long LeaseTenantHistId { get; set; }
+    [Column("_PROP_LEASE_COMP_REQ_HIST_ID")]
+    public long PropLeaseCompReqHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,34 +20,17 @@ public partial class PimsLeaseTenantHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("LEASE_TENANT_ID")]
-    public long LeaseTenantId { get; set; }
+    [Column("PROP_LEASE_COMP_REQ_ID")]
+    public long PropLeaseCompReqId { get; set; }
 
-    [Column("LEASE_ID")]
-    public long LeaseId { get; set; }
+    [Column("PROPERTY_LEASE_ID")]
+    public long PropertyLeaseId { get; set; }
 
-    [Column("PERSON_ID")]
-    public long? PersonId { get; set; }
+    [Column("COMPENSATION_REQUISITION_ID")]
+    public long CompensationRequisitionId { get; set; }
 
-    [Column("ORGANIZATION_ID")]
-    public long? OrganizationId { get; set; }
-
-    [Column("PRIMARY_CONTACT_ID")]
-    public long? PrimaryContactId { get; set; }
-
-    [Required]
-    [Column("LESSOR_TYPE_CODE")]
-    [StringLength(20)]
-    public string LessorTypeCode { get; set; }
-
-    [Required]
-    [Column("TENANT_TYPE_CODE")]
-    [StringLength(20)]
-    public string TenantTypeCode { get; set; }
-
-    [Column("NOTE")]
-    [StringLength(2000)]
-    public string Note { get; set; }
+    [Column("IS_DISABLED")]
+    public bool? IsDisabled { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

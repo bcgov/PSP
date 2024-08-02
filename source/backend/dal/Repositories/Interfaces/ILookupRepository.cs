@@ -92,7 +92,7 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsAcqFlTeamProfileType> GetAllAcqFileTeamProfileTypes();
 
-        IEnumerable<PimsTenantType> GetAllTenantTypes();
+        IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes();
 
         IEnumerable<PimsAcquisitionFundingType> GetAllAcquisitionFundingTypes();
 

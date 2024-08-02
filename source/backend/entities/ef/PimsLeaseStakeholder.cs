@@ -9,19 +9,19 @@ namespace Pims.Dal.Entities;
 /// <summary>
 /// Associates a tenant with a lease
 /// </summary>
-[Table("PIMS_LEASE_TENANT")]
-[Index("LeaseId", Name = "TENANT_LEASE_ID_IDX")]
-[Index("OrganizationId", "PersonId", "LeaseId", Name = "TENANT_LEASE_PERSON_ORG_TUC", IsUnique = true)]
-[Index("LessorTypeCode", Name = "TENANT_LESSOR_TYPE_CODE_IDX")]
-[Index("OrganizationId", Name = "TENANT_ORGANIZATION_ID_IDX")]
-[Index("PersonId", Name = "TENANT_PERSON_ID_IDX")]
-[Index("PrimaryContactId", Name = "TENANT_PRIMARY_CONTACT_ID_IDX")]
-[Index("TenantTypeCode", Name = "TENANT_TENANT_TYPE_CODE_IDX")]
-public partial class PimsLeaseTenant
+[Table("PIMS_LEASE_STAKEHOLDER")]
+[Index("LeaseId", Name = "LSTKHL_LEASE_ID_IDX")]
+[Index("OrganizationId", "PersonId", "LeaseId", Name = "LSTKHL_LEASE_PERSON_ORG_TUC", IsUnique = true)]
+[Index("LeaseStakeholderTypeCode", Name = "LSTKHL_LEASE_STAKEHOLDER_TYPE_CODE_IDX")]
+[Index("LessorTypeCode", Name = "LSTKHL_LESSOR_TYPE_CODE_IDX")]
+[Index("OrganizationId", Name = "LSTKHL_ORGANIZATION_ID_IDX")]
+[Index("PersonId", Name = "LSTKHL_PERSON_ID_IDX")]
+[Index("PrimaryContactId", Name = "LSTKHL_PRIMARY_CONTACT_ID_IDX")]
+public partial class PimsLeaseStakeholder
 {
     [Key]
-    [Column("LEASE_TENANT_ID")]
-    public long LeaseTenantId { get; set; }
+    [Column("LEASE_STAKEHOLDER_ID")]
+    public long LeaseStakeholderId { get; set; }
 
     [Column("LEASE_ID")]
     public long LeaseId { get; set; }
@@ -41,9 +41,9 @@ public partial class PimsLeaseTenant
     public string LessorTypeCode { get; set; }
 
     [Required]
-    [Column("TENANT_TYPE_CODE")]
+    [Column("LEASE_STAKEHOLDER_TYPE_CODE")]
     [StringLength(20)]
-    public string TenantTypeCode { get; set; }
+    public string LeaseStakeholderTypeCode { get; set; }
 
     /// <summary>
     /// Notes associated with the lease/tenant relationship.
@@ -104,26 +104,29 @@ public partial class PimsLeaseTenant
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("LeaseId")]
-    [InverseProperty("PimsLeaseTenants")]
+    [InverseProperty("PimsLeaseStakeholders")]
     public virtual PimsLease Lease { get; set; }
 
+    [ForeignKey("LeaseStakeholderTypeCode")]
+    [InverseProperty("PimsLeaseStakeholders")]
+    public virtual PimsLeaseStakeholderType LeaseStakeholderTypeCodeNavigation { get; set; }
+
     [ForeignKey("LessorTypeCode")]
-    [InverseProperty("PimsLeaseTenants")]
+    [InverseProperty("PimsLeaseStakeholders")]
     public virtual PimsLessorType LessorTypeCodeNavigation { get; set; }
 
     [ForeignKey("OrganizationId")]
-    [InverseProperty("PimsLeaseTenants")]
+    [InverseProperty("PimsLeaseStakeholders")]
     public virtual PimsOrganization Organization { get; set; }
 
     [ForeignKey("PersonId")]
-    [InverseProperty("PimsLeaseTenantPeople")]
+    [InverseProperty("PimsLeaseStakeholderPeople")]
     public virtual PimsPerson Person { get; set; }
 
-    [ForeignKey("PrimaryContactId")]
-    [InverseProperty("PimsLeaseTenantPrimaryContacts")]
-    public virtual PimsPerson PrimaryContact { get; set; }
+    [InverseProperty("LeaseStakeholder")]
+    public virtual ICollection<PimsLeaseStakeholderCompReq> PimsLeaseStakeholderCompReqs { get; set; } = new List<PimsLeaseStakeholderCompReq>();
 
-    [ForeignKey("TenantTypeCode")]
-    [InverseProperty("PimsLeaseTenants")]
-    public virtual PimsTenantType TenantTypeCodeNavigation { get; set; }
+    [ForeignKey("PrimaryContactId")]
+    [InverseProperty("PimsLeaseStakeholderPrimaryContacts")]
+    public virtual PimsPerson PrimaryContact { get; set; }
 }

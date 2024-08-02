@@ -63,7 +63,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.LeasePayRvblTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
-                    .ThenInclude(t => t.PimsLeaseTenants)
+                    .ThenInclude(t => t.PimsLeaseStakeholders)
                     .ThenInclude(t => t.Person)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)

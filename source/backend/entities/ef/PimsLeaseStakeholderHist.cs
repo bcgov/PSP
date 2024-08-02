@@ -3,48 +3,51 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using NetTopologySuite.Geometries;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROPERTY_LEASE")]
-[Index("LeaseId", Name = "PROPLS_LEASE_ID_IDX")]
-[Index("PropertyId", Name = "PROPLS_PROPERTY_ID_IDX")]
-[Index("LeaseId", "PropertyId", Name = "PROPLS_PROPERTY_LEASE_TUC", IsUnique = true)]
-public partial class PimsPropertyLease
+[Table("PIMS_LEASE_STAKEHOLDER_HIST")]
+[Index("LeaseStakeholderHistId", "EndDateHist", Name = "PIMS_LSTKHL_H_UK", IsUnique = true)]
+public partial class PimsLeaseStakeholderHist
 {
     [Key]
-    [Column("PROPERTY_LEASE_ID")]
-    public long PropertyLeaseId { get; set; }
+    [Column("_LEASE_STAKEHOLDER_HIST_ID")]
+    public long LeaseStakeholderHistId { get; set; }
 
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
+    public DateTime EffectiveDateHist { get; set; }
+
+    [Column("END_DATE_HIST", TypeName = "datetime")]
+    public DateTime? EndDateHist { get; set; }
+
+    [Column("LEASE_STAKEHOLDER_ID")]
+    public long LeaseStakeholderId { get; set; }
 
     [Column("LEASE_ID")]
     public long LeaseId { get; set; }
 
-    [Column("AREA_UNIT_TYPE_CODE")]
+    [Column("PERSON_ID")]
+    public long? PersonId { get; set; }
+
+    [Column("ORGANIZATION_ID")]
+    public long? OrganizationId { get; set; }
+
+    [Column("PRIMARY_CONTACT_ID")]
+    public long? PrimaryContactId { get; set; }
+
+    [Required]
+    [Column("LESSOR_TYPE_CODE")]
     [StringLength(20)]
-    public string AreaUnitTypeCode { get; set; }
+    public string LessorTypeCode { get; set; }
 
-    /// <summary>
-    /// Property/lease name
-    /// </summary>
-    [Column("NAME")]
-    [StringLength(250)]
-    public string Name { get; set; }
+    [Required]
+    [Column("LEASE_STAKEHOLDER_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeaseStakeholderTypeCode { get; set; }
 
-    /// <summary>
-    /// Leased area measurement
-    /// </summary>
-    [Column("LEASE_AREA")]
-    public float? LeaseArea { get; set; }
-
-    /// <summary>
-    /// Geospatial location (pin) of property
-    /// </summary>
-    [Column("LOCATION", TypeName = "geometry")]
-    public Geometry Location { get; set; }
+    [Column("NOTE")]
+    [StringLength(2000)]
+    public string Note { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -96,19 +99,4 @@ public partial class PimsPropertyLease
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [ForeignKey("AreaUnitTypeCode")]
-    [InverseProperty("PimsPropertyLeases")]
-    public virtual PimsAreaUnitType AreaUnitTypeCodeNavigation { get; set; }
-
-    [ForeignKey("LeaseId")]
-    [InverseProperty("PimsPropertyLeases")]
-    public virtual PimsLease Lease { get; set; }
-
-    [InverseProperty("PropertyLease")]
-    public virtual ICollection<PimsPropLeaseCompReq> PimsPropLeaseCompReqs { get; set; } = new List<PimsPropLeaseCompReq>();
-
-    [ForeignKey("PropertyId")]
-    [InverseProperty("PimsPropertyLeases")]
-    public virtual PimsProperty Property { get; set; }
 }

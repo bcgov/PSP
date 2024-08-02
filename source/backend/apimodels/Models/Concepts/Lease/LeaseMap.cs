@@ -53,7 +53,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.CancellationReason, src => src.CancellationReason)
                 .Map(dest => dest.TerminationReason, src => src.TerminationReason)
                 .Map(dest => dest.Project, src => src.Project)
-                .Map(dest => dest.Tenants, src => src.PimsLeaseTenants)
+                .Map(dest => dest.Stakeholders, src => src.PimsLeaseStakeholders)
                 .Map(dest => dest.FileChecklistItems, src => src.PimsLeaseChecklistItems)
                 .Map(dest => dest.PrimaryArbitrationCity, src => src.PrimaryArbitrationCity)
                 .Map(dest => dest.Periods, src => src.PimsLeasePeriods)

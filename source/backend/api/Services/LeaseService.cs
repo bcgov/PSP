@@ -30,7 +30,7 @@ namespace Pims.Api.Services
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IInsuranceRepository _insuranceRepository;
-        private readonly ILeaseTenantRepository _tenantRepository;
+        private readonly ILeaseStakeholderRepository _stakeholderRepository;
         private readonly ILeaseRenewalRepository _renewalRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyService _propertyService;
@@ -46,7 +46,7 @@ namespace Pims.Api.Services
             IPropertyImprovementRepository propertyImprovementRepository,
             IEntityNoteRepository entityNoteRepository,
             IInsuranceRepository insuranceRepository,
-            ILeaseTenantRepository tenantRepository,
+            ILeaseStakeholderRepository stakeholderRepository,
             ILeaseRenewalRepository renewalRepository,
             IUserRepository userRepository,
             IPropertyService propertyService,
@@ -61,7 +61,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _propertyImprovementRepository = propertyImprovementRepository;
             _insuranceRepository = insuranceRepository;
-            _tenantRepository = tenantRepository;
+            _stakeholderRepository = stakeholderRepository;
             _renewalRepository = renewalRepository;
             _userRepository = userRepository;
             _propertyService = propertyService;
@@ -144,27 +144,27 @@ namespace Pims.Api.Services
             return _propertyImprovementRepository.GetByLeaseId(leaseId);
         }
 
-        public IEnumerable<PimsLeaseTenant> GetTenantsByLeaseId(long leaseId)
+        public IEnumerable<PimsLeaseStakeholder> GetStakeholdersByLeaseId(long leaseId)
         {
-            _logger.LogInformation("Getting tenants on lease {leaseId}", leaseId);
+            _logger.LogInformation("Getting stakeholders on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
-            return _tenantRepository.GetByLeaseId(leaseId);
+            return _stakeholderRepository.GetByLeaseId(leaseId);
         }
 
-        public IEnumerable<PimsLeaseTenant> UpdateTenantsByLeaseId(long leaseId, IEnumerable<PimsLeaseTenant> pimsLeaseTenants)
+        public IEnumerable<PimsLeaseStakeholder> UpdateStakeholdersByLeaseId(long leaseId, IEnumerable<PimsLeaseStakeholder> pimsLeaseStakeholders)
         {
-            _logger.LogInformation("Updating tenants on lease {leaseId}", leaseId);
+            _logger.LogInformation("Updating stakeholders on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
-            _tenantRepository.Update(leaseId, pimsLeaseTenants);
-            _tenantRepository.CommitTransaction();
+            _stakeholderRepository.Update(leaseId, pimsLeaseStakeholders);
+            _stakeholderRepository.CommitTransaction();
 
-            return _tenantRepository.GetByLeaseId(leaseId);
+            return _stakeholderRepository.GetByLeaseId(leaseId);
         }
 
         public PimsLease Add(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
