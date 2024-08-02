@@ -164,7 +164,7 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsLeasePurposeType> GetAllLeasePurposeTypes()
         {
-            return Context.PimsLeasePurposeTypes.Where(x => !x.IsDisabled).AsNoTracking().OrderBy(a => a.LeasePurposeTypeCode).ToArray();
+            return Context.PimsLeasePurposeTypes.AsNoTracking().OrderBy(a => a.LeasePurposeTypeCode).ToArray();
         }
 
         public IEnumerable<PimsLeaseResponsibilityType> GetAllLeaseResponsibilityTypes()

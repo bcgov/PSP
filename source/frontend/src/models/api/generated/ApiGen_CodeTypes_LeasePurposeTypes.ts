@@ -5,7 +5,6 @@
 export enum ApiGen_CodeTypes_LeasePurposeTypes {
   ACCCCOM = 'ACCCCOM',
   ACCRES = 'ACCRES',
-  AGRIC = 'AGRIC',
   ARCHEOLGY = 'ARCHEOLGY',
   BCFERRIES = 'BCFERRIES',
   BCTRANSIT = 'BCTRANSIT',
