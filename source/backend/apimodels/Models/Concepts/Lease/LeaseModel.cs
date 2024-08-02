@@ -144,9 +144,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public IEnumerable<ConsultationLeaseModel> Consultations { get; set; }
 
         /// <summary>
-        /// get/set - A collection of the tenants for this lease.
+        /// get/set - A collection of the stakeholders for this lease.
         /// </summary>
-        public IEnumerable<LeaseTenantModel> Tenants { get; set; }
+        public IEnumerable<LeaseStakeholderModel> Stakeholders { get; set; }
 
         /// <summary>
         /// get/set - A collection of the periods for this lease.

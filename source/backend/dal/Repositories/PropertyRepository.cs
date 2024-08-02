@@ -117,14 +117,14 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(a => a.Country)
                 .Include(p => p.PimsPropertyLeases)
                     .ThenInclude(l => l.Lease)
-                    .ThenInclude(l => l.PimsLeaseTenants)
+                    .ThenInclude(l => l.PimsLeaseStakeholders)
                 .Include(p => p.PimsPropertyLeases)
                     .ThenInclude(l => l.Lease)
-                    .ThenInclude(l => l.PimsLeaseTenants)
+                    .ThenInclude(l => l.PimsLeaseStakeholders)
                     .ThenInclude(l => l.Person)
                 .Include(p => p.PimsPropertyLeases)
                     .ThenInclude(l => l.Lease)
-                    .ThenInclude(l => l.PimsLeaseTenants)
+                    .ThenInclude(l => l.PimsLeaseStakeholders)
                     .ThenInclude(l => l.Organization)
                 .FirstOrDefault(p => p.PropertyId == id) ?? throw new KeyNotFoundException();
             return property;

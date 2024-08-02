@@ -4,9 +4,9 @@ using Pims.Api.Models.Concepts.Person;
 
 namespace Pims.Api.Models.Concepts.Lease
 {
-    public class LeaseTenantModel : BaseAuditModel
+    public class LeaseStakeholderModel : BaseAuditModel
     {
-        public long? LeaseTenantId { get; set; }
+        public long? LeaseStakeholderId { get; set; }
 
         public long LeaseId { get; set; }
 
@@ -26,6 +26,6 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public CodeTypeModel<string> LessorType { get; set; }
 
-        public CodeTypeModel<string> TenantTypeCode { get; set; }
+        public CodeTypeModel<string> StakeholderTypeCode { get; set; }
     }
 }

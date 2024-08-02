@@ -114,7 +114,7 @@ namespace Pims.Api.Controllers
                 var acquisitionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionPhysFileStatusTypes());
                 var acquisitionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionTypes());
                 var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcqFileTeamProfileTypes());
-                var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTenantTypes());
+                var leaseStakeholderTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseStakeholderTypes());
                 var acqFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFundingTypes());
                 var projectStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllProjectStatusTypes());
                 var formTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllFormTypes());
@@ -189,7 +189,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acquisitionPhysFileStatusTypes);
                 codes.AddRange(acquisitionTypes);
                 codes.AddRange(acqFilePersonProfileTypes);
-                codes.AddRange(tenantTypes);
+                codes.AddRange(leaseStakeholderTypes);
                 codes.AddRange(acqFundingTypes);
                 codes.AddRange(projectStatusTypes);
                 codes.AddRange(formTypes);

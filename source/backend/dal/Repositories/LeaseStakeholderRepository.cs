@@ -9,19 +9,19 @@ using Pims.Dal.Helpers.Extensions;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// LeaseTenantRepository class, provides a service layer to interact with lease tenants within the datasource.
+    /// LeaseStakeholderRepository class, provides a service layer to interact with lease stakeholders within the datasource.
     /// </summary>
-    public class LeaseTenantRepository : BaseRepository<PimsLeaseTenant>, ILeaseTenantRepository
+    public class LeaseStakeholderRepository : BaseRepository<PimsLeaseStakeholder>, ILeaseStakeholderRepository
     {
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a LeaseTenantRepository, and initializes it with the specified arguments.
+        /// Creates a new instance of a LeaseStakeholderRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseTenantRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger)
+        public LeaseStakeholderRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger)
             : base(dbContext, user, logger)
         {
         }
@@ -30,14 +30,14 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// get the tenants on a lease.
+        /// get the stakeholders on a lease.
         /// </summary>
         /// <param name="leaseId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLeaseTenant> GetByLeaseId(long leaseId)
+        public IEnumerable<PimsLeaseStakeholder> GetByLeaseId(long leaseId)
         {
             using var scope = Logger.QueryScope();
-            return this.Context.PimsLeaseTenants
+            return this.Context.PimsLeaseStakeholders
                 .Include(t => t.LessorTypeCodeNavigation)
                 .Include(t => t.Organization)
                     .ThenInclude(o => o.PimsPersonOrganizations)
@@ -61,21 +61,21 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.PimsContactMethods)
                     .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(t => t.PrimaryContact)
-                .Include(t => t.TenantTypeCodeNavigation)
+                .Include(t => t.LeaseStakeholderTypeCodeNavigation)
                 .Where(l => l.LeaseId == leaseId).AsNoTracking()
                  ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
-        /// update the tenants on a lease.
+        /// update the stakeholders on a lease.
         /// </summary>
         /// <param name="leaseId"></param>
-        /// <param name="pimsLeaseTenants"></param>
+        /// <param name="pimsLeaseStakeholders"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLeaseTenant> Update(long leaseId, IEnumerable<PimsLeaseTenant> pimsLeaseTenants)
+        public IEnumerable<PimsLeaseStakeholder> Update(long leaseId, IEnumerable<PimsLeaseStakeholder> pimsLeaseStakeholders)
         {
             using var scope = Logger.QueryScope();
-            this.Context.UpdateChild<PimsLease, long, PimsLeaseTenant, long>(l => l.PimsLeaseTenants, leaseId, pimsLeaseTenants.ToArray());
+            this.Context.UpdateChild<PimsLease, long, PimsLeaseStakeholder, long>(l => l.PimsLeaseStakeholders, leaseId, pimsLeaseStakeholders.ToArray());
 
             return GetByLeaseId(leaseId);
         }

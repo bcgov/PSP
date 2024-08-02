@@ -287,9 +287,9 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsAcqFlTeamProfileTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsTenantType> GetAllTenantTypes()
+        public IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes()
         {
-            return this.Context.PimsTenantTypes.AsNoTracking().ToArray();
+            return this.Context.PimsLeaseStakeholderTypes.AsNoTracking().ToArray();
         }
 
         public IEnumerable<PimsAcquisitionFundingType> GetAllAcquisitionFundingTypes()

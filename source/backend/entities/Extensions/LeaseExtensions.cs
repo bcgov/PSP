@@ -50,13 +50,13 @@ namespace Pims.Dal.Helpers.Extensions
         }
 
         /// <summary>
-        /// Get the tenant name from either the person or the organization.
+        /// Get the stakeholder name from either the person or the organization.
         /// </summary>
-        /// <param name="lease"></param>
+        /// <param name="stakeholder"></param>
         /// <returns></returns>
-        public static string GetTenantName(this PimsLeaseTenant lease)
+        public static string GetStakeholderName(this PimsLeaseStakeholder stakeholder)
         {
-            return lease?.Person?.GetFullName() ?? lease?.Organization?.Name;
+            return stakeholder?.Person?.GetFullName() ?? stakeholder?.Organization?.Name;
         }
 
         /// <summary>
