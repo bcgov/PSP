@@ -17,7 +17,7 @@ namespace Pims.Core.Test
         /// Create a new instance of a Lease.
         /// </summary>
         /// <returns></returns>
-        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addTenant = false, bool addStakeholder = false, bool addProperty = true,
+        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true,
             PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeaseStatusType pimsLeaseStatusType = null, PimsLeasePayRvblType pimsLeasePayRvblType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null)
         {
             var lease = new Entity.PimsLease()
