@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// Create a new instance of a Lease.
         /// </summary>
         /// <returns></returns>
-        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholserLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true,
+        public static Entity.PimsLease CreateLease(int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true,
             PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeasePurposeType pimsLeasePurposeType = null, PimsLeaseStatusType pimsLeaseStatusType = null, PimsLeasePayRvblType pimsLeasePayRvblType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null)
         {
             var lease = new Entity.PimsLease()
@@ -24,7 +24,7 @@ namespace Pims.Core.Test
                 LFileNo = lFileNo,
                 ConcurrencyControlNumber = 1,
             };
-            var person = new Entity.PimsPerson() { FirstName = stakeholderFirstName ?? "first", Surname = stakeholserLastName ?? "last" };
+            var person = new Entity.PimsPerson() { FirstName = stakeholderFirstName ?? "first", Surname = stakeholderLastName ?? "last" };
             person.PimsPersonAddresses.Add(new PimsPersonAddress() { Person = person, Address = address, AddressUsageTypeCode = AddressUsageTypes.Mailing });
             var organization = new Entity.PimsOrganization() { OrganizationName = "Lease organization" };
             organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address, AddressUsageTypeCode = AddressUsageTypes.Mailing });
