@@ -95,7 +95,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholserLastName: "tenant", addStakeholder: true);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
@@ -155,7 +155,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholserLastName: "tenant", addStakeholder: true);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
@@ -184,7 +184,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholserLastName: "tenant", addStakeholder: true, addProperty: true);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, addProperty: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
@@ -227,7 +227,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholserLastName: "tenant", addStakeholder: true, addProperty: true);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, addProperty: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
@@ -270,7 +270,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholserLastName: "tenant", addStakeholder: true, addProperty: true);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, addProperty: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
@@ -314,7 +314,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholserLastName: "tenant", addStakeholder: true, addProperty: true);
+            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, addProperty: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
