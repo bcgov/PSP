@@ -389,7 +389,15 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
-            var lease = EntityHelper.CreateLease(1, pimsLeasePurposeType: new PimsLeasePurposeType() { Id = "test", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" }, addProperty: false);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+
+            lease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
+            {
+                LeaseLeasePurposeId = 100,
+                LeaseId = lease.LeaseId,
+                LeasePurposeTypeCode = "test",
+            });
+
             property.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = property.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(property);
 
