@@ -219,7 +219,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
             ))}
           </LayerGroup>
         )}
-        {mapMachine.showPopup && !mapMachine.isRepositioning && (
+        {mapMachine.showPopup && (
           // Draws the popup on top of the map
           <LayerPopupContainer ref={popupRef} />
         )}

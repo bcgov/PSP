@@ -64,8 +64,8 @@ export interface IMapStateMachineContext {
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
   startReposition: (
-    repositioningFeatureDataset: LocationFeatureDataset | null,
-    index: number | null,
+    repositioningFeatureDataset: LocationFeatureDataset,
+    index: number,
     selectingComponentId?: string,
   ) => void;
   finishReposition: () => void;
@@ -266,8 +266,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
   const startReposition = useCallback(
     (
-      repositioningFeatureDataset: LocationFeatureDataset | null,
-      index: number | null,
+      repositioningFeatureDataset: LocationFeatureDataset,
+      index: number,
       selectingComponentId?: string,
     ) => {
       serviceSend({
@@ -345,9 +345,14 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_LAYERS' });
   }, [serviceSend]);
 
+  const isRepositioning = useMemo(() => {
+    return state.matches({ mapVisible: { featureView: 'repositioning' } });
+  }, [state]);
+
+  // disable map popup when repositioning file markers
   const showPopup = useMemo(() => {
-    return state.context.mapLocationFeatureDataset !== null;
-  }, [state.context.mapLocationFeatureDataset]);
+    return state.context.mapLocationFeatureDataset !== null && !isRepositioning;
+  }, [isRepositioning, state.context.mapLocationFeatureDataset]);
 
   const isFiltering = useMemo(() => {
     return state.matches({ mapVisible: { featureView: 'filtering' } });
@@ -378,7 +383,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
-        isRepositioning: state.matches({ mapVisible: { featureView: 'repositioning' } }),
+        isRepositioning: isRepositioning,
         selectingComponentId: state.context.selectingComponentId,
         isFiltering: isFiltering,
         isShowingMapLayers: isShowingMapLayers,
