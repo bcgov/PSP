@@ -1,0 +1,41 @@
+@import '@/assets/scss/styles.scss';
+@import '@/assets/scss/colors.scss';
+
+.simple-pagination-container {
+  display: flex;
+  list-style: none;
+
+  height: 3.6rem;
+  padding: 0rem;
+  margin: 0rem;
+
+  .simple-pagination-active {
+  }
+  .simple-pagination-break {
+  }
+  .simple-pagination-break-link {
+  }
+
+  .simple-pagination-page {
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+
+    .simple-pagination-page-link {
+      color: black;
+    }
+  }
+
+  .simple-pagination-previous {
+    padding-top: 0.2rem;
+    font-size: 3rem;
+    .simple-pagination-previous-link {
+    }
+  }
+
+  .simple-pagination-next {
+    padding-top: 0.2rem;
+    font-size: 3rem;
+    .simple-pagination-next-link {
+    }
+  }
+}

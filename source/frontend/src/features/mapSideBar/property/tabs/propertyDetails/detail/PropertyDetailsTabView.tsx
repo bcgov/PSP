@@ -4,6 +4,7 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 import { EditButton } from '@/components/common/EditButton';
+import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -25,7 +26,7 @@ import { exists } from '@/utils';
 import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
-import { IPropertyDetailsForm, readOnlyMultiSelectStyle } from './PropertyDetailsTabView.helpers';
+import { IPropertyDetailsForm } from './PropertyDetailsTabView.helpers';
 import { OperationContainer } from './propertyOperation/OperationContainer';
 import { OperationSectionView } from './propertyOperation/OperationSectionView';
 

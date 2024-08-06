@@ -209,7 +209,7 @@ namespace Pims.Api.Areas.Reports.Controllers
             var allLeases = page.Items
                 .SelectMany(l => l.PimsLeasePeriods.DefaultIfEmpty(), (lease, period) => (lease, period))
                 .SelectMany(lt => lt.lease.PimsPropertyLeases.DefaultIfEmpty(), (leasePeriod, property) => (leasePeriod.period, leasePeriod.lease, property))
-                .SelectMany(ltp => ltp.lease.PimsLeaseTenants.DefaultIfEmpty(), (leasePeriodProperty, tenant) => (leasePeriodProperty.period, leasePeriodProperty.lease, leasePeriodProperty.property, tenant));
+                .SelectMany(ltp => ltp.lease.PimsLeaseStakeholders.DefaultIfEmpty(), (leasePeriodProperty, tenant) => (leasePeriodProperty.period, leasePeriodProperty.lease, leasePeriodProperty.property, tenant));
             var flatLeases = _mapper.Map<IEnumerable<LeaseModel>>(allLeases);
             return flatLeases;
         }

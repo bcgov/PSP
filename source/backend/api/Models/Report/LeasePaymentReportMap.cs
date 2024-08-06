@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using Mapster;
@@ -20,10 +19,9 @@ namespace Pims.Api.Models.Report.Lease
                 .Map(dest => dest.HistoricalFiles, src => GetHistoricalFileNumbers(src.LeasePeriod.Lease))
                 .Map(dest => dest.LeaseStatus, src => src.LeasePeriod.Lease.LeaseStatusTypeCodeNavigation.Description)
                 .Map(dest => dest.PropertyList, src => string.Join(",", src.LeasePeriod.Lease.PimsPropertyLeases.Select(x => GetFallbackPropertyIdentifier(x))))
-                .Map(dest => dest.TenantList, src => string.Join(",", src.LeasePeriod.Lease.PimsLeaseTenants.Where(t => t != null && t.TenantTypeCode == "TEN").Select(x => x != null && x.Person != null ? x.Person.GetFullName(false) : x != null && x.Organization != null ? x.Organization.OrganizationName : string.Empty)))
+                .Map(dest => dest.TenantList, src => string.Join(",", src.LeasePeriod.Lease.PimsLeaseStakeholders.Where(t => t != null && t.LeaseStakeholderTypeCode == "TEN").Select(x => x != null && x.Person != null ? x.Person.GetFullName(false) : x != null && x.Organization != null ? x.Organization.OrganizationName : string.Empty)))
                 .Map(dest => dest.PayableOrReceivable, src => src.LeasePeriod.Lease.LeasePayRvblTypeCodeNavigation.Description)
                 .Map(dest => dest.Program, src => src.LeasePeriod.Lease.LeaseProgramTypeCode.ToUpper() == "OTHER" && !string.IsNullOrEmpty(src.LeasePeriod.Lease.OtherLeaseProgramType) ? $"{src.LeasePeriod.Lease.LeaseProgramTypeCodeNavigation.Description} - {src.LeasePeriod.Lease.OtherLeaseProgramType}" : src.LeasePeriod.Lease.LeaseProgramTypeCodeNavigation.Description)
-                //.Map(dest => dest.Purpose, src => src.LeasePeriod.Lease.LeasePurposeTypeCode.ToUpper() == "OTHER" && !string.IsNullOrEmpty(src.LeasePeriod.Lease.OtherLeasePurposeType) ? $"{src.LeasePeriod.Lease.LeasePurposeTypeCodeNavigation.Description} - {src.LeasePeriod.Lease.OtherLeasePurposeType}" : src.LeasePeriod.Lease.LeasePurposeTypeCodeNavigation.Description) TODO: Fix mappings
                 .Map(dest => dest.PeriodStart, src => src.LeasePeriod.PeriodStartDate.ToString("MMMM dd, yyyy"))
                 .Map(dest => dest.PeriodExpiry, src => src.LeasePeriod.PeriodExpiryDate.HasValue ? src.LeasePeriod.PeriodExpiryDate.Value.ToString("MMMM dd, yyyy") : string.Empty)
                 .Map(dest => dest.IsPeriodExercised, src => src.LeasePeriod.LeasePeriodStatusTypeCode == "EXER" ? "Yes" : "No")

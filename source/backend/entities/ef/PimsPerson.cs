@@ -146,10 +146,10 @@ public partial class PimsPerson
     public virtual ICollection<PimsInterestHolder> PimsInterestHolderPrimaryContacts { get; set; } = new List<PimsInterestHolder>();
 
     [InverseProperty("Person")]
-    public virtual ICollection<PimsLeaseTenant> PimsLeaseTenantPeople { get; set; } = new List<PimsLeaseTenant>();
+    public virtual ICollection<PimsLeaseStakeholder> PimsLeaseStakeholderPeople { get; set; } = new List<PimsLeaseStakeholder>();
 
     [InverseProperty("PrimaryContact")]
-    public virtual ICollection<PimsLeaseTenant> PimsLeaseTenantPrimaryContacts { get; set; } = new List<PimsLeaseTenant>();
+    public virtual ICollection<PimsLeaseStakeholder> PimsLeaseStakeholderPrimaryContacts { get; set; } = new List<PimsLeaseStakeholder>();
 
     [InverseProperty("Person")]
     public virtual ICollection<PimsPersonAddress> PimsPersonAddresses { get; set; } = new List<PimsPersonAddress>();

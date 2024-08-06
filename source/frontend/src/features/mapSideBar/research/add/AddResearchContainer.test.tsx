@@ -102,6 +102,7 @@ describe('AddResearchContainer component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
         },
       },

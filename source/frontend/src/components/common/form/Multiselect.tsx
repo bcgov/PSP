@@ -132,6 +132,24 @@ export const Multiselect = forwardRef(MultiselectInner) as <T, U>(
   props: IMultiselectProps<T, U> & { ref?: React.ForwardedRef<MultiselectBase> },
 ) => ReturnType<typeof MultiselectInner>;
 
+export const readOnlyMultiSelectStyle = {
+  multiselectContainer: {
+    opacity: 1,
+  },
+  searchBox: {
+    border: 'none',
+    padding: 0,
+  },
+  chips: {
+    opacity: 1,
+    background: '#F2F2F2',
+    borderRadius: '4px',
+    color: 'black',
+    fontSize: '16px',
+    marginRight: '1em',
+  },
+};
+
 const defaultStyle = {
   chips: {
     background: '#F2F2F2',

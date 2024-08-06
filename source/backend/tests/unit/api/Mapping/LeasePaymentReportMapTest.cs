@@ -321,9 +321,9 @@ namespace Pims.Api.Test.Mappings
         public void MapLeasePaymentReport_TenantList()
         {
             var lease = EntityHelper.CreateLease(1, addProperty: false);
-            lease.PimsLeaseTenants.Add(new PimsLeaseTenant() { TenantTypeCode = "TEN", Person = new PimsPerson() { FirstName = "first" } });
-            lease.PimsLeaseTenants.Add(new PimsLeaseTenant() { TenantTypeCode = "TEN", Organization = new PimsOrganization() { OrganizationName = "test org" } });
-            lease.PimsLeaseTenants.Add(new PimsLeaseTenant() { TenantTypeCode = "NOT", Organization = new PimsOrganization() { OrganizationName = "test org" } });
+            lease.PimsLeaseStakeholders.Add(new PimsLeaseStakeholder() { LeaseStakeholderTypeCode = "TEN", Person = new PimsPerson() { FirstName = "first" } });
+            lease.PimsLeaseStakeholders.Add(new PimsLeaseStakeholder() { LeaseStakeholderTypeCode = "TEN", Organization = new PimsOrganization() { OrganizationName = "test org" } });
+            lease.PimsLeaseStakeholders.Add(new PimsLeaseStakeholder() { LeaseStakeholderTypeCode = "NOT", Organization = new PimsOrganization() { OrganizationName = "test org" } });
             var leasePayment = new PimsLeasePayment() { };
 
             leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
@@ -358,7 +358,7 @@ namespace Pims.Api.Test.Mappings
             // TODO: Fix Mappings
             //lease.LeasePurposeTypeCode = "OTHER";
             //lease.LeasePurposeTypeCodeNavigation = new PimsLeasePurposeType() { Description = "OTHER" };
-            lease.OtherLeasePurposeType = "DESC";
+            //lease.OtherLeasePurposeType = "DESC";
             var leasePayment = new PimsLeasePayment() { };
 
             leasePayment.LeasePeriod = new PimsLeasePeriod() { Lease = lease, PimsLeasePayments = new List<PimsLeasePayment>() };
