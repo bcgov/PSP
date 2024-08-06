@@ -307,7 +307,7 @@ IF @@ROWCOUNT = 0
       (N'AGRIC', N'Agricultural Grazing/haying');
 ELSE  
   UPDATE PIMS_LEASE_PURPOSE_TYPE
-  SET    DESCRIPTION                = N'Agricultural Grazing/haying'
+  SET    DESCRIPTION                = N'Grazing/haying'
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  LEASE_PURPOSE_TYPE_CODE = @CurrCd;
 GO

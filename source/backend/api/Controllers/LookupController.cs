@@ -80,7 +80,6 @@ namespace Pims.Api.Controllers
                 var countries = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllCountries());
                 var districts = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDistricts());
                 var insuranceTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllInsuranceTypes());
-                var leaseCategoryTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseCategoryTypes());
                 var leaseInitiatorTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseInitiatorTypes());
                 var leasePaymentFrequencyTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePmtFreqTypes());
                 var leasePaymentMethodTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePaymentMethodTypes());
@@ -115,7 +114,7 @@ namespace Pims.Api.Controllers
                 var acquisitionPhysFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionPhysFileStatusTypes());
                 var acquisitionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionTypes());
                 var acqFilePersonProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcqFileTeamProfileTypes());
-                var tenantTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTenantTypes());
+                var leaseStakeholderTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseStakeholderTypes());
                 var acqFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFundingTypes());
                 var projectStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllProjectStatusTypes());
                 var formTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllFormTypes());
@@ -156,7 +155,6 @@ namespace Pims.Api.Controllers
                 codes.AddRange(countries);
                 codes.AddRange(districts);
                 codes.AddRange(insuranceTypes);
-                codes.AddRange(leaseCategoryTypes);
                 codes.AddRange(leaseInitiatorTypes);
                 codes.AddRange(leasePaymentFrequencyTypes);
                 codes.AddRange(leasePaymentMethodTypes);
@@ -191,7 +189,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acquisitionPhysFileStatusTypes);
                 codes.AddRange(acquisitionTypes);
                 codes.AddRange(acqFilePersonProfileTypes);
-                codes.AddRange(tenantTypes);
+                codes.AddRange(leaseStakeholderTypes);
                 codes.AddRange(acqFundingTypes);
                 codes.AddRange(projectStatusTypes);
                 codes.AddRange(formTypes);

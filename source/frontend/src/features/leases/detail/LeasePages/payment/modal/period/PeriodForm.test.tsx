@@ -15,6 +15,7 @@ import {
 import { FormLeasePeriod, defaultFormLeasePeriod } from '../../models';
 import PeriodForm, { IPeriodFormProps } from './PeriodForm';
 import { createRef } from 'react';
+import { ISystemConstant } from '@/store/slices/systemConstants';
 
 const history = createMemoryHistory();
 const onSave = vi.fn();
@@ -32,6 +33,7 @@ describe('PeriodForm component', () => {
         formikRef={formikRef}
         initialValues={renderOptions?.initialValues ?? { ...defaultFormLeasePeriod }}
         lease={{} as any}
+        gstConstant={{ name: 'gstDecimal', value: '0.05' }}
       />,
       {
         ...renderOptions,

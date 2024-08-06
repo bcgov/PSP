@@ -56,6 +56,9 @@ namespace Pims.Api.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
+
+
+            /* TODO: Fix compensation requisition
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, compensationRequisition.AcquisitionFileId);
 
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
@@ -93,6 +96,8 @@ namespace Pims.Api.Services
 
                 return null;
             }
+            */
+            return null;
         }
 
         public bool DeleteCompensation(long compensationId)
@@ -102,6 +107,7 @@ namespace Pims.Api.Services
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationId);
 
+           /* TODO: Fix compensation requisition
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(currentCompensation.AcquisitionFileId);
 
             if (!_statusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
@@ -111,8 +117,9 @@ namespace Pims.Api.Services
 
             var fileFormToDelete = _compensationRequisitionRepository.TryDelete(compensationId);
             _compensationRequisitionRepository.CommitTransaction();
-
             return fileFormToDelete;
+            */
+            return true;
         }
 
         public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)

@@ -324,23 +324,6 @@ namespace Pims.Dal.Tests.Repositories
             Assert.IsType<PimsLeaseLicenseType[]>(result);
         }
 
-        //[Fact]
-        public void LookupRepository_GetAllLeaseCategoryTypes_ReturnsCorrectType()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var context = helper.CreatePimsContext(user, true);
-
-            var lookupRepository = helper.CreateRepository<LookupRepository>(user);
-
-            // Act
-            var result = lookupRepository.GetAllLeaseCategoryTypes();
-
-            // Assert
-            Assert.IsType<PimsLeaseCategoryType[]>(result);
-        }
-
         [Fact]
         public void LookupRepository_GetAllLeasePurposeTypes_ReturnsCorrectType()
         {
@@ -767,7 +750,7 @@ namespace Pims.Dal.Tests.Repositories
         }
 
         [Fact]
-        public void LookupRepository_GetAllTenantTypes_ReturnsCorrectType()
+        public void LookupRepository_GetAllLeaseStakeholderTypes_ReturnsCorrectType()
         {
             // Arrange
             var helper = new TestHelper();
@@ -777,10 +760,10 @@ namespace Pims.Dal.Tests.Repositories
             var lookupRepository = helper.CreateRepository<LookupRepository>(user);
 
             // Act
-            var result = lookupRepository.GetAllTenantTypes();
+            var result = lookupRepository.GetAllLeaseStakeholderTypes();
 
             // Assert
-            Assert.IsType<PimsTenantType[]>(result);
+            Assert.IsType<PimsLeaseStakeholderType[]>(result);
         }
 
         [Fact]

@@ -105,6 +105,9 @@ public partial class PimsPropertyLease
     [InverseProperty("PimsPropertyLeases")]
     public virtual PimsLease Lease { get; set; }
 
+    [InverseProperty("PropertyLease")]
+    public virtual ICollection<PimsPropLeaseCompReq> PimsPropLeaseCompReqs { get; set; } = new List<PimsPropLeaseCompReq>();
+
     [ForeignKey("PropertyId")]
     [InverseProperty("PimsPropertyLeases")]
     public virtual PimsProperty Property { get; set; }

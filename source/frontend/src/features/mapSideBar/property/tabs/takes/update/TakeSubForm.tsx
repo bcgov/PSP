@@ -62,8 +62,8 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
         setDisplayModal(true);
       } else if (isLeasePayable) {
         setModalContent({
-          variant: 'info',
-          title: 'Follow-up required',
+          variant: 'warning',
+          title: 'Acknowledgement',
           message:
             'You have created a Lease (Payable) Take. You also need to create a Lease/Licence File.',
           okButtonText: 'Close',
