@@ -139,11 +139,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedFileProperties.SelectFirstOptionFromSearch();
             }
             //Search for a property by Legal Description
-            //if (researchFile.SearchProperties.LegalDescription != "")
-            //{
-            //    sharedSearchProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
-            //    sharedSearchProperties.SelectFirstOption();
-            //}
+            if (researchFile.SearchProperties.LegalDescription != "")
+            {
+                sharedFileProperties.SelectPropertyByLegalDescription(researchFile.SearchProperties.LegalDescription);
+                sharedFileProperties.SelectFirstOptionFromSearch();
+            }
 
             //Save Research File
             researchFiles.SaveResearchFileProperties();

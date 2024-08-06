@@ -60,7 +60,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
         private By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[7]");
 
-        private By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::strong/parent::div/following-sibling::div/span[1]");
+        private By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[1]");
 
         //Search Leases Pagination
         private By searchLeasesPaginationMenu = By.CssSelector("div[class='Menu-root']");
