@@ -153,6 +153,7 @@ namespace Pims.Api.Services
                 {
                     var retryPolicy = Policy<ExternalResponse<DocumentDetailModel>>
                         .HandleResult(result => result.HttpStatusCode != HttpStatusCode.OK || result.Payload.FileLatest == null)
+                        .Or<System.Text.Json.JsonException>()
                         .WaitAndRetryAsync(_config.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
                     var detail = await retryPolicy.ExecuteAsync(async () => await GetStorageDocumentDetail(externalDocument.Id));
                     if(detail?.Payload?.FileLatest == null)
