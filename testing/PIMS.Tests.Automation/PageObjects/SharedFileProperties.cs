@@ -47,7 +47,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropResultsLegalDescriptHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Legal Description')]");
 
         private By searchPropertiesNoRowsResult = By.CssSelector("div[data-testid='map-properties'] div[class='no-rows-message']");
-        private By searchProperties1stResultPropDiv = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
+        private By searchProperties1stResultAddressOptions = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
 
         private By searchPropertiesAddSelectionBttn = By.XPath("//button/div[contains(text(),'Add to selection')]");
@@ -129,9 +129,8 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByAddressInput).SendKeys(address);
 
-            WaitUntilVisible(searchByAddressInputSuggestionList);
+            WaitUntilClickable(searchByAddressInputSuggestionList);
             FocusAndClick(searchByAddressSuggestion1stOption);
-
         }
 
         public void SelectPropertyByPlan(string plan)

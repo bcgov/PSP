@@ -1,5 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V123.DOM;
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
 using Sprache;
@@ -112,10 +111,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsCategoryOtherInput = By.Id("input-otherCategoryTypeDescription");
         private readonly By licenseDetailsCategoryOtherContent = By.Id("input-otherCategoryType");
         private readonly By licenseDetailsPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
-        private readonly By licenseDetailsPurposeSelector = By.Id("input-purposeTypeCode");
-        private readonly By licenseDetailsPurposeContent = By.Id("input-purposeType.description");
-        private readonly By licenseDetailsOtherPurposeLabel = By.XPath("//input[@id='input-otherPurposeTypeDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
-        private readonly By licenseDetailsOtherPurposeInput = By.Id("input-otherPurposeTypeDescription");
+        private readonly By licenseDetailsPurposeMultiselector = By.Id("multiselect-purposes_input");
+        private readonly By licenseDetailsPurposeDeleteBttns = By.CssSelector("div[id='multiselect-purposes'] i[class='custom-close']");
+        private readonly By licenseDetailsPurposeOptions = By.XPath("//input[@id='multiselect-purposes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+
+        private readonly By licenseDetailsPurposeContent = By.Id("multiselectContainerReact");
+        private readonly By licenseDetailsOtherPurposeLabel = By.XPath("//input[@id='input-purposeOtherDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
+        private readonly By licenseDetailsOtherPurposeInput = By.Id("input-purposeOtherDescription");
         private readonly By licenseDetailsOtherPurposeContent = By.Id("input-otherPurposeType");
         private readonly By licenseDetailsInitiatorLabel = By.XPath("//label[contains(text(),'Initiator')]");
         private readonly By licenseDetailsInitiatorTooltip = By.XPath("//label[contains(text(),'Initiator')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
@@ -192,14 +194,13 @@ namespace PIMS.Tests.Automation.PageObjects
         //Lease Property Section Elements
         private readonly By leasePropertiesSubtitle = By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2");
         private readonly By leasePropertiesUpdateSubtitle = By.XPath("//div[contains(text(),'Selected properties')]/parent::div/parent::h2");
-        private readonly By leasePropertiesTotalCount = By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div");
 
         //Leases Modal Element
         private readonly By licenseDetailsConfirmationModal = By.CssSelector("div[class='modal-content']");
         private readonly By licenseDetailsConfirmationContent = By.CssSelector("div[class='modal-content'] p");
 
-        private SharedFileProperties sharedSearchProperties;
-        private SharedModals sharedModals;
+        private readonly SharedFileProperties sharedSearchProperties;
+        private readonly SharedModals sharedModals;
 
         public LeaseDetails(IWebDriver webDriver) : base(webDriver)
         {
@@ -272,8 +273,24 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Purpose
-            if (lease.LeasePurpose != "")
-                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.LeasePurpose);
+            if (webDriver.FindElements(licenseDetailsPurposeDeleteBttns).Count > 0)
+            {
+                while (webDriver.FindElements(licenseDetailsPurposeDeleteBttns).Count > 0)
+                    webDriver.FindElements(licenseDetailsPurposeDeleteBttns)[0].Click();
+            }
+
+            if (lease.LeasePurpose.Count > 0)
+            {
+                foreach (string purpose in lease.LeasePurpose)
+                {
+                    FocusAndClick(licenseDetailsPurposeMultiselector);
+
+                    Wait(2000);
+                    ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
+                }
+
+                webDriver.FindElement(licenseDetailsPurposeLabel).Click();
+            }
 
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
@@ -304,14 +321,14 @@ namespace PIMS.Tests.Automation.PageObjects
             //Status
             if (lease.LeaseStatus != "")
             {
-                SelectElement selectStatusElement = new SelectElement(webDriver.FindElement(licenseDetailsStatusSelector));
+                SelectElement selectStatusElement = new(webDriver.FindElement(licenseDetailsStatusSelector));
                 IWebElement selectedStatus = selectStatusElement.SelectedOption;
                 string previousStatus = selectedStatus.Text;
 
                 ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
 
                 Wait();
-                if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
+                if (webDriver.FindElements(licenseDetailsConfirmationModal).Count > 0)
                 {
                     Assert.Equal("Are you sure?", sharedModals.ModalHeader());
                     Assert.Contains("The lease is no longer in " + previousStatus + " state. The reason for doing so will be cleared from the file details and can only be viewed in the notes tab.", webDriver.FindElement(licenseDetailsConfirmationContent).Text);
@@ -373,14 +390,13 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.FindElement(licenceDetailsFirstRenewalDeleteBttn).Click();
 
                     Wait();
-                    if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
+                    if (webDriver.FindElements(licenseDetailsConfirmationModal).Count > 0)
                     {
                         Assert.Equal("Remove Renewal", sharedModals.ModalHeader());
                         Assert.Contains("Removing a renewal will also delete any renewal data.", sharedModals.ModalContent());
                         Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
                         sharedModals.ModalClickOKBttn();
                     }
-
                 }
 
                 for (var i = 0; i < lease.LeaseRenewals.Count; i++)
@@ -448,8 +464,22 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Purpose
-            if (lease.LeasePurpose != "")
-                ChooseSpecificSelectOption(licenseDetailsPurposeSelector, lease.LeasePurpose);
+            if (webDriver.FindElements(licenseDetailsPurposeDeleteBttns).Count > 0)
+            {
+                while (webDriver.FindElements(licenseDetailsPurposeDeleteBttns).Count > 0)
+                    webDriver.FindElements(licenseDetailsPurposeDeleteBttns)[0].Click();
+            }
+
+            if (lease.LeasePurpose.Count > 0)
+            {
+                foreach (string purpose in lease.LeasePurpose)
+                {
+                    FocusAndClick(licenseDetailsPurposeMultiselector);
+
+                    WaitUntilClickable(licenseDetailsPurposeOptions);
+                    ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
+                }
+            }
 
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
@@ -578,7 +608,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
 
                 Wait(5000);
-                if (webDriver.FindElements(licenseDetailsConfirmationModal).Count() > 0)
+                if (webDriver.FindElements(licenseDetailsConfirmationModal).Count > 0)
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
 
@@ -616,7 +646,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyLicenseDetailsCreateForm()
         {
             Wait();
-            WaitUntilVisible(licenseDetailsProjectLabel);
 
             //Create Title
             AssertTrueIsDisplayed(licenseCreateTitle);
@@ -647,7 +676,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsTypeLabel);
             AssertTrueIsDisplayed(licenseDetailsTypeSelector);
             AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
-            AssertTrueIsDisplayed(licenseDetailsPurposeSelector);
+            AssertTrueIsDisplayed(licenseDetailsPurposeMultiselector);
             AssertTrueIsDisplayed(licenseDetailsInitiatorLabel);
             AssertTrueIsDisplayed(licenseDetailsInitiatorTooltip);
             AssertTrueIsDisplayed(licenseDetailsInitiatorSelector);
@@ -717,7 +746,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsProgramLabel);
             AssertTrueIsDisplayed(licenseDetailsProgramSelector);
 
-            if (webDriver.FindElements(licenseDetailsOtherProgramLabel).Count() > 0)
+            if (webDriver.FindElements(licenseDetailsOtherProgramLabel).Count > 0)
                 AssertTrueIsDisplayed(licenseDetailsOtherProgramInput);
 
             AssertTrueIsDisplayed(licenseDetailsTypeLabel);
@@ -733,7 +762,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(licenseDetailsCategoryOtherInput);
 
             AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
-            AssertTrueIsDisplayed(licenseDetailsPurposeSelector);
+            AssertTrueIsDisplayed(licenseDetailsPurposeMultiselector);
 
             if (webDriver.FindElements(licenseDetailsOtherTypeLabel).Count > 0)
                 AssertTrueIsDisplayed(licenseDetailsOtherTypeInput);
@@ -762,17 +791,30 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsNotesTextarea);
         }
 
-        public void VerifyLicensePropertiesUpdateForm(List<LeaseProperty> properties)
+        public void UpdateLicensePropertiesForm(LeaseProperty property, int propertyIdx)
         {
             AssertTrueIsDisplayed(leasePropertiesUpdateSubtitle);
 
-            for (var i = 0; i < properties.Count; i++)
+            if (property.DescriptiveName != "")
             {
-                if (properties[i].DescriptiveName != "")
-                    webDriver.FindElement(By.Id("input-properties."+ i +".name")).SendKeys(properties[i].DescriptiveName);
+                ClearInput(By.Id("input-properties."+ propertyIdx +".name"));
+                webDriver.FindElement(By.Id("input-properties."+ propertyIdx +".name")).SendKeys(property.DescriptiveName);
 
-                if (properties[i].Area != "")
-                    webDriver.FindElement(By.XPath("//input[@id='input-properties."+ i +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[1]/div/div[1]/div/input")).SendKeys(properties[i].Area);
+            }
+
+            if (property.Area != "")
+            {
+                ClearDigitsInput(By.XPath("//input[@id='input-properties."+ propertyIdx +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[1]/div/div[1]/div/input"));
+                webDriver.FindElement(By.XPath("//input[@id='input-properties."+ propertyIdx +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[1]/div/div[1]/div/input")).SendKeys(property.Area);
+
+                AssertTrueDoublesEquals(By.XPath("//input[@id='input-properties."+ propertyIdx +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[1]/div/div[2]/div/input"), TransformSqMtToHectares(property.Area));
+                AssertTrueIsDisplayed(By.XPath("//input[@id='input-properties."+ propertyIdx +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[1]/div/div[2]/div[contains(text(),'hectares')]"));
+
+                AssertTrueDoublesEquals(By.XPath("//input[@id='input-properties."+ propertyIdx +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[2]/div/div[1]/div/input"), TransformSqMtToSqFt(property.Area));
+                AssertTrueIsDisplayed(By.XPath("//input[@id='input-properties."+ propertyIdx +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[2]/div/div[1]/div[contains(text(),'sq. feet')]"));
+
+                AssertTrueDoublesEquals(By.XPath("//input[@id='input-properties."+ propertyIdx +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[2]/div/div[2]/div/input"), TransformSqMtToAcres(property.Area));
+                AssertTrueIsDisplayed(By.XPath("//input[@id='input-properties."+ propertyIdx +".name']/parent::div/parent::div/parent::div/following-sibling::div[1]/div/div/div[2]/div/div[2]/div[contains(text(),'acres')]"));
             }
         }
 
@@ -947,9 +989,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueElementValueEquals(licenseDetailsCategoryOtherContent, lease.CategoryOther);
 
             AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
-
-            if(lease.LeasePurpose != "")
-                AssertTrueElementValueEquals(licenseDetailsPurposeContent, lease.LeasePurpose);
+            if (lease.LeasePurpose.Count > 0)
+            {
+                var purposesUI = GetViewFieldListContent(licenseDetailsPurposeContent);
+                Assert.True(Enumerable.SequenceEqual(purposesUI, lease.LeasePurpose));
+            }
 
             if (lease.PurposeOther != "")
                 AssertTrueElementValueEquals(licenseDetailsOtherPurposeContent, lease.PurposeOther);
@@ -1028,7 +1072,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.FeeDeterminationPublicBenefit != "")
             {
                 IWebElement publicBenefit = webDriver.FindElement(licenseDetailsFeeDeterminationPublicBenefitInput);
-                SelectElement selectedValue = new SelectElement(publicBenefit);
+                SelectElement selectedValue = new(publicBenefit);
                 string selectedText = selectedValue.SelectedOption.Text;
                 Assert.Equal(lease.FeeDeterminationPublicBenefit, selectedText);
             }
@@ -1037,7 +1081,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.FeeDeterminationFinancialGain != "")
             {
                 IWebElement financialGain = webDriver.FindElement(licenseDetailsFeeDeterminationFinancialGainInput);
-                SelectElement selectedValue = new SelectElement(financialGain);
+                SelectElement selectedValue = new(element: financialGain);
                 string selectedText = selectedValue.SelectedOption.Text;
                 Assert.Equal(lease.FeeDeterminationFinancialGain, selectedText);
             }
@@ -1054,7 +1098,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.PhysicalLeaseExist != "")
             {
                 IWebElement physicalDocumentation = webDriver.FindElement(licenseDetailsPhysicalLeaseExistSelector);
-                SelectElement selectedValue = new SelectElement(physicalDocumentation);
+                SelectElement selectedValue = new(physicalDocumentation);
                 string selectedText = selectedValue.SelectedOption.Text;
                 Assert.Equal(lease.PhysicalLeaseExist, selectedText);
             }
@@ -1064,7 +1108,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.DigitalLeaseExist != "")
             {
                 IWebElement digitalDocumentation = webDriver.FindElement(licenseDetailsDigitalLeaseExistSelector);
-                SelectElement selectedValue = new SelectElement(digitalDocumentation);
+                SelectElement selectedValue = new(digitalDocumentation);
                 string selectedText = selectedValue.SelectedOption.Text;
                 Assert.Equal(lease.DigitalLeaseExist, selectedText);
             }
@@ -1085,7 +1129,6 @@ namespace PIMS.Tests.Automation.PageObjects
             VerifyLicensePropertiesHeader();
 
             AssertTrueIsDisplayed(leasePropertiesSubtitle);
-            Assert.Equal(properties.Count, webDriver.FindElements(leasePropertiesTotalCount).Count);
 
             for (var i = 0; i < properties.Count; i++)
             {
@@ -1095,40 +1138,31 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/label[contains(text(),'Descriptive name')]"));
                 if (properties[i].DescriptiveName != "")
-                    AssertTrueElementContains(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[2]/div[2]"), properties[i].DescriptiveName);
+                    AssertTrueElementValueEquals(By.Id("input-fileProperties."+ i +".propertyName"), properties[i].DescriptiveName);
 
                 AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/label[contains(text(),'Area included')]"));
                 if (properties[i].Area != "")
                 {
-                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[1]/div/div[1]/div[1]"), properties[i].Area);
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[1]/div/div[1]/div[1]"), TransformAreaNumberFormat(properties[i].Area));
                     AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div[1]/div[3]/div/div/div[1]/div/div[1]/div[contains(text(),'sq. metres')]"));
-
-                    AssertTrueDoublesEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[1]/div/div[2]/div[1]"), TransformSqMtToHectares(properties[i].Area));
-                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[1]/div/div[2]/div[contains(text(),'hectares')]"));
-
-                    AssertTrueDoublesEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[2]/div/div[1]/div[1]"), TransformSqMtToSqFt(properties[i].Area));
-                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[2]/div/div[1]/div[contains(text(),'sq. feet')]"));
-
-                    AssertTrueDoublesEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[2]/div/div[2]/div[1]"), TransformSqMtToAcres(properties[i].Area));
-                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[3]/div/div/div[2]/div/div[2]/div[contains(text(),'acres')]"));
                 }
 
                 AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[1]/label[contains(text(),'Address')]"));
                 if (properties[i].Address.AddressLine1 != "")
                 {
-                    AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress1"), properties[i].Address.AddressLine1);
+                    AssertTrueElementValueEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress1"), properties[i].Address.AddressLine1);
 
                     if(properties[i].Address.AddressLine2 != "")
-                        AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress2"), properties[i].Address.AddressLine2);
+                        AssertTrueElementValueEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress2"), properties[i].Address.AddressLine2);
 
                     if (properties[i].Address.AddressLine3 != "")
-                        AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress3"), properties[i].Address.AddressLine3);
+                        AssertTrueElementValueEquals(By.Id("input-fileProperties."+ i +".property.address.streetAddress3"), properties[i].Address.AddressLine3);
 
                     if (properties[i].Address.City != "")
-                        AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.municipality"), properties[i].Address.City);
+                        AssertTrueElementValueEquals(By.Id("input-fileProperties."+ i +".property.address.municipality"), properties[i].Address.City);
 
                     if (properties[i].Address.PostalCode != "")
-                        AssertTrueContentEquals(By.Id("input-fileProperties."+ i +".property.address.postal"), properties[i].Address.PostalCode);
+                        AssertTrueElementValueEquals(By.Id("input-fileProperties."+ i +".property.address.postal"), properties[i].Address.PostalCode);
                 }
                 else
                 {
@@ -1136,7 +1170,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/p[contains(text(),'Address not available in PIMS')]"));
                 }
 
-                AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[5]//div/label[contains(text(),'Legal Description')]"));
+                AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[5]/div/label[contains(text(),'Legal description')]"));
                 if (properties[i].LegalDescription != "")
                     AssertTrueContentEquals(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[5]/div[2]"), properties[i].LegalDescription);
 
@@ -1169,7 +1203,5 @@ namespace PIMS.Tests.Automation.PageObjects
             System.Diagnostics.Debug.WriteLine(expiryDates);
             return expiryDates[0].ToString("MMM d, yyyy");
         }
-
-       
     }
 }

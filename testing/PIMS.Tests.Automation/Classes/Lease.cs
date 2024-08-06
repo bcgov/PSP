@@ -24,7 +24,7 @@
         public string TypeOther { get; set; } = null!;
         public string Category { get; set; } = null!;
         public string CategoryOther { get; set; } = null!;
-        public string LeasePurpose { get; set; } = null!;
+        public List<string> LeasePurpose { get; set; } = new List<string>() { };
         public string PurposeOther { get; set; } = null!;
         public string Initiator { get; set; } = null!;
         public string Responsibility { get; set; } = null!;
@@ -115,12 +115,13 @@
         public int DepositsCount { get; set; } = 0;
         public List<Deposit> LeaseDeposits { get; set; } = new List<Deposit>();
 
-        public int TermsStartRow { get; set; } = 0;
-        public int TermsCount { get; set; } = 0;
+        public int PeriodsStartRow { get; set; } = 0;
+        public int PeriodsCount { get; set; } = 0;
         public List<Period> LeaseTerms { get; set; } = new List<Period>();
-        public int PaymentsStartRow { get; set; } = 0;
-        public int PaymentsCount { get; set; } = 0;
-        public List<Payment> TermPayments { get; set; } = new List<Payment>();
+
+        public int PeriodPaymentsStartRow { get; set; } = 0;
+        public int PeriodPaymentsCount { get; set; } = 0;
+        public List<Payment> PeriodPayments { get; set; } = new List<Payment>();
     }
 
     public class LeaseRenewal
@@ -193,7 +194,7 @@
 
     public class Period
     {
-        public string PaymentType { get; set; } = null!;
+        public string PeriodPaymentType { get; set; } = null!;
         public string PeriodDuration { get; set; } = null!;
         public string PeriodStartDate { get; set; } = null!;
         public string PeriodEndDate { get; set; } = null!;
@@ -201,24 +202,34 @@
         public string PeriodStatus { get; set; } = null!;
         public string PeriodBasePaymentFrequency { get; set;} = null!;
         public string PeriodBaseAgreedPayment { get; set; } = null!;
-        public bool PeriodBaseIsGSTEligible { get; set; } = false;
+        public string PeriodBaseIsGSTEligible { get; set; } = null!;
+        public string PeriodBaseGSTAmount { get; set; } = null!;
+        public string PeriodBaseTotalPaymentAmount { get; set; } = null!;
         public string PeriodAdditionalPaymentFrequency { get; set; } = null!;
         public string PeriodAdditionalAgreedPayment { get; set; } = null!;
-        public bool PeriodAdditionalIsGSTEligible { get; set; } = false;
+        public string PeriodAdditionalIsGSTEligible { get; set; } = null!;
+        public string PeriodAdditionalGSTAmount { get; set; } = null!;
+        public string PeriodAdditionalTotalPaymentAmount { get; set; } = null!;
         public string PeriodVariablePaymentFrequency { get; set; } = null!;
         public string PeriodVariableAgreedPayment { get; set; } = null!;
-        public bool PeriodVariableIsGSTEligible { get; set; } = false;
+        public string PeriodVariableIsGSTEligible { get; set; } = null!;
+        public string PeriodVariableGSTAmount { get; set; } = null!;
+        public string PeriodVariableTotalPaymentAmount { get; set; } = null!;
     }
 
     public class Payment
     {
         public string PaymentSentDate { get; set; } = null!;
         public string PaymentMethod { get; set; } = null!;
+        public string PaymentCategory { get; set; } = null!;
         public string PaymentTotalReceived { get; set; } = null!;
         public string PaymentExpectedPayment { get; set; } = null!;
+        public string PaymentIsGSTApplicable { get; set; } = null!; 
         public string PaymentGST { get; set; } = null!;
         public string PaymentStatus { get; set; } = null!;
-        public int ParentTerm { get; set; } = 0;
+        public int PeriodParentIndex { get; set; } = 0;
+        public string ParentPeriodPaymentType { get; set; } = null!;
+
     }
 
 }

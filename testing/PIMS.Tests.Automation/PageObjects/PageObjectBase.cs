@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
-            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
         }
 
         protected virtual void Wait(int milliseconds = 2000) => Thread.Sleep(milliseconds);
@@ -199,6 +199,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void AssertTrueDoublesEquals(By elementBy, double number2)
         {
+            
             WaitUntilVisible(elementBy);
             var numberFromElement = webDriver.FindElement(elementBy).GetAttribute("Value");
             var number1 = Math.Round(double.Parse(numberFromElement), 4, MidpointRounding.ToEven).ToString();
@@ -239,7 +240,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        protected string TransformNumberFormat(string amount)
+        protected string TransformAreaNumberFormat(string amount)
         {
             if (amount == "")
                 return "";
@@ -328,20 +329,15 @@ namespace PIMS.Tests.Automation.PageObjects
             return result;
         }
 
-        protected string TransformBooleanLeaseFormat(bool elementValue)
+        protected string CalculateGSTDisplay(string GST)
         {
-            if (elementValue)
-                { return "Y"; }
-            else
-                { return "N"; }
+            return GST == "true" || GST == "" ? "Y" : "N";
         }
 
         protected string TransformBooleanFormat(string elementValue)
         {
-            var boolElementValue = bool.Parse(elementValue);
-
-            if (boolElementValue) return "Yes";
-            else return "No";
+            bool boolElementValue = bool.Parse(elementValue);
+            return boolElementValue ? "Yes" : "No";
         }
 
         protected List<string> GetViewFieldListContent(By element)

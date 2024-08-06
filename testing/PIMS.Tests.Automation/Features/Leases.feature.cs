@@ -320,6 +320,40 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="08. Lease and License Periods and Payments")]
+        [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
+        [Xunit.TraitAttribute("Description", "08. Lease and License Periods and Payments")]
+        public void _08_LeaseAndLicensePeriodsAndPayments()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Lease and License Periods and Payments", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 48
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 49
+ testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 50
+ testRunner.When("I add Periods and Payments to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 51
+ testRunner.And("I update a Lease\'s Payments from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 52
+ testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [Xunit.SkippableFactAttribute(DisplayName="09. Lease and License Documents")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
         [Xunit.TraitAttribute("Description", "09. Lease and License Documents")]
