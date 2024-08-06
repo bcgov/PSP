@@ -6,245 +6,245 @@ namespace PIMS.Tests.Automation.PageObjects
     public class PropertyInformation : PageObjectBase
     {
         //Map Property LTSA ParcelMap Data Pop-Up Elements
-        private By propertyLeafletCloseLink = By.CssSelector("a[class='leaflet-popup-close-button']");
-        private By propertyLeafletTitle = By.XPath("//h5[contains(text(),'LTSA ParcelMap data')]");
-        private By propertyLeafletPIDLabel = By.XPath("//b[contains(text(),'Parcel PID:')]");
-        private By propertyLeafletPINLabel = By.XPath("//b[contains(text(),'Parcel PIN:')]");
-        private By propertyLeafletPlanNbrLabel = By.XPath("//b[contains(text(),'Plan number:')]");
-        private By propertyLeafletOwnerTypeLabel = By.XPath("//b[contains(text(),'Owner type:')]");
-        private By propertyLeafletMunicipalityLabel = By.XPath("//b[contains(text(),'Municipality:')]");
-        private By propertyLeafletAreaLabel = By.XPath("//b[contains(text(),'Area:')]");
-        private By propertyLeafletZoomMapZoomBttn = By.XPath("//button/div[contains(text(),'Zoom map')]");
-        private By propertyLeafletEllipsisBttn = By.CssSelector("button[data-testid='fly-out-ellipsis']");
+        private readonly By propertyLeafletCloseLink = By.CssSelector("a[class='leaflet-popup-close-button']");
+        private readonly By propertyLeafletTitle = By.XPath("//h5[contains(text(),'LTSA ParcelMap data')]");
+        private readonly By propertyLeafletPIDLabel = By.XPath("//b[contains(text(),'Parcel PID:')]");
+        private readonly By propertyLeafletPINLabel = By.XPath("//b[contains(text(),'Parcel PIN:')]");
+        private readonly By propertyLeafletPlanNbrLabel = By.XPath("//b[contains(text(),'Plan number:')]");
+        private readonly By propertyLeafletOwnerTypeLabel = By.XPath("//b[contains(text(),'Owner type:')]");
+        private readonly By propertyLeafletMunicipalityLabel = By.XPath("//b[contains(text(),'Municipality:')]");
+        private readonly By propertyLeafletAreaLabel = By.XPath("//b[contains(text(),'Area:')]");
+        private readonly By propertyLeafletZoomMapZoomBttn = By.XPath("//button/div[contains(text(),'Zoom map')]");
+        private readonly By propertyLeafletEllipsisBttn = By.CssSelector("button[data-testid='fly-out-ellipsis']");
 
-        private By propertyCloseWindowBttn = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]/parent::div/following-sibling::div");
-        private By propertyMoreOptionsMenu = By.CssSelector("div[class='list-group list-group-flush']");
-        private By propertyViewInfoBttn = By.XPath("//button/div[contains(text(),'View Property info')]");
-        private By propertyNewResearchFileBttn = By.XPath("//div[contains(text(),'Research File')]/parent::button");
-        private By propertyNewAcquisitionFileBttn = By.XPath("//div[contains(text(),'Acquisition File')]/parent::button");
-        private By propertyNewLeaseFileBttn = By.XPath("//div[contains(text(),'Lease/Licence')]/parent::button");
-        private By propertyNewDispositionFileBttn = By.XPath("//div[contains(text(),'Disposition File')]/parent::button");
-        private By propertyNewSubdivisionFileBttn = By.XPath("//div[contains(text(),'Create Subdivision')]/parent::button");
-        private By propertyNewConsolidationFileBttn = By.XPath("//div[contains(text(),'Create Consolidation')]/parent::button");
+        private readonly By propertyCloseWindowBttn = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]/parent::div/following-sibling::div");
+        private readonly By propertyMoreOptionsMenu = By.CssSelector("div[class='list-group list-group-flush']");
+        private readonly By propertyViewInfoBttn = By.XPath("//button/div[contains(text(),'View Property info')]");
+        private readonly By propertyNewResearchFileBttn = By.XPath("//div[contains(text(),'Research File')]/parent::button");
+        private readonly By propertyNewAcquisitionFileBttn = By.XPath("//div[contains(text(),'Acquisition File')]/parent::button");
+        private readonly By propertyNewLeaseFileBttn = By.XPath("//div[contains(text(),'Lease/Licence')]/parent::button");
+        private readonly By propertyNewDispositionFileBttn = By.XPath("//div[contains(text(),'Disposition File')]/parent::button");
+        private readonly By propertyNewSubdivisionFileBttn = By.XPath("//div[contains(text(),'Create Subdivision')]/parent::button");
+        private readonly By propertyNewConsolidationFileBttn = By.XPath("//div[contains(text(),'Create Consolidation')]/parent::button");
 
         //Property Information Tabs Elements
-        private By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
-        private By propertyInformationTitleTab = By.XPath("//a[contains(text(),'Title')]");
-        private By propertyInformationValueTab = By.XPath("//a[contains(text(),'Value')]");
+        private readonly By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
+        private readonly By propertyInformationTitleTab = By.XPath("//a[contains(text(),'Title')]");
+        private readonly By propertyInformationValueTab = By.XPath("//a[contains(text(),'Value')]");
 
         //Property Information Header Elements
-        private By propertyInformationHeaderTitle = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]");
-        private By propertyInformationHeaderAddressLabel = By.XPath("//label[contains(text(),'Civic Address')]");
-        private By propertyInformationHeaderAddressContent = By.XPath("//label[contains(text(),'Civic Address')]/parent::strong/parent::div/following-sibling::div");
-        private By propertyInformationHeaderPlanLabel = By.XPath("//label[contains(text(),'Plan')]");
-        private By propertyInformationHeaderPlanContent = By.XPath("//label[contains(text(),'Plan #')]/parent::strong/parent::div/following-sibling::div");
-        private By propertyInformationHeaderHistoricFileLabel = By.XPath("//label[contains(text(),'Historical File #:')]");
-        private By propertyInformationHeaderHistoricFileContent = By.XPath("//label[contains(text(),'Historical File #:')]/parent::strong/parent::div/following-sibling::div/div/span");
-        private By propertyInformationHeaderPIDLabel = By.XPath("//label[contains(text(),'PID')]");
-        private By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::strong/parent::div/following-sibling::div");
-        private By propertyInformationHeaderLandTypeLabel = By.XPath("//strong/label[contains(text(),'Land parcel type')]");
-        private By propertyInformationHeaderLandTypeContent = By.XPath("//label[contains(text(),'Land parcel type')]/parent::strong/parent::div/following-sibling::div");
-        private By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Zoom Map']");
+        private readonly By propertyInformationHeaderTitle = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]");
+        private readonly By propertyInformationHeaderAddressLabel = By.XPath("//label[contains(text(),'Civic Address')]");
+        private readonly By propertyInformationHeaderAddressContent = By.XPath("//label[contains(text(),'Civic Address')]/parent::div/following-sibling::div");
+        private readonly By propertyInformationHeaderPlanLabel = By.XPath("//label[contains(text(),'Plan')]");
+        private readonly By propertyInformationHeaderPlanContent = By.XPath("//label[contains(text(),'Plan #')]/parent::div/following-sibling::div");
+        private readonly By propertyInformationHeaderHistoricFileLabel = By.XPath("//label[contains(text(),'Historical file #:')]");
+        private readonly By propertyInformationHeaderHistoricFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
+        private readonly By propertyInformationHeaderPIDLabel = By.XPath("//label[contains(text(),'PID')]");
+        private readonly By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
+        private readonly By propertyInformationHeaderLandTypeLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div/div/div/div[2]/div/div/div/label[contains(text(),'Land parcel type')]");
+        private readonly By propertyInformationHeaderLandTypeContent = By.XPath("//h1/parent::div/parent::div/following-sibling::div/div/div/div[2]/div/div/div/label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
+        private readonly By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Zoom Map']");
 
         //Title Tab Elements
-        private By propertyTitleInfo = By.XPath("//div[contains(text(),'This data was retrieved from LTSA')]");
-        private By propertyTitleDetailsTitle = By.XPath("//div[contains(text(),'Title Details')]");
-        private By propertyTitleNumberLabel = By.XPath("//label[contains(text(),'Title number')]");
-        private By propertyTitleLandTitleLabel = By.XPath("//label[contains(text(),'Land title district')]");
-        private By propertyTitleTaxationAuthoritiesLabel = By.XPath("//label[contains(text(),'Taxation authorities')]");
+        private readonly By propertyTitleInfo = By.XPath("//div[contains(text(),'This data was retrieved from LTSA')]");
+        private readonly By propertyTitleDetailsTitle = By.XPath("//div[contains(text(),'Title Details')]");
+        private readonly By propertyTitleNumberLabel = By.XPath("//label[contains(text(),'Title number')]");
+        private readonly By propertyTitleLandTitleLabel = By.XPath("//label[contains(text(),'Land title district')]");
+        private readonly By propertyTitleTaxationAuthoritiesLabel = By.XPath("//label[contains(text(),'Taxation authorities')]");
 
-        private By propertyTitleLandTitle = By.XPath("//h2/div/div[contains(text(),'Land')]");
-        private By propertyTitlePIDLabel = By.XPath("//div[contains(text(),'Land')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PID')]");
-        private By propertyTitleLandDescriptionLabel = By.XPath("//label[contains(text(),'Legal description')]");
+        private readonly By propertyTitleLandTitle = By.XPath("//h2/div/div[contains(text(),'Land')]");
+        private readonly By propertyTitlePIDLabel = By.XPath("//div[contains(text(),'Land')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PID')]");
+        private readonly By propertyTitleLandDescriptionLabel = By.XPath("//label[contains(text(),'Legal description')]");
 
-        private By propertyOwnershipInformationTitle = By.XPath("//h2/div/div[contains(text(),'Ownership Information')]");
-        private By propertyFractionalOwnershipLabel = By.XPath("//label[contains(text(),'Fractional ownership')]");
-        private By propertyJointTenancyLabel = By.XPath("//label[contains(text(),'Joint tenancy')]");
-        private By propertyOwnershipRemarksLabel = By.XPath("//label[contains(text(),'Ownership remarks')]");
-        private By propertyOwnerNameLabel = By.XPath("//label[contains(text(),'Owner name')]");
-        private By propertyIncorporationNbrLabel = By.XPath("//label[contains(text(),'Incorporation number')]");
-        private By propertyOccupationLabel = By.XPath("//label[contains(text(),'Occupation')]");
-        private By propertyAddressLabel = By.XPath("//div[contains(text(),'Ownership Information')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Address')]");
+        private readonly By propertyOwnershipInformationTitle = By.XPath("//h2/div/div[contains(text(),'Ownership Information')]");
+        private readonly By propertyFractionalOwnershipLabel = By.XPath("//label[contains(text(),'Fractional ownership')]");
+        private readonly By propertyJointTenancyLabel = By.XPath("//label[contains(text(),'Joint tenancy')]");
+        private readonly By propertyOwnershipRemarksLabel = By.XPath("//label[contains(text(),'Ownership remarks')]");
+        private readonly By propertyOwnerNameLabel = By.XPath("//label[contains(text(),'Owner name')]");
+        private readonly By propertyIncorporationNbrLabel = By.XPath("//label[contains(text(),'Incorporation number')]");
+        private readonly By propertyOccupationLabel = By.XPath("//label[contains(text(),'Occupation')]");
+        private readonly By propertyAddressLabel = By.XPath("//div[contains(text(),'Ownership Information')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Address')]");
 
-        private By propertyChargesLienInterestsTitle = By.XPath("//h2/div/div[contains(text(),'Charges, Liens and Interests')]");
-        private By propertyNatureLabel = By.XPath("//label[contains(text(),'Nature')]");
-        private By propertyRegistrationLabel = By.XPath("//label[contains(text(),'Registration #')]");
-        private By propertyRegisteredDateLabel = By.XPath("//label[contains(text(),'Registered date')]");
-        private By propertyRegisteredOwnerLabel = By.XPath("//label[contains(text(),'Registered owner')]");
+        private readonly By propertyChargesLienInterestsTitle = By.XPath("//h2/div/div[contains(text(),'Charges, Liens and Interests')]");
+        private readonly By propertyNatureLabel = By.XPath("//label[contains(text(),'Nature')]");
+        private readonly By propertyRegistrationLabel = By.XPath("//label[contains(text(),'Registration #')]");
+        private readonly By propertyRegisteredDateLabel = By.XPath("//label[contains(text(),'Registered date')]");
+        private readonly By propertyRegisteredOwnerLabel = By.XPath("//label[contains(text(),'Registered owner')]");
 
-        private By propertyDuplicateIndefeasibleTitle = By.XPath("//h2/div/div[contains(text(),'Duplicate Indefeasible Title')]");
-        private By propertyDuplicateIndefeasibleNoneContent = By.XPath("//div[contains(text(),'Duplicate Indefeasible Title')]/parent::div/parent::h2/following-sibling::div[contains(text(),'None')]");
+        private readonly By propertyDuplicateIndefeasibleTitle = By.XPath("//h2/div/div[contains(text(),'Duplicate Indefeasible Title')]");
+        private readonly By propertyDuplicateIndefeasibleNoneContent = By.XPath("//div[contains(text(),'Duplicate Indefeasible Title')]/parent::div/parent::h2/following-sibling::div[contains(text(),'None')]");
 
-        private By propertyTransfersTitle = By.XPath("//h2/div/div[contains(text(),'Transfers')]");
-        private By propertyTransfersNoneContent = By.XPath("//div[contains(text(),'Transfers')]/parent::div/parent::h2/following-sibling::div[contains(text(),'None')]");
+        private readonly By propertyTransfersTitle = By.XPath("//h2/div/div[contains(text(),'Transfers')]");
+        private readonly By propertyTransfersNoneContent = By.XPath("//div[contains(text(),'Transfers')]/parent::div/parent::h2/following-sibling::div[contains(text(),'None')]");
 
-        private By propertyNotesTitle = By.XPath("//h2/div/div[contains(text(),'Transfers')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
-        private By propertyMiscellaneousNotesLabel = By.XPath("//label[contains(text(),'Miscellaneous notes')]");
-        private By propertyParcelStatusLabel = By.XPath("//label[contains(text(),'Parcel status')]");
+        private readonly By propertyNotesTitle = By.XPath("//h2/div/div[contains(text(),'Transfers')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
+        private readonly By propertyMiscellaneousNotesLabel = By.XPath("//label[contains(text(),'Miscellaneous notes')]");
+        private readonly By propertyParcelStatusLabel = By.XPath("//label[contains(text(),'Parcel status')]");
 
         //Property Value Elements
-        private By propertyValueInfo = By.XPath("//div[contains(text(),'This data was retrieved from BC Assessment on')]");
+        private readonly By propertyValueInfo = By.XPath("//div[contains(text(),'This data was retrieved from BC Assessment on')]");
 
-        private By propertyAssessmentOverviewTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Overview')]");
-        private By propertyAssessmentPIDLabel = By.XPath("//div[contains(text(),'Assessment Overview')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PID')]");
-        private By propertyAssessmentJurisdictionLabel = By.XPath("//label[contains(text(),'Jurisdiction')]");
-        private By propertyAssessmentNeighbourhoodLabel = By.XPath("//label[contains(text(),'Neighbourhood')]");
-        private By propertyAssessmentOwnershipYearLabel = By.XPath("//label[contains(text(),'Ownership year')]");
-        private By propertyAssessmentRollNumberLabel = By.XPath("//label[contains(text(),'Roll number')]");
-        private By propertyAssessmentRollYearLabel = By.XPath("//label[contains(text(),'Roll year')]");
-        private By propertyAssessmentDocumentNumberLabel = By.XPath("//label[contains(text(),'Document number')]");
+        private readonly By propertyAssessmentOverviewTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Overview')]");
+        private readonly By propertyAssessmentPIDLabel = By.XPath("//div[contains(text(),'Assessment Overview')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PID')]");
+        private readonly By propertyAssessmentJurisdictionLabel = By.XPath("//label[contains(text(),'Jurisdiction')]");
+        private readonly By propertyAssessmentNeighbourhoodLabel = By.XPath("//label[contains(text(),'Neighbourhood')]");
+        private readonly By propertyAssessmentOwnershipYearLabel = By.XPath("//label[contains(text(),'Ownership year')]");
+        private readonly By propertyAssessmentRollNumberLabel = By.XPath("//label[contains(text(),'Roll number')]");
+        private readonly By propertyAssessmentRollYearLabel = By.XPath("//label[contains(text(),'Roll year')]");
+        private readonly By propertyAssessmentDocumentNumberLabel = By.XPath("//label[contains(text(),'Document number')]");
 
-        private By propertyAssessmentAddressTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Overview')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Property Address')]");
-        private By propertyValueAddressInfo = By.XPath("//div/p[contains(text(),'This is the property address as per BC Assessment (for reference)')]");
-        private By propertyValueAddressLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Address'))]");
-        private By propertyValueCityLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'City'))]");
-        private By propertyValueProvinceLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Province'))]");
-        private By propertyValuePostalCodeLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Postal code'))]");
+        private readonly By propertyAssessmentAddressTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Overview')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Property Address')]");
+        private readonly By propertyValueAddressInfo = By.XPath("//div/p[contains(text(),'This is the property address as per BC Assessment (for reference)')]");
+        private readonly By propertyValueAddressLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Address'))]");
+        private readonly By propertyValueCityLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'City'))]");
+        private readonly By propertyValueProvinceLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Province'))]");
+        private readonly By propertyValuePostalCodeLabel = By.XPath("//p[contains(text(),'This is the property address as per BC Assessment (for reference)')]/following-sibling::div/div/label[(contains(text(),'Postal code'))]");
 
-        private By propertyAssessedValueTitle = By.XPath("//h2/div/div[contains(text(),'Assessed Value')]");
-        private By propertyAssessedTable = By.CssSelector("div[data-testid='Assessed Values Sales']");
+        private readonly By propertyAssessedValueTitle = By.XPath("//h2/div/div[contains(text(),'Assessed Value')]");
+        private readonly By propertyAssessedTable = By.CssSelector("div[data-testid='Assessed Values Sales']");
 
-        private By propertyAssessmentDetailsTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Details')]");
-        private By propertyAssessmentManualClassLabel = By.XPath("//label[contains(text(),'Manual class')]");
-        private By propertyAssessmentActualUseLabel = By.XPath("//label[contains(text(),'Actual use')]");
-        private By propertyAssessmentALRLabel = By.XPath("//label[contains(text(),'ALR')]");
-        private By propertyAssessmentLandDimensionLabel = By.XPath("//label[contains(text(),'Land dimension')]");
+        private readonly By propertyAssessmentDetailsTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Details')]");
+        private readonly By propertyAssessmentManualClassLabel = By.XPath("//label[contains(text(),'Manual class')]");
+        private readonly By propertyAssessmentActualUseLabel = By.XPath("//label[contains(text(),'Actual use')]");
+        private readonly By propertyAssessmentALRLabel = By.XPath("//label[contains(text(),'ALR')]");
+        private readonly By propertyAssessmentLandDimensionLabel = By.XPath("//label[contains(text(),'Land dimension')]");
 
-        private By propertyAssessmentSalesTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Details')]");
-        private By propertySalesDescription = By.XPath("//div[contains(text(),'Description')]");
+        private readonly By propertyAssessmentSalesTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Details')]");
+        private readonly By propertySalesDescription = By.XPath("//div[contains(text(),'Description')]");
 
 
         //Property Details Elements
-        private By propertyDetailsTab = By.XPath("//a[contains(text(),'Property Details')]");
-        private By propertyDetailsEditBttn = By.CssSelector("button[title='Edit property details']");
+        private readonly By propertyDetailsTab = By.XPath("//a[contains(text(),'Property Details')]");
+        private readonly By propertyDetailsEditBttn = By.CssSelector("button[title='Edit property details']");
 
-        private By propertyDetailsAddressTitle = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/parent::div/preceding-sibling::div/h2/div/div[contains(text(),'Property Address')]");
-        private By propertyDetailsEditAddressTitle = By.XPath("//div[contains(text(),'Property Address')]");
-        private By propertyDetailsAddressNotAvailable = By.XPath("//b[contains(text(),'Property address not available')]");
-        private By propertyDetailsAddressLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div/label");
-        private By propertyDetailsAddressLine1Label = By.XPath("//label[contains(text(),'Address (line 1)')]");
-        private By propertyDetailsAddressLine1Content = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/div[1]");
-        private By propertyDetailsAddressLine2Content = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/div[2]");
-        private By propertyDetailsAddressLine3Content = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/div[3]");
-        private By propertyDetailsCityLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[2]/div/label[contains(text(),'City')]");
-        private By propertyDetailsCityContent = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[2]/div/label[contains(text(),'City')]/parent::div/following-sibling::div");
-        private By propertyDetailsEditCityLabel = By.XPath("//Label[contains(text(),'City')]");
-        private By propertyDetailsProvinceLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[3]/div/label[contains(text(),'Province')]");
-        private By propertyDetailsProvinceContent = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[3]/div/label[contains(text(),'Province')]/parent::div/following-sibling::div");
-        private By propertyDetailsPostalCodeLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[4]/div/label[contains(text(),'Postal code')]");
-        private By propertyDetailsPostalCodeContent = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[4]/div/label[contains(text(),'Postal code')]/parent::div/following-sibling::div");
-        private By propertyDetailsEditPostalCodeLabel = By.XPath("//Label[contains(text(),'Postal code')]");
-        private By propertyDetailsGeneralLocationLabel = By.XPath("//label[contains(text(),'General location')]");
-        private By propertyDetailsGeneralLocationContent = By.XPath("//label[contains(text(),'General location')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAddressTitle = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/parent::div/preceding-sibling::div/h2/div/div[contains(text(),'Property Address')]");
+        private readonly By propertyDetailsEditAddressTitle = By.XPath("//div[contains(text(),'Property Address')]");
+        private readonly By propertyDetailsAddressNotAvailable = By.XPath("//b[contains(text(),'Property address not available')]");
+        private readonly By propertyDetailsAddressLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div/label");
+        private readonly By propertyDetailsAddressLine1Label = By.XPath("//label[contains(text(),'Address (line 1)')]");
+        private readonly By propertyDetailsAddressLine1Content = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/div[1]");
+        private readonly By propertyDetailsAddressLine2Content = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/div[2]");
+        private readonly By propertyDetailsAddressLine3Content = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/h2/div/div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/div[3]");
+        private readonly By propertyDetailsCityLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[2]/div/label[contains(text(),'City')]");
+        private readonly By propertyDetailsCityContent = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[2]/div/label[contains(text(),'City')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsEditCityLabel = By.XPath("//Label[contains(text(),'City')]");
+        private readonly By propertyDetailsProvinceLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[3]/div/label[contains(text(),'Province')]");
+        private readonly By propertyDetailsProvinceContent = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[3]/div/label[contains(text(),'Province')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsPostalCodeLabel = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[4]/div/label[contains(text(),'Postal code')]");
+        private readonly By propertyDetailsPostalCodeContent = By.XPath("//div[@class='tab-content']/div[@role='tabpanel']/div/div[2]/div/div[4]/div/label[contains(text(),'Postal code')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsEditPostalCodeLabel = By.XPath("//Label[contains(text(),'Postal code')]");
+        private readonly By propertyDetailsGeneralLocationLabel = By.XPath("//label[contains(text(),'General location')]");
+        private readonly By propertyDetailsGeneralLocationContent = By.XPath("//label[contains(text(),'General location')]/parent::div/following-sibling::div");
 
-        private By propertyDetailsAttributesTitle = By.XPath("//div[contains(text(),'Property Attributes')]");
-        private By propertyDetailsAttrLegalDescLabel = By.XPath("//label[contains(text(),'Legal Description')]");
-        private By propertyDetailsAttrLegalDescContent = By.XPath("//label[contains(text(),'Legal Description')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
-        private By propertyDetailsAttrRegionDiv = By.XPath("//label[contains(text(),'MOTI region')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrHighwayLabel = By.XPath("//label[contains(text(),'Highways district')]");
-        private By propertyDetailsAttrHighwayDiv = By.XPath("//label[contains(text(),'Highways district')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrElectoralLabel = By.XPath("//label[contains(text(),'Electoral district')]");
-        private By propertyDetailsAttrElectoralDiv = By.XPath("//label[contains(text(),'Electoral district')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrAgriLandLabel = By.XPath("//label[contains(text(),'Agricultural Land Reserve')]");
-        private By propertyDetailsAttrAgriLandDiv = By.XPath("//label[contains(text(),'Agricultural Land Reserve')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrRailwayLabel = By.XPath("//label[contains(text(),'Railway belt / Dominion patent')]");
-        private By propertyDetailsAttrRailwayDiv = By.XPath("//label[contains(text(),'Railway belt / Dominion patent')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrLandParcelLabel = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Land parcel type')]");
-        private By propertyDetailsAttrLandParcelDiv = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrMunicipalLabel = By.XPath("//label[contains(text(),'Municipal zoning')]");
-        private By propertyDetailsAttrMunicipalDiv = By.XPath("//label[contains(text(),'Municipal zoning')]/parent::div/following-sibling::div");
-        private By propertyDetailsAttrAnomaliesLabel = By.XPath("//label[contains(text(),'Anomalies')]");
-        private By propertyDetailsAttrAnomaliesDiv = By.XPath("//label[contains(text(),'Anomalies')]/parent::div/following-sibling::div/div/div/div");
-        private By propertyDetailsAttrCoordinatesLabel = By.XPath("//label[contains(text(),'Coordinates')]");
-        private By propertyDetailsAttrCoordinatesDiv = By.XPath("//label[contains(text(),'Coordinates')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttributesTitle = By.XPath("//div[contains(text(),'Property Attributes')]");
+        private readonly By propertyDetailsAttrLegalDescLabel = By.XPath("//label[contains(text(),'Legal Description')]");
+        private readonly By propertyDetailsAttrLegalDescContent = By.XPath("//label[contains(text(),'Legal Description')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
+        private readonly By propertyDetailsAttrRegionDiv = By.XPath("//label[contains(text(),'MOTI region')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrHighwayLabel = By.XPath("//label[contains(text(),'Highways district')]");
+        private readonly By propertyDetailsAttrHighwayDiv = By.XPath("//label[contains(text(),'Highways district')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrElectoralLabel = By.XPath("//label[contains(text(),'Electoral district')]");
+        private readonly By propertyDetailsAttrElectoralDiv = By.XPath("//label[contains(text(),'Electoral district')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrAgriLandLabel = By.XPath("//label[contains(text(),'Agricultural Land Reserve')]");
+        private readonly By propertyDetailsAttrAgriLandDiv = By.XPath("//label[contains(text(),'Agricultural Land Reserve')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrRailwayLabel = By.XPath("//label[contains(text(),'Railway belt / Dominion patent')]");
+        private readonly By propertyDetailsAttrRailwayDiv = By.XPath("//label[contains(text(),'Railway belt / Dominion patent')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrLandParcelLabel = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Land parcel type')]");
+        private readonly By propertyDetailsAttrLandParcelDiv = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Land parcel type')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrMunicipalLabel = By.XPath("//label[contains(text(),'Municipal zoning')]");
+        private readonly By propertyDetailsAttrMunicipalDiv = By.XPath("//label[contains(text(),'Municipal zoning')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrAnomaliesLabel = By.XPath("//label[contains(text(),'Anomalies')]");
+        private readonly By propertyDetailsAttrAnomaliesDiv = By.XPath("//label[contains(text(),'Anomalies')]/parent::div/following-sibling::div/div/div/div");
+        private readonly By propertyDetailsAttrCoordinatesLabel = By.XPath("//label[contains(text(),'Coordinates')]");
+        private readonly By propertyDetailsAttrCoordinatesDiv = By.XPath("//label[contains(text(),'Coordinates')]/parent::div/following-sibling::div");
 
-        private By propertyDetailsTenureTitle = By.XPath("//div[contains(text(),'Tenure Status')]");
-        private By propertyDetailsTenureStatusLabel = By.XPath("//label[contains(text(),'Tenure status')]");
-        private By propertyDetailsTenureStatusDiv = By.XPath("//label[contains(text(),'Tenure status')]/parent::div/following-sibling::div/div/div/div");
-        private By propertyDetailsPublicHwyLabel = By.XPath("//label[contains(text(),'Provincial Public Hwy')]");
-        private By propertyDetailsPublicHwyDiv = By.XPath("//label[contains(text(),'Provincial Public Hwy')]/parent::div/following-sibling::div");
-        private By propertyDetailsHighwayRoadEstablishLabel = By.XPath("//label[contains(text(),'Highway / Road established by')]");
-        private By propertyDetailsHighwayRoadEstablishDiv = By.XPath("//label[contains(text(),'Highway / Road established by')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsTenureTitle = By.XPath("//div[contains(text(),'Tenure Status')]");
+        private readonly By propertyDetailsTenureStatusLabel = By.XPath("//label[contains(text(),'Tenure status')]");
+        private readonly By propertyDetailsTenureStatusDiv = By.XPath("//label[contains(text(),'Tenure status')]/parent::div/following-sibling::div/div/div/div");
+        private readonly By propertyDetailsPublicHwyLabel = By.XPath("//label[contains(text(),'Provincial Public Hwy')]");
+        private readonly By propertyDetailsPublicHwyDiv = By.XPath("//label[contains(text(),'Provincial Public Hwy')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsHighwayRoadEstablishLabel = By.XPath("//label[contains(text(),'Highway / Road established by')]");
+        private readonly By propertyDetailsHighwayRoadEstablishDiv = By.XPath("//label[contains(text(),'Highway / Road established by')]/parent::div/following-sibling::div");
 
-        private By propertyDetailsAdjacentLandTypeLabel = By.XPath("//label[contains(text(),'Adjacent Land type')]");
-        private By propertyDetailsAdjacentLandTypeDiv = By.XPath("//label[contains(text(),'Adjacent Land type')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAdjacentLandTypeLabel = By.XPath("//label[contains(text(),'Adjacent Land type')]");
+        private readonly By propertyDetailsAdjacentLandTypeDiv = By.XPath("//label[contains(text(),'Adjacent Land type')]/parent::div/following-sibling::div");
 
-        private By propertyDetailsFirstNationTitle = By.XPath("//div[contains(text(),'First Nations Information')]");
-        private By propertyDetailsFirstNationBandNameLabel = By.XPath("//label[contains(text(),'Band name')]");
-        private By propertyDetailsFirstNationBandNameDiv = By.XPath("//label[contains(text(),'Band name')]/parent::div/following-sibling::div");
-        private By propertyDetailsFirstNationReserveLabel = By.XPath("//label[contains(text(),'Reserve name')]");
-        private By propertyDetailsFirstNationReserveDiv = By.XPath("//label[contains(text(),'Reserve name')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsFirstNationTitle = By.XPath("//div[contains(text(),'First Nations Information')]");
+        private readonly By propertyDetailsFirstNationBandNameLabel = By.XPath("//label[contains(text(),'Band name')]");
+        private readonly By propertyDetailsFirstNationBandNameDiv = By.XPath("//label[contains(text(),'Band name')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsFirstNationReserveLabel = By.XPath("//label[contains(text(),'Reserve name')]");
+        private readonly By propertyDetailsFirstNationReserveDiv = By.XPath("//label[contains(text(),'Reserve name')]/parent::div/following-sibling::div");
 
-        private By propertyDetailsMeasurementsTitle = By.XPath("//div[contains(text(),'Measurements')]");
-        private By propertyDetailsMeasurementsAreaLabel = By.XPath("//label[contains(text(),'Area')]");
-        private By propertyDetailsAreaSqMtsLabel = By.XPath("//div[contains(text(),'sq. metres')]");
-        private By propertyDetailsAreaSqMtsContent = By.XPath("//label[contains(text(),'Area')]/parent::div/following-sibling::div/div/div[1]/div/div[1]/div[1]");
-        private By propertyDetailsAreaHtsLabel = By.XPath("//div[contains(text(),'hectares')]");
-        private By propertyDetailsAreaSqFeetLabel = By.XPath("//div[contains(text(),'sq. feet')]");
-        private By propertyDetailsAreaAcresLabel = By.XPath("//div[contains(text(),'acres')]");
-        private By propertyDetailsMeasurementVolumeParcelLabel = By.XPath("//label[contains(text(),'Is this a volumetric parcel?')]");
-        private By propertyDetailsMeasurementVolumeLabel = By.XPath("//label[contains(text(),'Volume')]");
-        private By propertyDetailsAreaMtsCubeLabel = By.XPath("//span[contains(text(),'metres')]");
-        private By propertyDetailsAreaMtsCubeContent = By.XPath("//label[contains(text(),'Volume')]/parent::div/following-sibling::div/div/div[1]/div/div[1]/div[1]/div[1]/div[1]");
-        private By propertyDetailsAreaFeetCubeLabel = By.XPath("//span[contains(text(),'feet')]");
-        private By propertyDetailsMeasurementTypeLabel = By.XPath("//label[contains(text(),'Type')]");
-        private By propertyDetailsMeasurementTypeContent = By.XPath("//label[contains(text(),'Type')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsMeasurementsTitle = By.XPath("//div[contains(text(),'Measurements')]");
+        private readonly By propertyDetailsMeasurementsAreaLabel = By.XPath("//label[contains(text(),'Area')]");
+        private readonly By propertyDetailsAreaSqMtsLabel = By.XPath("//div[contains(text(),'sq. metres')]");
+        private readonly By propertyDetailsAreaSqMtsContent = By.XPath("//label[contains(text(),'Area')]/parent::div/following-sibling::div/div/div[1]/div/div[1]/div[1]");
+        private readonly By propertyDetailsAreaHtsLabel = By.XPath("//div[contains(text(),'hectares')]");
+        private readonly By propertyDetailsAreaSqFeetLabel = By.XPath("//div[contains(text(),'sq. feet')]");
+        private readonly By propertyDetailsAreaAcresLabel = By.XPath("//div[contains(text(),'acres')]");
+        private readonly By propertyDetailsMeasurementVolumeParcelLabel = By.XPath("//label[contains(text(),'Is this a volumetric parcel?')]");
+        private readonly By propertyDetailsMeasurementVolumeLabel = By.XPath("//label[contains(text(),'Volume')]");
+        private readonly By propertyDetailsAreaMtsCubeLabel = By.XPath("//span[contains(text(),'metres')]");
+        private readonly By propertyDetailsAreaMtsCubeContent = By.XPath("//label[contains(text(),'Volume')]/parent::div/following-sibling::div/div/div[1]/div/div[1]/div[1]/div[1]/div[1]");
+        private readonly By propertyDetailsAreaFeetCubeLabel = By.XPath("//span[contains(text(),'feet')]");
+        private readonly By propertyDetailsMeasurementTypeLabel = By.XPath("//label[contains(text(),'Type')]");
+        private readonly By propertyDetailsMeasurementTypeContent = By.XPath("//label[contains(text(),'Type')]/parent::div/following-sibling::div");
 
-        private By propertyDetailsViewNotesTitle = By.XPath("//div[contains(text(),'Measurements')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
-        private By propertyDetailsEditNotesTitle = By.XPath("//h2/div/div[contains(text(),'Notes')]");
-        private By propertyDetailsViewNotesContent = By.XPath("//div[contains(text(),'Notes')]/parent::div/parent::h2/following-sibling::div/p");
+        private readonly By propertyDetailsViewNotesTitle = By.XPath("//div[contains(text(),'Measurements')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
+        private readonly By propertyDetailsEditNotesTitle = By.XPath("//h2/div/div[contains(text(),'Notes')]");
+        private readonly By propertyDetailsViewNotesContent = By.XPath("//div[contains(text(),'Notes')]/parent::div/parent::h2/following-sibling::div/p");
 
-        private By propertyDetailsSubdivisionTitle = By.XPath("//div[contains(text(),'Subdivision History')]");
-        private By propertyDetailsSubdivisionNoneContent = By.XPath("//div[contains(text(),'This property is not part of a subdivision')]");
+        private readonly By propertyDetailsSubdivisionTitle = By.XPath("//div[contains(text(),'Subdivision History')]");
+        private readonly By propertyDetailsSubdivisionNoneContent = By.XPath("//div[contains(text(),'This property is not part of a subdivision')]");
 
-        private By propertyDetailsConsolidationTitle = By.XPath("//div[contains(text(),'Consolidation History')]");
-        private By propertyDetailsConsolidationNoneContent = By.XPath("//div[contains(text(),'This property is not part of a consolidation')]");
+        private readonly By propertyDetailsConsolidationTitle = By.XPath("//div[contains(text(),'Consolidation History')]");
+        private readonly By propertyDetailsConsolidationNoneContent = By.XPath("//div[contains(text(),'This property is not part of a consolidation')]");
 
         //Create Form elements
-        private By propertyDetailsAddressAddLineBttn = By.XPath("//div[contains(text(),'Add an address line')]/parent::button");
-        private By propertyDetailsAddressLine1Input = By.Id("input-address.streetAddress1");
-        private By propertyDetailsAddressLine2Input = By.Id("input-address.streetAddress2");
-        private By propertyDetailsAddressLine3Input = By.Id("input-address.streetAddress3");
-        private By propertyDetailsAddressLineDeleteBttn = By.XPath("//*[@data-testid='remove-button']/parent::div/parent::button");
-        private By propertyDetailsAddressCityInput = By.Id("input-address.municipality");
-        private By propertyDetailsPostalCodeInput = By.Id("input-address.postal");
-        private By propertyDetailsGeneralLocationInput = By.Id("input-generalLocation");
+        private readonly By propertyDetailsAddressAddLineBttn = By.XPath("//div[contains(text(),'Add an address line')]/parent::button");
+        private readonly By propertyDetailsAddressLine1Input = By.Id("input-address.streetAddress1");
+        private readonly By propertyDetailsAddressLine2Input = By.Id("input-address.streetAddress2");
+        private readonly By propertyDetailsAddressLine3Input = By.Id("input-address.streetAddress3");
+        private readonly By propertyDetailsAddressLineDeleteBttn = By.XPath("//*[@data-testid='remove-button']/parent::div/parent::button");
+        private readonly By propertyDetailsAddressCityInput = By.Id("input-address.municipality");
+        private readonly By propertyDetailsPostalCodeInput = By.Id("input-address.postal");
+        private readonly By propertyDetailsGeneralLocationInput = By.Id("input-generalLocation");
 
-        private By propertyAttrAddHistoricalFileButton = By.CssSelector("button[data-testid='add-historical-number']");
-        private By propertyAttrHistoricalFilesTotalCount = By.XPath("//label[contains(text(),'Historical File #')]/parent::div/following-sibling::div/div");
-        private By propertyAttributesHistoricalFile1stDeleteButton = By.CssSelector("div[data-testid='historical-number-row-0'] button");
-        private By propertyAttributesLegalDescriptionInput = By.Id("input-landLegalDescription");
-        private By propertyDetailsMotiRegionSelect = By.Id("input-regionTypeCode");
-        private By propertyDetailsHighwayDistrictSelect = By.Id("input-districtTypeCode");
-        private By propertyDetailsRailwaySelect = By.Id("input-isRwyBeltDomPatent");
-        private By propertyDetailsLandTypeSelect = By.Id("input-propertyTypeCode");
-        private By propertyDetailsMunicipalZoneInput = By.Id("input-municipalZoning");
-        private By propertyDetailsAnomaliesInput = By.Id("multiselect-anomalies_input");
-        private By propertyDetailsAnomaliesOptions = By.XPath("//input[@id='multiselect-anomalies_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
-        private By propertyDetailsAttrAnomaliesDeleteBttns = By.CssSelector("div[id='multiselect-anomalies'] i[class='custom-close']");
+        private readonly By propertyAttrAddHistoricalFileButton = By.CssSelector("button[data-testid='add-historical-number']");
+        private readonly By propertyAttrHistoricalFilesTotalCount = By.XPath("//label[contains(text(),'Historical File #')]/parent::div/following-sibling::div/div");
+        private readonly By propertyAttributesHistoricalFile1stDeleteButton = By.CssSelector("div[data-testid='historical-number-row-0'] button");
+        private readonly By propertyAttributesLegalDescriptionInput = By.Id("input-landLegalDescription");
+        private readonly By propertyDetailsMotiRegionSelect = By.Id("input-regionTypeCode");
+        private readonly By propertyDetailsHighwayDistrictSelect = By.Id("input-districtTypeCode");
+        private readonly By propertyDetailsRailwaySelect = By.Id("input-isRwyBeltDomPatent");
+        private readonly By propertyDetailsLandTypeSelect = By.Id("input-propertyTypeCode");
+        private readonly By propertyDetailsMunicipalZoneInput = By.Id("input-municipalZoning");
+        private readonly By propertyDetailsAnomaliesInput = By.Id("multiselect-anomalies_input");
+        private readonly By propertyDetailsAnomaliesOptions = By.XPath("//input[@id='multiselect-anomalies_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By propertyDetailsAttrAnomaliesDeleteBttns = By.CssSelector("div[id='multiselect-anomalies'] i[class='custom-close']");
 
-        private By propertyDetailsTenureStatusInput = By.Id("multiselect-tenures_input");
-        private By propertyDetailsTenureOptions = By.XPath("//input[@id='multiselect-tenures_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
-        private By propertyDetailsTenureDeleteBttns = By.CssSelector("div[id='multiselect-tenures'] i[class='custom-close']");
-        private By propertyDetailsProvPublicHwy = By.Id("input-pphStatusTypeCode");
-        private By propertyDetailsRoadEstablishInput = By.Id("multiselect-roadTypes_input");
-        private By propertyDetailsRoadEstablishOptions = By.XPath("//input[@id='multiselect-roadTypes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
-        
-        private By propertyDetailsAreaSqMtsInput = By.Name("area-sq-meters");
-        private By propertyDetailsAreaHctInput = By.Name("area-hectares");
-        private By propertyDetailsAreaSqFtInput = By.Name("area-sq-feet");
-        private By propertyDetailsAreaAcrInput = By.Name("area-acres");
-        private By propertyDetailsIsVolumeRadioYes = By.Id("input-true");
-        private By propertyDetailsIsVolumeRadioNo = By.Id("input-false");
-        private By propertyDetailsVolCubeMtsInput = By.Name("volume-cubic-meters");
-        private By propertyDetailsVolCubeFeetInput = By.Name("volume-cubic-feet");
-        private By propertyDetailsVolTypeSelect = By.Id("input-volumetricParcelTypeCode");
+        private readonly By propertyDetailsTenureStatusInput = By.Id("multiselect-tenures_input");
+        private readonly By propertyDetailsTenureOptions = By.XPath("//input[@id='multiselect-tenures_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By propertyDetailsTenureDeleteBttns = By.CssSelector("div[id='multiselect-tenures'] i[class='custom-close']");
+        private readonly By propertyDetailsProvPublicHwy = By.Id("input-pphStatusTypeCode");
+        private readonly By propertyDetailsRoadEstablishInput = By.Id("multiselect-roadTypes_input");
+        private readonly By propertyDetailsRoadEstablishOptions = By.XPath("//input[@id='multiselect-roadTypes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
 
-        private By propertyDetailsNotesTextarea = By.Id("input-notes");
+        private readonly By propertyDetailsAreaSqMtsInput = By.Name("area-sq-meters");
+        private readonly By propertyDetailsAreaHctInput = By.Name("area-hectares");
+        private readonly By propertyDetailsAreaSqFtInput = By.Name("area-sq-feet");
+        private readonly By propertyDetailsAreaAcrInput = By.Name("area-acres");
+        private readonly By propertyDetailsIsVolumeRadioYes = By.Id("input-true");
+        private readonly By propertyDetailsIsVolumeRadioNo = By.Id("input-false");
+        private readonly By propertyDetailsVolCubeMtsInput = By.Name("volume-cubic-meters");
+        private readonly By propertyDetailsVolCubeFeetInput = By.Name("volume-cubic-feet");
+        private readonly By propertyDetailsVolTypeSelect = By.Id("input-volumetricParcelTypeCode");
+
+        private readonly By propertyDetailsNotesTextarea = By.Id("input-notes");
 
         //Property Information Confirmation Modal
-        private By propertyInformationConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By propertyInformationConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
 

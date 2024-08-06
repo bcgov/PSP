@@ -11,8 +11,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementSummaryTitle = By.XPath("//div[contains(text(),'Summary')]");
         private By managementPropertyPurposeLabel = By.XPath("//label[contains(text(),'Property purpose')]");
         private By managementPropertyPurposeContent = By.XPath("//div[contains(text(),'Summary')]/parent::div/parent::h2/parent::div/div/div/div/div//div[@id='multiselectContainerReact']/div/span");
-        private By managementLeaseLabel = By.XPath("//label[contains(text(),'Lease/Licensed')]");
-        private By managementLeaseContent = By.XPath("//label[contains(text(),'Lease/Licensed')]/parent::div/following-sibling::div");
+        private By managementLeaseLabel = By.XPath("//label[contains(text(),'Active Lease/License')]");
+        private By managementLeaseContent = By.XPath("//label[contains(text(),'Active Lease/License')]/parent::div/following-sibling::div");
         private By managementUtilitiesPayableLabel = By.XPath("//label[contains(text(),'Utilities payable')]");
         private By managementUtilitiesPayableContent = By.XPath("//label[contains(text(),'Utilities payable')]/parent::div/following-sibling::div");
         private By managementTaxesPayableLabel = By.XPath("//label[contains(text(),'Taxes payable')]");
@@ -364,7 +364,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
 
-            Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+            Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
             Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
             Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
 
