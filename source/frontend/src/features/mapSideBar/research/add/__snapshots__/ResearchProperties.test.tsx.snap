@@ -543,6 +543,22 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                             <label
                               class="c9"
                             >
+                              PIN:
+                            </label>
+                          </div>
+                          <div
+                            class="c10 text-left col"
+                          />
+                        </div>
+                        <div
+                          class="pb-2 row"
+                        >
+                          <div
+                            class="pr-0 text-left col-4"
+                          >
+                            <label
+                              class="c9"
+                            >
                               Plan #:
                             </label>
                           </div>

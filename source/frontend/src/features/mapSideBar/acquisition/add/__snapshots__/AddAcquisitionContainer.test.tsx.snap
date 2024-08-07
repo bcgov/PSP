@@ -1056,6 +1056,22 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                       <label
                                         class="c14"
                                       >
+                                        PIN:
+                                      </label>
+                                    </div>
+                                    <div
+                                      class="c15 text-left col"
+                                    />
+                                  </div>
+                                  <div
+                                    class="pb-2 row"
+                                  >
+                                    <div
+                                      class="pr-0 text-left col-4"
+                                    >
+                                      <label
+                                        class="c14"
+                                      >
                                         Plan #:
                                       </label>
                                     </div>

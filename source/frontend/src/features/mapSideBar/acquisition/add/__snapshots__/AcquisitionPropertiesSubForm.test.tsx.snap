@@ -419,6 +419,22 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
                         <label
                           class="c8"
                         >
+                          PIN:
+                        </label>
+                      </div>
+                      <div
+                        class="c9 text-left col"
+                      />
+                    </div>
+                    <div
+                      class="pb-2 row"
+                    >
+                      <div
+                        class="pr-0 text-left col-4"
+                      >
+                        <label
+                          class="c8"
+                        >
                           Plan #:
                         </label>
                       </div>
