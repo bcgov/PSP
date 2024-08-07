@@ -60,7 +60,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
   return (
     <>
       {period?.isVariable === 'true' && (
-        <Section className="ml-10 p-0">
+        <Section header={<StyledSectionListHeader claims={[]} title="Rent Breakdown" />}>
           <PaymentStyles.StyledPaymentTable<React.FC<TableProps<LeasePeriodByCategoryProjection>>>
             name="variablePeriodTable"
             columns={variablePaymentColumns}
@@ -71,7 +71,6 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
         </Section>
       )}
       <Section
-        className="ml-20 p-0"
         header={
           <StyledSectionListHeader
             title="Payments"
