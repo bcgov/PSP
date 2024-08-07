@@ -842,6 +842,22 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                               <label
                                 class="c3"
                               >
+                                PIN:
+                              </label>
+                            </div>
+                            <div
+                              class="c4 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c3"
+                              >
                                 Plan #:
                               </label>
                             </div>
