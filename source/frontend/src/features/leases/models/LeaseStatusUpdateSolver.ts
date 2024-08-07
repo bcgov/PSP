@@ -1,0 +1,13 @@
+import { IUpdateCompensationStrategy } from '@/features/mapSideBar/compensation/models/UpdateCompensationStrategy';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+
+export class LeaseStatusUpdateSolver implements IUpdateCompensationStrategy {
+  constructor(private readonly fileStatus: ApiGen_Base_CodeType<string> | null = null) {
+    this.fileStatus = fileStatus;
+  }
+
+  // eslint-disable-next-line unused-imports/no-unused-vars
+  canEditOrDeleteCompensation(isDraftCompensation: boolean): boolean {
+    return false;
+  }
+}

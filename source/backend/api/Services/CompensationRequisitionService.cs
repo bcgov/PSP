@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
@@ -22,7 +23,8 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IAcquisitionFileRepository _acqFileRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
-        private readonly IAcquisitionStatusSolver _statusSolver;
+        private readonly IAcquisitionStatusSolver _acquisitionStatusSolver;
+        private readonly ILeaseRepository _leaseRepository;
 
         public CompensationRequisitionService(
             ClaimsPrincipal user,
@@ -32,7 +34,8 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IAcquisitionFileRepository acqFileRepository,
             ICompReqFinancialService compReqFinancialService,
-            IAcquisitionStatusSolver statusSolver)
+            IAcquisitionStatusSolver statusSolver,
+            ILeaseRepository leaseRepository)
         {
             _user = user;
             _logger = logger;
@@ -41,7 +44,8 @@ namespace Pims.Api.Services
             _userRepository = userRepository;
             _acqFileRepository = acqFileRepository;
             _compReqFinancialService = compReqFinancialService;
-            _statusSolver = statusSolver;
+            _acquisitionStatusSolver = statusSolver;
+            _leaseRepository = leaseRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -52,52 +56,34 @@ namespace Pims.Api.Services
             return _compensationRequisitionRepository.GetById(compensationRequisitionId);
         }
 
+        public PimsCompensationRequisition AddCompensationRequisition(FileTypes fileType, PimsCompensationRequisition compensationRequisition)
+        {
+            PimsCompensationRequisition newCompensationRequisition = fileType switch
+            {
+                FileTypes.Acquisition => AddAcquisitionFileCompReq(compensationRequisition),
+                FileTypes.Lease => AddLeaseFileCompReq(compensationRequisition),
+                FileTypes.Disposition => throw new BadRequestException("Relationship type not valid."),
+                FileTypes.Research => throw new BadRequestException("Relationship type not valid."),
+                _ => throw new BadRequestException("Relationship type not valid."),
+            };
+
+            return newCompensationRequisition;
+        }
+
         public PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition)
         {
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
 
-
-            /* TODO: Fix compensation requisition
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, compensationRequisition.AcquisitionFileId);
-
-            _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
-
-            var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
-
-            var currentAcquisitionFile = _acqFileRepository.GetById(currentCompensation.AcquisitionFileId);
-            var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
-
-            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (compensationRequisition.AcquisitionFileId is not null)
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, (long)compensationRequisition.AcquisitionFileId);
+                _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
+
+                return UpdateAcquisitionFileCompensation(compensationRequisition);
             }
 
-            CheckTotalAllowableCompensation(currentAcquisitionFile, compensationRequisition);
-            compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
-
-            PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
-            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
-            _compensationRequisitionRepository.CommitTransaction();
-
-            return updatedEntity;
-
-            DateOnly? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateOnly? currentValue)
-            {
-                if (currentStatusIsDraft.Equals(newStatusIsDraft))
-                {
-                    return currentValue;
-                }
-
-                if (newStatusIsDraft.HasValue)
-                {
-                    return newStatusIsDraft.Value ? null : DateOnly.FromDateTime(DateTime.UtcNow);
-                }
-
-                return null;
-            }
-            */
-            return null;
+            return UpdateLeaseFileCompensation(compensationRequisition);
         }
 
         public bool DeleteCompensation(long compensationId)
@@ -107,19 +93,20 @@ namespace Pims.Api.Services
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationId);
 
-           /* TODO: Fix compensation requisition
-            var currentAcquisitionStatus = GetCurrentAcquisitionStatus(currentCompensation.AcquisitionFileId);
-
-            if (!_statusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+            if (currentCompensation.AcquisitionFileId is not null)
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                var currentAcquisitionStatus = GetCurrentAcquisitionStatus((long)currentCompensation.AcquisitionFileId);
+
+                if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+                {
+                    throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                }
             }
 
             var fileFormToDelete = _compensationRequisitionRepository.TryDelete(compensationId);
             _compensationRequisitionRepository.CommitTransaction();
+
             return fileFormToDelete;
-            */
-            return true;
         }
 
         public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)
@@ -128,6 +115,20 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             return _compensationRequisitionRepository.GetPropertiesByCompRequisitionId(id);
+        }
+
+        public IEnumerable<PimsCompensationRequisition> GetFileCompensationRequisitions(FileTypes fileType, long fileId)
+        {
+            List<PimsCompensationRequisition> compReqs = fileType switch
+            {
+                FileTypes.Acquisition => GetAcquisitionFileCompReqs(fileId),
+                FileTypes.Lease => GetLeaseFileCompReqs(fileId),
+                FileTypes.Research => throw new BadRequestException("Relationship type not valid."),
+                FileTypes.Disposition => throw new BadRequestException("Relationship type not valid."),
+                _ => throw new BadRequestException("Relationship type not valid."),
+            };
+
+            return compReqs;
         }
 
         private static string GetCompensationRequisitionStatusText(bool? isDraft)
@@ -140,6 +141,124 @@ namespace Pims.Api.Services
             {
                 return "'No Status'";
             }
+        }
+
+        private static DateOnly? CheckFinalizedDate(bool? currentStatusIsDraft, bool? newStatusIsDraft, DateOnly? currentValue)
+        {
+            if (currentStatusIsDraft.Equals(newStatusIsDraft))
+            {
+                return currentValue;
+            }
+
+            if (newStatusIsDraft.HasValue)
+            {
+                return newStatusIsDraft.Value ? null : DateOnly.FromDateTime(DateTime.UtcNow);
+            }
+
+            return null;
+        }
+
+        private PimsCompensationRequisition AddAcquisitionFileCompReq(PimsCompensationRequisition compensationRequisition)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
+
+            compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
+            if (compensationRequisition.AcquisitionFileId is null)
+            {
+                throw new BadRequestException("Invalid acquisitionFileId.");
+            }
+
+            _logger.LogInformation("Adding compensation requisition for acquisition file id: {acquisitionFileId}", compensationRequisition.AcquisitionFileId);
+
+            if (compensationRequisition.LeaseId is not null)
+            {
+                throw new BadRequestException("Compensation Requisition should have only one parent Id");
+            }
+
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, (long)compensationRequisition.AcquisitionFileId);
+
+            _ = _acqFileRepository.GetById((long)compensationRequisition.AcquisitionFileId) ?? throw new BadRequestException("Invalid acquisitionFileId.");
+
+            compensationRequisition.IsDraft ??= true;
+            var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
+            _compensationRequisitionRepository.CommitTransaction();
+
+            return newCompensationRequisition;
+        }
+
+        private PimsCompensationRequisition AddLeaseFileCompReq(PimsCompensationRequisition compensationRequisition)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
+
+            compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
+            if (compensationRequisition.LeaseId is null)
+            {
+                throw new BadRequestException("Invalid LeaseId.");
+            }
+
+            _logger.LogInformation("Adding compensation requisition for lease file id: {leaseId}", compensationRequisition.LeaseId);
+
+            if (compensationRequisition.AcquisitionFileId is not null)
+            {
+                throw new BadRequestException("Compensation Requisition should have only one parent Id");
+            }
+
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            var currentLease = _leaseRepository.GetNoTracking((long)compensationRequisition.LeaseId) ?? throw new BadRequestException("Invalid LeaseId.");
+            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode);
+
+            compensationRequisition.IsDraft ??= true;
+            var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
+            _compensationRequisitionRepository.CommitTransaction();
+
+            return newCompensationRequisition;
+        }
+
+        private PimsCompensationRequisition UpdateLeaseFileCompensation(PimsCompensationRequisition compensationRequisition)
+        {
+            throw new NotImplementedException();
+        }
+
+        private List<PimsCompensationRequisition> GetAcquisitionFileCompReqs(long fileId)
+        {
+            _logger.LogInformation("Getting compensations for acquisition file id: {acquisitionFileId}", fileId);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, fileId);
+
+            return _compensationRequisitionRepository.GetAllByAcquisitionFileId(fileId).ToList();
+        }
+
+        private List<PimsCompensationRequisition> GetLeaseFileCompReqs(long fileId)
+        {
+            _logger.LogInformation("Getting compensations for Lease file id: {LeaseId}", fileId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(fileId).RegionCode);
+
+            return _compensationRequisitionRepository.GetAllByLeaseFileId(fileId).ToList();
+        }
+
+        private PimsCompensationRequisition UpdateAcquisitionFileCompensation(PimsCompensationRequisition compensationRequisition)
+        {
+            var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
+
+            var currentAcquisitionFile = _acqFileRepository.GetById((long)currentCompensation.AcquisitionFileId);
+            var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
+
+            if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
+            CheckTotalAllowableCompensation(currentAcquisitionFile, compensationRequisition);
+            compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
+
+            PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
+            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, (long)compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
+            _compensationRequisitionRepository.CommitTransaction();
+
+            return updatedEntity;
         }
 
         private void AddNoteIfStatusChanged(long compensationRequisitionId, long acquisitionFileId, bool? currentStatus, bool? newStatus)

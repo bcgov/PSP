@@ -6,8 +6,12 @@ import { LeaseFormModel } from '@/features/leases/models';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 
+import CompensationListContainer from '../../compensation/list/CompensationListContainer';
+import CompensationListView from '../../compensation/list/CompensationListView';
 import { LeaseContainerState, LeasePageNames, leasePages } from '../LeaseContainer';
 import { LeaseFileTabNames, LeaseFileTabs, LeaseTabFileView } from './LeaseFileTabs';
 import { LeaseTab } from './LeaseTab';
@@ -176,6 +180,25 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       ),
       key: LeaseFileTabNames.notes,
       name: 'Notes',
+    });
+  }
+
+  if (
+    lease?.id &&
+    (lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA ||
+      lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLMOTI) &&
+    hasClaim(Claims.COMPENSATION_REQUISITION_VIEW)
+  ) {
+    tabViews.push({
+      content: (
+        <CompensationListContainer
+          fileType={ApiGen_CodeTypes_FileTypes.Lease}
+          file={lease}
+          View={CompensationListView}
+        />
+      ),
+      key: LeaseFileTabNames.compensation,
+      name: 'Compensation',
     });
   }
 

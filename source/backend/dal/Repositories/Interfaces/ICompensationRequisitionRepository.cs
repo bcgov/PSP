@@ -7,6 +7,8 @@ namespace Pims.Dal.Repositories
     {
         IList<PimsCompensationRequisition> GetAllByAcquisitionFileId(long acquisitionFileId);
 
+        IList<PimsCompensationRequisition> GetAllByLeaseFileId(long leaseFileId);
+
         PimsCompensationRequisition GetById(long compensationRequisitionId);
 
         PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition);

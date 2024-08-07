@@ -18,6 +18,7 @@ using Pims.Av;
 using Pims.Core.Http.Configuration;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Security;
+using FileTypes = Pims.Api.Models.Cdogs.FileTypes;
 
 namespace Pims.Api.Services
 {

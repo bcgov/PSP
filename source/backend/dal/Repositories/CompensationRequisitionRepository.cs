@@ -35,6 +35,14 @@ namespace Pims.Dal.Repositories
                 .Where(c => c.AcquisitionFileId == acquisitionFileId).ToList();
         }
 
+        public IList<PimsCompensationRequisition> GetAllByLeaseFileId(long leaseFileId)
+        {
+            return Context.PimsCompensationRequisitions
+                .Include(c => c.PimsCompReqFinancials)
+                .AsNoTracking()
+                .Where(c => c.LeaseId == leaseFileId).ToList();
+        }
+
         public PimsCompensationRequisition Add(PimsCompensationRequisition compensationRequisition)
         {
             Context.PimsCompensationRequisitions.Add(compensationRequisition);

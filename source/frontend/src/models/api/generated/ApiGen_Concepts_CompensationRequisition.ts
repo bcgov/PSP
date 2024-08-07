@@ -17,8 +17,9 @@ import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 // LINK: @backend/apimodels/Models/Concepts/CompensationRequisition/CompensationRequisitionModel.cs
 export interface ApiGen_Concepts_CompensationRequisition extends ApiGen_Base_BaseAudit {
   id: number | null;
-  acquisitionFileId: number;
+  acquisitionFileId: number | null;
   acquisitionFile: ApiGen_Concepts_AcquisitionFile | null;
+  leaseId: number | null;
   isDraft: boolean | null;
   fiscalYear: string | null;
   yearlyFinancialId: number | null;

@@ -2,7 +2,6 @@ import { createMemoryHistory } from 'history';
 import { Route } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
-import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import {
   mockAcquisitionFileOwnersResponse,
@@ -24,6 +23,7 @@ import { createRef } from 'react';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 // mock auth library
 
@@ -101,7 +101,7 @@ describe('AcquisitionView component', () => {
       <SideBarContextProvider
         file={{
           ...mockAcquisitionFileResponse(),
-          fileType: FileTypes.Acquisition,
+          fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
         }}
         lastUpdatedBy={{
           ...mockLastUpdatedBy(1),

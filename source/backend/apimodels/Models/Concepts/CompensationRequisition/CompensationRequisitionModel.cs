@@ -12,9 +12,11 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
     {
         public long? Id { get; set; }
 
-        public long AcquisitionFileId { get; set; }
+        public long? AcquisitionFileId { get; set; }
 
         public AcquisitionFileModel AcquisitionFile { get; set; }
+
+        public long? LeaseId { get; set; }
 
         public bool? IsDraft { get; set; }
 

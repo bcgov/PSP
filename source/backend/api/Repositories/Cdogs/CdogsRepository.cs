@@ -12,8 +12,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
-
 using Pims.Api.Models.Requests.Http;
+
+using FileTypes = Pims.Api.Models.Cdogs.FileTypes;
 
 namespace Pims.Api.Repositories.Cdogs
 {

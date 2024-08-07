@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -12,5 +13,9 @@ namespace Pims.Api.Services
         bool DeleteCompensation(long compensationId);
 
         IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id);
+
+        IEnumerable<PimsCompensationRequisition> GetFileCompensationRequisitions(FileTypes fileType, long fileId);
+
+        PimsCompensationRequisition AddCompensationRequisition(FileTypes fileType, PimsCompensationRequisition compensationRequisition);
     }
 }
