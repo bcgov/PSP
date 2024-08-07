@@ -96,28 +96,41 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     zoom,
   ]);
 
-  const mapMachineMapLocationFeatureDataset = mapMachine.mapLocationFeatureDataset;
+  const { mapLocationFeatureDataset, repositioningFeatureDataset, isRepositioning } = mapMachine;
+
   useEffect(() => {
     activeFeatureLayer?.clearLayers();
-    if (mapMachineMapLocationFeatureDataset !== null) {
-      const location = mapMachineMapLocationFeatureDataset.location;
 
-      let activeFeature: Feature<Geometry, GeoJsonProperties> = {
-        geometry: { coordinates: [location.lng, location.lat], type: 'Point' },
-        type: 'Feature',
-        properties: {},
-      };
-      if (mapMachineMapLocationFeatureDataset.parcelFeature !== null) {
-        activeFeature = mapMachineMapLocationFeatureDataset.parcelFeature;
-        activeFeatureLayer?.addData(activeFeature);
-      } else if (mapMachineMapLocationFeatureDataset.municipalityFeature !== null) {
-        activeFeature = mapMachineMapLocationFeatureDataset.municipalityFeature;
-        if (mapMachineMapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
+    if (isRepositioning) {
+      if (
+        repositioningFeatureDataset !== null &&
+        repositioningFeatureDataset.pimsFeature !== null
+      ) {
+        // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
+        activeFeatureLayer?.addData(repositioningFeatureDataset.pimsFeature);
+      }
+    } else {
+      // Not repositioning - highlight parcels on map click as usual workflow
+      if (mapLocationFeatureDataset !== null) {
+        const location = mapLocationFeatureDataset.location;
+
+        let activeFeature: Feature<Geometry, GeoJsonProperties> = {
+          geometry: { coordinates: [location.lng, location.lat], type: 'Point' },
+          type: 'Feature',
+          properties: {},
+        };
+        if (mapLocationFeatureDataset.parcelFeature !== null) {
+          activeFeature = mapLocationFeatureDataset.parcelFeature;
           activeFeatureLayer?.addData(activeFeature);
+        } else if (mapLocationFeatureDataset.municipalityFeature !== null) {
+          activeFeature = mapLocationFeatureDataset.municipalityFeature;
+          if (mapLocationFeatureDataset.municipalityFeature?.geometry?.type === 'Polygon') {
+            activeFeatureLayer?.addData(activeFeature);
+          }
         }
       }
     }
-  }, [activeFeatureLayer, mapMachineMapLocationFeatureDataset]);
+  }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeatureDataset]);
 
   const hasPendingFlyTo = mapMachine.pendingFlyTo;
   const requestedFlyTo = mapMachine.requestedFlyTo;

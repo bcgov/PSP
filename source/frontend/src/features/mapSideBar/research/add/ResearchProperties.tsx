@@ -1,4 +1,6 @@
 import { FieldArray, useFormikContext } from 'formik';
+import { LatLngLiteral } from 'leaflet';
+import isNumber from 'lodash/isNumber';
 import { Col, Row } from 'react-bootstrap';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -9,6 +11,7 @@ import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPro
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useModalContext } from '@/hooks/useModalContext';
+import { isLatLngInFeatureSetBoundary } from '@/utils';
 
 import { AddressForm, PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
@@ -30,7 +33,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeA
       </div>
 
       <FieldArray name="properties">
-        {({ push, remove }) => (
+        {({ push, remove, replace }) => (
           <>
             <LoadingBackdrop show={bcaLoading} />
             <Row className="py-3 no-gutters">
@@ -77,6 +80,25 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeA
                       });
                     }, Promise.resolve());
                   }}
+                  repositionSelectedProperty={(
+                    featureset: LocationFeatureDataset,
+                    latLng: LatLngLiteral,
+                    index: number | null,
+                  ) => {
+                    // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
+                    if (
+                      isNumber(index) &&
+                      index >= 0 &&
+                      isLatLngInFeatureSetBoundary(latLng, featureset)
+                    ) {
+                      const formProperty = values.properties[index];
+                      const updatedFormProperty = new PropertyForm(formProperty);
+                      updatedFormProperty.fileLocation = latLng;
+
+                      // Find property within formik values and reposition it based on incoming file marker position
+                      replace(index, updatedFormProperty);
+                    }
+                  }}
                   modifiedProperties={values.properties.map(p => p.toFeatureDataset())}
                 />
               </Col>
@@ -89,7 +111,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = ({ confirmBeforeA
                   onRemove={() => remove(index)}
                   nameSpace={`properties.${index}`}
                   index={index}
-                  property={property.toMapProperty()}
+                  property={property.toFeatureDataset()}
                 />
               ))}
               {values.properties.length === 0 && <span>No Properties selected</span>}
