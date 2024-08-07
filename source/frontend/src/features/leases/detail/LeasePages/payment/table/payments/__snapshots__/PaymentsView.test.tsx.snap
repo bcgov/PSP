@@ -204,7 +204,7 @@ exports[`PaymentsView component > renders as expected 1`] = `
 }
 
 <div
-    class="c0 form-section ml-20 p-0"
+    class="c0 form-section"
   >
     <h2
       class="c1"
@@ -473,7 +473,7 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
 }
 
 <div
-    class="c0 form-section ml-20 p-0"
+    class="c0 form-section"
   >
     <h2
       class="c1"

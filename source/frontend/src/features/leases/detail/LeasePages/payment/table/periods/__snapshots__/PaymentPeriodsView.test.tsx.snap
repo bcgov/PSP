@@ -238,7 +238,7 @@ exports[`PeriodsForm component > renders as expected 1`] = `
       class="collapse show"
     >
       <div
-        class="table"
+        class="table no-zebra-rows"
         data-testid="leasePaymentsTable"
         role="table"
       >
@@ -789,7 +789,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
       class="collapse show"
     >
       <div
-        class="table"
+        class="table no-zebra-rows"
         data-testid="leasePaymentsTable"
         role="table"
       >
