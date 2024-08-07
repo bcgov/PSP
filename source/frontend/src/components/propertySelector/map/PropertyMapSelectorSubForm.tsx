@@ -16,6 +16,7 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
 > = ({ onClickDraftMarker, selectedProperty }) => {
   const selectedMapProperty = featuresetToMapProperty(selectedProperty);
   const pid = selectedMapProperty?.pid;
+  const pin = selectedMapProperty?.pin;
   const planNumber = selectedMapProperty?.planNumber;
   const legalDescription =
     selectedProperty?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
@@ -35,6 +36,7 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
           <GroupHeader>Selected property attributes</GroupHeader>
         </Row>
         <SectionField label="PID">{pidFormatter(pid)}</SectionField>
+        <SectionField label="PIN">{pin}</SectionField>
         <SectionField label="Plan #">{planNumber}</SectionField>
         <SectionField label="Address">{address}</SectionField>
         <SectionField label="Region">
