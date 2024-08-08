@@ -1,12 +1,15 @@
-
 import { FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
-import { toast } from 'react-toastify';
 
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
-import { useWfsLayer } from '@/hooks/layer-api/useWfsLayer';
-import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import {
+  TANTALIS_CrownLandInclusions_Feature_Properties,
+  TANTALIS_CrownLandInventory_Feature_Properties,
+  TANTALIS_CrownLandLeases_Feature_Properties,
+  TANTALIS_CrownLandLicenses_Feature_Properties,
+  TANTALIS_CrownLandTenures_Feature_Properties,
+} from '@/models/layers/crownLand';
 import { useTenant } from '@/tenants';
 
 /**
@@ -15,123 +18,184 @@ import { useTenant } from '@/tenants';
  */
 
 export const useCrownLandLayer = () => {
-  const { parcelMapFullyAttributed, fullyAttributedParcelsLayerUrl } = useTenant();
+  const {
+    crownLandLeasesUrl,
+    crownLandLicensesUrl,
+    crownLandTenuresUrl,
+    crownLandInventoryUrl,
+    crownLandInclusionsUrl,
+  } = useTenant();
 
-  const getAllFeaturesWrapper = useWfsLayer(parcelMapFullyAttributed.url, {
-    name: parcelMapFullyAttributed.name,
-    withCredentials: true,
-  });
+  const {
+    findOneWhereContainsWrapped: {
+      execute: findOneWhereContainsCrownLandLeasesExecute,
+      loading: findOneWhereContainsCrownLandLeasesLoading,
+    },
+  } = useLayerQuery(crownLandLeasesUrl);
 
-  const { findOneWhereContains } = useLayerQuery(fullyAttributedParcelsLayerUrl);
-
-  const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
-
-  const handleError = useCallback(() => {
-    toast.error('Unable to contact Parcel Map');
-  }, []);
-
-  const findByLegalDescription = useCallback(
-    async (legalDesc: string) => {
-      const data = await getAllFeatures({ LEGAL_DESCRIPTION: legalDesc }, { timeout: 40000 });
+  const findOneCrownLandLease = useCallback(
+    async (
+      latlng: LatLngLiteral,
+      geometryName?: string | undefined,
+      spatialReferenceId?: number | undefined,
+    ) => {
+      const featureCollection = await findOneWhereContainsCrownLandLeasesExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      return data as
-        | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-        | undefined;
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        TANTALIS_CrownLandLeases_Feature_Properties
+      >;
+
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features[0]
+        : undefined;
     },
-    [getAllFeatures],
+    [findOneWhereContainsCrownLandLeasesExecute],
   );
 
-  const findByPid = useCallback(
-    async (pid: string, forceExactMatch = false) => {
-      // Removes dashes to match expectations of the map layer.
-      const formattedPid = pid.replace(/[-\s]/g, '');
-      try {
-        const data = await getAllFeatures(
-          { PID: formattedPid },
-          { forceExactMatch: forceExactMatch, timeout: 30000 },
-        );
-        // TODO: Enhance useLayerQuery to allow generics to match the Property types
-        return data as
-          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-          | undefined;
-      } catch (e: unknown) {
-        handleError();
-        return undefined;
-      }
+  const {
+    findOneWhereContainsWrapped: {
+      execute: findOneWhereContainsCrownLandLicensesExecute,
+      loading: findOneWhereContainsCrownLandLicensesLoading,
     },
-    [getAllFeatures, handleError],
+  } = useLayerQuery(crownLandLicensesUrl);
+
+  const findOneCrownLandLicense = useCallback(
+    async (
+      latlng: LatLngLiteral,
+      geometryName?: string | undefined,
+      spatialReferenceId?: number | undefined,
+    ) => {
+      const featureCollection = await findOneWhereContainsCrownLandLicensesExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        TANTALIS_CrownLandLicenses_Feature_Properties
+      >;
+
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features[0]
+        : undefined;
+    },
+    [findOneWhereContainsCrownLandLicensesExecute],
   );
 
-  const findByPin = useCallback(
-    async (pin: string, forceExactMatch = false) => {
-      try {
-        const data = await getAllFeatures(
-          { PIN: pin },
-          { forceExactMatch: forceExactMatch, timeout: 30000 },
-        );
-        // TODO: Enhance useLayerQuery to allow generics to match the Property types
-        return data as
-          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-          | undefined;
-      } catch (e: unknown) {
-        handleError();
-        return undefined;
-      }
+  const {
+    findOneWhereContainsWrapped: {
+      execute: findOneWhereContainsCrownLandTenuresExecute,
+      loading: findOneWhereContainsCrownLandTenuresLoading,
     },
-    [getAllFeatures, handleError],
+  } = useLayerQuery(crownLandTenuresUrl);
+
+  const findOneCrownLandTenure = useCallback(
+    async (
+      latlng: LatLngLiteral,
+      geometryName?: string | undefined,
+      spatialReferenceId?: number | undefined,
+    ) => {
+      const featureCollection = await findOneWhereContainsCrownLandTenuresExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        TANTALIS_CrownLandTenures_Feature_Properties
+      >;
+
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features[0]
+        : undefined;
+    },
+    [findOneWhereContainsCrownLandTenuresExecute],
   );
 
-  const findByPlanNumber = useCallback(
-    async (planNumber: string, forceExactMatch = false) => {
-      try {
-        const data = await getAllFeatures(
-          { PLAN_NUMBER: planNumber },
-          { forceExactMatch: forceExactMatch, timeout: 30000 },
-        );
-        // TODO: Enhance useLayerQuery to allow generics to match the Property types
-        return data as
-          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-          | undefined;
-      } catch (e: unknown) {
-        handleError();
-        return undefined;
-      }
+  const {
+    findOneWhereContainsWrapped: {
+      execute: findOneWhereContainsCrownLandInventoryExecute,
+      loading: findOneWhereContainsCrownLandInventoryLoading,
     },
-    [getAllFeatures, handleError],
+  } = useLayerQuery(crownLandInventoryUrl);
+
+  const findOneCrownLandInventory = useCallback(
+    async (
+      latlng: LatLngLiteral,
+      geometryName?: string | undefined,
+      spatialReferenceId?: number | undefined,
+    ) => {
+      const featureCollection = await findOneWhereContainsCrownLandInventoryExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        TANTALIS_CrownLandInventory_Feature_Properties
+      >;
+
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features[0]
+        : undefined;
+    },
+    [findOneWhereContainsCrownLandInventoryExecute],
   );
 
-  const findOne = useCallback(
-    async (latlng: LatLngLiteral, geometryName?: string, spatialReferenceId?: number) => {
-      try {
-        const featureCollection = await findOneWhereContains(
-          latlng,
-          geometryName,
-          spatialReferenceId,
-        );
-
-        // TODO: Enhance useLayerQuery to allow generics to match the Property types
-        const forceCasted = featureCollection as
-          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-          | undefined;
-        return forceCasted !== undefined && forceCasted.features.length > 0
-          ? forceCasted.features[0]
-          : undefined;
-      } catch (e: unknown) {
-        handleError();
-        return undefined;
-      }
+  const {
+    findOneWhereContainsWrapped: {
+      execute: findOneWhereContainsCrownLandInclusionsExecute,
+      loading: findOneWhereContainsCrownLandInclusionsLoading,
     },
-    [findOneWhereContains, handleError],
+  } = useLayerQuery(crownLandInclusionsUrl);
+
+  const findOneCrownLandInclusion = useCallback(
+    async (
+      latlng: LatLngLiteral,
+      geometryName?: string | undefined,
+      spatialReferenceId?: number | undefined,
+    ) => {
+      const featureCollection = await findOneWhereContainsCrownLandInclusionsExecute(
+        latlng,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as FeatureCollection<
+        Geometry,
+        TANTALIS_CrownLandInclusions_Feature_Properties
+      >;
+
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features[0]
+        : undefined;
+    },
+    [findOneWhereContainsCrownLandInclusionsExecute],
   );
 
   return {
-    findByLegalDescription,
-    findByPid,
-    findByPin,
-    findByPlanNumber,
-    findByLoading: getAllFeaturesLoading,
-    findByWrapper: getAllFeaturesWrapper,
-    findOne,
+    findOneCrownLandLease,
+    findOneCrownLandLeaseLoading: findOneWhereContainsCrownLandLeasesLoading,
+    findOneCrownLandLicense,
+    findOneCrownLandLicenseLoading: findOneWhereContainsCrownLandLicensesLoading,
+    findOneCrownLandTenure,
+    findOneCrownLandTenureLoading: findOneWhereContainsCrownLandTenuresLoading,
+    findOneCrownLandInventory,
+    findOneCrownLandInventoryLoading: findOneWhereContainsCrownLandInventoryLoading,
+    findOneCrownLandInclusion,
+    findOneCrownLandInclusionsLoading: findOneWhereContainsCrownLandInclusionsLoading,
   };
 };
