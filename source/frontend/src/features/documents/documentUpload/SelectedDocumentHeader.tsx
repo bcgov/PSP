@@ -1,17 +1,21 @@
 import clsx from 'classnames';
+import { FormikProps } from 'formik';
 import truncate from 'lodash/truncate';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaCheck, FaTrash } from 'react-icons/fa';
-import styled from 'styled-components';
+import { FaTrash } from 'react-icons/fa';
+import { FiCheck } from 'react-icons/fi';
+import styled, { useTheme } from 'styled-components';
 
 import { StyledRemoveIconButton } from '@/components/common/buttons';
 import { Select, SelectOption } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
+import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
-import { DocumentUploadFormData } from '../ComposedDocument';
+import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocument';
 
 export interface ISelectedDocumentHeaderProps {
   // props
@@ -19,6 +23,7 @@ export interface ISelectedDocumentHeaderProps {
   namespace?: string;
   className?: string;
   'data-testId'?: string;
+  formikProps: FormikProps<BatchUploadFormModel>;
   document: DocumentUploadFormData;
   documentTypes: ApiGen_Concepts_DocumentType[];
   documentStatusOptions: SelectOption[];
@@ -32,20 +37,37 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
   namespace,
   className,
   'data-testId': dataTestId,
+  formikProps,
   document,
   documentTypes,
   documentStatusOptions,
   onDocumentTypeChange,
   onRemove,
 }) => {
-  // An attached file is required to render this component
-  if (!exists(document.file)) {
-    return null;
-  }
+  const theme = useTheme();
+  const isMounted = useIsMounted();
+  const { setFieldValue } = formikProps;
 
   const documentTypeOptions = documentTypes.map<SelectOption>(x => {
     return { label: x.documentTypeDescription || '', value: x.id?.toString() || '' };
   });
+
+  // Ensure the drop-down fields are selected when the supplied options have only one item.
+  // We do this for CDOGS templates which have a single document type (TEMPLATE)
+  useEffect(() => {
+    if (isMounted() && exists(documentTypeOptions) && documentTypeOptions.length === 1) {
+      setFieldValue(withNameSpace(namespace, 'documentTypeId'), documentTypeOptions[0].value);
+    }
+
+    if (isMounted() && exists(documentStatusOptions) && documentStatusOptions.length === 1) {
+      setFieldValue(withNameSpace(namespace, 'documentStatusCode'), documentStatusOptions[0].value);
+    }
+  }, [documentStatusOptions, documentTypeOptions, isMounted, namespace, setFieldValue]);
+
+  // An attached file is required to render this component
+  if (!exists(document.file)) {
+    return null;
+  }
 
   return (
     <>
@@ -53,7 +75,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
         <Col>
           <span>File {index}:</span>
           <span className="ml-4">{truncate(document.file.name, { length: 20 })}</span>
-          <FaCheck className="ml-2" size="1.6rem" />
+          <FiCheck className="ml-2" size="1.6rem" color={theme.css.uploadFileCheckColor} />
         </Col>
       </Row>
       <StyledRow className={clsx('no-gutters', className)}>

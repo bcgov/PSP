@@ -9,12 +9,12 @@ import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/Ap
 import { ApiGen_Mayan_QueryResponse } from '@/models/api/generated/ApiGen_Mayan_QueryResponse';
 import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_Requests_ExternalResponse';
 import { exists } from '@/utils';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { StyledScrollable } from '../commonStyles';
 import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
 import { SelectedDocumentHeader } from './SelectedDocumentHeader';
-import { withNameSpace } from '@/utils/formUtils';
 
 export interface ISelectedDocumentRowProps {
   index: number;
@@ -43,6 +43,7 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
   retrieveDocumentTypeMetadata,
   onRemove,
 }) => {
+  const { setFieldValue } = formikProps;
   const errors: FormikErrors<DocumentUploadFormData> = getIn(formikProps.errors, namespace ?? '');
 
   const onDocumentTypeChange = async (changeEvent: React.ChangeEvent<HTMLInputElement>) => {
@@ -56,22 +57,21 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
         return;
       }
 
-      // setDocumentType(documentType.id?.toString() || '');
       if (documentType.mayanId) {
         const results = await retrieveDocumentTypeMetadata(documentType.mayanId);
         if (results?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success) {
           const metadata = results?.payload?.results || [];
           document.setMayanMetadata(metadata);
-          formikProps.setFieldValue(withNameSpace(namespace, 'mayanMetadata'), metadata);
+          setFieldValue(withNameSpace(namespace, 'mayanMetadata'), metadata);
           // setDocumentTypeMetadataTypes(results?.payload?.results || []);
         }
       } else {
         document.setMayanMetadata([]);
-        formikProps.setFieldValue(withNameSpace(namespace, 'mayanMetadata'), []);
+        setFieldValue(withNameSpace(namespace, 'mayanMetadata'), []);
         // setDocumentTypeMetadataTypes([]);
       }
     },
-    [document, formikProps, namespace, retrieveDocumentTypeMetadata],
+    [document, namespace, retrieveDocumentTypeMetadata, setFieldValue],
   );
 
   return (
@@ -80,6 +80,7 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
         <SelectedDocumentHeader
           index={index}
           namespace={namespace}
+          formikProps={formikProps}
           document={document}
           documentTypes={documentTypes}
           documentStatusOptions={documentStatusOptions}
@@ -87,6 +88,7 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
           onDocumentTypeChange={onDocumentTypeChange}
         />
       }
+      isStyledHeader
       isCollapsable
       initiallyExpanded={false}
       noPadding
