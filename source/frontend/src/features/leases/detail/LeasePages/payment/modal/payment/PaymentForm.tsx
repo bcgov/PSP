@@ -69,6 +69,7 @@ export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPayme
       }}
     >
       <PaymentFormContent
+        periods={periods}
         isReceived={!!isReceived}
         isGstEligible={!!isGstEligible}
         isVariable={currentPeriod?.isVariable}
