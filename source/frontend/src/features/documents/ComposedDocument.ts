@@ -98,12 +98,18 @@ export class DocumentRow {
   }
 }
 
+export class BatchUploadFormModel {
+  public isSelectedFile = false;
+  public documents: DocumentUploadFormData[] = [];
+}
+
 export class DocumentUploadFormData {
   public documentTypeId: string;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
   public isDocumentTypeChanged = false;
-  public isSelectedFile = false;
+  public mayanMetadata: ApiGen_Mayan_DocumentTypeMetadataType[];
+  public file: File | null;
 
   public constructor(
     initialStatus: string,
@@ -112,6 +118,12 @@ export class DocumentUploadFormData {
   ) {
     this.documentStatusCode = initialStatus;
     this.documentTypeId = documentType;
+    this.file = null;
+    this.setMayanMetadata(metadata);
+  }
+
+  public setMayanMetadata(metadata: ApiGen_Mayan_DocumentTypeMetadataType[]) {
+    this.mayanMetadata = metadata;
     this.documentMetadata = {};
 
     metadata.forEach(metaType => {
@@ -120,7 +132,6 @@ export class DocumentUploadFormData {
   }
 
   public toRequestApi(
-    file: File,
     documentType: ApiGen_Concepts_DocumentType,
   ): ApiGen_Requests_DocumentUploadRequest {
     const metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
@@ -136,7 +147,7 @@ export class DocumentUploadFormData {
     return {
       documentTypeId: documentType?.id,
       documentStatusCode: this.documentStatusCode,
-      file: file,
+      file: this.file,
       documentMetadata: metadata,
       documentTypeMayanId: documentType?.mayanId,
     };

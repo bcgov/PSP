@@ -1,13 +1,5 @@
 import { FormikProps } from 'formik/dist/types';
-import {
-  ChangeEvent,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import { SelectOption } from '@/components/common/form';
 import * as API from '@/constants/API';
@@ -17,12 +9,11 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
 
-import { DocumentUploadFormData } from '../ComposedDocument';
+import { BatchUploadFormModel } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentUploadForm from './DocumentUploadForm';
@@ -57,7 +48,7 @@ const DocumentUploadContainer = forwardRef<
     },
   });
 
-  const formikRef = useRef<FormikProps<DocumentUploadFormData>>(null);
+  const formikRef = useRef<FormikProps<BatchUploadFormModel>>(null);
 
   const handleCancelClick = () => {
     if (formikRef.current?.dirty) {
@@ -92,29 +83,29 @@ const DocumentUploadContainer = forwardRef<
     ApiGen_Mayan_DocumentTypeMetadataType[]
   >([]);
 
-  const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
-    const documentTypeId = Number(changeEvent.target.value);
-    await updateDocumentType(documentTypes.find(x => x.id === documentTypeId));
-  };
+  // const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
+  //   const documentTypeId = Number(changeEvent.target.value);
+  //   await updateDocumentType(documentTypes.find(x => x.id === documentTypeId));
+  // };
 
-  const updateDocumentType = useCallback(
-    async (documentType?: ApiGen_Concepts_DocumentType) => {
-      if (documentType === undefined) {
-        return;
-      }
+  // const updateDocumentType = useCallback(
+  //   async (documentType?: ApiGen_Concepts_DocumentType) => {
+  //     if (documentType === undefined) {
+  //       return;
+  //     }
 
-      setDocumentType(documentType.id?.toString() || '');
-      if (documentType.mayanId) {
-        const results = await retrieveDocumentTypeMetadata(documentType.mayanId);
-        if (results?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success) {
-          setDocumentTypeMetadataTypes(results?.payload?.results || []);
-        }
-      } else {
-        setDocumentTypeMetadataTypes([]);
-      }
-    },
-    [retrieveDocumentTypeMetadata],
-  );
+  //     setDocumentType(documentType.id?.toString() || '');
+  //     if (documentType.mayanId) {
+  //       const results = await retrieveDocumentTypeMetadata(documentType.mayanId);
+  //       if (results?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success) {
+  //         setDocumentTypeMetadataTypes(results?.payload?.results || []);
+  //       }
+  //     } else {
+  //       setDocumentTypeMetadataTypes([]);
+  //     }
+  //   },
+  //   [retrieveDocumentTypeMetadata],
+  // );
 
   useEffect(() => {
     const retrievedDocumentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
@@ -160,7 +151,7 @@ const DocumentUploadContainer = forwardRef<
     },
   }));
 
-  const onDocumentSelected = () => {
+  const onDocumentsSelected = () => {
     props.setCanUpload(true);
   };
 
@@ -173,7 +164,7 @@ const DocumentUploadContainer = forwardRef<
       documentStatusOptions={documentStatusOptions}
       mayanMetadataTypes={documentTypeMetadataTypes}
       onDocumentTypeChange={onDocumentTypeChange}
-      onDocumentSelected={onDocumentSelected}
+      onDocumentsSelected={onDocumentsSelected}
       onUploadDocument={onUploadDocument}
       onCancel={handleCancelClick}
     />

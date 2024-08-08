@@ -15,9 +15,7 @@ export interface IDocumentUploadModalProps {
   onClose: () => void;
 }
 
-export const DocumentUploadModal: React.FunctionComponent<
-  React.PropsWithChildren<IDocumentUploadModalProps>
-> = props => {
+export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalProps> = props => {
   const [canUpload, setCanUpload] = useState(false);
 
   const uploadContainerRef = createRef<IDocumentUploadContainerRef>();
@@ -36,7 +34,7 @@ export const DocumentUploadModal: React.FunctionComponent<
       setDisplay={props.setDisplay}
       closeButton={false}
       headerIcon={<FaUpload size={22} />}
-      title={'Add a Document'}
+      title="Add Document"
       message={
         <DocumentUploadContainer
           ref={uploadContainerRef}
