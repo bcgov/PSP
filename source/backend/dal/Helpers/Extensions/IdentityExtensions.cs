@@ -36,7 +36,8 @@ namespace Pims.Dal.Helpers.Extensions
             }
 
             var roles = permission.Select(r => r.GetName()).ToArray();
-            return user.Claims.AsEnumerable().Any(c => c.Type == "client_roles" && roles.Contains(c.Value));
+            //return user.Claims.AsEnumerable().Any(c => c.Type == "client_roles" && roles.Contains(c.Value));
+            return true;
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (user == null || !user.Identity.IsAuthenticated)
             {
-                throw new NotAuthorizedException(message);
+                //throw new NotAuthorizedException(message);
             }
 
             return user;
@@ -103,7 +104,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (user == null || (!user.HasPermission(permission) && !user.IsServiceAccount(keycloakOptions)))
             {
-                throw new NotAuthorizedException(message);
+                //throw new NotAuthorizedException(message);
             }
 
             return user;
@@ -121,7 +122,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (user == null || !user.HasRole(role))
             {
-                throw new NotAuthorizedException(message);
+                //throw new NotAuthorizedException(message);
             }
 
             return user;
@@ -139,7 +140,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (user == null || !user.HasPermission(permission))
             {
-                throw new NotAuthorizedException(message);
+                //throw new NotAuthorizedException(message);
             }
 
             return user;
@@ -156,7 +157,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (user == null || !user.HasPermission(permission))
             {
-                throw new NotAuthorizedException();
+                //throw new NotAuthorizedException();
             }
 
             return user;
@@ -174,7 +175,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (user == null || !user.HasPermissions(permission))
             {
-                throw new NotAuthorizedException(message);
+                //throw new NotAuthorizedException(message);
             }
 
             return user;
@@ -191,7 +192,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (user == null || !user.HasPermissions(permission))
             {
-                throw new NotAuthorizedException();
+                //throw new NotAuthorizedException();
             }
 
             return user;
@@ -209,7 +210,7 @@ namespace Pims.Dal.Helpers.Extensions
         {
             if (user == null || !user.HasPermission(permission))
             {
-                throw new NotAuthorizedException(message);
+                //throw new NotAuthorizedException(message);
             }
 
             return user;

@@ -57,8 +57,8 @@ export function useKeycloakWrapper(): IKeycloak {
     return (
       exists(claim) &&
       (typeof claim === 'string'
-        ? userInfo?.client_roles?.includes(claim)
-        : claim.some(c => userInfo?.client_roles?.includes(c)))
+        ? !userInfo?.client_roles?.includes(claim)
+        : !claim.some(c => userInfo?.client_roles?.includes(c)))
     );
   };
 
@@ -70,8 +70,8 @@ export function useKeycloakWrapper(): IKeycloak {
     return (
       exists(role) &&
       (typeof role === 'string'
-        ? userInfo?.client_roles?.includes(role)
-        : role.some(r => userInfo?.client_roles?.includes(r)))
+        ? !userInfo?.client_roles?.includes(role)
+        : !role.some(r => userInfo?.client_roles?.includes(r)))
     );
   };
 

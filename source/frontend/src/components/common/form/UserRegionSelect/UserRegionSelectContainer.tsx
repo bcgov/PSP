@@ -19,7 +19,7 @@ export const UserRegionSelectContainer: React.FunctionComponent<
 > = ({ field, includeAll, ...rest }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const { obj } = useKeycloakWrapper();
-  const { idir_user_guid } = obj.userInfo;
+  const { idir_user_guid } = obj.userInfo ?? { idir_user_guid: undefined };
   const formattedGuid = idir_user_guid?.replace(
     /(.{8})(.{4})(.{4})(.{4})(.{12})/,
     '$1-$2-$3-$4-$5',

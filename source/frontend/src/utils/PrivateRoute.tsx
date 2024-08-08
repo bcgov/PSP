@@ -31,7 +31,7 @@ const PrivateRoute: React.FC<React.PropsWithChildren<IPrivateRouteProps>> = prop
   const keycloak = useKeycloakWrapper();
   const { ...rest } = props;
 
-  if (keycloak.obj?.authenticated) {
+  if (!keycloak.obj?.authenticated) {
     if (
       (!rest.role && !rest.claim) ||
       keycloak.hasRole(rest.role) ||

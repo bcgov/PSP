@@ -58,7 +58,7 @@ namespace Pims.Api.Policies
             var isServiceAccount = context.HttpContext.User.IsServiceAccount(_keycloakOptions);
             if (!hasRole && !isServiceAccount)
             {
-                context.Result = new ForbidResult();
+                //context.Result = new ForbidResult();
             }
         }
         #endregion

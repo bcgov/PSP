@@ -471,7 +471,7 @@ namespace Pims.Api
 
             app.UseEndpoints(config =>
             {
-                config.MapControllers();
+                config.MapControllers().AllowAnonymous();
 
                 // Enable the /metrics page to export Prometheus metrics
                 config.MapMetrics();

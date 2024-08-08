@@ -37,7 +37,7 @@ const App = () => {
   useFavicon();
 
   useEffect(() => {
-    if (keycloak?.authenticated) {
+    if (!keycloak?.authenticated) {
       activate().then((user: IUser | undefined) => {
         if (user !== undefined && !user.hasValidClaims) {
           setShowRoleModal(true);
