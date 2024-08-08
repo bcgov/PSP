@@ -291,7 +291,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       frequencyField="additionalRentFreqTypeCode"
                       isGstEligibleField="isAdditionalRentGstEligible"
                       paymentAmountField="additionalRentPaymentAmount"
-                      gstAmountField="additionalGstAmount"
+                      gstAmountField="additionalRentGstAmount"
                       gstConstant={gstConstant}
                     />
                   </StyledSection>
@@ -312,7 +312,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       frequencyField="variableRentFreqTypeCode"
                       isGstEligibleField="isVariableRentGstEligible"
                       paymentAmountField="variableRentPaymentAmount"
-                      gstAmountField="variableGstAmount"
+                      gstAmountField="variableRentGstAmount"
                       gstConstant={gstConstant}
                     />
                   </StyledSection>
