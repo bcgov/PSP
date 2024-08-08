@@ -1,4 +1,3 @@
-import { act, screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
@@ -6,14 +5,15 @@ import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mock';
-import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../features/mapSideBar/shared/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
-import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
-import { useMapProperties } from '@/hooks/repositories/useMapProperties';
+import { IMapStateMachineContext } from '../common/mapFSM/MapStateMachineContext';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -22,6 +22,7 @@ const mockAxios = new MockAdapter(axios);
 const store = mockStore({});
 
 const onSelectedProperties = vi.fn();
+const onRepositionSelectedProperty = vi.fn();
 
 const testProperty: IMapProperty = {
   propertyId: 123,
@@ -55,12 +56,14 @@ describe('MapSelectorContainer component', () => {
       <Formik initialValues={{ properties: [] }} onSubmit={noop}>
         <MapSelectorContainer
           addSelectedProperties={onSelectedProperties}
+          repositionSelectedProperty={onRepositionSelectedProperty}
           modifiedProperties={renderOptions.modifiedProperties ?? []}
         />
       </Formik>,
       {
         ...renderOptions,
         store: store,
+        mockMapMachine: renderOptions.mockMapMachine ?? mapMachineBaseMock,
       },
     );
 
@@ -294,5 +297,36 @@ describe('MapSelectorContainer component', () => {
       'A property that the user is trying to select has already been added to the selected properties list',
     );
     expect(toast[0]).toBeVisible();
+  });
+
+  it(`calls "repositionSelectedProperty" callback when file marker has been repositioned`, async () => {
+    const testMapMock: IMapStateMachineContext = { ...mapMachineBaseMock };
+    const mapProperties = [
+      PropertyForm.fromMapProperty({ ...testProperty, pid: '009-727-493' }).toFeatureDataset(),
+    ];
+
+    const { rerender } = setup({
+      modifiedProperties: mapProperties,
+      mockMapMachine: testMapMock,
+    });
+
+    // simulate file marker repositioning via the map state machine
+    await act(async () => {
+      testMapMock.isRepositioning = true;
+      testMapMock.repositioningFeatureDataset = {} as any;
+      testMapMock.mapLocationFeatureDataset = {} as any;
+    });
+
+    rerender(
+      <Formik initialValues={{ properties: [] }} onSubmit={noop}>
+        <MapSelectorContainer
+          addSelectedProperties={onSelectedProperties}
+          repositionSelectedProperty={onRepositionSelectedProperty}
+          modifiedProperties={mapProperties}
+        />
+      </Formik>,
+    );
+
+    expect(onRepositionSelectedProperty).toHaveBeenCalled();
   });
 });

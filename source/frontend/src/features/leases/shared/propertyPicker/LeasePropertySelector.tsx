@@ -1,4 +1,6 @@
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
+import { LatLngLiteral } from 'leaflet';
+import isNumber from 'lodash/isNumber';
 import { useCallback, useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
@@ -16,7 +18,7 @@ import { useProperties } from '@/hooks/repositories/useProperties';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
-import { exists, isValidId, isValidString } from '@/utils';
+import { exists, isLatLngInFeatureSetBoundary, isValidId, isValidString } from '@/utils';
 
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
@@ -202,6 +204,26 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                   <Col>
                     <MapSelectorContainer
                       addSelectedProperties={processAddedProperties}
+                      repositionSelectedProperty={(
+                        featureset: LocationFeatureDataset,
+                        latLng: LatLngLiteral,
+                        index: number | null,
+                      ) => {
+                        // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
+                        if (
+                          isNumber(index) &&
+                          index >= 0 &&
+                          isLatLngInFeatureSetBoundary(latLng, featureset)
+                        ) {
+                          const formProperty = formikProps.values.properties[index];
+                          const updatedFormProperty =
+                            FormLeaseProperty.fromFormLeaseProperty(formProperty);
+                          updatedFormProperty.property.fileLocation = latLng;
+
+                          // Find property within formik values and reposition it based on incoming file marker position
+                          arrayHelpers.replace(index, updatedFormProperty);
+                        }
+                      }}
                       modifiedProperties={LeaseFormModel.getPropertiesAsForm(values).map(p =>
                         p.toFeatureDataset(),
                       )}
@@ -220,7 +242,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                           onRemove={() => onRemoveClick(index)}
                           nameSpace={`properties.${index}`}
                           index={index}
-                          property={property}
+                          property={property.toFeatureDataset()}
                           showSeparator={index < formikProps.values.properties.length - 1}
                         />
                       );

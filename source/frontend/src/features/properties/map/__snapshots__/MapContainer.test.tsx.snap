@@ -451,6 +451,12 @@ exports[`MapContainer > Renders the map 1`] = `
   cursor: url("/src/assets/images/pins/icon-draft.svg") 15 45,pointer;
 }
 
+.c0.reposition-cursor,
+.c0.reposition-cursor .leaflet-grab,
+.c0.reposition-cursor .leaflet-interactive {
+  cursor: url("/src/assets/images/pins/icon-relocate.svg") 20 20,pointer;
+}
+
 <div
     class="c0 default"
   >
