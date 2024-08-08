@@ -229,6 +229,11 @@ export class PropertyForm {
       },
       municipalityFeature: null,
       highwayFeature: null,
+      crownLandLeasesFeature: null,
+      crownLandLicensesFeature: null,
+      crownLandTenuresFeature: null,
+      crownLandInventoryFeature: null,
+      crownLandInclusionsFeature: null,
     };
   }
 

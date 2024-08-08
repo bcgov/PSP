@@ -1,4 +1,6 @@
-import { pidFormatter } from '@/utils';
+import { Feature } from 'geojson';
+
+import { exists, pidFormatter } from '@/utils';
 
 import { PopupContentConfig } from './components/LayerPopupContent';
 
@@ -22,6 +24,32 @@ export const parcelLayerPopupConfig: PopupContentConfig = {
       </>
     ),
   },
+};
+
+// Utility function that dynamically creates a PopupContentConfig for a feature.
+// Transforms "THE_PARAM" to "The param"
+export const getDynamicFeatureConfig: (feature: Feature) => PopupContentConfig = (
+  feature: Feature,
+) => {
+  // For debug enable this
+  /*
+  config['Feature Type'] = {
+    label: 'Feature Type',
+    display: (data: { [key: string]: any }) => feature.id,
+  };
+  */
+  const config: PopupContentConfig = {};
+  Object.keys(feature.properties).forEach(key => {
+    config[key] = {
+      label: key.charAt(0).toUpperCase() + key.slice(1).toLowerCase().replaceAll('_', ' '),
+      display: (data: { [key: string]: any }) => data[key],
+    };
+  });
+  // This is not being mapped in the typed feature data
+  if (exists(config['SE_ANNO_CAD_DATA'])) {
+    delete config['SE_ANNO_CAD_DATA'];
+  }
+  return config;
 };
 
 export const municipalityLayerPopupConfig: PopupContentConfig = {

@@ -108,6 +108,11 @@ describe('LayerPopupView component', () => {
           municipalityFeature: null,
           highwayFeature: null,
           selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
@@ -145,6 +150,11 @@ describe('LayerPopupView component', () => {
           municipalityFeature: null,
           highwayFeature: null,
           selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
@@ -187,6 +197,11 @@ describe('LayerPopupView component', () => {
           municipalityFeature: null,
           highwayFeature: null,
           selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
@@ -245,6 +260,11 @@ describe('LayerPopupView component', () => {
           municipalityFeature: null,
           highwayFeature: null,
           selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null
         },
         claims: [Claims.PROPERTY_ADD],
       });
@@ -278,6 +298,11 @@ describe('LayerPopupView component', () => {
           municipalityFeature: null,
           highwayFeature: null,
           selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null
         },
         claims: [Claims.PROPERTY_ADD],
       });
@@ -310,6 +335,11 @@ describe('LayerPopupView component', () => {
           municipalityFeature: null,
           highwayFeature: null,
           selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null
         },
         claims: [Claims.PROPERTY_ADD],
       });
