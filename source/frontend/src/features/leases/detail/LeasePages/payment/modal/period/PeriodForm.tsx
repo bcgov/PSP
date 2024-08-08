@@ -1,5 +1,5 @@
-import { Formik, FormikProps } from 'formik';
-import { useState } from 'react';
+import { Formik, FormikProps, useFormikContext } from 'formik';
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -31,7 +31,7 @@ import { LeasePeriodSchema } from './PeriodsYupSchema';
 import VariablePeriodSubForm from './VariablePeriodSubForm';
 
 export interface IPeriodFormProps {
-  formikRef: React.Ref<FormikProps<FormLeasePeriod>>;
+  formikRef: React.RefObject<FormikProps<FormLeasePeriod>>;
   onSave: (values: FormLeasePeriod) => void;
   initialValues?: FormLeasePeriod;
   lease: ApiGen_Concepts_Lease | undefined;
@@ -71,17 +71,6 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
 
   const initialGstAmount = initialValues.gstAmount;
 
-  const onGstCheckChange = (formikState: FormikProps<FormLeasePeriod>, values: boolean) => {
-    if (values === true) {
-      const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : 5;
-
-      const calculated = round((formikState.values.paymentAmount as number) * (gstDecimal / 100));
-      formikState.setFieldValue('gstAmount', calculated);
-    } else {
-      formikState.setFieldValue('gstAmount', '');
-    }
-  };
-
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);
     return isNaN(total) ? 0 : total;
@@ -107,6 +96,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
         {formikProps => {
           return (
             <StyledFormBody>
+              <GstCalculator gstConstant={gstConstant} />
               <Row>
                 <Col md={6}>
                   <SectionField
@@ -191,7 +181,14 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         radioLabelOne="Y"
                         radioLabelTwo="N"
                         type="radio"
-                        handleChange={(field, value) => onGstCheckChange(formikProps, value)}
+                        handleChange={(field, value) =>
+                          onGstChange(
+                            value,
+                            +formikProps.values.paymentAmount,
+                            gstConstant,
+                            formikProps.setFieldValue,
+                          )
+                        }
                       />
                       {initialGstAmount !== formikProps.values.gstAmount &&
                         formikProps.values.isGstEligible === false && (
@@ -207,7 +204,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       <Col xs="6">
                         <FastCurrencyInput
                           formikProps={formikProps}
-                          label="GST Ammount"
+                          label="GST Amount"
                           field="gstAmount"
                         />
                       </Col>
@@ -339,6 +336,43 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
       />
     </>
   );
+};
+
+const onGstChange = (
+  isGstEligible: boolean,
+  paymentAmount: number,
+  gstConstant: ISystemConstant,
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void,
+) => {
+  if (isGstEligible === true) {
+    const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : 5;
+
+    const calculated = round((paymentAmount as number) * (gstDecimal / 100));
+    setFieldValue('gstAmount', calculated);
+  } else {
+    setFieldValue('gstAmount', '');
+  }
+};
+
+const GstCalculator: React.FunctionComponent<{ gstConstant: ISystemConstant }> = ({
+  gstConstant,
+}) => {
+  const formikProps = useFormikContext<FormLeasePeriod>();
+
+  useEffect(() => {
+    onGstChange(
+      formikProps.values.isGstEligible,
+      +formikProps.values.paymentAmount,
+      gstConstant,
+      formikProps.setFieldValue,
+    );
+  }, [
+    formikProps.setFieldValue,
+    formikProps.values.paymentAmount,
+    formikProps.values.isGstEligible,
+    gstConstant,
+  ]);
+  return <></>;
 };
 
 const StyledSection = styled(Section)`

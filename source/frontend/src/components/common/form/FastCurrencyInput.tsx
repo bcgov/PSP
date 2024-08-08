@@ -51,9 +51,9 @@ type OptionalAttributes = {
   /** Suppress validation on submit */
   suppressValidation?: boolean;
 
-  onBlurChange?: React.FormEventHandler;
+  onBlurChange?: React.ChangeEventHandler<HTMLInputElement>;
 
-  onChange?: React.FormEventHandler;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
 };
 
 export type CurrencyInputProps = RequiredAttributes &

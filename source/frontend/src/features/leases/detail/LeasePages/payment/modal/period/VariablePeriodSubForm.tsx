@@ -1,5 +1,6 @@
 import { getIn, useFormikContext } from 'formik';
 import * as React from 'react';
+import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -32,17 +33,24 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
   const lookups = useLookupCodeHelpers();
   const paymentFrequencyOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_FREQUENCY_TYPES);
 
-  const onGstCheckChange = (field: string, values: boolean) => {
-    if (values === true) {
-      const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : 5;
-      const calculated = round(
-        (getIn(formikProps.values, paymentAmountField) as number) * (gstDecimal / 100),
-      );
-      formikProps.setFieldValue(gstAmountField, calculated);
-    } else {
-      formikProps.setFieldValue(gstAmountField, '');
-    }
-  };
+  const paymentAmount = +formikProps.values.paymentAmount;
+  const setFieldValue = formikProps.setFieldValue;
+  const onGstChange = useCallback(
+    (field: string, values: boolean) => {
+      if (values === true) {
+        const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : 5;
+        const calculated = round(paymentAmount * (gstDecimal / 100));
+        setFieldValue(gstAmountField, calculated);
+      } else {
+        setFieldValue(gstAmountField, '');
+      }
+    },
+    [gstConstant, paymentAmount, setFieldValue, gstAmountField],
+  );
+
+  useEffect(() => {
+    onGstChange('', formikProps.values.isGstEligible);
+  }, [formikProps.values.isGstEligible, formikProps.values.paymentAmount, onGstChange]);
 
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);
@@ -77,7 +85,7 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
             radioLabelOne="Y"
             radioLabelTwo="N"
             type="radio"
-            handleChange={onGstCheckChange}
+            handleChange={onGstChange}
           />
           {initialGstAmount !== getIn(formikProps.values, gstAmountField) &&
             getIn(formikProps.values, isGstEligibleField) === false && (
@@ -93,7 +101,7 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
           <Col xs="6">
             <FastCurrencyInput
               formikProps={formikProps}
-              label="GST Ammount"
+              label="GST Amount"
               field={gstAmountField}
             />
           </Col>
