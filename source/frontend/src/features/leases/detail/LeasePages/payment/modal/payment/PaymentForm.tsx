@@ -1,10 +1,8 @@
 import { Formik, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 
-import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 
-import { FormLeasePayment, FormLeasePeriod } from '../../models';
-import { isActualGstEligible } from '../../PeriodPaymentsContainer';
+import { FormLeasePayment } from '../../models';
 import PaymentFormContent from './PaymentFormContent';
 import { PaymentsYupSchema } from './PaymentsYupSchema';
 
@@ -28,14 +26,7 @@ export const PaymentForm: React.FunctionComponent<React.PropsWithChildren<IPayme
   isReceived,
   periods,
 }: IPaymentFormProps) => {
-  let isGstEligible = false;
-  if (initialValues?.leasePeriodId) {
-    isGstEligible = isActualGstEligible(
-      initialValues?.leasePeriodId,
-      periods?.map(t => FormLeasePeriod.fromApi(t)) ?? [],
-      ApiGen_CodeTypes_LeasePaymentCategoryTypes[initialValues?.leasePaymentCategoryTypeCode?.id],
-    );
-  }
+  const isGstEligible = false;
 
   const currentPeriod = periods.find(t => t.id === initialValues?.leasePeriodId);
 
