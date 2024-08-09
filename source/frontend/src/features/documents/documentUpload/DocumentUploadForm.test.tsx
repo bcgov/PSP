@@ -17,7 +17,7 @@ const handleSubmit = vi.fn();
 
 const handleCancelClick = vi.fn();
 const onUploadDocument = vi.fn();
-const onDocumentTypeChange = vi.fn();
+const retrieveDocumentTypeMetadata = vi.fn();
 const onDocumentSelected = vi.fn();
 
 const documentStatusOptions: SelectOption[] = [
@@ -70,7 +70,7 @@ describe('DocumentUploadView component', () => {
         documentTypes={mockDocumentTypesResponse()}
         isLoading={false}
         mayanMetadataTypes={documentTypeMetadataType}
-        onDocumentTypeChange={onDocumentTypeChange}
+        retrieveDocumentTypeMetadata={retrieveDocumentTypeMetadata}
         onDocumentsSelected={onDocumentSelected}
         onUploadDocument={onUploadDocument}
         onCancel={handleCancelClick}
