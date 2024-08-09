@@ -1,15 +1,15 @@
 @import '@/assets/scss/styles.scss';
 @import '@/assets/scss/colors.scss';
 .table.no-zebra-rows > .tbody > .tr-wrapper {
-    &:nth-child(even) {
-      background-color: $highlight-background-color;
+  &:nth-child(even) {
+    background-color: $highlight-background-color;
+  }
+  &:nth-child(odd) {
+    background-color: $highlight-background-color;
+    &:last-child {
+      border-bottom: 0.1rem solid $highlight-background-color;
     }
-    &:nth-child(odd) {
-      background-color: $highlight-background-color;
-      &:last-child {
-        border-bottom: 0.1rem solid $highlight-background-color;
-      }
-    }
+  }
 }
 .table {
   .thead-light {
