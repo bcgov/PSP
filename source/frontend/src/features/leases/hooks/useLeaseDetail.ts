@@ -71,7 +71,7 @@ export function useLeaseDetail(leaseId?: number) {
       if (lease) {
         const mergedLeases: ApiGen_Concepts_Lease = {
           ...lease,
-          tenants: leaseTenants ?? [],
+          stakeholders: leaseTenants ?? [],
           fileProperties: propertyLeases ?? [],
           periods: leasePeriods ?? [],
           fileChecklistItems: leaseChecklistItems ?? [],

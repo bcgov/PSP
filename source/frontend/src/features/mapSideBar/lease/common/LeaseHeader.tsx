@@ -53,7 +53,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
           </HeaderField>
           <HeaderField label="Tenant:" labelWidth="4" contentWidth="8">
             <LeaseHeaderTenants
-              tenants={lease?.tenants ?? []}
+              tenants={lease?.stakeholders ?? []}
               maxCollapsedLength={1}
               delimiter={<br />}
             />

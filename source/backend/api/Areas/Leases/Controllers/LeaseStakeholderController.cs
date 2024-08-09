@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.Lease;
+using Pims.Api.Models.Models.Concepts.Lease;
 using Pims.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
@@ -97,6 +98,30 @@ namespace Pims.Api.Areas.Lease.Controllers
             var updatedLease = _leaseService.UpdateStakeholdersByLeaseId(leaseId, stakeholderEntities);
 
             return new JsonResult(_mapper.Map<IEnumerable<LeaseStakeholderModel>>(updatedLease));
+        }
+
+        /// <summary>
+        /// Get all stakeholders types.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("stakeholdertypes")]
+        [HasPermission(Permissions.LeaseView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<LeaseStakeholderTypeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetStakeholderTypes()
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(LeaseStakeholderController),
+                nameof(GetStakeholderTypes),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var stakeholderTypes = _leaseService.GetAllStakeholderTypes();
+
+            return new JsonResult(_mapper.Map<IEnumerable<LeaseStakeholderTypeModel>>(stakeholderTypes));
         }
         #endregion
     }

@@ -1,9 +1,9 @@
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
-import { ApiGen_CodeTypes_LeaseTenantTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTenantTypes';
+import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
@@ -38,7 +38,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   responsibilityEffectiveDate: null,
   fileProperties: null,
   consultations: null,
-  tenants: null,
+  stakeholders: null,
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
@@ -92,7 +92,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
     {
       leaseTenantId: 82,
       tenantTypeCode: {
-        id: ApiGen_CodeTypes_LeaseTenantTypes.TEN.toString(),
+        id: ApiGen_CodeTypes_LeaseStakeholderTypes.TEN.toString(),
         description: null,
         displayOrder: null,
         isDisabled: false,
@@ -270,7 +270,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       leaseId: 1,
       organizationId: 3,
       tenantTypeCode: {
-        id: ApiGen_CodeTypes_LeaseTenantTypes.REP.toString(),
+        id: ApiGen_CodeTypes_LeaseStakeholderTypes.REP.toString(),
         description: null,
         displayOrder: null,
         isDisabled: false,
@@ -343,7 +343,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       leaseId: 1,
       organizationId: 4,
       tenantTypeCode: {
-        id: ApiGen_CodeTypes_LeaseTenantTypes.PMGR.toString(),
+        id: ApiGen_CodeTypes_LeaseStakeholderTypes.PMGR.toString(),
         description: null,
         displayOrder: null,
         isDisabled: false,
@@ -432,9 +432,9 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   appCreateUserGuid: '77777777-7777-7777-7777-777777777777',
 });
 
-export const getEmptyLeaseTenant = (): ApiGen_Concepts_LeaseTenant => {
+export const getEmptyLeaseTenant = (): ApiGen_Concepts_LeaseStakeholder => {
   return {
-    leaseTenantId: null,
+    leaseStakeholderId: null,
     leaseId: 0,
     personId: null,
     person: null,
@@ -444,7 +444,7 @@ export const getEmptyLeaseTenant = (): ApiGen_Concepts_LeaseTenant => {
     primaryContact: null,
     primaryContactId: null,
     lessorType: null,
-    tenantTypeCode: null,
+    stakeholderTypeCode: null,
     ...getEmptyBaseAudit(),
   };
 };

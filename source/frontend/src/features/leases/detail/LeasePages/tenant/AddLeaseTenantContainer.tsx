@@ -9,7 +9,7 @@ import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRep
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { exists, isValidId } from '@/utils/utils';
 
@@ -51,9 +51,9 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     const tenantFunc = async () => {
       const tenants = await getLeaseTenants(leaseId ?? 0);
       if (tenants !== undefined) {
-        setTenants(tenants.map((t: ApiGen_Concepts_LeaseTenant) => new FormTenant(t)));
+        setTenants(tenants.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormTenant(t)));
         setSelectedContacts(
-          tenants.map((t: ApiGen_Concepts_LeaseTenant) =>
+          tenants.map((t: ApiGen_Concepts_LeaseStakeholder) =>
             FormTenant.toContactSearchResult(new FormTenant(t)),
           ) || [],
         );
@@ -107,13 +107,13 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       try {
         const updatedTenants = await updateLeaseTenants.execute(
           leaseToUpdate.id,
-          leaseToUpdate.tenants ?? [],
+          leaseToUpdate.stakeholders ?? [],
         );
         if (updatedTenants) {
           formikRef?.current?.resetForm({
             values: LeaseFormModel.fromApi({
               ...leaseToUpdate,
-              tenants: updatedTenants,
+              stakeholders: updatedTenants,
             }),
           });
           onEdit && onEdit(false);

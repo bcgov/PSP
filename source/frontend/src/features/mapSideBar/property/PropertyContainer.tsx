@@ -19,7 +19,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { isValidId } from '@/utils';
 
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
@@ -30,7 +30,7 @@ export interface IPropertyContainerProps {
 
 export interface LeaseAssociationInfo {
   leaseDetails: ApiGen_Concepts_Lease[];
-  leaseTenants: ApiGen_Concepts_LeaseTenant[];
+  leaseTenants: ApiGen_Concepts_LeaseStakeholder[];
   leaseRenewals: ApiGen_Concepts_LeaseRenewal[];
   loading: boolean;
 }
@@ -38,7 +38,7 @@ export interface LeaseAssociationInfo {
 export const getLeaseInfo = async (
   leasesAssociations: ApiGen_Concepts_Association[],
   getLease: (leaseId: number) => Promise<ApiGen_Concepts_Lease>,
-  getLeaseTenants: (leaseId: number) => Promise<ApiGen_Concepts_LeaseTenant[]>,
+  getLeaseTenants: (leaseId: number) => Promise<ApiGen_Concepts_LeaseStakeholder[]>,
   getLeaseRenewals: (leaseId: number) => Promise<ApiGen_Concepts_LeaseRenewal[]>,
   setLeaseAssociationInfo: (info) => void,
 ) => {

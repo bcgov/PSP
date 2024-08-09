@@ -10,7 +10,7 @@ import { ApiGen_Concepts_FileWithChecklist } from './ApiGen_Concepts_FileWithChe
 import { ApiGen_Concepts_LeasePeriod } from './ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_LeasePurpose } from './ApiGen_Concepts_LeasePurpose';
 import { ApiGen_Concepts_LeaseRenewal } from './ApiGen_Concepts_LeaseRenewal';
-import { ApiGen_Concepts_LeaseTenant } from './ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from './ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 import { ApiGen_Concepts_PropertyLease } from './ApiGen_Concepts_PropertyLease';
 
@@ -42,7 +42,7 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   responsibilityEffectiveDate: UtcIsoDate | null;
   fileProperties: ApiGen_Concepts_PropertyLease[] | null;
   consultations: ApiGen_Concepts_ConsultationLease[] | null;
-  tenants: ApiGen_Concepts_LeaseTenant[] | null;
+  stakeholders: ApiGen_Concepts_LeaseStakeholder[] | null;
   periods: ApiGen_Concepts_LeasePeriod[] | null;
   renewals: ApiGen_Concepts_LeaseRenewal[] | null;
   isResidential: boolean;

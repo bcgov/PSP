@@ -39,7 +39,7 @@ describe('Tenant component', () => {
     const { component } = setup({
       lease: {
         ...defaultApiLease(),
-        tenants: [
+        stakeholders: [
           { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
           { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
         ],
@@ -73,7 +73,7 @@ describe('Tenant component', () => {
     const { component } = setup({
       lease: {
         ...defaultApiLease(),
-        tenants: [
+        stakeholders: [
           { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
           { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
         ],
@@ -91,7 +91,7 @@ describe('Tenant component', () => {
 
   it('renders assignee section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease(), tenants: [] },
+      lease: { ...defaultApiLease(), stakeholders: [] },
       tenants: [],
     });
     const { getAllByText } = component;
@@ -102,7 +102,7 @@ describe('Tenant component', () => {
 
   it('renders representative section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease(), tenants: [] },
+      lease: { ...defaultApiLease(), stakeholders: [] },
       tenants: [],
     });
     const { getAllByText } = component;
@@ -113,7 +113,7 @@ describe('Tenant component', () => {
 
   it('renders property manager section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease(), tenants: [] },
+      lease: { ...defaultApiLease(), stakeholders: [] },
       tenants: [],
     });
     const { getAllByText } = component;
@@ -123,7 +123,7 @@ describe('Tenant component', () => {
   });
   it('renders unknown section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease(), tenants: [] },
+      lease: { ...defaultApiLease(), stakeholders: [] },
       tenants: [],
     });
     const { getAllByText } = component;
@@ -136,7 +136,7 @@ describe('Tenant component', () => {
     const mockLeaseWithTenants = getMockApiLease();
     const { component } = setup({
       lease: mockLeaseWithTenants,
-      tenants: mockLeaseWithTenants?.tenants?.map(t => new FormTenant(t)) ?? [],
+      tenants: mockLeaseWithTenants?.stakeholders?.map(t => new FormTenant(t)) ?? [],
     });
     const { getByText } = component;
     const summary = getByText('French Mouse Property Management');
@@ -147,7 +147,7 @@ describe('Tenant component', () => {
     const mockLeaseWithTenants = getMockApiLease();
     const { component } = setup({
       lease: mockLeaseWithTenants,
-      tenants: mockLeaseWithTenants?.tenants?.map(t => new FormTenant(t)) ?? [],
+      tenants: mockLeaseWithTenants?.stakeholders?.map(t => new FormTenant(t)) ?? [],
     });
     const { getByText } = component;
     const primaryContact = getByText('Bob Billy Smith');

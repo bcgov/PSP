@@ -18,7 +18,7 @@ import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { defaultApiLease, getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync } from '@/utils/test-utils';
@@ -57,7 +57,7 @@ const View = (props: IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps
 };
 
 const getLeaseTenantsObj = {
-  execute: vi.fn().mockResolvedValue(defaultApiLease().tenants),
+  execute: vi.fn().mockResolvedValue(defaultApiLease().stakeholders),
   loading: false,
   error: undefined,
   response: [],
@@ -239,17 +239,17 @@ describe('AddLeaseTenantContainer component', () => {
     await waitFor(async () => {
       expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(onEdit).toHaveBeenCalledWith(false);
-      expect(updateTenants.mock.calls[0][1][0]).toStrictEqual<ApiGen_Concepts_LeaseTenant>({
+      expect(updateTenants.mock.calls[0][1][0]).toStrictEqual<ApiGen_Concepts_LeaseStakeholder>({
         personId: 1,
         person: null,
         organizationId: null,
         organization: null,
         lessorType: null,
-        tenantTypeCode: null,
+        stakeholderTypeCode: null,
         primaryContactId: null,
         note: null,
         leaseId: 0,
-        leaseTenantId: null,
+        leaseStakeholderId: null,
         primaryContact: null,
         ...getEmptyBaseAudit(),
       });
