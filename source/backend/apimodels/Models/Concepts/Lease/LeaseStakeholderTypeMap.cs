@@ -2,7 +2,7 @@ using Mapster;
 using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Models.Models.Concepts.Lease
+namespace Pims.Api.Models.Concepts.Lease
 {
     public class LeaseStakeholderTypeMap : IRegister
     {

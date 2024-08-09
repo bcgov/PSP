@@ -1,6 +1,6 @@
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Models.Concepts.Lease
+namespace Pims.Api.Models.Concepts.Lease
 {
     public class LeaseStakeholderTypeModel : BaseConcurrentModel
     {
