@@ -1,4 +1,5 @@
 import { Formik, FormikProps } from 'formik';
+import { useEffect, useState } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { Prompt } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -12,6 +13,7 @@ import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { Claims } from '@/constants';
 import { LeaseFormModel } from '@/features/leases/models';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 
@@ -22,8 +24,6 @@ import PrimaryContactWarningModal, {
   IPrimaryContactWarningModalProps,
 } from './PrimaryContactWarningModal';
 import SelectedTableHeader from './SelectedTableHeader';
-import { useEffect, useState } from 'react';
-import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 
 export interface IAddLeaseTenantFormProps {
   selectedContacts: IContactSearchResult[];
