@@ -56,13 +56,24 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
   // We do this for CDOGS templates which have a single document type (TEMPLATE)
   useEffect(() => {
     if (isMounted() && exists(documentTypeOptions) && documentTypeOptions.length === 1) {
-      setFieldValue(withNameSpace(namespace, 'documentTypeId'), documentTypeOptions[0].value);
+      const defaultValue = documentTypeOptions[0].value;
+      setFieldValue(withNameSpace(namespace, 'documentTypeId'), defaultValue);
+      // call onChange event programmatically
+      const eventObj = { target: { value: defaultValue } } as React.ChangeEvent<HTMLInputElement>;
+      onDocumentTypeChange(eventObj);
     }
 
     if (isMounted() && exists(documentStatusOptions) && documentStatusOptions.length === 1) {
       setFieldValue(withNameSpace(namespace, 'documentStatusCode'), documentStatusOptions[0].value);
     }
-  }, [documentStatusOptions, documentTypeOptions, isMounted, namespace, setFieldValue]);
+  }, [
+    documentStatusOptions,
+    documentTypeOptions,
+    isMounted,
+    namespace,
+    onDocumentTypeChange,
+    setFieldValue,
+  ]);
 
   // An attached file is required to render this component
   if (!exists(document.file)) {

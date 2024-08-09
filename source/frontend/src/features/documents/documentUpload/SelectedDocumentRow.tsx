@@ -44,7 +44,8 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
   onRemove,
 }) => {
   const { setFieldValue } = formikProps;
-  const errors: FormikErrors<DocumentUploadFormData> = getIn(formikProps.errors, namespace ?? '');
+  const errors: FormikErrors<DocumentUploadFormData> =
+    getIn(formikProps.errors, namespace ?? '') || {};
 
   const onDocumentTypeChange = async (changeEvent: React.ChangeEvent<HTMLInputElement>) => {
     const documentTypeId = Number(changeEvent.target.value);

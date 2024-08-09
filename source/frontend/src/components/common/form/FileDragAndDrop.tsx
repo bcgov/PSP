@@ -2,7 +2,7 @@ import { ChangeEvent, FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
 interface IFileDragAndDropProps {
-  onSelectFiles: (file: File[]) => void;
+  onSelectFiles: (files: File[]) => void;
   validExtensions: string[];
   multiple?: boolean;
 }

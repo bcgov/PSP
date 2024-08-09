@@ -114,7 +114,7 @@ const DocumentUploadContainer = forwardRef<
         const axiosResponse = await getDocumentTypes();
         if (axiosResponse && isMounted()) {
           setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
-          updateDocumentType(axiosResponse.find(x => x.documentType === DocumentTypeName.CDOGS));
+          // updateDocumentType(axiosResponse.find(x => x.documentType === DocumentTypeName.CDOGS));
           setDocumentStatusOptions(
             retrievedDocumentStatusTypes.filter(x => x.value === DocumentStatusType.Final),
           );
@@ -134,7 +134,6 @@ const DocumentUploadContainer = forwardRef<
     getDocumentTypes,
     getDocumentRelationshipTypes,
     isMounted,
-    updateDocumentType,
     getOptionsByType,
   ]);
 
@@ -163,7 +162,8 @@ const DocumentUploadContainer = forwardRef<
       documentTypes={documentTypes}
       documentStatusOptions={documentStatusOptions}
       mayanMetadataTypes={documentTypeMetadataTypes}
-      onDocumentTypeChange={onDocumentTypeChange}
+      // onDocumentTypeChange={onDocumentTypeChange}
+      retrieveDocumentTypeMetadata={retrieveDocumentTypeMetadata}
       onDocumentsSelected={onDocumentsSelected}
       onUploadDocument={onUploadDocument}
       onCancel={handleCancelClick}
