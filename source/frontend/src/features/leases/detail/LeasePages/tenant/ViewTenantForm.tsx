@@ -29,6 +29,7 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
   loading,
   isPayableLease,
 }) => {
+  console.log(tenants);
   return (
     <FormSectionOne>
       <Formik
