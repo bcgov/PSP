@@ -12,7 +12,11 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { FormTenant } from './models';
 
-const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] => {
+const getColumns = (
+  tenantTypes: SelectOption[],
+  isPayableLease: boolean,
+): ColumnWithProps<FormTenant>[] => {
+  const stakeholderType = isPayableLease ? 'Payee type' : 'Contact type';
   return [
     {
       Header: '',
@@ -127,7 +131,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       },
     },
     {
-      Header: 'Contact type',
+      Header: stakeholderType,
       accessor: 'email',
       align: 'left',
       minWidth: 80,

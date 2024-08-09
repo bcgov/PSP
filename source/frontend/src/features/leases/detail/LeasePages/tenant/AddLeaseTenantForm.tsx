@@ -5,7 +5,7 @@ import { Prompt } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { TableSelect } from '@/components/common/form';
+import { SelectOption, TableSelect } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -86,8 +86,8 @@ export const AddLeaseTenantForm: React.FunctionComponent<
         header={
           <SectionListHeader
             claims={[Claims.LEASE_EDIT]}
-            title="Tenants"
-            addButtonText="Select Tenant(s)"
+            title={isPayableLease ? 'Payees' : 'Tenants'}
+            addButtonText={isPayableLease ? 'Select Payee(s)' : 'Select Tenant(s)'}
             addButtonIcon={<FaPlus size={'2rem'} />}
             onAdd={() => {
               setShowContactManager(true);
@@ -95,12 +95,23 @@ export const AddLeaseTenantForm: React.FunctionComponent<
           />
         }
       >
-        <span>
-          Note: If the tenants you are trying to find were never added to the &quot;contact
-          list&quot; it will not show up. Please add them to the contact list{' '}
-          {<Link to="/contact/list">here</Link>}, then you will be able to see them on the &quot;Add
-          a Tenant&quot; list.
-        </span>
+        {!isPayableLease && (
+          <span>
+            Note: If the tenants you are trying to find were never added to the &quot;contact
+            list&quot; it will not show up. Please add them to the contact list{' '}
+            {<Link to="/contact/list">here</Link>}, then you will be able to see them on the
+            &quot;Add a Tenant&quot; list.
+          </span>
+        )}
+
+        {isPayableLease && (
+          <span>
+            Note: If the payees you are trying to find were never added to the &quot;contact
+            list&quot; it will not show up. Please add them to the contact list{' '}
+            {<Link to="/contact/list">here</Link>}, then you will be able to see them on the
+            &quot;Add a Payee&quot; list.
+          </span>
+        )}
 
         <Formik
           validationSchema={AddLeaseTenantYupSchema}
@@ -121,7 +132,12 @@ export const AddLeaseTenantForm: React.FunctionComponent<
               <StyledFormBody>
                 <TableSelect<FormTenant>
                   selectedItems={selectedTenants}
-                  columns={getColumns(tenantTypes)}
+                  columns={getColumns(
+                    stakeholderTypes.map<SelectOption>(x => {
+                      return { label: x.description || '', value: x.code || 0 };
+                    }),
+                    isPayableLease,
+                  )}
                   field="tenants"
                   selectedTableHeader={SelectedTableHeader}
                   onRemove={onRemove}

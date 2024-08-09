@@ -8,6 +8,7 @@ import { getColumnsWithRemove } from '@/utils/columnUtils';
 
 export interface ISelectedTableHeaderProps {
   selectedCount?: number;
+  isPayableLease?: boolean;
 }
 
 type RequiredAttributes<T extends object> = {
@@ -33,13 +34,14 @@ export const TableSelect = <T extends { id?: string | number }>({
   selectedTableHeader: SelectedTableHeader,
   onRemove,
   columns,
+  isPayableLease,
 }: TableSelectProps<T>) => {
   const columnsWithRemove = getColumnsWithRemove<T>((rows: T[]) => onRemove(rows), [...columns]);
 
   return (
     <Container className="p-0 m-0">
       <Styled.SaveTableWrapper>
-        <SelectedTableHeader selectedCount={selectedItems.length} />
+        <SelectedTableHeader selectedCount={selectedItems.length} isPayableLease={isPayableLease} />
         <Table<T>
           name="selected-items"
           lockPageSize

@@ -7,11 +7,11 @@ export const updateLeaseTenants = (
   improvements: ApiGen_Concepts_LeaseStakeholder[],
 ) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<ApiGen_Concepts_LeaseStakeholder[]>(
-    `/leases/${leaseId}/tenants`,
+    `/leases/${leaseId}/stakeholders`,
     improvements,
   );
 
 export const getLeaseTenants = (leaseId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_LeaseStakeholder[]>(
-    `/leases/${leaseId}/tenants`,
+    `/leases/${leaseId}/stakeholders`,
   );
