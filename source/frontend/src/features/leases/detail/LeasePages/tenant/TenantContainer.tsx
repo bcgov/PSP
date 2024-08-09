@@ -46,7 +46,7 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
       />
     </ProtectedComponent>
   ) : (
-    <ViewTenantForm tenants={formTenants} loading={loading} isPayableLease={getIsPayableLease()}/>
+    <ViewTenantForm tenants={formTenants} loading={loading} isPayableLease={getIsPayableLease()} />
   );
 };
 

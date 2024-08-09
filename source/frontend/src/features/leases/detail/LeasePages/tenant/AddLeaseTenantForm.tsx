@@ -57,7 +57,6 @@ export const AddLeaseTenantForm: React.FunctionComponent<
   loading,
   isPayableLease,
 }) => {
-
   const [stakeholderTypes, setStakeholderTypes] = useState<ApiGen_Concepts_LeaseStakeholderType[]>(
     [],
   );
