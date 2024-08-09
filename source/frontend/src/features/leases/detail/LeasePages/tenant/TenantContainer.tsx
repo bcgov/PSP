@@ -21,6 +21,9 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
   onSuccess,
 }) => {
   const { lease } = useContext(LeaseStateContext);
+  const getIsPayableLease = () => {
+    return lease?.paymentReceivableType.id !== 'RCVBL' ? true : false;
+  };
   const {
     getLeaseTenants: { execute: getLeaseTenants, loading, response: tenants },
   } = useLeaseTenantRepository();
@@ -39,10 +42,11 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
         tenants={formTenants}
         View={AddLeaseTenantForm}
         onSuccess={onSuccess}
+        isPayableLease={getIsPayableLease()}
       />
     </ProtectedComponent>
   ) : (
-    <ViewTenantForm tenants={formTenants} loading={loading} />
+    <ViewTenantForm tenants={formTenants} loading={loading} isPayableLease={getIsPayableLease()}/>
   );
 };
 

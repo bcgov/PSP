@@ -16,6 +16,7 @@ export interface ITenantProps {
   nameSpace?: string;
   tenants: FormTenant[];
   loading?: boolean;
+  isPayableLease: boolean;
 }
 
 /**
@@ -26,6 +27,7 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
   nameSpace,
   tenants,
   loading,
+  isPayableLease,
 }) => {
   return (
     <FormSectionOne>
@@ -36,7 +38,8 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
       >
         <>
           <LoadingBackdrop show={loading} parentScreen />
-          <Section header="Assignee">
+
+          {!isPayableLease && <Section header="Assignee">
             {tenants.map(
               (tenant: FormTenant, index) =>
                 tenant.tenantType === 'ASGN' && (
@@ -57,9 +60,9 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                   </div>
                 ),
             )}
-          </Section>
+          </Section>}
 
-          <Section header="Tenant">
+          {!isPayableLease &&<Section header="Tenant">
             {tenants.map(
               (tenant: FormTenant, index) =>
                 tenant.tenantType === 'TEN' && (
@@ -80,9 +83,9 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                   </div>
                 ),
             )}
-          </Section>
+          </Section>}
 
-          <Section header="Representative">
+          {!isPayableLease && <Section header="Representative">
             {tenants.map(
               (tenant: FormTenant, index) =>
                 tenant.tenantType === 'REP' && (
@@ -103,9 +106,9 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                   </div>
                 ),
             )}
-          </Section>
+          </Section>}
 
-          <Section header="Property Manager">
+          {!isPayableLease && <Section header="Property Manager">
             {tenants.map(
               (tenant: FormTenant, index) =>
                 tenant.tenantType === 'PMGR' && (
@@ -126,8 +129,9 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                   </div>
                 ),
             )}
-          </Section>
-          <Section header="Unknown">
+          </Section>}
+
+          {!isPayableLease && <Section header="Unknown">
             {tenants.map(
               (tenant: FormTenant, index) =>
                 tenant.tenantType === 'UNK' && (
@@ -148,7 +152,54 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
                   </div>
                 ),
             )}
-          </Section>
+          </Section>}
+
+          {isPayableLease && <Section header="Owner">
+            {tenants.map(
+              (tenant: FormTenant, index) =>
+                tenant.tenantType === 'OWNER' && (
+                  <div key={`tenants-${index}`}>
+                    <>
+                      {tenant.lessorTypeCode?.id === 'ORG' ? (
+                        <TenantOrganizationContactInfo
+                          disabled={true}
+                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                        />
+                      ) : (
+                        <TenantPersonContactInfo
+                          disabled={true}
+                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                        />
+                      )}
+                    </>
+                  </div>
+                ),
+            )}
+          </Section>}
+
+          {isPayableLease && <Section header="Owner Representative">
+            {tenants.map(
+              (tenant: FormTenant, index) =>
+                tenant.tenantType === 'OWNREP' && (
+                  <div key={`tenants-${index}`}>
+                    <>
+                      {tenant.lessorTypeCode?.id === 'ORG' ? (
+                        <TenantOrganizationContactInfo
+                          disabled={true}
+                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                        />
+                      ) : (
+                        <TenantPersonContactInfo
+                          disabled={true}
+                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                        />
+                      )}
+                    </>
+                  </div>
+                ),
+            )}
+          </Section>}
+
           {tenants.length === 0 && (
             <StyledSection>
               <p>There are no tenants associated to this lease.</p>

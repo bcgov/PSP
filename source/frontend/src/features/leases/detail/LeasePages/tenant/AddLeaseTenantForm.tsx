@@ -11,11 +11,9 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { Claims } from '@/constants';
-import { TENANT_TYPES } from '@/constants/API';
 import { LeaseFormModel } from '@/features/leases/models';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces';
-import { mapLookupCode } from '@/utils';
+import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 
 import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';
 import getColumns from './columns';
@@ -24,6 +22,8 @@ import PrimaryContactWarningModal, {
   IPrimaryContactWarningModalProps,
 } from './PrimaryContactWarningModal';
 import SelectedTableHeader from './SelectedTableHeader';
+import { useEffect, useState } from 'react';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 
 export interface IAddLeaseTenantFormProps {
   selectedContacts: IContactSearchResult[];
@@ -36,6 +36,7 @@ export interface IAddLeaseTenantFormProps {
   showContactManager: boolean;
   setShowContactManager: (showContactManager: boolean) => void;
   loading?: boolean;
+  isPayableLease: boolean;
 }
 
 export const AddLeaseTenantForm: React.FunctionComponent<
@@ -54,9 +55,26 @@ export const AddLeaseTenantForm: React.FunctionComponent<
   saveCallback,
   onCancel,
   loading,
+  isPayableLease,
 }) => {
-  const lookupCodes = useLookupCodeHelpers();
-  const tenantTypes = lookupCodes.getByType(TENANT_TYPES).map(c => mapLookupCode(c));
+
+  const [stakeholderTypes, setStakeholderTypes] = useState<ApiGen_Concepts_LeaseStakeholderType[]>(
+    [],
+  );
+  const {
+    getLeaseStakeholderTypes: { execute: getLeaseStakeholderTypes },
+  } = useLeaseRepository();
+
+  useEffect(() => {
+    const stakeholderTypes = async () => {
+      const leaseStakeholderTypes = (await getLeaseStakeholderTypes()).filter(
+        type => type.isPayableRelated === isPayableLease && type.isDisabled === false,
+      );
+
+      setStakeholderTypes(leaseStakeholderTypes);
+    };
+    stakeholderTypes();
+  }, [getLeaseStakeholderTypes, isPayableLease]);
   const onRemove = (remainingTenants: FormTenant[]) => {
     const remainingContacts = remainingTenants.map(t => FormTenant.toContactSearchResult(t));
     setSelectedTenants(remainingContacts);

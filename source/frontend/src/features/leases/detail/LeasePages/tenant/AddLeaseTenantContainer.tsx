@@ -28,11 +28,12 @@ interface IAddLeaseTenantContainerProps {
   View: React.FunctionComponent<
     React.PropsWithChildren<IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps>
   >;
+  isPayableLease: boolean;
 }
 
 export const AddLeaseTenantContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseTenantContainerProps>
-> = ({ formikRef, onEdit, children, View, tenants: initialTenants, onSuccess }) => {
+> = ({ formikRef, onEdit, children, View, tenants: initialTenants, onSuccess, isPayableLease }) => {
   const { lease } = useContext(LeaseStateContext);
   const [tenants, setTenants] = useState<FormTenant[]>(initialTenants);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(
@@ -148,6 +149,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       saveCallback={handleSubmit}
       onCancel={() => setHandleSubmit(undefined)}
       loading={loading}
+      isPayableLease={isPayableLease}
     >
       {children}
     </View>
