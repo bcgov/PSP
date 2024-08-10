@@ -124,17 +124,22 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
                   />
                 </SectionField>
                 {formikProps.values.documents.map((formDocument, index) => (
-                  <SelectedDocumentRow
+                  <SectionField
                     key={`document-${formDocument.documentTypeId || 'DOC_ID'}-${index}`}
-                    formikProps={formikProps}
-                    namespace={`documents.${index}`}
-                    index={index}
-                    document={formDocument}
-                    documentTypes={documentTypes}
-                    documentStatusOptions={documentStatusOptions}
-                    retrieveDocumentTypeMetadata={retrieveDocumentTypeMetadata}
-                    onRemove={remove}
-                  ></SelectedDocumentRow>
+                    label={null}
+                    contentWidth="12"
+                  >
+                    <SelectedDocumentRow
+                      formikProps={formikProps}
+                      namespace={`documents.${index}`}
+                      index={index}
+                      document={formDocument}
+                      documentTypes={documentTypes}
+                      documentStatusOptions={documentStatusOptions}
+                      retrieveDocumentTypeMetadata={retrieveDocumentTypeMetadata}
+                      onRemove={remove}
+                    ></SelectedDocumentRow>
+                  </SectionField>
                 ))}
               </>
             )}

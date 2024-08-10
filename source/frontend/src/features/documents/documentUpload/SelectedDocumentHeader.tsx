@@ -3,8 +3,7 @@ import { FormikProps } from 'formik';
 import truncate from 'lodash/truncate';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
-import { FiCheck } from 'react-icons/fi';
+import { FaCheck, FaTrash } from 'react-icons/fa';
 import styled, { useTheme } from 'styled-components';
 
 import { StyledRemoveIconButton } from '@/components/common/buttons';
@@ -82,17 +81,18 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
 
   return (
     <>
-      <Row className={clsx('no-gutters', className)}>
+      <Row className={clsx('no-gutters', 'pb-3', className)}>
         <Col>
-          <span>File {index}:</span>
-          <span className="ml-4">{truncate(document.file.name, { length: 20 })}</span>
-          <FiCheck className="ml-2" size="1.6rem" color={theme.css.uploadFileCheckColor} />
+          <span>File {index + 1}:</span>
+          <span className="ml-4">{truncate(document.file.name, { length: 50 })}</span>
+          <FaCheck className="ml-2" size="1.6rem" color={theme.css.uploadFileCheckColor} />
         </Col>
       </Row>
-      <StyledRow className={clsx('no-gutters', className)}>
-        <Col xs="auto">
+      <StyledRow className={clsx('ml-0', className)}>
+        <Col md="5">
           <SectionField label={null} contentWidth="12" required>
             <Select
+              className="mb-0"
               data-testid={withNameSpace(namespace, 'document-type')}
               placeholder={documentTypeOptions.length > 1 ? 'Select Document type' : undefined}
               field={withNameSpace(namespace, 'documentTypeId')}
@@ -102,15 +102,17 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
             />
           </SectionField>
         </Col>
-        <Col xs="auto">
+        <Col md="auto">
           <SectionField label={null} contentWidth="12">
             <Select
+              className="mb-0"
               field={withNameSpace(namespace, 'documentStatusCode')}
               options={documentStatusOptions}
               disabled={documentStatusOptions.length === 1}
             />
           </SectionField>
         </Col>
+        <Col></Col>
         <Col>
           <StyledRemoveIconButton
             id={withNameSpace(namespace, 'document-delete')}

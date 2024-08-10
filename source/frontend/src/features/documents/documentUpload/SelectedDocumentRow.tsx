@@ -64,12 +64,10 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
           const metadata = results?.payload?.results || [];
           document.setMayanMetadata(metadata);
           setFieldValue(withNameSpace(namespace, 'mayanMetadata'), metadata);
-          // setDocumentTypeMetadataTypes(results?.payload?.results || []);
         }
       } else {
         document.setMayanMetadata([]);
         setFieldValue(withNameSpace(namespace, 'mayanMetadata'), []);
-        // setDocumentTypeMetadataTypes([]);
       }
     },
     [document, namespace, retrieveDocumentTypeMetadata, setFieldValue],
