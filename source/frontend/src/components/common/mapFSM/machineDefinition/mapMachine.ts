@@ -250,9 +250,9 @@ const selectedFeatureLoaderStates = {
 };
 
 const sideBarStates = {
-  initial: 'close',
+  initial: 'closed',
   states: {
-    close: {
+    closed: {
       entry: assign({
         mapSideBarState: () => ({
           type: SideBarType.NOT_DEFINED,
@@ -264,14 +264,14 @@ const sideBarStates = {
       }),
       on: {
         OPEN_SIDEBAR: {
-          target: 'open',
+          target: 'opened',
         },
         FINISHED_LOCATION_DATA_LOAD: {
           actions: 'navigateToProperty',
         },
       },
     },
-    open: {
+    opened: {
       entry: [
         assign({
           mapSideBarState: (context: MachineContext, event: any) => ({
@@ -304,7 +304,7 @@ const sideBarStates = {
               isFullWidth: false,
             }),
           }),
-          target: 'close',
+          target: 'closed',
         },
 
         SET_FILE_PROPERTY_LOCATIONS: {
@@ -343,9 +343,9 @@ const sideBarStates = {
 };
 
 const advancedFilterSideBarStates = {
-  initial: 'close',
+  initial: 'closed',
   states: {
-    close: {
+    closed: {
       on: {
         TOGGLE_FILTER: {
           target: 'filtering',
@@ -361,7 +361,7 @@ const advancedFilterSideBarStates = {
           target: 'filtering',
         },
         TOGGLE_LAYERS: {
-          target: 'close',
+          target: 'closed',
         },
         SET_MAP_LAYERS: {
           actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
@@ -373,7 +373,7 @@ const advancedFilterSideBarStates = {
       exit: [send({ type: 'REFRESH_PROPERTIES' })],
       on: {
         TOGGLE_FILTER: {
-          target: 'close',
+          target: 'closed',
           actions: [assign({ showDisposed: () => false }), assign({ showRetired: () => false })],
         },
         TOGGLE_LAYERS: {
@@ -442,25 +442,25 @@ export const mapMachine = createMachine<MachineContext>({
           {
             cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
-            target: ['mapVisible.sideBar.open', 'mapVisible.featureDataLoader.loading'],
+            target: ['mapVisible.sideBar.opened', 'mapVisible.featureDataLoader.loading'],
           },
           {
-            target: 'mapVisible.sideBar.open',
+            target: 'mapVisible.sideBar.opened',
           },
         ],
         OPEN_SIDEBAR: [
           {
             cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
-            target: ['mapVisible.sideBar.open', 'mapVisible.featureDataLoader.loading'],
+            target: ['mapVisible.sideBar.opened', 'mapVisible.featureDataLoader.loading'],
           },
           {
-            target: 'mapVisible.sideBar.open',
+            target: 'mapVisible.sideBar.opened',
           },
         ],
 
         CLOSE_SIDEBAR: {
-          target: 'mapVisible.sideBar.close',
+          target: 'mapVisible.sideBar.closed',
         },
       },
     },
