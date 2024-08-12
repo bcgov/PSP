@@ -24,7 +24,11 @@ describe('Tenant component', () => {
       <LeaseContextProvider
         initialLease={renderOptions.lease ? renderOptions.lease : defaultApiLease()}
       >
-        <ViewTenantForm nameSpace={renderOptions.nameSpace} tenants={renderOptions.tenants ?? []} isPayableLease ={renderOptions.isPayableLease ?? false}/>
+        <ViewTenantForm
+          nameSpace={renderOptions.nameSpace}
+          tenants={renderOptions.tenants ?? []}
+          isPayableLease={renderOptions.isPayableLease ?? false}
+        />
       </LeaseContextProvider>,
       {
         ...renderOptions,

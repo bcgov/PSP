@@ -31,7 +31,6 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-
 const mockGetContactsFn = vi
   .fn()
   .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Contact> });
@@ -63,50 +62,50 @@ const leaseStakeholderTypesList = [
     description: 'Assignee',
     isPayableRelated: false,
     isDisplayed: true,
-    displayOrder: null
+    displayOrder: null,
   },
   {
     code: 'OWNER',
     description: 'Owner',
     isPayableRelated: true,
     isDisplayed: true,
-    displayOrder: null
+    displayOrder: null,
   },
   {
     code: 'OWNREP',
     description: 'Owner Representative',
     isPayableRelated: true,
     isDisplayed: true,
-    displayOrder: null
+    displayOrder: null,
   },
   {
     code: 'PMGR',
     description: 'Property manager',
     isPayableRelated: false,
     isDisplayed: true,
-    displayOrder: null
+    displayOrder: null,
   },
   {
     code: 'REP',
     description: 'Representative',
     isPayableRelated: false,
     isDisplayed: true,
-    displayOrder: null
+    displayOrder: null,
   },
   {
     code: 'TEN',
     description: 'Tenant',
     isPayableRelated: false,
     isDisplayed: true,
-    displayOrder: null
+    displayOrder: null,
   },
   {
     code: 'UNK',
     description: 'Unknown',
     isPayableRelated: false,
     isDisplayed: true,
-    displayOrder: null
-  }
+    displayOrder: null,
+  },
 ];
 
 const setSelectedContacts = vi.fn();
@@ -203,7 +202,7 @@ describe('AddLeaseTenantForm component', () => {
   it('cancelling the modal resets the tenants', async () => {
     const tenants = [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())];
     await act(async () => {
-      await setup({ showContactManager: true, selectedTenants: tenants, });
+      await setup({ showContactManager: true, selectedTenants: tenants });
     });
 
     const modal = screen.getByText('Select a contact');

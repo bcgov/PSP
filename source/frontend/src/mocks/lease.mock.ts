@@ -76,7 +76,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
     id: 'RCVBL',
     description: 'Receivable',
     isDisabled: false,
-    displayOrder: 0
+    displayOrder: 0,
   },
   responsibilityType: null,
   initiatorType: null,
