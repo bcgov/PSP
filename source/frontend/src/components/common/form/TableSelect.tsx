@@ -21,6 +21,7 @@ type RequiredAttributes<T extends object> = {
   /** The columns that should be used for the secondary, "saved items" table */
   columns: ColumnWithProps<T>[];
   onRemove: (items: T[]) => void;
+  isPayableLease: boolean;
 };
 
 export type TableSelectProps<T extends object> = FormControlProps & RequiredAttributes<T>;
