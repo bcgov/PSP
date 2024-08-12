@@ -68,7 +68,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
-            Action act = () => service.GetProperties(1);
+            Action act = () => service.GetAcquisitionProperties(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();

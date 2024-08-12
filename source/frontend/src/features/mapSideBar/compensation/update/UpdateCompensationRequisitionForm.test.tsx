@@ -79,7 +79,7 @@ describe('Compensation Requisition UpdateForm component', () => {
         responsiblityCentreOptions={[]}
         yearlyFinancialOptions={[]}
         gstConstant={currentGstPercent ?? 0.05}
-        acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
+        file={renderOptions.props?.file ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
         showAltProjectError={false}
         setShowAltProjectError={setShowAltProjectError}
@@ -384,7 +384,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     const mockCompensation = CompensationRequisitionFormModel.fromApi(apiCompensation);
 
     const { getProjectSelector, getProjectSelectorItem } = await setup({
-      props: { initialValues: mockCompensation, acquisitionFile: acquisitionFile },
+      props: { initialValues: mockCompensation, file: acquisitionFile },
     });
 
     await act(async () => userEvent.type(getProjectSelector(), 'MOCK TEST'));

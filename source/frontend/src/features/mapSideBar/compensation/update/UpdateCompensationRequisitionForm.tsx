@@ -26,9 +26,11 @@ import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { isValidId } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { withNameSpace } from '@/utils/formUtils';
@@ -39,7 +41,8 @@ import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm'
 
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
-  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  fileType: ApiGen_CodeTypes_FileTypes;
+  file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   payeeOptions: PayeeOption[];
   initialValues: CompensationRequisitionFormModel;
   gstConstant: number;
@@ -57,7 +60,8 @@ export interface CompensationRequisitionFormProps {
 
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
   isLoading,
-  acquisitionFile,
+  fileType,
+  file,
   payeeOptions,
   initialValues,
   gstConstant,
@@ -128,8 +132,11 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
   };
 
   const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
-    if (param.length > 0) {
-      if (isValidId(param[0].id) && acquisitionFile.projectId === param[0].id) {
+    if (param.length > 0 && fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
+      if (
+        isValidId(param[0].id) &&
+        (file as ApiGen_Concepts_AcquisitionFile).projectId === param[0].id
+      ) {
         setShowAltProjectError(true);
       }
     }
@@ -186,22 +193,39 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 <SectionField label="Agreement date" labelWidth="5" contentWidth="4">
                   <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
                 </SectionField>
-                <SectionField
-                  label="Expropriation notice served date"
-                  labelWidth="5"
-                  contentWidth="4"
-                >
-                  <FastDatePicker
-                    field="expropriationNoticeServedDateTime"
-                    formikProps={formikProps}
-                  />
-                </SectionField>
-                <SectionField label="Expropriation vesting date" labelWidth="5" contentWidth="4">
-                  <FastDatePicker field="expropriationVestingDateTime" formikProps={formikProps} />
-                </SectionField>
-                <SectionField label="Advanced payment served date" labelWidth="5" contentWidth="4">
-                  <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
-                </SectionField>
+
+                {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
+                  <>
+                    <SectionField
+                      label="Expropriation notice served date"
+                      labelWidth="5"
+                      contentWidth="4"
+                    >
+                      <FastDatePicker
+                        field="expropriationNoticeServedDateTime"
+                        formikProps={formikProps}
+                      />
+                    </SectionField>
+                    <SectionField
+                      label="Expropriation vesting date"
+                      labelWidth="5"
+                      contentWidth="4"
+                    >
+                      <FastDatePicker
+                        field="expropriationVestingDateTime"
+                        formikProps={formikProps}
+                      />
+                    </SectionField>
+                    <SectionField
+                      label="Advanced payment served date"
+                      labelWidth="5"
+                      contentWidth="4"
+                    >
+                      <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
+                    </SectionField>
+                  </>
+                )}
+
                 <SectionField label="Special instructions" labelWidth="12">
                   <MediumTextArea field="specialInstruction" />
                 </SectionField>
@@ -222,7 +246,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                 <SectionField label="Selected Properties" labelWidth="5">
                   <FilePropertiesTable
                     disabledSelection={false}
-                    fileProperties={acquisitionFile.fileProperties ?? []}
+                    fileProperties={file.fileProperties ?? []}
                     selectedFileProperties={formikProps.values.selectedProperties}
                     setSelectedFileProperties={(fileProperties: ApiGen_Concepts_FileProperty[]) => {
                       formikProps.setFieldValue('selectedProperties', fileProperties);
@@ -232,17 +256,20 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
 
               <Section header="Financial Coding">
-                <SectionField label="Product" labelWidth="4">
-                  {acquisitionFile.product?.code ?? ''}
-                </SectionField>
+                {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
+                  <SectionField label="Product" labelWidth="4">
+                    {(file as ApiGen_Concepts_AcquisitionFile).product?.code ?? ''}
+                  </SectionField>
+                )}
+
                 <SectionField label="Business function" labelWidth="4">
-                  {acquisitionFile.project?.businessFunctionCode?.code ?? ''}
+                  {file.project?.businessFunctionCode?.code ?? ''}
                 </SectionField>
                 <SectionField label="Work activity" labelWidth="4">
-                  {acquisitionFile.project?.workActivityCode?.code ?? ''}
+                  {file.project?.workActivityCode?.code ?? ''}
                 </SectionField>
                 <SectionField label="Cost type" labelWidth="4">
-                  {acquisitionFile.project?.costTypeCode?.code ?? ''}
+                  {file.project?.costTypeCode?.code ?? ''}
                 </SectionField>
                 <SectionField label="Fiscal year" labelWidth="4" contentWidth="4" required>
                   <Select field="fiscalYear" options={fiscalYearOptions} placeholder="Select..." />

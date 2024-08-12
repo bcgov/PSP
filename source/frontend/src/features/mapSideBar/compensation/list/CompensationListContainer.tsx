@@ -9,7 +9,8 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompensationRequisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisitionProperty';
+import { ApiGen_Concepts_CompReqAcquisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqAcquisitionProperty';
+import { ApiGen_Concepts_CompReqLeaseProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseProperty';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -144,15 +145,8 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       legacyPayee: null,
       isPaymentInTrust: null,
       gstNumber: null,
-      compensationRequisitionProperties:
-        file.fileProperties?.map(x => {
-          return {
-            compensationRequisitionPropertyId: null,
-            compensationRequisitionId: null,
-            propertyAcquisitionFileId: x.id,
-            acquisitionFileProperty: null,
-          } as ApiGen_Concepts_CompensationRequisitionProperty;
-        }) || [],
+      compReqAcquisitionProperties: null,
+      compReqLeaseProperties: null,
       ...getEmptyBaseAudit(),
     };
 
@@ -160,10 +154,28 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       case ApiGen_CodeTypes_FileTypes.Acquisition:
         newCompensationRequisition.acquisitionFileId = fileId;
         newCompensationRequisition.leaseId = null;
+        newCompensationRequisition.compReqAcquisitionProperties =
+          file.fileProperties?.map(x => {
+            return {
+              compensationRequisitionPropertyId: null,
+              compensationRequisitionId: null,
+              propertyAcquisitionFileId: x.id,
+              acquisitionFileProperty: null,
+            } as ApiGen_Concepts_CompReqAcquisitionProperty;
+          }) || [];
         break;
       case ApiGen_CodeTypes_FileTypes.Lease:
         newCompensationRequisition.leaseId = fileId;
         newCompensationRequisition.acquisitionFileId = null;
+        newCompensationRequisition.compReqLeaseProperties =
+          file.fileProperties?.map(x => {
+            return {
+              compensationRequisitionPropertyId: null,
+              compensationRequisitionId: null,
+              propertyLeaseId: x.id,
+              leaseProperty: null,
+            } as ApiGen_Concepts_CompReqLeaseProperty;
+          }) || [];
         break;
       default:
         return null;

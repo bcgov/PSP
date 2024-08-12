@@ -80,12 +80,13 @@ export const useCompensationRequisitionRepository = () => {
 
   const getCompensationRequisitionProperties = useApiRequestWrapper<
     (
+      fileType: ApiGen_CodeTypes_FileTypes,
       compensationId: number,
     ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFileProperty[], any>>
   >({
     requestFunction: useCallback(
-      async (compensationId: number) =>
-        await getCompensationRequisitionPropertiesApi(compensationId),
+      async (fileType: ApiGen_CodeTypes_FileTypes, compensationId: number) =>
+        await getCompensationRequisitionPropertiesApi(fileType, compensationId),
       [],
     ),
     requestName: 'getCompensationRequisitionProperties',

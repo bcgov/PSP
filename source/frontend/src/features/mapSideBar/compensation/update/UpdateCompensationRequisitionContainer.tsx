@@ -7,9 +7,11 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists } from '@/utils';
 
@@ -18,7 +20,8 @@ import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitio
 
 export interface UpdateCompensationRequisitionContainerProps {
   compensation: ApiGen_Concepts_CompensationRequisition;
-  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  fileType: ApiGen_CodeTypes_FileTypes;
+  file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   onSuccess: () => void;
   onCancel: () => void;
   View: React.FC<CompensationRequisitionFormProps>;
@@ -26,7 +29,7 @@ export interface UpdateCompensationRequisitionContainerProps {
 
 const UpdateCompensationRequisitionContainer: React.FC<
   UpdateCompensationRequisitionContainerProps
-> = ({ compensation, acquisitionFile, onSuccess, onCancel, View }) => {
+> = ({ compensation, fileType, file, onSuccess, onCancel, View }) => {
   const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>([]);
   const [financialActivityOptions, setFinancialActivityOptions] = useState<SelectOption[]>([]);
   const [chartOfAccountOptions, setChartOfAccountOptions] = useState<SelectOption[]>([]);
@@ -80,59 +83,65 @@ const UpdateCompensationRequisitionContainer: React.FC<
     return result;
   };
 
-  const fetchContacts = useCallback(async () => {
-    if (acquisitionFile.id) {
-      const acquisitionOwnersCall = retrieveAcquisitionOwners(acquisitionFile.id);
-      const interestHoldersCall = fetchInterestHolders(acquisitionFile.id);
+  const fetchPayeeOptions = useCallback(async () => {
+    if (file.id) {
+      switch (fileType) {
+        case ApiGen_CodeTypes_FileTypes.Acquisition:
+          {
+            const acquisitionOwnersCall = retrieveAcquisitionOwners(file.id);
+            const interestHoldersCall = fetchInterestHolders(file.id);
 
-      await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
-        ([acquisitionOwners, interestHolders]) => {
-          const matchedInterestHolder =
-            interestHolders?.find(ih => ih.interestHolderId === compensation.interestHolderId) ??
-            null;
-          compensation.interestHolder = matchedInterestHolder;
+            await Promise.all([acquisitionOwnersCall, interestHoldersCall]).then(
+              ([acquisitionOwners, interestHolders]) => {
+                const matchedInterestHolder =
+                  interestHolders?.find(
+                    ih => ih.interestHolderId === compensation.interestHolderId,
+                  ) ?? null;
+                compensation.interestHolder = matchedInterestHolder;
 
-          const options = payeeOptions;
+                const options = payeeOptions;
 
-          if (acquisitionOwners !== undefined) {
-            const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
-              PayeeOption.createOwner(x),
+                if (acquisitionOwners !== undefined) {
+                  const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
+                    PayeeOption.createOwner(x),
+                  );
+                  options.push(...ownersOptions);
+                }
+
+                if (interestHolders !== undefined) {
+                  const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
+                    PayeeOption.createInterestHolder(x),
+                  );
+                  options.push(...interestHolderOptions);
+                }
+
+                const teamMemberOptions: PayeeOption[] =
+                  (file as ApiGen_Concepts_AcquisitionFile).acquisitionTeam
+                    ?.filter(
+                      (x): x is ApiGen_Concepts_AcquisitionFileTeam =>
+                        exists(x) && x.teamProfileTypeCode === 'MOTILAWYER',
+                    )
+                    .map(x => PayeeOption.createTeamMember(x)) || [];
+                options.push(...teamMemberOptions);
+
+                if (compensation.legacyPayee) {
+                  options.push(PayeeOption.createLegacyPayee(compensation));
+                }
+
+                setPayeeOptions(options);
+              },
             );
-            options.push(...ownersOptions);
           }
-
-          if (interestHolders !== undefined) {
-            const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
-              PayeeOption.createInterestHolder(x),
-            );
-            options.push(...interestHolderOptions);
-          }
-
-          const teamMemberOptions: PayeeOption[] =
-            acquisitionFile.acquisitionTeam
-              ?.filter(
-                (x): x is ApiGen_Concepts_AcquisitionFileTeam =>
-                  exists(x) && x.teamProfileTypeCode === 'MOTILAWYER',
-              )
-              .map(x => PayeeOption.createTeamMember(x)) || [];
-          options.push(...teamMemberOptions);
-
-          if (compensation.legacyPayee) {
-            options.push(PayeeOption.createLegacyPayee(compensation));
-          }
-
-          setPayeeOptions(options);
-        },
-      );
+          break;
+        case ApiGen_CodeTypes_FileTypes.Lease:
+          setPayeeOptions([]);
+          break;
+        default:
+          setPayeeOptions([]);
+          break;
+      }
     }
-  }, [
-    compensation,
-    payeeOptions,
-    acquisitionFile.acquisitionTeam,
-    acquisitionFile.id,
-    retrieveAcquisitionOwners,
-    fetchInterestHolders,
-  ]);
+  }, [file, fileType, retrieveAcquisitionOwners, fetchInterestHolders, compensation, payeeOptions]);
 
   const fetchFinancialCodes = useCallback(async () => {
     const fetchFinancialActivitiesCall = fetchFinancialActivities();
@@ -216,8 +225,8 @@ const UpdateCompensationRequisitionContainer: React.FC<
   ]);
 
   useEffect(() => {
-    fetchContacts();
-  }, [fetchContacts]);
+    fetchPayeeOptions();
+  }, [fetchPayeeOptions]);
 
   useEffect(() => {
     fetchFinancialCodes();
@@ -247,7 +256,8 @@ const UpdateCompensationRequisitionContainer: React.FC<
       chartOfAccountsOptions={chartOfAccountOptions}
       responsiblityCentreOptions={responsibilityCentreOptions}
       yearlyFinancialOptions={yearlyFinancialOptions}
-      acquisitionFile={acquisitionFile}
+      file={file}
+      fileType={fileType}
       onSave={updateCompensation}
       onCancel={onCancel}
       showAltProjectError={showAltProjectError}

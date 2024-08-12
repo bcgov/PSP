@@ -103,7 +103,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     const component = render(
       <UpdateCompensationRequisitionContainer
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
-        acquisitionFile={renderOptions?.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
+        file={renderOptions?.props?.file ?? mockAcquisitionFileResponse()}
         onSuccess={onSuccess}
         onCancel={onCancel}
         View={TestView}

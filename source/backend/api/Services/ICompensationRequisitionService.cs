@@ -12,7 +12,9 @@ namespace Pims.Api.Services
 
         bool DeleteCompensation(long compensationId);
 
-        IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id);
+        IEnumerable<PimsPropertyAcquisitionFile> GetAcquisitionProperties(long id);
+
+        IEnumerable<PimsPropertyLease> GetLeaseProperties(long id);
 
         IEnumerable<PimsCompensationRequisition> GetFileCompensationRequisitions(FileTypes fileType, long fileId);
 

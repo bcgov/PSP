@@ -65,6 +65,8 @@ export class PayeeOption {
     options: PayeeOption[],
   ): ApiGen_Concepts_CompensationRequisition {
     const compensationModel: ApiGen_Concepts_CompensationRequisition = {
+      acquisitionFileId: 0,
+      leaseId: null,
       isPaymentInTrust: null,
       gstNumber: null,
       acquisitionOwnerId: null,
@@ -76,7 +78,6 @@ export class PayeeOption {
       interestHolder: null,
       acquisitionFileTeamId: null,
       id: null,
-      acquisitionFileId: 0,
       acquisitionFile: null,
       isDraft: null,
       fiscalYear: null,
@@ -92,7 +93,8 @@ export class PayeeOption {
       advancedPaymentServedDate: null,
       generationDate: null,
       financials: [],
-      compensationRequisitionProperties: [],
+      compReqAcquisitionProperties: [],
+      compReqLeaseProperties: [],
       legacyPayee: null,
       finalizedDate: null,
       specialInstruction: null,

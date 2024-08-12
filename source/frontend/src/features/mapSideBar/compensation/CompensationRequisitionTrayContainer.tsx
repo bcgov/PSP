@@ -3,6 +3,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
@@ -11,6 +12,7 @@ import { isValidId } from '@/utils';
 import { CompensationRequisitionTrayViewProps } from './CompensationRequisitionTrayView';
 
 export interface ICompensationRequisitionTrayContainerProps {
+  fileType: ApiGen_CodeTypes_FileTypes;
   compensationRequisitionId?: number;
   onClose: () => void;
   View: React.FunctionComponent<React.PropsWithChildren<CompensationRequisitionTrayViewProps>>;
@@ -18,7 +20,7 @@ export interface ICompensationRequisitionTrayContainerProps {
 
 export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   React.PropsWithChildren<ICompensationRequisitionTrayContainerProps>
-> = ({ compensationRequisitionId, onClose, View }) => {
+> = ({ compensationRequisitionId, fileType, onClose, View }) => {
   const { getSystemConstant } = useSystemConstants();
   const { file, project, setProject, setProjectLoading, setStaleFile, setStaleLastUpdatedBy } =
     useContext(SideBarContext);
@@ -75,9 +77,8 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   return loadedCompensation ? (
     <View
       compensation={loadedCompensation}
-      acquisitionFile={
-        { ...file, fileChecklistItems: [] } as unknown as ApiGen_Concepts_AcquisitionFile
-      }
+      fileType={fileType}
+      file={{ ...file, fileChecklistItems: [] } as unknown as ApiGen_Concepts_AcquisitionFile}
       clientConstant={clientConstant?.value ?? ''}
       gstConstant={gstDecimal}
       onClose={onClose}

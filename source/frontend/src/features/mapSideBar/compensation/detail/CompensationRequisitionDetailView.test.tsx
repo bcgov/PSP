@@ -29,7 +29,7 @@ describe('Compensation Detail View Component', () => {
     // render component under test
     const component = render(
       <CompensationRequisitionDetailView
-        acquisitionFile={renderOptions?.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
+        file={renderOptions?.props?.file ?? mockAcquisitionFileResponse()}
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
         compensationProperties={
           renderOptions?.props?.compensationProperties ?? getMockCompensationPropertiesReq()
@@ -130,7 +130,7 @@ describe('Compensation Detail View Component', () => {
     const { queryByTitle } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_VIEW],
       props: {
-        acquisitionFile: {
+        file: {
           ...acquistionFile,
           fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
         },
@@ -166,7 +166,7 @@ describe('Compensation Detail View Component', () => {
     const { queryByTitle, getByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
-        acquisitionFile: {
+        file: {
           ...acquistionFile,
           fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
         },
@@ -197,7 +197,7 @@ describe('Compensation Detail View Component', () => {
       props: {
         compensation: getMockApiCompensationWithProperty(),
         compensationProperties: getMockCompensationPropertiesReq(),
-        acquisitionFile: mockAcquisitionFileResponse(),
+        file: mockAcquisitionFileResponse(),
       },
     });
 

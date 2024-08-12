@@ -9,7 +9,8 @@ import { ApiGen_Concepts_AcquisitionFile } from './ApiGen_Concepts_AcquisitionFi
 import { ApiGen_Concepts_AcquisitionFileOwner } from './ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileTeam } from './ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationFinancial } from './ApiGen_Concepts_CompensationFinancial';
-import { ApiGen_Concepts_CompensationRequisitionProperty } from './ApiGen_Concepts_CompensationRequisitionProperty';
+import { ApiGen_Concepts_CompReqAcquisitionProperty } from './ApiGen_Concepts_CompReqAcquisitionProperty';
+import { ApiGen_Concepts_CompReqLeaseProperty } from './ApiGen_Concepts_CompReqLeaseProperty';
 import { ApiGen_Concepts_FinancialCode } from './ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_InterestHolder } from './ApiGen_Concepts_InterestHolder';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
@@ -48,5 +49,6 @@ export interface ApiGen_Concepts_CompensationRequisition extends ApiGen_Base_Bas
   detailedRemarks: string | null;
   alternateProjectId: number | null;
   alternateProject: ApiGen_Concepts_Project | null;
-  compensationRequisitionProperties: ApiGen_Concepts_CompensationRequisitionProperty[] | null;
+  compReqAcquisitionProperties: ApiGen_Concepts_CompReqAcquisitionProperty[] | null;
+  compReqLeaseProperties: ApiGen_Concepts_CompReqLeaseProperty[] | null;
 }

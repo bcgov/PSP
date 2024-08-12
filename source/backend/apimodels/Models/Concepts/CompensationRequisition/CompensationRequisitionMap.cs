@@ -42,7 +42,8 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.CompensationRequisitionProperties, src => src.PimsPropAcqFlCompReqs)
+                .Map(dest => dest.CompReqAcquisitionProperties, src => src.PimsPropAcqFlCompReqs)
+                .Map(dest => dest.CompReqLeaseProperties, src => src.PimsPropLeaseCompReqs)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
@@ -72,7 +73,8 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompensationRequisitionProperties)
+                .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompReqAcquisitionProperties)
+                .Map(dest => dest.PimsPropLeaseCompReqs, src => src.CompReqLeaseProperties)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

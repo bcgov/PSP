@@ -22,9 +22,12 @@ export const deleteCompensationRequisitionApi = (compensationId: number) =>
     `/compensation-requisitions/${compensationId}`,
   );
 
-export const getCompensationRequisitionPropertiesApi = (compensationId: number) =>
+export const getCompensationRequisitionPropertiesApi = (
+  fileType: ApiGen_CodeTypes_FileTypes,
+  compensationId: number,
+) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_AcquisitionFileProperty[]>(
-    `/compensation-requisitions/${compensationId}/properties`,
+    `/compensation-requisitions/${fileType}/${compensationId}/properties`,
   );
 
 export const getFileCompensationsApi = (fileType: ApiGen_CodeTypes_FileTypes, fileId: number) =>

@@ -38,7 +38,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   responsibilityEffectiveDate: null,
   fileProperties: null,
   consultations: null,
-  tenants: null,
+  stakeholders: null,
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,

@@ -109,12 +109,20 @@ namespace Pims.Api.Services
             return fileFormToDelete;
         }
 
-        public IEnumerable<PimsPropertyAcquisitionFile> GetProperties(long id)
+        public IEnumerable<PimsPropertyAcquisitionFile> GetAcquisitionProperties(long id)
         {
             _logger.LogInformation("Getting properties for Compensation Requisition with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            return _compensationRequisitionRepository.GetPropertiesByCompRequisitionId(id);
+            return _compensationRequisitionRepository.GetAcquisitionCompReqPropertiesById(id);
+        }
+
+        public IEnumerable<PimsPropertyLease> GetLeaseProperties(long id)
+        {
+            _logger.LogInformation("Getting properties for Compensation Requisition with id {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            return _compensationRequisitionRepository.GetLeaseCompReqPropertiesById(id);
         }
 
         public IEnumerable<PimsCompensationRequisition> GetFileCompensationRequisitions(FileTypes fileType, long fileId)
@@ -214,11 +222,6 @@ namespace Pims.Api.Services
             return newCompensationRequisition;
         }
 
-        private PimsCompensationRequisition UpdateLeaseFileCompensation(PimsCompensationRequisition compensationRequisition)
-        {
-            throw new NotImplementedException();
-        }
-
         private List<PimsCompensationRequisition> GetAcquisitionFileCompReqs(long fileId)
         {
             _logger.LogInformation("Getting compensations for acquisition file id: {acquisitionFileId}", fileId);
@@ -253,6 +256,17 @@ namespace Pims.Api.Services
 
             CheckTotalAllowableCompensation(currentAcquisitionFile, compensationRequisition);
             compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
+
+            PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
+            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, (long)compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
+            _compensationRequisitionRepository.CommitTransaction();
+
+            return updatedEntity;
+        }
+
+        private PimsCompensationRequisition UpdateLeaseFileCompensation(PimsCompensationRequisition compensationRequisition)
+        {
+            var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
             AddNoteIfStatusChanged(compensationRequisition.Internal_Id, (long)compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);

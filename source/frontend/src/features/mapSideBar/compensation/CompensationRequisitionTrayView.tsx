@@ -6,8 +6,10 @@ import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import * as Styled from '@/components/common/styles';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 
 import { CompensationRequisitionDetailContainer } from './detail/CompensationRequisitionDetailContainer';
 import CompensationRequisitionDetailView from './detail/CompensationRequisitionDetailView';
@@ -16,7 +18,8 @@ import UpdateCompensationRequisitionForm from './update/UpdateCompensationRequis
 
 export interface CompensationRequisitionTrayViewProps {
   compensation?: ApiGen_Concepts_CompensationRequisition;
-  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  fileType: ApiGen_CodeTypes_FileTypes;
+  file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   clientConstant: string;
   gstConstant: number | undefined;
   onClose: () => void;
@@ -33,7 +36,8 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionTrayViewProps>
 > = ({
   compensation,
-  acquisitionFile,
+  file,
+  fileType,
   clientConstant,
   gstConstant,
   editMode,
@@ -48,10 +52,11 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
   const detailViewContent =
     !editMode && compensation ? (
       <HalfHeightDiv>
-        {!!compensation?.id && acquisitionFile && (
+        {!!compensation?.id && file && (
           <CompensationRequisitionDetailContainer
             compensation={compensation}
-            acquisitionFile={acquisitionFile}
+            fileType={fileType}
+            file={file}
             View={CompensationRequisitionDetailView}
             clientConstant={clientConstant}
             loading={loading}
@@ -66,7 +71,8 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
       <HalfHeightDiv>
         <UpdateCompensationRequisitionContainer
           compensation={compensation}
-          acquisitionFile={acquisitionFile}
+          fileType={fileType}
+          file={file}
           onSuccess={() => {
             setEditMode(false);
             onUpdate();

@@ -4,7 +4,7 @@ import { SelectOption } from '@/components/common/form';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompensationRequisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisitionProperty';
+import { ApiGen_Concepts_CompReqAcquisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqAcquisitionProperty';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { isValidId, isValidIsoDateTime } from '@/utils';
@@ -88,13 +88,13 @@ export class CompensationRequisitionFormModel {
       financials: this.financials
         .filter(x => !x.isEmpty())
         .map<ApiGen_Concepts_CompensationFinancial>(x => x.toApi()),
-      compensationRequisitionProperties: this.selectedProperties.map(x => {
+      compReqAcquisitionProperties: this.selectedProperties.map(x => {
         return {
           compensationRequisitionPropertyId: null,
           compensationRequisitionId: this.id,
           propertyAcquisitionFileId: x.id,
           acquisitionFileProperty: null,
-        } as ApiGen_Concepts_CompensationRequisitionProperty;
+        } as ApiGen_Concepts_CompReqAcquisitionProperty;
       }),
       rowVersion: this.rowVersion ?? null,
     };
@@ -167,7 +167,7 @@ export class CompensationRequisitionFormModel {
     compensation.payee.pretaxAmount = payeePretaxAmount;
     compensation.payee.taxAmount = payeeTaxAmount;
     compensation.payee.totalAmount = payeeTotalAmount;
-    compensation.selectedProperties = apiModel.compensationRequisitionProperties.map(
+    compensation.selectedProperties = apiModel.compReqAcquisitionProperties.map(
       x => x.acquisitionFileProperty,
     );
 

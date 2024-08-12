@@ -15,9 +15,11 @@ import { StyledAddButton } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { exists, formatMoney, getFilePropertyName, prettyFormatDate } from '@/utils';
@@ -28,7 +30,8 @@ import { DetailAcquisitionFileOwner } from '../../acquisition/models/DetailAcqui
 import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 
 export interface CompensationRequisitionDetailViewProps {
-  acquisitionFile: ApiGen_Concepts_AcquisitionFile;
+  fileType: ApiGen_CodeTypes_FileTypes;
+  file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   compensation: ApiGen_Concepts_CompensationRequisition;
   compensationProperties: ApiGen_Concepts_FileProperty[];
   compensationContactPerson: ApiGen_Concepts_Person | undefined;
@@ -50,7 +53,8 @@ interface PayeeViewDetails {
 export const CompensationRequisitionDetailView: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailViewProps>
 > = ({
-  acquisitionFile,
+  fileType,
+  file,
   compensation,
   compensationProperties,
   compensationContactPerson,
@@ -130,10 +134,13 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     ?.map(f => f.totalAmount ?? 0)
     .reduce((prev, next) => prev + next, 0);
 
-  const acqFileProject = acquisitionFile?.project;
-  const acqFileProduct = acquisitionFile?.product;
+  const acqFileProject = file?.project;
+  const acqFileProduct =
+    fileType === ApiGen_CodeTypes_FileTypes.Acquisition
+      ? (file as ApiGen_Concepts_AcquisitionFile).product
+      : null;
 
-  const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
+  const statusSolver = new AcquisitionFileStatusUpdateSolver(file.fileStatusTypeCode);
 
   const userCanEditCompensationReq = (): boolean => {
     if (
@@ -215,14 +222,16 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
                   toolTip={cannotEditMessage}
                 />
               )}
-              <StyledAddButton
-                onClick={() => {
-                  onGenerate(compensation);
-                }}
-              >
-                <FaMoneyCheck className="mr-2" />
-                Generate H120
-              </StyledAddButton>
+              {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
+                <StyledAddButton
+                  onClick={() => {
+                    onGenerate(compensation);
+                  }}
+                >
+                  <FaMoneyCheck className="mr-2" />
+                  Generate H120
+                </StyledAddButton>
+              )}
             </RightFlexDiv>
           </FlexDiv>
         }
@@ -239,19 +248,25 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         <SectionField label="Agreement date" labelWidth="4">
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>
-        <SectionField label="Expropriation notice served date" labelWidth="4">
-          {prettyFormatDate(compensation.expropriationNoticeServedDate)}
-        </SectionField>
-        <SectionField label="Expropriation vesting date" labelWidth="4">
-          {prettyFormatDate(compensation.expropriationVestingDate)}
-        </SectionField>
-        <SectionField
-          label="Advanced payment served date"
-          labelWidth="4"
-          valueTestId="advanced-payment-served-date"
-        >
-          {prettyFormatDate(compensation.advancedPaymentServedDate)}
-        </SectionField>
+
+        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
+          <>
+            <SectionField label="Expropriation notice served date" labelWidth="4">
+              {prettyFormatDate(compensation.expropriationNoticeServedDate)}
+            </SectionField>
+            <SectionField label="Expropriation vesting date" labelWidth="4">
+              {prettyFormatDate(compensation.expropriationVestingDate)}
+            </SectionField>
+            <SectionField
+              label="Advanced payment served date"
+              labelWidth="4"
+              valueTestId="advanced-payment-served-date"
+            >
+              {prettyFormatDate(compensation.advancedPaymentServedDate)}
+            </SectionField>
+          </>
+        )}
+
         <SectionField label="Special instructions" labelWidth={'12'} valueClassName="pre-wrap">
           <p style={{ whiteSpace: 'pre-wrap' }}>{compensation.specialInstruction}</p>
         </SectionField>
@@ -282,9 +297,12 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
-        <SectionField label="Product" labelWidth="4">
-          {acqFileProduct?.code ?? ''}
-        </SectionField>
+        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
+          <SectionField label="Product" labelWidth="4">
+            {acqFileProduct?.code ?? ''}
+          </SectionField>
+        )}
+
         <SectionField label="Business function" labelWidth="4">
           {acqFileProject?.businessFunctionCode?.code ?? ''}
         </SectionField>

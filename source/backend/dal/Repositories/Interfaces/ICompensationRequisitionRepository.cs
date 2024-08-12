@@ -17,6 +17,8 @@ namespace Pims.Dal.Repositories
 
         bool TryDelete(long compensationId);
 
-        List<PimsPropertyAcquisitionFile> GetPropertiesByCompRequisitionId(long compensationRequisitionId);
+        List<PimsPropertyAcquisitionFile> GetAcquisitionCompReqPropertiesById(long compensationRequisitionId);
+
+        List<PimsPropertyLease> GetLeaseCompReqPropertiesById(long compensationRequisitionId);
     }
 }
