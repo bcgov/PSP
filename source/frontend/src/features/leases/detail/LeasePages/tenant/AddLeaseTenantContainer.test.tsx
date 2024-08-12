@@ -106,6 +106,7 @@ describe('AddLeaseTenantContainer component', () => {
       getLeaseStakeholderTypes: [],
     } as unknown as ReturnType<typeof useLeaseRepository>);
   });
+
   it('renders as expected', async () => {
     const { component } = await setup({});
 
