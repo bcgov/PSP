@@ -1,7 +1,4 @@
-import {
-  act,
-  screen,
-} from '@testing-library/react';
+import { act, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/claims';
@@ -174,7 +171,7 @@ describe('AddLeaseTenantForm component', () => {
 
   it('confirming the modal sets the tenants', async () => {
     await act(async () => {
-      await setup({ showContactManager: true, });
+      await setup({ showContactManager: true });
     });
 
     const modal = screen.getByText('Select a contact');
@@ -418,7 +415,6 @@ describe('AddLeaseTenantForm component', () => {
     expect(ownerOption).toBeVisible();
     expect(ownerRepOption).toBeVisible();
   });
-
 
   it('can remove previously selected tenants', async () => {
     const {
