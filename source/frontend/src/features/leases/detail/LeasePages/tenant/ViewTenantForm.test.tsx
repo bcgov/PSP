@@ -40,6 +40,7 @@ describe('Tenant component', () => {
       component,
     };
   };
+
   it('renders as expected', () => {
     const { component } = setup({
       lease: {
@@ -54,6 +55,7 @@ describe('Tenant component', () => {
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
+
   it('renders one Person Tenant section per person', () => {
     const { component } = setup({
       lease: {

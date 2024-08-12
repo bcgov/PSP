@@ -93,10 +93,10 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   otherProgramType: null,
   otherPurposeType: null,
   otherType: null,
-  tenants: [
+  stakeholders: [
     {
-      leaseTenantId: 82,
-      tenantTypeCode: {
+      leaseStakeholderId: 82,
+      stakeholderTypeCode: {
         id: ApiGen_CodeTypes_LeaseStakeholderTypes.TEN.toString(),
         description: null,
         displayOrder: null,
@@ -271,10 +271,10 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       personId: null,
     },
     {
-      leaseTenantId: 83,
+      leaseStakeholderId: 83,
       leaseId: 1,
       organizationId: 3,
-      tenantTypeCode: {
+      stakeholderTypeCode: {
         id: ApiGen_CodeTypes_LeaseStakeholderTypes.REP.toString(),
         description: null,
         displayOrder: null,
@@ -344,10 +344,10 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       primaryContactId: null,
     },
     {
-      leaseTenantId: 84,
+      leaseStakeholderId: 84,
       leaseId: 1,
       organizationId: 4,
-      tenantTypeCode: {
+      stakeholderTypeCode: {
         id: ApiGen_CodeTypes_LeaseStakeholderTypes.PMGR.toString(),
         description: null,
         displayOrder: null,

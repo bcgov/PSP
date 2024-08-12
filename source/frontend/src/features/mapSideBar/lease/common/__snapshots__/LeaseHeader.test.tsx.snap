@@ -6,7 +6,148 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
     class="Toastify"
   />
   <div />
-  .c4 {
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  height: 3.8rem;
+}
+
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5 {
   font-size: 0.87em;
   line-height: 1.9;
 }
@@ -16,7 +157,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   white-space: nowrap;
 }
 
-.c3 {
+.c4 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -108,7 +249,23 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           <div
             class="pl-1 text-left col-8"
           >
-            <div />
+            <div>
+              <span>
+                French Mouse Property Management
+                <br />
+              </span>
+              <button
+                class="c3 Button btn btn-link"
+                data-testid="expand"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  [+2 more...]
+                </div>
+              </button>
+            </div>
           </div>
         </div>
         <div
@@ -213,7 +370,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
         class="col"
       >
         <div
-          class="c3"
+          class="c4"
         >
           <div
             class="no-gutters row"
@@ -222,7 +379,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               class="text-right col"
             >
               <span
-                class="c4"
+                class="c5"
               >
                 <strong>
                   Created: 
@@ -247,7 +404,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               class="text-right col"
             >
               <span
-                class="c4"
+                class="c5"
               >
                 <strong>
                   Updated: 
