@@ -28,12 +28,14 @@ import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './models';
 import { IPrimaryContactWarningModalProps } from './PrimaryContactWarningModal';
 import { createRef } from 'react';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 
 // mock auth library
 
 vi.mock('@/hooks/pims-api/useApiContacts');
 vi.mock('@/features/leases/hooks/useUpdateLease');
 vi.mock('@/hooks/repositories/useLeaseTenantRepository');
+vi.mock('@/hooks/repositories/useLeaseRepository');
 
 const getPersonConcept = vi.fn();
 const updateTenants = vi.fn().mockResolvedValue({ ...defaultApiLease(), id: 1 });
@@ -100,6 +102,9 @@ describe('AddLeaseTenantContainer component', () => {
       updateLeaseTenants: { execute: updateTenants.mockResolvedValue([]) },
       getLeaseTenants: getLeaseTenantsObj,
     } as unknown as ReturnType<typeof useLeaseTenantRepository>);
+    vi.mocked(useLeaseRepository).mockReturnValue({
+      getLeaseStakeholderTypes: [],
+    } as unknown as ReturnType<typeof useLeaseRepository>);
   });
   it('renders as expected', async () => {
     const { component } = await setup({});

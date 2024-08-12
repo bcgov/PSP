@@ -5,6 +5,7 @@ import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
 import { Select, SelectOption } from '@/components/common/form';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import { getPrimaryContact } from '@/features/contacts/contactUtils';
 import { isValidId } from '@/utils';
@@ -19,7 +20,12 @@ const getColumns = (
   const stakeholderType = isPayableLease ? 'Payee type' : 'Contact type';
   return [
     {
-      Header: '',
+      Header: (
+        <TooltipIcon
+          toolTipId="stakeholder-status"
+          toolTip="Green dot indicates contact is active"
+        ></TooltipIcon>
+      ),
       accessor: 'isDisabled',
       align: 'right',
       width: 16,
@@ -144,7 +150,7 @@ const getColumns = (
     },
     {
       Header: stakeholderType,
-      accessor: 'email',
+      accessor: 'tenantType',
       align: 'left',
       minWidth: 80,
       width: 100,

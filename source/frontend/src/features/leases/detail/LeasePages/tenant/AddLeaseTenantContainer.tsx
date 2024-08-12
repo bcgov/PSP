@@ -5,6 +5,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IContactSearchResult } from '@/interfaces';
@@ -46,6 +47,20 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     updateLeaseTenants,
     getLeaseTenants: { execute: getLeaseTenants, loading },
   } = useLeaseTenantRepository();
+
+  const {
+    getLeaseStakeholderTypes: {
+      execute: getLeaseStakeholderTypes,
+      response: leaseStakeholderTypesResponse,
+    },
+  } = useLeaseRepository();
+
+  useEffect(() => {
+    const stakeholderTypes = async () => {
+      await getLeaseStakeholderTypes();
+    };
+    stakeholderTypes();
+  }, [getLeaseStakeholderTypes, isPayableLease]);
 
   const leaseId = lease?.id;
   useEffect(() => {
@@ -154,6 +169,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       onCancel={() => setHandleSubmit(undefined)}
       loading={loading}
       isPayableLease={isPayableLease}
+      stakeholderTypesOptions={leaseStakeholderTypesResponse}
     >
       {children}
     </View>

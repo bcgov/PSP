@@ -36,7 +36,11 @@ export const TableSelect = <T extends { id?: string | number }>({
   columns,
   isPayableLease,
 }: TableSelectProps<T>) => {
-  const columnsWithRemove = getColumnsWithRemove<T>((rows: T[]) => onRemove(rows), [...columns]);
+  const columnsWithRemove = getColumnsWithRemove<T>(
+    (rows: T[]) => onRemove(rows),
+    [...columns],
+    'Action',
+  );
 
   return (
     <Container className="p-0 m-0">
