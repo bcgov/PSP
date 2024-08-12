@@ -37,6 +37,7 @@ export type MachineContext = {
   searchCriteria: IPropertyFilter | null;
 
   isLoading: boolean;
+  fitToResultsAfterLoading: boolean;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   filePropertyLocations: LatLngLiteral[];
