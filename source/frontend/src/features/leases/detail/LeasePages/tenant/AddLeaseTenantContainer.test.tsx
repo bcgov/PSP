@@ -65,6 +65,13 @@ const getLeaseTenantsObj = {
   response: [],
 };
 
+const getLeaseTenantTypesObj = {
+  execute: vi.fn().mockResolvedValue([]),
+  loading: false,
+  error: undefined,
+  response: [],
+};
+
 describe('AddLeaseTenantContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions & { lease?: ApiGen_Concepts_Lease; tenants?: FormTenant[] } = {},
@@ -103,7 +110,7 @@ describe('AddLeaseTenantContainer component', () => {
       getLeaseTenants: getLeaseTenantsObj,
     } as unknown as ReturnType<typeof useLeaseTenantRepository>);
     vi.mocked(useLeaseRepository).mockReturnValue({
-      getLeaseStakeholderTypes: [],
+      getLeaseStakeholderTypes: getLeaseTenantTypesObj,
     } as unknown as ReturnType<typeof useLeaseRepository>);
   });
 
