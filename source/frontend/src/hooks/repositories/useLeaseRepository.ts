@@ -46,7 +46,7 @@ export const useLeaseRepository = () => {
     ),
     requestName: 'getApiLease',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retreive lease.'),
+    onError: useAxiosErrorHandler('Failed to retrieve lease.'),
   });
 
   const getLeaseRenewalsApi = useApiRequestWrapper<
@@ -58,7 +58,7 @@ export const useLeaseRepository = () => {
     ),
     requestName: 'getLeaseRenewalsApi',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retreive lease renewals.'),
+    onError: useAxiosErrorHandler('Failed to retrieve lease renewals.'),
   });
 
   const getLeaseChecklistApi = useApiRequestWrapper<
@@ -92,7 +92,7 @@ export const useLeaseRepository = () => {
       async () => await getLeaseStakeholderTypes(),
       [getLeaseStakeholderTypes],
     ),
-    requestName: 'getApiLeaseStakeholderTypes',
+    requestName: 'getLeaseStakeholderTypes',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to retrieve Lease Stakeholder Types.'),
   });

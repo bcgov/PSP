@@ -43,6 +43,12 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
   const [handleSubmit, setHandleSubmit] = useState<(() => void) | undefined>(undefined);
 
+  const { getPersonConcept } = useApiContacts();
+  const { execute } = useApiRequestWrapper({
+    requestFunction: getPersonConcept,
+    requestName: 'get person by id',
+  });
+
   const {
     updateLeaseTenants,
     getLeaseTenants: { execute: getLeaseTenants, loading },
@@ -54,13 +60,6 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
       response: leaseStakeholderTypesResponse,
     },
   } = useLeaseRepository();
-
-  useEffect(() => {
-    const stakeholderTypes = async () => {
-      await getLeaseStakeholderTypes();
-    };
-    stakeholderTypes();
-  }, [getLeaseStakeholderTypes, isPayableLease]);
 
   const leaseId = lease?.id;
   useEffect(() => {
@@ -78,11 +77,12 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     tenantFunc();
   }, [leaseId, getLeaseTenants]);
 
-  const { getPersonConcept } = useApiContacts();
-  const { execute } = useApiRequestWrapper({
-    requestFunction: getPersonConcept,
-    requestName: 'get person by id',
-  });
+  useEffect(() => {
+    const stakeholderTypesFunc = async () => {
+      await getLeaseStakeholderTypes();
+    };
+    stakeholderTypesFunc();
+  }, [getLeaseStakeholderTypes]);
 
   const setSelectedTenantsWithPersonData = async (updatedTenants?: IContactSearchResult[]) => {
     const allExistingTenantIds = tenants.map(t => t.id);
