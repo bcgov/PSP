@@ -31,7 +31,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
     isShowingMapLayers,
     isRepositioning,
     toggleMapFilter,
-    toggleMapLayer,
+    toggleMapLayerControl,
   } = useMapStateMachine();
 
   const cursorClass = isSelecting
@@ -66,7 +66,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
         closeTooltipText="Close Map Layers"
         data-testId="map-layers-sidebar"
         isOpen={isShowingMapLayers}
-        toggle={toggleMapLayer}
+        toggle={toggleMapLayerControl}
       >
         <LayersMenu />
       </RightSideLayout>

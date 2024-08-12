@@ -70,7 +70,7 @@ export interface IMapStateMachineContext {
   ) => void;
   finishReposition: () => void;
   toggleMapFilter: () => void;
-  toggleMapLayer: () => void;
+  toggleMapLayerControl: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
   setDefaultMapLayers: (layers: ILayerItem[]) => void;
@@ -136,7 +136,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
         return result;
       },
-      loadFeatures: (context: MachineContext, event: any) => {
+      loadFeatures: (context: MachineContext, event: any): Promise<MapFeatureData> => {
         // If there is data in the event, use that criteria.
         // Otherwise, use the stored one in the context.
         let searchCriteria = context.searchCriteria || defaultPropertyFilter;
@@ -341,7 +341,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_FILTER' });
   }, [serviceSend]);
 
-  const toggleMapLayer = useCallback(() => {
+  const toggleMapLayerControl = useCallback(() => {
     serviceSend({ type: 'TOGGLE_LAYERS' });
   }, [serviceSend]);
 
@@ -355,11 +355,11 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   }, [isRepositioning, state.context.mapLocationFeatureDataset]);
 
   const isFiltering = useMemo(() => {
-    return state.matches({ mapVisible: { featureView: 'filtering' } });
+    return state.matches({ mapVisible: { advancedFilterSideBar: 'filtering' } });
   }, [state]);
 
   const isShowingMapLayers = useMemo(() => {
-    return state.matches({ mapVisible: { featureView: 'layerControl' } });
+    return state.matches({ mapVisible: { advancedFilterSideBar: 'layerControl' } });
   }, [state]);
 
   return (
@@ -409,7 +409,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         startReposition,
         finishReposition,
         toggleMapFilter,
-        toggleMapLayer,
+        toggleMapLayerControl,
         toggleSidebarDisplay,
         setFilePropertyLocations,
         setVisiblePimsProperties,
