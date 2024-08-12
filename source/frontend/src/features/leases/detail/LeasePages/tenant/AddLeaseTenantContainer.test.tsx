@@ -76,6 +76,7 @@ describe('AddLeaseTenantContainer component', () => {
           onEdit={onEdit}
           tenants={renderOptions.tenants ?? []}
           onSuccess={onSuccess}
+          isPayableLease={false}
         >
           <SaveButton />
         </AddLeaseTenantContainer>

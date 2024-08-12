@@ -46,12 +46,24 @@ const getColumns = (
       align: 'right',
       width: 16,
       maxWidth: 16,
-      Cell: (props: CellProps<FormTenant>) =>
-        isValidId(props.row.original.personId) ? (
-          <FaRegUser size={16} />
+      Cell: (props: CellProps<FormTenant>) => {
+        const original = props.row.original;
+        const status =
+          original.original !== undefined
+            ? original.original.id.startsWith('O') === true
+              ? original.original.organization.isDisabled
+              : original.isDisabled
+            : original.isDisabled;
+        return isValidId(props.row.original.personId) ? (
+          <StatusIndicators className={status ? 'inactive' : 'active'}>
+            <FaRegUser size={16} />
+          </StatusIndicators>
         ) : (
-          <FaRegBuilding size={16} />
-        ),
+          <StatusIndicators className={status ? 'inactive' : 'active'}>
+            <FaRegBuilding size={16} />
+          </StatusIndicators>
+        );
+      },
     },
     {
       Header: 'Summary',

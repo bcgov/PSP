@@ -96,7 +96,11 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
             op.person = matchingPerson;
           }
         });
-        tenant.tenantType = tenant.tenantType ? tenant.tenantType : 'TEN';
+        tenant.tenantType = tenant.tenantType
+          ? tenant.tenantType
+          : isPayableLease
+          ? 'OWNER'
+          : 'TEN';
         return tenant;
       }) ?? [];
     const formTenants = tenantsWithPersons?.map(t => new FormTenant(undefined, t)) ?? [];

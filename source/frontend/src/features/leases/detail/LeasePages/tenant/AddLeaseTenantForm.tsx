@@ -134,11 +134,11 @@ export const AddLeaseTenantForm: React.FunctionComponent<
                   selectedItems={selectedTenants}
                   columns={getColumns(
                     stakeholderTypes.map<SelectOption>(x => {
-                      return { label: x.description || '', value: x.code || 0 };
+                      return { label: x.description || '', value: x.code || null };
                     }),
                     isPayableLease,
                   )}
-                  field="tenants"
+                  field="stakeholders"
                   selectedTableHeader={SelectedTableHeader}
                   onRemove={onRemove}
                 ></TableSelect>

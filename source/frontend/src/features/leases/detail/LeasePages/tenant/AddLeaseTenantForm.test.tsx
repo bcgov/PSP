@@ -20,6 +20,7 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, renderAsync, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 
 import AddLeaseTenantForm, { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
 import { FormTenant } from './models';
@@ -29,6 +30,8 @@ const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+
 const mockGetContactsFn = vi
   .fn()
   .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Contact> });
@@ -40,6 +43,71 @@ vi.mock('@/hooks/pims-api/useApiContacts', () => ({
     };
   },
 }));
+
+// const mockGetStakeholderTypesFn = vi
+//   .fn()
+//   .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_LeaseStakeholderType> });
+
+// vi.mock('@/hooks/repositories/useLeaseRepository', () => ({
+//   useApiContacts: () => {
+//     return {
+//       getLeaseStakeholderTypes: mockGetStakeholderTypesFn,
+//     };
+//   },
+// }));
+
+vi.mock('@/hooks/repositories/useLeaseRepository');
+const leaseStakeholderTypesList = [
+  {
+    code: 'ASGN',
+    description: 'Assignee',
+    isPayableRelated: false,
+    isDisplayed: true,
+    displayOrder: null
+  },
+  {
+    code: 'OWNER',
+    description: 'Owner',
+    isPayableRelated: true,
+    isDisplayed: true,
+    displayOrder: null
+  },
+  {
+    code: 'OWNREP',
+    description: 'Owner Representative',
+    isPayableRelated: true,
+    isDisplayed: true,
+    displayOrder: null
+  },
+  {
+    code: 'PMGR',
+    description: 'Property manager',
+    isPayableRelated: false,
+    isDisplayed: true,
+    displayOrder: null
+  },
+  {
+    code: 'REP',
+    description: 'Representative',
+    isPayableRelated: false,
+    isDisplayed: true,
+    displayOrder: null
+  },
+  {
+    code: 'TEN',
+    description: 'Tenant',
+    isPayableRelated: false,
+    isDisplayed: true,
+    displayOrder: null
+  },
+  {
+    code: 'UNK',
+    description: 'Unknown',
+    isPayableRelated: false,
+    isDisplayed: true,
+    displayOrder: null
+  }
+];
 
 const setSelectedContacts = vi.fn();
 const setShowContactManager = vi.fn();
@@ -55,6 +123,14 @@ const defaultRenderOptions: IAddLeaseTenantFormProps = {
   showContactManager: false,
   onSubmit,
   formikRef: createRef(),
+  isPayableLease: false,
+};
+
+const getstakeholderTypesObj = {
+  execute: vi.fn().mockResolvedValue(leaseStakeholderTypesList),
+  loading: false,
+  error: undefined,
+  response: [],
 };
 
 describe('AddLeaseTenantForm component', () => {
@@ -79,10 +155,13 @@ describe('AddLeaseTenantForm component', () => {
   beforeEach(() => {
     vi.resetAllMocks();
     mockKeycloak({ claims: [Claims.CONTACT_VIEW, Claims.LEASE_EDIT] });
+    vi.mocked(useLeaseRepository).mockReturnValue({
+      getLeaseStakeholderTypes: getstakeholderTypesObj,
+    } as unknown as ReturnType<typeof useLeaseRepository>);
   });
+
   it('renders as expected', async () => {
     const { component } = await setup({});
-
     expect(component.asFragment()).toMatchSnapshot();
   });
 
@@ -124,7 +203,7 @@ describe('AddLeaseTenantForm component', () => {
   it('cancelling the modal resets the tenants', async () => {
     const tenants = [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())];
     await act(async () => {
-      await setup({ showContactManager: true, selectedTenants: tenants });
+      await setup({ showContactManager: true, selectedTenants: tenants, });
     });
 
     const modal = screen.getByText('Select a contact');
@@ -150,9 +229,21 @@ describe('AddLeaseTenantForm component', () => {
   it('displays the number of previously selected tenants', async () => {
     await setup({
       selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      isPayableLease: false,
     });
 
-    const number = screen.getByText('1 Tenants associated with this Lease/Licence');
+    const number = screen.getByText('1 Tenant(s) associated with this Lease/Licence');
+
+    expect(number).toBeVisible();
+  });
+
+  it('displays the number of previously selected payee', async () => {
+    await setup({
+      selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      isPayableLease: true,
+    });
+
+    const number = screen.getByText('1 Payee(s) associated with this Lease/Licence');
 
     expect(number).toBeVisible();
   });
@@ -160,6 +251,7 @@ describe('AddLeaseTenantForm component', () => {
   it('displays previously selected tenants', async () => {
     await setup({
       selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      isPayableLease: false,
     });
 
     const summary = screen.getByText('Dairy Queen Forever! Property Management');
@@ -170,6 +262,7 @@ describe('AddLeaseTenantForm component', () => {
   it('displays Not applicable for contact when contact is a person', async () => {
     await setup({
       selectedTenants: [new FormTenant(undefined, getMockContactPerson())],
+      isPayableLease: false,
     });
 
     const contactMsg = screen.getByText('Not applicable');

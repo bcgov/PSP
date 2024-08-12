@@ -72,7 +72,12 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   tenantNotes: ['a note', '', ''],
   persons: [],
   organizations: [],
-  paymentReceivableType: null,
+  paymentReceivableType: {
+    id: 'RCVBL',
+    description: 'Receivable',
+    isDisabled: false,
+    displayOrder: 0
+  },
   responsibilityType: null,
   initiatorType: null,
   statusType: null,

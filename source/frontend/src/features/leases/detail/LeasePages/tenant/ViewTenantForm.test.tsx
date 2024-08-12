@@ -16,6 +16,7 @@ describe('Tenant component', () => {
   const setup = (
     renderOptions: RenderOptions & ITenantProps & { lease?: ApiGen_Concepts_Lease } = {
       tenants: [],
+      isPayableLease: false,
     },
   ) => {
     // render component under test
@@ -23,7 +24,7 @@ describe('Tenant component', () => {
       <LeaseContextProvider
         initialLease={renderOptions.lease ? renderOptions.lease : defaultApiLease()}
       >
-        <ViewTenantForm nameSpace={renderOptions.nameSpace} tenants={renderOptions.tenants ?? []} />
+        <ViewTenantForm nameSpace={renderOptions.nameSpace} tenants={renderOptions.tenants ?? []} isPayableLease ={renderOptions.isPayableLease ?? false}/>
       </LeaseContextProvider>,
       {
         ...renderOptions,
@@ -45,6 +46,7 @@ describe('Tenant component', () => {
         ],
       },
       tenants: [],
+      isPayableLease: false,
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -61,6 +63,7 @@ describe('Tenant component', () => {
           note: 'organization id',
         },
       ],
+      isPayableLease: false,
     });
     const { getAllByText } = component;
     const tenantSection = getAllByText('Tenant');
@@ -82,6 +85,7 @@ describe('Tenant component', () => {
         { leaseId: 1, personId: mockApiPerson.id, note: 'person note' },
         { leaseId: 1, organizationId: mockOrganization.id, note: 'organization id' },
       ],
+      isPayableLease: false,
     });
     const { getAllByText } = component;
     const notes = getAllByText('Notes');
@@ -93,6 +97,7 @@ describe('Tenant component', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
       tenants: [],
+      isPayableLease: false,
     });
     const { getAllByText } = component;
     const asgnSection = getAllByText('Assignee');
@@ -104,6 +109,7 @@ describe('Tenant component', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
       tenants: [],
+      isPayableLease: false,
     });
     const { getAllByText } = component;
     const repSection = getAllByText('Representative');
@@ -115,19 +121,46 @@ describe('Tenant component', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
       tenants: [],
+      isPayableLease: false,
     });
     const { getAllByText } = component;
     const propSection = getAllByText('Property Manager');
 
     expect(propSection).toHaveLength(1);
   });
+
   it('renders unknown section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
       tenants: [],
+      isPayableLease: false,
     });
     const { getAllByText } = component;
     const unknownSection = getAllByText('Unknown');
+
+    expect(unknownSection).toHaveLength(1);
+  });
+
+  it('renders owner section', () => {
+    const { component } = setup({
+      lease: { ...defaultApiLease(), stakeholders: [] },
+      tenants: [],
+      isPayableLease: true,
+    });
+    const { getAllByText } = component;
+    const unknownSection = getAllByText('Owner');
+
+    expect(unknownSection).toHaveLength(1);
+  });
+
+  it('renders owner representative section', () => {
+    const { component } = setup({
+      lease: { ...defaultApiLease(), stakeholders: [] },
+      tenants: [],
+      isPayableLease: true,
+    });
+    const { getAllByText } = component;
+    const unknownSection = getAllByText('Owner Representative');
 
     expect(unknownSection).toHaveLength(1);
   });
@@ -137,6 +170,7 @@ describe('Tenant component', () => {
     const { component } = setup({
       lease: mockLeaseWithTenants,
       tenants: mockLeaseWithTenants?.stakeholders?.map(t => new FormTenant(t)) ?? [],
+      isPayableLease: false,
     });
     const { getByText } = component;
     const summary = getByText('French Mouse Property Management');
@@ -148,6 +182,7 @@ describe('Tenant component', () => {
     const { component } = setup({
       lease: mockLeaseWithTenants,
       tenants: mockLeaseWithTenants?.stakeholders?.map(t => new FormTenant(t)) ?? [],
+      isPayableLease: false,
     });
     const { getByText } = component;
     const primaryContact = getByText('Bob Billy Smith');

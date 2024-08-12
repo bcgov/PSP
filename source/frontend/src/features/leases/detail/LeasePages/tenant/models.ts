@@ -90,7 +90,6 @@ export class FormTenant {
   };
 
   public static toApi(model: FormTenant): ApiGen_Concepts_LeaseStakeholder {
-    console.log(model);
     return {
       personId: model.personId ?? null,
       organizationId: !isValidId(model.personId) ? model.organizationId ?? null : null,
