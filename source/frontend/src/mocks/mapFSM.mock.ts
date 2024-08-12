@@ -70,7 +70,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setVisiblePimsProperties: vi.fn(),
   toggleMapFilter: vi.fn(),
 
-  toggleMapLayer: vi.fn(),
+  toggleMapLayerControl: vi.fn(),
   setShowDisposed: vi.fn(),
   setShowRetired: vi.fn(),
   setMapLayers: vi.fn(),
