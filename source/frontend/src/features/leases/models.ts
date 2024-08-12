@@ -270,6 +270,11 @@ export class FormLeaseProperty {
     this.areaUnitTypeCode = AreaUnitTypes.SquareMeters;
   }
 
+  public static fromFormLeaseProperty(baseModel?: Partial<FormLeaseProperty>): FormLeaseProperty {
+    const model = Object.assign(new FormLeaseProperty(), baseModel);
+    return model;
+  }
+
   public static fromApi(apiPropertyLease: ApiGen_Concepts_PropertyLease): FormLeaseProperty {
     const model = new FormLeaseProperty(apiPropertyLease.file?.id);
     model.property = PropertyForm.fromApi(apiPropertyLease);

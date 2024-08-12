@@ -90,7 +90,7 @@ export class PropertyForm {
   public areaUnit?: AreaUnitTypes;
   public isRetired?: boolean;
 
-  private constructor(baseModel?: Partial<PropertyForm>) {
+  public constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
   }
 
@@ -229,6 +229,11 @@ export class PropertyForm {
       },
       municipalityFeature: null,
       highwayFeature: null,
+      crownLandLeasesFeature: null,
+      crownLandLicensesFeature: null,
+      crownLandTenuresFeature: null,
+      crownLandInventoryFeature: null,
+      crownLandInclusionsFeature: null,
     };
   }
 
@@ -243,6 +248,9 @@ export class PropertyForm {
     newForm.latitude = model.property?.latitude ?? undefined;
     newForm.longitude = model.property?.longitude ?? undefined;
     newForm.fileLocation = getLatLng(model.location) ?? undefined;
+    newForm.polygon = exists(model.property?.boundary)
+      ? (model.property?.boundary as Polygon | MultiPolygon)
+      : undefined;
     newForm.planNumber = model.property?.planNumber ?? undefined;
     newForm.region = model.property?.region?.id ?? undefined;
     newForm.district = model.property?.district?.id ?? undefined;

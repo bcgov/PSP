@@ -50,6 +50,11 @@ export interface ITenantConfig2 {
   boundaryLayerUrl: string;
   highwayLayerUrl: string;
   bcAssessment: IBcAssessmentLayerConfig;
+  crownLandLicensesUrl: string;
+  crownLandTenuresUrl: string;
+  crownLandLeasesUrl: string;
+  crownLandInventoryUrl: string;
+  crownLandInclusionsUrl: string;
   // the amount of time it takes to time out the idle prompt (in minutes)
   idlePromptTimeout: number;
   // the amount of time it takes to display the idle prompt (in minutes)
