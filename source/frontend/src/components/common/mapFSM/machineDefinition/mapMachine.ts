@@ -18,6 +18,16 @@ const featureViewStates = {
             assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
           ],
         },
+        START_REPOSITION: {
+          target: 'repositioning',
+          actions: [
+            assign({
+              selectingComponentId: (_, event: any) => event.selectingComponentId,
+              repositioningFeatureDataset: (_, event: any) => event.repositioningFeatureDataset,
+              repositioningPropertyIndex: (_, event: any) => event.repositioningPropertyIndex,
+            }),
+          ],
+        },
         TOGGLE_FILTER: {
           target: 'filtering',
         },
@@ -31,7 +41,30 @@ const featureViewStates = {
     },
     selecting: {
       on: {
-        FINISH_SELECTION: { target: 'browsing' },
+        FINISH_SELECTION: {
+          target: 'browsing',
+          actions: [assign({ selectingComponentId: () => null })],
+        },
+        SET_FILE_PROPERTY_LOCATIONS: {
+          actions: [
+            assign({ filePropertyLocations: (_, event: any) => event.locations }),
+            raise('REQUEST_FIT_BOUNDS'),
+          ],
+        },
+      },
+    },
+    repositioning: {
+      on: {
+        FINISH_REPOSITION: {
+          target: 'browsing',
+          actions: [
+            assign({
+              repositioningFeatureDataset: () => null,
+              repositioningPropertyIndex: () => null,
+              selectingComponentId: () => null,
+            }),
+          ],
+        },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({ filePropertyLocations: (_, event: any) => event.locations }),
@@ -382,6 +415,8 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
     selectedFeatureDataset: null,
+    repositioningFeatureDataset: null,
+    repositioningPropertyIndex: null,
     selectingComponentId: null,
     isLoading: false,
     searchCriteria: null,

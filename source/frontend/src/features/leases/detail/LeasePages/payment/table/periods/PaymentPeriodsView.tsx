@@ -96,6 +96,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
       <Table<FormLeasePeriod>
         name="leasePaymentsTable"
         columns={columns}
+        className="no-zebra-rows"
         data={leaseForm.periods ?? []}
         manualPagination
         hideToolbar

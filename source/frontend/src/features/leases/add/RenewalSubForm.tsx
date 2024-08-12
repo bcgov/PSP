@@ -34,7 +34,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                   <Section header={`Renewal ${index + 1}`} noPadding>
                     <Row>
                       <Col xs="7">
-                        <SectionField label="Excercised?" labelWidth="6" required>
+                        <SectionField label="Exercised?" labelWidth="6" required>
                           <YesNoSelect field={`${fieldName}.${index}.isExercised`} notNullable />
                         </SectionField>
                       </Col>

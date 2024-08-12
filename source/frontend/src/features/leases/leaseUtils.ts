@@ -24,12 +24,12 @@ export const getCalculatedExpiry = (
   lease: ApiGen_Concepts_Lease,
   renewals: ApiGen_Concepts_LeaseRenewal[],
 ): string => {
-  const excercisedRenewalDates = renewals.filter(r => r.isExercised).flatMap(fr => fr.expiryDt);
+  const exercisedRenewalDates = renewals.filter(r => r.isExercised).flatMap(fr => fr.expiryDt);
 
   let calculatedExpiry: string | null = lease?.expiryDate ?? '';
-  for (let i = 0; i < excercisedRenewalDates.length; i++) {
-    if (moment(excercisedRenewalDates[i]).isAfter(calculatedExpiry)) {
-      calculatedExpiry = excercisedRenewalDates[i];
+  for (let i = 0; i < exercisedRenewalDates.length; i++) {
+    if (moment(exercisedRenewalDates[i]).isAfter(calculatedExpiry)) {
+      calculatedExpiry = exercisedRenewalDates[i];
     }
   }
   return calculatedExpiry;

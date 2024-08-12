@@ -1,5 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
+import { LatLngLiteral } from 'leaflet';
+import isNumber from 'lodash/isNumber';
 import { useContext, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -17,7 +19,7 @@ import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { isValidId } from '@/utils';
+import { isLatLngInFeatureSetBoundary, isValidId } from '@/utils';
 
 import { AddressForm, FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -150,7 +152,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         >
           {formikProps => (
             <FieldArray name="properties">
-              {({ push, remove }) => (
+              {({ push, remove, replace }) => (
                 <>
                   <Row className="py-3 no-gutters">
                     <Col>
@@ -192,6 +194,25 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                             });
                           }, Promise.resolve());
                         }}
+                        repositionSelectedProperty={(
+                          featureset: LocationFeatureDataset,
+                          latLng: LatLngLiteral,
+                          index: number | null,
+                        ) => {
+                          // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
+                          if (
+                            isNumber(index) &&
+                            index >= 0 &&
+                            isLatLngInFeatureSetBoundary(latLng, featureset)
+                          ) {
+                            const formProperty = formikProps.values.properties[index];
+                            const updatedFormProperty = new PropertyForm(formProperty);
+                            updatedFormProperty.fileLocation = latLng;
+
+                            // Find property within formik values and reposition it based on incoming file marker position
+                            replace(index, updatedFormProperty);
+                          }
+                        }}
                         modifiedProperties={formikProps.values.properties.map(p =>
                           p.toFeatureDataset(),
                         )}
@@ -212,7 +233,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                         }}
                         nameSpace={`properties.${index}`}
                         index={index}
-                        property={property.toMapProperty()}
+                        property={property.toFeatureDataset()}
                       />
                     ))}
                     {formikProps.values.properties.length === 0 && (
