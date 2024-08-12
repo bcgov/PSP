@@ -637,11 +637,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to first term payments
             periodPayments.OpenClosePeriodCategoryPayments(lease.PeriodPayments[0].PeriodParentIndex);
 
-            //Update Payment for first period
-            //periodPayments.EditNthPayment(lease.PeriodPayments[0].PeriodParentIndex, 1);
-            //periodPayments.AddPayment(lease.PeriodPayments[0], lease.PeriodPayments[0].ParentPeriodPaymentType);
-            //periodPayments.VerifyInsertedPaymentTable(lease.PeriodPayments[0], lease.PeriodPayments[0].PeriodParentIndex);
-
             //Delete last term last payment
             periodPayments.DeleteLastPayment(lease.PeriodPayments[0].PeriodParentIndex);
         }

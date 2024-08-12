@@ -285,7 +285,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     FocusAndClick(licenseDetailsPurposeMultiselector);
 
-                    Wait(2000);
+                    Wait();
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
