@@ -335,6 +335,11 @@ namespace Pims.Api.Services
             return _leaseRepository.Get(leaseId);
         }
 
+        public IEnumerable<PimsLeaseStakeholderType> GetAllStakeholderTypes()
+        {
+            return _leaseRepository.GetAllLeaseStakeholderTypes();
+        }
+
         private static void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals)
         {
             if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
@@ -575,6 +580,5 @@ namespace Pims.Api.Services
                 }
             }
         }
-
     }
 }

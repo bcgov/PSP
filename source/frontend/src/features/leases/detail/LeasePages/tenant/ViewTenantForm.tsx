@@ -16,6 +16,7 @@ export interface ITenantProps {
   nameSpace?: string;
   tenants: FormTenant[];
   loading?: boolean;
+  isPayableLease: boolean;
 }
 
 /**
@@ -26,6 +27,7 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
   nameSpace,
   tenants,
   loading,
+  isPayableLease,
 }) => {
   return (
     <FormSectionOne>
@@ -36,119 +38,182 @@ export const ViewTenantForm: React.FunctionComponent<React.PropsWithChildren<ITe
       >
         <>
           <LoadingBackdrop show={loading} parentScreen />
-          <Section header="Assignee">
-            {tenants.map(
-              (tenant: FormTenant, index) =>
-                tenant.tenantType === 'ASGN' && (
-                  <div key={`tenants-${index}`}>
-                    <>
-                      {tenant.organizationId ? (
-                        <TenantOrganizationContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      ) : (
-                        <TenantPersonContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      )}
-                    </>
-                  </div>
-                ),
-            )}
-          </Section>
 
-          <Section header="Tenant">
-            {tenants.map(
-              (tenant: FormTenant, index) =>
-                tenant.tenantType === 'TEN' && (
-                  <div key={`tenants-${index}`}>
-                    <>
-                      {tenant.organizationId ? (
-                        <TenantOrganizationContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      ) : (
-                        <TenantPersonContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      )}
-                    </>
-                  </div>
-                ),
-            )}
-          </Section>
+          {!isPayableLease && (
+            <Section header="Assignee">
+              {tenants.map(
+                (tenant: FormTenant, index) =>
+                  tenant.tenantType === 'ASGN' && (
+                    <div key={`tenants-${index}`}>
+                      <>
+                        {tenant.organizationId ? (
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        ) : (
+                          <TenantPersonContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        )}
+                      </>
+                    </div>
+                  ),
+              )}
+            </Section>
+          )}
 
-          <Section header="Representative">
-            {tenants.map(
-              (tenant: FormTenant, index) =>
-                tenant.tenantType === 'REP' && (
-                  <div key={`tenants-${index}`}>
-                    <>
-                      {tenant.lessorTypeCode?.id === 'ORG' ? (
-                        <TenantOrganizationContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      ) : (
-                        <TenantPersonContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      )}
-                    </>
-                  </div>
-                ),
-            )}
-          </Section>
+          {!isPayableLease && (
+            <Section header="Tenant">
+              {tenants.map(
+                (tenant: FormTenant, index) =>
+                  tenant.tenantType === 'TEN' && (
+                    <div key={`tenants-${index}`}>
+                      <>
+                        {tenant.organizationId ? (
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        ) : (
+                          <TenantPersonContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        )}
+                      </>
+                    </div>
+                  ),
+              )}
+            </Section>
+          )}
 
-          <Section header="Property Manager">
-            {tenants.map(
-              (tenant: FormTenant, index) =>
-                tenant.tenantType === 'PMGR' && (
-                  <div key={`tenants-${index}`}>
-                    <>
-                      {tenant.lessorTypeCode?.id === 'ORG' ? (
-                        <TenantOrganizationContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      ) : (
-                        <TenantPersonContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      )}
-                    </>
-                  </div>
-                ),
-            )}
-          </Section>
-          <Section header="Unknown">
-            {tenants.map(
-              (tenant: FormTenant, index) =>
-                tenant.tenantType === 'UNK' && (
-                  <div key={`tenants-${index}`}>
-                    <>
-                      {tenant.lessorTypeCode?.id === 'ORG' ? (
-                        <TenantOrganizationContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      ) : (
-                        <TenantPersonContactInfo
-                          disabled={true}
-                          nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
-                        />
-                      )}
-                    </>
-                  </div>
-                ),
-            )}
-          </Section>
+          {!isPayableLease && (
+            <Section header="Representative">
+              {tenants.map(
+                (tenant: FormTenant, index) =>
+                  tenant.tenantType === 'REP' && (
+                    <div key={`tenants-${index}`}>
+                      <>
+                        {tenant.lessorTypeCode?.id === 'ORG' ? (
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        ) : (
+                          <TenantPersonContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        )}
+                      </>
+                    </div>
+                  ),
+              )}
+            </Section>
+          )}
+
+          {!isPayableLease && (
+            <Section header="Property Manager">
+              {tenants.map(
+                (tenant: FormTenant, index) =>
+                  tenant.tenantType === 'PMGR' && (
+                    <div key={`tenants-${index}`}>
+                      <>
+                        {tenant.lessorTypeCode?.id === 'ORG' ? (
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        ) : (
+                          <TenantPersonContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        )}
+                      </>
+                    </div>
+                  ),
+              )}
+            </Section>
+          )}
+
+          {!isPayableLease && (
+            <Section header="Unknown">
+              {tenants.map(
+                (tenant: FormTenant, index) =>
+                  tenant.tenantType === 'UNK' && (
+                    <div key={`tenants-${index}`}>
+                      <>
+                        {tenant.lessorTypeCode?.id === 'ORG' ? (
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        ) : (
+                          <TenantPersonContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        )}
+                      </>
+                    </div>
+                  ),
+              )}
+            </Section>
+          )}
+
+          {isPayableLease && (
+            <Section header="Owner">
+              {tenants.map(
+                (tenant: FormTenant, index) =>
+                  tenant.tenantType === 'OWNER' && (
+                    <div key={`tenants-${index}`}>
+                      <>
+                        {tenant.lessorTypeCode?.id === 'ORG' ? (
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        ) : (
+                          <TenantPersonContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        )}
+                      </>
+                    </div>
+                  ),
+              )}
+            </Section>
+          )}
+
+          {isPayableLease && (
+            <Section header="Owner Representative">
+              {tenants.map(
+                (tenant: FormTenant, index) =>
+                  tenant.tenantType === 'OWNREP' && (
+                    <div key={`tenants-${index}`}>
+                      <>
+                        {tenant.lessorTypeCode?.id === 'ORG' ? (
+                          <TenantOrganizationContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        ) : (
+                          <TenantPersonContactInfo
+                            disabled={true}
+                            nameSpace={withNameSpace(nameSpace, `tenants.${index}`)}
+                          />
+                        )}
+                      </>
+                    </div>
+                  ),
+              )}
+            </Section>
+          )}
+
           {tenants.length === 0 && (
             <StyledSection>
               <p>There are no tenants associated to this lease.</p>

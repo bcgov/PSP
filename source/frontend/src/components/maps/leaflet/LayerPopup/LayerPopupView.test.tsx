@@ -112,7 +112,7 @@ describe('LayerPopupView component', () => {
           crownLandLicensesFeature: null,
           crownLandTenuresFeature: null,
           crownLandInventoryFeature: null,
-          crownLandInclusionsFeature: null
+          crownLandInclusionsFeature: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
@@ -154,7 +154,7 @@ describe('LayerPopupView component', () => {
           crownLandLicensesFeature: null,
           crownLandTenuresFeature: null,
           crownLandInventoryFeature: null,
-          crownLandInclusionsFeature: null
+          crownLandInclusionsFeature: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
@@ -201,7 +201,7 @@ describe('LayerPopupView component', () => {
           crownLandLicensesFeature: null,
           crownLandTenuresFeature: null,
           crownLandInventoryFeature: null,
-          crownLandInclusionsFeature: null
+          crownLandInclusionsFeature: null,
         },
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
@@ -264,7 +264,7 @@ describe('LayerPopupView component', () => {
           crownLandLicensesFeature: null,
           crownLandTenuresFeature: null,
           crownLandInventoryFeature: null,
-          crownLandInclusionsFeature: null
+          crownLandInclusionsFeature: null,
         },
         claims: [Claims.PROPERTY_ADD],
       });
@@ -302,7 +302,7 @@ describe('LayerPopupView component', () => {
           crownLandLicensesFeature: null,
           crownLandTenuresFeature: null,
           crownLandInventoryFeature: null,
-          crownLandInclusionsFeature: null
+          crownLandInclusionsFeature: null,
         },
         claims: [Claims.PROPERTY_ADD],
       });
@@ -339,7 +339,7 @@ describe('LayerPopupView component', () => {
           crownLandLicensesFeature: null,
           crownLandTenuresFeature: null,
           crownLandInventoryFeature: null,
-          crownLandInclusionsFeature: null
+          crownLandInclusionsFeature: null,
         },
         claims: [Claims.PROPERTY_ADD],
       });

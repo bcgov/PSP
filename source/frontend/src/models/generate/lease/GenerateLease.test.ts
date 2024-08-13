@@ -1,7 +1,7 @@
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
@@ -358,7 +358,7 @@ describe('GenerateLease tests', () => {
       [],
       [
         { person: { firstName: 'first', middleNames: 'middle', surname: 'last' } },
-      ] as ApiGen_Concepts_LeaseTenant[],
+      ] as ApiGen_Concepts_LeaseStakeholder[],
       [],
       [],
       [],
@@ -374,9 +374,9 @@ describe('GenerateLease tests', () => {
       [
         {
           person: { firstName: 'first', middleNames: 'middle', surname: 'last' },
-          tenantTypeCode: { id: 'TEN' },
+          stakeholderTypeCode: { id: 'TEN' },
         },
-      ] as ApiGen_Concepts_LeaseTenant[],
+      ] as ApiGen_Concepts_LeaseStakeholder[],
       [],
       [],
       [],
@@ -391,8 +391,8 @@ describe('GenerateLease tests', () => {
       {} as ApiGen_Concepts_Lease,
       [],
       [
-        { organization: { name: 'test org' }, tenantTypeCode: { id: 'TEN' } },
-      ] as ApiGen_Concepts_LeaseTenant[],
+        { organization: { name: 'test org' }, stakeholderTypeCode: { id: 'TEN' } },
+      ] as ApiGen_Concepts_LeaseStakeholder[],
       [],
       [],
       [],
@@ -409,9 +409,9 @@ describe('GenerateLease tests', () => {
       [
         {
           organization: { name: 'test org', incorporationNumber: '1234' },
-          tenantTypeCode: { id: 'TEN' },
+          stakeholderTypeCode: { id: 'TEN' },
         },
-      ] as ApiGen_Concepts_LeaseTenant[],
+      ] as ApiGen_Concepts_LeaseStakeholder[],
       [],
       [],
       [],
@@ -429,9 +429,9 @@ describe('GenerateLease tests', () => {
         {
           organization: { name: 'test org' },
           primaryContact: { firstName: 'first', middleNames: 'middle', surname: 'last' },
-          tenantTypeCode: { id: 'TEN' },
+          stakeholderTypeCode: { id: 'TEN' },
         },
-      ] as ApiGen_Concepts_LeaseTenant[],
+      ] as ApiGen_Concepts_LeaseStakeholder[],
       [],
       [],
       [],
@@ -460,9 +460,9 @@ describe('GenerateLease tests', () => {
               },
             ],
           },
-          tenantTypeCode: { id: 'TEN' },
+          stakeholderTypeCode: { id: 'TEN' },
         },
-      ] as ApiGen_Concepts_LeaseTenant[],
+      ] as ApiGen_Concepts_LeaseStakeholder[],
       [],
       [],
       [],
