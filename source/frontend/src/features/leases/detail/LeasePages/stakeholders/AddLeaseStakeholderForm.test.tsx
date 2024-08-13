@@ -36,7 +36,7 @@ vi.mock('@/hooks/pims-api/useApiContacts', () => ({
   },
 }));
 
-const leaseStakeholderTypesList = [
+export const leaseStakeholderTypesList = [
   {
     code: 'ASGN',
     description: 'Assignee',
@@ -226,7 +226,9 @@ describe('AddLeaseTenantForm component', () => {
 
   it('displays the number of previously selected payee', async () => {
     await setup({
-      selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+      ],
       isPayableLease: true,
     });
 
@@ -391,7 +393,9 @@ describe('AddLeaseTenantForm component', () => {
 
   it('displays expected options for tenants', async () => {
     await setup({
-      selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+      ],
       stakeholderTypesOptions: leaseStakeholderTypesList,
     });
 
@@ -410,7 +414,9 @@ describe('AddLeaseTenantForm component', () => {
 
   it('displays expected options for payees', async () => {
     await setup({
-      selectedTenants: [new FormTenant(undefined, getMockContactOrganizationWithOnePerson())],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+      ],
       isPayableLease: true,
       stakeholderTypesOptions: leaseStakeholderTypesList,
     });

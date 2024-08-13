@@ -8,10 +8,11 @@ import { defaultApiLease } from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { FormStakeholder } from './models';
-import { ITenantProps, ViewTenantForm } from './ViewStakeholderForm';
+import { ITenantProps, ViewStakeholderForm } from './ViewStakeholderForm';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
+import { leaseStakeholderTypesList } from './AddLeaseStakeholderForm.test';
 
 const history = createMemoryHistory();
 
@@ -21,9 +22,11 @@ const storeState = {
 
 describe('Tenant component', () => {
   const setup = (
-    renderOptions: RenderOptions & ITenantProps & { lease?: ApiGen_Concepts_Lease } = {
+    renderOptions: RenderOptions &
+      ITenantProps & { lease?: ApiGen_Concepts_Lease; isPayableLease: boolean } = {
       stakeholders: [],
       isPayableLease: false,
+      leaseStakeholderTypes: leaseStakeholderTypesList,
     },
   ) => {
     // render component under test
@@ -31,10 +34,11 @@ describe('Tenant component', () => {
       <LeaseContextProvider
         initialLease={renderOptions.lease ? renderOptions.lease : defaultApiLease()}
       >
-        <ViewTenantForm
+        <ViewStakeholderForm
           nameSpace={renderOptions.nameSpace}
           stakeholders={renderOptions.stakeholders ?? []}
           isPayableLease={renderOptions.isPayableLease ?? false}
+          leaseStakeholderTypes={renderOptions.leaseStakeholderTypes ?? leaseStakeholderTypesList}
         />
       </LeaseContextProvider>,
       {
@@ -112,8 +116,8 @@ describe('Tenant component', () => {
       lease: {
         ...defaultApiLease(),
         stakeholders: [],
-        isPayableLease: false,
       },
+      isPayableLease: false,
       stakeholders: [
         {
           leaseId: 1,
@@ -189,7 +193,7 @@ describe('Tenant component', () => {
   it('renders owner section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
-      tenants: [],
+      stakeholders: [],
       isPayableLease: true,
     });
     const { getAllByText } = component;
@@ -201,7 +205,7 @@ describe('Tenant component', () => {
   it('renders owner representative section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
-      tenants: [],
+      stakeholders: [],
       isPayableLease: true,
     });
     const { getAllByText } = component;

@@ -29,7 +29,7 @@ import { ChecklistItemFormModel } from '../mapSideBar/shared/tabs/checklist/upda
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
 import { FormLeasePeriod } from './detail/LeasePages/payment/models';
-import { FormStakeholder } from './detail/LeasePages/tenant/models';
+import { FormStakeholder } from './detail/LeasePages/stakeholders/models';
 import { LeasePurposeModel } from './models/LeasePurposeModel';
 
 export class FormLeaseRenewal {

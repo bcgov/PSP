@@ -6,13 +6,14 @@ import { Claims } from '@/constants';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 
 import AddLeaseStakeholderContainer from './AddLeaseStakeholderContainer';
 import AddLeaseStakeholderForm from './AddLeaseStakeholderForm';
 import { FormStakeholder } from './models';
-import ViewTenantForm from './ViewStakeholderForm';
+import ViewStakeholderForm from './ViewStakeholderForm';
 
 const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<void>>> = ({
   isEditing,
@@ -27,9 +28,19 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
   const {
     getLeaseStakeholders: { execute: getLeaseStakeholders, loading, response: stakeholders },
   } = useLeaseStakeholderRepository();
+  const {
+    getLeaseStakeholderTypes: {
+      execute: getLeaseStakeholderTypes,
+      response: leaseStakeholderTypes,
+    },
+  } = useLeaseRepository();
+
   useEffect(() => {
-    lease?.id && getLeaseStakeholders(lease.id);
-  }, [lease, getLeaseStakeholders]);
+    if (lease?.id) {
+      getLeaseStakeholders(lease.id);
+      getLeaseStakeholderTypes();
+    }
+  }, [lease, getLeaseStakeholders, getLeaseStakeholderTypes]);
 
   const formStakeholders =
     stakeholders?.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormStakeholder(t)) ?? [];
@@ -46,7 +57,12 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
       />
     </ProtectedComponent>
   ) : (
-    <ViewTenantForm stakeholders={formStakeholders} loading={loading} />
+    <ViewStakeholderForm
+      stakeholders={formStakeholders}
+      loading={loading}
+      leaseStakeholderTypes={leaseStakeholderTypes ?? []}
+      isPayableLease={getIsPayableLease()}
+    />
   );
 };
 
