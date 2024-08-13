@@ -11,13 +11,14 @@ import { getPrimaryContact } from '@/features/contacts/contactUtils';
 import { isValidId } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { FormTenant } from './models';
+import { FormStakeholder } from './models';
 
 const getColumns = (
-  tenantTypes: SelectOption[],
+  stakeholderTypes: SelectOption[],
   isPayableLease: boolean,
-): ColumnWithProps<FormTenant>[] => {
+): ColumnWithProps<FormStakeholder>[] => {
   const stakeholderType = isPayableLease ? 'Payee type' : 'Contact type';
+  console.log(stakeholderTypes);
   return [
     {
       Header: (
@@ -31,7 +32,7 @@ const getColumns = (
       width: 16,
       maxWidth: 16,
       minWidth: 16,
-      Cell: (props: CellProps<FormTenant>) => {
+      Cell: (props: CellProps<FormStakeholder>) => {
         const original = props.row.original;
         const status =
           original.original !== undefined
@@ -48,11 +49,11 @@ const getColumns = (
     },
     {
       Header: '',
-      accessor: 'leaseTenantId',
+      accessor: 'leaseStakeholderId',
       align: 'right',
       width: 16,
       maxWidth: 16,
-      Cell: (props: CellProps<FormTenant>) => {
+      Cell: (props: CellProps<FormStakeholder>) => {
         const original = props.row.original;
         const status =
           original.original !== undefined
@@ -78,7 +79,7 @@ const getColumns = (
       clickable: true,
       width: 120,
       maxWidth: 150,
-      Cell: (props: CellProps<FormTenant>) => (
+      Cell: (props: CellProps<FormStakeholder>) => (
         <Link to={`/contact/${props.row.original.id}`} target="_blank" rel="noopener noreferrer">
           {props.row.original.summary}
         </Link>
@@ -90,16 +91,16 @@ const getColumns = (
       align: 'left',
       minWidth: 150,
       width: 120,
-      Cell: (props: CellProps<FormTenant>) => {
-        const tenant = props.row.original;
+      Cell: (props: CellProps<FormStakeholder>) => {
+        const stakeholder = props.row.original;
         const persons =
-          tenant.original !== undefined && isValidId(tenant.organizationId)
-            ? tenant?.original.organization.organizationPersons?.map(op => op.person)
-            : tenant?.organizationPersons?.map(op => op.person);
-        let initialPrimaryContact = tenant.initialPrimaryContact;
-        if (Number(tenant.primaryContactId) !== initialPrimaryContact?.id) {
-          initialPrimaryContact = tenant.primaryContactId
-            ? getPrimaryContact(Number(tenant.primaryContactId), tenant) ?? undefined
+          stakeholder.original !== undefined && isValidId(stakeholder.organizationId)
+            ? stakeholder?.original.organization.organizationPersons?.map(op => op.person)
+            : stakeholder?.organizationPersons?.map(op => op.person);
+        let initialPrimaryContact = stakeholder.initialPrimaryContact;
+        if (Number(stakeholder.primaryContactId) !== initialPrimaryContact?.id) {
+          initialPrimaryContact = stakeholder.primaryContactId
+            ? getPrimaryContact(Number(stakeholder.primaryContactId), stakeholder) ?? undefined
             : undefined;
         }
         const primaryContactOptions: SelectOption[] =
@@ -107,13 +108,13 @@ const getColumns = (
             label: formatApiPersonNames(person),
             value: person?.id ?? 0,
           })) ?? [];
-        if (isValidId(tenant?.personId)) {
+        if (isValidId(stakeholder?.personId)) {
           return <p>Not applicable</p>;
         } else if (persons?.length && persons?.length > 1) {
           return (
             <Select
-              key={`tenants.primaryContact.${persons[0]?.id ?? props?.row?.index}`}
-              field={`tenants.${props.row.index}.primaryContactId`}
+              key={`stakeholders.primaryContact.${persons[0]?.id ?? props?.row?.index}`}
+              field={`stakeholders.${props.row.index}.primaryContactId`}
               type="number"
               options={primaryContactOptions}
               placeholder="Select a contact"
@@ -121,7 +122,7 @@ const getColumns = (
           );
         } else if (persons?.length === 1) {
           return (
-            <p key={`tenants.primaryContact.${persons[0]?.id ?? props?.row?.index}`}>
+            <p key={`stakeholders.primaryContact.${persons[0]?.id ?? props?.row?.index}`}>
               {formatApiPersonNames(initialPrimaryContact ?? persons[0])}
             </p>
           );
@@ -136,7 +137,7 @@ const getColumns = (
       align: 'left',
       minWidth: 80,
       width: 100,
-      Cell: (props: CellProps<FormTenant>) => {
+      Cell: (props: CellProps<FormStakeholder>) => {
         return (
           <div>
             <p>{props.row.original.email}</p>
@@ -150,16 +151,16 @@ const getColumns = (
     },
     {
       Header: stakeholderType,
-      accessor: 'tenantType',
+      accessor: 'stakeholderType',
       align: 'left',
       minWidth: 80,
       width: 100,
-      Cell: (props: CellProps<FormTenant>) => {
+      Cell: (props: CellProps<FormStakeholder>) => {
         return (
           <Select
-            field={`tenants.${props.row.index}.tenantType`}
+            field={`stakeholders.${props.row.index}.stakeholderType`}
             type="number"
-            options={tenantTypes}
+            options={stakeholderTypes}
           ></Select>
         );
       },

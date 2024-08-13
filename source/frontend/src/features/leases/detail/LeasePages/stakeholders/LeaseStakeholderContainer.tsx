@@ -6,13 +6,13 @@ import { Claims } from '@/constants';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 
-import AddLeaseTenantContainer from './AddLeaseTenantContainer';
-import AddLeaseTenantForm from './AddLeaseTenantForm';
-import { FormTenant } from './models';
-import ViewTenantForm from './ViewTenantForm';
+import AddLeaseStakeholderContainer from './AddLeaseStakeholderContainer';
+import AddLeaseStakeholderForm from './AddLeaseStakeholderForm';
+import { FormStakeholder } from './models';
+import ViewTenantForm from './ViewStakeholderForm';
 
 const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<void>>> = ({
   isEditing,
@@ -25,28 +25,28 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
     return lease?.paymentReceivableType.id !== 'RCVBL' ? true : false;
   };
   const {
-    getLeaseTenants: { execute: getLeaseTenants, loading, response: tenants },
-  } = useLeaseTenantRepository();
+    getLeaseStakeholders: { execute: getLeaseStakeholders, loading, response: stakeholders },
+  } = useLeaseStakeholderRepository();
   useEffect(() => {
-    lease?.id && getLeaseTenants(lease.id);
-  }, [lease, getLeaseTenants]);
+    lease?.id && getLeaseStakeholders(lease.id);
+  }, [lease, getLeaseStakeholders]);
 
-  const formTenants =
-    tenants?.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormTenant(t)) ?? [];
+  const formStakeholders =
+    stakeholders?.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormStakeholder(t)) ?? [];
 
   return isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
-      <AddLeaseTenantContainer
+      <AddLeaseStakeholderContainer
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
         onEdit={onEdit}
-        tenants={formTenants}
-        View={AddLeaseTenantForm}
+        stakeholders={formStakeholders}
+        View={AddLeaseStakeholderForm}
         onSuccess={onSuccess}
         isPayableLease={getIsPayableLease()}
       />
     </ProtectedComponent>
   ) : (
-    <ViewTenantForm tenants={formTenants} loading={loading} isPayableLease={getIsPayableLease()} />
+    <ViewTenantForm stakeholders={formStakeholders} loading={loading} />
   );
 };
 

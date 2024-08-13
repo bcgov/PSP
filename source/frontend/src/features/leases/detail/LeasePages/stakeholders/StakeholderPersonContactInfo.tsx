@@ -7,7 +7,7 @@ import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { LeaseFormModel } from '@/features/leases/models';
 import { withNameSpace } from '@/utils/formUtils';
 
-import { FormTenant } from './models';
+import { FormStakeholder } from './models';
 
 export interface ITenantPersonContactInfoProps {
   nameSpace: string;
@@ -22,7 +22,7 @@ export const TenantPersonContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantPersonContactInfoProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace }) => {
   const { values } = useFormikContext<LeaseFormModel>();
-  const tenant: FormTenant = getIn(values, nameSpace);
+  const tenant: FormStakeholder = getIn(values, nameSpace);
   return (
     <StyledSectionWrapper>
       <SectionField labelWidth="2" contentWidth="10" label="Person">

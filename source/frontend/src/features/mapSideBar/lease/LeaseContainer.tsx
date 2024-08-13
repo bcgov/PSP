@@ -21,7 +21,7 @@ import PeriodPaymentsView, {
   IPeriodPaymentsViewProps,
 } from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
-import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
+import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/tenant/LeaseStakeholderContainer';
 import { LeaseFormModel } from '@/features/leases/models';
 
 import { SideBarContext } from '../context/sidebarContext';
@@ -101,7 +101,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
     LeasePageNames.TENANT,
     {
       pageName: LeasePageNames.TENANT,
-      component: TenantContainer,
+      component: LeaseStakeholderContainer,
       title: 'Tenant',
     },
   ],
