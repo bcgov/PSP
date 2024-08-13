@@ -7,6 +7,7 @@ import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
+import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiLeases } from '../pims-api/useApiLeases';
@@ -21,6 +22,7 @@ export const useLeaseRepository = () => {
     putLeaseChecklist,
     getLeaseChecklist,
     getLeaseRenewals,
+    getLeaseStakeholderTypes,
   } = useApiLeases();
 
   const getLastUpdatedBy = useApiRequestWrapper<
@@ -44,7 +46,7 @@ export const useLeaseRepository = () => {
     ),
     requestName: 'getApiLease',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retreive lease.'),
+    onError: useAxiosErrorHandler('Failed to retrieve lease.'),
   });
 
   const getLeaseRenewalsApi = useApiRequestWrapper<
@@ -56,7 +58,7 @@ export const useLeaseRepository = () => {
     ),
     requestName: 'getLeaseRenewalsApi',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retreive lease renewals.'),
+    onError: useAxiosErrorHandler('Failed to retrieve lease renewals.'),
   });
 
   const getLeaseChecklistApi = useApiRequestWrapper<
@@ -83,6 +85,18 @@ export const useLeaseRepository = () => {
     throwError: true,
   });
 
+  const getLeaseStakeholderTypesApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<ApiGen_Concepts_LeaseStakeholderType[], any>>
+  >({
+    requestFunction: useCallback(
+      async () => await getLeaseStakeholderTypes(),
+      [getLeaseStakeholderTypes],
+    ),
+    requestName: 'getLeaseStakeholderTypes',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve Lease Stakeholder Types.'),
+  });
+
   return useMemo(
     () => ({
       getLastUpdatedBy: getLastUpdatedBy,
@@ -90,6 +104,7 @@ export const useLeaseRepository = () => {
       getLeaseRenewals: getLeaseRenewalsApi,
       getLeaseChecklist: getLeaseChecklistApi,
       putLeaseChecklist: updateLeaseChecklistApi,
+      getLeaseStakeholderTypes: getLeaseStakeholderTypesApi,
     }),
     [
       getLastUpdatedBy,
@@ -97,6 +112,7 @@ export const useLeaseRepository = () => {
       getLeaseRenewalsApi,
       getLeaseChecklistApi,
       updateLeaseChecklistApi,
+      getLeaseStakeholderTypesApi,
     ],
   );
 };

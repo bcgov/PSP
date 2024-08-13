@@ -2,7 +2,7 @@ import moment from 'moment';
 
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { isValidId } from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
@@ -10,7 +10,7 @@ import { formatNames } from '@/utils/personUtils';
  * return all of the person tenant names and organization tenant names of this lease
  * @param lease
  */
-export const getAllNames = (tenants: ApiGen_Concepts_LeaseTenant[]): string[] => {
+export const getAllNames = (tenants: ApiGen_Concepts_LeaseStakeholder[]): string[] => {
   const persons = tenants?.filter(t => isValidId(t.personId)).map(p => p.person) ?? [];
   const organizations = tenants?.filter(t => !isValidId(t.personId)).map(p => p.organization) ?? [];
   const allNames =

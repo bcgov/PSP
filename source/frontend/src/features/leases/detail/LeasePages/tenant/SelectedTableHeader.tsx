@@ -3,11 +3,13 @@ import * as CommonStyled from '@/components/common/styles';
 
 const SelectedTableHeader: React.FC<React.PropsWithChildren<ISelectedTableHeaderProps>> = ({
   selectedCount,
+  isPayableLease,
 }) => {
   return (
     <>
       <CommonStyled.SelectedText>
-        {selectedCount} Tenants associated with this Lease/Licence
+        {selectedCount} {isPayableLease ? 'Payee(s)' : 'Tenant(s)'} associated with this
+        Lease/Licence
       </CommonStyled.SelectedText>
     </>
   );

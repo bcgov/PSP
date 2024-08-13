@@ -5,6 +5,7 @@ import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
 import { Select, SelectOption } from '@/components/common/form';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import { getPrimaryContact } from '@/features/contacts/contactUtils';
 import { isValidId } from '@/utils';
@@ -12,10 +13,19 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { FormTenant } from './models';
 
-const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] => {
+const getColumns = (
+  tenantTypes: SelectOption[],
+  isPayableLease: boolean,
+): ColumnWithProps<FormTenant>[] => {
+  const stakeholderType = isPayableLease ? 'Payee type' : 'Contact type';
   return [
     {
-      Header: '',
+      Header: (
+        <TooltipIcon
+          toolTipId="stakeholder-status"
+          toolTip="Green dot indicates contact is active"
+        ></TooltipIcon>
+      ),
       accessor: 'isDisabled',
       align: 'right',
       width: 16,
@@ -42,12 +52,24 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       align: 'right',
       width: 16,
       maxWidth: 16,
-      Cell: (props: CellProps<FormTenant>) =>
-        isValidId(props.row.original.personId) ? (
-          <FaRegUser size={16} />
+      Cell: (props: CellProps<FormTenant>) => {
+        const original = props.row.original;
+        const status =
+          original.original !== undefined
+            ? original.original.id.startsWith('O') === true
+              ? original.original.organization.isDisabled
+              : original.isDisabled
+            : original.isDisabled;
+        return isValidId(props.row.original.personId) ? (
+          <StatusIndicators className={status ? 'inactive' : 'active'}>
+            <FaRegUser size={16} />
+          </StatusIndicators>
         ) : (
-          <FaRegBuilding size={16} />
-        ),
+          <StatusIndicators className={status ? 'inactive' : 'active'}>
+            <FaRegBuilding size={16} />
+          </StatusIndicators>
+        );
+      },
     },
     {
       Header: 'Summary',
@@ -127,8 +149,8 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       },
     },
     {
-      Header: 'Contact type',
-      accessor: 'email',
+      Header: stakeholderType,
+      accessor: 'tenantType',
       align: 'left',
       minWidth: 80,
       width: 100,

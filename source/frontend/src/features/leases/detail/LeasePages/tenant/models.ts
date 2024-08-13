@@ -6,7 +6,7 @@ import {
 import { IAddress, IContactSearchResult } from '@/interfaces';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -89,12 +89,12 @@ export class FormTenant {
     return contact;
   };
 
-  public static toApi(model: FormTenant): ApiGen_Concepts_LeaseTenant {
+  public static toApi(model: FormTenant): ApiGen_Concepts_LeaseStakeholder {
     return {
       personId: model.personId ?? null,
       organizationId: !isValidId(model.personId) ? model.organizationId ?? null : null,
       lessorType: model.lessorTypeCode ?? null,
-      tenantTypeCode: toTypeCodeNullable(model.tenantType),
+      stakeholderTypeCode: toTypeCodeNullable(model.tenantType),
       primaryContactId: !isValidId(model.personId)
         ? isValidId(Number(model.primaryContactId))
           ? Number(model.primaryContactId)
@@ -102,7 +102,7 @@ export class FormTenant {
         : null,
       note: model.note ?? null,
       leaseId: model.leaseId ?? 0,
-      leaseTenantId: null,
+      leaseStakeholderId: null,
       organization: null,
       person: null,
       primaryContact: null,
@@ -110,7 +110,10 @@ export class FormTenant {
     };
   }
 
-  constructor(apiModel?: ApiGen_Concepts_LeaseTenant, selectedContactModel?: IContactSearchResult) {
+  constructor(
+    apiModel?: ApiGen_Concepts_LeaseStakeholder,
+    selectedContactModel?: IContactSearchResult,
+  ) {
     if (exists(apiModel)) {
       // convert an api tenant to a form tenant.
       const tenant = apiModel.person ?? apiModel.organization;
@@ -141,7 +144,7 @@ export class FormTenant {
         getPreferredContactMethodValue(tenant?.contactMethods, ContactMethodTypes.WorkMobile) ??
         undefined;
       this.lessorTypeCode = apiModel.lessorType ?? undefined;
-      this.tenantType = fromTypeCode(apiModel.tenantTypeCode) ?? undefined;
+      this.tenantType = fromTypeCode(apiModel.stakeholderTypeCode) ?? undefined;
       this.primaryContactId = apiModel.primaryContactId?.toString() ?? undefined;
       this.initialPrimaryContact = apiModel.primaryContact ?? undefined;
     } else if (exists(selectedContactModel)) {

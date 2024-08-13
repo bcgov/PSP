@@ -4,18 +4,16 @@ import { Prompt } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { TableSelect } from '@/components/common/form';
+import { SelectOption, TableSelect } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { Claims } from '@/constants';
-import { TENANT_TYPES } from '@/constants/API';
 import { LeaseFormModel } from '@/features/leases/models';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces';
-import { mapLookupCode } from '@/utils';
+import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 
 import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';
 import getColumns from './columns';
@@ -36,6 +34,8 @@ export interface IAddLeaseTenantFormProps {
   showContactManager: boolean;
   setShowContactManager: (showContactManager: boolean) => void;
   loading?: boolean;
+  isPayableLease: boolean;
+  stakeholderTypesOptions: ApiGen_Concepts_LeaseStakeholderType[];
 }
 
 export const AddLeaseTenantForm: React.FunctionComponent<
@@ -54,9 +54,13 @@ export const AddLeaseTenantForm: React.FunctionComponent<
   saveCallback,
   onCancel,
   loading,
+  isPayableLease,
+  stakeholderTypesOptions,
 }) => {
-  const lookupCodes = useLookupCodeHelpers();
-  const tenantTypes = lookupCodes.getByType(TENANT_TYPES).map(c => mapLookupCode(c));
+  const filteredStakeHolderTypes =
+    stakeholderTypesOptions?.filter(
+      type => type.isPayableRelated === isPayableLease && type.isDisabled === false,
+    ) ?? [];
   const onRemove = (remainingTenants: FormTenant[]) => {
     const remainingContacts = remainingTenants.map(t => FormTenant.toContactSearchResult(t));
     setSelectedTenants(remainingContacts);
@@ -69,8 +73,8 @@ export const AddLeaseTenantForm: React.FunctionComponent<
         header={
           <SectionListHeader
             claims={[Claims.LEASE_EDIT]}
-            title="Tenants"
-            addButtonText="Select Tenant(s)"
+            title={isPayableLease ? 'Payees' : 'Tenants'}
+            addButtonText={isPayableLease ? 'Select Payee(s)' : 'Select Tenant(s)'}
             addButtonIcon={<FaPlus size={'2rem'} />}
             onAdd={() => {
               setShowContactManager(true);
@@ -78,12 +82,23 @@ export const AddLeaseTenantForm: React.FunctionComponent<
           />
         }
       >
-        <span>
-          Note: If the tenants you are trying to find were never added to the &quot;contact
-          list&quot; it will not show up. Please add them to the contact list{' '}
-          {<Link to="/contact/list">here</Link>}, then you will be able to see them on the &quot;Add
-          a Tenant&quot; list.
-        </span>
+        {!isPayableLease && (
+          <span>
+            Note: If the tenants you are trying to find were never added to the &quot;contact
+            list&quot; it will not show up. Please add them to the contact list{' '}
+            {<Link to="/contact/list">here</Link>}, then you will be able to see them on the
+            &quot;Add a Tenant&quot; list.
+          </span>
+        )}
+
+        {isPayableLease && (
+          <span>
+            Note: If the payees you are trying to find were never added to the &quot;contact
+            list&quot; it will not show up. Please add them to the contact list{' '}
+            {<Link to="/contact/list">here</Link>}, then you will be able to see them on the
+            &quot;Add a Payee&quot; list.
+          </span>
+        )}
 
         <Formik
           validationSchema={AddLeaseTenantYupSchema}
@@ -104,10 +119,16 @@ export const AddLeaseTenantForm: React.FunctionComponent<
               <StyledFormBody>
                 <TableSelect<FormTenant>
                   selectedItems={selectedTenants}
-                  columns={getColumns(tenantTypes)}
-                  field="tenants"
+                  columns={getColumns(
+                    filteredStakeHolderTypes.map<SelectOption>(x => {
+                      return { label: x.description || '', value: x.code || null };
+                    }),
+                    isPayableLease,
+                  )}
+                  field="stakeholders"
                   selectedTableHeader={SelectedTableHeader}
                   onRemove={onRemove}
+                  isPayableLease={isPayableLease}
                 ></TableSelect>
                 <ContactManagerModal
                   selectedRows={selectedContacts}

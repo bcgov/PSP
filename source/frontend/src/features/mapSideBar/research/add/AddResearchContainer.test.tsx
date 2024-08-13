@@ -108,7 +108,7 @@ describe('AddResearchContainer component', () => {
           crownLandLicensesFeature: null,
           crownLandTenuresFeature: null,
           crownLandInventoryFeature: null,
-          crownLandInclusionsFeature: null
+          crownLandInclusionsFeature: null,
         },
       },
     });

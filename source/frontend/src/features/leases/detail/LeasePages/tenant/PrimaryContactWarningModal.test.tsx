@@ -36,7 +36,7 @@ describe('PrimaryContactWarningModal component', () => {
     const { component } = setup({
       tenants: LeaseFormModel.fromApi({
         ...defaultApiLease(),
-        tenants: [
+        stakeholders: [
           { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
           { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
         ],
@@ -50,7 +50,7 @@ describe('PrimaryContactWarningModal component', () => {
       saveCallback: saveCallback,
       tenants: LeaseFormModel.fromApi({
         ...defaultApiLease(),
-        tenants: [
+        stakeholders: [
           { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
           { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
         ],
@@ -67,9 +67,9 @@ describe('PrimaryContactWarningModal component', () => {
     setup({
       tenants: LeaseFormModel.fromApi({
         ...getMockApiLease(),
-        tenants: [
+        stakeholders: [
           {
-            ...getMockApiLease().tenants![0],
+            ...getMockApiLease().stakeholders![0],
             primaryContactId: null,
             primaryContact: null,
           },

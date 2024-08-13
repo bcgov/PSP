@@ -84,7 +84,7 @@ describe('Lease and License List View', () => {
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenants: [
+        stakeholders: [
           {
             ...getEmptyLeaseTenant(),
             person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
@@ -137,7 +137,7 @@ describe('Lease and License List View', () => {
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenants: [
+        stakeholders: [
           {
             ...getEmptyLeaseTenant(),
             person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
@@ -181,7 +181,7 @@ describe('Lease and License List View', () => {
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenants: [
+        stakeholders: [
           {
             ...getEmptyLeaseTenant(),
             person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
@@ -233,7 +233,7 @@ describe('Lease and License List View', () => {
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenants: [
+        stakeholders: [
           {
             ...getEmptyLeaseTenant(),
             person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
@@ -285,7 +285,7 @@ describe('Lease and License List View', () => {
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenants: [
+        stakeholders: [
           {
             ...getEmptyLeaseTenant(),
             person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
@@ -338,7 +338,7 @@ describe('Lease and License List View', () => {
         id: 1,
         lFileNo: 'L-123-456',
         programName: 'TRAN-IT',
-        tenants: [
+        stakeholders: [
           {
             ...getEmptyLeaseTenant(),
             person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },

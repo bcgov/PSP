@@ -49,7 +49,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       />
     ),
     key: LeaseFileTabNames.fileDetails,
-    name: 'File details',
+    name: 'File Details',
   });
 
   tabViews.push({
@@ -69,19 +69,41 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     name: 'Checklist',
   });
 
-  tabViews.push({
-    content: (
-      <LeaseTab
-        leasePage={leasePages.get(LeasePageNames.TENANT)}
-        onEdit={() => setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })}
-        isEditing={isEditing}
-        formikRef={formikRef}
-        onSuccess={onSuccess}
-      />
-    ),
-    key: LeaseFileTabNames.tenant,
-    name: 'Tenant',
-  });
+  if (lease?.paymentReceivableType.id === 'RCVBL') {
+    tabViews.push({
+      content: (
+        <LeaseTab
+          leasePage={leasePages.get(LeasePageNames.TENANT)}
+          onEdit={() =>
+            setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })
+          }
+          isEditing={isEditing}
+          formikRef={formikRef}
+          onSuccess={onSuccess}
+        />
+      ),
+      key: LeaseFileTabNames.tenant,
+      name: 'Tenant',
+    });
+  }
+
+  if (lease?.paymentReceivableType.id !== 'RCVBL') {
+    tabViews.push({
+      content: (
+        <LeaseTab
+          leasePage={leasePages.get(LeasePageNames.TENANT)}
+          onEdit={() =>
+            setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })
+          }
+          isEditing={isEditing}
+          formikRef={formikRef}
+          onSuccess={onSuccess}
+        />
+      ),
+      key: LeaseFileTabNames.tenant,
+      name: 'Payee',
+    });
+  }
 
   tabViews.push({
     content: (
