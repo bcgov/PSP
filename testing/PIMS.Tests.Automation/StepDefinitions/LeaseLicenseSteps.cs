@@ -840,8 +840,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.ProgramOther = ExcelDataContext.ReadData(rowNumber, "ProgramOther");
             lease.AdminType = ExcelDataContext.ReadData(rowNumber, "AdminType");
             lease.TypeOther = ExcelDataContext.ReadData(rowNumber, "TypeOther");
-            lease.Category = ExcelDataContext.ReadData(rowNumber, "Category");
-            lease.CategoryOther = ExcelDataContext.ReadData(rowNumber, "CategoryOther");
             lease.LeasePurpose = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "LeasePurpose"));
             lease.PurposeOther = ExcelDataContext.ReadData(rowNumber, "PurposeOther");
             lease.Initiator = ExcelDataContext.ReadData(rowNumber, "Initiator");
