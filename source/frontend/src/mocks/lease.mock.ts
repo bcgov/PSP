@@ -437,7 +437,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   appCreateUserGuid: '77777777-7777-7777-7777-777777777777',
 });
 
-export const getEmptyLeaseTenant = (): ApiGen_Concepts_LeaseStakeholder => {
+export const getEmptyLeaseStakeholder = (): ApiGen_Concepts_LeaseStakeholder => {
   return {
     leaseStakeholderId: null,
     leaseId: 0,

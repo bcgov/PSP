@@ -4,7 +4,7 @@ import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
@@ -24,8 +24,8 @@ export function useLeaseDetail(leaseId?: number) {
     getPropertyLeases: { execute: getPropertyLeases, loading: propertyLeasesLoading },
   } = usePropertyLeaseRepository();
   const {
-    getLeaseTenants: { execute: getLeaseTenants, loading: leaseTenantsLoading },
-  } = useLeaseTenantRepository();
+    getLeaseStakeholders: { execute: getLeaseStakeholders, loading: getLeaseStakeholdersLoading },
+  } = useLeaseStakeholderRepository();
   const {
     getLeasePeriods: { execute: getLeasePeriods, loading: leasePeriodsLoading },
   } = useLeasePeriodRepository();
@@ -47,7 +47,7 @@ export function useLeaseDetail(leaseId?: number) {
   const getCompleteLease = useCallback(async () => {
     if (leaseId) {
       const leasePromise = getApiLeaseByIdFunc(leaseId);
-      const leaseTenantsPromise = getLeaseTenants(leaseId);
+      const leaseTenantsPromise = getLeaseStakeholders(leaseId);
       const propertyLeasesPromise = getPropertyLeases(leaseId);
       const leasePeriodsPromise = getLeasePeriods(leaseId);
       const leaseChecklistPromise = getLeaseChecklist(leaseId);
@@ -85,7 +85,7 @@ export function useLeaseDetail(leaseId?: number) {
   }, [
     leaseId,
     getApiLeaseByIdFunc,
-    getLeaseTenants,
+    getLeaseStakeholders,
     getPropertyLeases,
     getLeasePeriods,
     getLeaseChecklist,
@@ -113,7 +113,7 @@ export function useLeaseDetail(leaseId?: number) {
   const loading =
     getApiLeaseById.loading ||
     propertyLeasesLoading ||
-    leaseTenantsLoading ||
+    getLeaseStakeholdersLoading ||
     leasePeriodsLoading ||
     getLastUpdatedByLoading ||
     getLeaseRenewalsLoading ||

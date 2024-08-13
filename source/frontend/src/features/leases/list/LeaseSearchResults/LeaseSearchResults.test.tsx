@@ -1,6 +1,6 @@
 import { getEmptyAddress } from '@/mocks/address.mock';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
-import { getEmptyLeaseTenant } from '@/mocks/lease.mock';
+import { getEmptyLeaseStakeholder } from '@/mocks/lease.mock';
 import { getEmptyPropertyLease } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyLease, getEmptyProperty } from '@/models/defaultInitializers';
@@ -38,7 +38,7 @@ const mockResults: ApiGen_Concepts_Lease[] = [
     programName: 'TRAN-IT',
     stakeholders: [
       {
-        ...getEmptyLeaseTenant(),
+        ...getEmptyLeaseStakeholder(),
         person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
       },
     ],
@@ -61,7 +61,7 @@ const mockResults: ApiGen_Concepts_Lease[] = [
     programName: 'TRAN-IT',
     stakeholders: [
       {
-        ...getEmptyLeaseTenant(),
+        ...getEmptyLeaseStakeholder(),
         person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
       },
     ],
