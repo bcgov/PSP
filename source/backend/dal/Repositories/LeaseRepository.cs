@@ -1020,6 +1020,18 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Gets all stakeholder types
+        /// </summary>
+        /// <returns>all stakeholder types.</returns>
+        public IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes()
+        {
+            return Context.PimsLeaseStakeholderTypes
+                    .OrderBy(it => it.DisplayOrder)
+                    .AsNoTracking()
+                    .ToList();
+        }
+
+        /// <summary>
         /// Generate an SQL statement for the specified 'user' and 'filter'.
         /// </summary>
         /// <param name="query"></param>

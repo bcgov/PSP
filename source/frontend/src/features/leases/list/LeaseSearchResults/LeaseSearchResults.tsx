@@ -90,7 +90,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
       return (
         <LeaseTenants
           tenantNames={
-            props.row.original.tenants?.map<string>(t =>
+            props.row.original.stakeholders?.map<string>(t =>
               exists(t.person) ? formatApiPersonNames(t.person) : t.organization?.name ?? '',
             ) ?? []
           }

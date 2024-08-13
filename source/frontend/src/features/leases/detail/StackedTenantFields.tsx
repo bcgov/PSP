@@ -2,12 +2,12 @@ import styled from 'styled-components';
 
 import OverflowTip from '@/components/common/OverflowTip';
 import { InlineFlexDiv } from '@/components/common/styles';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 
 import { getAllNames } from '../leaseUtils';
 
 export interface IStackedTenantFieldsProps {
-  tenants?: ApiGen_Concepts_LeaseTenant[];
+  tenants?: ApiGen_Concepts_LeaseStakeholder[];
 }
 
 /**

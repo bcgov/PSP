@@ -211,7 +211,9 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
             </span>
             <span
               class="c2"
-            />
+            >
+              Receivable
+            </span>
           </div>
         </div>
         <div

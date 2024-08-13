@@ -8,7 +8,7 @@ import PropertyAssociationTabView, {
 } from './PropertyAssociationTabView';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 
@@ -94,15 +94,15 @@ describe('PropertyAssociationTabView component', () => {
         {
           leaseId: 34,
           person: { firstName: 'John', surname: 'Doe' } as ApiGen_Concepts_Person,
-          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          stakeholderTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
           lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
-        } as ApiGen_Concepts_LeaseTenant,
+        } as ApiGen_Concepts_LeaseStakeholder,
         {
           leaseId: 34,
           person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
-          tenantTypeCode: { id: 'TEN' } as ApiGen_Base_CodeType<string>,
+          stakeholderTypeCode: { id: 'TEN' } as ApiGen_Base_CodeType<string>,
           lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
-        } as ApiGen_Concepts_LeaseTenant,
+        } as ApiGen_Concepts_LeaseStakeholder,
       ],
       associatedLeaseRenewals: [],
     });
@@ -119,15 +119,15 @@ describe('PropertyAssociationTabView component', () => {
         {
           leaseId: 34,
           person: { firstName: 'John', surname: 'Doe' } as ApiGen_Concepts_Person,
-          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          stakeholderTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
           lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
-        } as ApiGen_Concepts_LeaseTenant,
+        } as ApiGen_Concepts_LeaseStakeholder,
         {
           leaseId: 34,
           person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
-          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          stakeholderTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
           lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
-        } as ApiGen_Concepts_LeaseTenant,
+        } as ApiGen_Concepts_LeaseStakeholder,
       ],
       associatedLeaseRenewals: [],
     });
@@ -144,15 +144,15 @@ describe('PropertyAssociationTabView component', () => {
         {
           leaseId: 34,
           organization: { name: 'Org' } as ApiGen_Concepts_Organization,
-          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          stakeholderTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
           lessorType: { id: 'ORG' } as ApiGen_Base_CodeType<string>,
-        } as ApiGen_Concepts_LeaseTenant,
+        } as ApiGen_Concepts_LeaseStakeholder,
         {
           leaseId: 34,
           person: { firstName: 'John2', surname: 'Doe2' } as ApiGen_Concepts_Person,
-          tenantTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
+          stakeholderTypeCode: { id: 'ASGN' } as ApiGen_Base_CodeType<string>,
           lessorType: { id: 'PER' } as ApiGen_Base_CodeType<string>,
-        } as ApiGen_Concepts_LeaseTenant,
+        } as ApiGen_Concepts_LeaseStakeholder,
       ],
       associatedLeaseRenewals: [],
     });

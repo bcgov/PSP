@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsLeaseStakeholderType class, provides an entity for the datamodel to manage a list of Lease Stakeholder types.
     /// </summary>
-    public partial class PimsLeaseStakeholderType : ITypeEntity<string>
+    public partial class PimsLeaseStakeholderType : IBaseEntity, ITypeEntity<string>
     {
         #region Properties
 

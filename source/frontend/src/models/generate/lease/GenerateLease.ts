@@ -6,7 +6,7 @@ import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concept
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { formatMoney, isValidIsoDateTime, pidFormatter } from '@/utils';
@@ -38,7 +38,7 @@ export class Api_GenerateLease {
   constructor(
     lease: ApiGen_Concepts_Lease,
     insurances: ApiGen_Concepts_Insurance[],
-    tenants: ApiGen_Concepts_LeaseTenant[],
+    tenants: ApiGen_Concepts_LeaseStakeholder[],
     renewals: ApiGen_Concepts_LeaseRenewal[],
     securityDeposits: ApiGen_Concepts_SecurityDeposit[],
     propertyLeases: ApiGen_Concepts_PropertyLease[],
@@ -89,13 +89,13 @@ export class Api_GenerateLease {
       '$0.00';
     this.deposits = securityDeposits?.map(d => new Api_GenerateSecurityDeposit(d)) ?? [];
     this.tenants = tenants
-      .filter(t => t.tenantTypeCode?.id === 'TEN')
+      .filter(t => t.stakeholderTypeCode?.id === 'TEN')
       .map(t => new Api_GenerateTenant(t));
     this.organization_tenants = tenants
-      .filter(t => t.tenantTypeCode?.id === 'TEN' && t.lessorType?.id === 'ORG')
+      .filter(t => t.stakeholderTypeCode?.id === 'TEN' && t.lessorType?.id === 'ORG')
       .map(t => new Api_GenerateTenant(t));
     this.person_tenants = tenants
-      .filter(t => t.tenantTypeCode?.id === 'TEN' && t.lessorType?.id === 'PER')
+      .filter(t => t.stakeholderTypeCode?.id === 'TEN' && t.lessorType?.id === 'PER')
       .map(t => new Api_GenerateTenant(t));
     this.lease_properties = propertyLeases?.map(p => new Api_GenerateLeaseProperty(p)) ?? [];
   }

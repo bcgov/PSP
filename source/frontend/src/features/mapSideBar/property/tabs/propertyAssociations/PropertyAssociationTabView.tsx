@@ -9,7 +9,7 @@ import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 
 import AssociationContent from './AssociationContent';
@@ -20,7 +20,7 @@ export interface IPropertyAssociationTabViewProps {
   isLoading: boolean;
   associations?: ApiGen_Concepts_PropertyAssociations;
   associatedLeases: ApiGen_Concepts_Lease[];
-  associatedLeaseTenants: ApiGen_Concepts_LeaseTenant[];
+  associatedLeaseTenants: ApiGen_Concepts_LeaseStakeholder[];
   associatedLeaseRenewals: ApiGen_Concepts_LeaseRenewal[];
 }
 

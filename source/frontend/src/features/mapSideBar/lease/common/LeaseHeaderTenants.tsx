@@ -2,10 +2,10 @@ import React from 'react';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { getAllNames } from '@/features/leases/leaseUtils';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 
 export interface ILeaseHeaderTenantsProps {
-  tenants?: ApiGen_Concepts_LeaseTenant[];
+  tenants?: ApiGen_Concepts_LeaseStakeholder[];
   delimiter?: React.ReactElement | string;
   maxCollapsedLength?: number;
 }
