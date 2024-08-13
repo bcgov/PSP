@@ -2,6 +2,7 @@ import { first, orderBy } from 'lodash';
 import moment from 'moment';
 
 import { getCalculatedExpiry } from '@/features/leases/leaseUtils';
+import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
 import { ApiGen_Concepts_Insurance } from '@/models/api/generated/ApiGen_Concepts_Insurance';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
@@ -31,14 +32,14 @@ export class Api_GenerateLease {
   aircraft_liability_limit: string;
   deposits: Api_GenerateSecurityDeposit[];
   tenants: Api_GenerateTenant[];
-  person_tenants: Api_GenerateTenant[];
-  organization_tenants: Api_GenerateTenant[];
+  person_stakeholders: Api_GenerateTenant[];
+  organization_stakeholders: Api_GenerateTenant[];
   lease_properties: Api_GenerateLeaseProperty[];
 
   constructor(
     lease: ApiGen_Concepts_Lease,
     insurances: ApiGen_Concepts_Insurance[],
-    tenants: ApiGen_Concepts_LeaseStakeholder[],
+    stakeholders: ApiGen_Concepts_LeaseStakeholder[],
     renewals: ApiGen_Concepts_LeaseRenewal[],
     securityDeposits: ApiGen_Concepts_SecurityDeposit[],
     propertyLeases: ApiGen_Concepts_PropertyLease[],
@@ -88,14 +89,22 @@ export class Api_GenerateLease {
       formatMoney(insurances.find(i => i?.insuranceType?.id === 'AIRCRAFT')?.coverageLimit) ??
       '$0.00';
     this.deposits = securityDeposits?.map(d => new Api_GenerateSecurityDeposit(d)) ?? [];
-    this.tenants = tenants
-      .filter(t => t.stakeholderTypeCode?.id === 'TEN')
+    this.tenants = stakeholders
+      .filter(t => t.stakeholderTypeCode?.id === ApiGen_CodeTypes_LeaseStakeholderTypes.TEN)
       .map(t => new Api_GenerateTenant(t));
-    this.organization_tenants = tenants
-      .filter(t => t.stakeholderTypeCode?.id === 'TEN' && t.lessorType?.id === 'ORG')
+    this.organization_stakeholders = stakeholders
+      .filter(
+        t =>
+          t.stakeholderTypeCode?.id === ApiGen_CodeTypes_LeaseStakeholderTypes.TEN &&
+          t.lessorType?.id === 'ORG',
+      )
       .map(t => new Api_GenerateTenant(t));
-    this.person_tenants = tenants
-      .filter(t => t.stakeholderTypeCode?.id === 'TEN' && t.lessorType?.id === 'PER')
+    this.person_stakeholders = stakeholders
+      .filter(
+        t =>
+          t.stakeholderTypeCode?.id === ApiGen_CodeTypes_LeaseStakeholderTypes.TEN &&
+          t.lessorType?.id === 'PER',
+      )
       .map(t => new Api_GenerateTenant(t));
     this.lease_properties = propertyLeases?.map(p => new Api_GenerateLeaseProperty(p)) ?? [];
   }

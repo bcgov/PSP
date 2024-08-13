@@ -20,7 +20,7 @@ export interface IPropertyAssociationTabViewProps {
   isLoading: boolean;
   associations?: ApiGen_Concepts_PropertyAssociations;
   associatedLeases: ApiGen_Concepts_Lease[];
-  associatedLeaseTenants: ApiGen_Concepts_LeaseStakeholder[];
+  associatedLeaseStakeholders: ApiGen_Concepts_LeaseStakeholder[];
   associatedLeaseRenewals: ApiGen_Concepts_LeaseRenewal[];
 }
 
@@ -77,7 +77,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           associationName="lease"
           associations={props.associations?.leaseAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/lease/|id|"
-          tenants={props.associatedLeaseTenants}
+          stakeholders={props.associatedLeaseStakeholders}
           renewals={props.associatedLeaseRenewals}
           leases={props.associatedLeases}
         />

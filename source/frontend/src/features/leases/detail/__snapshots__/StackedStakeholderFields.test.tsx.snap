@@ -1,0 +1,125 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`StackedPidTenantFields component > renders as expected when provided data 1`] = `
+<DocumentFragment>
+  @media only screen and (max-width:1250px) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  @media only screen and (max-width:1250px) {
+
+}
+
+<div />
+  .c2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  width: 100%;
+  text-align: left;
+}
+
+.c1 div {
+  font-family: 'BCSans-Bold';
+}
+
+@media only screen and (max-width:1250px) {
+  .c1 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+}
+
+<div
+    class="c0 c1"
+  >
+    <label>
+      Tenant:
+    </label>
+    <div
+      class="c2"
+    >
+      First Last
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`StackedPidTenantFields component > renders as expected when provided no data 1`] = `
+<DocumentFragment>
+  @media only screen and (max-width:1250px) {
+
+}
+
+<div
+    class="Toastify"
+  />
+  @media only screen and (max-width:1250px) {
+
+}
+
+<div />
+  .c2 {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c1 {
+  width: 100%;
+  text-align: left;
+}
+
+.c1 div {
+  font-family: 'BCSans-Bold';
+}
+
+@media only screen and (max-width:1250px) {
+  .c1 {
+    -webkit-box-pack: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+  }
+}
+
+<div
+    class="c0 c1"
+  >
+    <label>
+      Tenant:
+    </label>
+    <div
+      class="c2"
+    />
+  </div>
+</DocumentFragment>
+`;

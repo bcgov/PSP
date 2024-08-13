@@ -99,6 +99,7 @@ export const ACQUISITION_TYPES = 'PimsAcquisitionType';
 export const ACTIVITY_TEMPLATE_TYPE = 'PimsActivityTemplateType';
 export const ACTIVITY_STATUS_TYPE = 'PimsActivityInstanceStatusType';
 export const ACQUISITION_FILE_TEAM_PROFILE_TYPES = 'PimsAcqFlTeamProfileType';
+export const STAKEHOLDER_TYPES = 'PimsLeaseStakeholderType';
 export const ACQUISITION_FUNDING_TYPES = 'PimsAcquisitionFundingType';
 export const PROJECT_STATUS_TYPES = 'PimsProjectStatusType';
 export const FORM_TYPES = 'PimsFormType';

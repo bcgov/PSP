@@ -6,7 +6,7 @@ import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -14,31 +14,39 @@ import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { exists, isValidId } from '@/utils/utils';
 
-import { IAddLeaseTenantFormProps } from './AddLeaseTenantForm';
-import { FormTenant } from './models';
+import { IAddLeaseStakeholderFormProps } from './AddLeaseStakeholderForm';
+import { FormStakeholder } from './models';
 import {
   getOrgsWithNoPrimaryContact,
   IPrimaryContactWarningModalProps,
 } from './PrimaryContactWarningModal';
 
-interface IAddLeaseTenantContainerProps {
+interface IAddLeaseStakeholderContainerProps {
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onEdit?: (isEditing: boolean) => void;
-  tenants: FormTenant[];
+  stakeholders: FormStakeholder[];
   onSuccess: () => void;
   View: React.FunctionComponent<
-    React.PropsWithChildren<IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps>
+    React.PropsWithChildren<IAddLeaseStakeholderFormProps & IPrimaryContactWarningModalProps>
   >;
   isPayableLease: boolean;
 }
 
-export const AddLeaseTenantContainer: React.FunctionComponent<
-  React.PropsWithChildren<IAddLeaseTenantContainerProps>
-> = ({ formikRef, onEdit, children, View, tenants: initialTenants, onSuccess, isPayableLease }) => {
+export const AddLeaseStakeholderContainer: React.FunctionComponent<
+  React.PropsWithChildren<IAddLeaseStakeholderContainerProps>
+> = ({
+  formikRef,
+  onEdit,
+  children,
+  View,
+  stakeholders: initialStakeholders,
+  onSuccess,
+  isPayableLease,
+}) => {
   const { lease } = useContext(LeaseStateContext);
-  const [tenants, setTenants] = useState<FormTenant[]>(initialTenants);
+  const [stakeholders, setStakeholders] = useState<FormStakeholder[]>(initialStakeholders);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(
-    tenants.map(t => FormTenant.toContactSearchResult(t)) || [],
+    stakeholders.map(t => FormStakeholder.toContactSearchResult(t)) || [],
   );
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
   const [handleSubmit, setHandleSubmit] = useState<(() => void) | undefined>(undefined);
@@ -50,9 +58,9 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
   });
 
   const {
-    updateLeaseTenants,
-    getLeaseTenants: { execute: getLeaseTenants, loading },
-  } = useLeaseTenantRepository();
+    updateLeaseStakeholders,
+    getLeaseStakeholders: { execute: getLeaseStakeholders, loading },
+  } = useLeaseStakeholderRepository();
 
   const {
     getLeaseStakeholderTypes: {
@@ -63,19 +71,21 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
 
   const leaseId = lease?.id;
   useEffect(() => {
-    const tenantFunc = async () => {
-      const tenants = await getLeaseTenants(leaseId ?? 0);
-      if (tenants !== undefined) {
-        setTenants(tenants.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormTenant(t)));
+    const stakeholderFunc = async () => {
+      const stakeholders = await getLeaseStakeholders(leaseId ?? 0);
+      if (stakeholders !== undefined) {
+        setStakeholders(
+          stakeholders.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormStakeholder(t)),
+        );
         setSelectedContacts(
-          tenants.map((t: ApiGen_Concepts_LeaseStakeholder) =>
-            FormTenant.toContactSearchResult(new FormTenant(t)),
+          stakeholders.map((t: ApiGen_Concepts_LeaseStakeholder) =>
+            FormStakeholder.toContactSearchResult(new FormStakeholder(t)),
           ) || [],
         );
       }
     };
-    tenantFunc();
-  }, [leaseId, getLeaseTenants]);
+    stakeholderFunc();
+  }, [leaseId, getLeaseStakeholders]);
 
   useEffect(() => {
     const stakeholderTypesFunc = async () => {
@@ -84,13 +94,19 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     stakeholderTypesFunc();
   }, [getLeaseStakeholderTypes]);
 
-  const setSelectedTenantsWithPersonData = async (updatedTenants?: IContactSearchResult[]) => {
-    const allExistingTenantIds = tenants.map(t => t.id);
-    const updatedTenantIds = updatedTenants?.map(t => t.id) ?? [];
-    const newTenants = updatedTenants?.filter(t => !allExistingTenantIds.includes(t.id));
-    const matchingExistingTenants = tenants?.filter(t => updatedTenantIds.includes(t?.id ?? ''));
+  const setSelectedStakeholdersWithPersonData = async (
+    updatedStakeholders?: IContactSearchResult[],
+  ) => {
+    const allExistingStakeholderIds = stakeholders.map(t => t.id);
+    const updatedStakeholderIds = updatedStakeholders?.map(t => t.id) ?? [];
+    const newStakeholders = updatedStakeholders?.filter(
+      t => !allExistingStakeholderIds.includes(t.id),
+    );
+    const matchingExistingTenants = stakeholders?.filter(t =>
+      updatedStakeholderIds.includes(t?.id ?? ''),
+    );
 
-    const personPersonIdList = getTenantOrganizationPersonList(newTenants);
+    const personPersonIdList = getStakeholderOrganizationPersonList(newStakeholders);
     // break the list up into the parts that have already been fetched and the parts that haven't been fetched.
     const unprocessedPersons = filter(personPersonIdList, p => p.person === undefined);
     const processedPersons = filter(personPersonIdList, p => p.person !== undefined).map(
@@ -104,36 +120,36 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
 
     // append the fetched person data onto the selected tenant list.
     const tenantsWithPersons =
-      newTenants?.map(tenant => {
-        tenant?.organization?.organizationPersons?.forEach(op => {
+      newStakeholders?.map(stakeholder => {
+        stakeholder?.organization?.organizationPersons?.forEach(op => {
           const matchingPerson = find(allPersons, p => p?.id === op.personId);
           if (matchingPerson) {
             op.person = matchingPerson;
           }
         });
-        tenant.tenantType = tenant.tenantType
-          ? tenant.tenantType
+        stakeholder.stakeholderType = stakeholder?.stakeholderType
+          ? stakeholder.stakeholderType
           : isPayableLease
           ? 'OWNER'
           : 'TEN';
-        return tenant;
+        return stakeholder;
       }) ?? [];
-    const formTenants = tenantsWithPersons?.map(t => new FormTenant(undefined, t)) ?? [];
-    setTenants([...formTenants, ...matchingExistingTenants]);
+    const formTenants = tenantsWithPersons?.map(t => new FormStakeholder(undefined, t)) ?? [];
+    setStakeholders([...formTenants, ...matchingExistingTenants]);
   };
 
   const submit = async (leaseToUpdate: ApiGen_Concepts_Lease) => {
     if (isValidId(leaseToUpdate.id)) {
       try {
-        const updatedTenants = await updateLeaseTenants.execute(
+        const updatedStakeholders = await updateLeaseStakeholders.execute(
           leaseToUpdate.id,
           leaseToUpdate.stakeholders ?? [],
         );
-        if (updatedTenants) {
+        if (updatedStakeholders) {
           formikRef?.current?.resetForm({
             values: LeaseFormModel.fromApi({
               ...leaseToUpdate,
-              stakeholders: updatedTenants,
+              stakeholders: updatedStakeholders,
             }),
           });
           onEdit && onEdit(false);
@@ -147,7 +163,7 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
 
   const onSubmit = async (lease: LeaseFormModel) => {
     const leaseToUpdate = LeaseFormModel.toApi(lease);
-    if (getOrgsWithNoPrimaryContact(lease.tenants)?.length > 0) {
+    if (getOrgsWithNoPrimaryContact(lease.stakeholders)?.length > 0) {
       setHandleSubmit(() => () => submit(leaseToUpdate));
     } else {
       submit(leaseToUpdate);
@@ -158,8 +174,8 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     <View
       initialValues={{ ...new LeaseFormModel(), ...LeaseFormModel.fromApi(lease) }}
       selectedContacts={selectedContacts}
-      setSelectedTenants={setSelectedTenantsWithPersonData}
-      selectedTenants={tenants}
+      setSelectedStakeholders={setSelectedStakeholdersWithPersonData}
+      selectedStakeholders={stakeholders}
       setSelectedContacts={setSelectedContacts}
       onSubmit={onSubmit}
       formikRef={formikRef}
@@ -177,18 +193,18 @@ export const AddLeaseTenantContainer: React.FunctionComponent<
     <></>
   );
 };
-// get a unique list of all tenant organization person-ids that are associated to organization tenants.
-// in the case of a duplicate organization person, prefers tenants that have the person field non-null.
-const getTenantOrganizationPersonList = (tenants?: IContactSearchResult[]) => {
+// get a unique list of all stakeholder organization person-ids that are associated to organization stakeholders.
+// in the case of a duplicate organization person, prefers stakeholders that have the person field non-null.
+const getStakeholderOrganizationPersonList = (stakeholders?: IContactSearchResult[]) => {
   const personList: { person?: ApiGen_Concepts_Person; personId: number }[] = [];
-  // put any tenants that have non-null organization person first to ensure that the de-duplication logic below will maintain that value.
-  tenants = orderBy(
-    tenants,
+  // put any stakeholders that have non-null organization person first to ensure that the de-duplication logic below will maintain that value.
+  stakeholders = orderBy(
+    stakeholders,
     t => some(t?.organization?.organizationPersons, op => exists(op.person)),
     'desc',
   );
-  tenants?.forEach(tenant =>
-    tenant?.organization?.organizationPersons?.forEach(op => {
+  stakeholders?.forEach(stakeholder =>
+    stakeholder?.organization?.organizationPersons?.forEach(op => {
       if (isValidId(op.personId) && !find(personList, p => p.personId === op.personId)) {
         personList.push({ person: op?.person ?? undefined, personId: op?.personId });
       }
@@ -197,4 +213,4 @@ const getTenantOrganizationPersonList = (tenants?: IContactSearchResult[]) => {
   return personList;
 };
 
-export default AddLeaseTenantContainer;
+export default AddLeaseStakeholderContainer;

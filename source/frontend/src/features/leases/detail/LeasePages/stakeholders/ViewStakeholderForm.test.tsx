@@ -2,21 +2,31 @@ import { createMemoryHistory } from 'history';
 
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import { mockApiOrganization, mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
-import { getEmptyLeaseTenant, getMockApiLease } from '@/mocks/lease.mock';
+import { getEmptyLeaseStakeholder, getMockApiLease } from '@/mocks/lease.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { defaultApiLease } from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
-import { FormTenant } from './models';
-import { ITenantProps, ViewTenantForm } from './ViewTenantForm';
+import { FormStakeholder } from './models';
+import { ITenantProps, ViewStakeholderForm } from './ViewStakeholderForm';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
+import { leaseStakeholderTypesList } from './AddLeaseStakeholderForm.test';
 
 const history = createMemoryHistory();
 
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+};
+
 describe('Tenant component', () => {
   const setup = (
-    renderOptions: RenderOptions & ITenantProps & { lease?: ApiGen_Concepts_Lease } = {
-      tenants: [],
+    renderOptions: RenderOptions &
+      ITenantProps & { lease?: ApiGen_Concepts_Lease; isPayableLease: boolean } = {
+      stakeholders: [],
       isPayableLease: false,
+      leaseStakeholderTypes: leaseStakeholderTypesList,
     },
   ) => {
     // render component under test
@@ -24,14 +34,16 @@ describe('Tenant component', () => {
       <LeaseContextProvider
         initialLease={renderOptions.lease ? renderOptions.lease : defaultApiLease()}
       >
-        <ViewTenantForm
+        <ViewStakeholderForm
           nameSpace={renderOptions.nameSpace}
-          tenants={renderOptions.tenants ?? []}
+          stakeholders={renderOptions.stakeholders ?? []}
           isPayableLease={renderOptions.isPayableLease ?? false}
+          leaseStakeholderTypes={renderOptions.leaseStakeholderTypes ?? leaseStakeholderTypesList}
         />
       </LeaseContextProvider>,
       {
         ...renderOptions,
+        store: storeState,
         history,
       },
     );
@@ -46,11 +58,11 @@ describe('Tenant component', () => {
       lease: {
         ...defaultApiLease(),
         stakeholders: [
-          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
-          { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
+          { ...getEmptyLeaseStakeholder(), leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseStakeholder(), leaseId: 1, organization: mockApiOrganization },
         ],
       },
-      tenants: [],
+      stakeholders: [],
       isPayableLease: false,
     });
     expect(component.asFragment()).toMatchSnapshot();
@@ -61,8 +73,8 @@ describe('Tenant component', () => {
       lease: {
         ...defaultApiLease(),
       },
-      tenants: [
-        { leaseId: 1, personId: mockApiPerson.id, note: 'person note' },
+      stakeholders: [
+        { leaseId: 1, personId: mockApiPerson.id, note: 'person note', stakeholderType: 'TEN' },
         {
           leaseId: 1,
           organizationId: mockOrganization.id,
@@ -83,11 +95,11 @@ describe('Tenant component', () => {
       lease: {
         ...defaultApiLease(),
         stakeholders: [
-          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
-          { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
+          { ...getEmptyLeaseStakeholder(), leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseStakeholder(), leaseId: 1, organization: mockApiOrganization },
         ],
       },
-      tenants: [
+      stakeholders: [
         { leaseId: 1, personId: mockApiPerson.id, note: 'person note' },
         { leaseId: 1, organizationId: mockOrganization.id, note: 'organization id' },
       ],
@@ -101,9 +113,19 @@ describe('Tenant component', () => {
 
   it('renders assignee section', () => {
     const { component } = setup({
-      lease: { ...defaultApiLease(), stakeholders: [] },
-      tenants: [],
+      lease: {
+        ...defaultApiLease(),
+        stakeholders: [],
+      },
       isPayableLease: false,
+      stakeholders: [
+        {
+          leaseId: 1,
+          personId: mockApiPerson.id,
+          note: 'person note',
+          stakeholderType: ApiGen_CodeTypes_LeaseStakeholderTypes.ASGN.toString(),
+        },
+      ],
     });
     const { getAllByText } = component;
     const asgnSection = getAllByText('Assignee');
@@ -114,7 +136,14 @@ describe('Tenant component', () => {
   it('renders representative section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
-      tenants: [],
+      stakeholders: [
+        {
+          leaseId: 1,
+          personId: mockApiPerson.id,
+          note: 'person note',
+          stakeholderType: ApiGen_CodeTypes_LeaseStakeholderTypes.REP.toString(),
+        },
+      ],
       isPayableLease: false,
     });
     const { getAllByText } = component;
@@ -126,11 +155,18 @@ describe('Tenant component', () => {
   it('renders property manager section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
-      tenants: [],
+      stakeholders: [
+        {
+          leaseId: 1,
+          personId: mockApiPerson.id,
+          note: 'person note',
+          stakeholderType: ApiGen_CodeTypes_LeaseStakeholderTypes.PMGR.toString(),
+        },
+      ],
       isPayableLease: false,
     });
     const { getAllByText } = component;
-    const propSection = getAllByText('Property Manager');
+    const propSection = getAllByText('Property manager');
 
     expect(propSection).toHaveLength(1);
   });
@@ -138,7 +174,14 @@ describe('Tenant component', () => {
   it('renders unknown section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
-      tenants: [],
+      stakeholders: [
+        {
+          leaseId: 1,
+          personId: mockApiPerson.id,
+          note: 'person note',
+          stakeholderType: ApiGen_CodeTypes_LeaseStakeholderTypes.UNK.toString(),
+        },
+      ],
       isPayableLease: false,
     });
     const { getAllByText } = component;
@@ -150,7 +193,7 @@ describe('Tenant component', () => {
   it('renders owner section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
-      tenants: [],
+      stakeholders: [],
       isPayableLease: true,
     });
     const { getAllByText } = component;
@@ -162,7 +205,7 @@ describe('Tenant component', () => {
   it('renders owner representative section', () => {
     const { component } = setup({
       lease: { ...defaultApiLease(), stakeholders: [] },
-      tenants: [],
+      stakeholders: [],
       isPayableLease: true,
     });
     const { getAllByText } = component;
@@ -175,7 +218,7 @@ describe('Tenant component', () => {
     const mockLeaseWithTenants = getMockApiLease();
     const { component } = setup({
       lease: mockLeaseWithTenants,
-      tenants: mockLeaseWithTenants?.stakeholders?.map(t => new FormTenant(t)) ?? [],
+      stakeholders: mockLeaseWithTenants?.stakeholders?.map(t => new FormStakeholder(t)) ?? [],
       isPayableLease: false,
     });
     const { getByText } = component;
@@ -187,7 +230,7 @@ describe('Tenant component', () => {
     const mockLeaseWithTenants = getMockApiLease();
     const { component } = setup({
       lease: mockLeaseWithTenants,
-      tenants: mockLeaseWithTenants?.stakeholders?.map(t => new FormTenant(t)) ?? [],
+      stakeholders: mockLeaseWithTenants?.stakeholders?.map(t => new FormStakeholder(t)) ?? [],
       isPayableLease: false,
     });
     const { getByText } = component;
