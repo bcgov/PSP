@@ -137,7 +137,7 @@ namespace Pims.Api.Test.Controllers.Reports
             lease.OtherLeaseLicenseType = "type";
             // TODO: Fix Mappings
             //lease.LeasePurposeTypeCodeNavigation = new PimsLeasePurposeType() { LeasePurposeTypeCode = "OTHER", Description = "otherpurposedesc" };
-            lease.OtherLeasePurposeType = "purpose";
+            //lease.OtherLeasePurposeType = "purpose";
             lease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType() { LeaseStatusTypeCode = "STATUS", Description = "status" };
             lease.PsFileNo = "123";
             lease.LeaseNotes = "note";
@@ -234,19 +234,19 @@ namespace Pims.Api.Test.Controllers.Reports
         }
 
         [Fact]
-        public void ExportLeases_LeaseTenant_Mapping()
+        public void ExportLeases_LeaseStakeholder_Mapping()
         {
             // Arrange
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
             var lease = EntityHelper.CreateLease(1);
-            var leaseOrgTenant = new PimsLeaseTenant();
-            leaseOrgTenant.Organization = new PimsOrganization() { Name = "org" };
-            lease.PimsLeaseTenants.Add(leaseOrgTenant);
+            var leaseOrgStakeholder = new PimsLeaseStakeholder();
+            leaseOrgStakeholder.Organization = new PimsOrganization() { Name = "org" };
+            lease.PimsLeaseStakeholders.Add(leaseOrgStakeholder);
 
-            var leasePersonTenant = new PimsLeaseTenant();
-            leasePersonTenant.Person = new PimsPerson() { FirstName = "first", MiddleNames = "middle", Surname = "last" };
-            lease.PimsLeaseTenants.Add(leasePersonTenant);
+            var leasePersonStakeholder = new PimsLeaseStakeholder();
+            leasePersonStakeholder.Person = new PimsPerson() { FirstName = "first", MiddleNames = "middle", Surname = "last" };
+            lease.PimsLeaseStakeholders.Add(leasePersonStakeholder);
 
             var leases = new[] { lease };
 
@@ -304,9 +304,9 @@ namespace Pims.Api.Test.Controllers.Reports
             lease.PimsLeasePeriods.Add(new PimsLeasePeriod());
             lease.PimsLeasePeriods.Add(new PimsLeasePeriod());
 
-            lease.PimsLeaseTenants.Add(new PimsLeaseTenant());
-            lease.PimsLeaseTenants.Add(new PimsLeaseTenant());
-            lease.PimsLeaseTenants.Add(new PimsLeaseTenant());
+            lease.PimsLeaseStakeholders.Add(new PimsLeaseStakeholder());
+            lease.PimsLeaseStakeholders.Add(new PimsLeaseStakeholder());
+            lease.PimsLeaseStakeholders.Add(new PimsLeaseStakeholder());
 
             var leases = new[] { lease };
 

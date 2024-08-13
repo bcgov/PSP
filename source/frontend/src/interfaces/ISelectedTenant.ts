@@ -11,7 +11,7 @@ export interface ISelectedTenant {
   primaryContact?: ApiGen_Concepts_Person;
   organizationId?: number;
   organization?: ApiGen_Concepts_Organization;
-  leaseTenantId?: number;
+  leaseStakeholderId?: number;
   isDisabled?: boolean;
   summary?: string;
   email?: string;

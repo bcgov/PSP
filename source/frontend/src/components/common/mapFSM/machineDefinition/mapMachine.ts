@@ -18,20 +18,24 @@ const featureViewStates = {
             assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
           ],
         },
-        TOGGLE_FILTER: {
-          target: 'filtering',
-        },
-        TOGGLE_LAYERS: {
-          target: 'layerControl',
-        },
-        DEFAULT_MAP_LAYERS: {
-          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        START_REPOSITION: {
+          target: 'repositioning',
+          actions: [
+            assign({
+              selectingComponentId: (_, event: any) => event.selectingComponentId,
+              repositioningFeatureDataset: (_, event: any) => event.repositioningFeatureDataset,
+              repositioningPropertyIndex: (_, event: any) => event.repositioningPropertyIndex,
+            }),
+          ],
         },
       },
     },
     selecting: {
       on: {
-        FINISH_SELECTION: { target: 'browsing' },
+        FINISH_SELECTION: {
+          target: 'browsing',
+          actions: [assign({ selectingComponentId: () => null })],
+        },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({ filePropertyLocations: (_, event: any) => event.locations }),
@@ -40,38 +44,23 @@ const featureViewStates = {
         },
       },
     },
-    layerControl: {
+    repositioning: {
       on: {
-        TOGGLE_FILTER: {
-          target: 'filtering',
-        },
-        TOGGLE_LAYERS: {
+        FINISH_REPOSITION: {
           target: 'browsing',
+          actions: [
+            assign({
+              repositioningFeatureDataset: () => null,
+              repositioningPropertyIndex: () => null,
+              selectingComponentId: () => null,
+            }),
+          ],
         },
-        SET_MAP_LAYERS: {
-          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
-        },
-      },
-    },
-    filtering: {
-      entry: [send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter })],
-      exit: [send({ type: 'REFRESH_PROPERTIES' })],
-      on: {
-        TOGGLE_FILTER: {
-          target: 'browsing',
-          actions: [assign({ showDisposed: () => false }), assign({ showRetired: () => false })],
-        },
-        TOGGLE_LAYERS: {
-          target: 'layerControl',
-        },
-        SET_VISIBLE_PROPERTIES: {
-          actions: assign({ activePimsPropertyIds: (_, event: any) => event.propertyIds }),
-        },
-        SET_SHOW_DISPOSED: {
-          actions: assign({ showDisposed: (_, event: any) => event.show }),
-        },
-        SET_SHOW_RETIRED: {
-          actions: assign({ showRetired: (_, event: any) => event.show }),
+        SET_FILE_PROPERTY_LOCATIONS: {
+          actions: [
+            assign({ filePropertyLocations: (_, event: any) => event.locations }),
+            raise('REQUEST_FIT_BOUNDS'),
+          ],
         },
       },
     },
@@ -91,6 +80,7 @@ const featureDataLoaderStates = {
           actions: assign({
             isLoading: () => true,
             searchCriteria: (_, event: any) => event.searchCriteria,
+            fitToResultsAfterLoading: () => true,
           }),
           target: 'loading',
         },
@@ -99,16 +89,30 @@ const featureDataLoaderStates = {
     loading: {
       invoke: {
         src: 'loadFeatures',
-        onDone: {
-          target: 'idle',
-          actions: [
-            assign({
-              isLoading: () => false,
-              mapFeatureData: (_, event: any) => event.data,
-            }),
-            raise('REQUEST_FIT_BOUNDS'),
-          ],
-        },
+        onDone: [
+          {
+            cond: (context: MachineContext) => context.fitToResultsAfterLoading === true,
+            actions: [
+              assign({
+                isLoading: () => false,
+                mapFeatureData: (_, event: any) => event.data,
+                fitToResultsAfterLoading: () => false,
+              }),
+              raise('REQUEST_FIT_BOUNDS'),
+            ],
+            target: 'idle',
+          },
+          {
+            actions: [
+              assign({
+                isLoading: () => false,
+                mapFeatureData: (_, event: any) => event.data,
+                fitToResultsAfterLoading: () => false,
+              }),
+            ],
+            target: 'idle',
+          },
+        ],
       },
     },
   },
@@ -246,9 +250,9 @@ const selectedFeatureLoaderStates = {
 };
 
 const sideBarStates = {
-  initial: 'fullScreen',
+  initial: 'closed',
   states: {
-    fullScreen: {
+    closed: {
       entry: assign({
         mapSideBarState: () => ({
           type: SideBarType.NOT_DEFINED,
@@ -260,14 +264,14 @@ const sideBarStates = {
       }),
       on: {
         OPEN_SIDEBAR: {
-          target: 'sidebarOpen',
+          target: 'opened',
         },
         FINISHED_LOCATION_DATA_LOAD: {
           actions: 'navigateToProperty',
         },
       },
     },
-    sidebarOpen: {
+    opened: {
       entry: [
         assign({
           mapSideBarState: (context: MachineContext, event: any) => ({
@@ -300,13 +304,13 @@ const sideBarStates = {
               isFullWidth: false,
             }),
           }),
-          target: 'fullScreen',
+          target: 'closed',
         },
 
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({
-              filePropertyLocations: (context: MachineContext, event: any) => event.locations || [],
+              filePropertyLocations: (_: MachineContext, event: any) => event.locations || [],
             }),
             raise('REQUEST_FIT_BOUNDS'),
           ],
@@ -339,20 +343,50 @@ const sideBarStates = {
 };
 
 const advancedFilterSideBarStates = {
-  initial: 'fullScreen',
+  initial: 'closed',
   states: {
-    fullScreen: {
+    closed: {
       on: {
-        OPEN_ADVANCED_FILTER_SIDEBAR: {
-          target: 'sidebarOpen',
+        TOGGLE_FILTER: {
+          target: 'filtering',
+        },
+        TOGGLE_LAYERS: {
+          target: 'layerControl',
         },
       },
     },
-    sidebarOpen: {
-      entry: assign({ mapFilter: () => defaultPropertyFilter }),
+    layerControl: {
       on: {
-        CLOSE_ADVANCED_FILTER_SIDEBAR: {
-          target: 'fullScreen',
+        TOGGLE_FILTER: {
+          target: 'filtering',
+        },
+        TOGGLE_LAYERS: {
+          target: 'closed',
+        },
+        SET_MAP_LAYERS: {
+          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        },
+      },
+    },
+    filtering: {
+      entry: [send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter })],
+      exit: [send({ type: 'REFRESH_PROPERTIES' })],
+      on: {
+        TOGGLE_FILTER: {
+          target: 'closed',
+          actions: [assign({ showDisposed: () => false }), assign({ showRetired: () => false })],
+        },
+        TOGGLE_LAYERS: {
+          target: 'layerControl',
+        },
+        SET_VISIBLE_PROPERTIES: {
+          actions: assign({ activePimsPropertyIds: (_, event: any) => event.propertyIds }),
+        },
+        SET_SHOW_DISPOSED: {
+          actions: assign({ showDisposed: (_, event: any) => event.show }),
+        },
+        SET_SHOW_RETIRED: {
+          actions: assign({ showRetired: (_, event: any) => event.show }),
         },
       },
     },
@@ -382,8 +416,11 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
     selectedFeatureDataset: null,
+    repositioningFeatureDataset: null,
+    repositioningPropertyIndex: null,
     selectingComponentId: null,
     isLoading: false,
+    fitToResultsAfterLoading: false,
     searchCriteria: null,
     mapFeatureData: emptyFeatureData,
     filePropertyLocations: [],
@@ -405,25 +442,25 @@ export const mapMachine = createMachine<MachineContext>({
           {
             cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
-            target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
+            target: ['mapVisible.sideBar.opened', 'mapVisible.featureDataLoader.loading'],
           },
           {
-            target: 'mapVisible.sideBar.sidebarOpen',
+            target: 'mapVisible.sideBar.opened',
           },
         ],
         OPEN_SIDEBAR: [
           {
             cond: (context: MachineContext) => context.searchCriteria === null,
             actions: assign({ searchCriteria: () => defaultPropertyFilter }),
-            target: ['mapVisible.sideBar.sidebarOpen', 'mapVisible.featureDataLoader.loading'],
+            target: ['mapVisible.sideBar.opened', 'mapVisible.featureDataLoader.loading'],
           },
           {
-            target: 'mapVisible.sideBar.sidebarOpen',
+            target: 'mapVisible.sideBar.opened',
           },
         ],
 
         CLOSE_SIDEBAR: {
-          target: 'mapVisible.sideBar.fullScreen',
+          target: 'mapVisible.sideBar.closed',
         },
       },
     },
@@ -439,6 +476,9 @@ export const mapMachine = createMachine<MachineContext>({
           actions: assign({
             selectedFeatureDataset: (context: MachineContext) => context.mapLocationFeatureDataset,
           }),
+        },
+        DEFAULT_MAP_LAYERS: {
+          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
         },
       },
       states: {

@@ -34,17 +34,18 @@ export const AddLeaseYupSchema = Yup.object().shape({
   leaseTypeCode: Yup.string().required('Lease Type is required'),
   purposes: Yup.array().min(1, 'Purpose Type is required'),
   purposeOtherDescription: Yup.string()
+    .nullable()
     .when('purposes', {
       is: (purposesArray: LeasePurposeModel[]) =>
         purposesArray?.some(
           obj => obj.purposeTypeCode === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
         ),
       then: Yup.string()
-        .required('Other purspose description is required')
+        .nullable()
+        .required('Other purpose description is required')
         .max(200, 'Other purpose description must be at most ${max} characters'),
       otherwise: Yup.string().nullable(),
-    })
-    .nullable(),
+    }),
   hasPhysicalLicense: Yup.string().nullable(),
   hasDigitalLicense: Yup.string().nullable(),
   otherLeaseTypeDescription: Yup.string().when('leaseTypeCode', {

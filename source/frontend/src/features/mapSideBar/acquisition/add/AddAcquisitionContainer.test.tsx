@@ -245,6 +245,11 @@ describe('AddAcquisitionContainer component', () => {
         municipalityFeature: null,
         highwayFeature: null,
         selectingComponentId: null,
+        crownLandLeasesFeature: null,
+        crownLandLicensesFeature: null,
+        crownLandTenuresFeature: null,
+        crownLandInventoryFeature: null,
+        crownLandInclusionsFeature: null,
       },
     };
 
@@ -275,6 +280,11 @@ describe('AddAcquisitionContainer component', () => {
         municipalityFeature: null,
         highwayFeature: null,
         selectingComponentId: null,
+        crownLandLeasesFeature: null,
+        crownLandLicensesFeature: null,
+        crownLandTenuresFeature: null,
+        crownLandInventoryFeature: null,
+        crownLandInclusionsFeature: null,
       },
     };
 

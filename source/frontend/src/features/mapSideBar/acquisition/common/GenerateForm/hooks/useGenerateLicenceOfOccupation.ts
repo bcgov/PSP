@@ -4,7 +4,7 @@ import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
@@ -22,8 +22,8 @@ export const useGenerateLicenceOfOccupation = () => {
   } = useInsurancesRepository();
 
   const {
-    getLeaseTenants: { execute: getLeaseTenants },
-  } = useLeaseTenantRepository();
+    getLeaseStakeholders: { execute: getLeaseStakeholders },
+  } = useLeaseStakeholderRepository();
 
   const {
     getLeaseRenewals: { execute: getLeaseRenewals },
@@ -49,10 +49,7 @@ export const useGenerateLicenceOfOccupation = () => {
   });
 
   const VALID_LICENCE_TYPES = [
-    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
-    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD.toString(),
-    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE.toString(),
-    ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL.toString(),
+    ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA.toString(),
     ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY.toString(),
   ];
 
@@ -60,7 +57,7 @@ export const useGenerateLicenceOfOccupation = () => {
     if (lease?.id) {
       const updatedLeasePromise = getLease(lease.id);
       const insurancesPromise = getInsurances(lease.id);
-      const tenantsPromise = getLeaseTenants(lease.id);
+      const stakeholdersPromise = getLeaseStakeholders(lease.id);
       const renewalsPromise = getLeaseRenewals(lease.id);
       const securityDepositsPromise = getLeaseDeposits(lease.id);
       const periodsPromise = getLeasePeriods(lease.id);
@@ -68,7 +65,7 @@ export const useGenerateLicenceOfOccupation = () => {
       const [
         updatedLease,
         insurances,
-        tenants,
+        stakeholders,
         renewals,
         securityDeposits,
         periods,
@@ -76,7 +73,7 @@ export const useGenerateLicenceOfOccupation = () => {
       ] = await Promise.all([
         updatedLeasePromise,
         insurancesPromise,
-        tenantsPromise,
+        stakeholdersPromise,
         renewalsPromise,
         securityDepositsPromise,
         periodsPromise,
@@ -94,7 +91,7 @@ export const useGenerateLicenceOfOccupation = () => {
       const leaseData = new Api_GenerateLease(
         updatedLease,
         insurances ?? [],
-        tenants ?? [],
+        stakeholders ?? [],
         renewals ?? [],
         securityDeposits ?? [],
         propertyLeases ?? [],
@@ -103,10 +100,7 @@ export const useGenerateLicenceOfOccupation = () => {
 
       let formTemplateType: ApiGen_CodeTypes_FormTypes;
       switch (updatedLease.type.id) {
-        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS:
-        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD:
-        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE:
-        case ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL:
+        case ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA:
           formTemplateType = ApiGen_CodeTypes_FormTypes.H1005A;
           break;
         case ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY:

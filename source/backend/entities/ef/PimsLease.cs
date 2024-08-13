@@ -166,13 +166,6 @@ public partial class PimsLease
     public string OtherLeaseLicenseType { get; set; }
 
     /// <summary>
-    /// Description of a non-standard lease purpose type
-    /// </summary>
-    [Column("OTHER_LEASE_PURPOSE_TYPE")]
-    [StringLength(200)]
-    public string OtherLeasePurposeType { get; set; }
-
-    /// <summary>
     /// Original start date of the lease/license
     /// </summary>
     [Column("ORIG_START_DATE", TypeName = "datetime")]
@@ -418,6 +411,9 @@ public partial class PimsLease
     public virtual PimsLeaseStatusType LeaseStatusTypeCodeNavigation { get; set; }
 
     [InverseProperty("Lease")]
+    public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; } = new List<PimsCompensationRequisition>();
+
+    [InverseProperty("Lease")]
     public virtual ICollection<PimsInsurance> PimsInsurances { get; set; } = new List<PimsInsurance>();
 
     [InverseProperty("Lease")]
@@ -442,7 +438,7 @@ public partial class PimsLease
     public virtual ICollection<PimsLeaseRenewal> PimsLeaseRenewals { get; set; } = new List<PimsLeaseRenewal>();
 
     [InverseProperty("Lease")]
-    public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; } = new List<PimsLeaseTenant>();
+    public virtual ICollection<PimsLeaseStakeholder> PimsLeaseStakeholders { get; set; } = new List<PimsLeaseStakeholder>();
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; } = new List<PimsPropertyImprovement>();

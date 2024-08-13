@@ -193,7 +193,6 @@ describe('AddLeaseContainer component', () => {
       userEvent.click(firstOption);
     });
 
-
     await act(async () => userEvent.click(getByText(/Save/i)));
 
     expect(await findByText('test message')).toBeVisible();
@@ -284,7 +283,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   description: null,
   documentationReference: null,
   expiryDate: '2020-01-02',
-  tenants: [],
+  stakeholders: [],
   periods: [],
   consultations: [
     {
@@ -351,6 +350,6 @@ const leaseData: ApiGen_Concepts_Lease = {
       leasePurposeTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeasePurposeTypes.BCFERRIES),
       purposeOtherDescription: null,
       ...getEmptyBaseAudit(),
-    }
+    },
   ],
 };

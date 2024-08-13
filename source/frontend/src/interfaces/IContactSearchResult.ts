@@ -5,7 +5,7 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 
 interface BaseContactResult {
   id: string;
-  leaseTenantId?: number;
+  leaseStakeholderId?: number;
   isDisabled?: boolean;
   summary?: string;
   email?: string;
@@ -16,7 +16,7 @@ interface BaseContactResult {
   note?: string;
   landline?: string;
   mobile?: string;
-  tenantType?: string;
+  stakeholderType?: string;
 }
 
 interface PersonContactResult extends BaseContactResult {

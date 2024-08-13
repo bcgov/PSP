@@ -21,12 +21,12 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// get/set - A collection of Persons associated to this Lease.
         /// </summary>
-        public ICollection<PimsPerson> GetPersons() => PimsLeaseTenants?.Where(lt => lt.Person != null).Select(lt => lt.Person).ToArray();
+        public ICollection<PimsPerson> GetPersons() => PimsLeaseStakeholders?.Where(lt => lt.Person != null).Select(lt => lt.Person).ToArray();
 
         /// <summary>
         /// get/set - A collection of Organizations associated to this Lease.
         /// </summary>
-        public ICollection<PimsOrganization> GetOrganizations() => PimsLeaseTenants?.Where(lt => lt.Person == null && lt.Organization != null).Select(lt => lt.Organization).ToArray();
+        public ICollection<PimsOrganization> GetOrganizations() => PimsLeaseStakeholders?.Where(lt => lt.Person == null && lt.Organization != null).Select(lt => lt.Organization).ToArray();
 
         /// <summary>
         /// get/set - A collection of Improvements associated to this Lease.

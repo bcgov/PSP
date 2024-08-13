@@ -13,6 +13,7 @@ const onClickDraftMarker = vi.fn();
 
 const testProperty: IMapProperty = {
   pid: '123-456-789',
+  pin: '1234',
   planNumber: '123546',
   address: 'Test address 123',
   legalDescription: 'Test Legal Description',
@@ -66,6 +67,7 @@ describe('PropertySelectorSubForm component', () => {
       onClickDraftMarker,
     });
     expect(getByText(`${testProperty.pid}`)).toBeVisible();
+    expect(getByText(`${testProperty.pin}`)).toBeVisible();
     expect(getByText(`${testProperty.planNumber}`)).toBeVisible();
     expect(getByText(`${testProperty.address}`)).toBeVisible();
     expect(getByText(`${testProperty.legalDescription}`)).toBeVisible();

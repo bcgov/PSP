@@ -27,14 +27,16 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsPropertyImprovement> UpdateImprovementsByLeaseId(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
 
-        IEnumerable<PimsLeaseTenant> GetTenantsByLeaseId(long leaseId);
+        IEnumerable<PimsLeaseStakeholder> GetStakeholdersByLeaseId(long leaseId);
 
-        IEnumerable<PimsLeaseTenant> UpdateTenantsByLeaseId(long leaseId, IEnumerable<PimsLeaseTenant> pimsLeaseTenants);
+        IEnumerable<PimsLeaseStakeholder> UpdateStakeholdersByLeaseId(long leaseId, IEnumerable<PimsLeaseStakeholder> pimsLeaseStakeholders);
 
         IEnumerable<PimsLeaseRenewal> GetRenewalsByLeaseId(long leaseId);
 
         IEnumerable<PimsLeaseChecklistItem> GetChecklistItems(long id);
 
         PimsLease UpdateChecklistItems(long leaseId, IList<PimsLeaseChecklistItem> checklistItems);
+
+        IEnumerable<PimsLeaseStakeholderType> GetAllStakeholderTypes();
     }
 }

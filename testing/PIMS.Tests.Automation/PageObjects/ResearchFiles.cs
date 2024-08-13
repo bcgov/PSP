@@ -54,15 +54,15 @@ namespace PIMS.Tests.Automation.PageObjects
         //Header
         private By researchFileViewTitle = By.XPath("//h1[contains(text(),'Research File')]");
         private By researchFileHeaderNbrLabel = By.XPath("(//label[contains(text(),'File #')])[1]");
-        private By researchFileHeaderNbrContent = By.XPath("(//label[contains(text(),'File #')]/parent::strong/parent::div/following-sibling::div)[1]");
+        private By researchFileHeaderNbrContent = By.XPath("(//label[contains(text(),'File #')]/parent::div/following-sibling::div)[1]");
         private By researchFileHeaderNameLabel = By.XPath("//label[contains(text(),'File name')]");
-        private By researchFileHeaderNameContent = By.XPath("//label[contains(text(),'File name')]/parent::strong/parent::div/following-sibling::div");
-        private By researchFileHeaderMOTIRegionLabel = By.XPath("//label[contains(text(),'MoTI region')]");
-        private By researchFileHeaderMOTIRegionContent = By.XPath("//label[contains(text(),'MoTI region')]/parent::strong/parent::div/following-sibling::div");
+        private By researchFileHeaderNameContent = By.XPath("//label[contains(text(),'File name')]/parent::div/following-sibling::div");
+        private By researchFileHeaderMOTIRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
+        private By researchFileHeaderMOTIRegionContent = By.XPath("//label[contains(text(),'MOTI region')]/parent::div/following-sibling::div");
         private By researchFileHeaderDistrictLabel = By.XPath("//label[contains(text(),'Ministry district')]");
-        private By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::strong/parent::div/following-sibling::div");
-        private By researchFileHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical File')]");
-        private By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical File')]/parent::strong/parent::div/following-sibling::div/div/span");
+        private By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::div/following-sibling::div");
+        private By researchFileHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
+        private By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file')]/parent::div/following-sibling::div/div/span");
         private By researchFileHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
         private By researchFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
         private By researchFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");

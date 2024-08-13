@@ -44,5 +44,7 @@ namespace Pims.Dal.Repositories
         PimsLeaseChecklistItem AddChecklistItem(PimsLeaseChecklistItem checklistItem);
 
         PimsLeaseChecklistItem UpdateChecklistItem(PimsLeaseChecklistItem checklistItem);
+
+        IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes();
     }
 }

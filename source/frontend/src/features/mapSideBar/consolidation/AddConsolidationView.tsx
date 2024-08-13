@@ -1,4 +1,5 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
+import noop from 'lodash/noop';
 import { Tab } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -171,6 +172,7 @@ const AddConsolidationView: React.FunctionComponent<
                   }}
                   selectedComponentId="destination-property-selector"
                   modifiedProperties={[]}
+                  repositionSelectedProperty={noop}
                 />
                 <Section header="Selected Child" noPadding className="pt-4">
                   <SelectedOperationPropertyHeader />
