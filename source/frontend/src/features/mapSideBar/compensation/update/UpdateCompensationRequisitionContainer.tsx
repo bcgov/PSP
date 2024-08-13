@@ -33,14 +33,15 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>([]);
   const [financialActivityOptions, setFinancialActivityOptions] = useState<SelectOption[]>([]);
   const [chartOfAccountOptions, setChartOfAccountOptions] = useState<SelectOption[]>([]);
+  const [yearlyFinancialOptions, setyearlyFinancialOptions] = useState<SelectOption[]>([]);
   const [responsibilityCentreOptions, setResponsibilityCentreOptions] = useState<SelectOption[]>(
     [],
   );
-  const [yearlyFinancialOptions, setyearlyFinancialOptions] = useState<SelectOption[]>([]);
   const { getSystemConstant } = useSystemConstants();
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimalPercentage =
     gstConstant !== undefined ? parseFloat(gstConstant.value) / 100 : undefined;
+
   const {
     updateCompensationRequisition: { execute: updateCompensationRequisition, loading: isUpdating },
   } = useCompensationRequisitionRepository();

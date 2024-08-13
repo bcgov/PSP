@@ -5,18 +5,20 @@ import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqAcquisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqAcquisitionProperty';
+import { ApiGen_Concepts_CompReqLeaseProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseProperty';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { isValidId, isValidIsoDateTime } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
 
 import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
-import { AcquisitionPayeeFormModel } from './AcquisitionPayeeFormModel';
+import { CompensationPayeeFormModel } from './AcquisitionPayeeFormModel';
 import { FinancialActivityFormModel } from './FinancialActivityFormModel';
 
 export class CompensationRequisitionFormModel {
   id: number | null;
-  acquisitionFileId: number;
+  acquisitionFileId: number | null;
+  leaseId: number | null;
   status = '';
   fiscalYear = '';
   stob: SelectOption | null = null;
@@ -34,15 +36,21 @@ export class CompensationRequisitionFormModel {
   specialInstruction = '';
   detailedRemarks = '';
   financials: FinancialActivityFormModel[] = [];
-  payee: AcquisitionPayeeFormModel;
+  payee: CompensationPayeeFormModel;
   alternateProject: IAutocompletePrediction | null = null;
   selectedProperties: ApiGen_Concepts_FileProperty[] = [];
   rowVersion: number | null = null;
 
-  constructor(id: number | null, acquisitionFileId = 0, finalizedDate: string) {
+  constructor(
+    id: number | null,
+    acquisitionFileId: number | null,
+    leaseId: number | null,
+    finalizedDate: string,
+  ) {
     this.id = id;
     this.acquisitionFileId = acquisitionFileId;
-    this.payee = new AcquisitionPayeeFormModel();
+    this.leaseId = leaseId;
+    this.payee = new CompensationPayeeFormModel();
     this.finalizedDate = isValidIsoDateTime(finalizedDate) ? finalizedDate : '';
   }
 
@@ -88,14 +96,28 @@ export class CompensationRequisitionFormModel {
       financials: this.financials
         .filter(x => !x.isEmpty())
         .map<ApiGen_Concepts_CompensationFinancial>(x => x.toApi()),
-      compReqAcquisitionProperties: this.selectedProperties.map(x => {
-        return {
-          compensationRequisitionPropertyId: null,
-          compensationRequisitionId: this.id,
-          propertyAcquisitionFileId: x.id,
-          acquisitionFileProperty: null,
-        } as ApiGen_Concepts_CompReqAcquisitionProperty;
-      }),
+      compReqAcquisitionProperties:
+        this.acquisitionFileId != null
+          ? this.selectedProperties.map(x => {
+              return {
+                compensationRequisitionPropertyId: null,
+                compensationRequisitionId: this.id,
+                propertyAcquisitionFileId: x.id,
+                acquisitionFileProperty: null,
+              } as ApiGen_Concepts_CompReqAcquisitionProperty;
+            })
+          : null,
+      compReqLeaseProperties:
+        this.leaseId != null
+          ? this.selectedProperties.map(x => {
+              return {
+                compensationRequisitionPropertyId: null,
+                compensationRequisitionId: this.id,
+                propertyLeaseId: x.id,
+                leaseProperty: null,
+              } as ApiGen_Concepts_CompReqLeaseProperty;
+            })
+          : null,
       rowVersion: this.rowVersion ?? null,
     };
   }
@@ -110,6 +132,7 @@ export class CompensationRequisitionFormModel {
     const compensation = new CompensationRequisitionFormModel(
       apiModel.id,
       apiModel.acquisitionFileId,
+      apiModel.leaseId,
       apiModel.finalizedDate ?? '',
     );
 
@@ -163,13 +186,18 @@ export class CompensationRequisitionFormModel {
       apiModel?.financials?.map(f => f.totalAmount ?? 0).reduce((prev, next) => prev + next, 0) ??
       0;
 
-    compensation.payee = AcquisitionPayeeFormModel.fromApi(apiModel);
+    compensation.payee = CompensationPayeeFormModel.fromApi(apiModel);
     compensation.payee.pretaxAmount = payeePretaxAmount;
     compensation.payee.taxAmount = payeeTaxAmount;
     compensation.payee.totalAmount = payeeTotalAmount;
-    compensation.selectedProperties = apiModel.compReqAcquisitionProperties.map(
-      x => x.acquisitionFileProperty,
-    );
+
+    if (apiModel.acquisitionFileId != null) {
+      compensation.selectedProperties = apiModel.compReqAcquisitionProperties.map(
+        x => x.acquisitionFileProperty,
+      );
+    } else if (apiModel.leaseId != null) {
+      compensation.selectedProperties = apiModel.compReqLeaseProperties.map(x => x.leaseProperty);
+    }
 
     return compensation;
   }

@@ -74,6 +74,8 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public ProjectModel AlternateProject { get; set; }
 
+        public IEnumerable<CompReqLeaseStakeholderModel> CompReqLeaseStakeholder { get; set; }
+
         public IEnumerable<CompReqAcquisitionPropertyModel> CompReqAcquisitionProperties { get; set; }
 
         public IEnumerable<CompReqLeasePropertyModel> CompReqLeaseProperties { get; set; }

@@ -3,7 +3,7 @@ import { stringToBoolean, stringToNull } from '@/utils/formUtils';
 
 import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
 
-export class AcquisitionPayeeFormModel {
+export class CompensationPayeeFormModel {
   payeeKey = '';
   gstNumber = '';
   legacyPayee = '';
@@ -13,8 +13,8 @@ export class AcquisitionPayeeFormModel {
   taxAmount = 0;
   totalAmount = 0;
 
-  static fromApi(apiModel: ApiGen_Concepts_CompensationRequisition): AcquisitionPayeeFormModel {
-    const payeeModel = new AcquisitionPayeeFormModel();
+  static fromApi(apiModel: ApiGen_Concepts_CompensationRequisition): CompensationPayeeFormModel {
+    const payeeModel = new CompensationPayeeFormModel();
 
     payeeModel.payeeKey = PayeeOption.fromApi(apiModel);
     payeeModel.isPaymentInTrust = apiModel.isPaymentInTrust ?? false;
