@@ -249,7 +249,7 @@ describe('AddAcquisitionContainer component', () => {
         crownLandLicensesFeature: null,
         crownLandTenuresFeature: null,
         crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null
+        crownLandInclusionsFeature: null,
       },
     };
 
@@ -284,7 +284,7 @@ describe('AddAcquisitionContainer component', () => {
         crownLandLicensesFeature: null,
         crownLandTenuresFeature: null,
         crownLandInventoryFeature: null,
-        crownLandInclusionsFeature: null
+        crownLandInclusionsFeature: null,
       },
     };
 

@@ -7,11 +7,11 @@ import { CellProps } from 'react-table';
 import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { ColumnWithProps, renderDate, Table } from '@/components/Table';
 import { getCalculatedExpiry } from '@/features/leases/leaseUtils';
-import { ApiGen_CodeTypes_LeaseTenantTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTenantTypes';
+import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 interface IAssociationInfo {
@@ -29,33 +29,33 @@ interface IAssociationInfo {
 
 export interface ILeaseAssociationContentProps {
   associationName: string;
-  tenants: ApiGen_Concepts_LeaseTenant[];
+  tenants: ApiGen_Concepts_LeaseStakeholder[];
   renewals: ApiGen_Concepts_LeaseRenewal[];
   leases: ApiGen_Concepts_Lease[];
   associations?: ApiGen_Concepts_Association[];
   linkUrlMask: string;
 }
 
-const getFormattedTenants = (tenants: ApiGen_Concepts_LeaseTenant[]) => {
+const getFormattedTenants = (tenants: ApiGen_Concepts_LeaseStakeholder[]) => {
   if (tenants.length === 0) {
     return '';
   }
   const sortOrder = [
-    { type: ApiGen_CodeTypes_LeaseTenantTypes.ASGN, order: 1 },
-    { type: ApiGen_CodeTypes_LeaseTenantTypes.TEN, order: 2 },
-    { type: ApiGen_CodeTypes_LeaseTenantTypes.UNK, order: 3 },
+    { type: ApiGen_CodeTypes_LeaseStakeholderTypes.ASGN, order: 1 },
+    { type: ApiGen_CodeTypes_LeaseStakeholderTypes.TEN, order: 2 },
+    { type: ApiGen_CodeTypes_LeaseStakeholderTypes.UNK, order: 3 },
   ];
-  const filteredTenants: ApiGen_Concepts_LeaseTenant[] = tenants.filter(t =>
-    sortOrder.map(t => t.type.toString()).includes(t.tenantTypeCode.id),
+  const filteredTenants: ApiGen_Concepts_LeaseStakeholder[] = tenants.filter(t =>
+    sortOrder.map(t => t.type.toString()).includes(t.stakeholderTypeCode.id),
   );
-  const sortedTenants: ApiGen_Concepts_LeaseTenant[] = sortBy(
+  const sortedTenants: ApiGen_Concepts_LeaseStakeholder[] = sortBy(
     filteredTenants,
-    tenant => sortOrder.find(s => s.type === tenant.tenantTypeCode.id)?.order,
+    tenant => sortOrder.find(s => s.type === tenant.stakeholderTypeCode.id)?.order,
   );
-  const tenantTypeCode = sortedTenants[0]?.tenantTypeCode?.id;
+  const tenantTypeCode = sortedTenants[0]?.stakeholderTypeCode?.id;
 
   return sortedTenants
-    .filter(t => t.tenantTypeCode.id === tenantTypeCode)
+    .filter(t => t.stakeholderTypeCode.id === tenantTypeCode)
     .map(t => (t.lessorType?.id === 'PER' ? formatApiPersonNames(t.person) : t.organization?.name))
     .join(', ');
 };

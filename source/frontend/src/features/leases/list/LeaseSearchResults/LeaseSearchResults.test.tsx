@@ -36,7 +36,7 @@ const mockResults: ApiGen_Concepts_Lease[] = [
     id: 1,
     lFileNo: 'L-123-456',
     programName: 'TRAN-IT',
-    tenants: [
+    stakeholders: [
       {
         ...getEmptyLeaseTenant(),
         person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
@@ -59,7 +59,7 @@ const mockResults: ApiGen_Concepts_Lease[] = [
     id: 2,
     lFileNo: 'L-999-888',
     programName: 'TRAN-IT',
-    tenants: [
+    stakeholders: [
       {
         ...getEmptyLeaseTenant(),
         person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },

@@ -42,7 +42,7 @@ export const AddLeaseYupSchema = Yup.object().shape({
         ),
       then: Yup.string()
         .nullable()
-        .required('Other purspose description is required')
+        .required('Other purpose description is required')
         .max(200, 'Other purpose description must be at most ${max} characters'),
       otherwise: Yup.string().nullable(),
     }),

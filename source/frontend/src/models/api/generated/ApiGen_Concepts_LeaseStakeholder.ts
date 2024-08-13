@@ -7,9 +7,9 @@ import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
 
-// LINK: @backend/apimodels/Models/Concepts/Lease/LeaseTenantModel.cs
-export interface ApiGen_Concepts_LeaseTenant extends ApiGen_Base_BaseAudit {
-  leaseTenantId: number | null;
+// LINK: @backend/apimodels/Models/Concepts/Lease/LeaseStakeholderModel.cs
+export interface ApiGen_Concepts_LeaseStakeholder extends ApiGen_Base_BaseAudit {
+  leaseStakeholderId: number | null;
   leaseId: number;
   personId: number | null;
   person: ApiGen_Concepts_Person | null;
@@ -19,5 +19,5 @@ export interface ApiGen_Concepts_LeaseTenant extends ApiGen_Base_BaseAudit {
   primaryContact: ApiGen_Concepts_Person | null;
   primaryContactId: number | null;
   lessorType: ApiGen_Base_CodeType<string> | null;
-  tenantTypeCode: ApiGen_Base_CodeType<string> | null;
+  stakeholderTypeCode: ApiGen_Base_CodeType<string> | null;
 }

@@ -7,7 +7,7 @@ import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 
 import AddLeaseTenantContainer from './AddLeaseTenantContainer';
 import AddLeaseTenantForm from './AddLeaseTenantForm';
@@ -21,6 +21,9 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
   onSuccess,
 }) => {
   const { lease } = useContext(LeaseStateContext);
+  const getIsPayableLease = () => {
+    return lease?.paymentReceivableType.id !== 'RCVBL' ? true : false;
+  };
   const {
     getLeaseTenants: { execute: getLeaseTenants, loading, response: tenants },
   } = useLeaseTenantRepository();
@@ -28,7 +31,8 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
     lease?.id && getLeaseTenants(lease.id);
   }, [lease, getLeaseTenants]);
 
-  const formTenants = tenants?.map((t: ApiGen_Concepts_LeaseTenant) => new FormTenant(t)) ?? [];
+  const formTenants =
+    tenants?.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormTenant(t)) ?? [];
 
   return isEditing ? (
     <ProtectedComponent claims={[Claims.LEASE_EDIT]}>
@@ -38,10 +42,11 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
         tenants={formTenants}
         View={AddLeaseTenantForm}
         onSuccess={onSuccess}
+        isPayableLease={getIsPayableLease()}
       />
     </ProtectedComponent>
   ) : (
-    <ViewTenantForm tenants={formTenants} loading={loading} />
+    <ViewTenantForm tenants={formTenants} loading={loading} isPayableLease={getIsPayableLease()} />
   );
 };
 

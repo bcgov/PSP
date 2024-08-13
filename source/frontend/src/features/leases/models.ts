@@ -173,7 +173,7 @@ export class LeaseFormModel {
     leaseDetail.consultations =
       sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
     leaseDetail.periods = apiModel?.periods?.map(t => FormLeasePeriod.fromApi(t)) || [];
-    leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
+    leaseDetail.tenants = apiModel?.stakeholders?.map(t => new FormTenant(t)) || [];
     leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
@@ -225,7 +225,7 @@ export class LeaseFormModel {
       otherType: stringToNull(formLease.otherLeaseTypeDescription),
       project: isValidId(formLease.project?.id) ? ({ id: formLease.project?.id } as any) : null,
       consultations: formLease.consultations.map(x => x.toApi()),
-      tenants: formLease.tenants.map(t => FormTenant.toApi(t)),
+      stakeholders: formLease.tenants.map(t => FormTenant.toApi(t)),
       periods: formLease.periods.map(t => FormLeasePeriod.toApi(t)),
       renewals: formLease.renewals.map(r => r.toApi()),
       fileName: null,
@@ -371,7 +371,7 @@ export class FormLeaseConsultation {
 export const getDefaultFormLease: () => LeaseFormModel = () =>
   LeaseFormModel.fromApi({
     fileProperties: [],
-    tenants: [],
+    stakeholders: [],
     startDate: EpochIsoDateTime,
     expiryDate: EpochIsoDateTime,
     terminationDate: null,
