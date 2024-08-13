@@ -14,7 +14,7 @@ import PropertyAssociationTabView from '@/features/mapSideBar/property/tabs/prop
 import { PropertyDetailsTabView } from '@/features/mapSideBar/property/tabs/propertyDetails/detail/PropertyDetailsTabView';
 import ComposedPropertyState from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Concepts_Association';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -30,7 +30,7 @@ export interface IPropertyContainerProps {
 
 export interface LeaseAssociationInfo {
   leaseDetails: ApiGen_Concepts_Lease[];
-  leaseTenants: ApiGen_Concepts_LeaseStakeholder[];
+  leaseStakeholders: ApiGen_Concepts_LeaseStakeholder[];
   leaseRenewals: ApiGen_Concepts_LeaseRenewal[];
   loading: boolean;
 }
@@ -38,28 +38,28 @@ export interface LeaseAssociationInfo {
 export const getLeaseInfo = async (
   leasesAssociations: ApiGen_Concepts_Association[],
   getLease: (leaseId: number) => Promise<ApiGen_Concepts_Lease>,
-  getLeaseTenants: (leaseId: number) => Promise<ApiGen_Concepts_LeaseStakeholder[]>,
+  getLeaseStakeholders: (leaseId: number) => Promise<ApiGen_Concepts_LeaseStakeholder[]>,
   getLeaseRenewals: (leaseId: number) => Promise<ApiGen_Concepts_LeaseRenewal[]>,
   setLeaseAssociationInfo: (info) => void,
 ) => {
   if (!leasesAssociations) return;
-  setLeaseAssociationInfo({ leaseDetails: [], leaseTenants: [], loading: true });
+  setLeaseAssociationInfo({ leaseDetails: [], leaseStakeholders: [], loading: true });
   const leaseDetailPromises = leasesAssociations?.map(leaseAssociation =>
     getLease(leaseAssociation.id),
   );
-  const leaseTenantPromises = leasesAssociations?.map(leaseAssociation =>
-    getLeaseTenants(leaseAssociation.id),
+  const leaseStakeholderPromises = leasesAssociations?.map(leaseAssociation =>
+    getLeaseStakeholders(leaseAssociation.id),
   );
   const leaseRenewalPromises = leasesAssociations?.map(leaseAssociation =>
     getLeaseRenewals(leaseAssociation.id),
   );
 
   const leaseDetails = (await Promise.all(leaseDetailPromises)).flat();
-  const leaseTenants = (await Promise.all(leaseTenantPromises)).flat();
+  const leaseStakeholders = (await Promise.all(leaseStakeholderPromises)).flat();
   const leaseRenewals = (await Promise.all(leaseRenewalPromises)).flat();
   setLeaseAssociationInfo({
     leaseDetails: leaseDetails,
-    leaseTenants: leaseTenants,
+    leaseStakeholders: leaseStakeholders,
     leaseRenewals: leaseRenewals,
     loading: false,
   });
@@ -74,11 +74,11 @@ export const PropertyContainer: React.FunctionComponent<
   const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
   const { getLease } = useLeaseRepository();
-  const { getLeaseTenants } = useLeaseTenantRepository();
+  const { getLeaseStakeholders } = useLeaseStakeholderRepository();
   const { getLeaseRenewals } = useLeaseRepository();
   const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
     leaseDetails: [],
-    leaseTenants: [],
+    leaseStakeholders: [],
     leaseRenewals: [],
     loading: false,
   });
@@ -90,14 +90,14 @@ export const PropertyContainer: React.FunctionComponent<
       getLeaseInfo(
         leaseAssociations,
         getLease.execute,
-        getLeaseTenants.execute,
+        getLeaseStakeholders.execute,
         getLeaseRenewals.execute,
         setLeaseAssociationInfo,
       ),
     [
       setLeaseAssociationInfo,
       leaseAssociations,
-      getLeaseTenants.execute,
+      getLeaseStakeholders.execute,
       getLeaseRenewals.execute,
       getLease.execute,
     ],
@@ -166,7 +166,7 @@ export const PropertyContainer: React.FunctionComponent<
           isLoading={composedPropertyState.propertyAssociationWrapper!.loading}
           associations={composedPropertyState.propertyAssociationWrapper?.response}
           associatedLeases={LeaseAssociationInfo?.leaseDetails ?? []}
-          associatedLeaseTenants={LeaseAssociationInfo?.leaseTenants ?? []}
+          associatedLeaseStakeholders={LeaseAssociationInfo?.leaseStakeholders ?? []}
           associatedLeaseRenewals={LeaseAssociationInfo?.leaseRenewals ?? []}
         />
       ),

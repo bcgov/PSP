@@ -1,0 +1,437 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`AddLeaseTenantForm component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+  height: 3.8rem;
+}
+
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  border: none;
+}
+
+.c4.btn.btn-secondary {
+  background: none;
+}
+
+.c4.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  background: none;
+}
+
+.c4.btn.btn-light {
+  border: none;
+}
+
+.c4.btn.btn-dark {
+  border: none;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c7 {
+  margin-top: 3rem;
+  font-size: 1.4rem;
+}
+
+.c7 .table .tr .td:first-of-type,
+.c7 .table .tr .td:nth-of-type(2),
+.c7 .table .tr .th:first-of-type,
+.c7 .table .tr .th:nth-of-type(2) {
+  border-left: 0;
+  border-right: 0;
+  padding: 0;
+}
+
+.c8 {
+  font-size: 1.4rem;
+}
+
+.c5.c5 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c0 {
+  padding-top: 1rem;
+}
+
+.c2 {
+  font-weight: bold;
+  border-bottom: 0.2rem solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c3 .btn {
+  margin: 0;
+}
+
+.c6 {
+  margin-top: 3rem;
+  text-align: left;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="c3 no-gutters row"
+            >
+              <div
+                class="px-2 my-1 col-auto"
+              >
+                Tenants
+              </div>
+              <div
+                class="my-1 col-auto"
+              >
+                <button
+                  class="c4 Button c5 btn btn-primary"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                      />
+                    </svg>
+                     Select Tenant(s)
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <span>
+          Note: If the tenants you are trying to find were never added to the "contact list" it will not show up. Please add them to the contact list 
+          <a
+            href="/contact/list"
+          >
+            here
+          </a>
+          , then you will be able to see them on the "Add a Tenant" list.
+        </span>
+        <div
+          class="c6"
+        >
+          <div
+            class="p-0 m-0 container"
+          >
+            <div
+              class="c7"
+            >
+              <p
+                class="c8"
+              >
+                0 Tenant(s) associated with this Lease/Licence
+              </p>
+              <div
+                class="table"
+                data-testid="selected-items"
+                role="table"
+              >
+                <div
+                  class="thead thead-light"
+                >
+                  <div
+                    class="tr"
+                    role="row"
+                    style="display: flex; flex: 1 0 auto; min-width: 416px;"
+                  >
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 16 0 auto; min-width: 16px; width: 16px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-stakeholder-status"
+                          id="stakeholder-status"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 16 0 auto; min-width: 30px; width: 16px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      />
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 120 0 auto; min-width: 30px; width: 120px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Summary
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 150 0 auto; min-width: 150px; width: 150px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Primary contact
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Contact info
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 100 0 auto; min-width: 80px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Contact type
+                      </div>
+                    </div>
+                    <div
+                      class="th"
+                      colspan="1"
+                      role="columnheader"
+                      style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                    >
+                      <div
+                        class="sortable-column"
+                      >
+                        Action
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="no-rows-message"
+                >
+                  No rows to display
+                </div>
+              </div>
+              <div
+                class="row"
+              >
+                <div
+                  class="align-self-center col-auto"
+                />
+                <div
+                  class="ml-auto align-self-center col-auto"
+                />
+                <div
+                  class="align-self-center col-auto"
+                />
+              </div>
+            </div>
+          </div>
+          <div />
+        </div>
+        <div />
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
