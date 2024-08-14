@@ -75,6 +75,8 @@ export enum LeasePageNames {
   DETAILS = 'details',
   TENANT = 'tenant',
   EDIT_TENANT = 'edit-tenant',
+  PAYEE = 'payee',
+  EDIT_PAYEE = 'edit-payee',
   PAYMENTS = 'payments',
   IMPROVEMENTS = 'improvements',
   INSURANCE = 'insurance',
@@ -103,6 +105,14 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
       pageName: LeasePageNames.TENANT,
       component: LeaseStakeholderContainer,
       title: 'Tenant',
+    },
+  ],
+  [
+    LeasePageNames.PAYEE,
+    {
+      pageName: LeasePageNames.PAYEE,
+      component: LeaseStakeholderContainer,
+      title: 'Payee',
     },
   ],
   [

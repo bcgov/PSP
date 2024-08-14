@@ -59,7 +59,7 @@ export const AddLeaseStakeholderForm: React.FunctionComponent<
 }) => {
   const filteredStakeHolderTypes =
     stakeholderTypesOptions?.filter(
-      type => type.isPayableRelated === isPayableLease && type.isDisabled === false,
+      type => type?.isPayableRelated === isPayableLease && type?.isDisabled === false,
     ) ?? [];
   const onRemove = (remainingTenants: FormStakeholder[]) => {
     const remainingContacts = remainingTenants.map(t => FormStakeholder.toContactSearchResult(t));

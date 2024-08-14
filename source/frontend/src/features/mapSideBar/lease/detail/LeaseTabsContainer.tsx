@@ -35,6 +35,13 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
 }) => {
   const tabViews: LeaseTabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+  const stakeholderPageName =
+    lease?.paymentReceivableType.id === 'RCVBL'
+      ? LeaseFileTabNames.tenant
+      : LeaseFileTabNames.payee;
+  const stakeHolderTypeName = lease?.paymentReceivableType.id === 'RCVBL' ? 'Tenant' : 'Payee';
+
+  console.log(lease?.paymentReceivableType.id);
 
   tabViews.push({
     content: (
@@ -69,41 +76,23 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     name: 'Checklist',
   });
 
-  if (lease?.paymentReceivableType.id === 'RCVBL') {
-    tabViews.push({
-      content: (
-        <LeaseTab
-          leasePage={leasePages.get(LeasePageNames.TENANT)}
-          onEdit={() =>
-            setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })
-          }
-          isEditing={isEditing}
-          formikRef={formikRef}
-          onSuccess={onSuccess}
-        />
-      ),
-      key: LeaseFileTabNames.tenant,
-      name: 'Tenant',
-    });
-  }
-
-  if (lease?.paymentReceivableType.id !== 'RCVBL') {
-    tabViews.push({
-      content: (
-        <LeaseTab
-          leasePage={leasePages.get(LeasePageNames.TENANT)}
-          onEdit={() =>
-            setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })
-          }
-          isEditing={isEditing}
-          formikRef={formikRef}
-          onSuccess={onSuccess}
-        />
-      ),
-      key: LeaseFileTabNames.tenant,
-      name: 'Payee',
-    });
-  }
+  tabViews.push({
+    content: (
+      <LeaseTab
+        leasePage={
+          lease?.paymentReceivableType.id === 'RCVBL'
+            ? leasePages.get(LeasePageNames.PAYEE)
+            : leasePages.get(LeasePageNames.TENANT)
+        }
+        onEdit={() => setContainerState({ activeEditForm: LeasePageNames.TENANT, isEditing: true })}
+        isEditing={isEditing}
+        formikRef={formikRef}
+        onSuccess={onSuccess}
+      />
+    ),
+    key: stakeholderPageName,
+    name: stakeHolderTypeName,
+  });
 
   tabViews.push({
     content: (
