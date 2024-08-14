@@ -72,11 +72,12 @@ export class PayeeOption {
   }
 
   public static toApi(
+    compensationRequisitionId: number,
     payeeKey: string,
     options: PayeeOption[],
   ): ApiGen_Concepts_CompensationRequisition {
     const compensationModel: ApiGen_Concepts_CompensationRequisition = {
-      acquisitionFileId: 0,
+      acquisitionFileId: null,
       leaseId: null,
       isPaymentInTrust: null,
       gstNumber: null,
@@ -140,7 +141,7 @@ export class PayeeOption {
         {
           const leaseStakeHolderPayee: ApiGen_Concepts_CompReqLeaseStakeholder = {
             compReqLeaseStakeholderId: null,
-            compensationRequisitionId: null,
+            compensationRequisitionId: compensationRequisitionId,
             leaseStakeholderId: payeeOption.api_id,
             leaseStakeholder: null,
           } as ApiGen_Concepts_CompReqLeaseStakeholder;

@@ -30,7 +30,7 @@ export interface UpdateCompensationRequisitionContainerProps {
 const UpdateCompensationRequisitionContainer: React.FC<
   UpdateCompensationRequisitionContainerProps
 > = ({ compensation, fileType, file, onSuccess, onCancel, View }) => {
-  const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>([]);
+  const [payeeOptions, setPayeeOptions] = useState<PayeeOption[]>(null);
   const [financialActivityOptions, setFinancialActivityOptions] = useState<SelectOption[]>([]);
   const [chartOfAccountOptions, setChartOfAccountOptions] = useState<SelectOption[]>([]);
   const [yearlyFinancialOptions, setyearlyFinancialOptions] = useState<SelectOption[]>([]);
@@ -135,10 +135,14 @@ const UpdateCompensationRequisitionContainer: React.FC<
           }
           break;
         case ApiGen_CodeTypes_FileTypes.Lease:
-          setPayeeOptions([]);
-          break;
-        default:
-          setPayeeOptions([]);
+          {
+            const payeesOptions = (file as ApiGen_Concepts_Lease).stakeholders;
+            const stakeHoldersOptions = payeesOptions.map(x =>
+              PayeeOption.createLeaseStakeholder(x),
+            );
+
+            setPayeeOptions(stakeHoldersOptions);
+          }
           break;
       }
     }
@@ -226,8 +230,10 @@ const UpdateCompensationRequisitionContainer: React.FC<
   ]);
 
   useEffect(() => {
-    fetchPayeeOptions();
-  }, [fetchPayeeOptions]);
+    if (payeeOptions === null) {
+      fetchPayeeOptions();
+    }
+  }, [fetchPayeeOptions, payeeOptions]);
 
   useEffect(() => {
     fetchFinancialCodes();
@@ -251,7 +257,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
         responsibilityCentreOptions,
         financialActivityOptions,
       )}
-      payeeOptions={payeeOptions}
+      payeeOptions={payeeOptions || []}
       gstConstant={gstDecimalPercentage ?? 0}
       financialActivityOptions={financialActivityOptions}
       chartOfAccountsOptions={chartOfAccountOptions}

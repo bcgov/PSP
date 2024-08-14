@@ -20,6 +20,7 @@ import {
   CompensationRequisitionDetailContainerProps,
 } from './CompensationRequisitionDetailContainer';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 vi.mock('@/hooks/pims-api/useApiContacts');
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
@@ -68,7 +69,8 @@ describe('Compensation Detail View container', () => {
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
         compensation={renderOptions.props?.compensation ?? getMockApiDefaultCompensation()}
-        acquisitionFile={renderOptions.props?.acquisitionFile ?? mockAcquisitionFileResponse()}
+        file={renderOptions.props?.file ?? mockAcquisitionFileResponse()}
+        fileType={renderOptions.props?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
       />,
       {

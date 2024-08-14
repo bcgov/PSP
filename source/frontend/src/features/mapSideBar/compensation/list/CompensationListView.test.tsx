@@ -37,7 +37,6 @@ describe('compensation list view', () => {
         fileType={renderOptions?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions?.file ?? { ...mockAcquisitionfile }}
         compensations={renderOptions?.compensations ?? []}
-        totalAllowableCompensation={renderOptions?.totalAllowableCompensation ?? 0}
         onDelete={onDelete}
         onAdd={onAddCompensationRequisition}
         onUpdateTotalCompensation={onUpdateTotalCompensation}

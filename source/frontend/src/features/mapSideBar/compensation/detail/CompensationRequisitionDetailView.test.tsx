@@ -17,6 +17,7 @@ import CompensationRequisitionDetailView, {
   CompensationRequisitionDetailViewProps,
 } from './CompensationRequisitionDetailView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 const setEditMode = vi.fn();
 
@@ -29,6 +30,7 @@ describe('Compensation Detail View Component', () => {
     // render component under test
     const component = render(
       <CompensationRequisitionDetailView
+        fileType={renderOptions?.props?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions?.props?.file ?? mockAcquisitionFileResponse()}
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
         compensationProperties={

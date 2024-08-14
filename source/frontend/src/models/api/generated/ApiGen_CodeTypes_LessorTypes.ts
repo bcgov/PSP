@@ -3,7 +3,7 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 export enum ApiGen_CodeTypes_LessorTypes {
-  ORG = 'Organization',
-  PER = 'Person',
-  UNK = 'Unknown',
+  ORG = 'ORG',
+  PER = 'PER',
+  UNK = 'UNK',
 }

@@ -242,6 +242,7 @@ export class LeaseFormModel {
       isExpired: false,
       programName: null,
       renewalCount: formLease.renewals.length,
+      totalAllowableCompensation: null,
       ...getEmptyBaseAudit(formLease.rowVersion),
     };
   }
@@ -420,4 +421,5 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     renewals: [],
     primaryArbitrationCity: null,
     ...getEmptyBaseAudit(),
+    totalAllowableCompensation: null,
   });

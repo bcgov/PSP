@@ -1,3 +1,4 @@
+import { sortBy } from 'lodash';
 import find from 'lodash/find';
 import orderBy from 'lodash/orderBy';
 import { Link } from 'react-router-dom';
@@ -80,7 +81,7 @@ export const LeaseAssociationContent: React.FunctionComponent<
         createdByGuid: x.createdByGuid || '',
         createdDate: x.createdDateTime || '',
         status: x.status || '',
-        tenants: '',
+        tenants: getFormattedTenants(props.tenants?.filter(tenant => x.id === tenant.leaseId)),
         expiryDate: calculatedExpiry,
       };
     }),

@@ -27,6 +27,7 @@ export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisiti
   advancedPaymentServedDate: null,
   generationDate: null,
   financials: [],
+  compReqLeaseStakeholder: [],
   compReqAcquisitionProperties: [],
   compReqLeaseProperties: [],
   acquisitionOwnerId: null,

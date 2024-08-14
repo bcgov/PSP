@@ -8,6 +8,7 @@ import { useGenerateH120 } from '@/features/mapSideBar/acquisition/common/Genera
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
@@ -32,7 +33,9 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailContainerProps>
 > = ({ compensation, setEditMode, View, clientConstant, fileType, file, loading }) => {
   const onGenerate = useGenerateH120();
-  const [payeePerson, setPayeePerson] = useState<ApiGen_Concepts_Person | undefined>();
+  const [payeePerson, setPayeePerson] = useState<ApiGen_Concepts_Person | null>();
+  const [payeeOrganization, setPayeeOrganization] = useState<ApiGen_Concepts_Organization | null>();
+
   const [compensationRequisitionProperties, setCompensationRequisitionProperties] = useState<
     ApiGen_Concepts_FileProperty[]
   >([]);
@@ -43,10 +46,6 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       loading: loadingCompReqProperties,
     },
   } = useCompensationRequisitionRepository();
-
-  const [payeeOrganization, setPayeeOrganization] = useState<
-    ApiGen_Concepts_Organization | undefined
-  >();
 
   const {
     getPersonDetail: { execute: getPerson, loading: loadingPerson },
@@ -79,12 +78,22 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
             const organization = await getOrganization(compensation.interestHolder.organizationId);
             setPayeeOrganization(organization);
           }
+        } else if (compensation.compReqLeaseStakeholder?.length > 0) {
+          const stakeHolder = compensation.compReqLeaseStakeholder[0].leaseStakeholder;
+          if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.ORG) {
+            const org = await getOrganization(stakeHolder.organizationId);
+            setPayeeOrganization(org);
+          } else if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.PER) {
+            const person = await getPerson(stakeHolder.personId);
+            setPayeePerson(person);
+          }
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
           if (axiosError.response?.status === 404) {
-            setPayeePerson(undefined);
+            setPayeePerson(null);
+            setPayeeOrganization(null);
           } else {
             toast.error(axiosError.response?.data.error);
           }
@@ -93,6 +102,7 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
     }
   }, [
     compensation.acquisitionFileTeam,
+    compensation.compReqLeaseStakeholder,
     compensation.id,
     compensation.interestHolder,
     getOrganization,

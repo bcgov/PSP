@@ -14,6 +14,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { StyledAddButton } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -28,6 +29,7 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 import { cannotEditMessage } from '../../acquisition/common/constants';
 import { DetailAcquisitionFileOwner } from '../../acquisition/models/DetailAcquisitionFileOwner';
 import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
+import { UpdateCompensationContext } from '../models/UpdateCompensationContext';
 
 export interface CompensationRequisitionDetailViewProps {
   fileType: ApiGen_CodeTypes_FileTypes;
@@ -42,7 +44,7 @@ export interface CompensationRequisitionDetailViewProps {
   onGenerate: (compensation: ApiGen_Concepts_CompensationRequisition) => void;
 }
 
-interface PayeeViewDetails {
+export interface PayeeViewDetails {
   displayName: string;
   isGstApplicable: boolean;
   isPaymentInTrust: boolean;
@@ -108,6 +110,16 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         payeeDetail.contactString = 'O' + compensationContactOrganization.id;
         payeeDetail.contactEnabled = true;
       }
+    } else if (compensation.compReqLeaseStakeholder?.length > 0) {
+      if (compensationContactPerson) {
+        payeeDetail.displayName = formatApiPersonNames(compensationContactPerson);
+        payeeDetail.contactString = 'P' + compensationContactPerson?.id;
+        payeeDetail.contactEnabled = true;
+      } else if (compensationContactOrganization) {
+        payeeDetail.displayName = compensationContactOrganization?.name ?? '';
+        payeeDetail.contactString = 'O' + compensationContactOrganization.id;
+        payeeDetail.contactEnabled = true;
+      }
     } else if (compensation.legacyPayee) {
       payeeDetail.displayName = `${compensation.legacyPayee}`;
     }
@@ -140,11 +152,29 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       ? (file as ApiGen_Concepts_AcquisitionFile).product
       : null;
 
-  const statusSolver = new AcquisitionFileStatusUpdateSolver(file.fileStatusTypeCode);
+  let updateCompensationContext: UpdateCompensationContext | null;
+  switch (fileType) {
+    case ApiGen_CodeTypes_FileTypes.Acquisition:
+      {
+        const solver = new AcquisitionFileStatusUpdateSolver(file.fileStatusTypeCode);
+        updateCompensationContext = new UpdateCompensationContext(solver);
+      }
+      break;
+    case ApiGen_CodeTypes_FileTypes.Lease:
+      {
+        const solver = new LeaseStatusUpdateSolver(file.fileStatusTypeCode);
+        updateCompensationContext = new UpdateCompensationContext(solver);
+      }
+      break;
+    default:
+      updateCompensationContext = null;
+      break;
+  }
 
   const userCanEditCompensationReq = (): boolean => {
     if (
-      statusSolver.canEditOrDeleteCompensation(compensation.isDraft) &&
+      updateCompensationContext &&
+      updateCompensationContext.canEditCompensations(compensation.isDraft) &&
       hasClaim(Claims.COMPENSATION_REQUISITION_EDIT)
     ) {
       return true;

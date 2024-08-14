@@ -92,6 +92,7 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqFinancial, long>(a => a.PimsCompReqFinancials, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqFinancials.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropAcqFlCompReq, long>(a => a.PimsPropAcqFlCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropAcqFlCompReqs.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropLeaseCompReq, long>(a => a.PimsPropLeaseCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropLeaseCompReqs.ToArray(), true);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsLeaseStakeholderCompReq, long>(a => a.PimsLeaseStakeholderCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsLeaseStakeholderCompReqs.ToArray(), true);
 
             return compensationRequisition;
         }
@@ -101,6 +102,8 @@ namespace Pims.Dal.Repositories
             var deletedEntity = Context.PimsCompensationRequisitions
                 .Include(fa => fa.PimsCompReqFinancials)
                 .Include(p => p.PimsPropAcqFlCompReqs)
+                .Include(l => l.PimsPropLeaseCompReqs)
+                .Include(s => s.PimsLeaseStakeholderCompReqs)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
 
@@ -119,6 +122,11 @@ namespace Pims.Dal.Repositories
                 foreach (var propLeaseFile in deletedEntity.PimsPropLeaseCompReqs)
                 {
                     Context.PimsPropLeaseCompReqs.Remove(new PimsPropLeaseCompReq() { PropLeaseCompReqId = propLeaseFile.PropLeaseCompReqId });
+                }
+
+                foreach (var compReqLeaseStakeholder in deletedEntity.PimsLeaseStakeholderCompReqs)
+                {
+                    Context.PimsLeaseStakeholderCompReqs.Remove(new PimsLeaseStakeholderCompReq() { LeaseStakeholderCompReqId = compReqLeaseStakeholder.LeaseStakeholderCompReqId });
                 }
 
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.

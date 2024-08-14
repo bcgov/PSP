@@ -258,7 +258,7 @@ namespace Pims.Api.Services
             compensationRequisition.FinalizedDate = CheckFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
-            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, (long)compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
+            AddAcquisitionNoteIfStatusChanged(compensationRequisition.Internal_Id, (long)compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
@@ -269,13 +269,13 @@ namespace Pims.Api.Services
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
-            AddNoteIfStatusChanged(compensationRequisition.Internal_Id, (long)compensationRequisition.AcquisitionFileId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
+            AddLeaseNoteIfStatusChanged(compensationRequisition.Internal_Id, (long)compensationRequisition.LeaseId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
             _compensationRequisitionRepository.CommitTransaction();
 
             return updatedEntity;
         }
 
-        private void AddNoteIfStatusChanged(long compensationRequisitionId, long acquisitionFileId, bool? currentStatus, bool? newStatus)
+        private void AddAcquisitionNoteIfStatusChanged(long compensationRequisitionId, long acquisitionFileId, bool? currentStatus, bool? newStatus)
         {
             if (currentStatus.Equals(newStatus))
             {
@@ -288,6 +288,33 @@ namespace Pims.Api.Services
             PimsAcquisitionFileNote fileNoteInstance = new()
             {
                 AcquisitionFileId = acquisitionFileId,
+                AppCreateTimestamp = DateTime.Now,
+                AppCreateUserid = _user.GetUsername(),
+                Note = new PimsNote()
+                {
+                    IsSystemGenerated = true,
+                    NoteTxt = $"Compensation Requisition with # {compensationRequisitionId}, changed status from {curentStatusText} to {newStatusText}",
+                    AppCreateTimestamp = DateTime.Now,
+                    AppCreateUserid = this._user.GetUsername(),
+                },
+            };
+
+            _entityNoteRepository.Add(fileNoteInstance);
+        }
+
+        private void AddLeaseNoteIfStatusChanged(long compensationRequisitionId, long leaseId, bool? currentStatus, bool? newStatus)
+        {
+            if (currentStatus.Equals(newStatus))
+            {
+                return;
+            }
+
+            var curentStatusText = GetCompensationRequisitionStatusText(currentStatus);
+            var newStatusText = GetCompensationRequisitionStatusText(newStatus);
+
+            PimsLeaseNote fileNoteInstance = new()
+            {
+                LeaseId = leaseId,
                 AppCreateTimestamp = DateTime.Now,
                 AppCreateUserid = _user.GetUsername(),
                 Note = new PimsNote()

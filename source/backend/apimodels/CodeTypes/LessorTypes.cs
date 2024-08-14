@@ -6,13 +6,13 @@ namespace Pims.Api.Models.CodeTypes
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum LessorTypes
     {
-        [EnumMember(Value = "Organization")]
+        [EnumMember(Value = "ORG")]
         ORG,
 
-        [EnumMember(Value = "Person")]
+        [EnumMember(Value = "PER")]
         PER,
 
-        [EnumMember(Value = "Unknown")]
+        [EnumMember(Value = "UNK")]
         UNK,
     }
 }

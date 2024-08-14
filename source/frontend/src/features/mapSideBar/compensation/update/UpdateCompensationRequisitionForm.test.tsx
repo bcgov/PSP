@@ -30,6 +30,7 @@ import UpdateCompensationRequisitionForm, {
 import Claims from '@/constants/claims';
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 const currentGstPercent = 0.05;
 const onSave = vi.fn();
@@ -43,6 +44,7 @@ const defauiltApiCompensation = getMockApiDefaultCompensation();
 const defaultCompensation = new CompensationRequisitionFormModel(
   defauiltApiCompensation.id,
   defauiltApiCompensation.acquisitionFileId,
+  null,
   '',
 );
 
@@ -79,6 +81,7 @@ describe('Compensation Requisition UpdateForm component', () => {
         responsiblityCentreOptions={[]}
         yearlyFinancialOptions={[]}
         gstConstant={currentGstPercent ?? 0.05}
+        fileType={renderOptions.props?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions.props?.file ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
         showAltProjectError={false}

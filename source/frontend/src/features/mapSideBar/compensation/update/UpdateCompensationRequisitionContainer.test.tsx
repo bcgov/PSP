@@ -20,6 +20,7 @@ import UpdateCompensationRequisitionContainer, {
 } from './UpdateCompensationRequisitionContainer';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 type Provider = typeof useCompensationRequisitionRepository;
@@ -103,6 +104,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     const component = render(
       <UpdateCompensationRequisitionContainer
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
+        fileType={renderOptions?.props?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions?.props?.file ?? mockAcquisitionFileResponse()}
         onSuccess={onSuccess}
         onCancel={onCancel}
@@ -189,6 +191,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     const updatedCompensationModel = new CompensationRequisitionFormModel(
       mockCompensation.id,
       mockCompensation.acquisitionFileId,
+      null,
       '',
     );
     updatedCompensationModel.detailedRemarks = 'my update';

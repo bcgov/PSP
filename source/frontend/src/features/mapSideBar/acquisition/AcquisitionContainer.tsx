@@ -163,7 +163,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     }
   }, [acquisitionFileId, getLastUpdatedBy, setLastUpdatedBy]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !exists(lastUpdatedBy) ||
       acquisitionFileId !== lastUpdatedBy?.parentId ||

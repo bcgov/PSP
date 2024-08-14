@@ -122,6 +122,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
       file: null,
     },
   ],
+  totalAllowableCompensation: null,
   appCreateTimestamp: '2022-09-02T19:29:50.397',
   appLastUpdateTimestamp: '2022-09-02T19:29:50.397',
   appLastUpdateUserid: 'admin',

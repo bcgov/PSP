@@ -17,8 +17,6 @@ import { FinancialActivityFormModel } from './FinancialActivityFormModel';
 
 export class CompensationRequisitionFormModel {
   id: number | null;
-  acquisitionFileId: number | null;
-  leaseId: number | null;
   status = '';
   fiscalYear = '';
   stob: SelectOption | null = null;
@@ -43,14 +41,14 @@ export class CompensationRequisitionFormModel {
 
   constructor(
     id: number | null,
-    acquisitionFileId: number | null,
-    leaseId: number | null,
+    readonly acquisitionFileId: number | null,
+    readonly leaseId: number | null,
     finalizedDate: string,
   ) {
     this.id = id;
     this.acquisitionFileId = acquisitionFileId;
     this.leaseId = leaseId;
-    this.payee = new CompensationPayeeFormModel();
+    this.payee = new CompensationPayeeFormModel(id);
     this.finalizedDate = isValidIsoDateTime(finalizedDate) ? finalizedDate : '';
   }
 
@@ -61,6 +59,7 @@ export class CompensationRequisitionFormModel {
       ...modelWithPayeeInformation,
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
+      leaseId: this.leaseId,
       alternateProjectId: isValidId(this.alternateProject?.id) ? this.alternateProject!.id : null,
       isDraft: this.status === 'draft' ? true : false,
       fiscalYear: stringToNull(this.fiscalYear),

@@ -13,8 +13,12 @@ export class CompensationPayeeFormModel {
   taxAmount = 0;
   totalAmount = 0;
 
+  constructor(readonly compensationRequisitionId: number) {
+    this.compensationRequisitionId = compensationRequisitionId;
+  }
+
   static fromApi(apiModel: ApiGen_Concepts_CompensationRequisition): CompensationPayeeFormModel {
-    const payeeModel = new CompensationPayeeFormModel();
+    const payeeModel = new CompensationPayeeFormModel(apiModel.id);
 
     payeeModel.payeeKey = PayeeOption.fromApi(apiModel);
     payeeModel.isPaymentInTrust = apiModel.isPaymentInTrust ?? false;
@@ -26,6 +30,7 @@ export class CompensationPayeeFormModel {
 
   toApi(payeeOptions: PayeeOption[]): ApiGen_Concepts_CompensationRequisition {
     const modelWithPayeeInformation: ApiGen_Concepts_CompensationRequisition = PayeeOption.toApi(
+      this.compensationRequisitionId,
       this.payeeKey,
       payeeOptions,
     );

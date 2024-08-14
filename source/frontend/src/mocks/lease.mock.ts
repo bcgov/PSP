@@ -61,6 +61,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   isFinancialGain: null,
   feeDeterminationNote: null,
   leasePurposes: [],
+  totalAllowableCompensation: null,
 };
 
 export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({

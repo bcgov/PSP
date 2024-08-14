@@ -6,6 +6,7 @@ import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRe
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { isValidId } from '@/utils';
 
@@ -64,7 +65,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
 
   useEffect(() => {
     fetchCompensationReq();
-  }, [compensationRequisitionId, getCompensationRequisition, fetchCompensationReq]);
+  }, [fetchCompensationReq]);
 
   useEffect(() => setProjectLoading(loadingProject), [loadingProject, setProjectLoading]);
 
@@ -74,11 +75,20 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
     }
   }, [project, fetchProject]);
 
+  const castFile = (): ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease => {
+    switch (fileType) {
+      case ApiGen_CodeTypes_FileTypes.Acquisition:
+        return file as unknown as ApiGen_Concepts_AcquisitionFile;
+      case ApiGen_CodeTypes_FileTypes.Lease:
+        return file as unknown as ApiGen_Concepts_AcquisitionFile;
+    }
+  };
+
   return loadedCompensation ? (
     <View
       compensation={loadedCompensation}
       fileType={fileType}
-      file={{ ...file, fileChecklistItems: [] } as unknown as ApiGen_Concepts_AcquisitionFile}
+      file={castFile()}
       clientConstant={clientConstant?.value ?? ''}
       gstConstant={gstDecimal}
       onClose={onClose}

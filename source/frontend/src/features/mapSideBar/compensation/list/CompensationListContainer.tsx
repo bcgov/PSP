@@ -21,6 +21,7 @@ export interface ICompensationListContainerProps {
   fileType: ApiGen_CodeTypes_FileTypes;
   file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   View: React.FunctionComponent<React.PropsWithChildren<ICompensationListViewProps>>;
+  onSuccess?: () => void;
 }
 
 /**
@@ -30,6 +31,7 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
   fileType,
   file,
   View,
+  onSuccess,
 }: ICompensationListContainerProps) => {
   const sidebar = useContext(SideBarContext);
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -145,6 +147,7 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       legacyPayee: null,
       isPaymentInTrust: null,
       gstNumber: null,
+      compReqLeaseStakeholder: null,
       compReqAcquisitionProperties: null,
       compReqLeaseProperties: null,
       ...getEmptyBaseAudit(),
@@ -190,6 +193,12 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       getDefaultCompensationRequisition(fileType, file.id),
     ).then(async newCompensationReq => {
       if (newCompensationReq?.id) {
+        // if (fileType !== ApiGen_CodeTypes_FileTypes.Lease) {
+        //   sidebar.setStaleLastUpdatedBy(true);
+        //   sidebar.setStaleFile(true);
+        // } else {
+        //   onSuccess && onSuccess();
+        // }
         sidebar.setStaleLastUpdatedBy(true);
         sidebar.setStaleFile(true);
       }
@@ -214,7 +223,13 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
           ...getDeleteModalProps(),
           handleOk: async () => {
             const result = await deleteCompensation(compensationId);
-            if (result === true) {
+            // if (result) {
+            //   sidebar.setStaleLastUpdatedBy(true);
+            //   sidebar.setStaleFile(true);
+            // } else {
+            //   onSuccess && onSuccess();
+            // }
+            if (result) {
               sidebar.setStaleLastUpdatedBy(true);
               sidebar.setStaleFile(true);
             }

@@ -8,6 +8,10 @@ export class LeaseStatusUpdateSolver implements IUpdateCompensationStrategy {
 
   // eslint-disable-next-line unused-imports/no-unused-vars
   canEditOrDeleteCompensation(isDraftCompensation: boolean): boolean {
-    return false;
+    if (this.fileStatus === null) {
+      return false;
+    }
+
+    return isDraftCompensation;
   }
 }
