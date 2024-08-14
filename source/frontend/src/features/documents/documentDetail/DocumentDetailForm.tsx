@@ -66,7 +66,7 @@ export const DocumentDetailForm: React.FunctionComponent<
               <Formik<DocumentUpdateFormData>
                 innerRef={props.formikRef}
                 initialValues={initialFormState}
-                validationSchema={getDocumentMetadataYupSchema(props.mayanMetadataTypes)}
+                validationSchema={getDocumentMetadataYupSchema(10)}
                 onSubmit={async (values: DocumentUpdateFormData, { setSubmitting }) => {
                   if (
                     props.document?.pimsDocumentRelationship?.id &&
