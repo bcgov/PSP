@@ -217,6 +217,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
           fileType={ApiGen_CodeTypes_FileTypes.Lease}
           file={lease}
           View={CompensationListView}
+          onSuccess={onSuccess}
         />
       ),
       key: LeaseFileTabNames.compensation,

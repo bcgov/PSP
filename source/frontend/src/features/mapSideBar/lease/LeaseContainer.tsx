@@ -265,7 +265,6 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   useEffect(() => {
     if (lastUpdatedBy === undefined || leaseId !== lastUpdatedBy?.parentId || staleLastUpdatedBy) {
-      console.table([lastUpdatedBy, staleLastUpdatedBy]);
       fetchLastUpdatedBy();
     }
   }, [fetchLastUpdatedBy, lastUpdatedBy, leaseId, staleLastUpdatedBy]);

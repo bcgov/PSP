@@ -16,7 +16,7 @@ import { LeaseStateContext } from './../context/LeaseContext';
 
 export function useLeaseDetail(leaseId?: number) {
   const { lease, setLease } = useContext(LeaseStateContext);
-  const { setFile, setStaleFile } = useContext(SideBarContext);
+  const { setFile } = useContext(SideBarContext);
 
   leaseId = leaseId ?? lease?.id ?? undefined;
   const { getApiLease } = useApiLeases();
@@ -96,7 +96,6 @@ export function useLeaseDetail(leaseId?: number) {
     getLeaseRenewals,
     setLease,
     setFile,
-    setStaleFile,
   ]);
 
   const loading =
