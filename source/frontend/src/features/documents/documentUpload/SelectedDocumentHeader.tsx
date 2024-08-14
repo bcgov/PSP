@@ -1,7 +1,7 @@
 import clsx from 'classnames';
 import { FormikProps } from 'formik';
 import truncate from 'lodash/truncate';
-import { useEffect } from 'react';
+import { useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaCheck, FaTrash } from 'react-icons/fa';
 import styled, { useTheme } from 'styled-components';
@@ -47,9 +47,13 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
   const isMounted = useIsMounted();
   const { setFieldValue } = formikProps;
 
-  const documentTypeOptions = documentTypes.map<SelectOption>(x => {
-    return { label: x.documentTypeDescription || '', value: x.id?.toString() || '' };
-  });
+  const documentTypeOptions = useMemo(
+    () =>
+      documentTypes.map<SelectOption>(x => {
+        return { label: x.documentTypeDescription || '', value: x.id?.toString() || '' };
+      }),
+    [documentTypes],
+  );
 
   // Ensure the drop-down fields are selected when the supplied options have only one item.
   // We do this for CDOGS templates which have a single document type (TEMPLATE)
@@ -113,14 +117,14 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
           </SectionField>
         </Col>
         <Col></Col>
-        <Col>
+        <Col xs="auto" className="p-0 m-0">
           <StyledRemoveIconButton
             id={withNameSpace(namespace, 'document-delete')}
             data-testid={dataTestId ?? withNameSpace(namespace, 'document-delete')}
             onClick={() => onRemove(index)}
             title="Delete document"
           >
-            <FaTrash size="2rem" />
+            <FaTrash size="1.6rem" />
           </StyledRemoveIconButton>
         </Col>
       </StyledRow>

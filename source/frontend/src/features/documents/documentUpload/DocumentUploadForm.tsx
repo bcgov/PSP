@@ -1,16 +1,14 @@
 import { FieldArray, Formik, FormikProps } from 'formik';
 
-import { SelectOption } from '@/components/common/form';
+import { DisplayError, SelectOption } from '@/components/common/form';
 import FileDragAndDrop from '@/components/common/form/FileDragAndDrop';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { SectionField } from '@/components/common/Section/SectionField';
 import ValidDocumentExtensions from '@/constants/ValidDocumentExtensions';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
-import { ApiGen_Mayan_QueryResponse } from '@/models/api/generated/ApiGen_Mayan_QueryResponse';
-import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
-import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_Requests_ExternalResponse';
 
+import { StyledScrollable } from '../commonStyles';
 import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocument';
 import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
 import SelectedDocumentRow from './SelectedDocumentRow';
@@ -19,20 +17,14 @@ interface IDocumentUploadFormProps {
   isLoading: boolean;
   formikRef: React.RefObject<FormikProps<BatchUploadFormModel>>;
   initialDocumentType: string;
+  maxDocumentCount: number;
   documentTypes: ApiGen_Concepts_DocumentType[];
   documentStatusOptions: SelectOption[];
-  mayanMetadataTypes: ApiGen_Mayan_DocumentTypeMetadataType[];
-  retrieveDocumentTypeMetadata: (
-    mayanDocumentId: number,
-  ) => Promise<
-    ApiGen_Requests_ExternalResponse<
-      ApiGen_Mayan_QueryResponse<ApiGen_Mayan_DocumentTypeMetadataType>
-    >
-  >;
-  // onDocumentTypeChange: (changeEvent: ChangeEvent<HTMLInputElement>) => void;
-  onDocumentsSelected: () => void;
-  onUploadDocument: (uploadRequest: ApiGen_Requests_DocumentUploadRequest) => void;
-  onCancel: () => void;
+  getDocumentMetadata: (
+    documentType?: ApiGen_Concepts_DocumentType,
+  ) => Promise<ApiGen_Mayan_DocumentTypeMetadataType[]>;
+  onDocumentsSelected: (documentCount: number) => void;
+  onUploadDocument: (batchRequest: BatchUploadFormModel) => void;
 }
 
 /**
@@ -42,30 +34,13 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
   isLoading,
   formikRef,
   initialDocumentType,
+  maxDocumentCount,
   documentTypes,
   documentStatusOptions,
-  mayanMetadataTypes,
-  retrieveDocumentTypeMetadata,
+  getDocumentMetadata,
   onDocumentsSelected,
-  // onDocumentTypeChange,
   onUploadDocument,
-  onCancel,
 }) => {
-  // const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
-
-  // const documentTypeOptions = props.documentTypes.map<SelectOption>(x => {
-  //   return { label: x.documentTypeDescription || '', value: x.id?.toString() || '' };
-  // });
-
-  // useEffect(() => {
-  //   const isTypeDirty =
-  //     documentTypes.find(x => x.id?.toString() === initialDocumentType) !== undefined;
-  //   if (isTypeDirty) {
-  //     // forces formik to flag the change as dirty
-  //     formikRef.current?.setFieldValue('isDocumentTypeChanged', isTypeDirty);
-  //   }
-  // }, [formikRef, documentTypes, initialDocumentType, mayanMetadataTypes]);
-
   const onSelectFiles = (files: File[], push: (obj: any) => void) => {
     for (const file of files) {
       const formDocument = new DocumentUploadFormData(
@@ -79,7 +54,7 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
 
     // forces formik to flag the change as dirty
     formikRef.current?.setFieldValue('isSelectedFile', true);
-    onDocumentsSelected();
+    onDocumentsSelected(formikRef.current.values.documents.length + files.length);
   };
 
   return (
@@ -90,21 +65,9 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
         enableReinitialize
         initialValues={new BatchUploadFormModel()}
         validateOnMount={true}
-        validationSchema={getDocumentMetadataYupSchema(mayanMetadataTypes)}
-        onSubmit={async (values: BatchUploadFormModel, { setSubmitting }) => {
-          // TODO: implement batch upload calls
-          // if (selectedFiles !== null) {
-          //   const selectedDocumentType = props.documentTypes.find(
-          //     x => x.id === Number(values.documentTypeId),
-          //   );
-          //   if (selectedDocumentType !== undefined) {
-          //     const request = values.toRequestApi(selectedFiles, selectedDocumentType);
-          //     await props.onUploadDocument(request);
-          //     setSubmitting(false);
-          //   } else {
-          //     console.error('Selected document type is not valid');
-          //   }
-          // }
+        validationSchema={getDocumentMetadataYupSchema(maxDocumentCount)}
+        onSubmit={async (values: BatchUploadFormModel) => {
+          onUploadDocument(values);
         }}
       >
         {formikProps => (
@@ -112,7 +75,7 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
             {({ push, remove }) => (
               <>
                 <SectionField
-                  label="Choose a max of 10 files to attach at the time"
+                  label={`Choose a max of ${maxDocumentCount} files to attach at the time`}
                   labelWidth="12"
                   className="mb-4"
                 >
@@ -123,24 +86,35 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
                     multiple
                   />
                 </SectionField>
-                {formikProps.values.documents.map((formDocument, index) => (
-                  <SectionField
-                    key={`document-${formDocument.documentTypeId || 'DOC_ID'}-${index}`}
-                    label={null}
-                    contentWidth="12"
-                  >
-                    <SelectedDocumentRow
-                      formikProps={formikProps}
-                      namespace={`documents.${index}`}
-                      index={index}
-                      document={formDocument}
-                      documentTypes={documentTypes}
-                      documentStatusOptions={documentStatusOptions}
-                      retrieveDocumentTypeMetadata={retrieveDocumentTypeMetadata}
-                      onRemove={remove}
-                    ></SelectedDocumentRow>
-                  </SectionField>
-                ))}
+                <StyledScrollable>
+                  {formikProps.values.documents.map((formDocument, index) => (
+                    <SectionField
+                      key={`document-${formDocument.documentTypeId || 'DOC_ID'}-${index}`}
+                      label={null}
+                      contentWidth="12"
+                    >
+                      <SelectedDocumentRow
+                        formikProps={formikProps}
+                        namespace={`documents.${index}`}
+                        index={index}
+                        document={formDocument}
+                        documentTypes={documentTypes}
+                        documentStatusOptions={documentStatusOptions}
+                        getDocumentMetadata={getDocumentMetadata}
+                        onRemove={(index: number) => {
+                          onDocumentsSelected(formikProps.values.documents.length - 1);
+                          remove(index);
+                        }}
+                      />
+                    </SectionField>
+                  ))}
+                </StyledScrollable>
+                <DisplayError field={'documents'} />
+                {formikProps.values.documents.length > 0 && (
+                  <div className="pt-5">
+                    {`You have attached ${formikProps.values.documents.length} files. Do you wane to proceed and save?`}
+                  </div>
+                )}
               </>
             )}
           </FieldArray>

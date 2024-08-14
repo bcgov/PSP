@@ -7,8 +7,8 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
-import { ApiGen_Requests_DocumentUploadResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadResponse';
 
 /**
  * hook that retrieves document relationship information.
@@ -85,7 +85,7 @@ export const useDocumentRelationshipProvider = () => {
       relationshipType: ApiGen_CodeTypes_DocumentRelationType,
       parentId: string,
       uploadRequest: ApiGen_Requests_DocumentUploadRequest,
-    ) => Promise<AxiosResponse<ApiGen_Requests_DocumentUploadResponse, any>>
+    ) => Promise<AxiosResponse<ApiGen_Requests_DocumentUploadRelationshipResponse, any>>
   >({
     requestFunction: useCallback(
       async (
@@ -101,13 +101,14 @@ export const useDocumentRelationshipProvider = () => {
     }, []),
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
-        toast.error(axiosError?.response.data.error);
+        toast.error(axiosError?.response?.data.error);
         return Promise.resolve();
       } else {
-        toast.error(axiosError?.response.data.error);
+        toast.error(axiosError?.response?.data.error);
         return Promise.reject(axiosError);
       }
     }, []),
+    returnApiError: true,
   });
 
   return {
