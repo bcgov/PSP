@@ -26,9 +26,14 @@ export const wfsAxios = (timeout?: number, onLayerError?: () => void) => {
   return instance;
 };
 
-export const wfsAxios2 = (axiosProps?: { timeout?: number; authenticated?: boolean }) => {
+export const wfsAxios2 = (axiosProps?: {
+  timeout?: number;
+  authenticated?: boolean;
+  withCredentials?: boolean;
+}) => {
   const instance = axios.create({
     timeout: axiosProps?.timeout ?? 5000,
+    withCredentials: axiosProps?.withCredentials,
   });
   if (axiosProps?.authenticated) {
     instance.defaults.headers.common['Authorization'] = `Bearer ${store.getState().jwt}`;
