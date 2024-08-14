@@ -22,7 +22,7 @@ import { exists, prettyFormatDate } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
-import { LeaseHeaderTenants } from './LeaseHeaderTenants';
+import { LeaseHeaderStakeholders } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
   lease?: ApiGen_Concepts_Lease;
@@ -52,8 +52,8 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
             />
           </HeaderField>
           <HeaderField label="Tenant:" labelWidth="4" contentWidth="8">
-            <LeaseHeaderTenants
-              tenants={lease?.tenants ?? []}
+            <LeaseHeaderStakeholders
+              stakeholders={lease?.stakeholders ?? []}
               maxCollapsedLength={1}
               delimiter={<br />}
             />

@@ -3,23 +3,23 @@ import noop from 'lodash/noop';
 
 import { LeaseFormModel } from '@/features/leases/models';
 import { mockApiOrganization, mockApiPerson } from '@/mocks/filterData.mock';
-import { getEmptyLeaseTenant, getMockApiLease } from '@/mocks/lease.mock';
+import { getEmptyLeaseStakeholder, getMockApiLease } from '@/mocks/lease.mock';
 import { defaultApiLease } from '@/models/defaultInitializers';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
-import { FormTenant } from './models';
+import { FormStakeholder } from './models';
 import PrimaryContactWarningModal from './PrimaryContactWarningModal';
 
 const history = createMemoryHistory();
 
 describe('PrimaryContactWarningModal component', () => {
   const setup = (
-    renderOptions: RenderOptions & { tenants?: FormTenant[]; saveCallback?: () => void } = {},
+    renderOptions: RenderOptions & { tenants?: FormStakeholder[]; saveCallback?: () => void } = {},
   ) => {
     // render component under test
     const component = render(
       <PrimaryContactWarningModal
-        selectedTenants={renderOptions.tenants ?? []}
+        selectedStakeholders={renderOptions.tenants ?? []}
         saveCallback={renderOptions.saveCallback}
       />,
       {
@@ -36,11 +36,11 @@ describe('PrimaryContactWarningModal component', () => {
     const { component } = setup({
       tenants: LeaseFormModel.fromApi({
         ...defaultApiLease(),
-        tenants: [
-          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
-          { ...getEmptyLeaseTenant(), leaseId: 1, organization: mockApiOrganization },
+        stakeholders: [
+          { ...getEmptyLeaseStakeholder(), leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseStakeholder(), leaseId: 1, organization: mockApiOrganization },
         ],
-      }).tenants,
+      }).stakeholders,
     });
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -50,11 +50,11 @@ describe('PrimaryContactWarningModal component', () => {
       saveCallback: saveCallback,
       tenants: LeaseFormModel.fromApi({
         ...defaultApiLease(),
-        tenants: [
-          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
-          { ...getEmptyLeaseTenant(), leaseId: 1, person: mockApiPerson },
+        stakeholders: [
+          { ...getEmptyLeaseStakeholder(), leaseId: 1, person: mockApiPerson },
+          { ...getEmptyLeaseStakeholder(), leaseId: 1, person: mockApiPerson },
         ],
-      }).tenants,
+      }).stakeholders,
     });
     const { getByText } = component;
     const save = getByText('Save');
@@ -67,14 +67,14 @@ describe('PrimaryContactWarningModal component', () => {
     setup({
       tenants: LeaseFormModel.fromApi({
         ...getMockApiLease(),
-        tenants: [
+        stakeholders: [
           {
-            ...getMockApiLease().tenants![0],
+            ...getMockApiLease().stakeholders![0],
             primaryContactId: null,
             primaryContact: null,
           },
         ],
-      }).tenants,
+      }).stakeholders,
       saveCallback: noop,
     });
     const tenantText = screen.getByText(content =>

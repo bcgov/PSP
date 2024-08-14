@@ -4,47 +4,47 @@ import { Prompt } from 'react-router';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { TableSelect } from '@/components/common/form';
+import { SelectOption, TableSelect } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import { Claims } from '@/constants';
-import { TENANT_TYPES } from '@/constants/API';
 import { LeaseFormModel } from '@/features/leases/models';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult } from '@/interfaces';
-import { mapLookupCode } from '@/utils';
+import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 
-import { AddLeaseTenantYupSchema } from './AddLeaseTenantYupSchema';
+import { AddLeaseTenantYupSchema } from './AddLeaseStakeholderYupSchema';
 import getColumns from './columns';
-import { FormTenant } from './models';
+import { FormStakeholder } from './models';
 import PrimaryContactWarningModal, {
   IPrimaryContactWarningModalProps,
 } from './PrimaryContactWarningModal';
 import SelectedTableHeader from './SelectedTableHeader';
 
-export interface IAddLeaseTenantFormProps {
+export interface IAddLeaseStakeholderFormProps {
   selectedContacts: IContactSearchResult[];
   setSelectedContacts: (selectedContacts: IContactSearchResult[]) => void;
-  setSelectedTenants: (selectedContacts: IContactSearchResult[]) => void;
-  selectedTenants: FormTenant[];
+  setSelectedStakeholders: (selectedContacts: IContactSearchResult[]) => void;
+  selectedStakeholders: FormStakeholder[];
   onSubmit: (lease: LeaseFormModel) => Promise<void>;
   initialValues?: LeaseFormModel;
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
   showContactManager: boolean;
   setShowContactManager: (showContactManager: boolean) => void;
   loading?: boolean;
+  isPayableLease: boolean;
+  stakeholderTypesOptions: ApiGen_Concepts_LeaseStakeholderType[];
 }
 
-export const AddLeaseTenantForm: React.FunctionComponent<
-  React.PropsWithChildren<IAddLeaseTenantFormProps & IPrimaryContactWarningModalProps>
+export const AddLeaseStakeholderForm: React.FunctionComponent<
+  React.PropsWithChildren<IAddLeaseStakeholderFormProps & IPrimaryContactWarningModalProps>
 > = ({
   selectedContacts,
   setSelectedContacts,
-  setSelectedTenants,
-  selectedTenants,
+  setSelectedStakeholders,
+  selectedStakeholders,
   onSubmit,
   initialValues,
   formikRef,
@@ -54,23 +54,27 @@ export const AddLeaseTenantForm: React.FunctionComponent<
   saveCallback,
   onCancel,
   loading,
+  isPayableLease,
+  stakeholderTypesOptions,
 }) => {
-  const lookupCodes = useLookupCodeHelpers();
-  const tenantTypes = lookupCodes.getByType(TENANT_TYPES).map(c => mapLookupCode(c));
-  const onRemove = (remainingTenants: FormTenant[]) => {
-    const remainingContacts = remainingTenants.map(t => FormTenant.toContactSearchResult(t));
-    setSelectedTenants(remainingContacts);
+  const filteredStakeHolderTypes =
+    stakeholderTypesOptions?.filter(
+      type => type.isPayableRelated === isPayableLease && type.isDisabled === false,
+    ) ?? [];
+  const onRemove = (remainingTenants: FormStakeholder[]) => {
+    const remainingContacts = remainingTenants.map(t => FormStakeholder.toContactSearchResult(t));
+    setSelectedStakeholders(remainingContacts);
     setSelectedContacts(remainingContacts);
   };
-
+  console.log(stakeholderTypesOptions, initialValues, selectedStakeholders, isPayableLease);
   return (
     <StyledSummarySection>
       <Section
         header={
           <SectionListHeader
             claims={[Claims.LEASE_EDIT]}
-            title="Tenants"
-            addButtonText="Select Tenant(s)"
+            title={isPayableLease ? 'Payees' : 'Tenants'}
+            addButtonText={isPayableLease ? 'Select Payee(s)' : 'Select Tenant(s)'}
             addButtonIcon={<FaPlus size={'2rem'} />}
             onAdd={() => {
               setShowContactManager(true);
@@ -78,13 +82,22 @@ export const AddLeaseTenantForm: React.FunctionComponent<
           />
         }
       >
-        <span>
-          Note: If the tenants you are trying to find were never added to the &quot;contact
-          list&quot; it will not show up. Please add them to the contact list{' '}
-          {<Link to="/contact/list">here</Link>}, then you will be able to see them on the &quot;Add
-          a Tenant&quot; list.
-        </span>
-
+        {!isPayableLease && (
+          <span>
+            Note: If the tenants you are trying to find were never added to the &quot;contact
+            list&quot; it will not show up. Please add them to the contact list{' '}
+            {<Link to="/contact/list">here</Link>}, then you will be able to see them on the
+            &quot;Add a Tenant&quot; list.
+          </span>
+        )}
+        {isPayableLease && (
+          <span>
+            Note: If the payees you are trying to find were never added to the &quot;contact
+            list&quot; it will not show up. Please add them to the contact list{' '}
+            {<Link to="/contact/list">here</Link>}, then you will be able to see them on the
+            &quot;Add a Payee&quot; list.
+          </span>
+        )}
         <Formik
           validationSchema={AddLeaseTenantYupSchema}
           onSubmit={values => {
@@ -92,7 +105,11 @@ export const AddLeaseTenantForm: React.FunctionComponent<
           }}
           innerRef={formikRef}
           enableReinitialize
-          initialValues={{ ...new LeaseFormModel(), ...initialValues, tenants: selectedTenants }}
+          initialValues={{
+            ...new LeaseFormModel(),
+            ...initialValues,
+            stakeholders: selectedStakeholders,
+          }}
         >
           {formikProps => (
             <>
@@ -102,12 +119,18 @@ export const AddLeaseTenantForm: React.FunctionComponent<
                 message="You have made changes on this form. Do you wish to leave without saving?"
               />
               <StyledFormBody>
-                <TableSelect<FormTenant>
-                  selectedItems={selectedTenants}
-                  columns={getColumns(tenantTypes)}
-                  field="tenants"
+                <TableSelect<FormStakeholder>
+                  selectedItems={selectedStakeholders}
+                  columns={getColumns(
+                    filteredStakeHolderTypes.map<SelectOption>(x => {
+                      return { label: x.description || '', value: x.code || null };
+                    }),
+                    isPayableLease,
+                  )}
+                  field="stakeholders"
                   selectedTableHeader={SelectedTableHeader}
                   onRemove={onRemove}
+                  isPayableLease={isPayableLease}
                 ></TableSelect>
                 <ContactManagerModal
                   selectedRows={selectedContacts}
@@ -118,12 +141,12 @@ export const AddLeaseTenantForm: React.FunctionComponent<
                   setDisplay={setShowContactManager}
                   handleModalOk={() => {
                     setShowContactManager(false);
-                    setSelectedTenants(selectedContacts);
+                    setSelectedStakeholders(selectedContacts);
                   }}
                   handleModalCancel={() => {
                     setShowContactManager(false);
                     setSelectedContacts(
-                      selectedTenants.map(t => FormTenant.toContactSearchResult(t)),
+                      selectedStakeholders.map(t => FormStakeholder.toContactSearchResult(t)),
                     );
                   }}
                   showActiveSelector={true}
@@ -137,7 +160,7 @@ export const AddLeaseTenantForm: React.FunctionComponent<
         <PrimaryContactWarningModal
           saveCallback={saveCallback}
           onCancel={onCancel}
-          selectedTenants={selectedTenants}
+          selectedStakeholders={selectedStakeholders}
         />
       </Section>
     </StyledSummarySection>
@@ -149,4 +172,4 @@ const StyledFormBody = styled.div`
   text-align: left;
 `;
 
-export default AddLeaseTenantForm;
+export default AddLeaseStakeholderForm;
