@@ -45,7 +45,7 @@ const TestLogin = ({
     <TenantProvider>
       <TenantConsumer>
         {({ tenant }) => (
-          <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} }}>
+          <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} as any }}>
             <Provider store={store ?? defaultStore}>
               <Router history={history}>
                 <Login />
