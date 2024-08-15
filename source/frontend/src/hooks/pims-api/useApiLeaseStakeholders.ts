@@ -2,7 +2,7 @@ import { ENVIRONMENT } from '@/constants';
 import CustomAxios from '@/customAxios';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 
-export const updateLeaseTenants = (
+export const updateLeaseStakeholders = (
   leaseId: number,
   improvements: ApiGen_Concepts_LeaseStakeholder[],
 ) =>
@@ -11,7 +11,7 @@ export const updateLeaseTenants = (
     improvements,
   );
 
-export const getLeaseTenants = (leaseId: number) =>
+export const getLeaseStakeholders = (leaseId: number) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).get<ApiGen_Concepts_LeaseStakeholder[]>(
     `/leases/${leaseId}/stakeholders`,
   );

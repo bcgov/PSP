@@ -2,17 +2,17 @@ import filter from 'lodash/filter';
 
 import { GenericModal } from '@/components/common/GenericModal';
 
-import { FormTenant } from './models';
+import { FormStakeholder } from './models';
 
 export interface IPrimaryContactWarningModalProps {
   saveCallback?: () => void;
-  selectedTenants: FormTenant[];
+  selectedStakeholders: FormStakeholder[];
   onCancel?: () => void;
 }
 
 const PrimaryContactWarningModal: React.FunctionComponent<
   React.PropsWithChildren<IPrimaryContactWarningModalProps>
-> = ({ saveCallback, selectedTenants, onCancel }) => {
+> = ({ saveCallback, selectedStakeholders: selectedTenants, onCancel }) => {
   const warningOrgs = selectedTenants ? getOrgsWithNoPrimaryContact(selectedTenants) : [];
   const warningOrgNames = warningOrgs.map(org => org.summary);
   return (
@@ -36,9 +36,9 @@ const PrimaryContactWarningModal: React.FunctionComponent<
   );
 };
 
-export const getOrgsWithNoPrimaryContact = (tenants: FormTenant[]): FormTenant[] => {
+export const getOrgsWithNoPrimaryContact = (tenants: FormStakeholder[]): FormStakeholder[] => {
   return filter(
-    tenants?.filter((tenant: FormTenant) => {
+    tenants?.filter((tenant: FormStakeholder) => {
       return (
         tenant.organizationId &&
         !tenant.personId &&

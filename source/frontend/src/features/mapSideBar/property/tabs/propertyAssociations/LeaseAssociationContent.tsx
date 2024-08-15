@@ -23,21 +23,21 @@ interface IAssociationInfo {
   createdByGuid: string;
   createdDate: string;
   status: string;
-  tenants: string;
+  stakeholders: string;
   expiryDate: string;
 }
 
 export interface ILeaseAssociationContentProps {
   associationName: string;
-  tenants: ApiGen_Concepts_LeaseStakeholder[];
+  stakeholders: ApiGen_Concepts_LeaseStakeholder[];
   renewals: ApiGen_Concepts_LeaseRenewal[];
   leases: ApiGen_Concepts_Lease[];
   associations?: ApiGen_Concepts_Association[];
   linkUrlMask: string;
 }
 
-const getFormattedTenants = (tenants: ApiGen_Concepts_LeaseStakeholder[]) => {
-  if (tenants.length === 0) {
+const getFormattedTenants = (stakeholders: ApiGen_Concepts_LeaseStakeholder[]) => {
+  if (stakeholders?.length === 0) {
     return '';
   }
   const sortOrder = [
@@ -45,17 +45,17 @@ const getFormattedTenants = (tenants: ApiGen_Concepts_LeaseStakeholder[]) => {
     { type: ApiGen_CodeTypes_LeaseStakeholderTypes.TEN, order: 2 },
     { type: ApiGen_CodeTypes_LeaseStakeholderTypes.UNK, order: 3 },
   ];
-  const filteredTenants: ApiGen_Concepts_LeaseStakeholder[] = tenants.filter(t =>
+  const filteredStakeholders: ApiGen_Concepts_LeaseStakeholder[] = stakeholders.filter(t =>
     sortOrder.map(t => t.type.toString()).includes(t.stakeholderTypeCode.id),
   );
-  const sortedTenants: ApiGen_Concepts_LeaseStakeholder[] = sortBy(
-    filteredTenants,
-    tenant => sortOrder.find(s => s.type === tenant.stakeholderTypeCode.id)?.order,
+  const sortedStakeholders: ApiGen_Concepts_LeaseStakeholder[] = sortBy(
+    filteredStakeholders,
+    stakeholder => sortOrder.find(s => s.type === stakeholder.stakeholderTypeCode.id)?.order,
   );
-  const tenantTypeCode = sortedTenants[0]?.stakeholderTypeCode?.id;
+  const stakeholderTypeCode = sortedStakeholders[0]?.stakeholderTypeCode?.id;
 
-  return sortedTenants
-    .filter(t => t.stakeholderTypeCode.id === tenantTypeCode)
+  return sortedStakeholders
+    .filter(t => t.stakeholderTypeCode.id === stakeholderTypeCode)
     .map(t => (t.lessorType?.id === 'PER' ? formatApiPersonNames(t.person) : t.organization?.name))
     .join(', ');
 };
@@ -70,7 +70,7 @@ export const LeaseAssociationContent: React.FunctionComponent<
   const tableData = orderBy(
     props.associations.map<IAssociationInfo>(x => {
       const lease = find(props.leases, lease => x.id === lease.id);
-      const leaseRenewals = props.renewals?.filter(renewal => x.id === renewal.leaseId);
+      const leaseRenewals = props.renewals?.filter(renewal => x.id === renewal?.leaseId);
       const calculatedExpiry = getCalculatedExpiry(lease, leaseRenewals ?? []);
       return {
         id: x.id?.toString() || '',
@@ -81,7 +81,9 @@ export const LeaseAssociationContent: React.FunctionComponent<
         createdByGuid: x.createdByGuid || '',
         createdDate: x.createdDateTime || '',
         status: x.status || '',
-        tenants: getFormattedTenants(props.tenants?.filter(tenant => x.id === tenant.leaseId)),
+        stakeholders: getFormattedTenants(
+          props.stakeholders?.filter(stakeholder => x.id === stakeholder?.leaseId),
+        ),
         expiryDate: calculatedExpiry,
       };
     }),
@@ -115,10 +117,10 @@ const associationColumns: ColumnWithProps<IAssociationInfo>[] = [
   },
   {
     Header: 'Tenant name',
-    accessor: 'tenants',
+    accessor: 'stakeholders',
     align: 'left',
     Cell: (props: CellProps<IAssociationInfo>) => {
-      return <p>{props.row.original.tenants}</p>;
+      return <p>{props.row.original.stakeholders}</p>;
     },
   },
   {

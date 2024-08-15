@@ -119,9 +119,9 @@ export class PayeeOption {
       return compensationModel;
     }
 
-    const payeeOption = options.find(x => x.value === payeeKey);
+    const payeeOption = options?.find(x => x.value === payeeKey) ?? null;
 
-    if (payeeOption === undefined) {
+    if (payeeOption === null) {
       return compensationModel;
     }
 

@@ -9,7 +9,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { withNameSpace } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { FormTenant } from './models';
+import { FormStakeholder } from './models';
 
 export interface ITenantOrganizationContactInfoProps {
   nameSpace: string;
@@ -24,7 +24,7 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
   React.PropsWithChildren<ITenantOrganizationContactInfoProps & Partial<FieldArrayRenderProps>>
 > = ({ nameSpace }) => {
   const { values } = useFormikContext<LeaseFormModel>();
-  const tenant: FormTenant = getIn(values, nameSpace);
+  const tenant: FormStakeholder = getIn(values, nameSpace);
   let primaryContact = tenant?.initialPrimaryContact;
   if (primaryContact?.id !== Number(tenant?.primaryContactId)) {
     primaryContact = tenant?.primaryContactId

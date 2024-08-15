@@ -9,7 +9,7 @@ export interface ITenant {
   personId?: number;
   organization?: IOrganization;
   organizationId?: number;
-  leaseTenantId?: number;
+  leaseStakeholderId?: number;
   note: string;
   name?: string;
   rowVersion?: number;

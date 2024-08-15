@@ -4,7 +4,7 @@ import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
@@ -22,8 +22,8 @@ export const useGenerateLicenceOfOccupation = () => {
   } = useInsurancesRepository();
 
   const {
-    getLeaseTenants: { execute: getLeaseTenants },
-  } = useLeaseTenantRepository();
+    getLeaseStakeholders: { execute: getLeaseStakeholders },
+  } = useLeaseStakeholderRepository();
 
   const {
     getLeaseRenewals: { execute: getLeaseRenewals },
@@ -57,7 +57,7 @@ export const useGenerateLicenceOfOccupation = () => {
     if (lease?.id) {
       const updatedLeasePromise = getLease(lease.id);
       const insurancesPromise = getInsurances(lease.id);
-      const tenantsPromise = getLeaseTenants(lease.id);
+      const stakeholdersPromise = getLeaseStakeholders(lease.id);
       const renewalsPromise = getLeaseRenewals(lease.id);
       const securityDepositsPromise = getLeaseDeposits(lease.id);
       const periodsPromise = getLeasePeriods(lease.id);
@@ -65,7 +65,7 @@ export const useGenerateLicenceOfOccupation = () => {
       const [
         updatedLease,
         insurances,
-        tenants,
+        stakeholders,
         renewals,
         securityDeposits,
         periods,
@@ -73,7 +73,7 @@ export const useGenerateLicenceOfOccupation = () => {
       ] = await Promise.all([
         updatedLeasePromise,
         insurancesPromise,
-        tenantsPromise,
+        stakeholdersPromise,
         renewalsPromise,
         securityDepositsPromise,
         periodsPromise,
@@ -91,7 +91,7 @@ export const useGenerateLicenceOfOccupation = () => {
       const leaseData = new Api_GenerateLease(
         updatedLease,
         insurances ?? [],
-        tenants ?? [],
+        stakeholders ?? [],
         renewals ?? [],
         securityDeposits ?? [],
         propertyLeases ?? [],

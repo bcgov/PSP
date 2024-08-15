@@ -100,7 +100,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
                   ) ?? null;
                 compensation.interestHolder = matchedInterestHolder;
 
-                const options = payeeOptions;
+                const options = payeeOptions ?? [];
 
                 if (acquisitionOwners !== undefined) {
                   const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>

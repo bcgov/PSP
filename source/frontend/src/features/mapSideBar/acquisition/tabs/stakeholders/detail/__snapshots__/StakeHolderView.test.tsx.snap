@@ -51,7 +51,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
             Interests
           </div>
           <div
-            class="pl-8 col-auto"
+            class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
               class="c3"
@@ -359,7 +359,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
             Non-interest Payees
           </div>
           <div
-            class="pl-8 col-auto"
+            class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
               class="c3"

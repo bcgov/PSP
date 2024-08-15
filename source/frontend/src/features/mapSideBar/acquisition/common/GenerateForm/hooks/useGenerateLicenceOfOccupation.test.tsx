@@ -7,7 +7,7 @@ import thunk from 'redux-thunk';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
@@ -19,6 +19,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { useGenerateLicenceOfOccupation } from './useGenerateLicenceOfOccupation';
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
+import { getLeaseStakeholders } from '@/hooks/pims-api/useApiLeaseStakeholders';
 
 const generateFn = vi
   .fn()
@@ -46,12 +47,12 @@ vi.mocked(useSecurityDepositRepository).mockImplementation(
     } as unknown as ReturnType<typeof useSecurityDepositRepository>),
 );
 
-vi.mock('@/hooks/repositories/useLeaseTenantRepository');
-vi.mocked(useLeaseTenantRepository).mockImplementation(
+vi.mock('@/hooks/repositories/useLeaseStakeholderRepository');
+vi.mocked(useLeaseStakeholderRepository).mockImplementation(
   () =>
     ({
-      getLeaseTenants: { execute: getLeaseTenantsFn },
-    } as unknown as ReturnType<typeof useLeaseTenantRepository>),
+      getLeaseStakeholders: { execute: getLeaseTenantsFn },
+    } as unknown as ReturnType<typeof useLeaseStakeholderRepository>),
 );
 
 vi.mock('@/hooks/repositories/useInsuranceRepository');

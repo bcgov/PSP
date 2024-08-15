@@ -20,8 +20,8 @@ import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/pay
 import PeriodPaymentsView, {
   IPeriodPaymentsViewProps,
 } from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
+import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stakeholders/LeaseStakeholderContainer';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
-import TenantContainer from '@/features/leases/detail/LeasePages/tenant/TenantContainer';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 
@@ -102,7 +102,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
     LeasePageNames.TENANT,
     {
       pageName: LeasePageNames.TENANT,
-      component: TenantContainer,
+      component: LeaseStakeholderContainer,
       title: 'Tenant',
     },
   ],

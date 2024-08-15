@@ -314,7 +314,7 @@ exports[`compensation list view > renders as expected 1`] = `
           Requisitions in this file (H120)
         </div>
         <div
-          class="pl-8 col-auto"
+          class="pl-8 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"

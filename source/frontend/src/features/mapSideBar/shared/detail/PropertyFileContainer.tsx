@@ -15,7 +15,7 @@ import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/deta
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
@@ -51,11 +51,11 @@ export const PropertyFileContainer: React.FunctionComponent<
   });
 
   const { getLease } = useLeaseRepository();
-  const { getLeaseTenants } = useLeaseTenantRepository();
+  const { getLeaseStakeholders } = useLeaseStakeholderRepository();
   const { getLeaseRenewals } = useLeaseRepository();
   const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
     leaseDetails: [],
-    leaseTenants: [],
+    leaseStakeholders: [],
     leaseRenewals: [],
     loading: false,
   });
@@ -67,11 +67,11 @@ export const PropertyFileContainer: React.FunctionComponent<
       getLeaseInfo(
         leaseAssociations,
         getLease.execute,
-        getLeaseTenants.execute,
+        getLeaseStakeholders.execute,
         getLeaseRenewals.execute,
         setLeaseAssociationInfo,
       ),
-    [leaseAssociations, getLease.execute, getLeaseTenants.execute, getLeaseRenewals.execute],
+    [leaseAssociations, getLease.execute, getLeaseStakeholders.execute, getLeaseRenewals.execute],
   );
 
   // After API property object has been received, we query relevant map layers to find
@@ -143,7 +143,7 @@ export const PropertyFileContainer: React.FunctionComponent<
             false
           }
           associations={composedProperties.propertyAssociationWrapper?.response}
-          associatedLeaseTenants={LeaseAssociationInfo.leaseTenants}
+          associatedLeaseStakeholders={LeaseAssociationInfo.leaseStakeholders}
           associatedLeaseRenewals={LeaseAssociationInfo.leaseRenewals}
           associatedLeases={LeaseAssociationInfo.leaseDetails}
         />
