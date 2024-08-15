@@ -1,5 +1,5 @@
 import orderBy from 'lodash/orderBy';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
@@ -73,6 +73,10 @@ export const DocumentListView: React.FunctionComponent<
 
     fetch();
   }, [props.relationshipType, getDocumentTypes, getDocumentRelationshipTypes]);
+
+  const maxDocumentCount = useMemo(() => {
+    return props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates ? 1 : 10;
+  }, [props.relationshipType]);
 
   const mapSortField = (sortField: string) => {
     if (sortField === 'documentType') {
@@ -215,6 +219,7 @@ export const DocumentListView: React.FunctionComponent<
       <DocumentUploadModal
         parentId={props.parentId}
         relationshipType={props.relationshipType}
+        maxDocumentCount={maxDocumentCount}
         display={isUploadVisible}
         setDisplay={setIsUploadVisible}
         onUploadSuccess={onUploadSuccess}
