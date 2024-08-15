@@ -1,48 +1,55 @@
-import { FieldArray, FormikProps } from 'formik';
+import { FieldArray, FormikErrors } from 'formik';
 
 import { Input } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { withNameSpace } from '@/utils/formUtils';
 
 import { StyledNoData } from './commonStyles';
 import { DocumentUpdateFormData, DocumentUploadFormData } from './ComposedDocument';
 
 export interface IDocumentMetadataViewProps {
+  namespace?: string;
   mayanMetadata: ApiGen_Mayan_DocumentTypeMetadataType[];
-  formikProps: FormikProps<DocumentUploadFormData> | FormikProps<DocumentUpdateFormData>;
+  values: DocumentUploadFormData | DocumentUpdateFormData;
+  errors: FormikErrors<DocumentUploadFormData> | FormikErrors<DocumentUpdateFormData>;
 }
 
-export const DocumentMetadataView: React.FunctionComponent<
-  React.PropsWithChildren<IDocumentMetadataViewProps>
-> = props => {
+export const DocumentMetadataView: React.FunctionComponent<IDocumentMetadataViewProps> = ({
+  namespace,
+  mayanMetadata,
+  values,
+  errors,
+}) => {
   return (
     <>
-      {props.mayanMetadata.length === 0 && <StyledNoData>No additional data</StyledNoData>}
+      {mayanMetadata.length === 0 && <StyledNoData>No additional data</StyledNoData>}
 
       <FieldArray
         name="documentMetadata"
         render={() => (
           <>
-            {props.mayanMetadata.map(meta => (
+            {mayanMetadata.map(meta => (
               <SectionField
                 labelWidth="4"
-                key={`document-metadata-${meta.metadata_type?.name}`}
+                key={withNameSpace(namespace, `document-metadata-${meta.metadata_type?.name}`)}
                 label={meta.metadata_type?.label || ''}
                 required={meta.required === true}
               >
                 <Input
-                  data-testid={`metadata-input-${meta.metadata_type?.name}` || ''}
-                  field={`documentMetadata.${meta.metadata_type?.id}`}
+                  data-testid={withNameSpace(
+                    namespace,
+                    `metadata-input-${meta.metadata_type?.name ?? ''}`,
+                  )}
+                  field={withNameSpace(namespace, `documentMetadata.${meta.metadata_type?.id}`)}
                   required={meta.required === true}
-                  value={props.formikProps.values.documentMetadata[meta.metadata_type?.id || '']}
+                  value={values.documentMetadata[meta.metadata_type?.id || '']}
                 />
               </SectionField>
             ))}
 
             <div style={{ color: 'red' }}>
-              {Object.values(props.formikProps.errors).length > 0 && (
-                <>Mandatory fields are required.</>
-              )}
+              {Object.values(errors).length > 0 && <>Mandatory fields are required.</>}
             </div>
           </>
         )}
