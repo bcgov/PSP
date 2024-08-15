@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export const getDocumentMetadataYupSchema = (maxDocumentCount: number) => {
   return Yup.object().shape({
     documents: Yup.array()
-      .max(1, 'There needs to be at least one document')
+      .min(1, 'There needs to be at least one document')
       .max(maxDocumentCount, 'Max number of uploads reached')
       .of(
         Yup.object().shape({
