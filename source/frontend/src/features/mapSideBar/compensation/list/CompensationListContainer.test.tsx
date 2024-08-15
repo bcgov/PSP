@@ -1,6 +1,5 @@
 import { createMemoryHistory } from 'history';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
-import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import {
   getMockApiCompensationList,
@@ -24,10 +23,11 @@ import CompensationListContainer, {
 } from './CompensationListContainer';
 import { ICompensationListViewProps } from './CompensationListView';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { isDraft } from '@reduxjs/toolkit';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -49,7 +49,7 @@ const mockPostApi = {
   loading: false,
 };
 
-const mockGetAllApi = {
+const mockGetFileCompensationsApi = {
   error: undefined,
   response: getMockApiCompensationList(),
   execute: vi.fn(),
@@ -66,8 +66,9 @@ const mockPutAcquisitionApi = {
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
   useCompensationRequisitionRepository: () => {
     return {
-      getFileCompensationRequisitions: mockGetAllApi,
       postCompensationRequisition: mockPostApi,
+      getFileCompensationRequisitions: mockGetFileCompensationsApi,
+      deleteCompensation: mockDeleteApi,
     };
   },
 }));
@@ -81,9 +82,9 @@ vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
 }));
 
 let viewProps: ICompensationListViewProps;
-const CompensationListView = (props: ICompensationListViewProps) => {
+const TestView: React.FC<ICompensationListViewProps> = props => {
   viewProps = props;
-  return <></>;
+  return <span>Content Rendered</span>;
 };
 
 describe('compensation list view container', () => {
@@ -95,8 +96,8 @@ describe('compensation list view container', () => {
       <SideBarContextProvider>
         <CompensationListContainer
           fileType={renderOptions?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
-          file={renderOptions?.file ?? ({} as any)}
-          View={CompensationListView}
+          file={renderOptions?.file ?? mockAcquisitionFileResponse(1)}
+          View={TestView}
         />
       </SideBarContextProvider>,
       {
@@ -113,18 +114,12 @@ describe('compensation list view container', () => {
   };
 
   beforeEach(() => {
-    vi.mocked(useCompensationRequisitionRepository).mockImplementation(
-      () =>
-        ({
-          deleteCompensation: mockDeleteApi,
-        } as unknown as ReturnType<typeof useCompensationRequisitionRepository>),
-    );
+    vi.resetAllMocks();
+    mockGetFileCompensationsApi.execute.mockResolvedValue([]);
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = await setup({
-      claims: [],
-    });
+    const { asFragment } = await setup({});
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });
@@ -159,7 +154,7 @@ describe('compensation list view container', () => {
       claims: [],
     });
 
-    expect(mockGetAllApi.execute).toHaveBeenCalledTimes(0);
+    expect(mockGetFileCompensationsApi.execute).toHaveBeenCalledTimes(0);
   });
 
   it('Creates the Compensation Requisition with the default data for Acquisition File', async () => {
@@ -186,7 +181,7 @@ describe('compensation list view container', () => {
         acquisitionFileId: acquisitionFileMock.id,
         leaseId: null,
         isDraft: true,
-        compensationRequisitionProperties: [],
+        compReqLeaseProperties: null,
       }),
     );
   });
@@ -210,7 +205,7 @@ describe('compensation list view container', () => {
         acquisitionFileId: null,
         leaseId: leaseFileMock.id,
         isDraft: true,
-        compensationRequisitionProperties: [],
+        compReqAcquisitionProperties: null,
       }),
     );
   });
@@ -235,7 +230,7 @@ describe('compensation list view container', () => {
 
     const mockNewCompensationRequisition = {
       ...getMockDefaultCreateCompenReq(acquisitionFileMock.id, null),
-      compensationRequisitionProperties: [
+      compReqAcquisitionProperties: [
         {
           compensationRequisitionPropertyId: null,
           compensationRequisitionId: null,
@@ -249,10 +244,12 @@ describe('compensation list view container', () => {
           acquisitionFileProperty: null,
         },
       ],
-    };
+      compReqLeaseProperties: null,
+      compReqLeaseStakeholder: null,
+    } as ApiGen_Concepts_CompensationRequisition;
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(
-      ApiGen_CodeTypes_FileTypes.Lease,
+      ApiGen_CodeTypes_FileTypes.Acquisition,
       mockNewCompensationRequisition,
     );
   });
@@ -302,21 +299,23 @@ describe('compensation list view container', () => {
 
     const mockNewCompensationRequisition = {
       ...getMockDefaultCreateCompenReq(null, leaseFileMock.id),
-      compensationRequisitionProperties: [
+      compReqLeaseProperties: [
         {
           compensationRequisitionPropertyId: null,
           compensationRequisitionId: null,
-          propertyAcquisitionFileId: 10,
-          acquisitionFileProperty: null,
+          propertyLeaseId: 10,
+          leaseProperty: null,
         },
         {
           compensationRequisitionPropertyId: null,
           compensationRequisitionId: null,
-          propertyAcquisitionFileId: 20,
-          acquisitionFileProperty: null,
+          propertyLeaseId: 20,
+          leaseProperty: null,
         },
       ],
-    };
+      compReqAcquisitionProperties: null,
+      compReqLeaseStakeholder: null,
+    } as ApiGen_Concepts_CompensationRequisition;
 
     expect(mockPostApi.execute).toHaveBeenCalledWith(
       ApiGen_CodeTypes_FileTypes.Lease,
@@ -331,7 +330,10 @@ describe('compensation list view container', () => {
     });
 
     expect(mockPutAcquisitionApi.execute).toHaveBeenCalledWith(
-      { totalAllowableCompensation: 1000 },
+      expect.objectContaining({
+        ...mockAcquisitionFileResponse(),
+        totalAllowableCompensation: 1000,
+      }),
       [],
     );
   });

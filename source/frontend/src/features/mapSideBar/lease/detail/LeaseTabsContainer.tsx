@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { Claims, NoteTypes } from '@/constants';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
@@ -39,6 +40,8 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
 }) => {
   const tabViews: LeaseTabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+  const location = useLocation();
+  const history = useHistory();
 
   tabViews.push({
     content: (
@@ -217,7 +220,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
           fileType={ApiGen_CodeTypes_FileTypes.Lease}
           file={lease}
           View={CompensationListView}
-          onSuccess={onSuccess}
         />
       ),
       key: LeaseFileTabNames.compensation,
@@ -227,12 +229,21 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
 
   const defaultTab = LeaseFileTabNames.fileDetails;
 
+  const onSetActiveTab = (tab: LeaseFileTabNames) => {
+    const previousTab = activeTab;
+    if (previousTab === LeaseFileTabNames.compensation) {
+      const backUrl = location.pathname.split('/compensation-requisition')[0];
+      history.push(backUrl);
+    }
+    setContainerState({ activeTab: tab });
+  };
+
   return (
     <LeaseFileTabs
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab ?? defaultTab}
-      setActiveTab={(tab: LeaseFileTabNames) => setContainerState({ activeTab: tab })}
+      setActiveTab={(tab: LeaseFileTabNames) => onSetActiveTab(tab)}
     />
   );
 };

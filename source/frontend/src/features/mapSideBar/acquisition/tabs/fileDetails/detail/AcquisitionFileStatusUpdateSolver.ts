@@ -75,7 +75,7 @@ class AcquisitionFileStatusUpdateSolver implements IUpdateCompensationStrategy {
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
-        canEdit = true;
+        canEdit = isDraftCompensation ?? true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:

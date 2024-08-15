@@ -137,6 +137,7 @@ export const getMockApiCompensationWithFinancials =
         h120CategoryId: null,
       },
     ],
+    compReqLeaseStakeholder: [],
     compReqAcquisitionProperties: [],
     compReqLeaseProperties: [],
     isPaymentInTrust: true,
@@ -153,6 +154,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
   fiscalYear: '2023/2024',
   specialInstruction: 'SPECIAL INSTRUCTION',
   detailedRemarks: 'DETAILED REMARKS',
+  compReqLeaseStakeholder: [],
   compReqAcquisitionProperties: [
     {
       compensationRequisitionPropertyId: 10000,

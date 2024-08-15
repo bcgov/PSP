@@ -86,8 +86,8 @@ export function createCompensationTableColumns(
       Header: 'Actions',
       align: 'left',
       sortable: false,
-      width: 20,
-      maxWidth: 20,
+      width: 15,
+      maxWidth: 15,
       Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         const { hasClaim, hasRole } = useKeycloakWrapper();
         const canEditDetails = (isDraft: boolean | null) => {
