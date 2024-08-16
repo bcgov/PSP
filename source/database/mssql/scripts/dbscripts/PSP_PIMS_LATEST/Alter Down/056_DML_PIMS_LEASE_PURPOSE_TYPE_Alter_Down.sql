@@ -16,8 +16,8 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable the "AGRIC" type
-PRINT N'Disable the "AGRIC" type'
+-- Enable the "AGRIC" type
+PRINT N'Enable the "AGRIC" type'
 GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'AGRIC'
@@ -28,7 +28,7 @@ WHERE  LEASE_PURPOSE_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
   UPDATE PIMS_LEASE_PURPOSE_TYPE
-  SET    IS_DISABLED                = 1
+  SET    IS_DISABLED                = 0
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  LEASE_PURPOSE_TYPE_CODE = @CurrCd;
 GO
