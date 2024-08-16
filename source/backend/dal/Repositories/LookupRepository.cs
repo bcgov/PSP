@@ -77,14 +77,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property classification types sorted by DisplayOrder and Id.
-        /// </summary>
-        public IEnumerable<PimsPropertyClassificationType> GetAllPropertyClassificationTypes()
-        {
-            return this.Context.PimsPropertyClassificationTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.PropertyClassificationTypeCode).ToArray();
-        }
-
-        /// <summary>
         /// Get all property types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsPropertyType> GetAllPropertyTypes()

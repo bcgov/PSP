@@ -5,6 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.PropertyOperation;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -12,11 +13,6 @@ using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
-using Pims.Api.Models.Concepts.Property;
-using Pims.Api.Models.CodeTypes;
-using Pims.Dal.Entities;
-using Pims.Core.Exceptions;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace Pims.Api.Areas.PropertyOperation.Controllers
 {

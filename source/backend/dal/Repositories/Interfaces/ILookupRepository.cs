@@ -22,8 +22,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsPropertyType> GetAllPropertyTypes();
 
-        IEnumerable<PimsPropertyClassificationType> GetAllPropertyClassificationTypes();
-
         IEnumerable<PimsAreaUnitType> GetAllPropertyAreaUnitTypes();
 
         IEnumerable<PimsVolumeUnitType> GetAllPropertyVolumeUnitTypes();

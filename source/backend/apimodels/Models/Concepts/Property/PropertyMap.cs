@@ -26,11 +26,7 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.DataSource, src => src.PropertyDataSourceTypeCodeNavigation)
                 .Map(dest => dest.DataSourceEffectiveDateOnly, src => src.PropertyDataSourceEffectiveDate)
 
-                .Map(dest => dest.Name, src => src.Name)
-                .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.IsSensitive, src => src.IsSensitive)
                 .Map(dest => dest.IsRetired, src => src.IsRetired)
-                .Map(dest => dest.IsProvincialPublicHwy, src => src.IsProvincialPublicHwy)
                 .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
                 .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
                 .Map(dest => dest.PphStatusUpdateUserid, src => src.PphStatusUpdateUserid)
@@ -38,7 +34,6 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.PphStatusUpdateUserGuid, src => src.PphStatusUpdateUserGuid)
                 .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
-                .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
 
                 // multi-selects
                 .Map(dest => dest.Anomalies, src => src.PimsPropPropAnomalyTypes)
@@ -56,8 +51,6 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.MunicipalZoning, src => src.MunicipalZoning)
 
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
-                .Map(dest => dest.Zoning, src => src.Zoning)
-                .Map(dest => dest.ZoningPotential, src => src.ZoningPotential)
 
                 .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
@@ -84,17 +77,12 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.Boundary, src => src.Boundary)
                 .Map(dest => dest.GeneralLocation, src => src.GeneralLocation)
 
-                .Map(dest => dest.Name, src => src.Name)
-                .Map(dest => dest.Description, src => src.Description)
-                .Map(dest => dest.IsSensitive, src => src.IsSensitive)
                 .Map(dest => dest.IsRetired, src => src.IsRetired)
-                .Map(dest => dest.IsProvincialPublicHwy, src => src.IsProvincialPublicHwy)
                 .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
                 .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
 
                 .Map(dest => dest.Notes, src => src.Notes)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
-                .Map(dest => dest.IsVisibleToOtherAgencies, src => src.IsVisibleToOtherAgencies)
 
                 // multi-selects
                 .Map(dest => dest.PimsPropPropAnomalyTypes, src => src.Anomalies)
@@ -112,8 +100,6 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.MunicipalZoning, src => src.MunicipalZoning)
 
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
-                .Map(dest => dest.Zoning, src => src.Zoning)
-                .Map(dest => dest.ZoningPotential, src => src.ZoningPotential)
 
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
