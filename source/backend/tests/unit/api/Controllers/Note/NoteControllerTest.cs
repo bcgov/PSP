@@ -1,28 +1,13 @@
-using System;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using MapsterMapper;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Notes.Controllers;
 using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Constants;
-using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal;
-using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
-using Pims.Dal.Exceptions;
-using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
-using Entity = Pims.Dal.Entities;
-using SModel = Pims.Api.Areas.Notes;
 
 namespace Pims.Api.Test.Controllers.Note
 {

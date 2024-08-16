@@ -95,7 +95,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PropertyClassificationTypeCodeNavigation)
                 .Include(p => p.PimsPropPropAnomalyTypes)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
@@ -145,7 +144,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PropertyClassificationTypeCodeNavigation)
                 .Include(p => p.PimsPropPropAnomalyTypes)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
@@ -204,7 +202,6 @@ namespace Pims.Dal.Repositories
                     .Include(p => p.PropertyTypeCodeNavigation)
                     .Include(p => p.PropertyStatusTypeCodeNavigation)
                     .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                    .Include(p => p.PropertyClassificationTypeCodeNavigation)
                     .Include(p => p.PimsPropPropAnomalyTypes)
                         .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                     .Include(p => p.PimsPropPropRoadTypes)
@@ -246,7 +243,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PropertyClassificationTypeCodeNavigation)
                 .Include(p => p.PimsPropPropAnomalyTypes)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
@@ -338,13 +334,10 @@ namespace Pims.Dal.Repositories
             property.AddressId = existingProperty.AddressId;
             property.PropertyDataSourceEffectiveDate = existingProperty.PropertyDataSourceEffectiveDate;
             property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
-            property.PropertyClassificationTypeCode = existingProperty.PropertyClassificationTypeCode;
             property.SurplusDeclarationTypeCode = existingProperty.SurplusDeclarationTypeCode;
             property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
             property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
             property.IsRetired = existingProperty.IsRetired;
-            property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
-            property.IsSensitive = existingProperty.IsSensitive;
 
             if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode
                 && (property.PphStatusTypeCode != PropertyPPHStatusTypes.UNKNOWN.ToString() && existingProperty.PphStatusTypeCode != null))
@@ -431,15 +424,6 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(p => p.PropertyId == property.Internal_Id) ?? throw new KeyNotFoundException();
 
             existingProperty.IsOwned = isOwned;
-
-            if (isOwned)
-            {
-                existingProperty.PropertyClassificationTypeCode = "COREOPER";
-            }
-            else
-            {
-                existingProperty.PropertyClassificationTypeCode = "OTHER";
-            }
 
             return existingProperty;
         }

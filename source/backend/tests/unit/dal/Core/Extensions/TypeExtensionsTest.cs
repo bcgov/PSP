@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Pims.Core.Extensions;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Test.Core.Extensions
 {

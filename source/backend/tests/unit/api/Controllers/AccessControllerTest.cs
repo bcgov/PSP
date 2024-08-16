@@ -9,7 +9,6 @@ using Pims.Api.Models.Concepts.Role;
 using Pims.Api.Controllers;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Repositories;
 using Xunit;
 using Entity = Pims.Dal.Entities;

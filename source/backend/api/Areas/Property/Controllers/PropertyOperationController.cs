@@ -33,9 +33,8 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <summary>
         /// Creates a new instance of a PropertyOperationController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="propertyOperaionService"></param>
+        /// <param name="propertyOperationService"></param>
         /// <param name="mapper"></param>
-        ///
         public PropertyOperationController(IPropertyOperationService propertyOperationService, IMapper mapper)
         {
             _propertyOperationService = propertyOperationService;

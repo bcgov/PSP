@@ -75,7 +75,6 @@ namespace Pims.Api.Controllers
             if (!_memoryCache.TryGetValue(CacheKeys.Lookup, out JsonResult cachedLookupResponse))
             {
                 var areaUnitTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyAreaUnitTypes());
-                var classificationTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyClassificationTypes());
                 var contactMethodTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllContactMethodTypes());
                 var countries = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllCountries());
                 var districts = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDistricts());
@@ -150,7 +149,6 @@ namespace Pims.Api.Controllers
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
-                codes.AddRange(classificationTypes);
                 codes.AddRange(contactMethodTypes);
                 codes.AddRange(countries);
                 codes.AddRange(districts);

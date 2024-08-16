@@ -117,7 +117,7 @@ public partial class PimsAcquisitionFile
     public int? PaimsAcquisitionFileId { get; set; }
 
     /// <summary>
-    /// The maximum allowable coensation for the acquisition file.  This amount should be exceeded by the total of all assiciated H120&apos;s.
+    /// The maximum allowable compensation for the acquisition file.  This amount should not be exceeded by the total of all assiciated H120&apos;s.
     /// </summary>
     [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
     public decimal? TotalAllowableCompensation { get; set; }

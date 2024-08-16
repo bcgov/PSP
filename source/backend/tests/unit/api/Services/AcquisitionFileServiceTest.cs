@@ -3,22 +3,17 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
-using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
@@ -1338,7 +1333,6 @@ namespace Pims.Api.Test.Services
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(
                 new PimsProperty()
                 {
-                    PropertyClassificationTypeCode = "UNKNOWN",
                     PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
                     PropertyDataSourceTypeCode = "PMBC",
                     PropertyTypeCode = "UNKNOWN",
@@ -1361,7 +1355,6 @@ namespace Pims.Api.Test.Services
             // Assert
             // since this is a new property, the following default fields should be set.
             var updatedProperty = updatedAcquisitionFileProperty.Property;
-            updatedProperty.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");

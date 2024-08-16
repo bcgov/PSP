@@ -6,19 +6,14 @@ using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using NExpect.Interfaces;
-using Pims.Api.Areas.Acquisition.Controllers;
 
 using Pims.Api.Controllers;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Services;
-using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Xunit;
 

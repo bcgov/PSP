@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using FluentAssertions;
-using FluentAssertions.Extensions;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Models.CodeTypes;
@@ -268,7 +267,6 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
             {
-                PropertyClassificationTypeCode = "UNKNOWN",
                 PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
                 PropertyDataSourceTypeCode = "PMBC",
                 PropertyTypeCode = "UNKNOWN",
@@ -287,7 +285,6 @@ namespace Pims.Api.Test.Services
             // Assert
             // since this is a new property, the following default fields should be set.
             var updatedProperty = updatedResearchFileProperty.Property;
-            updatedProperty.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
@@ -328,7 +325,6 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
             {
-                PropertyClassificationTypeCode = "UNKNOWN",
                 PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
                 PropertyDataSourceTypeCode = "PMBC",
                 PropertyTypeCode = "UNKNOWN",
@@ -344,7 +340,6 @@ namespace Pims.Api.Test.Services
             // Assert
             // since this is a new property, the following default fields should be set.
             var updatedProperty = updatedResearchFileProperty.Property;
-            updatedProperty.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");

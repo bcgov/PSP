@@ -168,6 +168,9 @@ public partial class PimsLeaseHist
     [StringLength(200)]
     public string PrimaryArbitrationCity { get; set; }
 
+    [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
+    public decimal? TotalAllowableCompensation { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
