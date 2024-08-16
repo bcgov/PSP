@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
-using Humanizer;
-using MapsterMapper;
 using Moq;
 using NetTopologySuite.Geometries;
-using Pims.Api.Constants;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -498,7 +493,6 @@ namespace Pims.Api.Test.Services
                 {
                     newProperty = x;
                     newProperty.Internal_Id = 0;
-                    newProperty.PropertyClassificationTypeCode = "UNKNOWN";
                     newProperty.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now);
                     newProperty.PropertyDataSourceTypeCode = "PMBC";
                     newProperty.PropertyTypeCode = "UNKNOWN";
@@ -516,7 +510,6 @@ namespace Pims.Api.Test.Services
             // Assert
             // since this is a new property, the following default fields should be set.
             var updatedProperty = updatedLeaseProperty.Property;
-            newProperty.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
             newProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             newProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             newProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
