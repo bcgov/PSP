@@ -349,7 +349,6 @@ namespace Pims.Api.Services
 
         public PimsProperty PopulateNewProperty(PimsProperty property, bool isOwned = false, bool isPropertyOfInterest = true)
         {
-            property.PropertyClassificationTypeCode = "UNKNOWN";
             property.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now);
             property.PropertyDataSourceTypeCode = "PMBC";
 

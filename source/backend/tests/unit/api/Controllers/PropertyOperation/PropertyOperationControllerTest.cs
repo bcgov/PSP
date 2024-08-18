@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
@@ -6,22 +5,15 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Pims.Api.Areas.Property.Models.Search;
 using Pims.Api.Areas.PropertyOperation.Controllers;
-using Pims.Api.Areas.Reports.Controllers;
-using Pims.Api.Helpers.Constants;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.PropertyOperation;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Test.Controllers.PropertyOperation
 {

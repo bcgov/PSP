@@ -1,6 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using NetTopologySuite.Geometries;
 using Pims.Dal.Entities.Models;
 using Xunit;
 

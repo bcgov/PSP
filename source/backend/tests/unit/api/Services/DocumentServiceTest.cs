@@ -6,8 +6,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -27,7 +25,6 @@ using Pims.Api.Models.Requests.Http;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
-using Pims.Api.Constants;
 using Microsoft.Extensions.Configuration;
 using Pims.Core.Exceptions;
 

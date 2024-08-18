@@ -9,8 +9,8 @@ import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/Ap
 import { ApiGen_Mayan_QueryResponse } from '@/models/api/generated/ApiGen_Mayan_QueryResponse';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
 import { ApiGen_Requests_DocumentUpdateResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateResponse';
+import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
-import { ApiGen_Requests_DocumentUploadResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadResponse';
 import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_Requests_ExternalResponse';
 import { ApiGen_Requests_FileDownloadResponse } from '@/models/api/generated/ApiGen_Requests_FileDownloadResponse';
 
@@ -95,7 +95,7 @@ export const useApiDocuments = () => {
           index++;
         });
 
-        return api.post<ApiGen_Requests_DocumentUploadResponse>(
+        return api.post<ApiGen_Requests_DocumentUploadRelationshipResponse>(
           `/documents/upload/${relationshipType}/${parentId}`,
           formData,
         );

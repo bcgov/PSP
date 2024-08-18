@@ -297,6 +297,12 @@ public partial class PimsLease
     public string PrimaryArbitrationCity { get; set; }
 
     /// <summary>
+    /// The maximum allowable compensation for the lease.  This amount should not be exceeded by the total of all assiciated H120&apos;s.
+    /// </summary>
+    [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
+    public decimal? TotalAllowableCompensation { get; set; }
+
+    /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]

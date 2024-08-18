@@ -63,12 +63,6 @@ namespace Pims.Dal.Helpers.Extensions
 
             var predicateBuilder = PredicateBuilder.New<PimsPropertyVw>(p => true);
 
-            // Users are not allowed to view sensitive properties outside of their organization or sub-organizations.
-            if (!viewSensitive)
-            {
-                predicateBuilder = predicateBuilder.And(p => !p.IsSensitive);
-            }
-
             if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
             {
                 // note - 2 part search required. all matches found by removing leading 0's, then matches filtered in subsequent step. This is because EF core does not support an lpad method.

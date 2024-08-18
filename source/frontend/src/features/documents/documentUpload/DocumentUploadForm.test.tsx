@@ -17,7 +17,7 @@ const handleSubmit = vi.fn();
 
 const handleCancelClick = vi.fn();
 const onUploadDocument = vi.fn();
-const onDocumentTypeChange = vi.fn();
+const getDocumentMetadata = vi.fn();
 const onDocumentSelected = vi.fn();
 
 const documentStatusOptions: SelectOption[] = [
@@ -69,11 +69,10 @@ describe('DocumentUploadView component', () => {
       <DocumentUploadForm
         documentTypes={mockDocumentTypesResponse()}
         isLoading={false}
-        mayanMetadataTypes={documentTypeMetadataType}
-        onDocumentTypeChange={onDocumentTypeChange}
-        onDocumentSelected={onDocumentSelected}
+        getDocumentMetadata={getDocumentMetadata}
+        maxDocumentCount={10}
+        onDocumentsSelected={onDocumentSelected}
         onUploadDocument={onUploadDocument}
-        onCancel={handleCancelClick}
         initialDocumentType={'AMMEND'}
         formikRef={{ current: { submitForm, dirty: true } } as any}
         documentStatusOptions={documentStatusOptions}
@@ -114,22 +113,6 @@ describe('DocumentUploadView component', () => {
     setup({ initialValues });
     await act(async () => {});
     expect(document.body).toMatchSnapshot();
-  });
-
-  it('renders the field', async () => {
-    const { getByTestId } = setup({ initialValues });
-    const textarea = getByTestId('document-type');
-
-    expect(textarea).toBeVisible();
-    await act(async () => {});
-  });
-
-  it('displays input for metadata types', async () => {
-    const { getByTestId } = setup({ initialValues });
-    const textarea = await getByTestId('metadata-input-Tag');
-
-    expect(textarea).toBeVisible();
-    await act(async () => {});
   });
 
   it.skip('should submit form when Submit button is clicked', async () => {

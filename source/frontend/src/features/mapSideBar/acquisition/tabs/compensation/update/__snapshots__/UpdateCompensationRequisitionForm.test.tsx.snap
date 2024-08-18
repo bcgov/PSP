@@ -1137,7 +1137,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               Payment
             </div>
             <div
-              class="pl-8 col-auto"
+              class="pl-8 d-flex align-items-end col-auto"
             >
               <svg
                 class="c11"
@@ -1444,7 +1444,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               Activities
             </div>
             <div
-              class="pl-8 col-auto"
+              class="pl-8 d-flex align-items-end col-auto"
             >
               <svg
                 class="c11"

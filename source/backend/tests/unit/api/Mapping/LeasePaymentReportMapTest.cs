@@ -4,21 +4,11 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using MapsterMapper;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using Moq;
-using NetTopologySuite.Geometries;
-using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Report.Lease;
-using Pims.Api.Services;
-using Pims.Core.Exceptions;
 using Pims.Core.Test;
-using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers;
-using Pims.Dal.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Mappings

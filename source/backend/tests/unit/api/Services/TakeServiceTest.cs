@@ -4,7 +4,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
 using Moq;
-using Pims.Api.Constants;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
