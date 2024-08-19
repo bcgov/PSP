@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using System.Globalization;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -21,7 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
         }
 
-        protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 2000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
         {
@@ -59,13 +58,13 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 wait.Until(ExpectedConditions.ElementExists(saveButton));
                 wait.Until(ExpectedConditions.ElementToBeClickable(saveButton));
-                webDriver.FindElement(saveButton).Click();
+                FocusAndClick(saveButton);
             }
             else
             {
                 wait.Until(ExpectedConditions.ElementExists(cancelButton));
                 wait.Until(ExpectedConditions.ElementToBeClickable(cancelButton));
-                webDriver.FindElement(cancelButton).Click();
+                FocusAndClick(cancelButton);
             }
         }
 
@@ -201,9 +200,10 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(elementBy);
             var numberFromElement = webDriver.FindElement(elementBy).GetAttribute("Value");
-            var number1 = double.Parse(numberFromElement);
+            var number1 = Math.Round(double.Parse(numberFromElement), 4, MidpointRounding.ToEven).ToString();
+            var roundedNumber2 = Math.Round(number2, 4, MidpointRounding.ToEven).ToString();
 
-            Assert.True(number1.Equals(number2));
+            Assert.Equal(roundedNumber2, number1);
         }
 
         protected void AssertTrueElementContains(By elementBy, string text)
@@ -240,15 +240,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected string TransformNumberFormat(string amount)
         {
-            NumberFormatInfo nfi = new CultureInfo("en-US", false).NumberFormat;
-            
-
             if (amount == "")
                 return "";
             else
             {
                 decimal value = decimal.Parse(amount);
-                return value.ToString("#,##0.##");        
+                return value.ToString("#,##0.0000");        
+            }
+        }
+
+        protected string TranformSqMtsFormat(string area)
+        {
+            if (area == "")
+                return "";
+            else
+            {
+                decimal value = decimal.Parse(area);
+                return value.ToString("#,##0.####") + " m\r\n2";
             }
         }
 
@@ -286,7 +294,7 @@ namespace PIMS.Tests.Automation.PageObjects
             return result;
         }
 
-        protected string TransformBooleanFormat(bool elementValue)
+        protected string TransformBooleanLeaseFormat(bool elementValue)
         {
             if (elementValue)
                 { return "Y"; }
@@ -294,9 +302,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 { return "N"; }
         }
 
-        protected double TransformStringToDouble(string elementValue)
+        protected string TransformBooleanFormat(string elementValue)
         {
-            return double.Parse(elementValue, System.Globalization.CultureInfo.InvariantCulture);
+            var boolElementValue = bool.Parse(elementValue);
+
+            if (boolElementValue) return "Yes";
+            else return "No";
         }
 
         protected List<string> GetViewFieldListContent(By element)

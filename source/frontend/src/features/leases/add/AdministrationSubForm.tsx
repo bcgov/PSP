@@ -63,7 +63,7 @@ const AdministrationSubForm: React.FunctionComponent<
         <InlineInput field="motiName" />
       </SectionField>
 
-      <SectionField label="MOTI region" labelWidth="2" contentWidth="4" required>
+      <SectionField label="MOTI region" labelWidth="2" contentWidth="auto" required>
         <UserRegionSelectContainer field="regionId" placeholder="Select region" required />
       </SectionField>
       <Row>
@@ -142,7 +142,7 @@ const AdministrationSubForm: React.FunctionComponent<
       </Row>
       <SectionField
         label="Initiator"
-        tooltip="Where did this lease/license initiate?"
+        tooltip="Where did this lease/licence initiate?"
         labelWidth="2"
         contentWidth="4"
       >
@@ -167,6 +167,9 @@ const AdministrationSubForm: React.FunctionComponent<
       </Row>
       <SectionField label="Intended use">
         <Styled.MediumTextArea field="description" />
+      </SectionField>
+      <SectionField label="Primary arbitration city">
+        <Input field="primaryArbitrationCity" />
       </SectionField>
     </Section>
   );

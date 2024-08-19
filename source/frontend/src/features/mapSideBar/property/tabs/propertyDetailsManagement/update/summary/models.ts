@@ -40,6 +40,8 @@ export class PropertyManagementFormModel {
       isTaxesPayable: this.isTaxesPayable,
       relatedLeases: 0,
       leaseExpiryDate: null,
+      hasActiveLease: null,
+      activeLeaseHasExpiryDate: null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }

@@ -14,7 +14,7 @@ import { AddImprovementsContainer } from './AddImprovementsContainer';
 import { Improvements } from './Improvements';
 
 export const ImprovementsContainer: React.FunctionComponent<
-  React.PropsWithChildren<LeasePageProps>
+  React.PropsWithChildren<LeasePageProps<void>>
 > = ({ isEditing, formikRef, onEdit, onSuccess }) => {
   const { lease } = useContext(LeaseStateContext);
   const {
@@ -30,7 +30,7 @@ export const ImprovementsContainer: React.FunctionComponent<
       <Section>
         <p>
           There are no commercial, residential, or other improvements indicated with this
-          lease/license.
+          lease/licence.
         </p>
       </Section>
     );

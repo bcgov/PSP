@@ -191,6 +191,10 @@ export const mockDocumentTypeMetadata = (): ApiGen_Mayan_DocumentTypeMetadataTyp
       delete_time_unit: null,
       trash_time_period: null,
       trash_time_unit: null,
+      document_stub_expiration_interval: null,
+      document_stub_pruning_enabled: null,
+      filename_generator_backend: '',
+      filename_generator_backend_arguments: '',
     },
     metadata_type: {
       default: '',
@@ -212,6 +216,8 @@ export const mockDocumentTypeMetadata = (): ApiGen_Mayan_DocumentTypeMetadataTyp
 export const mockDocumentMetadata = (): ApiGen_Mayan_DocumentMetadata[] => [
   {
     document: {
+      language: '',
+      uuid: '',
       label: '',
       datetime_created: '2022-07-27T16:06:42.42',
       description: '',
@@ -223,6 +229,8 @@ export const mockDocumentMetadata = (): ApiGen_Mayan_DocumentMetadata[] => [
         mimetype: '',
         size: 12,
         timestamp: '',
+        file: '',
+        checksum: '',
       },
       id: 1,
       document_type: {
@@ -232,6 +240,10 @@ export const mockDocumentMetadata = (): ApiGen_Mayan_DocumentMetadata[] => [
         delete_time_unit: null,
         trash_time_period: null,
         trash_time_unit: null,
+        document_stub_expiration_interval: null,
+        document_stub_pruning_enabled: null,
+        filename_generator_backend: '',
+        filename_generator_backend_arguments: '',
       },
     },
     id: 1,

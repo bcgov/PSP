@@ -1,0 +1,1022 @@
+/* -----------------------------------------------------------------------------
+Rename the TERM table and columns to PERIOD
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+Author        Date         Comment
+------------  -----------  -----------------------------------------------------
+Doug Filteau  2024-Jun-20  Initial version.
+----------------------------------------------------------------------------- */
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+
+-- ------------------------------------------------
+-- Rename Tables, Columns, Constraints, and Indices
+-- ------------------------------------------------
+
+-- Alter PIMS_LEASE_TERM
+PRINT N'Alter PIMS_LEASE_TERM'
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM.LEASE_TERM_ID', 'LEASE_PERIOD_ID', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM.LEASE_TERM_STATUS_TYPE_CODE', 'LEASE_PERIOD_STATUS_TYPE_CODE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+exec sp_rename 'dbo.PIMS_LEASE_TERM.TERM_START_DATE', 'PERIOD_START_DATE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+exec sp_rename 'dbo.PIMS_LEASE_TERM.TERM_EXPIRY_DATE', 'PERIOD_EXPIRY_DATE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+exec sp_rename 'dbo.PIMS_LEASE_TERM.TERM_RENEWAL_DATE', 'PERIOD_RENEWAL_DATE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM', 'PIMS_LEASE_PERIOD'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter PIMS_LEASE_TERM_HIST
+PRINT N'Alter PIMS_LEASE_TERM_HIST'
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM_HIST._LEASE_TERM_HIST_ID', '_LEASE_PERIOD_HIST_ID', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM_HIST.LEASE_TERM_ID', 'LEASE_PERIOD_ID', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM_HIST.LEASE_TERM_STATUS_TYPE_CODE', 'LEASE_PERIOD_STATUS_TYPE_CODE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+exec sp_rename 'dbo.PIMS_LEASE_TERM_HIST.TERM_START_DATE', 'PERIOD_START_DATE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+exec sp_rename 'dbo.PIMS_LEASE_TERM_HIST.TERM_EXPIRY_DATE', 'PERIOD_EXPIRY_DATE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+exec sp_rename 'dbo.PIMS_LEASE_TERM_HIST.TERM_RENEWAL_DATE', 'PERIOD_RENEWAL_DATE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM_HIST', 'PIMS_LEASE_PERIOD_HIST'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter PIMS_LEASE_PAYMENT
+PRINT N'Alter PIMS_LEASE_PAYMENT'
+GO
+exec sp_rename 'dbo.PIMS_LEASE_PAYMENT.LEASE_TERM_ID', 'LEASE_PERIOD_ID', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter PIMS_LEASE_PAYMENT_HIST
+PRINT N'Alter PIMS_LEASE_PAYMENT_HIST'
+GO
+exec sp_rename 'dbo.PIMS_LEASE_PAYMENT_HIST.LEASE_TERM_ID', 'LEASE_PERIOD_ID', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Alter dbo.PIMS_LEASE_TERM_STATUS_TYPE
+PRINT N'Alter dbo.PIMS_LEASE_TERM_STATUS_TYPE'
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM_STATUS_TYPE.LEASE_TERM_STATUS_TYPE_CODE', 'LEASE_PERIOD_STATUS_TYPE_CODE', 'COLUMN';
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+exec sp_rename 'dbo.PIMS_LEASE_TERM_STATUS_TYPE', 'PIMS_LEASE_PERIOD_STATUS_TYPE'
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+
+-- ----------------------------------------------
+-- Process Metadata
+-- ----------------------------------------------
+
+-- Alter dbo.PIMS_LEASE_PERIOD_STATUS_TYPE
+PRINT N'Alter dbo.PIMS_LEASE_PERIOD_STATUS_TYPE'
+GO
+EXEC sp_updateextendedproperty 
+	@name = N'MS_Description', @value = N'Description of the status of the lease period.' , 
+	@level0type = N'Schema', @level0name = N'dbo', 
+	@level1type = N'Table', @level1name = N'PIMS_LEASE_PERIOD_STATUS_TYPE', 
+	@level2type = N'Column', @level2name = N'DESCRIPTION'
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+
+-- ----------------------------------------------
+-- Process Triggers
+-- ----------------------------------------------
+
+-- Drop trigger dbo.PIMS_LSTERM_A_S_IUD_TR
+PRINT N'Drop trigger dbo.PIMS_LSTERM_A_S_IUD_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_LSTERM_A_S_IUD_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create triger PIMS_LSTERM_A_S_IUD_TR
+PRINT N'Create triger PIMS_LSTERM_A_S_IUD_TR'
+GO
+CREATE TRIGGER [dbo].[PIMS_LSTERM_A_S_IUD_TR] ON PIMS_LEASE_PERIOD FOR INSERT, UPDATE, DELETE AS
+SET NOCOUNT ON
+BEGIN TRY
+DECLARE @curr_date datetime;
+SET @curr_date = getutcdate();
+  IF NOT EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM deleted) 
+    RETURN;
+
+  -- historical
+  IF EXISTS(SELECT * FROM deleted)
+    update PIMS_LEASE_PERIOD_HIST set END_DATE_HIST = @curr_date where LEASE_PERIOD_ID in (select LEASE_PERIOD_ID from deleted) and END_DATE_HIST is null;
+  
+  IF EXISTS(SELECT * FROM inserted)
+    insert into PIMS_LEASE_PERIOD_HIST ([LEASE_PERIOD_ID], [LEASE_ID], [LEASE_PERIOD_STATUS_TYPE_CODE], [LEASE_PMT_FREQ_TYPE_CODE], [BASE_RENT_FREQ], [ADDL_RENT_FREQ], [VBL_RENT_FREQ], [PERIOD_START_DATE], [PERIOD_EXPIRY_DATE], [PERIOD_RENEWAL_DATE], [PAYMENT_AMOUNT], [PAYMENT_DUE_DATE], [PAYMENT_NOTE], [IS_GST_ELIGIBLE], [GST_AMOUNT], [IS_PERIOD_EXERCISED], [PAYMENT_TYPE], [PERIOD_DURATION], [BASE_RENT_AGREED_PMT], [IS_BASE_RENT_SUBJECT_TO_GST], [ADDL_RENT_AGREED_PMT], [IS_ADDL_RENT_SUBJECT_TO_GST], [VBL_RENT_AGREED_PMT], [IS_VBL_RENT_SUBJECT_TO_GST], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _LEASE_PERIOD_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)
+      select [LEASE_PERIOD_ID], [LEASE_ID], [LEASE_PERIOD_STATUS_TYPE_CODE], [LEASE_PMT_FREQ_TYPE_CODE], [BASE_RENT_FREQ], [ADDL_RENT_FREQ], [VBL_RENT_FREQ], [PERIOD_START_DATE], [PERIOD_EXPIRY_DATE], [PERIOD_RENEWAL_DATE], [PAYMENT_AMOUNT], [PAYMENT_DUE_DATE], [PAYMENT_NOTE], [IS_GST_ELIGIBLE], [GST_AMOUNT], [IS_PERIOD_EXERCISED], [PAYMENT_TYPE], [PERIOD_DURATION], [BASE_RENT_AGREED_PMT], [IS_BASE_RENT_SUBJECT_TO_GST], [ADDL_RENT_AGREED_PMT], [IS_ADDL_RENT_SUBJECT_TO_GST], [VBL_RENT_AGREED_PMT], [IS_VBL_RENT_SUBJECT_TO_GST], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], (next value for [dbo].[PIMS_LEASE_PERIOD_H_ID_SEQ]) as [_LEASE_PERIOD_HIST_ID], null as [END_DATE_HIST], @curr_date as [EFFECTIVE_DATE_HIST] from inserted;
+
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop trigger dbo.PIMS_LSTERM_I_S_I_TR
+PRINT N'Drop trigger dbo.PIMS_LSTERM_I_S_I_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_LSTERM_I_S_I_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create triger PIMS_LSTERM_I_S_I_TR
+PRINT N'Create triger PIMS_LSTERM_I_S_I_TR'
+GO
+CREATE TRIGGER [dbo].[PIMS_LSTERM_I_S_I_TR] ON PIMS_LEASE_PERIOD INSTEAD OF INSERT AS
+SET NOCOUNT ON
+BEGIN TRY
+  IF NOT EXISTS(SELECT * FROM inserted) 
+    RETURN;
+  
+  insert into PIMS_LEASE_PERIOD ("LEASE_PERIOD_ID",
+      "LEASE_ID",
+      "LEASE_PERIOD_STATUS_TYPE_CODE",
+      "LEASE_PMT_FREQ_TYPE_CODE",
+      "BASE_RENT_FREQ",
+      "ADDL_RENT_FREQ",
+      "VBL_RENT_FREQ",
+      "PERIOD_START_DATE",
+      "PERIOD_EXPIRY_DATE",
+      "PERIOD_RENEWAL_DATE",
+      "PAYMENT_AMOUNT",
+      "PAYMENT_DUE_DATE",
+      "PAYMENT_NOTE",
+      "IS_GST_ELIGIBLE",
+      "GST_AMOUNT",
+      "IS_PERIOD_EXERCISED",
+      "PAYMENT_TYPE",
+      "PERIOD_DURATION",
+      "BASE_RENT_AGREED_PMT",
+      "IS_BASE_RENT_SUBJECT_TO_GST",
+      "ADDL_RENT_AGREED_PMT",
+      "IS_ADDL_RENT_SUBJECT_TO_GST",
+      "VBL_RENT_AGREED_PMT",
+      "IS_VBL_RENT_SUBJECT_TO_GST",
+      "CONCURRENCY_CONTROL_NUMBER",
+      "APP_CREATE_TIMESTAMP",
+      "APP_CREATE_USERID",
+      "APP_CREATE_USER_GUID",
+      "APP_CREATE_USER_DIRECTORY",
+      "APP_LAST_UPDATE_TIMESTAMP",
+      "APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USER_DIRECTORY")
+    select "LEASE_PERIOD_ID",
+      "LEASE_ID",
+      "LEASE_PERIOD_STATUS_TYPE_CODE",
+      "LEASE_PMT_FREQ_TYPE_CODE",
+      "BASE_RENT_FREQ",
+      "ADDL_RENT_FREQ",
+      "VBL_RENT_FREQ",
+      "PERIOD_START_DATE",
+      "PERIOD_EXPIRY_DATE",
+      "PERIOD_RENEWAL_DATE",
+      "PAYMENT_AMOUNT",
+      "PAYMENT_DUE_DATE",
+      "PAYMENT_NOTE",
+      "IS_GST_ELIGIBLE",
+      "GST_AMOUNT",
+      "IS_PERIOD_EXERCISED",
+      "PAYMENT_TYPE",
+      "PERIOD_DURATION",
+      "BASE_RENT_AGREED_PMT",
+      "IS_BASE_RENT_SUBJECT_TO_GST",
+      "ADDL_RENT_AGREED_PMT",
+      "IS_ADDL_RENT_SUBJECT_TO_GST",
+      "VBL_RENT_AGREED_PMT",
+      "IS_VBL_RENT_SUBJECT_TO_GST",
+      "CONCURRENCY_CONTROL_NUMBER",
+      "APP_CREATE_TIMESTAMP",
+      "APP_CREATE_USERID",
+      "APP_CREATE_USER_GUID",
+      "APP_CREATE_USER_DIRECTORY",
+      "APP_LAST_UPDATE_TIMESTAMP",
+      "APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USER_DIRECTORY"
+    from inserted;
+
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop trigger dbo.PIMS_LSTERM_I_S_U_TR
+PRINT N'Drop trigger dbo.PIMS_LSTERM_I_S_U_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_LSTERM_I_S_U_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create triger PIMS_LSTERM_I_S_U_TR
+PRINT N'Create triger PIMS_LSTERM_I_S_U_TR'
+GO
+CREATE TRIGGER [dbo].[PIMS_LSTERM_I_S_U_TR] ON PIMS_LEASE_PERIOD INSTEAD OF UPDATE AS
+SET NOCOUNT ON
+BEGIN TRY
+  IF NOT EXISTS(SELECT * FROM deleted) 
+    RETURN;
+
+  -- validate concurrency control
+  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.LEASE_PERIOD_ID = deleted.LEASE_PERIOD_ID)
+    raiserror('CONCURRENCY FAILURE.',16,1)
+
+  -- update statement
+  update PIMS_LEASE_PERIOD
+    set "LEASE_PERIOD_ID" = inserted."LEASE_PERIOD_ID",
+      "LEASE_ID" = inserted."LEASE_ID",
+      "LEASE_PERIOD_STATUS_TYPE_CODE" = inserted."LEASE_PERIOD_STATUS_TYPE_CODE",
+      "LEASE_PMT_FREQ_TYPE_CODE" = inserted."LEASE_PMT_FREQ_TYPE_CODE",
+      "BASE_RENT_FREQ" = inserted."BASE_RENT_FREQ",
+      "ADDL_RENT_FREQ" = inserted."ADDL_RENT_FREQ",
+      "VBL_RENT_FREQ" = inserted."VBL_RENT_FREQ",
+      "PERIOD_START_DATE" = inserted."PERIOD_START_DATE",
+      "PERIOD_EXPIRY_DATE" = inserted."PERIOD_EXPIRY_DATE",
+      "PERIOD_RENEWAL_DATE" = inserted."PERIOD_RENEWAL_DATE",
+      "PAYMENT_AMOUNT" = inserted."PAYMENT_AMOUNT",
+      "PAYMENT_DUE_DATE" = inserted."PAYMENT_DUE_DATE",
+      "PAYMENT_NOTE" = inserted."PAYMENT_NOTE",
+      "IS_GST_ELIGIBLE" = inserted."IS_GST_ELIGIBLE",
+      "GST_AMOUNT" = inserted."GST_AMOUNT",
+      "IS_PERIOD_EXERCISED" = inserted."IS_PERIOD_EXERCISED",
+      "PAYMENT_TYPE" = inserted."PAYMENT_TYPE",
+      "PERIOD_DURATION" = inserted."PERIOD_DURATION",
+      "BASE_RENT_AGREED_PMT" = inserted."BASE_RENT_AGREED_PMT",
+      "IS_BASE_RENT_SUBJECT_TO_GST" = inserted."IS_BASE_RENT_SUBJECT_TO_GST",
+      "ADDL_RENT_AGREED_PMT" = inserted."ADDL_RENT_AGREED_PMT",
+      "IS_ADDL_RENT_SUBJECT_TO_GST" = inserted."IS_ADDL_RENT_SUBJECT_TO_GST",
+      "VBL_RENT_AGREED_PMT" = inserted."VBL_RENT_AGREED_PMT",
+      "IS_VBL_RENT_SUBJECT_TO_GST" = inserted."IS_VBL_RENT_SUBJECT_TO_GST",
+      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER",
+      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
+      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY"
+    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
+    , DB_LAST_UPDATE_USERID = user_name()
+    from PIMS_LEASE_PERIOD
+    inner join inserted
+    on (PIMS_LEASE_PERIOD.LEASE_PERIOD_ID = inserted.LEASE_PERIOD_ID);
+    
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop trigger dbo.PIMS_LSPYMT_A_S_IUD_TR
+PRINT N'Drop trigger dbo.PIMS_LSPYMT_A_S_IUD_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_LSPYMT_A_S_IUD_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create triger PIMS_LSPYMT_A_S_IUD_TR
+PRINT N'Create triger PIMS_LSPYMT_A_S_IUD_TR'
+GO
+CREATE TRIGGER [dbo].[PIMS_LSPYMT_A_S_IUD_TR] ON PIMS_LEASE_PAYMENT FOR INSERT, UPDATE, DELETE AS
+SET NOCOUNT ON
+BEGIN TRY
+DECLARE @curr_date datetime;
+SET @curr_date = getutcdate();
+  IF NOT EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM deleted) 
+    RETURN;
+
+  -- historical
+  IF EXISTS(SELECT * FROM deleted)
+    update PIMS_LEASE_PAYMENT_HIST set END_DATE_HIST = @curr_date where LEASE_PAYMENT_ID in (select LEASE_PAYMENT_ID from deleted) and END_DATE_HIST is null;
+  
+  IF EXISTS(SELECT * FROM inserted)
+    insert into PIMS_LEASE_PAYMENT_HIST ([LEASE_PAYMENT_ID], [LEASE_PERIOD_ID], [LEASE_PAYMENT_METHOD_TYPE_CODE], [LEASE_PAYMENT_STATUS_TYPE_CODE], [LEASE_PAYMENT_CATEGORY_TYPE_CODE], [LEASE_PMT_FREQ_TYPE_CODE], [PAYMENT_RECEIVED_DATE], [PAYMENT_AMOUNT_PRE_TAX], [PAYMENT_AMOUNT_PST], [PAYMENT_AMOUNT_GST], [PAYMENT_AMOUNT_TOTAL], [NOTE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _LEASE_PAYMENT_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)
+      select [LEASE_PAYMENT_ID], [LEASE_PERIOD_ID], [LEASE_PAYMENT_METHOD_TYPE_CODE], [LEASE_PAYMENT_STATUS_TYPE_CODE], [LEASE_PAYMENT_CATEGORY_TYPE_CODE], [LEASE_PMT_FREQ_TYPE_CODE], [PAYMENT_RECEIVED_DATE], [PAYMENT_AMOUNT_PRE_TAX], [PAYMENT_AMOUNT_PST], [PAYMENT_AMOUNT_GST], [PAYMENT_AMOUNT_TOTAL], [NOTE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], (next value for [dbo].[PIMS_LEASE_PAYMENT_H_ID_SEQ]) as [_LEASE_PAYMENT_HIST_ID], null as [END_DATE_HIST], @curr_date as [EFFECTIVE_DATE_HIST] from inserted;
+
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop trigger dbo.PIMS_LSPYMT_I_S_I_TR
+PRINT N'Drop trigger dbo.PIMS_LSPYMT_I_S_I_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_LSPYMT_I_S_I_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create triger PIMS_LSPYMT_I_S_I_TR
+PRINT N'Create triger PIMS_LSPYMT_I_S_I_TR'
+GO
+CREATE TRIGGER [dbo].[PIMS_LSPYMT_I_S_I_TR] ON PIMS_LEASE_PAYMENT INSTEAD OF INSERT AS
+SET NOCOUNT ON
+BEGIN TRY
+  IF NOT EXISTS(SELECT * FROM inserted) 
+    RETURN;
+  
+  insert into PIMS_LEASE_PAYMENT ("LEASE_PAYMENT_ID",
+      "LEASE_PERIOD_ID",
+      "LEASE_PAYMENT_METHOD_TYPE_CODE",
+      "LEASE_PAYMENT_STATUS_TYPE_CODE",
+      "LEASE_PAYMENT_CATEGORY_TYPE_CODE",
+      "LEASE_PMT_FREQ_TYPE_CODE",
+      "PAYMENT_RECEIVED_DATE",
+      "PAYMENT_AMOUNT_PRE_TAX",
+      "PAYMENT_AMOUNT_PST",
+      "PAYMENT_AMOUNT_GST",
+      "PAYMENT_AMOUNT_TOTAL",
+      "NOTE",
+      "CONCURRENCY_CONTROL_NUMBER",
+      "APP_CREATE_TIMESTAMP",
+      "APP_CREATE_USERID",
+      "APP_CREATE_USER_GUID",
+      "APP_CREATE_USER_DIRECTORY",
+      "APP_LAST_UPDATE_TIMESTAMP",
+      "APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USER_DIRECTORY")
+    select "LEASE_PAYMENT_ID",
+      "LEASE_PERIOD_ID",
+      "LEASE_PAYMENT_METHOD_TYPE_CODE",
+      "LEASE_PAYMENT_STATUS_TYPE_CODE",
+      "LEASE_PAYMENT_CATEGORY_TYPE_CODE",
+      "LEASE_PMT_FREQ_TYPE_CODE",
+      "PAYMENT_RECEIVED_DATE",
+      "PAYMENT_AMOUNT_PRE_TAX",
+      "PAYMENT_AMOUNT_PST",
+      "PAYMENT_AMOUNT_GST",
+      "PAYMENT_AMOUNT_TOTAL",
+      "NOTE",
+      "CONCURRENCY_CONTROL_NUMBER",
+      "APP_CREATE_TIMESTAMP",
+      "APP_CREATE_USERID",
+      "APP_CREATE_USER_GUID",
+      "APP_CREATE_USER_DIRECTORY",
+      "APP_LAST_UPDATE_TIMESTAMP",
+      "APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USER_DIRECTORY"
+    from inserted;
+
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop trigger dbo.PIMS_LSPYMT_I_S_U_TR
+PRINT N'Drop trigger dbo.PIMS_LSPYMT_I_S_U_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_LSPYMT_I_S_U_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create triger PIMS_LSPYMT_I_S_U_TR
+PRINT N'Create triger PIMS_LSPYMT_I_S_U_TR'
+GO
+CREATE TRIGGER [dbo].[PIMS_LSPYMT_I_S_U_TR] ON PIMS_LEASE_PAYMENT INSTEAD OF UPDATE AS
+SET NOCOUNT ON
+BEGIN TRY
+  IF NOT EXISTS(SELECT * FROM deleted) 
+    RETURN;
+
+  -- validate concurrency control
+  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.LEASE_PAYMENT_ID = deleted.LEASE_PAYMENT_ID)
+    raiserror('CONCURRENCY FAILURE.',16,1)
+
+  -- update statement
+  update PIMS_LEASE_PAYMENT
+    set "LEASE_PAYMENT_ID" = inserted."LEASE_PAYMENT_ID",
+      "LEASE_PERIOD_ID" = inserted."LEASE_PERIOD_ID",
+      "LEASE_PAYMENT_METHOD_TYPE_CODE" = inserted."LEASE_PAYMENT_METHOD_TYPE_CODE",
+      "LEASE_PAYMENT_STATUS_TYPE_CODE" = inserted."LEASE_PAYMENT_STATUS_TYPE_CODE",
+      "LEASE_PAYMENT_CATEGORY_TYPE_CODE" = inserted."LEASE_PAYMENT_CATEGORY_TYPE_CODE",
+      "LEASE_PMT_FREQ_TYPE_CODE" = inserted."LEASE_PMT_FREQ_TYPE_CODE",
+      "PAYMENT_RECEIVED_DATE" = inserted."PAYMENT_RECEIVED_DATE",
+      "PAYMENT_AMOUNT_PRE_TAX" = inserted."PAYMENT_AMOUNT_PRE_TAX",
+      "PAYMENT_AMOUNT_PST" = inserted."PAYMENT_AMOUNT_PST",
+      "PAYMENT_AMOUNT_GST" = inserted."PAYMENT_AMOUNT_GST",
+      "PAYMENT_AMOUNT_TOTAL" = inserted."PAYMENT_AMOUNT_TOTAL",
+      "NOTE" = inserted."NOTE",
+      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER",
+      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
+      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
+      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
+      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY"
+    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
+    , DB_LAST_UPDATE_USERID = user_name()
+    from PIMS_LEASE_PAYMENT
+    inner join inserted
+    on (PIMS_LEASE_PAYMENT.LEASE_PAYMENT_ID = inserted.LEASE_PAYMENT_ID);
+    
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop trigger dbo.PIMS_LTRMST_I_S_I_TR
+PRINT N'Drop trigger dbo.PIMS_LTRMST_I_S_I_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_LTRMST_I_S_I_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create triger PIMS_LTRMST_I_S_I_TR
+PRINT N'Create triger PIMS_LTRMST_I_S_I_TR'
+GO
+CREATE TRIGGER [dbo].[PIMS_LTRMST_I_S_I_TR] ON PIMS_LEASE_PERIOD_STATUS_TYPE INSTEAD OF INSERT AS
+SET NOCOUNT ON
+BEGIN TRY
+  IF NOT EXISTS(SELECT * FROM inserted) 
+    RETURN;
+
+  
+  insert into PIMS_LEASE_PERIOD_STATUS_TYPE ("LEASE_PERIOD_STATUS_TYPE_CODE",
+      "DESCRIPTION",
+      "IS_DISABLED",
+      "DISPLAY_ORDER",
+      "CONCURRENCY_CONTROL_NUMBER")
+    select "LEASE_PERIOD_STATUS_TYPE_CODE",
+      "DESCRIPTION",
+      "IS_DISABLED",
+      "DISPLAY_ORDER",
+      "CONCURRENCY_CONTROL_NUMBER"
+    from inserted;
+
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop trigger dbo.PIMS_LTRMST_I_S_U_TR
+PRINT N'Drop trigger dbo.PIMS_LTRMST_I_S_U_TR'
+GO
+DROP TRIGGER IF EXISTS [dbo].[PIMS_LTRMST_I_S_U_TR]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create triger PIMS_LTRMST_I_S_U_TR
+PRINT N'Create triger PIMS_LTRMST_I_S_U_TR'
+GO
+CREATE TRIGGER [dbo].[PIMS_LTRMST_I_S_U_TR] ON PIMS_LEASE_PERIOD_STATUS_TYPE INSTEAD OF UPDATE AS
+SET NOCOUNT ON
+BEGIN TRY
+  IF NOT EXISTS(SELECT * FROM deleted) 
+    RETURN;
+
+  -- validate concurrency control
+  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.LEASE_PERIOD_STATUS_TYPE_CODE = deleted.LEASE_PERIOD_STATUS_TYPE_CODE)
+    raiserror('CONCURRENCY FAILURE.',16,1)
+
+
+  -- update statement
+  update PIMS_LEASE_PERIOD_STATUS_TYPE
+    set "LEASE_PERIOD_STATUS_TYPE_CODE" = inserted."LEASE_PERIOD_STATUS_TYPE_CODE",
+      "DESCRIPTION" = inserted."DESCRIPTION",
+      "IS_DISABLED" = inserted."IS_DISABLED",
+      "DISPLAY_ORDER" = inserted."DISPLAY_ORDER",
+      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
+    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
+    , DB_LAST_UPDATE_USERID = user_name()
+    from PIMS_LEASE_PERIOD_STATUS_TYPE
+    inner join inserted
+    on (PIMS_LEASE_PERIOD_STATUS_TYPE.LEASE_PERIOD_STATUS_TYPE_CODE = inserted.LEASE_PERIOD_STATUS_TYPE_CODE);
+
+END TRY
+BEGIN CATCH
+   IF @@trancount > 0 ROLLBACK TRANSACTION
+   EXEC pims_error_handling
+END CATCH;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+
+-- ----------------------------------------------
+-- Process Views
+-- ----------------------------------------------
+
+-- Drop view PIMS_HISTORICAL_FILE_NUMBER_VW
+PRINT N'Drop view PIMS_HISTORICAL_FILE_NUMBER_VW'
+GO
+DROP VIEW IF EXISTS [dbo].[PIMS_HISTORICAL_FILE_NUMBER_VW]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create view PIMS_HISTORICAL_FILE_NUMBER_VW
+PRINT N'Create view PIMS_HISTORICAL_FILE_NUMBER_VW'
+GO
+CREATE VIEW [dbo].[PIMS_HISTORICAL_FILE_NUMBER_VW] AS
+SELECT PROPERTY_ID  
+     , STRING_AGG(HISTORICAL_FILE_NUMBER_STR, N', ') AS HISTORICAL_FILE_NUMBER_STR
+FROM   (SELECT fnum.PROPERTY_ID
+             , fnum.HISTORICAL_FILE_NUMBER
+             , fdsc.DISPLAY_ORDER
+             , CASE
+                 WHEN fnum.HISTORICAL_FILE_NUMBER_TYPE_CODE <> N'OTHER' THEN 
+                   fdsc.DESCRIPTION + N': ' + fnum.HISTORICAL_FILE_NUMBER
+                 ELSE 
+                   fnum.OTHER_HIST_FILE_NUMBER_TYPE_CODE + N': ' + fnum.HISTORICAL_FILE_NUMBER
+               END AS HISTORICAL_FILE_NUMBER_STR
+        FROM   PIMS_HISTORICAL_FILE_NUMBER      fnum JOIN
+               PIMS_HISTORICAL_FILE_NUMBER_TYPE fdsc ON fdsc.HISTORICAL_FILE_NUMBER_TYPE_CODE = fnum.HISTORICAL_FILE_NUMBER_TYPE_CODE) AS HISTORICAL_FILE_NUMBER
+GROUP BY PROPERTY_ID
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop view PIMS_PROPERTY_VW
+PRINT N'Drop view PIMS_PROPERTY_VW'
+GO
+DROP VIEW IF EXISTS [dbo].[PIMS_PROPERTY_VW]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create view PIMS_PROPERTY_VW
+PRINT N'Create view PIMS_PROPERTY_VW'
+GO
+CREATE VIEW [dbo].[PIMS_PROPERTY_VW] AS
+SELECT PROP.PROPERTY_ID
+     , PROP.PID   
+     , RIGHT('000000000' + CAST(PROP.PID AS VARCHAR(9)), 9) AS PID_PADDED
+     , PROP.PIN
+     , PROP.PROPERTY_TYPE_CODE
+     , PROP.PROPERTY_STATUS_TYPE_CODE
+     , PROP.PROPERTY_DATA_SOURCE_TYPE_CODE
+     , PROP.PROPERTY_DATA_SOURCE_EFFECTIVE_DATE
+     , PROP.PROPERTY_CLASSIFICATION_TYPE_CODE
+     , (SELECT STRING_AGG(TENURE_DESC, ', ')
+        FROM   (SELECT TNUR.DESCRIPTION AS TENURE_DESC
+                FROM   PIMS_PROPERTY_TENURE_TYPE  TNUR INNER JOIN
+                       PIMS_PROP_PROP_TENURE_TYPE TNTY ON TNTY.PROPERTY_TENURE_TYPE_CODE = TNUR.PROPERTY_TENURE_TYPE_CODE
+                                                      AND TNTY.PROPERTY_ID               = PROP.PROPERTY_ID) temp) AS PROPERTY_TENURE_TYPE_CODE
+     , ADDR.STREET_ADDRESS_1
+     , ADDR.STREET_ADDRESS_2
+     , ADDR.STREET_ADDRESS_3
+     , ADDR.MUNICIPALITY_NAME
+     , ADDR.POSTAL_CODE
+     , PROV.PROVINCE_STATE_CODE
+     , PROV.DESCRIPTION AS PROVINCE_NAME
+     , CNTY.COUNTRY_CODE
+     , CNTY.DESCRIPTION AS COUNTRY_NAME
+     , PROP.NAME
+     , PROP.DESCRIPTION
+     , PROP.ADDRESS_ID
+     , PROP.REGION_CODE
+     , PROP.DISTRICT_CODE
+     , PROP.BOUNDARY AS GEOMETRY  
+     , PROP.BOUNDARY AS LOCATION
+     , PROP.PROPERTY_AREA_UNIT_TYPE_CODE
+     , PROP.LAND_AREA                                            
+     , PROP.LAND_LEGAL_DESCRIPTION
+     , PROP.SURVEY_PLAN_NUMBER
+     , PROP.ENCUMBRANCE_REASON        
+     , PROP.IS_SENSITIVE
+     , PROP.IS_OWNED        
+     , PROP.IS_RETIRED              
+     , PROP.IS_VISIBLE_TO_OTHER_AGENCIES
+     , PROP.ZONING
+     , PROP.ZONING_POTENTIAL        
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_DISPOSITION_FILE_PROPERTY DFPR JOIN
+                          PIMS_DISPOSITION_FILE          DISP   ON DISP.DISPOSITION_FILE_ID = DFPR.DISPOSITION_FILE_ID
+                                                               AND DFPR.PROPERTY_ID         = PROP.PROPERTY_ID
+                   WHERE  DISP.DISPOSITION_FILE_STATUS_TYPE_CODE = N'COMPLETE'), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_DISPOSED 
+     , CASE
+         WHEN EXISTS (SELECT 1    
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID            
+                      WHERE  TAKE.IS_NEW_LAND_ACT       = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE = 'COMPLETE'                                                                                                                              
+                         AND TAKE.LAND_ACT_TYPE_CODE   IN (N'Section 15', N'Section 16', N'Section 17', N'Section 66', N'NOI')) THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  TAKE.IS_NEW_INTEREST_IN_SRW = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE  = N'COMPLETE') THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID    
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  TAKE.IS_NEW_LICENSE_TO_CONSTRUCT = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE       = N'COMPLETE') THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1                                                                                                                                    
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID    
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  IS_ACTIVE_LEASE       = 1                        
+                         AND TAKE_STATUS_TYPE_CODE = N'COMPLETE') THEN CONVERT([bit],(1))
+         ELSE CONVERT([bit],(0))
+         END AS IS_OTHER_INTEREST                                                                 
+     , IIF(EXISTS (SELECT 1                        
+                   FROM   PIMS_PROPERTY_ACQUISITION_FILE PRAF JOIN
+                          PIMS_ACQUISITION_FILE          ACQF   ON ACQF.ACQUISITION_FILE_ID = PRAF.ACQUISITION_FILE_ID
+                                                               AND PRAF.PROPERTY_ID         = PROP.PROPERTY_ID
+                   WHERE  ACQF.ACQUISITION_FILE_STATUS_TYPE_CODE IN (N'DRAFT', N'ACTIVE')), CONVERT([bit],(1)), CONVERT([bit],(0))) AS HAS_ACTIVE_ACQUISITION_FILE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_RESEARCH_FILE PRSF JOIN
+                          PIMS_RESEARCH_FILE          RSHF   ON RSHF.RESEARCH_FILE_ID = PRSF.RESEARCH_FILE_ID
+                                                            AND PRSF.PROPERTY_ID      = PROP.PROPERTY_ID
+                   WHERE  RSHF.RESEARCH_FILE_STATUS_TYPE_CODE = N'ACTIVE'), CONVERT([bit],(1)), CONVERT([bit],(0)))  AS HAS_ACTIVE_RESEARCH_FILE                                                              
+     , IIF(EXISTS (SELECT 1                                            
+                   FROM   PIMS_PROPERTY_LEASE PRLS JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE IN (N'PYBLMOTI', N'PYBLBCTFA')), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_PAYABLE_LEASE   
+     , IIF(EXISTS (SELECT 1                                                                                                            
+                   FROM   PIMS_PROPERTY_LEASE PRLS                                          JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID LEFT JOIN
+                          PIMS_LEASE_PERIOD   TERM ON TERM.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE IN (N'PYBLMOTI', N'PYBLBCTFA')
+                      AND ((getutcdate() BETWEEN LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE          ) OR
+                           (getutcdate() >=      LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE IS NULL  ) OR
+                           (getutcdate() BETWEEN TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE        ) OR
+                           (getutcdate() >=      TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE IS NULL))), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_ACTIVE_PAYABLE_LEASE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_LEASE PRLS JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE = 'RCVBL'), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_RECEIVABLE_LEASE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_LEASE PRLS                                          JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID LEFT JOIN
+                          PIMS_LEASE_PERIOD   TERM ON TERM.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE = 'RCVBL'
+                      AND ((getutcdate() BETWEEN LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE          ) OR
+                           (getutcdate() >=      LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE IS NULL  ) OR
+                           (getutcdate() BETWEEN TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE        ) OR
+                           (getutcdate() >=      TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE IS NULL))), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_ACTIVE_RECEIVABLE_LEASE                 
+     , FNVW.HISTORICAL_FILE_NUMBER_STR
+FROM   PIMS_PROPERTY                  PROP                                                    LEFT OUTER JOIN                                                                                        
+       PIMS_HISTORICAL_FILE_NUMBER_VW FNVW ON FNVW.PROPERTY_ID       = PROP.PROPERTY_ID       LEFT OUTER JOIN
+       PIMS_ADDRESS                   ADDR ON ADDR.ADDRESS_ID        = PROP.ADDRESS_ID        LEFT OUTER JOIN
+       PIMS_PROVINCE_STATE            PROV ON PROV.PROVINCE_STATE_ID = ADDR.PROVINCE_STATE_ID LEFT OUTER JOIN
+       PIMS_COUNTRY                   CNTY ON CNTY.COUNTRY_ID        = ADDR.COUNTRY_ID
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop view PIMS_PROPERTY_BOUNDARY_VW
+PRINT N'Drop view PIMS_PROPERTY_BOUNDARY_VW'
+GO
+DROP VIEW IF EXISTS [dbo].[PIMS_PROPERTY_BOUNDARY_VW]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create view PIMS_PROPERTY_BOUNDARY_VW
+PRINT N'Create view PIMS_PROPERTY_BOUNDARY_VW'
+GO
+CREATE VIEW [dbo].[PIMS_PROPERTY_BOUNDARY_VW] AS
+SELECT PROP.PROPERTY_ID
+     , PROP.PID   
+     , RIGHT('000000000' + CAST(PROP.PID AS VARCHAR(9)), 9) AS PID_PADDED
+     , PROP.PIN
+     , PROP.PROPERTY_TYPE_CODE     
+     , PROP.PROPERTY_STATUS_TYPE_CODE
+     , PROP.PROPERTY_DATA_SOURCE_TYPE_CODE
+     , PROP.PROPERTY_DATA_SOURCE_EFFECTIVE_DATE
+     , PROP.PROPERTY_CLASSIFICATION_TYPE_CODE
+     , (SELECT STRING_AGG(TENURE_DESC, ', ')
+        FROM   (SELECT TNUR.DESCRIPTION AS TENURE_DESC
+                FROM   PIMS_PROPERTY_TENURE_TYPE  TNUR INNER JOIN
+                       PIMS_PROP_PROP_TENURE_TYPE TNTY ON TNTY.PROPERTY_TENURE_TYPE_CODE = TNUR.PROPERTY_TENURE_TYPE_CODE
+                                                      AND TNTY.PROPERTY_ID               = PROP.PROPERTY_ID) temp) AS PROPERTY_TENURE_TYPE_CODE
+     , ADDR.STREET_ADDRESS_1
+     , ADDR.STREET_ADDRESS_2
+     , ADDR.STREET_ADDRESS_3
+     , ADDR.MUNICIPALITY_NAME
+     , ADDR.POSTAL_CODE
+     , PROV.PROVINCE_STATE_CODE
+     , PROV.DESCRIPTION AS PROVINCE_NAME
+     , CNTY.COUNTRY_CODE                                                                                                                             
+     , CNTY.DESCRIPTION AS COUNTRY_NAME
+     , PROP.NAME
+     , PROP.DESCRIPTION
+     , PROP.ADDRESS_ID
+     , PROP.REGION_CODE
+     , PROP.DISTRICT_CODE
+     , PROP.BOUNDARY AS GEOMETRY  
+     , PROP.PROPERTY_AREA_UNIT_TYPE_CODE
+     , PROP.LAND_AREA                                            
+     , PROP.LAND_LEGAL_DESCRIPTION
+     , PROP.SURVEY_PLAN_NUMBER
+     , PROP.ENCUMBRANCE_REASON        
+     , PROP.IS_SENSITIVE
+     , PROP.IS_OWNED        
+     , PROP.IS_RETIRED              
+     , PROP.IS_VISIBLE_TO_OTHER_AGENCIES                                                                                                                                               
+     , PROP.ZONING
+     , PROP.ZONING_POTENTIAL        
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_DISPOSITION_FILE_PROPERTY DFPR JOIN
+                          PIMS_DISPOSITION_FILE          DISP   ON DISP.DISPOSITION_FILE_ID = DFPR.DISPOSITION_FILE_ID
+                                                               AND DFPR.PROPERTY_ID         = PROP.PROPERTY_ID
+                   WHERE  DISP.DISPOSITION_FILE_STATUS_TYPE_CODE = N'COMPLETE'), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_DISPOSED 
+     , CASE
+         WHEN EXISTS (SELECT 1    
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID            
+                      WHERE  TAKE.IS_NEW_LAND_ACT       = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE = 'COMPLETE'                                                                                                                              
+                         AND TAKE.LAND_ACT_TYPE_CODE   IN (N'Section 15', N'Section 16', N'Section 17', N'Section 66', N'NOI')) THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  TAKE.IS_NEW_INTEREST_IN_SRW = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE  = N'COMPLETE') THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID    
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  TAKE.IS_NEW_LICENSE_TO_CONSTRUCT = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE       = N'COMPLETE') THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1                                                                                                                                    
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID    
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  IS_ACTIVE_LEASE       = 1
+                         AND TAKE_STATUS_TYPE_CODE = N'COMPLETE') THEN CONVERT([bit],(1))
+         ELSE CONVERT([bit],(0))
+         END AS IS_OTHER_INTEREST                                                                 
+     , IIF(EXISTS (SELECT 1                        
+                   FROM   PIMS_PROPERTY_ACQUISITION_FILE PRAF JOIN
+                          PIMS_ACQUISITION_FILE          ACQF   ON ACQF.ACQUISITION_FILE_ID = PRAF.ACQUISITION_FILE_ID
+                                                               AND PRAF.PROPERTY_ID         = PROP.PROPERTY_ID
+                   WHERE  ACQF.ACQUISITION_FILE_STATUS_TYPE_CODE IN (N'DRAFT', N'ACTIVE')), CONVERT([bit],(1)), CONVERT([bit],(0))) AS HAS_ACTIVE_ACQUISITION_FILE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_RESEARCH_FILE PRSF JOIN
+                          PIMS_RESEARCH_FILE          RSHF   ON RSHF.RESEARCH_FILE_ID = PRSF.RESEARCH_FILE_ID
+                                                            AND PRSF.PROPERTY_ID      = PROP.PROPERTY_ID
+                   WHERE  RSHF.RESEARCH_FILE_STATUS_TYPE_CODE = N'ACTIVE'), CONVERT([bit],(1)), CONVERT([bit],(0)))  AS HAS_ACTIVE_RESEARCH_FILE                                                              
+     , IIF(EXISTS (SELECT 1                                            
+                   FROM   PIMS_PROPERTY_LEASE PRLS JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE IN (N'PYBLMOTI', N'PYBLBCTFA')), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_PAYABLE_LEASE   
+     , IIF(EXISTS (SELECT 1                                                                                                            
+                   FROM   PIMS_PROPERTY_LEASE PRLS                                          JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID LEFT JOIN
+                          PIMS_LEASE_PERIOD   TERM ON TERM.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE IN (N'PYBLMOTI', N'PYBLBCTFA')
+                      AND ((getutcdate() BETWEEN LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE          ) OR
+                           (getutcdate() >=      LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE IS NULL  ) OR
+                           (getutcdate() BETWEEN TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE        ) OR
+                           (getutcdate() >=      TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE IS NULL))), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_ACTIVE_PAYABLE_LEASE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_LEASE PRLS JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE = 'RCVBL'), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_RECEIVABLE_LEASE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_LEASE PRLS                                          JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID LEFT JOIN
+                          PIMS_LEASE_PERIOD   TERM ON TERM.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE = 'RCVBL'
+                      AND ((getutcdate() BETWEEN LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE          ) OR
+                           (getutcdate() >=      LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE IS NULL  ) OR
+                           (getutcdate() BETWEEN TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE        ) OR
+                           (getutcdate() >=      TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE IS NULL))), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_ACTIVE_RECEIVABLE_LEASE          
+     , FNVW.HISTORICAL_FILE_NUMBER_STR
+FROM   PIMS_PROPERTY                  PROP                                                    LEFT OUTER JOIN   
+       PIMS_HISTORICAL_FILE_NUMBER_VW FNVW ON FNVW.PROPERTY_ID       = PROP.PROPERTY_ID       LEFT OUTER JOIN         
+       PIMS_ADDRESS                   ADDR ON ADDR.ADDRESS_ID        = PROP.ADDRESS_ID        LEFT OUTER JOIN
+       PIMS_PROVINCE_STATE            PROV ON PROV.PROVINCE_STATE_ID = ADDR.PROVINCE_STATE_ID LEFT OUTER JOIN
+       PIMS_COUNTRY                   CNTY ON CNTY.COUNTRY_ID        = ADDR.COUNTRY_ID   
+WHERE  PROP.BOUNDARY IS NOT NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop view PIMS_PROPERTY_LOCATION_VW
+PRINT N'Drop view PIMS_PROPERTY_LOCATION_VW'
+GO
+DROP VIEW IF EXISTS [dbo].[PIMS_PROPERTY_LOCATION_VW]
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create view PIMS_PROPERTY_LOCATION_VW
+PRINT N'Create view PIMS_PROPERTY_LOCATION_VW'
+GO
+CREATE VIEW [dbo].[PIMS_PROPERTY_LOCATION_VW] AS
+SELECT PROP.PROPERTY_ID
+     , PROP.PID
+     , RIGHT('000000000' + CAST(PROP.PID AS VARCHAR(9)), 9) AS PID_PADDED
+     , PROP.PIN                   
+     , PROP.PROPERTY_TYPE_CODE
+     , PROP.PROPERTY_STATUS_TYPE_CODE
+     , PROP.PROPERTY_DATA_SOURCE_TYPE_CODE
+     , PROP.PROPERTY_DATA_SOURCE_EFFECTIVE_DATE
+     , PROP.PROPERTY_CLASSIFICATION_TYPE_CODE  
+     , (SELECT STRING_AGG(TENURE_DESC, ', ')
+        FROM   (SELECT TNUR.DESCRIPTION AS TENURE_DESC
+                FROM   PIMS_PROPERTY_TENURE_TYPE  TNUR INNER JOIN
+                       PIMS_PROP_PROP_TENURE_TYPE TNTY ON TNTY.PROPERTY_TENURE_TYPE_CODE = TNUR.PROPERTY_TENURE_TYPE_CODE
+                                                      AND TNTY.PROPERTY_ID               = PROP.PROPERTY_ID) temp) AS PROPERTY_TENURE_TYPE_CODE
+     , ADDR.STREET_ADDRESS_1
+     , ADDR.STREET_ADDRESS_2
+     , ADDR.STREET_ADDRESS_3
+     , ADDR.MUNICIPALITY_NAME
+     , ADDR.POSTAL_CODE
+     , PROV.PROVINCE_STATE_CODE
+     , PROV.DESCRIPTION AS PROVINCE_NAME
+     , CNTY.COUNTRY_CODE
+     , CNTY.DESCRIPTION AS COUNTRY_NAME
+     , PROP.NAME                                                                                                                                                                                 
+     , PROP.DESCRIPTION
+     , PROP.ADDRESS_ID
+     , PROP.REGION_CODE
+     , PROP.DISTRICT_CODE
+     , PROP.LOCATION AS GEOMETRY
+     , PROP.PROPERTY_AREA_UNIT_TYPE_CODE
+     , PROP.LAND_AREA
+     , PROP.LAND_LEGAL_DESCRIPTION
+     , PROP.SURVEY_PLAN_NUMBER
+     , PROP.ENCUMBRANCE_REASON          
+     , PROP.IS_SENSITIVE
+     , PROP.IS_OWNED              
+     , PROP.IS_RETIRED                               
+     , PROP.IS_VISIBLE_TO_OTHER_AGENCIES 
+     , PROP.ZONING
+     , PROP.ZONING_POTENTIAL                                                                                                                                                        
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_DISPOSITION_FILE_PROPERTY DFPR JOIN
+                          PIMS_DISPOSITION_FILE          DISP   ON DISP.DISPOSITION_FILE_ID = DFPR.DISPOSITION_FILE_ID
+                                                               AND DFPR.PROPERTY_ID         = PROP.PROPERTY_ID
+                   WHERE  DISP.DISPOSITION_FILE_STATUS_TYPE_CODE = N'COMPLETE'), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_DISPOSED 
+     , CASE
+         WHEN EXISTS (SELECT 1    
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID            
+                      WHERE  TAKE.IS_NEW_LAND_ACT       = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE = 'COMPLETE'                                                                                                                              
+                         AND TAKE.LAND_ACT_TYPE_CODE   IN (N'Section 15', N'Section 16', N'Section 17', N'Section 66', N'NOI')) THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  TAKE.IS_NEW_INTEREST_IN_SRW = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE  = N'COMPLETE') THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID    
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID                                                     
+                      WHERE  TAKE.IS_NEW_LICENSE_TO_CONSTRUCT = 1
+                         AND TAKE.TAKE_STATUS_TYPE_CODE       = N'COMPLETE') THEN CONVERT([bit],(1))
+         WHEN EXISTS (SELECT 1                                                                                                                                    
+                      FROM   PIMS_TAKE                      TAKE JOIN
+                             PIMS_PROPERTY_ACQUISITION_FILE PRAF   ON PRAF.PROPERTY_ACQUISITION_FILE_ID = TAKE.PROPERTY_ACQUISITION_FILE_ID    
+                                                                  AND PRAF.PROPERTY_ID                  = PROP.PROPERTY_ID
+                      WHERE  IS_ACTIVE_LEASE       = 1
+                         AND TAKE_STATUS_TYPE_CODE = N'COMPLETE') THEN CONVERT([bit],(1))
+         ELSE CONVERT([bit],(0))
+         END AS IS_OTHER_INTEREST                                                                 
+     , IIF(EXISTS (SELECT 1                        
+                   FROM   PIMS_PROPERTY_ACQUISITION_FILE PRAF JOIN
+                          PIMS_ACQUISITION_FILE          ACQF   ON ACQF.ACQUISITION_FILE_ID = PRAF.ACQUISITION_FILE_ID
+                                                               AND PRAF.PROPERTY_ID         = PROP.PROPERTY_ID
+                   WHERE  ACQF.ACQUISITION_FILE_STATUS_TYPE_CODE IN (N'DRAFT', N'ACTIVE')), CONVERT([bit],(1)), CONVERT([bit],(0))) AS HAS_ACTIVE_ACQUISITION_FILE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_RESEARCH_FILE PRSF JOIN
+                          PIMS_RESEARCH_FILE          RSHF   ON RSHF.RESEARCH_FILE_ID = PRSF.RESEARCH_FILE_ID
+                                                            AND PRSF.PROPERTY_ID      = PROP.PROPERTY_ID
+                   WHERE  RSHF.RESEARCH_FILE_STATUS_TYPE_CODE = N'ACTIVE'), CONVERT([bit],(1)), CONVERT([bit],(0)))  AS HAS_ACTIVE_RESEARCH_FILE                                                              
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_LEASE PRLS JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE IN ('PYBLMOTI', 'PYBLBCTFA')), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_PAYABLE_LEASE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_LEASE PRLS                                          JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID LEFT JOIN
+                          PIMS_LEASE_PERIOD   TERM ON TERM.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE IN ('PYBLMOTI', 'PYBLBCTFA')
+                      AND ((getutcdate() BETWEEN LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE        ) OR   
+                           (getutcdate() >=      LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE IS NULL) OR
+                           (getutcdate() BETWEEN TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE        ) OR
+                           (getutcdate() >=      TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE IS NULL))), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_ACTIVE_PAYABLE_LEASE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_LEASE PRLS JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE = 'RCVBL'), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_RECEIVABLE_LEASE
+     , IIF(EXISTS (SELECT 1
+                   FROM   PIMS_PROPERTY_LEASE PRLS                                          JOIN
+                          PIMS_LEASE          LEAS ON PRLS.PROPERTY_ID = PROP.PROPERTY_ID
+                                                  AND PRLS.LEASE_ID    = LEAS.LEASE_ID LEFT JOIN      
+                          PIMS_LEASE_PERIOD   TERM ON TERM.LEASE_ID    = LEAS.LEASE_ID
+                   WHERE  LEAS.LEASE_PAY_RVBL_TYPE_CODE = 'RCVBL'
+                      AND ((getutcdate() BETWEEN LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE        ) OR
+                           (getutcdate() >=      LEAS.ORIG_START_DATE   AND LEAS.ORIG_EXPIRY_DATE IS NULL) OR
+                           (getutcdate() BETWEEN TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE        ) OR
+                           (getutcdate() >=      TERM.PERIOD_START_DATE AND TERM.PERIOD_EXPIRY_DATE IS NULL))), CONVERT([bit],(1)), CONVERT([bit],(0))) AS IS_ACTIVE_RECEIVABLE_LEASE                     
+     , FNVW.HISTORICAL_FILE_NUMBER_STR
+FROM   PIMS_PROPERTY                  PROP                                                    LEFT OUTER JOIN                                                                                        
+       PIMS_HISTORICAL_FILE_NUMBER_VW FNVW ON FNVW.PROPERTY_ID       = PROP.PROPERTY_ID       LEFT OUTER JOIN
+       PIMS_ADDRESS                   ADDR ON ADDR.ADDRESS_ID        = PROP.ADDRESS_ID        LEFT OUTER JOIN
+       PIMS_PROVINCE_STATE            PROV ON PROV.PROVINCE_STATE_ID = ADDR.PROVINCE_STATE_ID LEFT OUTER JOIN
+       PIMS_COUNTRY                   CNTY ON CNTY.COUNTRY_ID        = ADDR.COUNTRY_ID
+WHERE  PROP.LOCATION IS NOT NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) PRINT 'The database update succeeded'
+ELSE BEGIN
+   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+   PRINT 'The database update failed'
+END
+GO

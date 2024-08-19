@@ -96,6 +96,7 @@ describe('AddResearchContainer component', () => {
         ...mapMachineBaseMock,
         selectedFeatureDataset: {
           location: { lat: 0, lng: 0 },
+          fileLocation: null,
           pimsFeature: null,
           parcelFeature: selectedFeature,
           regionFeature: null,

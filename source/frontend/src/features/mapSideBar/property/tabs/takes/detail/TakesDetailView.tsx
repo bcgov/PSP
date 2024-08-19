@@ -3,7 +3,6 @@ import { FaPlus, FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { StyledRemoveLinkButton } from '@/components/common/buttons';
-import YesNoButtons from '@/components/common/buttons/YesNoButtons';
 import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -25,6 +24,7 @@ import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_Cod
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
+import { booleanToYesNoUnknownString } from '@/utils/formUtils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
 
@@ -65,11 +65,11 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
 
   const canEditTakes = (take: ApiGen_Concepts_Take) => {
     if (
-      (statusSolver.canEditTakes() &&
-        take.takeStatusTypeCode.id !==
-          ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString() &&
+      statusSolver.canEditTakes() &&
+      ((take.takeStatusTypeCode.id !==
+        ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE.toString() &&
         hasClaim(Claims.ACQUISITION_EDIT)) ||
-      hasRole(Roles.SYSTEM_ADMINISTRATOR)
+        hasRole(Roles.SYSTEM_ADMINISTRATOR))
     ) {
       return true;
     }
@@ -106,7 +106,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             claims={[Claims.PROPERTY_EDIT]}
             addButtonIcon={<FaPlus />}
             addButtonText="Add Take"
-            onAdd={onAdd}
+            onAdd={statusSolver.canEditTakes() ? onAdd : undefined}
           />
         </H2>
         {[...nonCancelledTakes, ...cancelledTakes].map((take, index) => {
@@ -182,14 +182,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 <StyledBorderSection>
                   <SectionField
                     label="Is there a new highway dedication? *"
-                    labelWidth="8"
+                    labelWidth="9"
                     tooltip="The term new highway dedication includes municipal road or provincial public highway."
                   >
-                    <YesNoButtons
-                      id="newRightOfWayToggle"
-                      disabled
-                      value={take.isNewHighwayDedication ?? undefined}
-                    />
+                    {booleanToYesNoUnknownString(take.isNewHighwayDedication ?? undefined)}
                   </SectionField>
                   {take.isNewHighwayDedication && (
                     <SectionField label="Area" labelWidth="12">
@@ -198,27 +194,19 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   )}
                   <SectionField
                     label="Is this being acquired for MoTI inventory? *"
-                    labelWidth="8"
+                    labelWidth="9"
                     tooltip="The property will be added to inventory."
                     className="pt-4"
                   >
-                    <YesNoButtons
-                      id="addPropertyToggle"
-                      disabled
-                      value={take.isAcquiredForInventory ?? undefined}
-                    />
+                    {booleanToYesNoUnknownString(take.isAcquiredForInventory ?? undefined)}
                   </SectionField>
                 </StyledBorderSection>
                 <StyledBorderSection>
                   <SectionField
                     label="Is there a new registered interest in land (SRW, Easement or Covenant)? *"
-                    labelWidth="8"
+                    labelWidth="9"
                   >
-                    <YesNoButtons
-                      id="newInterestInSrwToggle"
-                      disabled
-                      value={take.isNewInterestInSrw ?? undefined}
-                    />
+                    {booleanToYesNoUnknownString(take.isNewInterestInSrw ?? undefined)}
                   </SectionField>
                   {take.isNewInterestInSrw && (
                     <>
@@ -233,12 +221,8 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   )}
                 </StyledBorderSection>
                 <StyledBorderSection>
-                  <SectionField label="Is there a new Land Act tenure? *" labelWidth="8">
-                    <YesNoButtons
-                      id="landActToggle"
-                      disabled
-                      value={take.isNewLandAct ?? undefined}
-                    />
+                  <SectionField label="Is there a new Land Act tenure? *" labelWidth="9">
+                    {booleanToYesNoUnknownString(take.isNewLandAct ?? undefined)}
                   </SectionField>
                   {take.isNewLandAct && (
                     <>
@@ -265,14 +249,10 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 </StyledBorderSection>
                 <StyledBorderSection>
                   <SectionField
-                    label="Is there a new License for Construction Access (TLCA/LTC)? *"
-                    labelWidth="8"
+                    label="Is there a new Licence for Construction Access (TLCA/LTC)? *"
+                    labelWidth="9"
                   >
-                    <YesNoButtons
-                      id="licenseToConstructToggle"
-                      disabled
-                      value={take.isNewLicenseToConstruct ?? undefined}
-                    />
+                    {booleanToYesNoUnknownString(take.isNewLicenseToConstruct ?? undefined)}
                   </SectionField>
                   {take.isNewLicenseToConstruct && (
                     <>
@@ -287,12 +267,8 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                   )}
                 </StyledBorderSection>
                 <StyledBorderSection>
-                  <SectionField label="Is there a Lease (Payable)? *" labelWidth="8">
-                    <YesNoButtons
-                      id="leasePayableToggle"
-                      disabled
-                      value={take.isLeasePayable ?? undefined}
-                    />
+                  <SectionField label="Is there a Lease (Payable)? *" labelWidth="9">
+                    {booleanToYesNoUnknownString(take.isLeasePayable ?? undefined)}
                   </SectionField>
                   {take.isLeasePayable && (
                     <>
@@ -309,12 +285,8 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
               </StyledNoTabSection>
               <StyledNoTabSection header="Surplus">
                 <StyledBorderSection>
-                  <SectionField label="Is there a Surplus? *" labelWidth="8">
-                    <YesNoButtons
-                      id="surplusToggle"
-                      disabled
-                      value={take.isThereSurplus ?? undefined}
-                    />
+                  <SectionField label="Is there a Surplus? *" labelWidth="9">
+                    {booleanToYesNoUnknownString(take.isThereSurplus ?? undefined)}
                   </SectionField>
                   {take.isThereSurplus && (
                     <SectionField label="Area" labelWidth="12">

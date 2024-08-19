@@ -104,29 +104,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[0].items[0].statusType"
                 name="checklistSections[0].items[0].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -152,29 +130,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[0].items[1].statusType"
                 name="checklistSections[0].items[1].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -200,29 +156,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[0].items[2].statusType"
                 name="checklistSections[0].items[2].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -248,29 +182,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[0].items[3].statusType"
                 name="checklistSections[0].items[3].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -284,9 +196,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Property Acquisition (PA) Plan:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -320,29 +230,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[0].items[4].statusType"
                 name="checklistSections[0].items[4].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -389,29 +277,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[0].statusType"
                 name="checklistSections[1].items[0].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -437,29 +303,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[1].statusType"
                 name="checklistSections[1].items[1].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -473,9 +317,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Other reports:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -509,29 +351,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[2].statusType"
                 name="checklistSections[1].items[2].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -557,29 +377,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[3].statusType"
                 name="checklistSections[1].items[3].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -605,29 +403,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[4].statusType"
                 name="checklistSections[1].items[4].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -641,9 +417,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Spending Authority Approval(s) - SAA:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -677,29 +451,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[5].statusType"
                 name="checklistSections[1].items[5].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -713,9 +465,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Final agreements with owner(s):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -749,29 +499,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[6].statusType"
                 name="checklistSections[1].items[6].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -797,29 +525,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[7].statusType"
                 name="checklistSections[1].items[7].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -845,29 +551,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[8].statusType"
                 name="checklistSections[1].items[8].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -893,29 +577,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[9].statusType"
                 name="checklistSections[1].items[9].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -941,29 +603,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[10].statusType"
                 name="checklistSections[1].items[10].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -989,29 +629,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[11].statusType"
                 name="checklistSections[1].items[11].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1025,9 +643,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Registered Plan:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1061,29 +677,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[12].statusType"
                 name="checklistSections[1].items[12].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1097,9 +691,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Copy of new title:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1133,29 +725,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[13].statusType"
                 name="checklistSections[1].items[13].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1181,29 +751,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[1].items[14].statusType"
                 name="checklistSections[1].items[14].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1258,9 +806,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Notice of Advanced Payment (Form 8):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1294,29 +840,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[3].items[0].statusType"
                 name="checklistSections[3].items[0].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1342,29 +866,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[3].items[1].statusType"
                 name="checklistSections[3].items[1].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1390,29 +892,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[3].items[2].statusType"
                 name="checklistSections[3].items[2].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1438,29 +918,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[3].items[3].statusType"
                 name="checklistSections[3].items[3].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1486,29 +944,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[3].items[4].statusType"
                 name="checklistSections[3].items[4].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1534,29 +970,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[3].items[5].statusType"
                 name="checklistSections[3].items[5].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1570,9 +984,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               ALC order:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1606,29 +1018,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[3].items[6].statusType"
                 name="checklistSections[3].items[6].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1663,9 +1053,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Copy of expropriation approval packages:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1699,29 +1087,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[4].items[0].statusType"
                 name="checklistSections[4].items[0].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1735,9 +1101,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Notice of Expropriation (Form 1):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1771,29 +1135,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[4].items[1].statusType"
                 name="checklistSections[4].items[1].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1807,9 +1149,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Approval of Expropriation (Form 5):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1843,29 +1183,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[4].items[2].statusType"
                 name="checklistSections[4].items[2].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1879,9 +1197,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               Vesting Notice (Form 9):
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -1915,29 +1231,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[4].items[3].statusType"
                 name="checklistSections[4].items[3].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -1963,29 +1257,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[4].items[4].statusType"
                 name="checklistSections[4].items[4].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -2011,29 +1283,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[4].items[5].statusType"
                 name="checklistSections[4].items[5].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>
@@ -2068,9 +1318,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
               class="c4"
             >
               File data entered into PIMS:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -2104,29 +1352,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
                 class="form-select form-control"
                 id="input-checklistSections[5].items[0].statusType"
                 name="checklistSections[5].items[0].statusType"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-INCOMP"
-                  value="INCOMP"
-                >
-                  Incomplete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-COMPLT"
-                  value="COMPLT"
-                >
-                  Complete
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-NOTAPP"
-                  value="NOTAPP"
-                >
-                  Not applicable
-                </option>
-              </select>
+              />
             </div>
           </div>
         </div>

@@ -21,6 +21,7 @@ import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSel
 import { IMapProperty } from '@/components/propertySelector/models';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { pidFormatter } from '@/utils';
+import { PropertyForm } from '../shared/models';
 
 const history = createMemoryHistory();
 
@@ -117,15 +118,19 @@ describe('Add Consolidation View', () => {
   it('calls getPrimaryAddressByPid when destination property is activated', async () => {
     await setup();
     await act(async () => {
-      mapSelectorProps.addSelectedProperties([testProperty]);
+      mapSelectorProps.addSelectedProperties([
+        PropertyForm.fromMapProperty(testProperty).toFeatureDataset(),
+      ]);
     });
-    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid);
+    expect(getPrimaryAddressByPid).toHaveBeenCalledWith(testProperty.pid.replaceAll('-', ''));
   });
 
   it('does not call for address if property has no pid', async () => {
     await setup();
     await act(async () => {
-      mapSelectorProps.addSelectedProperties([{ ...testProperty, pid: undefined }]);
+      mapSelectorProps.addSelectedProperties([
+        PropertyForm.fromMapProperty({ ...testProperty, pid: undefined }).toFeatureDataset(),
+      ]);
     });
     const text = await screen.findByText('Selected property must have a PID');
     expect(text).toBeVisible();

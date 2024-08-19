@@ -58,7 +58,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By takeLandActAcresInput = By.XPath("//input[@data-testid='radio-isnewlandact-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-acres']");
         private By takeLandActEndDateInput = By.Id("datepicker-landActEndDt");
 
-        private By takeLicenseConstructLabel = By.XPath("//label[contains(text(),'Is there a new License for Construction Access (TLCA/LTC)?')]");
+        private By takeLicenseConstructLabel = By.XPath("//label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]");
         private By takeLicenseConstructRadioBttnGroup = By.CssSelector("input[name='isNewLicenseToConstruct']");
         private By takeLicenseConstructSqMetresInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-meters']");
         private By takeLicenseConstructSqFeetInput = By.XPath("//input[@data-testid='radio-isnewlicensetoconstruct-yes']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/div/div/div/div/input[@name='area-sq-feet']");
@@ -107,7 +107,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ClickEditTakesButton(int index)
         {
-            By editButton = By.CssSelector("div[data-testid='take-"+ index +"'] button[data-testid='edit-button']");
+            By editButton = By.CssSelector("div[data-testid='take-" + index + "'] button[data-testid='edit-button']");
 
             WaitUntilSpinnerDisappear();
             WaitUntilClickable(editButton);
@@ -276,14 +276,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (sharedModals.ModalContent().Contains("You have created a Lease (Payable) Take"))
                 {
                     Assert.Contains("Follow-up required", sharedModals.ModalHeader());
-                    Assert.Contains("You have created a Lease (Payable) Take. You also need to create a Lease/License File.", sharedModals.ModalContent());
+                    Assert.Contains("You have created a Lease (Payable) Take. You also need to create a Lease/Licence File.", sharedModals.ModalContent());
                 }
                 else
                 {
                     Assert.Contains("Confirm change", sharedModals.ModalHeader());
                     Assert.Contains("The area, if provided, will be cleared. Do you wish to proceed?", sharedModals.ModalContent());
                 }
-                    
+
 
                 sharedModals.ModalClickOKBttn();
             }
@@ -331,7 +331,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteTake(int index)
         {
-            By deleteButton = By.CssSelector("div[data-testid='take-"+ index +"'] button[title='Remove take']");
+            By deleteButton = By.CssSelector("div[data-testid='take-" + index + "'] button[title='Remove take']");
 
             WaitUntilSpinnerDisappear();
             WaitUntilClickable(deleteButton);
@@ -386,7 +386,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(takeLeaseRadioBttnGroup);
             AssertTrueIsDisplayed(takeLeaseLabel);
             AssertTrueIsDisplayed(takeLeaseRadioBttnGroup);
- 
+
             AssertTrueIsDisplayed(takeSurplusSubtitle);
             AssertTrueIsDisplayed(takeSurplusLabel);
             AssertTrueIsDisplayed(takeSurplusRadioBttnGroup);
@@ -398,90 +398,94 @@ namespace PIMS.Tests.Automation.PageObjects
             var index = 0;
 
             //Take Details
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Take added on')]"));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Take added on')]"));
 
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Take type')]"));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Take type')]/parent::div/following-sibling::div"), take.TakeType);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Take type')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Take type')]/parent::div/following-sibling::div"), take.TakeType);
 
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Take status')]"));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Take status')]/parent::div/following-sibling::div"), take.TakeStatus);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Take status')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Take status')]/parent::div/following-sibling::div"), take.TakeStatus);
 
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Site contamination')]"));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Site contamination')]/parent::div/following-sibling::div"), take.SiteContamination);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Site contamination')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Site contamination')]/parent::div/following-sibling::div"), take.SiteContamination);
 
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Description')]"));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div"), take.TakeDescription);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Description')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div"), take.TakeDescription);
 
             //Take Area
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/h2/div/div[contains(text(),'Area')]"));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/h2/div/div[contains(text(),'Area')]"));
 
             //Highway Dedication
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new highway dedication?')]"));
-            Assert.Equal(2, webDriver.FindElements(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/div/div/div/div/input[@id='input-newRightOfWayToggle']")).Count);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new highway dedication?')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new highway dedication')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsNewHighwayDedication));
+
             if (take.IsNewHighwayDedication.Equals("true") && take.IsNewHighwayDedicationArea != "")
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new highway dedication?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsNewHighwayDedicationArea));
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new highway dedication?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsNewHighwayDedicationArea));
 
             //MoTI Inventory
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MoTI inventory?')]"));
-            Assert.Equal(2, webDriver.FindElements(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/div/div/div/div/input[@id='input-addPropertyToggle']")).Count);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MoTI inventory?')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is this being acquired for MoTI inventory')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsMotiInventory));
 
             //Interest in Land
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)')]"));
-            Assert.Equal(2, webDriver.FindElements(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/div/div/div/div/input[@id='input-newInterestInSrwToggle']")).Count);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsNewInterestLand));
+
             if (take.IsNewInterestLand.Equals("true") && take.IsNewInterestLandArea != "")
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsNewInterestLandArea));
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new registered interest in land (SRW, Easement or Covenant)')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsNewInterestLandArea));
 
             //Land Acture Tenure
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]"));
-            Assert.Equal(2, webDriver.FindElements(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/div/div/div/div/input[@id='input-landActToggle']")).Count);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsLandActTenure));
             if (take.IsLandActTenure.Equals("true"))
             {
-                AssertTrueContentEquals(By.XPath("(//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]/parent::div/parent::div/parent::div/div/div/label[contains(text(),'Land Act')]/parent::div/following-sibling::div)[2]"),take.IsLandActTenureDetail);
+                AssertTrueContentEquals(By.XPath("(//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]/parent::div/parent::div/parent::div/div/div/label[contains(text(),'Land Act')]/parent::div/following-sibling::div)[2]"), take.IsLandActTenureDetail);
 
-                if(take.IsLandActTenureArea != "")
-                    AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsLandActTenureArea));
+                if (take.IsLandActTenureArea != "")
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsLandActTenureArea));
 
             }
-            if(take.IsLandActTenureDate != "")
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]/parent::div/parent::div/parent::div/div/div/label[contains(text(),'End date')]/parent::div/following-sibling::div"), TransformDateFormat(take.IsLandActTenureDate));
+            if (take.IsLandActTenureDate != "")
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Land Act tenure?')]/parent::div/parent::div/parent::div/div/div/label[contains(text(),'End date')]/parent::div/following-sibling::div"), TransformDateFormat(take.IsLandActTenureDate));
 
 
             //License for Construction
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new License for Construction Access (TLCA/LTC)')]"));
-            Assert.Equal(2, webDriver.FindElements(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/div/div/div/div/input[@id='input-licenseToConstructToggle']")).Count);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsLicenseConstruct));
+
             if (take.IsLicenseConstruct.Equals("true"))
             {
                 if (take.IsLicenseConstructArea != "")
-                    AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new License for Construction Access (TLCA/LTC)?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsLicenseConstructArea));
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsLicenseConstructArea));
 
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new License for Construction Access (TLCA/LTC)?')]/parent::div/parent::div/parent::div/div/div/label[contains(text(),'LTC end date')]/parent::div/following-sibling::div"), TransformDateFormat(take.IsLicenseConstructDate));
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a new Licence for Construction Access (TLCA/LTC)?')]/parent::div/parent::div/parent::div/div/div/label[contains(text(),'LTC end date')]/parent::div/following-sibling::div"), TransformDateFormat(take.IsLicenseConstructDate));
             }
 
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Lease (Payable)?')]"));
-            Assert.Equal(2, webDriver.FindElements(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/div/div/div/div/input[@id='input-leasePayableToggle']")).Count);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Lease (Payable)?')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Lease (Payable)?')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsLeasePayable));
+
             if (take.IsLeasePayable.Equals("true"))
             {
                 if (take.IsLeasePayableArea != "")
-                    AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Lease (Payable)?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsLeasePayableArea));
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Lease (Payable)?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsLeasePayableArea));
 
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Lease (Payable)?')]/parent::div/parent::div/parent::div/div/div/label[contains(text(),'End date')]/parent::div/following-sibling::div"), TransformDateFormat(take.IsLeasePayableDate));
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Lease (Payable)?')]/parent::div/parent::div/parent::div/div/div/label[contains(text(),'End date')]/parent::div/following-sibling::div"), TransformDateFormat(take.IsLeasePayableDate));
             }
 
             //Surplus
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/h2/div/div[contains(text(),'Surplus')]"));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/h2/div/div[contains(text(),'Surplus')]"));
 
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Surplus?')]"));
-            Assert.Equal(2, webDriver.FindElements(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/div/div/div/div/input[@id='input-surplusToggle']")).Count);
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Surplus?')]"));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Surplus?')]/parent::div/following-sibling::div"), TransformBooleanFormat(take.IsSurplus));
             if (take.IsNewHighwayDedication.Equals("True") && take.IsSurplusArea != "")
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-"+ index +"']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Surplus?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsSurplusArea));
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='take-" + index + "']/div/div/div/div/div/div/div/label[contains(text(),'Is there a Surplus?')]/parent::div/parent::div/parent::div/div/div/div/div/div/div/div[contains(text(),'sq. metres')]/preceding-sibling::div"), TransformNumberFormat(take.IsSurplusArea));
         }
 
         private double TransformSqMtToSqFt(string sqmt)
         {
             double sqmtNbr = double.Parse(sqmt) * 10.76391041671;
-            double sqftRounded = Math.Round(sqmtNbr, 2, MidpointRounding.ToEven);
+            double sqftRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
 
-            if (sqftRounded.Equals(0.00))
+            if (sqftRounded.Equals(0.0000))
                 return 0;
             else
                 return sqftRounded;
@@ -490,9 +494,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private double TransformSqMtToHectares(string sqmt)
         {
             double sqmtNbr = double.Parse(sqmt) * 0.0001;
-            double hectaresRounded = Math.Round(sqmtNbr, 2, MidpointRounding.ToEven);
+            double hectaresRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
 
-            if (hectaresRounded.Equals(0.00))
+            if (hectaresRounded.Equals(0.0000))
                 return 0;
             else
                 return hectaresRounded;
@@ -500,10 +504,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private double TransformSqMtToAcres(string sqmt)
         {
-            double sqmtNbr = double.Parse(sqmt) * 0.000247105;
-            double acresRounded = Math.Round(sqmtNbr, 2, MidpointRounding.ToEven);
+            double sqmtNbr = double.Parse(sqmt) * 0.000247110891123302;
+            double acresRounded = Math.Round(sqmtNbr, 4, MidpointRounding.ToEven);
 
-            if (acresRounded.Equals(0.00))
+            if (acresRounded.Equals(0.0000))
                 return 0;
             else
                 return acresRounded;

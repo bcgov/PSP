@@ -1,15 +1,18 @@
 import clsx from 'classnames';
 import { useContext, useState } from 'react';
-import { FaBriefcase } from 'react-icons/fa';
-import { MdChevronLeft, MdChevronRight, MdContactMail, MdHome } from 'react-icons/md';
-import { TbArrowBounce } from 'react-icons/tb';
 import { useHistory } from 'react-router-dom';
 
-import AdminPanelSettings from '@/assets/images/admin-panel-settings.svg?react';
-import Fence from '@/assets/images/fence.svg?react';
-import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
-import Source from '@/assets/images/source.svg?react';
-import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
+import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
+import AdminIcon from '@/assets/images/admin-icon.svg?react';
+import ContactIcon from '@/assets/images/contact-icon.svg?react';
+import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
+import HomeIcon from '@/assets/images/home-icon.svg?react';
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import ProjectsIcon from '@/assets/images/projects-icon.svg?react';
+import ResearchIcon from '@/assets/images/research-icon.svg?react';
+import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
+import { ExpandCollapseButton } from '@/components/common/buttons/ExpandCollapseButton';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { NavIcon } from '@/components/layout';
 import { Claims, Roles } from '@/constants/index';
 
@@ -29,77 +32,75 @@ export const SideNavBar = () => {
     <Styled.ZIndexWrapper>
       <Styled.SideNavBar className={clsx({ expanded: expanded })}>
         <NavIcon
-          onClick={() => history.push('/mapview')}
-          icon={<MdHome size={24} />}
-          text="Home"
+          onClick={() => {
+            history.push('/mapview');
+          }}
+          icon={<HomeIcon />}
+          text="Map View"
           showText={expanded}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.PROJECT)}
-          icon={<FaBriefcase size={24} />}
+          icon={<ProjectsIcon />}
           text="Project"
           showText={expanded}
           claims={[Claims.PROJECT_VIEW]}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.RESEARCH)}
-          icon={<Source />}
+          icon={<ResearchIcon />}
           text="Research"
           showText={expanded}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.ACQUISITION)}
-          icon={<RealEstateAgent />}
+          icon={<AcquisitionFileIcon />}
           text="Acquisition"
           showText={expanded}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.LEASE)}
-          icon={<Fence />}
-          text="Leases & Licenses"
+          icon={<LeaseIcon />}
+          text="Leases & Licences"
           showText={expanded}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.DISPOSITION)}
-          icon={<TbArrowBounce size={24} color="white" fillOpacity={0} />}
+          icon={<DispositionIcon />}
           text="Disposition"
           showText={expanded}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.SUBDCONS)}
-          icon={<ConsolidateSubdivideIcon className="mr-1" />}
+          icon={<SubdivisionIcon />}
           text="Subdivision & Consolidation"
           showText={expanded}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.CONTACT)}
-          icon={<MdContactMail size={24} />}
+          icon={<ContactIcon />}
           text="Contacts"
           showText={expanded}
           claims={[Claims.CONTACT_VIEW]}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.ADMIN)}
-          icon={<AdminPanelSettings />}
+          icon={<AdminIcon />}
           text="Admin Tools"
           showText={expanded}
           roles={[Roles.SYSTEM_ADMINISTRATOR]}
         />
-        {expanded ? (
-          <MdChevronLeft
-            title="collapse"
-            className="chevron"
-            size={24}
-            onClick={() => setExpanded(false)}
-          />
-        ) : (
-          <MdChevronRight
-            title="expand"
-            className="chevron"
-            size={24}
-            onClick={() => setExpanded(true)}
-          />
-        )}
+        <TooltipWrapper
+          tooltipId="expand-navbar"
+          tooltip={expanded ? 'Collapse Menu' : 'Expand Menu'}
+        >
+          <span className="to-bottom">
+            <ExpandCollapseButton
+              expanded={expanded}
+              toggleExpanded={() => setExpanded(!expanded)}
+            />
+          </span>
+        </TooltipWrapper>
       </Styled.SideNavBar>
       <SideTray context={trayPage} setContext={setTrayPage} />
     </Styled.ZIndexWrapper>

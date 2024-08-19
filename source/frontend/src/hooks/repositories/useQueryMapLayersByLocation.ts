@@ -48,8 +48,8 @@ export const useQueryMapLayersByLocation = () => {
       try {
         // We are using spatial reference = 3005 (BC Albers) here because that's how the backend is returning spatial location
         const alrFeature = await findOneAgriculturalReserve(location, 'GEOMETRY', 3005);
-        const motiRegionFeature = await findRegion(location, 'GEOMETRY', 3005);
-        const highwaysDistrictFeature = await findDistrict(location, 'GEOMETRY', 3005);
+        const motiRegionFeature = await findRegion(location, 'SHAPE', 3005);
+        const highwaysDistrictFeature = await findDistrict(location, 'SHAPE', 3005);
         const electoralDistrictFeature = await findElectoralDistrict(location);
         const firstNationsFeature = await findOnefirstNation(location, 'GEOMETRY', 3005);
 

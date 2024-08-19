@@ -1,4 +1,3 @@
-import { getIn } from 'formik';
 import { FaTrash } from 'react-icons/fa';
 import { MdEdit, MdReceipt } from 'react-icons/md';
 import { CellProps } from 'react-table';
@@ -11,10 +10,11 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderDate, renderMoney, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 import { ApiGen_Concepts_Payment } from '@/models/api/generated/ApiGen_Concepts_Payment';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { formatMoney, stringToFragment } from '@/utils';
-import { withNameSpace } from '@/utils/formUtils';
 
 import { FormLeasePayment } from '../../models';
 
@@ -45,13 +45,29 @@ const actualsActions = (
   };
 };
 
+const renderCategory = () =>
+  function ({ row: { original } }: CellProps<FormLeasePayment, ApiGen_Base_CodeType<string>>) {
+    let categoryName = '';
+    switch (original.leasePaymentCategoryTypeCode?.id) {
+      case ApiGen_CodeTypes_LeasePaymentCategoryTypes.ADDL.toString():
+        categoryName = 'Additional Rent';
+        break;
+      case ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL.toString():
+        categoryName = 'Variable Rent';
+        break;
+      case ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE.toString():
+        categoryName = 'Base Rent';
+    }
+    return <>{categoryName}</>;
+  };
+
 export interface IPaymentColumnProps {
   onEdit: (values: FormLeasePayment) => void;
   onSave: (values: FormLeasePayment) => void;
   onDelete: (values: FormLeasePayment) => void;
   isReceivable?: boolean;
   isGstEligible?: boolean;
-  nameSpace?: string;
+  payments: FormLeasePayment[];
 }
 
 export const getActualsColumns = ({
@@ -60,14 +76,13 @@ export const getActualsColumns = ({
   onSave,
   isReceivable,
   isGstEligible,
-  nameSpace,
 }: IPaymentColumnProps): ColumnWithProps<
   FormLeasePayment,
   { properties: ApiGen_Concepts_Payment[] }
 >[] => {
   return [
     {
-      Header: isReceivable ? 'Received date' : 'Sent date',
+      Header: 'Date',
       align: 'left',
       maxWidth: 70,
       accessor: 'receivedDate',
@@ -77,6 +92,13 @@ export const getActualsColumns = ({
           <MdReceipt /> Payment Summary
         </span>
       ),
+    },
+    {
+      Header: 'Rent category',
+      accessor: 'leasePaymentCategoryTypeCode',
+      align: 'left',
+      maxWidth: 60,
+      Cell: renderCategory(),
     },
     {
       Header: 'Payment method',
@@ -134,7 +156,7 @@ export const getActualsColumns = ({
     {
       Header: () => (
         <>
-          {isReceivable ? 'Received total ($)' : 'Sent total ($)'}
+          Total ($)
           <TooltipIcon
             toolTipId="receivedTotalTooltip"
             toolTip="Actual payment amount, including GST if applicable."
@@ -174,14 +196,15 @@ export const getActualsColumns = ({
       align: 'center',
       Cell: ({ row }: CellProps<FormLeasePayment, string | undefined>) => {
         return (
-          <NotesModal
+          <NotesModal<FormLeasePayment>
             title="Payment Notes"
             notesLabel="Notes:"
             onSave={(values: FormLeasePayment) => {
-              const valuesToSave = getIn(values, withNameSpace(nameSpace, `${row.index}`));
+              const valuesToSave = row.original;
+              valuesToSave.note = values.note;
               onSave(valuesToSave);
             }}
-            nameSpace={withNameSpace(nameSpace, `${row.index}`)}
+            initialValues={row.original}
           />
         );
       },

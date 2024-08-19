@@ -29,6 +29,7 @@ import { CompensationRequisitionFormModel } from './models';
 import UpdateCompensationRequisitionForm, {
   CompensationRequisitionFormProps,
 } from './UpdateCompensationRequisitionForm';
+import Claims from '@/constants/claims';
 
 const currentGstPercent = 0.05;
 const onSave = vi.fn();
@@ -56,7 +57,6 @@ const getPayeeOptions = (owners: ApiGen_Concepts_AcquisitionFileOwner[]): PayeeO
 
 vi.mock('@/hooks/useProjectTypeahead');
 const mockUseProjectTypeahead = vi.mocked(useProjectTypeahead);
-
 const handleTypeaheadSearch = vi.fn();
 const setShowAltProjectError = vi.fn();
 
@@ -177,6 +177,18 @@ describe('Compensation Requisition UpdateForm component', () => {
 
     expect(await findByText(/Special instructions must be at most 2000 characters/i)).toBeVisible();
     expect(await findByText(/Detailed remarks must be at most 2000 characters/i)).toBeVisible();
+  });
+
+  it('displays the acquisition files properties for selection', async () => {
+    const { findByText, findByTestId } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+    });
+
+    expect(await findByTestId('selectrow-1')).not.toBeChecked();
+    expect(await findByText(/PID: 023-214-937/)).toBeVisible();
+
+    expect(await findByTestId('selectrow-2')).not.toBeChecked();
+    expect(await findByText(/PID: 024-996-777/)).toBeVisible();
   });
 
   it('should display the payee information', async () => {

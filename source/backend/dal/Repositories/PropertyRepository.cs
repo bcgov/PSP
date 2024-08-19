@@ -330,9 +330,9 @@ namespace Pims.Dal.Repositories
             }
 
             // ignore a number of properties that we don't the frontend to override - for now
-            property.Boundary = existingProperty.Boundary;
             if (!overrideLocation)
             {
+                property.Boundary = existingProperty.Boundary;
                 property.Location = existingProperty.Location;
             }
             property.AddressId = existingProperty.AddressId;
@@ -510,13 +510,13 @@ namespace Pims.Dal.Repositories
                 predicate.And(p => p.PimsPropertyLeases.Any(pl => pl.Lease.LeasePayRvblTypeCode == filter.LeasePayRcvblType || filter.LeasePayRcvblType == "all"));
 
                 // Check not expired
-                predicate.And(p => p.PimsPropertyLeases.Any(pl => (pl.Lease.PimsLeaseTerms.Any(t => !t.TermExpiryDate.HasValue) // any term expiry is null
-                                        || (!pl.Lease.PimsLeaseTerms.Any() && !pl.Lease.OrigExpiryDate.HasValue) // no terms and orig is null
-                                        || (!pl.Lease.PimsLeaseTerms.Any() && pl.Lease.OrigExpiryDate.HasValue && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date) // no terms and orig not expired
-                                        || (pl.Lease.OrigExpiryDate.HasValue // has terms and term expired is bigger than Lease expiry is not expired
-                                            && pl.Lease.PimsLeaseTerms.Any(lt => lt.TermExpiryDate.HasValue && lt.TermExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date && lt.TermExpiryDate.Value.Date >= DateTime.UtcNow.Date))
-                                        || (pl.Lease.OrigExpiryDate.HasValue // has terms and term expired is lower than Lease expiry
-                                            && (!pl.Lease.PimsLeaseTerms.Any(lt => lt.TermExpiryDate.HasValue && lt.TermExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date) && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date)))));
+                predicate.And(p => p.PimsPropertyLeases.Any(pl => (pl.Lease.PimsLeasePeriods.Any(t => !t.PeriodExpiryDate.HasValue) // any period expiry is null
+                                        || (!pl.Lease.PimsLeasePeriods.Any() && !pl.Lease.OrigExpiryDate.HasValue) // no period and orig is null
+                                        || (!pl.Lease.PimsLeasePeriods.Any() && pl.Lease.OrigExpiryDate.HasValue && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date) // no terms and orig not expired
+                                        || (pl.Lease.OrigExpiryDate.HasValue // has period and period expired is bigger than Lease expiry is not expired
+                                            && pl.Lease.PimsLeasePeriods.Any(lt => lt.PeriodExpiryDate.HasValue && lt.PeriodExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date && lt.PeriodExpiryDate.Value.Date >= DateTime.UtcNow.Date))
+                                        || (pl.Lease.OrigExpiryDate.HasValue // has period and period expired is lower than Lease expiry
+                                            && (!pl.Lease.PimsLeasePeriods.Any(lt => lt.PeriodExpiryDate.HasValue && lt.PeriodExpiryDate.Value.Date > pl.Lease.OrigExpiryDate.Value.Date) && pl.Lease.OrigExpiryDate.Value.Date >= DateTime.UtcNow.Date)))));
             }
 
             // Anomalies
@@ -526,8 +526,8 @@ namespace Pims.Dal.Repositories
                     p.PimsPropPropAnomalyTypes.Any(at => filter.AnomalyIds.Contains(at.PropertyAnomalyTypeCode)));
             }
 
-
-            var authorizationTypes = new List<string>(){
+            var authorizationTypes = new List<string>()
+            {
                "NOI",
                "Section 15",
                "Section 16",
@@ -567,7 +567,6 @@ namespace Pims.Dal.Repositories
             {
                 predicate.And(ownershipBuilder); // Only apply ownership filter if at least one type is specified.
             }
-            predicate.And(ownershipBuilder);
 
             return Context.PimsProperties.AsNoTracking()
                 .Where(predicate)

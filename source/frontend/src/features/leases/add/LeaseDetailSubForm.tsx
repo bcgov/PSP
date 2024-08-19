@@ -62,6 +62,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
             setFieldValue('cancellationReason', '');
           } else if (statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED) {
             setFieldValue('terminationReason', '');
+            setFieldValue('terminationDate', '');
           }
           setDisplayModal(false);
         },
@@ -78,13 +79,13 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   };
 
   return (
-    <Section>
-      <SectionField label="Ministry project" labelWidth="2">
+    <Section header="Original Agreement">
+      <SectionField label="Ministry project" labelWidth="3">
         <ProjectSelector field="project" />
       </SectionField>
       <SectionField
         label="Status"
-        labelWidth="2"
+        labelWidth="3"
         contentWidth="4"
         tooltip={
           <TooltipIcon
@@ -96,7 +97,8 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
                   Active: Finalized and all requirements met. Lease/Licence being actively managed.
                 </li>
                 <li>
-                  Terminated: Lease/Licence ended due to violation of terms / no further renewals.
+                  Terminated: The expiry date of the last agreement if by effluxion of time or the
+                  early termination date for cause.
                 </li>
                 <li>Cancelled: Request cancelled by requestor or MOTI.</li>
                 <li>Duplicate: Duplicate file created by accident or data transfer.</li>
@@ -124,33 +126,73 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
         />
       </SectionField>
 
-      {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
-        <SectionField label="Termination reason" contentWidth="12" required>
-          <TextArea field="terminationReason" />
-        </SectionField>
-      )}
-
       {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD && (
         <SectionField label="Cancellation reason" contentWidth="12" required>
           <TextArea field="cancellationReason" />
         </SectionField>
       )}
 
-      <SectionField label="Account type" labelWidth="2" contentWidth="5" required>
+      <SectionField label="Account type" labelWidth="3" contentWidth="5" required>
         <Select field="paymentReceivableTypeCode" options={paymentReceivableTypes} />
       </SectionField>
       <Row>
         <Col>
-          <SectionField label="Start date" required>
-            <FastDatePicker formikProps={formikProps} field="startDate" required />
+          <SectionField
+            label="Commencement"
+            labelWidth="6"
+            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+            tooltip={
+              <TooltipIcon
+                toolTipId="lease-commencement-tooltip"
+                toolTip="The start date defined in the original agreement."
+                placement="right"
+              />
+            }
+          >
+            <FastDatePicker
+              formikProps={formikProps}
+              field="startDate"
+              required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+            />
           </SectionField>
         </Col>
         <Col>
-          <SectionField label="Expiry date">
+          <SectionField
+            label="Expiry"
+            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+            tooltip={
+              <TooltipIcon
+                toolTipId="lease-expiry-tooltip"
+                toolTip="The end date specified in the original agreement."
+                placement="right"
+              />
+            }
+          >
             <FastDatePicker formikProps={formikProps} field="expiryDate" />
           </SectionField>
         </Col>
       </Row>
+      {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
+        <>
+          <SectionField
+            label="Termination"
+            labelWidth="3"
+            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED}
+            tooltip={
+              <TooltipIcon
+                toolTipId="lease-termination-tooltip"
+                toolTip="The expiry date of the last agreement if by effluxion of time or the early termination date for cause."
+                placement="right"
+              />
+            }
+          >
+            <FastDatePicker formikProps={formikProps} field="terminationDate" />
+          </SectionField>
+          <SectionField label="Termination reason" contentWidth="12" required>
+            <TextArea field="terminationReason" />
+          </SectionField>
+        </>
+      )}
     </Section>
   );
 };

@@ -13,10 +13,10 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Services
 {
@@ -26,12 +26,12 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly ILeaseRepository _leaseRepository;
         private readonly IPropertyImprovementRepository _propertyImprovementRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseTenantRepository _tenantRepository;
+        private readonly ILeaseRenewalRepository _renewalRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
@@ -47,6 +47,7 @@ namespace Pims.Api.Services
             IEntityNoteRepository entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseTenantRepository tenantRepository,
+            ILeaseRenewalRepository renewalRepository,
             IUserRepository userRepository,
             IPropertyService propertyService,
             ILookupRepository lookupRepository)
@@ -55,13 +56,13 @@ namespace Pims.Api.Services
             _logger = logger;
             _user = user;
             _leaseRepository = leaseRepository;
-            _coordinateService = coordinateTransformService;
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
             _entityNoteRepository = entityNoteRepository;
             _propertyImprovementRepository = propertyImprovementRepository;
             _insuranceRepository = insuranceRepository;
             _tenantRepository = tenantRepository;
+            _renewalRepository = renewalRepository;
             _userRepository = userRepository;
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
@@ -81,16 +82,6 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var lease = _leaseRepository.Get(leaseId);
-            foreach (PimsPropertyLease propertyLease in lease.PimsPropertyLeases)
-            {
-                var property = propertyLease.Property;
-                if (property?.Location != null)
-                {
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, property.Location.Coordinate);
-                    property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
-            }
-
             return lease;
         }
 
@@ -189,11 +180,17 @@ namespace Pims.Api.Services
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
-            var leasesWithProperties = AssociatePropertyLeases(lease, userOverrides);
+            var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
 
             lease.PimsLeaseChecklistItems = GetActiveChecklistItemsForLease();
 
-            return _leaseRepository.Add(leasesWithProperties);
+            // Update marker locations in the context of this file
+            foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
+            {
+                _propertyService.PopulateNewFileProperty(incomingLeaseProperty);
+            }
+
+            return _leaseRepository.Add(leaseWithProperties);
         }
 
         public IEnumerable<PimsPropertyLease> GetPropertiesByLeaseId(long leaseId)
@@ -204,7 +201,7 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
             var propertyLeases = _propertyLeaseRepository.GetAllByLeaseId(leaseId);
-            return ReprojectPropertyLocationsToWgs84(propertyLeases);
+            return _propertyService.TransformAllPropertiesToLatLong(propertyLeases.ToList());
         }
 
         public PimsLease Update(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
@@ -218,8 +215,8 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
-            var currentProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
-            var newPropertiesAdded = lease.PimsPropertyLeases.Where(x => !currentProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
+            var newPropertiesAdded = lease.PimsPropertyLeases.Where(x => !currentFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
 
             if (newPropertiesAdded.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
             {
@@ -233,13 +230,41 @@ namespace Pims.Api.Services
                 _entityNoteRepository.Add(newLeaseNote);
             }
 
+            ValidateRenewalDates(lease, lease.PimsLeaseRenewals);
+
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
+
+            // Update marker locations in the context of this file
+            foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
+            {
+                // If the property is not new, check if the marker location has been updated.
+                if (incomingLeaseProperty.Internal_Id != 0)
+                {
+                    var existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingLeaseProperty.Internal_Id);
+
+                    var incomingGeom = incomingLeaseProperty?.Location;
+                    var existingGeom = existingFileProperty?.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
+                        _propertyService.UpdateFilePropertyLocation(incomingLeaseProperty, existingFileProperty);
+                        incomingLeaseProperty.Location = existingFileProperty?.Location;
+                    }
+                }
+                else
+                {
+                    // New property needs to be added
+                    _propertyService.PopulateNewFileProperty(incomingLeaseProperty);
+                }
+            }
+
             _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
             _leaseRepository.UpdateLeaseConsultations(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseConsultations);
 
-            List<PimsPropertyLease> differenceSet = currentProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
+
+            List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
@@ -252,6 +277,16 @@ namespace Pims.Api.Services
 
             _leaseRepository.CommitTransaction();
             return _leaseRepository.GetNoTracking(lease.LeaseId);
+        }
+
+        public IEnumerable<PimsLeaseRenewal> GetRenewalsByLeaseId(long leaseId)
+        {
+            _logger.LogInformation("Getting renewals on lease {leaseId}", leaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+
+            return _renewalRepository.GetByLeaseId(leaseId);
         }
 
         public IEnumerable<PimsLeaseChecklistItem> GetChecklistItems(long id)
@@ -295,7 +330,7 @@ namespace Pims.Api.Services
                 {
                     _leaseRepository.AddChecklistItem(incomingItem);
                 }
-                else if (existingItem.LeaseChklstItemStatusTypeCode != incomingItem.LeaseChklstItemStatusTypeCode)
+                else if (existingItem.ChklstItemStatusTypeCode != incomingItem.ChklstItemStatusTypeCode)
                 {
                     _leaseRepository.UpdateChecklistItem(incomingItem);
                 }
@@ -343,22 +378,6 @@ namespace Pims.Api.Services
             }
 
             return leaseNote;
-        }
-
-        private IEnumerable<PimsPropertyLease> ReprojectPropertyLocationsToWgs84(IEnumerable<PimsPropertyLease> propertyLeases)
-        {
-            List<PimsPropertyLease> reprojectedProperties = new List<PimsPropertyLease>();
-            foreach (var leaseProperty in propertyLeases)
-            {
-                if (leaseProperty.Property.Location != null)
-                {
-                    var oldCoords = leaseProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    leaseProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                    reprojectedProperties.Add(leaseProperty);
-                }
-            }
-            return reprojectedProperties;
         }
 
         /// <summary>
@@ -409,36 +428,6 @@ namespace Pims.Api.Services
             return lease;
         }
 
-        private void UpdateLocation(PimsProperty leaseProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> userOverrides)
-        {
-            if (propertyToUpdate.Location == null)
-            {
-                if (userOverrides.Contains(UserOverrideCode.AddLocationToProperty))
-                {
-                    // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-                    var geom = leaseProperty.Location;
-                    if (geom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                        propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
-                    }
-
-                    var boundaryGeom = leaseProperty.Boundary;
-                    if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
-                    {
-                        var newCoords = boundaryGeom.Coordinates.Select(coord => _coordinateService.TransformCoordinates(boundaryGeom.SRID, SpatialReference.BCALBERS, coord));
-                        var gf = NetTopologySuite.NtsGeometryServices.Instance.CreateGeometryFactory(SpatialReference.BCALBERS);
-                        leaseProperty.Boundary = gf.CreatePolygon(newCoords.ToArray());
-                    }
-                }
-                else
-                {
-                    throw new UserOverrideException(UserOverrideCode.AddLocationToProperty, "The selected property already exists in the system's inventory. However, the record is missing spatial details.\n\n To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.");
-                }
-            }
-        }
-
         private void MatchProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
             foreach (var leaseProperty in lease.PimsPropertyLeases)
@@ -455,7 +444,7 @@ namespace Pims.Api.Services
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
+                        _propertyService.UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
                         leaseProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -476,7 +465,7 @@ namespace Pims.Api.Services
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
-                        UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
+                        _propertyService.UpdateLocation(leaseProperty.Property, ref foundProperty, userOverrides);
                         leaseProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -498,10 +487,10 @@ namespace Pims.Api.Services
             List<PimsLeaseChecklistItem> chklistItems = new();
             foreach (var itemType in _leaseRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType() && !x.IsDisabled))
             {
-                PimsLeaseChecklistItem checklistItem = new ()
+                PimsLeaseChecklistItem checklistItem = new()
                 {
                     LeaseChklstItemTypeCode = itemType.LeaseChklstItemTypeCode,
-                    LeaseChklstItemStatusTypeCode = LeaseChecklistItemStatusTypes.INCOMP.ToString(),
+                    ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                 };
 
                 chklistItems.Add(checklistItem);
@@ -512,7 +501,7 @@ namespace Pims.Api.Services
 
         private void AppendNewItemsToChecklist(PimsLease lease, ref List<PimsLeaseChecklistItem> pimsLeaseChecklistItems)
         {
-            PimsLeaseChklstItemStatusType incompleteStatusType = _lookupRepository.GetAllLeaseChecklistItemStatusTypes().FirstOrDefault(cst => cst.Id == LeaseChecklistItemStatusTypes.INCOMP.ToString());
+            PimsChklstItemStatusType incompleteStatusType = _lookupRepository.GetAllChecklistItemStatusTypes().FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString());
             foreach (var itemType in _leaseRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType() && !x.IsDisabled))
             {
                 if (!pimsLeaseChecklistItems.Any(cli => cli.LeaseChklstItemTypeCode == itemType.LeaseChklstItemTypeCode))
@@ -521,13 +510,75 @@ namespace Pims.Api.Services
                     {
                         LeaseChklstItemTypeCode = itemType.LeaseChklstItemTypeCode,
                         LeaseChklstItemTypeCodeNavigation = itemType,
-                        LeaseChklstItemStatusTypeCode = incompleteStatusType.Id,
+                        ChklstItemStatusTypeCode = incompleteStatusType.Id,
                         LeaseId = lease.LeaseId,
-                        LeaseChklstItemStatusTypeCodeNavigation = incompleteStatusType,
+                        ChklstItemStatusTypeCodeNavigation = incompleteStatusType,
                     };
 
                     pimsLeaseChecklistItems.Add(checklistItem);
                 }
+            }
+        }
+
+        private void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals)
+        {
+            if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
+            {
+                return;
+            }
+
+            List<Tuple<DateTime, DateTime>> renewalDates = new();
+
+            foreach (var renewal in renewals)
+            {
+                if (renewal.IsExercised == true)
+                {
+                    if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
+                    {
+                        renewalDates.Add(new Tuple<DateTime, DateTime>(renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
+                    }
+                    else
+                    {
+                        throw new BusinessRuleViolationException("Excercised renewals must have a commencement date and expiry date");
+                    }
+                }
+            }
+
+            // Sort agreement dates/renewals by start date.
+            renewalDates.Sort((a, b) => DateTime.Compare(a.Item1, b.Item1));
+
+            DateTime currentEndDate;
+
+            if (lease.OrigStartDate.HasValue && lease.OrigExpiryDate.HasValue)
+            {
+                var agreementStart = lease.OrigStartDate.Value;
+                var agreementEnd = lease.OrigExpiryDate.Value;
+                currentEndDate = agreementEnd;
+                if (DateTime.Compare(agreementEnd, agreementStart) <= 0)
+                {
+                    throw new BusinessRuleViolationException("The lease commencement date must be before its expiry date");
+                }
+            }
+            else
+            {
+                throw new BusinessRuleViolationException("Active leases must have commencement and expiry dates");
+            }
+
+            for (int i = 0; i < renewalDates.Count; i++)
+            {
+                var startDate = renewalDates[i].Item1;
+                var endDate = renewalDates[i].Item2;
+
+                if (DateTime.Compare(endDate, startDate) <= 0)
+                {
+                    throw new BusinessRuleViolationException("The expiry date of your renewal should be later than its commencement date");
+                }
+
+                if (DateTime.Compare(currentEndDate, startDate) >= 0)
+                {
+                    throw new BusinessRuleViolationException("The commencement date of your renewal should be later than the previous expiry date (agreement or renewal)");
+                }
+                currentEndDate = endDate;
             }
         }
     }

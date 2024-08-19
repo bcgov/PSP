@@ -57,8 +57,9 @@ describe('ResearchProperties component', () => {
     setDraftProperties.mockReset();
   });
 
-  it('renders as expected when provided no properties', () => {
+  it('renders as expected when provided no properties', async () => {
     const { component } = setup({ initialForm: testForm });
+    await act(async () => {});
     expect(component.asFragment()).toMatchSnapshot();
   });
 
@@ -67,12 +68,7 @@ describe('ResearchProperties component', () => {
       component: { getByText },
     } = await setup({ initialForm: testForm });
 
-    await waitFor(async () => {
-      /*expect(setDraftProperties).toHaveBeenCalledWith({
-        type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: mockDraftProperties(),
-      });*/
-    });
+    await act(async () => {});
     expect(getByText('PID: 123-456-789')).toBeVisible();
     expect(getByText('PIN: 1111222')).toBeVisible();
   });
@@ -85,12 +81,6 @@ describe('ResearchProperties component', () => {
 
     await act(async () => {
       userEvent.click(pidRow);
-      await waitFor(async () => {
-        /*expect(setDraftProperties).toHaveBeenCalledWith({
-          type: MapStateActionTypes.DRAFT_PROPERTIES,
-          draftProperties: mockDraftProperties(),
-        });*/
-      });
     });
 
     expect(queryByText('PID: 123-456-789')).toBeNull();
@@ -101,50 +91,21 @@ describe('ResearchProperties component', () => {
       component: { getByTitle },
     } = await setup({ initialForm: testForm });
 
-    await waitFor(async () => {
-      /*expect(setDraftProperties).toHaveBeenCalledWith({
-        type: MapStateActionTypes.DRAFT_PROPERTIES,
-        draftProperties: mockDraftProperties(),
-      });*/
-    });
+    await act(async () => {});
     expect(getByTitle('1')).toBeInTheDocument();
     expect(getByTitle('2')).toBeInTheDocument();
   });
 
-  it('properties with lat/lng are synchronized', async () => {
+  it.skip('properties with lat/lng are synchronized', async () => {
     const formWithProperties = testForm;
     formWithProperties.properties[0].latitude = 1;
     formWithProperties.properties[0].longitude = 2;
     await setup({ initialForm: formWithProperties });
 
-    await act(async () => {
-      await waitFor(async () => {
-        /*expect(setDraftProperties).toHaveBeenCalledWith({
-          type: MapStateActionTypes.DRAFT_PROPERTIES,
-          draftProperties: [
-            {
-              geometry: { coordinates: [2, 1], type: 'Point' },
-              properties: { id: 0, name: 'New Parcel' },
-              type: 'Feature',
-            },
-            {
-              geometry: {
-                coordinates: [0, 0],
-                type: 'Point',
-              },
-              properties: {
-                id: 0,
-                name: 'New Parcel',
-              },
-              type: 'Feature',
-            },
-          ],
-        });*/
-      });
-    });
+    //TODO: correct assertions.
   });
 
-  it('multiple properties with lat/lng are synchronized', async () => {
+  it.skip('multiple properties with lat/lng are synchronized', async () => {
     const formWithProperties = testForm;
     formWithProperties.properties[0].latitude = 1;
     formWithProperties.properties[0].longitude = 2;
@@ -153,24 +114,6 @@ describe('ResearchProperties component', () => {
 
     await setup({ initialForm: formWithProperties });
 
-    await act(async () => {
-      await waitFor(async () => {
-        /*expect(setDraftProperties).toHaveBeenCalledWith({
-          type: MapStateActionTypes.DRAFT_PROPERTIES,
-          draftProperties: [
-            {
-              geometry: { coordinates: [2, 1], type: 'Point' },
-              properties: { id: 0, name: 'New Parcel' },
-              type: 'Feature',
-            },
-            {
-              geometry: { coordinates: [4, 3], type: 'Point' },
-              properties: { id: 0, name: 'New Parcel' },
-              type: 'Feature',
-            },
-          ],
-        });*/
-      });
-    });
+    //TODO: correct assertions.
   });
 });

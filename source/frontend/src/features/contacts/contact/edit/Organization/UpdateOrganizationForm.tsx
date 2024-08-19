@@ -149,11 +149,12 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
             <Section header="Individual Contacts">
               <SectionField
                 label="Connected to this organization"
+                labelWidth="auto"
                 tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page."
               >
                 {persons &&
                   persons.map((person, index: number) => (
-                    <>
+                    <Styled.ContactLink key={'organization-person-' + person.id + '-contact'}>
                       <Link
                         to={'/contact/P' + person.id}
                         data-testid={`contact-organization-person-${index}`}
@@ -162,7 +163,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
                       >
                         {person.fullName}
                       </Link>
-                    </>
+                    </Styled.ContactLink>
                   ))}
               </SectionField>
             </Section>

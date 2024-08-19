@@ -62,17 +62,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       // ACQ file properties
-      fileProperties: this.properties.map<ApiGen_Concepts_AcquisitionFileProperty>(ap => ({
-        id: ap.id ?? 0,
-        propertyName: ap.name ?? null,
-        displayOrder: ap.displayOrder ?? null,
-        rowVersion: ap.rowVersion ?? null,
-        property: ap.toApi(),
-        propertyId: ap.apiId ?? 0,
-        fileId: this.id ?? 0,
-        acquisitionFile: null,
-        file: null,
-      })),
+      fileProperties: this.properties.map(x => this.toPropertyApi(x)),
       acquisitionFileOwners: this.owners
         .filter(x => !x.isEmpty())
         .map<ApiGen_Concepts_AcquisitionFileOwner>(x => x.toApi()),
@@ -92,6 +82,14 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       product: null,
       project: null,
       ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+
+  private toPropertyApi(x: PropertyForm): ApiGen_Concepts_AcquisitionFileProperty {
+    const apiFileProperty = x.toFilePropertyApi(this.id);
+    return {
+      ...apiFileProperty,
+      file: null,
     };
   }
 

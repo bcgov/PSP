@@ -8,6 +8,7 @@ import {
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/ApiGen_Concepts_PropertyAssociations';
 
@@ -20,6 +21,7 @@ export interface IPropertyAssociationTabViewProps {
   associations?: ApiGen_Concepts_PropertyAssociations;
   associatedLeases: ApiGen_Concepts_Lease[];
   associatedLeaseTenants: ApiGen_Concepts_LeaseTenant[];
+  associatedLeaseRenewals: ApiGen_Concepts_LeaseRenewal[];
 }
 
 const PropertyAssociationTabView: React.FunctionComponent<
@@ -64,8 +66,8 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdFence title="Leases-Licenses" size="2.5rem" />}
-            title="Leases/Licenses"
+            icon={<MdFence title="Leases-Licences" size="2.5rem" />}
+            title="Leases/Licences"
             count={props.associations?.leaseAssociations?.length}
           />
         }
@@ -76,6 +78,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
           associations={props.associations?.leaseAssociations ?? undefined}
           linkUrlMask="/mapview/sidebar/lease/|id|"
           tenants={props.associatedLeaseTenants}
+          renewals={props.associatedLeaseRenewals}
           leases={props.associatedLeases}
         />
       </Section>

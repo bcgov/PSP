@@ -28,6 +28,12 @@ const documentTypes: ApiGen_Mayan_DocumentType[] = [
     delete_time_unit: null,
     trash_time_period: null,
     trash_time_unit: null,
+
+    document_stub_expiration_interval: null,
+    document_stub_pruning_enabled: null,
+
+    filename_generator_backend: '',
+    filename_generator_backend_arguments: '',
   },
 ];
 
@@ -64,17 +70,18 @@ const documentMetadata: ApiGen_Mayan_DocumentMetadata[] = [
       label: '',
       datetime_created: '2022-07-27T16:06:42.42',
       description: '',
+      language: '',
+      uuid: '',
       file_latest: {
         id: 2,
-
         comment: '',
         encoding: '',
-
         mimetype: '',
         size: 12,
-
         filename: null,
         timestamp: '',
+        checksum: '',
+        file: '',
       },
       id: 1,
       document_type: documentTypes[0],

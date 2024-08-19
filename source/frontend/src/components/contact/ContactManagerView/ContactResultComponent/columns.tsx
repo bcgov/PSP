@@ -1,11 +1,11 @@
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
-import { MdContactMail, MdEdit } from 'react-icons/md';
+import { FaCircle } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
+import { MdContactMail } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import Active from '@/assets/images/active.svg?react';
-import Inactive from '@/assets/images/inactive.svg?react';
 import { StyledIconButton } from '@/components/common/buttons';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
@@ -22,17 +22,28 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     width: 10,
     maxWidth: 10,
     minWidth: 10,
-    Cell: (props: CellProps<IContactSearchResult>) =>
-      props.row.original.isDisabled ? <Inactive /> : <Active />,
+    Cell: (props: CellProps<IContactSearchResult>) => (
+      <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
+        <FaCircle size={10} className="mr-2" />
+      </StatusIndicators>
+    ),
   },
   {
     Header: '',
     id: 'id',
-    align: 'right',
+    align: 'center',
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      isPersonResult(props.row.original) ? <FaRegUser size={20} /> : <FaRegBuilding size={20} />,
+      isPersonResult(props.row.original) ? (
+        <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
+          <FaRegUser size={20} />
+        </StatusIndicators>
+      ) : (
+        <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
+          <FaRegBuilding size={20} />
+        </StatusIndicators>
+      ),
   },
   {
     Header: 'Summary',
@@ -45,7 +56,11 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Cell: (props: CellProps<IContactSearchResult>) => {
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.CONTACT_VIEW)) {
-        return <Link to={`/contact/${props.row.original.id}`}>{props.row.original.summary}</Link>;
+        return (
+          <SummaryLink>
+            <Link to={`/contact/${props.row.original.id}`}>{props.row.original.summary}</Link>
+          </SummaryLink>
+        );
       }
       return stringToFragment(props.row.original.summary);
     },
@@ -106,7 +121,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 50,
   },
   {
-    Header: 'Update/View',
+    Header: 'Edit/View',
     accessor: 'controls' as any, // this column is not part of the data model
     width: 50,
     maxWidth: 50,
@@ -121,7 +136,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
               variant="light"
               onClick={() => history.push(`/contact/${props.row.original.id}/edit`)}
             >
-              <MdEdit size={22} />
+              <FaEdit size={22} />
             </StyledIconButton>
           )}
 
@@ -142,6 +157,20 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
 const StyledDiv = styled(InlineFlexDiv)`
   justify-content: space-around;
   width: 100%;
+`;
+
+export const StatusIndicators = styled.div`
+  color: ${props => props.theme.css.borderOutlineColor};
+  &.active {
+    color: ${props => props.theme.bcTokens.iconsColorSuccess};
+  }
+`;
+
+export const SummaryLink = styled.div`
+  a {
+    font-weight: bold;
+    color: ${props => props.theme.css.activeActionColor} !important;
+  }
 `;
 
 export default columns;

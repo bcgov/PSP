@@ -9,8 +9,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyByPIDPINInput = By.Id("input-pinOrPid");
         private By searchPropertyByAddressInput = By.Id("input-address");
         private By searchPropertyByPlanInput = By.Id("input-planNumber");
-        private By searchPropertyAddressSuggestionsGroup = By.CssSelector("div[class='suggestionList']");
-        private By searchPropertyAddressSuggestions1stOption = By.CssSelector("div[class='suggestionList'] option:nth-child(1)");
+        private By searchPropertyAddressSuggestionsGroup = By.CssSelector("ul[class='suggestionList']");
+        private By searchPropertyAddressSuggestions1stOption = By.CssSelector("ul[class='suggestionList'] li:nth-child(1)");
         private By searchPropertySearchBttn = By.Id("search-button");
         private By searchPropertyResetBttn = By.Id("reset-button");
 
@@ -33,14 +33,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropertyListLotSizeSortBttn = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]/div");
         private By searchPropertyListHeaderOwnership = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Ownership')]");
         private By searchPropertyListOwnershipSortBttn = By.CssSelector("div[data-testid='sort-column-Ownership']");
-        private By searchPropertyListContent = By.XPath("//div[@data-testid='propertiesTable']/form/div/div");
-        private By searchPropertyListContent1stProp = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]");
-        private By searchPropertyListContent1stPID = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[1]");
-        private By searchPropertyListContent1stLocation = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[4]");
-        private By searchPropertyListContent1stLotSize = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[5]");
-        private By searchPropertyListContent1stOwnership = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[6]");
+        private By searchPropertyListContent = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private By searchPropertyListContent1stProp = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child");
+        private By searchPropertyListContent1stPID = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(1)");
+        private By searchPropertyListContent1stLocation = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(5)");
+        private By searchPropertyListContent1stLotSize = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(6)");
+        private By searchPropertyListContent1stOwnership = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(7)");
         private By searchPropertyListContent1stViewTabBttn = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child button[data-testid='view-prop-tab']");
-        private By searchPropertyListContent1stViewWindowBttn = By.XPath("//div[@data-testid='propertiesTable']/form/div/div[1]/div/div[7]/div/button[@data-testid='view-prop-ext']");
+        private By searchPropertyListContent1stViewWindowBttn = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child button[data-testid='view-prop-ext']");
         private By searchPropertyListPaginationMenu = By.CssSelector("div[class='Menu-root']");
         private By searchPropertyListPaginationMenuBttn = By.CssSelector("div[class='Menu-button']");
         private By searchPropertyListPagination = By.CssSelector("ul[class='pagination']");
@@ -75,7 +75,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchPropertyAddressSuggestionsGroup);
             FocusAndClick(searchPropertyAddressSuggestions1stOption);
-            
+
+            WaitUntilClickable(searchPropertySearchBttn);
             webDriver.FindElement(searchPropertySearchBttn).Click();
             WaitUntilSpinnerDisappear();
         }

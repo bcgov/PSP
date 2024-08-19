@@ -42,36 +42,42 @@ namespace Pims.Dal.Repositories
             return updatedEntity.Entity;
         }
 
-        public IEnumerable<PimsLeasePayment> GetAll(DateTime startDate, DateTime endDate)
+        public IEnumerable<PimsLeasePayment> GetAllTracking(DateTime startDate, DateTime endDate)
         {
             return this.Context.PimsLeasePayments
-                .Include(p => p.LeaseTerm)
+                .Include(p => p.LeasePaymentCategoryTypeCodeNavigation)
+                .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(p => p.PimsPropertyLeases)
                     .ThenInclude(p => p.Property)
-                .Include(p => p.LeaseTerm)
+                .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(p => p.RegionCodeNavigation)
-                .Include(p => p.LeaseTerm)
+                .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(t => t.LeaseStatusTypeCodeNavigation)
-                .Include(p => p.LeaseTerm)
+                .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(t => t.LeasePayRvblTypeCodeNavigation)
-                .Include(p => p.LeaseTerm)
+                .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(t => t.PimsLeaseTenants)
                     .ThenInclude(t => t.Person)
-                .Include(p => p.LeaseTerm)
+                .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(t => t.LeaseProgramTypeCodeNavigation)
-                .Include(p => p.LeaseTerm)
+                .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)
                     .ThenInclude(t => t.LeasePurposeTypeCodeNavigation)
-                .Include(p => p.LeaseTerm)
-                    .ThenInclude(t => t.LeaseTermStatusTypeCodeNavigation)
-                .Include(p => p.LeaseTerm)
-                    .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation).Where(p => p.PaymentReceivedDate <= endDate && p.PaymentReceivedDate >= startDate).AsNoTracking();
+                .Include(p => p.LeasePeriod)
+                    .ThenInclude(t => t.LeasePeriodStatusTypeCodeNavigation)
+                .Include(p => p.LeasePeriod)
+                    .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
+                .Include(p => p.LeasePeriod)
+                    .ThenInclude(t => t.Lease)
+                    .ThenInclude(t => t.PimsLeasePeriods)
+                    .ThenInclude(t => t.PimsLeasePayments)
+                .Where(p => p.PaymentReceivedDate <= endDate && p.PaymentReceivedDate >= startDate);
         }
     }
 }

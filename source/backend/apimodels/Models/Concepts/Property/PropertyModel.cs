@@ -217,7 +217,7 @@ namespace Pims.Api.Models.Concepts.Property
         /// <summary>
         /// get/set - The boundary of the property.
         /// </summary>
-        public PolygonModel Boundary { get; set; }
+        public NetTopologySuite.Geometries.Geometry Boundary { get; set; }
 
         /// <summary>
         /// get/set - General location of the property.

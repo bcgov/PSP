@@ -11,7 +11,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-import RealEstateAgent from '@/assets/images/real-estate-agent.svg?react';
+import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -133,12 +133,11 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
           onClose={onClose}
           title={formTitle}
           icon={
-            <RealEstateAgent
+            <AcquisitionFileIcon
               title="Acquisition file Icon"
               width="2.6rem"
               height="2.6rem"
               fill="currentColor"
-              className="mr-2"
             />
           }
           header={

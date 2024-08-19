@@ -37,6 +37,12 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   height: 3.8rem;
 }
 
+.c9.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -266,7 +272,6 @@ exports[`AddResearchForm component > renders as expected 1`] = `
 
 .c10 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -916,7 +921,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                           <div
                             class="tr"
                             role="row"
-                            style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                            style="display: flex; flex: 1 0 auto; min-width: 120px;"
                           >
                             <div
                               class="th"
@@ -984,18 +989,6 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                                 class="sortable-column"
                               >
                                 Address
-                              </div>
-                            </div>
-                            <div
-                              class="th"
-                              colspan="1"
-                              role="columnheader"
-                              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                            >
-                              <div
-                                class="sortable-column"
-                              >
-                                Legal Description
                               </div>
                             </div>
                           </div>

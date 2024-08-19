@@ -42,6 +42,13 @@ export const AddDispositionFormYupSchema = yup
         otherwise: yup.string().nullable(),
       }),
     regionCode: yup.string().nullable().required('Ministry region is required'),
+    properties: yup.array().of(
+      yup.object().shape({
+        isRetired: yup
+          .boolean()
+          .isFalse('Selected property is retired and can not be added to the file'),
+      }),
+    ),
   })
   .concat(DispositionTeamYupSchema);
 

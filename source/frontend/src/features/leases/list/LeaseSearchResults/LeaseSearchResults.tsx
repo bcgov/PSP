@@ -14,6 +14,7 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
+import { getCalculatedExpiry } from '../../leaseUtils';
 import LeaseProperties from './LeaseProperties';
 import LeaseTenants from './LeaseTenants';
 
@@ -41,7 +42,10 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     sortable: true,
     width: 20,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
-      const expiryDate = props.row.original.expiryDate;
+      const expiryDate = getCalculatedExpiry(
+        props.row.original,
+        props.row.original?.renewals ?? [],
+      );
       const isExpired = moment().isAfter(moment(expiryDate, 'YYYY-MM-DD'), 'day');
 
       const icon = (
@@ -168,7 +172,7 @@ export function LeaseSearchResults(props: ILeaseSearchResultsProps) {
       externalSort={{ sort: sort, setSort: setSort }}
       onRequestData={updateCurrentPage}
       onPageSizeChange={setPageSize}
-      noRowsMessage="Lease / License details do not exist in PIMS inventory"
+      noRowsMessage="Lease / Licence details do not exist in PIMS inventory"
       totalItems={props.totalItems}
       {...rest}
     ></Table>

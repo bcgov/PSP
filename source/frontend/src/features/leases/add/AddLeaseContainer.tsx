@@ -3,7 +3,7 @@ import { useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import Fence from '@/assets/images/fence.svg?react';
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -60,7 +60,6 @@ export const AddLeaseContainer: React.FunctionComponent<
     const response = await addLease.execute(leaseApi, userOverrideCodes);
     formikHelpers.setSubmitting(false);
 
-    // TODO: the isValidId check is sufficient but current ts (4.3) does not see it as valid. This works correctly on 5.3
     if (exists(response) && isValidId(response?.id)) {
       if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
         toast.warn(
@@ -106,8 +105,16 @@ export const AddLeaseContainer: React.FunctionComponent<
 
   return (
     <MapSideBarLayout
-      title="Create Lease/License"
-      icon={<Fence />}
+      title="Create Lease/Licence"
+      icon={
+        <LeaseIcon
+          title="Lease and Licence Icon"
+          width="2.6rem"
+          height="2.6rem"
+          fill="currentColor"
+          className="mr-2"
+        />
+      }
       footer={
         <SidebarFooter
           isOkDisabled={formikRef.current?.isSubmitting || bcaLoading}

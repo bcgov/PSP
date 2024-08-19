@@ -247,9 +247,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Search for a property by Legal Description
-            //sharedSearchProperties.NavigateToSearchTab();
-            //sharedSearchProperties.SelectPropertyByLegalDescription(acquisitionFile.SearchProperties.LegalDescription);
-            //sharedSearchProperties.SelectFirstOption();
+            sharedFileProperties.NavigateToSearchTab();
+            sharedFileProperties.SelectPropertyByLegalDescription(acquisitionFile.AcquisitionSearchProperties.LegalDescription);
+            sharedFileProperties.SelectFirstOptionFromSearch();
 
             //Save changes
             sharedFileProperties.SaveFileProperties();

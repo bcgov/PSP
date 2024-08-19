@@ -26,9 +26,9 @@ export const TenantOrganizationContactInfo: React.FunctionComponent<
   const { values } = useFormikContext<LeaseFormModel>();
   const tenant: FormTenant = getIn(values, nameSpace);
   let primaryContact = tenant?.initialPrimaryContact;
-  if (primaryContact?.id !== tenant?.primaryContactId) {
+  if (primaryContact?.id !== Number(tenant?.primaryContactId)) {
     primaryContact = tenant?.primaryContactId
-      ? getPrimaryContact(tenant?.primaryContactId, tenant) ?? undefined
+      ? getPrimaryContact(Number(tenant?.primaryContactId), tenant) ?? undefined
       : undefined;
   }
   const primaryContactName = formatApiPersonNames(primaryContact);

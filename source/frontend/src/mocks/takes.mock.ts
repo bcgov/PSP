@@ -1,3 +1,4 @@
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
@@ -22,7 +23,9 @@ export const getMockApiTakes = (): ApiGen_Concepts_Take[] => [
     leasePayableArea: 20231.281,
     takeSiteContamTypeCode: toTypeCodeNullable('UNK'),
     takeTypeCode: toTypeCodeNullable('PARTIAL'),
-    takeStatusTypeCode: toTypeCodeNullable('INPROGRESS'),
+    takeStatusTypeCode: toTypeCodeNullable(
+      ApiGen_CodeTypes_AcquisitionTakeStatusTypes.INPROGRESS.toString(),
+    ),
     appCreateTimestamp: '2023-03-08T04:15:56.273',
     appLastUpdateTimestamp: '2023-03-08T05:51:09.953',
     appLastUpdateUserid: 'DESMITH',

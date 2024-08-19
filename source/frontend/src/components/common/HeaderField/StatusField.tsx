@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import { Dictionary } from '@/interfaces/Dictionary';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { isValidIsoDateTime, prettyFormatDate } from '@/utils';
 
 import { InlineFlexDiv } from '../styles';
 import { StyledSmallText } from './AuditSection';
@@ -14,6 +15,7 @@ import { StyledSmallText } from './AuditSection';
 interface IStatusFieldProps {
   statusCodeType: ApiGen_Base_CodeType<string>;
   preText?: string;
+  statusCodeDate?: string;
 }
 
 interface StatusStyle {
@@ -35,6 +37,7 @@ const statusDictionary: Dictionary<StatusStyle> = {
 const StatusField: React.FunctionComponent<React.PropsWithChildren<IStatusFieldProps>> = ({
   statusCodeType,
   preText,
+  statusCodeDate,
 }) => {
   const translateStatusCode = (statusCodeType: ApiGen_Base_CodeType<string>) => {
     switch (statusCodeType.id.toLowerCase()) {
@@ -74,18 +77,28 @@ const StatusField: React.FunctionComponent<React.PropsWithChildren<IStatusFieldP
 
   const statusFound = translateStatusCode(statusCodeType);
   return (
-    <StyledBottomRow className="no-gutters justify-content-end align-items-end">
-      <Col />
-      <Col xs="auto" className="align-self-end d-flex">
-        <StyledSmallText>
-          <b>{preText}</b>
-        </StyledSmallText>
-        <RetiredWarning $variant={statusFound.colorVariant}>
-          <statusFound.icon size={16} />
-          {statusCodeType?.description.toUpperCase()}
-        </RetiredWarning>
-      </Col>
-    </StyledBottomRow>
+    <StyledBottomContainer>
+      <Row className="no-gutters justify-content-end align-items-end">
+        <Col />
+        <Col xs="auto" className="align-self-end d-flex">
+          <StyledSmallText>
+            <b>{preText}</b>
+          </StyledSmallText>
+          <RetiredWarning $variant={statusFound.colorVariant}>
+            <statusFound.icon size={16} />
+            {statusCodeType?.description.toUpperCase()}
+          </RetiredWarning>
+        </Col>
+      </Row>
+      {isValidIsoDateTime(statusCodeDate) && (
+        <Row className="no-gutters justify-content-end align-items-end">
+          <Col />
+          <Col xs="auto" className="align-self-end d-flex">
+            <StyledSmallText>{prettyFormatDate(statusCodeDate)}</StyledSmallText>
+          </Col>
+        </Row>
+      )}
+    </StyledBottomContainer>
   );
 };
 
@@ -110,16 +123,16 @@ const RetiredWarning = styled(InlineFlexDiv)<{ $variant: string }>`
     if (props.$variant === 'green') {
       return `
   color: ${props.theme.css.completedColor};
-  background-color: ${props.theme.css.selectedColor};
+  background-color: ${props.theme.css.completedBackgroundColor};
     `;
     } else if (props.$variant === 'grey') {
       return `
-  color: ${props.theme.css.disabledColor};
-  background-color: ${props.theme.css.disabledFieldBackgroundColor};
+  color: ${props.theme.css.fileStatusGreyColor};
+  background-color: ${props.theme.css.fileStatusGreyBackgroundColor};
     `;
     } else if (props.$variant === 'blue') {
       return `
-  color: ${props.theme.css.slideOutBlue};
+  color: ${props.theme.css.fileStatusBlueColor};
   background-color: ${props.theme.css.filterBoxColor};
     `;
     } else if (props.$variant === 'yellow') {
@@ -138,7 +151,7 @@ const RetiredWarning = styled(InlineFlexDiv)<{ $variant: string }>`
   }}
 `;
 
-const StyledBottomRow = styled(Row)`
+const StyledBottomContainer = styled.div`
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;

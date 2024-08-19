@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Policies;
@@ -140,7 +139,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var leaseEntity = _mapper.Map<Pims.Dal.Entities.PimsLease>(leaseModel);
+            var leaseEntity = _mapper.Map<Dal.Entities.PimsLease>(leaseModel);
             var userOverrides = userOverrideCodes.Select(x => UserOverrideCode.Parse(x));
             var updatedLease = _leaseService.Update(leaseEntity, userOverrides);
 
@@ -174,9 +173,9 @@ namespace Pims.Api.Areas.Lease.Controllers
         [ProducesResponseType(typeof(LeaseModel), 200)]
         [SwaggerOperation(Tags = new[] { "lease" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateLeaseChecklist([FromRoute]long id, [FromBody] IList<FileChecklistItemModel> checklistItems)
+        public IActionResult UpdateLeaseChecklist([FromRoute] long id, [FromBody] IList<FileChecklistItemModel> checklistItems)
         {
-            if(checklistItems.Any(x => x.FileId != id))
+            if (checklistItems.Any(x => x.FileId != id))
             {
                 throw new BadRequestException("All checklist items file id must match the Lease's id");
             }

@@ -61,6 +61,7 @@ export const usePimsPropertyLayer = () => {
         latlng,
         geometryName,
         spatialReferenceId,
+        'SORTBY=IS_RETIRED%20ASC',
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types

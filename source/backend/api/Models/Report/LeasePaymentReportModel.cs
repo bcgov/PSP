@@ -81,31 +81,31 @@ namespace Pims.Api.Models.Report.Lease
         public string Purpose { get; set; }
 
         /// <summary>
-        /// get/set - Start date of the term parent for this lease.
+        /// get/set - Start date of the period parent for this lease.
         /// </summary>
         ///
-        [DisplayName("Term start")]
-        [CsvHelper.Configuration.Attributes.Name("Term start")]
-        public string TermStart { get; set; }
+        [DisplayName("Period start")]
+        [CsvHelper.Configuration.Attributes.Name("Period start")]
+        public string PeriodStart { get; set; }
 
         /// <summary>
-        /// get/set - Expiry date of the term parent for this lease.
+        /// get/set - Expiry date of the period parent for this lease.
         /// </summary>
         ///
-        [DisplayName("Term expiry")]
-        [CsvHelper.Configuration.Attributes.Name("Term expiry")]
-        public string TermExpiry { get; set; }
+        [DisplayName("Period expiry")]
+        [CsvHelper.Configuration.Attributes.Name("Period expiry")]
+        public string PeriodExpiry { get; set; }
 
         /// <summary>
-        /// get/set - Whether or not this term is exercised (Yes/No).
+        /// get/set - Whether or not this period is exercised (Yes/No).
         /// </summary>
         ///
-        [DisplayName("Term exercised")]
-        [CsvHelper.Configuration.Attributes.Name("Term exercised")]
-        public string IsTermExercised { get; set; }
+        [DisplayName("Period exercised")]
+        [CsvHelper.Configuration.Attributes.Name("Period exercised")]
+        public string IsPeriodExercised { get; set; }
 
         /// <summary>
-        /// get/set - How often this payment occurs within the term.
+        /// get/set - How often this payment occurs within the period.
         /// </summary>
         ///
         [DisplayName("Payment frequency")]

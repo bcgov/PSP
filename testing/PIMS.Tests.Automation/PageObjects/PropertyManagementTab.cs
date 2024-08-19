@@ -53,8 +53,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementActivitiesTable = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable']");
         private By managementActivitiesBodyCount = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']");
         private By managementActivitiesDeleteBttns = By.CssSelector("button[title='Delete']");
-
-        private By managementActivityPaginationOptions = By.CssSelector("ul[class='pagination'] li");
+        private By managementActivityPaginationOptions = By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
+        
 
         //Create Activity Elements
         //Activity Details
@@ -155,7 +155,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewLastActivityButton()
         {
-            Wait(2000);
+            Wait();
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
             webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/div[1]/button")).Click();
@@ -365,19 +365,19 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Cancel");
 
             Assert.Equal("Confirm changes", sharedModals.ModalHeader());
-            Assert.Equal("If you cancel now, this property information will not be saved.", sharedModals.ConfirmationModalText1());
-            Assert.Equal("Are you sure you want to Cancel?", sharedModals.ConfirmationModalText2());
+            Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
+            Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
 
             sharedModals.ModalClickOKBttn();
         }
 
         public void DeleteAllContacts()
         {
-            Wait(2000);
+            Wait();
 
             while (webDriver.FindElements(managementContactsDeleteBttns).Count > 0)
             {
-                Wait(2000);
+                Wait();
                 webDriver.FindElement(managementContactsFirstDeleteBttn).Click();
 
                 Assert.Equal("Confirm delete", sharedModals.ModalHeader());
@@ -410,7 +410,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             var paginationLastPage = webDriver.FindElements(managementActivityPaginationOptions).Count() -1;
 
-            webDriver.FindElement(By.CssSelector("ul[class='pagination'] li:nth-child("+ paginationLastPage +")")).Click();
+            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
         }
 
         public void VerifyInitManagementTabView()
@@ -419,7 +419,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementSummaryTitle);
             AssertTrueIsDisplayed(managementPropertyPurposeLabel);
             AssertTrueIsDisplayed(managementLeaseLabel);
-            AssertTrueContentEquals(managementLeaseContent, "Multiple");
+            AssertTrueContentEquals(managementLeaseContent, "No");
             AssertTrueIsDisplayed(managementUtilitiesPayableLabel);
             AssertTrueContentEquals(managementUtilitiesPayableContent, "Unknown");
             AssertTrueIsDisplayed(managementTaxesPayableLabel);
@@ -507,7 +507,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsertedSummaryForm(PropertyManagement managementProperty)
         {
-            Wait(2000);
+            Wait();
 
             AssertTrueIsDisplayed(managementSummaryTitle);
             AssertTrueIsDisplayed(managementPropertyPurposeLabel);
@@ -532,7 +532,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLastInsertedPropertyContactTable(PropertyContact contact)
         {
-            Wait(2000);
+            Wait();
 
             var lastInsertedContactIndex = webDriver.FindElements(managementContactsBodyCount).Count;
 

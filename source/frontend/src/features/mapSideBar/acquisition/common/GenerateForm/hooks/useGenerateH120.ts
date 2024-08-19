@@ -3,13 +3,14 @@ import chunk from 'lodash/chunk';
 import { ConvertToTypes } from '@/constants/convertToTypes';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { FormTemplateTypes } from '@/features/mapSideBar/shared/content/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
@@ -22,6 +23,7 @@ export const useGenerateH120 = () => {
   const { getAcquisitionFile, getAcquisitionProperties, getAcquisitionCompReqH120s } =
     useAcquisitionProvider();
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
+  const { getCompensationRequisitionProperties } = useCompensationRequisitionRepository();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const getH120Categories = useH120CategoryRepository();
 
@@ -44,7 +46,8 @@ export const useGenerateH120 = () => {
       );
     }
     const filePromise = getAcquisitionFile.execute(compensation.acquisitionFileId);
-    const propertiesPromise = getAcquisitionProperties.execute(compensation.acquisitionFileId);
+    const filePropertiesPromise = getAcquisitionProperties.execute(compensation.acquisitionFileId);
+    const compReqPropertiesPromise = getCompensationRequisitionProperties.execute(compensation.id);
     const compReqFinalH120sPromise = getAcquisitionCompReqH120s.execute(
       compensation.acquisitionFileId,
       true,
@@ -64,7 +67,8 @@ export const useGenerateH120 = () => {
 
     const [
       file,
-      properties,
+      fileProperties,
+      compReqProperties,
       h120Categories,
       compReqFinalH120s,
       interestHolders,
@@ -72,7 +76,8 @@ export const useGenerateH120 = () => {
       acquisitionFileTeamOrganization,
     ] = await Promise.all([
       filePromise,
-      propertiesPromise,
+      filePropertiesPromise,
+      compReqPropertiesPromise,
       h120CategoriesPromise,
       compReqFinalH120sPromise,
       interestHoldersPromise,
@@ -83,7 +88,7 @@ export const useGenerateH120 = () => {
     if (!file) {
       throw Error('Acquisition file not found');
     }
-    file.fileProperties = properties ?? null;
+    file.fileProperties = fileProperties ?? null;
 
     // Add ELECTORAL_DISTRICT info to each property (from map layer request)
     const fileData = new Api_GenerateAcquisitionFile({
@@ -117,13 +122,16 @@ export const useGenerateH120 = () => {
 
     const compensationData = new Api_GenerateCompensation(
       compensation,
+      compReqProperties ?? [],
       fileData,
       h120Categories ?? [],
       compReqFinalH120s ?? [],
       client?.value,
+      interestHolders,
     );
+
     const generatedFile = await generate({
-      templateType: FormTemplateTypes.H120,
+      templateType: ApiGen_CodeTypes_FormTypes.H120.toString(),
       templateData: compensationData,
       convertToType: ConvertToTypes.PDF,
     });
@@ -136,5 +144,6 @@ export const useGenerateH120 = () => {
       throw Error('Failed to generate file');
     }
   };
+
   return generateCompensation;
 };

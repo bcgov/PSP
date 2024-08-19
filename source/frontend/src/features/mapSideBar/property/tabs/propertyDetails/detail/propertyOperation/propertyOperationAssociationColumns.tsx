@@ -17,7 +17,7 @@ const getFileNameByType = (type: FileTypes) => {
     case FileTypes.Disposition:
       return 'Disposition';
     case FileTypes.Lease:
-      return 'Lease/License';
+      return 'Lease/Licence';
     case FileTypes.Research:
       return 'Research';
     default:

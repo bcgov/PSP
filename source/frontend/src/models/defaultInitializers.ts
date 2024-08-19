@@ -1,6 +1,6 @@
 import moment from 'moment';
 
-import { prettyFormatDate } from '@/utils';
+import { isValidId, prettyFormatDate } from '@/utils';
 
 import { ApiGen_Base_BaseAudit } from './api/generated/ApiGen_Base_BaseAudit';
 import { ApiGen_Concepts_AcquisitionFile } from './api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -17,7 +17,7 @@ export const getEmptyBaseAudit = (rowVersion?: number | null): ApiGen_Base_BaseA
   appCreateUserid: null,
   appLastUpdateUserGuid: null,
   appCreateUserGuid: null,
-  rowVersion: rowVersion ?? null,
+  rowVersion: isValidId(rowVersion) ? rowVersion : null,
 });
 
 /**
@@ -41,6 +41,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   otherType: null,
   expiryDate: null,
   startDate: EpochIsoDateTime,
+  terminationDate: null,
   renewalCount: 0,
   paymentReceivableType: null,
   type: null,
@@ -56,7 +57,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   fileProperties: null,
   consultations: null,
   tenants: null,
-  terms: null,
+  periods: null,
   isResidential: false,
   isCommercialBuilding: false,
   isOtherImprovement: false,
@@ -70,8 +71,13 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   fileNumber: null,
   cancellationReason: null,
   terminationReason: null,
+  renewals: [],
+  primaryArbitrationCity: null,
   fileChecklistItems: [],
   ...getEmptyBaseAudit(),
+  isPublicBenefit: null,
+  isFinancialGain: null,
+  feeDeterminationNote: null,
 });
 
 /**
@@ -99,7 +105,7 @@ export const defaultApiLease = (): ApiGen_Concepts_Lease => ({
   returnNotes: '',
   consultations: [],
   tenants: [],
-  terms: [],
+  periods: [],
   otherCategoryType: null,
   otherProgramType: null,
   otherPurposeType: null,

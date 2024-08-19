@@ -11,7 +11,6 @@ import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/t
 
 import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
-import { TAKE_STATUS_TYPES } from '@/constants/API';
 import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import Roles from '@/constants/roles';
 
@@ -56,7 +55,7 @@ describe('TakesDetailView component', () => {
   });
 
   it('renders as expected', () => {
-    const { asFragment } = setup({});
+    const { asFragment } = setup({ props: { takes: getMockApiTakes() } });
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -68,7 +67,7 @@ describe('TakesDetailView component', () => {
 
   it('clicking the edit button fires the edit event', async () => {
     const { getByTitle } = setup({
-      props: { loading: true, takes: getMockApiTakes() },
+      props: { takes: getMockApiTakes() },
       claims: [Claims.PROPERTY_EDIT, Claims.ACQUISITION_EDIT],
     });
     const editButton = getByTitle('Edit take');
@@ -76,12 +75,31 @@ describe('TakesDetailView component', () => {
     expect(onEdit).toHaveBeenCalled();
   });
 
-  it('hides the edit button when the file has been completed', () => {
+  it('hides the add button when the file has been completed', () => {
     const fileProperty = getMockApiPropertyFiles()[0];
-    const file: ApiGen_Concepts_File = fileProperty!.file as ApiGen_Concepts_File;
+    const file: ApiGen_Concepts_File = fileProperty.file as ApiGen_Concepts_File;
     const { queryByTitle, getByTestId } = setup({
       props: {
-        loading: true,
+        fileProperty: {
+          ...fileProperty,
+          file: {
+            ...file,
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
+          },
+        },
+        takes: getMockApiTakes(),
+      },
+      claims: [Claims.PROPERTY_EDIT],
+    });
+    const addButton = queryByTitle('Add take');
+    expect(addButton).toBeNull();
+  });
+
+  it('hides the edit button when the file has been completed', () => {
+    const fileProperty = getMockApiPropertyFiles()[0];
+    const file: ApiGen_Concepts_File = fileProperty.file as ApiGen_Concepts_File;
+    const { queryByTitle, getByTestId } = setup({
+      props: {
         fileProperty: {
           ...fileProperty,
           file: {
@@ -99,10 +117,32 @@ describe('TakesDetailView component', () => {
     expect(tooltip).toBeVisible();
   });
 
+  it('hides the edit button when the file has been completed for admins', () => {
+    const fileProperty = getMockApiPropertyFiles()[0];
+    const file: ApiGen_Concepts_File = fileProperty.file as ApiGen_Concepts_File;
+    const { queryByTitle, getByTestId } = setup({
+      props: {
+        fileProperty: {
+          ...fileProperty,
+          file: {
+            ...file,
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
+          },
+        },
+        takes: getMockApiTakes(),
+      },
+      claims: [Claims.PROPERTY_EDIT],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+    });
+    const editButton = queryByTitle('Edit take');
+    expect(editButton).toBeNull();
+    const tooltip = getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
+    expect(tooltip).toBeVisible();
+  });
+
   it('hides the edit button when the take has been completed', () => {
     const { queryByTitle, getByTestId } = setup({
       props: {
-        loading: true,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -123,7 +163,6 @@ describe('TakesDetailView component', () => {
   it('does not hide the edit button when the user is an admin even if the take is complete', async () => {
     const { getByTitle } = setup({
       props: {
-        loading: true,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -143,7 +182,7 @@ describe('TakesDetailView component', () => {
 
   it('clicking the delete button fires the edit event', async () => {
     const { getByTitle } = setup({
-      props: { loading: true, takes: getMockApiTakes() },
+      props: { takes: getMockApiTakes() },
       claims: [Claims.PROPERTY_EDIT, Claims.ACQUISITION_EDIT],
     });
     const removeButton = getByTitle('Remove take');
@@ -155,10 +194,9 @@ describe('TakesDetailView component', () => {
 
   it('hides the delete button when the file has been completed', () => {
     const fileProperty = getMockApiPropertyFiles()[0];
-    const file: ApiGen_Concepts_File = fileProperty!.file as ApiGen_Concepts_File;
-    const { queryByTitle, getByTestId } = setup({
+    const file: ApiGen_Concepts_File = fileProperty.file as ApiGen_Concepts_File;
+    const { queryByTitle } = setup({
       props: {
-        loading: true,
         fileProperty: {
           ...fileProperty,
           file: {
@@ -175,9 +213,8 @@ describe('TakesDetailView component', () => {
   });
 
   it('hides the delete button when the take has been completed', () => {
-    const { queryByTitle, getByTestId } = setup({
+    const { queryByTitle } = setup({
       props: {
-        loading: true,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -194,9 +231,8 @@ describe('TakesDetailView component', () => {
   });
 
   it('does not hide delete button when the take has been completed and user is an admin', () => {
-    const { queryByTitle, getByTestId } = setup({
+    const { queryByTitle } = setup({
       props: {
-        loading: true,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -216,14 +252,20 @@ describe('TakesDetailView component', () => {
   it('displays the number of takes in other files', () => {
     setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
-            takeStatusTypeCode: toTypeCodeNullable('CANCELLED'),
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.CANCELLED.toString(),
+            ),
             id: 1,
           },
-          { ...getMockApiTakes()[0], takeStatusTypeCode: toTypeCodeNullable('INPROGRESS') },
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.INPROGRESS.toString(),
+            ),
+          },
         ],
         allTakesCount: 10,
       },
@@ -235,14 +277,20 @@ describe('TakesDetailView component', () => {
   it('displays all non-cancelled takes and then cancelled takes', () => {
     setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
-            takeStatusTypeCode: toTypeCodeNullable('CANCELLED'),
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.CANCELLED.toString(),
+            ),
             id: 1,
           },
-          { ...getMockApiTakes()[0], takeStatusTypeCode: toTypeCodeNullable('INPROGRESS') },
+          {
+            ...getMockApiTakes()[0],
+            takeStatusTypeCode: toTypeCodeNullable(
+              ApiGen_CodeTypes_AcquisitionTakeStatusTypes.INPROGRESS.toString(),
+            ),
+          },
         ],
       },
     });
@@ -253,7 +301,6 @@ describe('TakesDetailView component', () => {
   it('does not display an area fields if all is radio buttons are false', () => {
     const { queryAllByText } = setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -273,7 +320,6 @@ describe('TakesDetailView component', () => {
   it('displays all area fields if all is radio buttons are true', () => {
     const { getAllByText } = setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -293,7 +339,6 @@ describe('TakesDetailView component', () => {
   it('displays srwEndDt if specified', async () => {
     const { findByText } = setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -310,7 +355,6 @@ describe('TakesDetailView component', () => {
   it('displays ltcEndDt if specified', async () => {
     const { findByText } = setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -327,7 +371,6 @@ describe('TakesDetailView component', () => {
   it('displays landActEndDt if specified', async () => {
     const { findByText } = setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -346,7 +389,6 @@ describe('TakesDetailView component', () => {
   it('displays leasePayableEndDt if specified', async () => {
     const { findByText } = setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
@@ -362,15 +404,34 @@ describe('TakesDetailView component', () => {
     expect(date).toBeVisible();
   });
 
-  it('displays the land act code', async () => {
+  it('displays completionDt if specified', async () => {
     const { findByText } = setup({
       props: {
-        loading: false,
         takes: [
           {
             ...getMockApiTakes()[0],
-            isNewLicenseToConstruct: true,
-            ltcEndDt: '2020-01-01',
+            completionDt: '2022-11-21',
+          },
+        ],
+      },
+    });
+    const date = await findByText('Completion date *:');
+    expect(date).toBeVisible();
+  });
+
+  it('displays the land act code', async () => {
+    const { findByText } = setup({
+      props: {
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            isNewLandAct: true,
+            landActTypeCode: {
+              id: 'Section 15',
+              description: 'Reserve',
+              displayOrder: null,
+              isDisabled: false,
+            },
           },
         ],
       },

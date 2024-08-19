@@ -110,7 +110,7 @@ public partial class PimsLeaseHist
     public string OtherLeasePurposeType { get; set; }
 
     [Column("ORIG_START_DATE", TypeName = "datetime")]
-    public DateTime OrigStartDate { get; set; }
+    public DateTime? OrigStartDate { get; set; }
 
     [Column("ORIG_EXPIRY_DATE", TypeName = "datetime")]
     public DateTime? OrigExpiryDate { get; set; }
@@ -206,4 +206,21 @@ public partial class PimsLeaseHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("TERMINATION_DATE", TypeName = "datetime")]
+    public DateTime? TerminationDate { get; set; }
+
+    [Column("IS_PUBLIC_BENEFIT")]
+    public bool? IsPublicBenefit { get; set; }
+
+    [Column("IS_FINANCIAL_GAIN")]
+    public bool? IsFinancialGain { get; set; }
+
+    [Column("FEE_DETERMINATION_NOTE")]
+    [StringLength(1000)]
+    public string FeeDeterminationNote { get; set; }
+
+    [Column("PRIMARY_ARBITRATION_CITY")]
+    [StringLength(200)]
+    public string PrimaryArbitrationCity { get; set; }
 }

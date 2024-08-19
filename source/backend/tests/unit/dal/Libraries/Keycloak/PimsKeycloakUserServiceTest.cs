@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Spreadsheet;
 using FluentAssertions;
+using k8s.KubeConfigModels;
 using Moq;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -183,9 +184,17 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var keycloakServiceMock = helper.GetMock<Pims.Keycloak.IKeycloakRepository>();
             keycloakServiceMock.Setup(m => m.GetUserAsync(It.IsAny<Guid>())).ReturnsAsync((Pims.Keycloak.Models.UserModel)null);
 
+            var userRepository = helper.GetMock<IUserRepository>();
+            userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(euser);
+            userRepository.Setup(m => m.UpdateOnly(It.IsAny<Pims.Dal.Entities.PimsUser>())).Returns(euser);
+
+            var user = EntityHelper.CreateUser(1, euser.GuidIdentifierValue.Value, euser.BusinessIdentifierValue, "new first name", "new last name");
+
             // Act
+            var result = await service.UpdateUserAsync(user);
+
             // Assert
-            await Assert.ThrowsAsync<KeyNotFoundException>(async () => await service.UpdateUserAsync(euser));
+            result.Should().Be(null);
         }
 
         /// <summary>

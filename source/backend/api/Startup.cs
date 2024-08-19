@@ -11,6 +11,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using HealthChecks.SqlServer;
 using HealthChecks.UI.Client;
 using Mapster;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -120,12 +121,14 @@ namespace Pims.Api
                 options.WriteIndented = jsonSerializerOptions.WriteIndented;
                 options.Converters.Add(new JsonStringEnumMemberConverter());
                 options.Converters.Add(new Int32ToStringJsonConverter());
+                options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
             });
             services.Configure<Core.Http.Configuration.AuthClientOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
             services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<Pims.Dal.PimsOptions>(this.Configuration.GetSection("Pims"));
             services.Configure<GeoserverProxyOptions>(this.Configuration.GetSection("Geoserver"));
+            services.Configure<AllHealthCheckOptions>(this.Configuration.GetSection("HealthChecks"));
             services.AddOptions();
 
             services.AddControllers()
@@ -138,8 +141,8 @@ namespace Pims.Api
                     options.JsonSerializerOptions.WriteIndented = jsonSerializerOptions.WriteIndented;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
-                    options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                    options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
                 });
 
             services.AddMvcCore()
@@ -151,8 +154,8 @@ namespace Pims.Api
                     options.JsonSerializerOptions.WriteIndented = jsonSerializerOptions.WriteIndented;
                     options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                     options.JsonSerializerOptions.Converters.Add(new Int32ToStringJsonConverter());
-                    options.JsonSerializerOptions.Converters.Add(new GeometryJsonConverter());
                     options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
+                    options.JsonSerializerOptions.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
                 });
 
             services.AddAuthentication(options =>
@@ -234,62 +237,109 @@ namespace Pims.Api
             // Export metrics from all HTTP clients registered in services
             services.UseHttpClientMetrics();
 
-            services.AddHealthChecks()
-                .AddCheck("liveliness", () => HealthCheckResult.Healthy())
-                .AddSqlServer(csBuilder.ConnectionString, tags: new[] { "services" })
-                .ForwardToPrometheus(); // Report health check results in the metrics output.
+            var allHealthCheckOptions = new AllHealthCheckOptions();
+            Configuration.GetSection("HealthChecks").Bind(allHealthCheckOptions);
+            services.AddHealthChecks().ForwardToPrometheus();
 
-            services.AddHealthChecks()
-                .AddCheck(
+            if (allHealthCheckOptions.SqlServer.Enabled)
+            {
+                services.AddHealthChecks()
+                    .Add(new HealthCheckRegistration(
+                        "SqlServer",
+                        sp =>
+                        {
+                            var options = new SqlServerHealthCheckOptions
+                            {
+                                ConnectionString = csBuilder.ConnectionString,
+                                CommandText = "SELECT 1;",
+                                Configure = null,
+                            };
+                            return new SqlServerHealthCheck(options);
+                        },
+                        default,
+                        new[] { "services" })
+                    { Period = TimeSpan.FromMinutes(allHealthCheckOptions.SqlServer.Period) });
+            }
+
+            if (allHealthCheckOptions.PimsDBCollation.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "PimsDBCollation",
-                    new PimsDatabaseHealthcheck(csBuilder.ConnectionString),
-                    HealthStatus.Unhealthy,
-                    new string[] { "services" });
+                    sp => new PimsDatabaseHealthcheck(csBuilder.ConnectionString),
+                    default,
+                    new string[] { "services" })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.PimsDBCollation.Period) });
+            }
 
-            services.AddHealthChecks()
-                .AddCheck(
-                    "api-metrics",
-                    new PimsMetricsHealthcheck(csBuilder.ConnectionString),
+            if (allHealthCheckOptions.ApiMetrics.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
+                    "ApiMetrics",
+                    sp => new PimsMetricsHealthcheck(csBuilder.ConnectionString),
                     HealthStatus.Unhealthy,
-                    new string[] { "services" });
+                    new string[] { "services" })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.ApiMetrics.Period) });
+            }
 
-            services.AddHealthChecks()
-                .AddCheck(
+            if (allHealthCheckOptions.PmbcExternalApi.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "PmbcExternalApi",
-                    new PimsExternalApiHealthcheck(this.Configuration.GetSection("HealthChecks:PmbcExternalApi")),
+                    sp => new PimsExternalApiHealthcheck(this.Configuration.GetSection("HealthChecks:PmbcExternalApi")),
                     null,
-                    new string[] { "services", "external" });
+                    new string[] { "services", "external" })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.PmbcExternalApi.Period) });
+            }
 
-            services.AddHealthChecks()
-                .AddCheck(
+            if (allHealthCheckOptions.Geoserver.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "Geoserver",
-                    new PimsGeoserverHealthCheck(this.Configuration),
+                    sp => new PimsGeoserverHealthCheck(this.Configuration),
                     null,
-                    new string[] { "services" });
+                    new string[] { "services" })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Geoserver.Period) });
+            }
 
-            services.AddHealthChecks()
-                .AddCheck<PimsMayanHealthcheck>(
+            if (allHealthCheckOptions.Mayan.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "Mayan",
+                    sp => new PimsMayanHealthcheck(sp.GetService<IEdmsDocumentRepository>()),
                     null,
-                    new string[] { "services" });
+                    new string[] { "services" })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Mayan.Period) });
+            }
 
-            services.AddHealthChecks()
-                .AddCheck<PimsLtsaHealthcheck>(
+            if (allHealthCheckOptions.Ltsa.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "Ltsa",
+                    sp => new PimsLtsaHealthcheck(allHealthCheckOptions.Ltsa, sp.GetService<ILtsaService>()),
                     null,
-                    new string[] { "services", "external" });
+                    new string[] { "services", "external" })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Ltsa.Period) });
+            }
 
-            services.AddHealthChecks()
-                .AddCheck<PimsGeocoderHealthcheck>(
+            if (allHealthCheckOptions.Geocoder.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "Geocoder",
+                    sp => new PimsGeocoderHealthcheck(this.Configuration, sp.GetService<IGeocoderService>()),
                     null,
-                    new string[] { "services", "external" });
+                    new string[] { "services", "external" })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Geocoder.Period) });
+            }
 
-            services.AddHealthChecks()
-                .AddCheck<PimsCdogsHealthcheck>(
+            if (allHealthCheckOptions.Cdogs.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "Cdogs",
+                    sp => new PimsCdogsHealthcheck(sp.GetService<IDocumentGenerationRepository>()),
                     null,
-                    new string[] { "services", "external" });
+                    new string[] { "services", "external" })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Cdogs.Period) });
+            }
 
             services.AddApiVersioning(options =>
             {
@@ -410,7 +460,7 @@ namespace Pims.Api
             var healthPort = this.Configuration.GetValue<int>("HealthChecks:Port");
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:LivePath"), healthPort, new HealthCheckOptions
             {
-                Predicate = r => r.Name.Contains("liveliness"),
+                Predicate = r => r.Name.Contains("SqlServer"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
@@ -449,7 +499,7 @@ namespace Pims.Api
             services.AddScoped<IAcquisitionFileService, AcquisitionFileService>();
             services.AddScoped<ILeaseService, LeaseService>();
             services.AddScoped<ILeaseReportsService, LeaseReportsService>();
-            services.AddScoped<ILeaseTermService, LeaseTermService>();
+            services.AddScoped<ILeasePeriodService, LeasePeriodService>();
             services.AddScoped<ILeasePaymentService, LeasePaymentService>();
             services.AddScoped<ISecurityDepositService, SecurityDepositService>();
             services.AddScoped<ISecurityDepositReturnService, SecurityDepositReturnService>();

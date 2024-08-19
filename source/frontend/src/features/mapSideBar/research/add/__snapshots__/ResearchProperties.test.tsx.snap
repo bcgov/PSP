@@ -37,6 +37,12 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   height: 3.8rem;
 }
 
+.c14.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c14.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -280,7 +286,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c2 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -778,7 +783,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                         <div
                           class="tr"
                           role="row"
-                          style="display: flex; flex: 1 0 auto; min-width: 150px;"
+                          style="display: flex; flex: 1 0 auto; min-width: 120px;"
                         >
                           <div
                             class="th"
@@ -846,18 +851,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                               class="sortable-column"
                             >
                               Address
-                            </div>
-                          </div>
-                          <div
-                            class="th"
-                            colspan="1"
-                            role="columnheader"
-                            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                          >
-                            <div
-                              class="sortable-column"
-                            >
-                              Legal Description
                             </div>
                           </div>
                         </div>

@@ -6,81 +6,148 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  border-bottom: solid 0.5rem;
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2.4rem;
-}
-
-.c2 {
-  width: 100%;
-  border-bottom: solid 0.5rem;
-}
-
-.c1 {
-  font-size: 2.4rem;
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  min-height: 3rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
   cursor: pointer;
+  height: 3.8rem;
 }
 
-<div
-    class=""
-  >
-    <div
-      class="row"
-    >
-      <div
-        class="col"
-      >
-        <h1
-          class="c0 mr-auto"
-        >
-          <svg
-            class="mr-2 mb-2"
-            fill="currentColor"
-            height="32"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 512 512"
-            width="32"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"
-            />
-          </svg>
-          Title
-        </h1>
-      </div>
-      <div
-        class="col-auto"
-      >
-        <svg
-          class="c1"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <title>
-            close
-          </title>
-          <path
-            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
-          />
-        </svg>
-      </div>
-    </div>
-    <div
-      class="c2"
-    />
-  </div>
-  .c5 {
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  border: none;
+}
+
+.c3.btn.btn-secondary {
+  background: none;
+}
+
+.c3.btn.btn-info {
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  background: none;
+}
+
+.c3.btn.btn-light {
+  border: none;
+}
+
+.c3.btn.btn-dark {
+  border: none;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -90,16 +157,126 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
+.c1 {
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c5 {
+  border-left: 0.1rem solid;
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
+}
+
+.c4.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid;
+  background-color: white;
+}
+
+.c4.btn.btn-light.Button:focus,
+.c4.btn.btn-light.Button:active {
+  background-color: white;
+}
+
+.c4.btn,
+.c4 .Button__icon,
+.c4 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
 .c0 {
+  padding: 1.6rem;
+}
+
+.c0.expanded {
+  min-width: 90rem;
+  height: 100%;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.c2 {
+  gap: 1.5rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c17 {
+  width: 100%;
+  position: relative;
+  overflow: auto;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+}
+
+.c8 {
+  width: 100%;
+  height: 100%;
+  display: contents;
+}
+
+.c9 {
   position: relative;
 }
 
-.c3 {
+.c7 {
+  width: 100%;
+  border-bottom: solid 0.5rem;
+}
+
+.c6 {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
+.c18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c13 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c6 {
+.c11 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c16 {
   font-family: 'BCSans-Bold';
   font-size: 1.4rem;
   border-radius: 0.4rem;
@@ -118,13 +295,13 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   background-color: undefined;
 }
 
-.c4 {
+.c14 {
   margin-top: auto;
   padding-top: 1rem;
   padding-bottom: 1rem;
 }
 
-.c1 {
+.c10 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -132,7 +309,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c2 {
+.c12 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -143,242 +320,307 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   flex-direction: column;
 }
 
-<div
-    class="c0"
-  >
-    <div
-      class="c1 no-gutters row"
-    >
-      <div
-        class="col-7"
-      >
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <strong>
-              <label>
-                Project:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-          >
-            771 Project Cool A
-          </div>
-        </div>
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <strong>
-              <label>
-                MoTI Region:
-              </label>
-            </strong>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-          >
-            South Coast Region
-          </div>
-        </div>
-      </div>
-      <div
-        class="col"
-      >
-        <div
-          class="c2"
-        >
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="text-right col"
-            >
-              <span
-                class="c3"
-              >
-                <strong>
-                  Created: 
-                </strong>
-                Jan 31, 2023 by 
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
-                >
-                  <strong>
-                    USER_B
-                  </strong>
-                </span>
-              </span>
-            </div>
-          </div>
-          <div
-            class="no-gutters row"
-          >
-            <div
-              class="text-right col"
-            >
-              <span
-                class="c3"
-              >
-                <strong>
-                  Updated: 
-                </strong>
-                Feb 1, 2023 by 
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-userNameTooltip"
-                  id="userNameTooltip"
-                >
-                  <strong>
-                    USER_A
-                  </strong>
-                </span>
-              </span>
-            </div>
-          </div>
-          <div
-            class="c4 no-gutters justify-content-end align-items-end row"
-          >
-            <div
-              class="col"
-            />
-            <div
-              class="align-self-end d-flex col-auto"
-            >
-              <span
-                class="c3"
-              >
-                <b />
-              </span>
-              <div
-                class="c5 c6"
-              >
-                <svg
-                  fill="currentColor"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
-                  />
-                </svg>
-                ACTIVE (AC)
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-  .c0 {
-  width: 100%;
-  position: relative;
-  overflow: auto;
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-}
-
-.c1 {
-  height: 100%;
-  width: 100%;
-}
-
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-}
-
-.c3 {
+.c19 {
   height: 100%;
 }
 
-.c3 .tab-content {
+.c19 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
-.c3 .tab-content .tab-pane {
+.c19 .tab-content .tab-pane {
   position: relative;
 }
 
-.c4 {
+.c20 {
   background-color: white;
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c4 .nav-tabs {
+.c20 .nav-tabs {
   height: auto;
 }
 
-.c4 .nav-item {
+.c20 .nav-item {
   min-width: 5rem;
   padding: 0.1rem 1.2rem;
 }
 
-.c4 .nav-item:hover {
+.c20 .nav-item:hover {
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
-.c4 .nav-item.active {
+.c20 .nav-item.active {
   font-family: 'BCSans-Bold';
   border-color: transparent;
 }
 
 <div
-    class="c0"
+    class="c0 expanded"
   >
     <div
-      class="c1"
+      class="row"
     >
       <div
-        class="c2"
+        class="col"
+      >
+        <h1
+          class="c1 mr-auto"
+        >
+          <span
+            class="mr-2"
+          >
+            <svg
+              fill="currentColor"
+              height="26"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="26"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"
+              />
+            </svg>
+          </span>
+          Title
+        </h1>
+      </div>
+      <div
+        class="c2 d-flex col-auto"
+      >
+        <span>
+          <button
+            class="c3 Button Button--icon-only c4 btn btn-light"
+            title="collapse"
+            type="button"
+          >
+            <div
+              class="Button__icon"
+            >
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="M17.59 18 19 16.59 14.42 12 19 7.41 17.59 6l-6 6z"
+                />
+                <path
+                  d="m11 18 1.41-1.41L7.83 12l4.58-4.59L11 6l-6 6z"
+                />
+              </svg>
+            </div>
+          </button>
+        </span>
+        <div
+          class="c5"
+        />
+        <svg
+          class="c6"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <title>
+            close
+          </title>
+          <path
+            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+          />
+        </svg>
+      </div>
+    </div>
+    <div
+      class="c7"
+    />
+    <div
+      class="c8"
+    >
+      <div
+        class="c9"
       >
         <div
-          class="c3"
+          class="c10 no-gutters row"
         >
-          <nav
-            class="c4 nav nav-tabs"
-            role="tablist"
-          />
           <div
-            class="tab-content"
-          />
+            class="col-7"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label
+                  class="c11"
+                >
+                  Project:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                771 Project Cool A
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="pr-0 text-left col-3"
+              >
+                <label
+                  class="c11"
+                >
+                  MoTI region:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-9"
+              >
+                South Coast Region
+              </div>
+            </div>
+          </div>
+          <div
+            class="col"
+          >
+            <div
+              class="c12"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="text-right col"
+                >
+                  <span
+                    class="c13"
+                  >
+                    <strong>
+                      Created: 
+                    </strong>
+                    Jan 31, 2023 by 
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        USER_B
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="text-right col"
+                >
+                  <span
+                    class="c13"
+                  >
+                    <strong>
+                      Updated: 
+                    </strong>
+                    Feb 1, 2023 by 
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-userNameTooltip"
+                      id="userNameTooltip"
+                    >
+                      <strong>
+                        USER_A
+                      </strong>
+                    </span>
+                  </span>
+                </div>
+              </div>
+              <div
+                class="c14"
+              >
+                <div
+                  class="no-gutters justify-content-end align-items-end row"
+                >
+                  <div
+                    class="col"
+                  />
+                  <div
+                    class="align-self-end d-flex col-auto"
+                  >
+                    <span
+                      class="c13"
+                    >
+                      <b />
+                    </span>
+                    <div
+                      class="c15 c16"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="16"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 24 24"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M0 0h24v24H0z"
+                          fill="none"
+                        />
+                        <path
+                          d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2z"
+                        />
+                      </svg>
+                      ACTIVE (AC)
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div />
+      </div>
+      <div
+        class="c17"
+      >
+        <div
+          class="c18"
+        >
+          <div
+            class="c19"
+          >
+            <nav
+              class="c20 nav nav-tabs"
+              role="tablist"
+            />
+            <div
+              class="tab-content"
+            />
+          </div>
+          <div />
+        </div>
       </div>
     </div>
   </div>

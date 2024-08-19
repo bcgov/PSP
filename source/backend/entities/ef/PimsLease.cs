@@ -204,7 +204,7 @@ public partial class PimsLease
     /// Original start date of the lease/license
     /// </summary>
     [Column("ORIG_START_DATE", TypeName = "datetime")]
-    public DateTime OrigStartDate { get; set; }
+    public DateTime? OrigStartDate { get; set; }
 
     /// <summary>
     /// Original expiry date of the lease/license
@@ -388,6 +388,38 @@ public partial class PimsLease
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    /// <summary>
+    /// Date that the lease was terminated.
+    /// </summary>
+    [Column("TERMINATION_DATE", TypeName = "datetime")]
+    public DateTime? TerminationDate { get; set; }
+
+    /// <summary>
+    /// Is there an associated public benefit with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
+    /// </summary>
+    [Column("IS_PUBLIC_BENEFIT")]
+    public bool? IsPublicBenefit { get; set; }
+
+    /// <summary>
+    /// Is there an associated financial gain with this lease?  TRUE = Yes, FALSE = No, and NULL = Unknown.  The default is NULL (Unknown).
+    /// </summary>
+    [Column("IS_FINANCIAL_GAIN")]
+    public bool? IsFinancialGain { get; set; }
+
+    /// <summary>
+    /// Note associated with fee determination.
+    /// </summary>
+    [Column("FEE_DETERMINATION_NOTE")]
+    [StringLength(1000)]
+    public string FeeDeterminationNote { get; set; }
+
+    /// <summary>
+    /// The location in which primary arbtration of the lease occurred.
+    /// </summary>
+    [Column("PRIMARY_ARBITRATION_CITY")]
+    [StringLength(200)]
+    public string PrimaryArbitrationCity { get; set; }
+
     [ForeignKey("LeaseCategoryTypeCode")]
     [InverseProperty("PimsLeases")]
     public virtual PimsLeaseCategoryType LeaseCategoryTypeCodeNavigation { get; set; }
@@ -436,10 +468,13 @@ public partial class PimsLease
     public virtual ICollection<PimsLeaseNote> PimsLeaseNotes { get; set; } = new List<PimsLeaseNote>();
 
     [InverseProperty("Lease")]
-    public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; } = new List<PimsLeaseTenant>();
+    public virtual ICollection<PimsLeasePeriod> PimsLeasePeriods { get; set; } = new List<PimsLeasePeriod>();
 
     [InverseProperty("Lease")]
-    public virtual ICollection<PimsLeaseTerm> PimsLeaseTerms { get; set; } = new List<PimsLeaseTerm>();
+    public virtual ICollection<PimsLeaseRenewal> PimsLeaseRenewals { get; set; } = new List<PimsLeaseRenewal>();
+
+    [InverseProperty("Lease")]
+    public virtual ICollection<PimsLeaseTenant> PimsLeaseTenants { get; set; } = new List<PimsLeaseTenant>();
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; } = new List<PimsPropertyImprovement>();
