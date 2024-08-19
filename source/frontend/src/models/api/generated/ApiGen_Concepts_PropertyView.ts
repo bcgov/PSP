@@ -14,7 +14,6 @@ export interface ApiGen_Concepts_PropertyView {
   propertyStatusTypeCode: string | null;
   propertyDataSourceTypeCode: string | null;
   propertyDataSourceEffectiveDate: UtcIsoDate;
-  propertyClassificationTypeCode: string | null;
   propertyTenureTypeCode: string | null;
   streetAddress1: string | null;
   streetAddress2: string | null;
@@ -25,8 +24,6 @@ export interface ApiGen_Concepts_PropertyView {
   provinceName: string | null;
   countryCode: string | null;
   countryName: string | null;
-  name: string | null;
-  description: string | null;
   addressId: number | null;
   regionCode: number;
   districtCode: number;
@@ -34,13 +31,8 @@ export interface ApiGen_Concepts_PropertyView {
   landArea: number | null;
   landLegalDescription: string | null;
   surveyPlanNumber: string | null;
-  encumbranceReason: string | null;
-  isSensitive: boolean;
   isOwned: boolean;
   isRetired: boolean | null;
-  isVisibleToOtherAgencies: boolean;
-  zoning: string | null;
-  zoningPotential: string | null;
   isDisposed: boolean | null;
   isOtherInterest: boolean | null;
   hasActiveAcquisitionFile: boolean | null;

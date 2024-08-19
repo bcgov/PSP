@@ -11,7 +11,6 @@ import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPro
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { FlexBox } from '@/components/common/styles';
-import { AddressTypes } from '@/constants/addressTypes';
 import {
   CancelConfirmationModal,
   useAddressHelpers,
@@ -25,6 +24,7 @@ import { usePersonDetail } from '@/features/contacts/hooks/usePersonDetail';
 import useUpdateContact from '@/features/contacts/hooks/useUpdateContact';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { usePrevious } from '@/hooks/usePrevious';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 import { isValidId } from '@/utils';
 
 import PersonSubForm from '../../Person/PersonSubForm';
@@ -113,7 +113,7 @@ const UpdatePersonComponent: React.FC<
       getOrganization(organizationId)
         .then(({ data }) => {
           const mailing = data.organizationAddresses?.find(
-            a => a.addressUsageType?.id === AddressTypes.Mailing,
+            a => a.addressUsageType?.id === ApiGen_CodeTypes_AddressUsageTypes.MAILING,
           );
           setFieldValue(
             'mailingAddress',
@@ -123,7 +123,7 @@ const UpdatePersonComponent: React.FC<
         .catch(() => {
           setFieldValue(
             'mailingAddress',
-            new IEditableOrganizationAddressForm(AddressTypes.Mailing),
+            new IEditableOrganizationAddressForm(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
           );
           toast.error('Failed to get organization address.');
         });
@@ -133,7 +133,10 @@ const UpdatePersonComponent: React.FC<
   // toggle is off - clear out existing values
   useEffect(() => {
     if (previousUseOrganizationAddress === true && useOrganizationAddress === false) {
-      setFieldValue('mailingAddress', new IEditableOrganizationAddressForm(AddressTypes.Mailing));
+      setFieldValue(
+        'mailingAddress',
+        new IEditableOrganizationAddressForm(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
+      );
     }
   }, [previousUseOrganizationAddress, useOrganizationAddress, setFieldValue]);
 

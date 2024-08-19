@@ -1,7 +1,6 @@
 import { createMemoryHistory } from 'history';
 
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import { AddressTypes } from '@/constants/index';
 import useAddContact from '@/features/contacts/hooks/useAddContact';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { getEmptyAddress } from '@/mocks/address.mock';
@@ -16,6 +15,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import CreatePersonForm from './CreatePersonForm';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -38,7 +38,7 @@ const mockOrganization: ApiGen_Concepts_Organization = {
       rowVersion: 2,
       organizationId: 200,
       addressUsageType: {
-        id: AddressTypes.Mailing,
+        id: ApiGen_CodeTypes_AddressUsageTypes.MAILING,
         description: null,
         isDisabled: false,
         displayOrder: null,
@@ -114,7 +114,7 @@ const mockAddress: ApiGen_Concepts_PersonAddress = {
     postal: '123456',
   },
   addressUsageType: {
-    id: AddressTypes.Mailing,
+    id: ApiGen_CodeTypes_AddressUsageTypes.MAILING,
     description: null,
     isDisabled: false,
     displayOrder: null,

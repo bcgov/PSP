@@ -1,18 +1,25 @@
-import { AddressTypes } from '@/constants/addressTypes';
 import { ContactInfoField } from '@/features/contacts/interfaces';
 import { Dictionary } from '@/interfaces/Dictionary';
 import { IContactAddress, IContactMethod } from '@/interfaces/IContact';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 import { exists } from '@/utils';
 
 // the order of this array corresponds to the expected display order
-const addressSortOrder = [AddressTypes.Mailing, AddressTypes.Residential, AddressTypes.Billing];
+const addressSortOrder = [
+  ApiGen_CodeTypes_AddressUsageTypes.MAILING,
+  ApiGen_CodeTypes_AddressUsageTypes.RESIDNT,
+  ApiGen_CodeTypes_AddressUsageTypes.BILLING,
+];
 
 export const sortAddresses = (a1: IContactAddress, a2: IContactAddress) => {
   if (a2.addressType.id === a1.addressType.id) {
     return 0;
   }
-  const a2Index = addressSortOrder.indexOf(a2.addressType.id as AddressTypes);
-  if (a2Index !== -1 && a2Index < addressSortOrder.indexOf(a1.addressType.id as AddressTypes)) {
+  const a2Index = addressSortOrder.indexOf(a2.addressType.id as ApiGen_CodeTypes_AddressUsageTypes);
+  if (
+    a2Index !== -1 &&
+    a2Index < addressSortOrder.indexOf(a1.addressType.id as ApiGen_CodeTypes_AddressUsageTypes)
+  ) {
     return 1;
   }
 

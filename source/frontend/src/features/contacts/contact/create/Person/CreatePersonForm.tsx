@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import { Button } from '@/components/common/buttons/Button';
 import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { FlexBox } from '@/components/common/styles';
-import { AddressTypes } from '@/constants/addressTypes';
 import {
   CancelConfirmationModal,
   DuplicateContactModal,
@@ -18,6 +17,7 @@ import { IEditablePersonAddressForm, IEditablePersonForm } from '@/features/cont
 import useAddContact from '@/features/contacts/hooks/useAddContact';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { usePrevious } from '@/hooks/usePrevious';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 import { isValidId } from '@/utils';
 
 import PersonSubForm from '../../Person/PersonSubForm';
@@ -135,15 +135,24 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
       getOrganization(organizationId)
         .then(({ data }) => {
           const mailing = data.organizationAddresses?.find(
-            a => a.addressUsageType?.id === AddressTypes.Mailing,
+            a => a.addressUsageType?.id === ApiGen_CodeTypes_AddressUsageTypes.MAILING,
           );
-          setFieldValue(
-            'mailingAddress',
-            IEditablePersonAddressForm.apiOrgAddressToFormAddress(personId, mailing),
-          );
+
+          if (mailing) {
+            const personMailinAddress = IEditablePersonAddressForm.apiOrgAddressToFormAddress(
+              personId,
+              mailing,
+            );
+
+            personMailinAddress.personAddressId = 0;
+            setFieldValue('mailingAddress', personMailinAddress);
+          }
         })
         .catch(() => {
-          setFieldValue('mailingAddress', new IEditablePersonAddressForm(AddressTypes.Mailing));
+          setFieldValue(
+            'mailingAddress',
+            new IEditablePersonAddressForm(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
+          );
           toast.error('Failed to get organization address.');
         });
     }
@@ -152,7 +161,10 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   // toggle is off - clear out existing values
   useEffect(() => {
     if (previousUseOrganizationAddress === true && useOrganizationAddress === false) {
-      setFieldValue('mailingAddress', new IEditablePersonAddressForm(AddressTypes.Mailing));
+      setFieldValue(
+        'mailingAddress',
+        new IEditablePersonAddressForm(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
+      );
     }
   }, [previousUseOrganizationAddress, useOrganizationAddress, setFieldValue]);
 
