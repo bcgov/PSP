@@ -114,7 +114,7 @@ describe('PaymentForm component', () => {
     await act(async () => {
       await fillInput(container, 'amountTotal', '1050');
     });
-    const amountPreTax = await findByLabelText('Expected payment ($)');
+    const amountPreTax = await findByLabelText('Amount (before tax)');
     const amountGst = await findByLabelText('GST ($)');
     expect(amountPreTax).toHaveValue('$1,000.00');
     expect(amountGst).toHaveValue('$50.00');
@@ -145,7 +145,7 @@ describe('PaymentForm component', () => {
     await act(async () => {
       await fillInput(container, 'amountTotal', '1000');
     });
-    const amountPreTax = await findByLabelText('Expected payment ($)');
+    const amountPreTax = await findByLabelText('Amount (before tax)');
     expect(amountPreTax).toHaveValue('$1,000.00');
   });
 
@@ -164,7 +164,7 @@ describe('PaymentForm component', () => {
     await act(async () => {
       await fillInput(container, 'amountTotal', '1000');
     });
-    const amountPreTax = await findByLabelText('Expected payment ($)');
+    const amountPreTax = await findByLabelText('Amount (before tax)');
     expect(amountPreTax).toHaveValue('$1,000.00');
   });
 });

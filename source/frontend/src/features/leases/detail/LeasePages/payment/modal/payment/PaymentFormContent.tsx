@@ -112,7 +112,7 @@ const PaymentFormContent: React.FunctionComponent<
             <InlineFlexDiv>
               <FastCurrencyInput
                 formikProps={formikProps}
-                label="Expected payment ($)"
+                label="Amount (before tax)"
                 field="amountPreTax"
                 innerClassName="small"
               />
