@@ -369,6 +369,33 @@ namespace PIMS.Tests.Automation.PageObjects
             return input.Substring(startIndex, endIndex - startIndex);
         }
 
+        protected string CalculateExpiryCurrentDate(string originExpiryDate, List<LeaseRenewal> renewals)
+        {
+            var expiryDates = new List<DateTime>();
+            if (originExpiryDate != "")
+            {
+                var originExpiryDateElement = DateTime.Parse(originExpiryDate);
+                expiryDates.Add(originExpiryDateElement);
+
+            }
+
+            if (renewals.Count > 0)
+            {
+                for (var i = 0; i < renewals.Count; i++)
+                {
+                    if (renewals[i].RenewalIsExercised == "Yes")
+                    {
+                        var renewalExpiryDate = DateTime.Parse(renewals[i].RenewalExpiryDate);
+                        expiryDates.Add(renewalExpiryDate);
+                    }
+                }
+            }
+
+            expiryDates.Sort((x, y) => y.CompareTo(x));
+            System.Diagnostics.Debug.WriteLine(expiryDates);
+            return expiryDates[0].ToString("MMM d, yyyy");
+        }
+
         public void Dispose()
         {
             webDriver.Close();

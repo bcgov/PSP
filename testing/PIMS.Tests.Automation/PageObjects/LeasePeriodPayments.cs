@@ -118,7 +118,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentPeriodAgreedPaymentInput = By.Id("input-paymentAmount");
         private readonly By licensePaymentPeriodGSTLabel = By.XPath("//label[contains(text(),'Subject to GST?')]");
         private readonly By licensePaymentPeriodGSTRadioBttns = By.Name("isGstEligible");
-        private readonly By licensePaymentPeriodGSTAmountLabel = By.XPath("//label[contains(text(),'GST Ammount')]");
+        private readonly By licensePaymentPeriodGSTAmountLabel = By.XPath("//label[contains(text(),'GST Amount')]");
         private readonly By licensePaymentPeriodGSTAmountInput = By.Id("input-gstAmount");
         private readonly By licensePaymentPeriodTotalAmountLabel = By.XPath("//label[contains(text(),'Total Payment')]");
         private readonly By licensePaymentPeriodTotalAmountContent = By.XPath("//label[contains(text(),'Total Payment')]/parent::div/following-sibling::div");
@@ -129,7 +129,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentPeriodBaseFrequencyLabel = By.XPath("//label[@for='input-leasePmtFreqTypeCode.id']/span[contains(text(),'Payment frequency')]");
         private readonly By licensePaymentPeriodBaseAgreedPaymentLabel = By.XPath("//label[contains(text(),'Payment (before tax)')]");
         private readonly By licensePaymentPeriodBaseGSTLabel = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
-        private readonly By licensePaymentPeriodBaseGSTAmountLabel = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'GST Ammount')]");
+        private readonly By licensePaymentPeriodBaseGSTAmountLabel = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'GST Amount')]");
         private readonly By licensePaymentPeriodBaseTotalAmountLabel = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total Payment')]");
         private readonly By licensePaymentPeriodBaseTotalAmountContent = By.XPath("//div[contains(text(),'Add Base Rent')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total Payment')]/parent::div/following-sibling::div");
 
@@ -141,7 +141,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentPeriodAdditionalAgreedPaymentInput = By.Id("input-additionalRentPaymentAmount");
         private readonly By licensePaymentPeriodAdditionalGSTLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
         private readonly By licensePaymentPeriodAdditionalGSTRadioBttns = By.Name("isAdditionalRentGstEligible");
-        private readonly By licensePaymentPeriodAdditionalGSTAmountLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'GST Ammount')]");
+        private readonly By licensePaymentPeriodAdditionalGSTAmountLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'GST Amount')]");
         private readonly By licensePaymentPeriodAdditionalGSTAmountInput = By.Id("input-additionalGstAmount");
         private readonly By licensePaymentPeriodAdditionalTotalAmountLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total Payment')]");
         private readonly By licensePaymentPeriodAdditionalTotalAmountContent = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total Payment')]/parent::div/following-sibling::div");
@@ -154,8 +154,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentPeriodVariableAgreedPaymentInput = By.Id("input-variableRentPaymentAmount");
         private readonly By licensePaymentPeriodVariableGSTLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
         private readonly By licensePaymentPeriodVariableGSTRadioBttns = By.Name("isVariableRentGstEligible");
-        private readonly By licensePaymentPeriodVariableGSTAmountLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'GST Ammount')]");
-        private readonly By licensePaymentPeriodVariableGSTAmountInput = By.Id("input-variableGstAmount");
+        private readonly By licensePaymentPeriodVariableGSTAmountLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'GST Amount')]");
+        private readonly By licensePaymentPeriodVariableGSTAmountInput = By.Id("input-variableRentGstAmount");
         private readonly By licensePaymentPeriodVariableTotalAmountLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total Payment')]");
         private readonly By licensePaymentPeriodVariableTotalAmountContent = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total Payment')]/parent::div/following-sibling::div");
 
@@ -362,6 +362,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 if (period.PeriodVariableIsGSTEligible == "true")
                 {
                     AssertTrueIsDisplayed(licensePaymentPeriodVariableGSTAmountLabel);
+                    ClearInput(licensePaymentPeriodVariableGSTAmountInput);
                     webDriver.FindElement(licensePaymentPeriodVariableGSTAmountInput).SendKeys(period.PeriodVariableGSTAmount);
                 }
 
@@ -453,12 +454,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             totalPaymentInPeriod = webDriver.FindElements(By.XPath("//b[contains(text(), 'Period "+ payment.PeriodParentIndex +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div")).Count;
-        }
-
-        public void EditNthPayment(int parentPeriodIdx, int paymentIdx)
-        {
-            WaitUntilClickable(By.XPath("//b[contains(text(), 'Period "+ parentPeriodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ paymentIdx +"]/div/div[9]/div/button[@title='edit actual']"));
-            webDriver.FindElement(By.XPath("//b[contains(text(), 'Period "+ parentPeriodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ paymentIdx +"]/div/div[9]/div/button[@title='edit actual']")).Click();
         }
 
         public void DeleteLastPeriod()
