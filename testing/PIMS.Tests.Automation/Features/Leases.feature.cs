@@ -172,7 +172,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 20
- testRunner.Given("I create a new minimum Lease from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 21
  testRunner.When("I insert Checklist information to a Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");

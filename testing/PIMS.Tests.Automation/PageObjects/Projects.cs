@@ -10,7 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By projectMenuBttn = By.CssSelector("div[data-testid='nav-tooltip-project'] a");
         private By createProjectButton = By.XPath("//a[contains(text(),'Create Project')]");
 
-        private By projectNavigationTabs = By.CssSelector("nav[role='tablist']");
+        private By projectNavigationDetailsTab = By.CssSelector("nav[role='tablist'] a[data-rb-event-key='projectDetails']");
         private By projectDetailTabLink = By.CssSelector("a[data-rb-event-key='projectDetails]");
 
         //Create Project Form Elements
@@ -60,17 +60,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //View Project Form Elements
         private By projectViewTitle = By.XPath("//h1[contains(text(),'Project')]");
-        private By projectHeaderProjectNameLabel = By.XPath("//label[contains(text(),'Project')]/parent::strong");
-        private By projectHeaderProjectNameContent = By.XPath("//label[contains(text(),'Project')]/parent::strong/parent::div/following-sibling::div");
-        private By projectHeaderMoTIRegionLabel = By.XPath("//label[contains(text(),'MoTI Region')]/parent::strong");
-        private By projectHeaderMoTIRegionContent = By.XPath("//label[contains(text(),'MoTI Region')]/parent::strong/parent::div/following-sibling::div");
+        private By projectHeaderProjectNameLabel = By.XPath("//h1[contains(text(),'Project')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div/label[contains(text(),'Project')]");
+        private By projectHeaderProjectNameContent = By.XPath("//h1[contains(text(),'Project')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div/label[contains(text(),'Project')]/parent::div/following-sibling::div");
+        private By projectHeaderMoTIRegionLabel = By.XPath("//label[contains(text(),'MoTI region')]");
+        private By projectHeaderMoTIRegionContent = By.XPath("//label[contains(text(),'MoTI region')]/parent::div/following-sibling::div");
         private By projectHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
         private By projectHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
         private By projectHeaderCreatedBy = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
         private By projectHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
         private By projectHeaderLastUpdatedContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
         private By projectHeaderLastUpdatedBy = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By projectHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div");
+        private By projectHeaderStatusContent = By.XPath("//div[@class='col']/div/div[3]/div/div/div");
 
         private By projectEditButton = By.CssSelector("button[title='Edit project']");
         private By projectDetailsSubtitle = By.XPath("//div[contains(text(),'Project Details')]");
@@ -307,7 +307,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
-            AssertTrueIsDisplayed(projectNavigationTabs);
+            AssertTrueIsDisplayed(projectNavigationDetailsTab);
         }
 
         public void CancelProject()
