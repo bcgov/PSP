@@ -123,7 +123,7 @@ export class BatchUploadResponseModel {
         this.errorMessage = (apiResponse as IApiError).details;
       } else {
         this.isSuccess =
-          apiResponse.uploadResponse?.documentExternalResponse?.status === 'Success' ?? false;
+          apiResponse.uploadResponse?.documentExternalResponse?.status === 'Success' ? true : false;
         this.response = apiResponse;
         this.errorMessage =
           apiResponse.uploadResponse?.documentExternalResponse.message ?? 'Mayan error';

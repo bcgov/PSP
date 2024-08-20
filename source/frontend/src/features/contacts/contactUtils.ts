@@ -1,5 +1,5 @@
-import { AddressTypes } from '@/constants/index';
 import { IContactSearchResult } from '@/interfaces';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
@@ -16,10 +16,11 @@ export function getApiPersonOrOrgMailingAddress(
 
   return (
     (contact as ApiGen_Concepts_Person).personAddresses?.find(
-      addr => addr?.addressUsageType?.id === AddressTypes.Mailing && addr.address,
+      addr =>
+        addr?.addressUsageType?.id === ApiGen_CodeTypes_AddressUsageTypes.MAILING && addr.address,
     )?.address ??
     (contact as ApiGen_Concepts_Organization).organizationAddresses?.find(
-      addr => addr?.addressUsageType?.id === AddressTypes.Mailing,
+      addr => addr?.addressUsageType?.id === ApiGen_CodeTypes_AddressUsageTypes.MAILING,
     )?.address ??
     null
   );

@@ -191,7 +191,6 @@ export class UpdatePropertyDetailsFormModel {
     model.planNumber = base.planNumber ?? undefined;
     model.municipalZoning = base.municipalZoning ?? undefined;
     model.notes = base.notes ?? undefined;
-
     model.isRetired = base.isRetired;
     model.pphStatusTypeCode =
       base.pphStatusTypeCode ?? ApiGen_CodeTypes_PropertyPPHStatusTypes.UNKNOWN.toString();
