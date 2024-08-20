@@ -18,7 +18,6 @@ export interface IMapProperty {
   regionName?: string;
   district?: number;
   districtName?: string;
-  name?: string;
   landArea?: number;
   areaUnit?: AreaUnitTypes;
 }
