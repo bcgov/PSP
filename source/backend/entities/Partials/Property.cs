@@ -44,13 +44,11 @@ namespace Pims.Dal.Entities
         /// <param name="areaUnit"></param>
         /// <param name="dataSource"></param>
         /// <param name="dataSourceEffectiveDate"></param>
-        public PimsProperty(int pid, PimsPropertyType type, PimsPropertyClassificationType classification, PimsAddress address, PimsPropPropTenureType tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status)
+        public PimsProperty(int pid, PimsPropertyType type, PimsAddress address, PimsPropPropTenureType tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status)
         {
             this.Pid = pid;
             this.PropertyTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));
             this.PropertyTypeCode = type.Id;
-            this.PropertyClassificationTypeCodeNavigation = classification ?? throw new ArgumentNullException(nameof(classification));
-            this.PropertyClassificationTypeCode = classification.Id;
             this.Address = address ?? throw new ArgumentNullException(nameof(address));
             this.AddressId = address.AddressId;
             this.RegionCodeNavigation = address.RegionCodeNavigation ?? throw new ArgumentException($"Argument '{nameof(address)}.{nameof(address.RegionCodeNavigation)}' is required.", nameof(address));

@@ -1,6 +1,6 @@
-import { AddressTypes } from '@/constants/addressTypes';
 import { EmailContactMethods, PhoneContactMethods } from '@/constants/contactMethodType';
 import { IContactPerson } from '@/interfaces/IContact';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_OrganizationAddress } from '@/models/api/generated/ApiGen_Concepts_OrganizationAddress';
@@ -52,9 +52,15 @@ export class IEditablePersonForm {
     this.useOrganizationAddress = false;
     this.emailContactMethods = [new IEditableContactMethodForm()];
     this.phoneContactMethods = [new IEditableContactMethodForm()];
-    this.mailingAddress = new IEditablePersonAddressForm(AddressTypes.Mailing);
-    this.propertyAddress = new IEditablePersonAddressForm(AddressTypes.Residential);
-    this.billingAddress = new IEditablePersonAddressForm(AddressTypes.Billing);
+    this.mailingAddress = new IEditablePersonAddressForm(
+      ApiGen_CodeTypes_AddressUsageTypes.MAILING,
+    );
+    this.propertyAddress = new IEditablePersonAddressForm(
+      ApiGen_CodeTypes_AddressUsageTypes.RESIDNT,
+    );
+    this.billingAddress = new IEditablePersonAddressForm(
+      ApiGen_CodeTypes_AddressUsageTypes.BILLING,
+    );
   }
 
   static apiPersonToFormPerson(person?: ApiGen_Concepts_Person) {
@@ -101,15 +107,15 @@ export class IEditablePersonForm {
     formPerson.isDisabled = person.isDisabled;
 
     formPerson.mailingAddress =
-      formAddresses.find(a => a.addressTypeId === AddressTypes.Mailing) ??
-      new IEditablePersonAddressForm(AddressTypes.Mailing);
+      formAddresses.find(a => a.addressTypeId === ApiGen_CodeTypes_AddressUsageTypes.MAILING) ??
+      new IEditablePersonAddressForm(ApiGen_CodeTypes_AddressUsageTypes.MAILING);
 
     formPerson.propertyAddress =
-      formAddresses.find(a => a.addressTypeId === AddressTypes.Residential) ??
-      new IEditablePersonAddressForm(AddressTypes.Residential);
+      formAddresses.find(a => a.addressTypeId === ApiGen_CodeTypes_AddressUsageTypes.RESIDNT) ??
+      new IEditablePersonAddressForm(ApiGen_CodeTypes_AddressUsageTypes.RESIDNT);
     formPerson.billingAddress =
-      formAddresses.find(a => a.addressTypeId === AddressTypes.Billing) ??
-      new IEditablePersonAddressForm(AddressTypes.Billing);
+      formAddresses.find(a => a.addressTypeId === ApiGen_CodeTypes_AddressUsageTypes.BILLING) ??
+      new IEditablePersonAddressForm(ApiGen_CodeTypes_AddressUsageTypes.BILLING);
     formPerson.emailContactMethods =
       emailContactMethods.length > 0 ? emailContactMethods : [new IEditableContactMethodForm()];
     formPerson.phoneContactMethods =
@@ -195,9 +201,15 @@ export class IEditableOrganizationForm {
     this.persons = [];
     this.emailContactMethods = [new IEditableContactMethodForm()];
     this.phoneContactMethods = [new IEditableContactMethodForm()];
-    this.mailingAddress = new IEditableOrganizationAddressForm(AddressTypes.Mailing);
-    this.propertyAddress = new IEditableOrganizationAddressForm(AddressTypes.Residential);
-    this.billingAddress = new IEditableOrganizationAddressForm(AddressTypes.Billing);
+    this.mailingAddress = new IEditableOrganizationAddressForm(
+      ApiGen_CodeTypes_AddressUsageTypes.MAILING,
+    );
+    this.propertyAddress = new IEditableOrganizationAddressForm(
+      ApiGen_CodeTypes_AddressUsageTypes.RESIDNT,
+    );
+    this.billingAddress = new IEditableOrganizationAddressForm(
+      ApiGen_CodeTypes_AddressUsageTypes.BILLING,
+    );
   }
 
   static apiOrganizationToFormOrganization(
@@ -242,14 +254,14 @@ export class IEditableOrganizationForm {
 
     newForm.persons = formPersonList;
     newForm.mailingAddress =
-      formAddresses.find(a => a.addressTypeId === AddressTypes.Mailing) ??
-      new IEditableOrganizationAddressForm(AddressTypes.Mailing);
+      formAddresses.find(a => a.addressTypeId === ApiGen_CodeTypes_AddressUsageTypes.MAILING) ??
+      new IEditableOrganizationAddressForm(ApiGen_CodeTypes_AddressUsageTypes.MAILING);
     newForm.propertyAddress =
-      formAddresses.find(a => a.addressTypeId === AddressTypes.Residential) ??
-      new IEditableOrganizationAddressForm(AddressTypes.Residential);
+      formAddresses.find(a => a.addressTypeId === ApiGen_CodeTypes_AddressUsageTypes.RESIDNT) ??
+      new IEditableOrganizationAddressForm(ApiGen_CodeTypes_AddressUsageTypes.RESIDNT);
     newForm.billingAddress =
-      formAddresses.find(a => a.addressTypeId === AddressTypes.Billing) ??
-      new IEditableOrganizationAddressForm(AddressTypes.Billing);
+      formAddresses.find(a => a.addressTypeId === ApiGen_CodeTypes_AddressUsageTypes.BILLING) ??
+      new IEditableOrganizationAddressForm(ApiGen_CodeTypes_AddressUsageTypes.BILLING);
     newForm.emailContactMethods =
       emailContactMethods.length > 0 ? emailContactMethods : [new IEditableContactMethodForm()];
     newForm.phoneContactMethods =
@@ -360,7 +372,7 @@ export class IEditablePersonAddressForm {
   personAddressId?: number;
   personAddressRowVersion?: number;
 
-  constructor(addressType: AddressTypes) {
+  constructor(addressType: ApiGen_CodeTypes_AddressUsageTypes) {
     this.addressTypeId = addressType;
     this.streetAddress1 = '';
     this.streetAddress2 = '';
@@ -381,8 +393,10 @@ export class IEditablePersonAddressForm {
     }
 
     const addressUsageTypeCode = orgAddress.addressUsageType?.id;
-    const addressType: AddressTypes =
-      AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
+    const addressType: ApiGen_CodeTypes_AddressUsageTypes =
+      ApiGen_CodeTypes_AddressUsageTypes[
+        addressUsageTypeCode as keyof typeof ApiGen_CodeTypes_AddressUsageTypes
+      ];
 
     const newForm = new IEditablePersonAddressForm(addressType);
     newForm.addressTypeId = fromTypeCode(orgAddress?.addressUsageType) ?? '';
@@ -410,8 +424,10 @@ export class IEditablePersonAddressForm {
     }
 
     const addressUsageTypeCode = personAddress.addressUsageType?.id;
-    const addressType: AddressTypes =
-      AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
+    const addressType: ApiGen_CodeTypes_AddressUsageTypes =
+      ApiGen_CodeTypes_AddressUsageTypes[
+        addressUsageTypeCode as keyof typeof ApiGen_CodeTypes_AddressUsageTypes
+      ];
 
     const newForm = new IEditablePersonAddressForm(addressType);
     newForm.addressTypeId = fromTypeCode(personAddress?.addressUsageType) ?? '';
@@ -482,7 +498,7 @@ export class IEditableOrganizationAddressForm {
   organizationAddressId?: number;
   organizationAddressRowVersion?: number;
 
-  constructor(addressType: AddressTypes) {
+  constructor(addressType: ApiGen_CodeTypes_AddressUsageTypes) {
     this.addressTypeId = addressType;
     this.streetAddress1 = '';
     this.streetAddress2 = '';
@@ -500,8 +516,10 @@ export class IEditableOrganizationAddressForm {
     }
 
     const addressUsageTypeCode = orgAddress.addressUsageType?.id;
-    const addressType: AddressTypes =
-      AddressTypes[addressUsageTypeCode as keyof typeof AddressTypes];
+    const addressType: ApiGen_CodeTypes_AddressUsageTypes =
+      ApiGen_CodeTypes_AddressUsageTypes[
+        addressUsageTypeCode as keyof typeof ApiGen_CodeTypes_AddressUsageTypes
+      ];
 
     const newForm = new IEditableOrganizationAddressForm(addressType);
     newForm.addressTypeId = fromTypeCode(orgAddress?.addressUsageType) ?? '';

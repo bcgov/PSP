@@ -5,16 +5,12 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Moq;
-using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Controllers;
-using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Tenant;
 
 namespace Pims.Api.Test.Controllers
 {

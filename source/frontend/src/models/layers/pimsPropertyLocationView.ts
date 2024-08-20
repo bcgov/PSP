@@ -12,8 +12,7 @@ export interface PIMS_Property_Location_View {
   readonly PROPERTY_TYPE_CODE: string | null;
   readonly PROPERTY_STATUS_TYPE_CODE: string | null;
   readonly PROPERTY_DATA_SOURCE_TYPE_CODE: string | null;
-  readonly PROPERTY_DATA_SOURCE_EFFECTIVE_DATE: string | null;
-  readonly PROPERTY_CLASSIFICATION_TYPE_CODE: string | null;
+  readonly PROPERTY_DATA_SOURCE_EFFECTIVE_DATE: stringDate | null;
   readonly PROPERTY_TENURE_TYPE_CODE: string | null;
   readonly STREET_ADDRESS_1: string | null;
   readonly STREET_ADDRESS_2: string | null;
@@ -24,8 +23,6 @@ export interface PIMS_Property_Location_View {
   readonly PROVINCE_NAME: string | null;
   readonly COUNTRY_CODE: string | null;
   readonly COUNTRY_NAME: string | null;
-  readonly NAME: string | null;
-  readonly DESCRIPTION: string | null;
   readonly ADDRESS_ID: number | null;
   readonly REGION_CODE: number | null;
   readonly DISTRICT_CODE: number | null;
@@ -34,17 +31,12 @@ export interface PIMS_Property_Location_View {
   readonly LAND_AREA: number | null;
   readonly LAND_LEGAL_DESCRIPTION: string | null;
   readonly SURVEY_PLAN_NUMBER: string | null;
-  readonly ENCUMBRANCE_REASON: string | null;
-  readonly IS_SENSITIVE: boolean | null;
   readonly IS_OWNED: boolean | null;
+  readonly IS_RETIRED: boolean | null;
   readonly IS_DISPOSED: boolean | null;
   readonly IS_OTHER_INTEREST: boolean | null;
   readonly HAS_ACTIVE_ACQUISITION_FILE: boolean | null;
   readonly HAS_ACTIVE_RESEARCH_FILE: boolean | null;
-  readonly IS_RETIRED: boolean | null;
-  readonly IS_VISIBLE_TO_OTHER_AGENCIES: boolean | null;
-  readonly ZONING: string | null;
-  readonly ZONING_POTENTIAL: string | null;
   readonly IS_PAYABLE_LEASE: boolean | null;
   readonly IS_ACTIVE_PAYABLE_LEASE: boolean | null;
   readonly IS_RECEIVABLE_LEASE: boolean | null;
@@ -61,7 +53,6 @@ export const EmptyPropertyLocation: PIMS_Property_Location_View = {
   PROPERTY_STATUS_TYPE_CODE: null,
   PROPERTY_DATA_SOURCE_TYPE_CODE: null,
   PROPERTY_DATA_SOURCE_EFFECTIVE_DATE: null,
-  PROPERTY_CLASSIFICATION_TYPE_CODE: null,
   PROPERTY_TENURE_TYPE_CODE: null,
   STREET_ADDRESS_1: null,
   STREET_ADDRESS_2: null,
@@ -72,8 +63,6 @@ export const EmptyPropertyLocation: PIMS_Property_Location_View = {
   PROVINCE_NAME: null,
   COUNTRY_CODE: null,
   COUNTRY_NAME: null,
-  NAME: null,
-  DESCRIPTION: null,
   ADDRESS_ID: null,
   REGION_CODE: null,
   DISTRICT_CODE: null,
@@ -82,17 +71,12 @@ export const EmptyPropertyLocation: PIMS_Property_Location_View = {
   LAND_AREA: null,
   LAND_LEGAL_DESCRIPTION: null,
   SURVEY_PLAN_NUMBER: null,
-  ENCUMBRANCE_REASON: null,
-  IS_SENSITIVE: null,
   IS_OWNED: null,
   IS_DISPOSED: null,
   HAS_ACTIVE_ACQUISITION_FILE: null,
   HAS_ACTIVE_RESEARCH_FILE: null,
   IS_OTHER_INTEREST: null,
   IS_RETIRED: null,
-  IS_VISIBLE_TO_OTHER_AGENCIES: null,
-  ZONING: null,
-  ZONING_POTENTIAL: null,
   IS_PAYABLE_LEASE: null,
   IS_ACTIVE_PAYABLE_LEASE: null,
   IS_RECEIVABLE_LEASE: null,
@@ -110,8 +94,7 @@ export interface PIMS_Property_Boundary_View {
   readonly PROPERTY_TYPE_CODE: string | null;
   readonly PROPERTY_STATUS_TYPE_CODE: string | null;
   readonly PROPERTY_DATA_SOURCE_TYPE_CODE: string | null;
-  readonly PROPERTY_DATA_SOURCE_EFFECTIVE_DATE: string | null;
-  readonly PROPERTY_CLASSIFICATION_TYPE_CODE: string | null;
+  readonly PROPERTY_DATA_SOURCE_EFFECTIVE_DATE: stringDate | null;
   readonly PROPERTY_TENURE_TYPE_CODE: string | null;
   readonly STREET_ADDRESS_1: string | null;
   readonly STREET_ADDRESS_2: string | null;
@@ -122,8 +105,6 @@ export interface PIMS_Property_Boundary_View {
   readonly PROVINCE_NAME: string | null;
   readonly COUNTRY_CODE: string | null;
   readonly COUNTRY_NAME: string | null;
-  readonly NAME: string | null;
-  readonly DESCRIPTION: string | null;
   readonly ADDRESS_ID: number | null;
   readonly REGION_CODE: number | null;
   readonly DISTRICT_CODE: number | null;
@@ -132,17 +113,12 @@ export interface PIMS_Property_Boundary_View {
   readonly LAND_AREA: number | null;
   readonly LAND_LEGAL_DESCRIPTION: string | null;
   readonly SURVEY_PLAN_NUMBER: string | null;
-  readonly ENCUMBRANCE_REASON: string | null;
-  readonly IS_SENSITIVE: boolean | null;
   readonly IS_OWNED: boolean | null;
-  readonly IS_DISPOSED: boolean | null;
-  readonly HAS_ACTIVE_RESEARCH_FILE: boolean | null;
-  readonly HAS_ACTIVE_ACQUISITION_FILE: boolean | null;
-  readonly IS_OTHER_INTEREST: boolean | null;
   readonly IS_RETIRED: boolean | null;
-  readonly IS_VISIBLE_TO_OTHER_AGENCIES: boolean | null;
-  readonly ZONING: string | null;
-  readonly ZONING_POTENTIAL: string | null;
+  readonly IS_DISPOSED: boolean | null;
+  readonly IS_OTHER_INTEREST: boolean | null;
+  readonly HAS_ACTIVE_ACQUISITION_FILE: boolean | null;
+  readonly HAS_ACTIVE_RESEARCH_FILE: boolean | null;
   readonly IS_PAYABLE_LEASE: boolean | null;
   readonly IS_ACTIVE_PAYABLE_LEASE: boolean | null;
   readonly IS_RECEIVABLE_LEASE: boolean | null;

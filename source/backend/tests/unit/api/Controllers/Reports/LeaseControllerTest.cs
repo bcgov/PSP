@@ -15,12 +15,10 @@ using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 

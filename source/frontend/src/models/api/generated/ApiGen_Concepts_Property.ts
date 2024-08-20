@@ -13,7 +13,6 @@ import { ApiGen_Concepts_Address } from './ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Geometry } from './ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_HistoricalFileNumber } from './ApiGen_Concepts_HistoricalFileNumber';
 import { ApiGen_Concepts_PropertyAnomaly } from './ApiGen_Concepts_PropertyAnomaly';
-import { ApiGen_Concepts_PropertyContact } from './ApiGen_Concepts_PropertyContact';
 import { ApiGen_Concepts_PropertyRoad } from './ApiGen_Concepts_PropertyRoad';
 import { ApiGen_Concepts_PropertyTenure } from './ApiGen_Concepts_PropertyTenure';
 
@@ -31,11 +30,7 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   dataSourceEffectiveDateOnly: UtcIsoDate;
   latitude: number | null;
   longitude: number | null;
-  name: string | null;
-  description: string | null;
-  isSensitive: boolean;
   isRetired: boolean;
-  isProvincialPublicHwy: boolean | null;
   pphStatusUpdateUserid: string | null;
   pphStatusUpdateTimestamp: UtcIsoDateTime | null;
   pphStatusUpdateUserGuid: string | null;
@@ -46,7 +41,6 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   pin: number | null;
   planNumber: string | null;
   isOwned: boolean;
-  isVisibleToOtherAgencies: boolean;
   areaUnit: ApiGen_Base_CodeType<string> | null;
   landArea: number | null;
   isVolumetricParcel: boolean | null;
@@ -55,12 +49,9 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   volumetricType: ApiGen_Base_CodeType<string> | null;
   landLegalDescription: string | null;
   municipalZoning: string | null;
-  zoning: string | null;
-  zoningPotential: string | null;
   location: ApiGen_Concepts_Geometry | null;
   boundary: Geometry | null;
   generalLocation: string | null;
-  propertyContacts: ApiGen_Concepts_PropertyContact[] | null;
   historicalFileNumbers: ApiGen_Concepts_HistoricalFileNumber[] | null;
   notes: string | null;
   surplusDeclarationType: ApiGen_Base_CodeType<string> | null;

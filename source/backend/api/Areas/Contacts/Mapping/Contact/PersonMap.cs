@@ -16,6 +16,7 @@ namespace Pims.Api.Areas.Contact.Mapping.Contact
                 .Map(dest => dest.PreferredName, src => src.PreferredName)
                 .Map(dest => dest.Addresses, src => src.PimsPersonAddresses)
                 .Map(dest => dest.ContactMethods, src => src.PimsContactMethods)
+                .Map(dest => dest.UseOrganizationAddress, src => src.UseOrganizationAddress)
                 .Map(dest => dest.Organizations, src => src.GetOrganizations())
                 .Map(dest => dest.Comment, src => src.Comment);
         }

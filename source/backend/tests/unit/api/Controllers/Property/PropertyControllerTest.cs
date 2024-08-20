@@ -1,16 +1,12 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using FluentAssertions;
 using MapsterMapper;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
-using Pims.Api.Areas.Notes.Controllers;
 using Pims.Api.Areas.Property.Controllers;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
 
 namespace Pims.Api.Test.Controllers.Property

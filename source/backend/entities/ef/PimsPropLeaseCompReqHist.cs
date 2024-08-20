@@ -29,9 +29,6 @@ public partial class PimsPropLeaseCompReqHist
     [Column("COMPENSATION_REQUISITION_ID")]
     public long CompensationRequisitionId { get; set; }
 
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
-
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
