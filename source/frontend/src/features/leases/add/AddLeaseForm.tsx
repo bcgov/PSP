@@ -11,7 +11,6 @@ import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
 import ConsultationSubForm, { getConsultations } from './ConsultationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
-import DocumentationSubForm from './ReferenceSubForm';
 
 interface IAddLeaseFormProps {
   onSubmit: (
@@ -61,7 +60,6 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
             <LeasePropertySelector formikProps={formikProps} />
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
             <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
-            <DocumentationSubForm />
           </>
         )}
       </Formik>
