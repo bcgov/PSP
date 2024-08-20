@@ -12,7 +12,6 @@ using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Core.Test;
 using Xunit;
-using Model = Pims.Api.Areas.Property.Models.Search;
 
 namespace Pims.Api.Test.Helpers
 {

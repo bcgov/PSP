@@ -10,7 +10,6 @@ using Pims.Api.Areas.Research.Controllers;
 using Pims.Api.Areas.Research.Models.Search;
 using Pims.Api.Models.Concepts.ResearchFile;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;

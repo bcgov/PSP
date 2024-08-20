@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Pims.Api.Services;
 using Pims.Core.Test;
@@ -12,10 +11,7 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
-using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Test.Services
 {

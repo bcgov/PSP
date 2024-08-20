@@ -131,16 +131,11 @@ export class UpdatePropertyDetailsFormModel {
   pid?: number;
   pin?: number;
   planNumber?: string;
-  zoning?: string;
-  zoningPotential?: string;
   municipalZoning?: string;
   notes?: string;
 
   isOwned: boolean;
 
-  name?: string;
-  description?: string;
-  isSensitive?: boolean;
   isRetired?: boolean;
   pphStatusTypeCode?: string;
   pphStatusUpdateUserid?: string;
@@ -194,14 +189,8 @@ export class UpdatePropertyDetailsFormModel {
     model.pid = base.pid ?? undefined;
     model.pin = base.pin ?? undefined;
     model.planNumber = base.planNumber ?? undefined;
-    model.zoning = base.zoning ?? undefined;
-    model.zoningPotential = base.zoningPotential ?? undefined;
     model.municipalZoning = base.municipalZoning ?? undefined;
     model.notes = base.notes ?? undefined;
-
-    model.name = base.name ?? undefined;
-    model.description = base.description ?? undefined;
-    model.isSensitive = base.isSensitive;
     model.isRetired = base.isRetired;
     model.pphStatusTypeCode =
       base.pphStatusTypeCode ?? ApiGen_CodeTypes_PropertyPPHStatusTypes.UNKNOWN.toString();
@@ -260,13 +249,8 @@ export class UpdatePropertyDetailsFormModel {
       pid: this.pid ?? null,
       pin: this.pin ?? null,
       planNumber: this.planNumber ?? null,
-      zoning: this.zoning ?? null,
-      zoningPotential: this.zoningPotential ?? null,
       municipalZoning: this.municipalZoning ?? null,
       notes: this.notes ?? null,
-      name: this.name ?? null,
-      description: this.description ?? null,
-      isSensitive: this.isSensitive ?? false,
       isRetired: this.isRetired ?? false,
       pphStatusTypeCode: this.pphStatusTypeCode ?? null,
       isRwyBeltDomPatent: this.isRwyBeltDomPatent ?? null,
@@ -295,12 +279,9 @@ export class UpdatePropertyDetailsFormModel {
       boundary: null,
       dataSource: null,
       dataSourceEffectiveDateOnly: EpochIsoDateTime,
-      isProvincialPublicHwy: null,
       pphStatusUpdateUserid: null,
       pphStatusUpdateTimestamp: null,
       pphStatusUpdateUserGuid: null,
-      isVisibleToOtherAgencies: false,
-      propertyContacts: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       historicalFileNumbers: null,

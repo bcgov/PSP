@@ -1,4 +1,3 @@
-import { AddressTypes } from '@/constants';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getEmptyAddress } from '@/mocks/address.mock';
@@ -8,6 +7,7 @@ import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 
 describe('GenerateFile tests', () => {
   it('Can Generate an empty file without throwing an error', () => {
@@ -302,7 +302,7 @@ describe('GenerateFile tests', () => {
               organizationId: 1,
               rowVersion: null,
               address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
-              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              addressUsageType: toTypeCodeNullable(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
             },
           ],
         },
@@ -329,7 +329,7 @@ describe('GenerateFile tests', () => {
           personAddresses: [
             {
               address: { ...getEmptyAddress(), streetAddress1: 'primaryaddress' },
-              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              addressUsageType: toTypeCodeNullable(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
               id: 1,
               personId: 1,
               rowVersion: null,
@@ -374,7 +374,7 @@ describe('GenerateFile tests', () => {
           organizationAddresses: [
             {
               address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
-              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              addressUsageType: toTypeCodeNullable(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
               id: 1,
               organizationId: 1,
               rowVersion: null,
@@ -412,7 +412,7 @@ describe('GenerateFile tests', () => {
               organizationId: 1,
               rowVersion: null,
               address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
-              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              addressUsageType: toTypeCodeNullable(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
             },
           ],
         },
@@ -466,7 +466,7 @@ describe('GenerateFile tests', () => {
           organizationAddresses: [
             {
               address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
-              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              addressUsageType: toTypeCodeNullable(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
               id: 1,
               organizationId: 1,
               rowVersion: null,
@@ -501,7 +501,7 @@ describe('GenerateFile tests', () => {
           organizationAddresses: [
             {
               address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
-              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              addressUsageType: toTypeCodeNullable(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
               id: 1,
               organizationId: 1,
               rowVersion: null,
@@ -563,7 +563,7 @@ describe('GenerateFile tests', () => {
               organizationId: 1,
               rowVersion: null,
               address: { ...getEmptyAddress(), streetAddress1: 'orgaddress' },
-              addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+              addressUsageType: toTypeCodeNullable(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
             },
           ],
         },

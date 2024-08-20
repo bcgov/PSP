@@ -59,6 +59,9 @@ public partial class PimsPersonHist
     [Column("USE_ORGANIZATION_ADDRESS")]
     public bool? UseOrganizationAddress { get; set; }
 
+    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+    public long? PimsPropertyActivityId { get; set; }
+
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
@@ -112,7 +115,4 @@ public partial class PimsPersonHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long? PimsPropertyActivityId { get; set; }
 }

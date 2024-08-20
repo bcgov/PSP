@@ -3,13 +3,11 @@ import { ClusterFeature, ClusterProperties } from 'supercluster';
 
 import {
   PropertyAreaUnitTypes,
-  PropertyClassificationTypes,
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
 } from '@/constants/index';
 import { toCqlFilterValue } from '@/hooks/layer-api/layerUtils';
-import { IProperty } from '@/interfaces';
 import {
   EmptyPropertyLocation,
   PIMS_Property_Location_View,
@@ -26,6 +24,7 @@ import {
   pointToLayer,
   propertyOfInterestIcon,
 } from './util';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
     it('converts a feature and latlng expression into a layer', () => {
@@ -183,94 +182,6 @@ describe('mapUtils tests', () => {
           true,
         ),
       ).toBeNull();
-    });
-  });
-
-  describe('create points function', () => {
-    const property: IProperty = {
-      id: 1,
-      pid: '000-000-001',
-      statusId: PropertyStatusTypes.UnderAdmin,
-      classificationId: PropertyClassificationTypes.CoreOperational,
-      tenureId: PropertyTenureTypes.HighwayRoad,
-      dataSourceId: PropertyDataSourceTypes.PAIMS,
-      dataSourceEffectiveDate: '2021-08-30T18:11:13.883Z',
-      address: {
-        streetAddress1: '1243 St',
-        provinceId: 1,
-        municipality: '',
-        postal: '',
-      },
-      regionId: 1,
-      districtId: 1,
-      areaUnitId: PropertyAreaUnitTypes.Hectare,
-      landArea: 0,
-      landLegalDescription: '',
-      latitude: 1,
-      longitude: 2,
-      isSensitive: false,
-    };
-    it('converts properties to point features', () => {
-      expect(createPoints([property, property])).toEqual([
-        {
-          geometry: { coordinates: [2, 1], type: 'Point' },
-          properties: {
-            PROPERTY_ID: 1,
-            address: {
-              streetAddress1: '1243 St',
-              provinceId: 1,
-              municipality: '',
-              postal: '',
-            },
-            areaUnitId: PropertyAreaUnitTypes.Hectare,
-            classificationId: PropertyClassificationTypes.CoreOperational,
-            dataSourceId: PropertyDataSourceTypes.PAIMS,
-            dataSourceEffectiveDate: property.dataSourceEffectiveDate,
-            districtId: 1,
-            cluster: false,
-            id: 1,
-            isSensitive: false,
-            latitude: 1,
-            longitude: 2,
-            tenureId: PropertyTenureTypes.HighwayRoad,
-            statusId: PropertyStatusTypes.UnderAdmin,
-            regionId: 1,
-            landArea: 0,
-            landLegalDescription: '',
-            pid: '000-000-001',
-          },
-          type: 'Feature',
-        },
-        {
-          geometry: { coordinates: [2, 1], type: 'Point' },
-          properties: {
-            PROPERTY_ID: 1,
-            address: {
-              streetAddress1: '1243 St',
-              provinceId: 1,
-              municipality: '',
-              postal: '',
-            },
-            areaUnitId: PropertyAreaUnitTypes.Hectare,
-            classificationId: PropertyClassificationTypes.CoreOperational,
-            dataSourceId: PropertyDataSourceTypes.PAIMS,
-            dataSourceEffectiveDate: property.dataSourceEffectiveDate,
-            districtId: 1,
-            cluster: false,
-            id: 1,
-            isSensitive: false,
-            latitude: 1,
-            longitude: 2,
-            tenureId: PropertyTenureTypes.HighwayRoad,
-            statusId: PropertyStatusTypes.UnderAdmin,
-            regionId: 1,
-            landArea: 0,
-            landLegalDescription: '',
-            pid: '000-000-001',
-          },
-          type: 'Feature',
-        },
-      ]);
     });
   });
 

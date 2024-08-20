@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using Pims.Api.Models.CodeTypes;
@@ -616,14 +614,12 @@ namespace Pims.Dal.Test.Repositories
 
             var newValues = new Entity.PimsProperty();
             property.CopyValues(newValues);
-            newValues.Description = propertyDescription;
             newValues.Pid = pid;
 
             // Act
             var updatedProperty = repository.Update(newValues);
 
             // Assert
-            updatedProperty.Description.Should().Be(propertyDescription);
             updatedProperty.Pid.Should().Be(pid);
         }
 
@@ -637,7 +633,6 @@ namespace Pims.Dal.Test.Repositories
 
             var newValues = new Entity.PimsProperty();
             property.CopyValues(newValues);
-            newValues.Description = "test";
             newValues.Pid = 200;
 
             // Act
@@ -768,7 +763,6 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             transferredProperty.IsOwned.Should().BeTrue();
-            transferredProperty.PropertyClassificationTypeCode.Should().Be("COREOPER");
         }
 
         [Fact]
@@ -786,7 +780,6 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             transferredProperty.IsOwned.Should().BeFalse();
-            transferredProperty.PropertyClassificationTypeCode.Should().Be("OTHER");
         }
         #endregion
 

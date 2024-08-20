@@ -40,7 +40,6 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
         dataSourceEffectiveDateOnly: '2022-09-02T00:00:00',
         latitude: 49.27720127104871,
         longitude: -123.128633565,
-        isSensitive: false,
         isRwyBeltDomPatent: false,
         pin: 0,
         pid: 123456789,

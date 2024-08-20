@@ -12,21 +12,6 @@ namespace Pims.Api.Areas.Reports.Models.Property
         public string PropertyTypeId { get; set; }
 
         /// <summary>
-        /// get/set - The current classification.
-        /// </summary>
-        public string ClassificationId { get; set; }
-
-        /// <summary>
-        /// get/set - The name of the property.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// get/set - A description of the property.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
         /// get/set - The civic address of the property.
         /// </summary>
         public string Address { get; set; }
@@ -52,13 +37,6 @@ namespace Pims.Api.Areas.Reports.Models.Property
         /// get/set - The longitude location.
         /// </summary>
         public double Longitude { get; set; }
-
-        /// <summary>
-        /// get/set - Whether the property is sensitive.
-        /// </summary>
-        [DisplayName("Sensitive")]
-        [CsvHelper.Configuration.Attributes.Name("Sensitive")]
-        public bool IsSensitive { get; set; }
 
         #region Parcel Properties
 
@@ -86,10 +64,6 @@ namespace Pims.Api.Areas.Reports.Models.Property
         [CsvHelper.Configuration.Attributes.Name("Legal Description")]
         public string LandLegalDescription { get; set; }
 
-        /// <summary>
-        /// get/set - The current zoning.
-        /// </summary>
-        public string Zoning { get; set; }
         #endregion
         #endregion
     }

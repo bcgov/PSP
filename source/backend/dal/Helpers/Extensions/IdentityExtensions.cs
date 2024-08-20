@@ -1,8 +1,6 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
-using System.Security.Cryptography.Xml;
-using System.Text.Json;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;

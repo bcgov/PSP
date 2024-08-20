@@ -1,4 +1,3 @@
-import { useKeycloak } from '@react-keycloak/web';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Feature, FeatureCollection, Point } from 'geojson';
@@ -8,7 +7,6 @@ import thunk from 'redux-thunk';
 
 import {
   IMapStateMachineContext,
-  useMapStateMachine,
 } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   FeatureSelected,
@@ -18,11 +16,6 @@ import {
 } from '@/components/common/mapFSM/models';
 import {
   Claims,
-  PropertyAreaUnitTypes,
-  PropertyClassificationTypes,
-  PropertyDataSourceTypes,
-  PropertyStatusTypes,
-  PropertyTenureTypes,
 } from '@/constants/index';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import {
@@ -155,42 +148,6 @@ const mockParcels: ParcelSeed[] = [
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
   propertyDetail: {
-    id: 1,
-    pid: '000-000-001',
-    pin: '',
-    statusId: PropertyStatusTypes.UnderAdmin,
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: new Date(),
-    classificationId: PropertyClassificationTypes.CoreStrategic,
-    classification: 'Core Operational',
-    tenureId: PropertyTenureTypes.HighwayRoad,
-    name: 'test name',
-    description: 'test',
-    encumbranceReason: '',
-    zoning: '',
-    zoningPotential: '',
-    latitude: 48,
-    longitude: 123,
-    isSensitive: false,
-    evaluations: [
-      {
-        evaluatedOn: '2019',
-        key: 1,
-        value: 100000,
-      },
-    ],
-    regionId: 1,
-    districtId: 1,
-    address: {
-      streetAddress1: '1234 mock Street',
-      streetAddress2: 'N/A',
-      municipality: '',
-      provinceId: 1,
-      postal: 'V1V1V1',
-    },
-    areaUnitId: PropertyAreaUnitTypes.Hectare,
-    landArea: 0,
-    landLegalDescription: 'test',
   },
 };
 

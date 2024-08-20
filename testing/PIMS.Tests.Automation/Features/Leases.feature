@@ -17,7 +17,7 @@ Scenario: 02. Leases Properties and Surplus Declaration
 	Then A new lease is created successfully
 
 Scenario: 03. Lease Checklist Tab
-	Given I create a new minimum Lease from row number 5
+	Given I create a new minimum Lease from row number 1
 	When I insert Checklist information to a Lease
 	Then A new lease is created successfully
 

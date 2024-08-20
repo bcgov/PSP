@@ -14,7 +14,6 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;

@@ -49,6 +49,9 @@ public partial class PimsPerson
     [Column("USE_ORGANIZATION_ADDRESS")]
     public bool? UseOrganizationAddress { get; set; }
 
+    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
+    public long? PimsPropertyActivityId { get; set; }
+
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
@@ -103,9 +106,6 @@ public partial class PimsPerson
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [Column("PIMS_PROPERTY_ACTIVITY_ID")]
-    public long? PimsPropertyActivityId { get; set; }
-
     [InverseProperty("Person")]
     public virtual ICollection<PimsAcquisitionFileTeam> PimsAcquisitionFileTeamPeople { get; set; } = new List<PimsAcquisitionFileTeam>();
 
@@ -144,6 +144,12 @@ public partial class PimsPerson
 
     [InverseProperty("PrimaryContact")]
     public virtual ICollection<PimsInterestHolder> PimsInterestHolderPrimaryContacts { get; set; } = new List<PimsInterestHolder>();
+
+    [InverseProperty("Person")]
+    public virtual ICollection<PimsLeaseConsultation> PimsLeaseConsultationPeople { get; set; } = new List<PimsLeaseConsultation>();
+
+    [InverseProperty("PrimaryContact")]
+    public virtual ICollection<PimsLeaseConsultation> PimsLeaseConsultationPrimaryContacts { get; set; } = new List<PimsLeaseConsultation>();
 
     [InverseProperty("Person")]
     public virtual ICollection<PimsLeaseStakeholder> PimsLeaseStakeholderPeople { get; set; } = new List<PimsLeaseStakeholder>();

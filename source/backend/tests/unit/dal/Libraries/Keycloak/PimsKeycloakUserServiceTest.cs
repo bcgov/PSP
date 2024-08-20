@@ -2,9 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.Spreadsheet;
 using FluentAssertions;
-using k8s.KubeConfigModels;
 using Moq;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
@@ -14,7 +12,6 @@ using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Pims.Keycloak.Models;
 using Xunit;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Test.Libraries.Keycloak
