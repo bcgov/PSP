@@ -3,7 +3,6 @@ import {
   AccessRequestStatus,
   OrganizationIdentifierTypes,
   OrganizationTypes,
-  PropertyClassificationTypes,
   PropertyDataSourceTypes,
   PropertyStatusTypes,
   PropertyTenureTypes,
@@ -665,7 +664,6 @@ export const mockApiProperty: ApiGen_Concepts_Property = {
   status: toTypeCode(PropertyStatusTypes.UnderAdmin),
   dataSource: toTypeCode(PropertyDataSourceTypes.PAIMS),
   dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
-  propertyType: toTypeCode(PropertyClassificationTypes.CoreOperational),
   tenures: [
     {
       id: 1,

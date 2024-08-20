@@ -179,7 +179,6 @@ export class PropertyForm {
         properties: {
           ...EmptyPropertyLocation,
           PROPERTY_ID: this.apiId,
-          NAME: this.name,
           PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
           PID_PADDED: this?.pid?.padStart(9, '0'),
           PIN: this.pin ? +this.pin : null,

@@ -131,16 +131,11 @@ export class UpdatePropertyDetailsFormModel {
   pid?: number;
   pin?: number;
   planNumber?: string;
-  zoning?: string;
-  zoningPotential?: string;
   municipalZoning?: string;
   notes?: string;
 
   isOwned: boolean;
 
-  name?: string;
-  description?: string;
-  isSensitive?: boolean;
   isRetired?: boolean;
   pphStatusTypeCode?: string;
   pphStatusUpdateUserid?: string;

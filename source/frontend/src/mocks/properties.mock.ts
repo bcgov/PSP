@@ -1,9 +1,7 @@
-import { PropertyClassificationTypes } from '@/constants/propertyClassificationTypes';
 import { PropertyDataSourceTypes } from '@/constants/propertyDataSourceTypes';
 import { PropertyStatusTypes } from '@/constants/propertyStatusTypes';
 import { PropertyTenureTypes } from '@/constants/propertyTenureTypes';
-import { IProperty } from '@/interfaces';
-import { mockAcquisitionFileResponse, mockAddress } from '@/mocks/index.mock';
+import { mockAcquisitionFileResponse } from '@/mocks/index.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
@@ -95,75 +93,6 @@ export const getEmptyPropertyView = (): ApiGen_Concepts_PropertyView => ({
   historicalFileNumberStr: '',
 });
 
-export const getMockProperties: () => IProperty[] = () => [
-  {
-    id: 1,
-    pid: '000-000-000',
-    pin: '',
-    statusId: PropertyStatusTypes.UnderAdmin,
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T17:28:17.655Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.HighwayRoad,
-    zoning: '',
-    zoningPotential: '',
-    encumbranceReason: '',
-    isSensitive: false,
-    latitude: 48,
-    longitude: 123,
-    name: 'test name',
-    description: 'test',
-    addressId: mockAddress.id,
-    address: { ...mockAddress },
-    landArea: 123,
-    landLegalDescription: 'test description',
-  },
-  {
-    id: 2,
-    pid: '000-000-001',
-    pin: '',
-    statusId: PropertyStatusTypes.UnderAdmin,
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.HighwayRoad,
-    zoning: '',
-    zoningPotential: '',
-    encumbranceReason: '',
-    isSensitive: false,
-    latitude: 49,
-    longitude: 123,
-    name: 'test name',
-    description: 'test',
-    addressId: mockAddress.id,
-    address: { ...mockAddress },
-    landArea: 123,
-    landLegalDescription: 'test description',
-  },
-  {
-    id: 100,
-    pid: '000-000-002',
-    pin: '',
-    statusId: PropertyStatusTypes.UnderAdmin,
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
-    dataSourceEffectiveDate: '2021-08-30T18:14:13.170Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
-    tenureId: PropertyTenureTypes.HighwayRoad,
-    zoning: '',
-    zoningPotential: '',
-    encumbranceReason: '',
-    isSensitive: false,
-    latitude: 48,
-    longitude: 123,
-    name: 'test name',
-    description: 'test',
-    addressId: mockAddress.id,
-    address: { ...mockAddress },
-    landArea: 123,
-    landLegalDescription: 'test description',
-  },
-];
-
 export const getMockApiProperty: () => ApiGen_Concepts_Property = () => ({
   ...emptyProperty,
   id: 1,
@@ -171,7 +100,6 @@ export const getMockApiProperty: () => ApiGen_Concepts_Property = () => ({
   status: toTypeCodeNullable(PropertyStatusTypes.UnderAdmin),
   dataSourceId: PropertyDataSourceTypes.PAIMS,
   dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
-  classificationId: PropertyClassificationTypes.CoreOperational,
   tenureId: PropertyTenureTypes.HighwayRoad,
   zoning: '',
   zoningPotential: '',
@@ -231,7 +159,6 @@ export const getMockApiProperties: () => ApiGen_Concepts_Property[] = () => [
     status: toTypeCodeNullable(PropertyStatusTypes.UnderAdmin),
     dataSourceId: PropertyDataSourceTypes.PAIMS,
     dataSourceEffectiveDateOnly: '2021-08-30T18:14:13.170Z',
-    classificationId: PropertyClassificationTypes.CoreOperational,
     tenureId: PropertyTenureTypes.HighwayRoad,
     zoning: '',
     zoningPotential: '',

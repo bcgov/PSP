@@ -14,7 +14,6 @@ export * from './projectTierTypes';
 export * from './projectTypes';
 export * from './propertyAdjacentLandTypes';
 export * from './propertyAreaUnitTypes';
-export * from './propertyClassificationTypes';
 export * from './propertyDataSourceTypes';
 export * from './propertyServiceFileTypes';
 export * from './propertyStatusTypes';

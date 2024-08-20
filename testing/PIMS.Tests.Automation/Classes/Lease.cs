@@ -22,8 +22,6 @@
         public string ProgramOther { get; set; } = null!;
         public string AdminType { get; set; } = null!;
         public string TypeOther { get; set; } = null!;
-        public string Category { get; set; } = null!;
-        public string CategoryOther { get; set; } = null!;
         public List<string> LeasePurpose { get; set; } = new List<string>() { };
         public string PurposeOther { get; set; } = null!;
         public string Initiator { get; set; } = null!;

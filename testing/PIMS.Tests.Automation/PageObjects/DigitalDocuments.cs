@@ -1006,7 +1006,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentDetailsCreateViewForm(DigitalDocument document)
         {
-            Wait(2000);
+            Wait();
             WaitUntilSpinnerDisappear();
 
             //Header
