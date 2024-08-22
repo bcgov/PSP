@@ -42,6 +42,15 @@ namespace Pims.Api.Test.Services
                         new object[] { FileTypes.Disposition, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
             };
 
+        public static IEnumerable<object[]> FileTypesUpdateNoAccess =
+    new List<object[]>
+    {
+                        new object[] { FileTypes.Acquisition, new NotAuthorizedException() },
+                        new object[] { FileTypes.Lease, new NotAuthorizedException() },
+                        new object[] { FileTypes.Research, new BadRequestException("Relationship type not valid.") },
+                        new object[] { FileTypes.Disposition, new BadRequestException("Relationship type not valid.") },
+    };
+
         public CompensationRequisitionServiceTest()
         {
             this._helper = new TestHelper();
@@ -89,7 +98,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Theory]
-        [MemberData(nameof(FileTypesDataNoAccess))]
+        [MemberData(nameof(FileTypesUpdateNoAccess))]
         public void GetCompensationsRequisitions_NoPermissions(FileTypes fileType, Exception exception)
         {
             // Arrange

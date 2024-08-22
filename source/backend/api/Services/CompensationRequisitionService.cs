@@ -175,11 +175,12 @@ namespace Pims.Api.Services
 
         private PimsCompensationRequisition AddAcquisitionFileCompReq(PimsCompensationRequisition compensationRequisition)
         {
+            compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
+
             _logger.LogInformation("Adding compensation requisition for acquisition file id: {acquisitionFileId}", compensationRequisition.AcquisitionFileId);
+
             compensationRequisition.ThrowInvalidParentId();
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
-
-            compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
 
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, (long)compensationRequisition.AcquisitionFileId);
 
@@ -192,11 +193,12 @@ namespace Pims.Api.Services
 
         private PimsCompensationRequisition AddLeaseFileCompReq(PimsCompensationRequisition compensationRequisition)
         {
+            compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
+
             _logger.LogInformation("Adding compensation requisition for lease file id: {leaseId}", compensationRequisition.LeaseId);
             compensationRequisition.ThrowInvalidParentId();
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
 
-            compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
             if (compensationRequisition.LeaseId is null)
             {
                 throw new BadRequestException("Invalid LeaseId.");
