@@ -5,18 +5,14 @@ import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import {
-  IMapStateMachineContext,
-} from '@/components/common/mapFSM/MapStateMachineContext';
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   FeatureSelected,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
   emptyPmbcFeatureCollection,
 } from '@/components/common/mapFSM/models';
-import {
-  Claims,
-} from '@/constants/index';
+import { Claims } from '@/constants/index';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import {
   EmptyPropertyLocation,
@@ -147,8 +143,7 @@ const mockParcels: ParcelSeed[] = [
 
 // This will spoof the active parcel (the one that will populate the popup details)
 const mockDetails = {
-  propertyDetail: {
-  },
+  propertyDetail: {},
 };
 
 const store = mockStore({
