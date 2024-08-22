@@ -36,10 +36,10 @@ namespace Pims.Api.Test.Services
         public static IEnumerable<object[]> FileTypesDataNoAccess =
             new List<object[]>
             {
-                        new object[] { FileTypes.Acquisition, new NotAuthorizedException() },
-                        new object[] { FileTypes.Lease, new NotAuthorizedException() },
-                        new object[] { FileTypes.Research, new BadRequestException("Relationship type not valid.") },
-                        new object[] { FileTypes.Disposition, new BadRequestException("Relationship type not valid.") },
+                        new object[] { FileTypes.Acquisition, new PimsCompensationRequisition() { AcquisitionFileId = 1, LeaseId = null, }, new NotAuthorizedException() },
+                        new object[] { FileTypes.Lease, new PimsCompensationRequisition() { LeaseId = 1, AcquisitionFileId = null, }, new NotAuthorizedException() },
+                        new object[] { FileTypes.Research, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
+                        new object[] { FileTypes.Disposition, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
             };
 
         public CompensationRequisitionServiceTest()
@@ -143,12 +143,12 @@ namespace Pims.Api.Test.Services
 
         [Theory]
         [MemberData(nameof(FileTypesDataNoAccess))]
-        public void AddCompensationsRequisitions_NoPermissions(FileTypes fileType, Exception exception)
+        public void AddCompensationsRequisitions_NoPermissions(FileTypes fileType,PimsCompensationRequisition compReq, Exception exception)
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions();
 
-            Exception ex = Assert.Throws(exception.GetType(), () => service.AddCompensationRequisition(fileType, new PimsCompensationRequisition()));
+            Exception ex = Assert.Throws(exception.GetType(), () => service.AddCompensationRequisition(fileType, compReq));
         }
 
         [Fact]
@@ -182,7 +182,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.AddCompensationRequisition(FileTypes.Acquisition, newCompensationRequisition);
 
             // Assert
-            act.Should().Throw<BadRequestException>();
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -200,7 +200,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.AddCompensationRequisition(FileTypes.Acquisition, newCompensationRequisition);
 
             // Assert
-            act.Should().Throw<BadRequestException>();
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]
@@ -271,13 +271,26 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Update_NoPermission()
+        public void Update_NoPermission_AcquisitionFile()
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
-            Action act = () => service.Update(new PimsCompensationRequisition());
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition() {  CompensationRequisitionId = 1, AcquisitionFileId = 1});
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_NoPermission_LeaseFile()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition() { CompensationRequisitionId = 1, LeaseId = 1 });
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -290,7 +303,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
 
             // Act
-            Action act = () => service.Update(null);
+            Action act = () => service.Update(FileTypes.Acquisition, null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -335,6 +348,7 @@ namespace Pims.Api.Test.Services
 
             // Act
             var result = service.Update(
+                FileTypes.Acquisition,
                 new PimsCompensationRequisition
                 {
                     Internal_Id = 1,
@@ -376,7 +390,7 @@ namespace Pims.Api.Test.Services
 
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -414,7 +428,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
-            Action act = () => service.Update(new PimsCompensationRequisition()
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -449,7 +463,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
-            Action act = () => service.Update(new PimsCompensationRequisition()
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -486,7 +500,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -527,7 +541,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -567,7 +581,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -611,7 +625,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -655,7 +669,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -697,7 +711,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -742,7 +756,7 @@ namespace Pims.Api.Test.Services
 
             // Act
             // Assert
-            Action act = () => service.Update(new PimsCompensationRequisition()
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -785,7 +799,7 @@ namespace Pims.Api.Test.Services
 
             // Act
             // Assert
-            Action act = () => service.Update(new PimsCompensationRequisition()
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,

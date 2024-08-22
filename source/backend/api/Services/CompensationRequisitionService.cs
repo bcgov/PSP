@@ -8,6 +8,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -58,6 +59,8 @@ namespace Pims.Api.Services
 
         public PimsCompensationRequisition AddCompensationRequisition(FileTypes fileType, PimsCompensationRequisition compensationRequisition)
         {
+            _logger.LogInformation("Adding compensation for: {fileType}", fileType);
+
             PimsCompensationRequisition newCompensationRequisition = fileType switch
             {
                 FileTypes.Acquisition => AddAcquisitionFileCompReq(compensationRequisition),
@@ -72,6 +75,9 @@ namespace Pims.Api.Services
 
         public PimsCompensationRequisition Update(FileTypes fileType, PimsCompensationRequisition compensationRequisition)
         {
+            _logger.LogInformation("Adding compensation for: {fileType}", fileType);
+            compensationRequisition.ThrowInvalidParentId();
+
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionEdit);
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
 
@@ -169,20 +175,11 @@ namespace Pims.Api.Services
 
         private PimsCompensationRequisition AddAcquisitionFileCompReq(PimsCompensationRequisition compensationRequisition)
         {
+            _logger.LogInformation("Adding compensation requisition for acquisition file id: {acquisitionFileId}", compensationRequisition.AcquisitionFileId);
+            compensationRequisition.ThrowInvalidParentId();
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
 
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
-            if (compensationRequisition.AcquisitionFileId is null)
-            {
-                throw new BadRequestException("Invalid acquisitionFileId.");
-            }
-
-            _logger.LogInformation("Adding compensation requisition for acquisition file id: {acquisitionFileId}", compensationRequisition.AcquisitionFileId);
-
-            if (compensationRequisition.LeaseId is not null)
-            {
-                throw new BadRequestException("Compensation Requisition should have only one parent Id");
-            }
 
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, (long)compensationRequisition.AcquisitionFileId);
 
@@ -195,19 +192,14 @@ namespace Pims.Api.Services
 
         private PimsCompensationRequisition AddLeaseFileCompReq(PimsCompensationRequisition compensationRequisition)
         {
+            _logger.LogInformation("Adding compensation requisition for lease file id: {leaseId}", compensationRequisition.LeaseId);
+            compensationRequisition.ThrowInvalidParentId();
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
 
             compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
             if (compensationRequisition.LeaseId is null)
             {
                 throw new BadRequestException("Invalid LeaseId.");
-            }
-
-            _logger.LogInformation("Adding compensation requisition for lease file id: {leaseId}", compensationRequisition.LeaseId);
-
-            if (compensationRequisition.AcquisitionFileId is not null)
-            {
-                throw new BadRequestException("Compensation Requisition should have only one parent Id");
             }
 
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());

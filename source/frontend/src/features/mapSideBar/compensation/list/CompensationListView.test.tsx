@@ -181,7 +181,7 @@ describe('compensation list view', () => {
       claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_ADD],
     });
 
-    const addButton = getByText('Add a Requisition');
+    const addButton = getByText('Add Requisition');
     expect(addButton).toBeVisible();
     await act(async () => userEvent.click(addButton));
     await waitFor(() => {
