@@ -1,11 +1,8 @@
-import { useKeycloak } from '@react-keycloak/web';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { getEmptyBaseAudit, getEmptyLease } from '@/models/defaultInitializers';
@@ -206,7 +203,7 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, getPurposeMultiSelect, container } = await setup({});
+    const { getByText, getPurposeMultiSelect, getByTestId, container } = await setup({});
 
     await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
     await act(async () =>
@@ -238,7 +235,7 @@ describe('AddLeaseContainer component', () => {
 
     await act(async () => userEvent.click(getByText(/Save/i)));
 
-    expect(addLease).toBeCalledWith(leaseData, []);
+    expect(addLease).toHaveBeenCalledWith(leaseData, []);
 
     const popup = await screen.findByText(/test message/i);
     expect(popup).toBeVisible();
@@ -247,10 +244,11 @@ describe('AddLeaseContainer component', () => {
     addLease.mockResolvedValue({ ...leaseData, id: 1 });
 
     await act(async () => {
-      userEvent.click((await screen.findAllByText('Yes'))[2]);
+      const okButton = getByTestId('ok-modal-button');
+      userEvent.click(okButton);
     });
 
-    expect(addLease).toBeCalledWith(leaseData, []);
+    expect(addLease).toHaveBeenCalledWith(leaseData, []);
     expect(history.location.pathname).toBe('/mapview/sidebar/lease/1');
   });
 });
