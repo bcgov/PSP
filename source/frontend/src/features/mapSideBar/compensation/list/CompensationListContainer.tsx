@@ -1,6 +1,7 @@
 import axios, { AxiosError } from 'axios';
 import React, { useCallback, useContext } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
@@ -186,15 +187,26 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
   };
 
   const onAddCompensationRequisition = () => {
-    createCompensationRequisition(
-      fileType,
-      getDefaultCompensationRequisition(fileType, file.id),
-    ).then(async newCompensationReq => {
-      if (newCompensationReq?.id) {
-        sidebar.setStaleLastUpdatedBy(true);
-        sidebar.setStaleFile(true);
+    try {
+      createCompensationRequisition(
+        fileType,
+        getDefaultCompensationRequisition(fileType, file.id),
+      ).then(async newCompensationReq => {
+        if (newCompensationReq?.id) {
+          sidebar.setStaleLastUpdatedBy(true);
+          sidebar.setStaleFile(true);
+        }
+      });
+    } catch (e) {
+      if (axios.isAxiosError(e)) {
+        const axiosError = e as AxiosError<IApiError>;
+        if (axiosError.response?.status === 400) {
+          toast.error(axiosError.response.data.error);
+        } else {
+          toast.error('Unable to save. Please try again.');
+        }
       }
-    });
+    }
   };
 
   React.useEffect(() => {
