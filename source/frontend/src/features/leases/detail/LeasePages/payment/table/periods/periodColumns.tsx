@@ -14,7 +14,6 @@ import {
   ColumnWithProps,
   renderBooleanAsYesNo,
   renderMoney,
-  renderStringOrDash,
   renderTypeCode,
 } from '@/components/Table';
 import { Claims } from '@/constants';
@@ -69,7 +68,6 @@ export const getLeasePeriodColumns = ({
       accessor: 'paymentDueDateStr',
       align: 'left',
       maxWidth: 60,
-      Cell: renderStringOrDash,
     },
     {
       Header: () => (
@@ -263,7 +261,7 @@ function startAndEndDate({ row: { original } }: CellProps<FormLeasePeriod, strin
 const renderExpectedPeriod = () =>
   function ({ row: { original } }: CellProps<FormLeasePeriod, string>) {
     if (!original.startDate || !original.expiryDate || original.paymentAmount === undefined) {
-      return stringToFragment('-');
+      return stringToFragment('$0.00');
     }
     const expectedPeriod = calculateExpectedPeriodAmount(
       original.leasePmtFreqTypeCode?.id ?? '',
@@ -272,19 +270,19 @@ const renderExpectedPeriod = () =>
       original.paymentAmount as number,
       (original.gstAmount as number) ?? 0,
     );
-    return stringToFragment(expectedPeriod !== undefined ? formatMoney(expectedPeriod) : '-');
+    return stringToFragment(expectedPeriod !== undefined ? formatMoney(expectedPeriod) : '$0.00');
   };
 
 function renderActualTotal({ row: { original } }: CellProps<FormLeasePeriod, string>) {
   const total = formatMoney(
     (original.payments ?? []).reduce((sum: number, p) => (sum += p.amountTotal as number), 0),
   );
-  return stringToFragment(original.isTermExercised ? total : '-');
+  return stringToFragment(original.isTermExercised ? total : '');
 }
 
 function renderGstAmount({ row: { original } }: CellProps<FormLeasePeriod, NumberFieldValue>) {
   return stringToFragment(
-    original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '-',
+    original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '',
   );
 }
 
