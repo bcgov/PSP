@@ -1,0 +1,167 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Schema Compare</title>
+<style type="text/css">
+body { font-family:"Verdana", monospace; font-size:11px; }
+.diff { border-width:1px; border-style:solid; border-color:gray; width:100%; padding: 0 0 0 0; font-family:"Verdana", monospace; font-size:11px; }td { padding: 0 3 0 3; }
+tr { padding: 0 0 0 0; }
+.L { width:4%; background:#e8e8e8; vertical-align:top; }
+.B { width:46%; background:#e8e8e8; }
+.U { width:46%; color:#808080; }
+.A { width:46%; background:#c8f2c8; font-weight: bold; }
+.D { width:46%; background:#ffded8; font-weight: bold; }
+.C {  width:46%; background:#cad9fa; }
+.SA {  background:#c8f2c8; }
+.SD {  background:#ffded8; }
+.SC {  background:#cad9fa; }
+.HI { font-weight: bold; background:#ffff00; }
+.Hr { font-weight: bold; font-size:125%; border-width:1px; border-style:solid; border-color:gray; padding: 2 2 2 2; }
+</style>
+</head>
+<body>
+<table class="diff" style="border-width:0px;"><tr><td style="padding-right:80px">0 Difference(s)</td><td style="background:#ffded8; padding-left:20px;">Only in source</td><td style="background:#cad9fa; padding-left:20px;">Both different</td><td style="background:#c8f2c8; padding-left:20px;">Only in target</td></tr></table>
+<br>
+<table class="diff">
+<tr><td colspan=2 class="Hr">PIMS_ACRQST_A_S_IUD_TR</td><td colspan=2 class="Hr">PIMS_ACRQST_A_S_IUD_TR</td></tr>
+<tr>
+<td class="L">1</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;RIGGER&nbsp;P&#x200B;IMS_ACRQ&#x200B;ST_A_S_I&#x200B;UD_TR&nbsp;ON&#x200B;&nbsp;PIMS_AC&#x200B;CESS_REQ&#x200B;UEST&nbsp;FOR&#x200B;&nbsp;INSERT,&#x200B;&nbsp;UPDATE,&#x200B;&nbsp;DELETE&nbsp;&#x200B;AS</td>
+<td class="L">1</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;RIGGER&nbsp;P&#x200B;IMS_ACRQ&#x200B;ST_A_S_I&#x200B;UD_TR&nbsp;ON&#x200B;&nbsp;PIMS_AC&#x200B;CESS_REQ&#x200B;UEST&nbsp;FOR&#x200B;&nbsp;INSERT,&#x200B;&nbsp;UPDATE,&#x200B;&nbsp;DELETE&nbsp;&#x200B;AS</td>
+</tr>
+<tr>
+<td class="L">2</td>
+<td class="U">&#x200B;SET&nbsp;NOCO&#x200B;UNT&nbsp;ON</td>
+<td class="L">2</td>
+<td class="U">&#x200B;SET&nbsp;NOCO&#x200B;UNT&nbsp;ON</td>
+</tr>
+<tr>
+<td class="L">3</td>
+<td class="U">&#x200B;BEGIN&nbsp;TR&#x200B;Y</td>
+<td class="L">3</td>
+<td class="U">&#x200B;BEGIN&nbsp;TR&#x200B;Y</td>
+</tr>
+<tr>
+<td class="L">4</td>
+<td class="U">&#x200B;DECLARE&nbsp;&#x200B;@curr_da&#x200B;te&nbsp;datet&#x200B;ime;</td>
+<td class="L">4</td>
+<td class="U">&#x200B;DECLARE&nbsp;&#x200B;@curr_da&#x200B;te&nbsp;datet&#x200B;ime;</td>
+</tr>
+<tr>
+<td class="L">5</td>
+<td class="U">&#x200B;SET&nbsp;@cur&#x200B;r_date&nbsp;=&#x200B;&nbsp;getutcd&#x200B;ate();</td>
+<td class="L">5</td>
+<td class="U">&#x200B;SET&nbsp;@cur&#x200B;r_date&nbsp;=&#x200B;&nbsp;getutcd&#x200B;ate();</td>
+</tr>
+<tr>
+<td class="L">6</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;NOT&#x200B;&nbsp;EXISTS(&#x200B;SELECT&nbsp;*&#x200B;&nbsp;FROM&nbsp;in&#x200B;serted)&nbsp;&#x200B;AND&nbsp;NOT&nbsp;&#x200B;EXISTS(S&#x200B;ELECT&nbsp;*&nbsp;&#x200B;FROM&nbsp;del&#x200B;eted)&nbsp;</td>
+<td class="L">6</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;NOT&#x200B;&nbsp;EXISTS(&#x200B;SELECT&nbsp;*&#x200B;&nbsp;FROM&nbsp;in&#x200B;serted)&nbsp;&#x200B;AND&nbsp;NOT&nbsp;&#x200B;EXISTS(S&#x200B;ELECT&nbsp;*&nbsp;&#x200B;FROM&nbsp;del&#x200B;eted)&nbsp;</td>
+</tr>
+<tr>
+<td class="L">7</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;RETU&#x200B;RN;</td>
+<td class="L">7</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;RETU&#x200B;RN;</td>
+</tr>
+<tr>
+<td class="L">8</td>
+<td class="U">&nbsp;</td>
+<td class="L">8</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">9</td>
+<td class="U">&#x200B;&nbsp;&nbsp;--&nbsp;his&#x200B;torical</td>
+<td class="L">9</td>
+<td class="U">&#x200B;&nbsp;&nbsp;--&nbsp;his&#x200B;torical</td>
+</tr>
+<tr>
+<td class="L">10</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;EXI&#x200B;STS(SELE&#x200B;CT&nbsp;*&nbsp;FRO&#x200B;M&nbsp;delete&#x200B;d)</td>
+<td class="L">10</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;EXI&#x200B;STS(SELE&#x200B;CT&nbsp;*&nbsp;FRO&#x200B;M&nbsp;delete&#x200B;d)</td>
+</tr>
+<tr>
+<td class="L">11</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;upda&#x200B;te&nbsp;PIMS_&#x200B;ACCESS_R&#x200B;EQUEST_H&#x200B;IST&nbsp;set&nbsp;&#x200B;END_DATE&#x200B;_HIST&nbsp;=&nbsp;&#x200B;@curr_da&#x200B;te&nbsp;where&#x200B;&nbsp;ACCESS_&#x200B;REQUEST_&#x200B;ID&nbsp;in&nbsp;(s&#x200B;elect&nbsp;AC&#x200B;CESS_REQ&#x200B;UEST_ID&nbsp;&#x200B;from&nbsp;del&#x200B;eted)&nbsp;an&#x200B;d&nbsp;END_DA&#x200B;TE_HIST&nbsp;&#x200B;is&nbsp;null;</td>
+<td class="L">11</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;upda&#x200B;te&nbsp;PIMS_&#x200B;ACCESS_R&#x200B;EQUEST_H&#x200B;IST&nbsp;set&nbsp;&#x200B;END_DATE&#x200B;_HIST&nbsp;=&nbsp;&#x200B;@curr_da&#x200B;te&nbsp;where&#x200B;&nbsp;ACCESS_&#x200B;REQUEST_&#x200B;ID&nbsp;in&nbsp;(s&#x200B;elect&nbsp;AC&#x200B;CESS_REQ&#x200B;UEST_ID&nbsp;&#x200B;from&nbsp;del&#x200B;eted)&nbsp;an&#x200B;d&nbsp;END_DA&#x200B;TE_HIST&nbsp;&#x200B;is&nbsp;null;</td>
+</tr>
+<tr>
+<td class="L">12</td>
+<td class="U">&nbsp;</td>
+<td class="L">12</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">13</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;EXI&#x200B;STS(SELE&#x200B;CT&nbsp;*&nbsp;FRO&#x200B;M&nbsp;insert&#x200B;ed)</td>
+<td class="L">13</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;EXI&#x200B;STS(SELE&#x200B;CT&nbsp;*&nbsp;FRO&#x200B;M&nbsp;insert&#x200B;ed)</td>
+</tr>
+<tr>
+<td class="L">14</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;inse&#x200B;rt&nbsp;into&nbsp;&#x200B;PIMS_ACC&#x200B;ESS_REQU&#x200B;EST_HIST&#x200B;&nbsp;([ACCES&#x200B;S_REQUES&#x200B;T_ID],&nbsp;[&#x200B;USER_ID]&#x200B;,&nbsp;[ROLE_&#x200B;ID],&nbsp;[US&#x200B;ER_TYPE_&#x200B;CODE],&nbsp;[&#x200B;ACCESS_R&#x200B;EQUEST_S&#x200B;TATUS_TY&#x200B;PE_CODE]&#x200B;,&nbsp;[REGIO&#x200B;N_CODE],&#x200B;&nbsp;[NOTE],&#x200B;&nbsp;[CONCUR&#x200B;RENCY_CO&#x200B;NTROL_NU&#x200B;MBER],&nbsp;[&#x200B;APP_CREA&#x200B;TE_TIMES&#x200B;TAMP],&nbsp;[&#x200B;APP_CREA&#x200B;TE_USERI&#x200B;D],&nbsp;[APP&#x200B;_CREATE_&#x200B;USER_GUI&#x200B;D],&nbsp;[APP&#x200B;_CREATE_&#x200B;USER_DIR&#x200B;ECTORY],&#x200B;&nbsp;[APP_LA&#x200B;ST_UPDAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID],&nbsp;&#x200B;[APP_LAS&#x200B;T_UPDATE&#x200B;_USER_GU&#x200B;ID],&nbsp;[AP&#x200B;P_LAST_U&#x200B;PDATE_US&#x200B;ER_DIREC&#x200B;TORY],&nbsp;[&#x200B;DB_CREAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[D&#x200B;B_CREATE&#x200B;_USERID]&#x200B;,&nbsp;[DB_LA&#x200B;ST_UPDAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[D&#x200B;B_LAST_U&#x200B;PDATE_US&#x200B;ERID],&nbsp;_&#x200B;ACCESS_R&#x200B;EQUEST_H&#x200B;IST_ID,&nbsp;&#x200B;END_DATE&#x200B;_HIST,&nbsp;E&#x200B;FFECTIVE&#x200B;_DATE_HI&#x200B;ST)</td>
+<td class="L">14</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;inse&#x200B;rt&nbsp;into&nbsp;&#x200B;PIMS_ACC&#x200B;ESS_REQU&#x200B;EST_HIST&#x200B;&nbsp;([ACCES&#x200B;S_REQUES&#x200B;T_ID],&nbsp;[&#x200B;USER_ID]&#x200B;,&nbsp;[ROLE_&#x200B;ID],&nbsp;[US&#x200B;ER_TYPE_&#x200B;CODE],&nbsp;[&#x200B;ACCESS_R&#x200B;EQUEST_S&#x200B;TATUS_TY&#x200B;PE_CODE]&#x200B;,&nbsp;[REGIO&#x200B;N_CODE],&#x200B;&nbsp;[NOTE],&#x200B;&nbsp;[CONCUR&#x200B;RENCY_CO&#x200B;NTROL_NU&#x200B;MBER],&nbsp;[&#x200B;APP_CREA&#x200B;TE_TIMES&#x200B;TAMP],&nbsp;[&#x200B;APP_CREA&#x200B;TE_USERI&#x200B;D],&nbsp;[APP&#x200B;_CREATE_&#x200B;USER_GUI&#x200B;D],&nbsp;[APP&#x200B;_CREATE_&#x200B;USER_DIR&#x200B;ECTORY],&#x200B;&nbsp;[APP_LA&#x200B;ST_UPDAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID],&nbsp;&#x200B;[APP_LAS&#x200B;T_UPDATE&#x200B;_USER_GU&#x200B;ID],&nbsp;[AP&#x200B;P_LAST_U&#x200B;PDATE_US&#x200B;ER_DIREC&#x200B;TORY],&nbsp;[&#x200B;DB_CREAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[D&#x200B;B_CREATE&#x200B;_USERID]&#x200B;,&nbsp;[DB_LA&#x200B;ST_UPDAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[D&#x200B;B_LAST_U&#x200B;PDATE_US&#x200B;ERID],&nbsp;_&#x200B;ACCESS_R&#x200B;EQUEST_H&#x200B;IST_ID,&nbsp;&#x200B;END_DATE&#x200B;_HIST,&nbsp;E&#x200B;FFECTIVE&#x200B;_DATE_HI&#x200B;ST)</td>
+</tr>
+<tr>
+<td class="L">15</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;se&#x200B;lect&nbsp;[AC&#x200B;CESS_REQ&#x200B;UEST_ID]&#x200B;,&nbsp;[USER_&#x200B;ID],&nbsp;[RO&#x200B;LE_ID],&nbsp;&#x200B;[USER_TY&#x200B;PE_CODE]&#x200B;,&nbsp;[ACCES&#x200B;S_REQUES&#x200B;T_STATUS&#x200B;_TYPE_CO&#x200B;DE],&nbsp;[RE&#x200B;GION_COD&#x200B;E],&nbsp;[NOT&#x200B;E],&nbsp;[CON&#x200B;CURRENCY&#x200B;_CONTROL&#x200B;_NUMBER]&#x200B;,&nbsp;[APP_C&#x200B;REATE_TI&#x200B;MESTAMP]&#x200B;,&nbsp;[APP_C&#x200B;REATE_US&#x200B;ERID],&nbsp;[&#x200B;APP_CREA&#x200B;TE_USER_&#x200B;GUID],&nbsp;[&#x200B;APP_CREA&#x200B;TE_USER_&#x200B;DIRECTOR&#x200B;Y],&nbsp;[APP&#x200B;_LAST_UP&#x200B;DATE_TIM&#x200B;ESTAMP],&#x200B;&nbsp;[APP_LA&#x200B;ST_UPDAT&#x200B;E_USERID&#x200B;],&nbsp;[APP_&#x200B;LAST_UPD&#x200B;ATE_USER&#x200B;_GUID],&nbsp;&#x200B;[APP_LAS&#x200B;T_UPDATE&#x200B;_USER_DI&#x200B;RECTORY]&#x200B;,&nbsp;[DB_CR&#x200B;EATE_TIM&#x200B;ESTAMP],&#x200B;&nbsp;[DB_CRE&#x200B;ATE_USER&#x200B;ID],&nbsp;[DB&#x200B;_LAST_UP&#x200B;DATE_TIM&#x200B;ESTAMP],&#x200B;&nbsp;[DB_LAS&#x200B;T_UPDATE&#x200B;_USERID]&#x200B;,&nbsp;(next&nbsp;&#x200B;value&nbsp;fo&#x200B;r&nbsp;[dbo].&#x200B;[PIMS_AC&#x200B;CESS_REQ&#x200B;UEST_H_I&#x200B;D_SEQ])&nbsp;&#x200B;as&nbsp;[_ACC&#x200B;ESS_REQU&#x200B;EST_HIST&#x200B;_ID],&nbsp;nu&#x200B;ll&nbsp;as&nbsp;[E&#x200B;ND_DATE_&#x200B;HIST],&nbsp;@&#x200B;curr_dat&#x200B;e&nbsp;as&nbsp;[EF&#x200B;FECTIVE_&#x200B;DATE_HIS&#x200B;T]&nbsp;from&nbsp;&#x200B;inserted&#x200B;;</td>
+<td class="L">15</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;se&#x200B;lect&nbsp;[AC&#x200B;CESS_REQ&#x200B;UEST_ID]&#x200B;,&nbsp;[USER_&#x200B;ID],&nbsp;[RO&#x200B;LE_ID],&nbsp;&#x200B;[USER_TY&#x200B;PE_CODE]&#x200B;,&nbsp;[ACCES&#x200B;S_REQUES&#x200B;T_STATUS&#x200B;_TYPE_CO&#x200B;DE],&nbsp;[RE&#x200B;GION_COD&#x200B;E],&nbsp;[NOT&#x200B;E],&nbsp;[CON&#x200B;CURRENCY&#x200B;_CONTROL&#x200B;_NUMBER]&#x200B;,&nbsp;[APP_C&#x200B;REATE_TI&#x200B;MESTAMP]&#x200B;,&nbsp;[APP_C&#x200B;REATE_US&#x200B;ERID],&nbsp;[&#x200B;APP_CREA&#x200B;TE_USER_&#x200B;GUID],&nbsp;[&#x200B;APP_CREA&#x200B;TE_USER_&#x200B;DIRECTOR&#x200B;Y],&nbsp;[APP&#x200B;_LAST_UP&#x200B;DATE_TIM&#x200B;ESTAMP],&#x200B;&nbsp;[APP_LA&#x200B;ST_UPDAT&#x200B;E_USERID&#x200B;],&nbsp;[APP_&#x200B;LAST_UPD&#x200B;ATE_USER&#x200B;_GUID],&nbsp;&#x200B;[APP_LAS&#x200B;T_UPDATE&#x200B;_USER_DI&#x200B;RECTORY]&#x200B;,&nbsp;[DB_CR&#x200B;EATE_TIM&#x200B;ESTAMP],&#x200B;&nbsp;[DB_CRE&#x200B;ATE_USER&#x200B;ID],&nbsp;[DB&#x200B;_LAST_UP&#x200B;DATE_TIM&#x200B;ESTAMP],&#x200B;&nbsp;[DB_LAS&#x200B;T_UPDATE&#x200B;_USERID]&#x200B;,&nbsp;(next&nbsp;&#x200B;value&nbsp;fo&#x200B;r&nbsp;[dbo].&#x200B;[PIMS_AC&#x200B;CESS_REQ&#x200B;UEST_H_I&#x200B;D_SEQ])&nbsp;&#x200B;as&nbsp;[_ACC&#x200B;ESS_REQU&#x200B;EST_HIST&#x200B;_ID],&nbsp;nu&#x200B;ll&nbsp;as&nbsp;[E&#x200B;ND_DATE_&#x200B;HIST],&nbsp;@&#x200B;curr_dat&#x200B;e&nbsp;as&nbsp;[EF&#x200B;FECTIVE_&#x200B;DATE_HIS&#x200B;T]&nbsp;from&nbsp;&#x200B;inserted&#x200B;;</td>
+</tr>
+<tr>
+<td class="L">16</td>
+<td class="U">&nbsp;</td>
+<td class="L">16</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">17</td>
+<td class="U">&#x200B;END&nbsp;TRY</td>
+<td class="L">17</td>
+<td class="U">&#x200B;END&nbsp;TRY</td>
+</tr>
+<tr>
+<td class="L">18</td>
+<td class="U">&#x200B;BEGIN&nbsp;CA&#x200B;TCH</td>
+<td class="L">18</td>
+<td class="U">&#x200B;BEGIN&nbsp;CA&#x200B;TCH</td>
+</tr>
+<tr>
+<td class="L">19</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;IF&nbsp;@@&#x200B;trancoun&#x200B;t&nbsp;>&nbsp;0&nbsp;RO&#x200B;LLBACK&nbsp;T&#x200B;RANSACTI&#x200B;ON</td>
+<td class="L">19</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;IF&nbsp;@@&#x200B;trancoun&#x200B;t&nbsp;>&nbsp;0&nbsp;RO&#x200B;LLBACK&nbsp;T&#x200B;RANSACTI&#x200B;ON</td>
+</tr>
+<tr>
+<td class="L">20</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;EXEC&nbsp;&#x200B;pims_err&#x200B;or_handl&#x200B;ing</td>
+<td class="L">20</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;EXEC&nbsp;&#x200B;pims_err&#x200B;or_handl&#x200B;ing</td>
+</tr>
+<tr>
+<td class="L">21</td>
+<td class="U">&#x200B;END&nbsp;CATC&#x200B;H;</td>
+<td class="L">21</td>
+<td class="U">&#x200B;END&nbsp;CATC&#x200B;H;</td>
+</tr>
+<tr>
+<td class="L">22</td>
+<td class="U">&nbsp;</td>
+<td class="L">22</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">23</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">23</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+</table>
+</body>
+</html>

@@ -1,0 +1,1319 @@
+<html>
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>Schema Compare</title>
+<style type="text/css">
+body { font-family:"Verdana", monospace; font-size:11px; }
+.diff { border-width:1px; border-style:solid; border-color:gray; width:100%; padding: 0 0 0 0; font-family:"Verdana", monospace; font-size:11px; }td { padding: 0 3 0 3; }
+tr { padding: 0 0 0 0; }
+.L { width:4%; background:#e8e8e8; vertical-align:top; }
+.B { width:46%; background:#e8e8e8; }
+.U { width:46%; color:#808080; }
+.A { width:46%; background:#c8f2c8; font-weight: bold; }
+.D { width:46%; background:#ffded8; font-weight: bold; }
+.C {  width:46%; background:#cad9fa; }
+.SA {  background:#c8f2c8; }
+.SD {  background:#ffded8; }
+.SC {  background:#cad9fa; }
+.HI { font-weight: bold; background:#ffff00; }
+.Hr { font-weight: bold; font-size:125%; border-width:1px; border-style:solid; border-color:gray; padding: 2 2 2 2; }
+</style>
+</head>
+<body>
+<table class="diff" style="border-width:0px;"><tr><td style="padding-right:80px">0 Difference(s)</td><td style="background:#ffded8; padding-left:20px;">Only in source</td><td style="background:#cad9fa; padding-left:20px;">Both different</td><td style="background:#c8f2c8; padding-left:20px;">Only in target</td></tr></table>
+<br>
+<table class="diff">
+<tr><td colspan=2 class="Hr">PIMS_ADDRESS</td><td colspan=2 class="Hr">PIMS_ADDRESS</td></tr>
+<tr>
+<td class="L">1</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;ABLE&nbsp;PIM&#x200B;S_ADDRES&#x200B;S&nbsp;&nbsp;(&nbsp;</td>
+<td class="L">1</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;ABLE&nbsp;PIM&#x200B;S_ADDRES&#x200B;S&nbsp;&nbsp;(&nbsp;</td>
+</tr>
+<tr>
+<td class="L">2</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADDR&#x200B;ESS_ID&nbsp;&nbsp;&#x200B;bigint&nbsp;N&#x200B;OT&nbsp;NULL&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;ADDRS&#x200B;S_ADDRES&#x200B;S_ID_DEF&#x200B;&nbsp;&nbsp;DEFAUL&#x200B;T&nbsp;(NEXT&nbsp;&#x200B;VALUE&nbsp;FO&#x200B;R&nbsp;[PIMS_&#x200B;ADDRESS_&#x200B;ID_SEQ])&#x200B;,</td>
+<td class="L">2</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADDR&#x200B;ESS_ID&nbsp;&nbsp;&#x200B;bigint&nbsp;N&#x200B;OT&nbsp;NULL&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;ADDRS&#x200B;S_ADDRES&#x200B;S_ID_DEF&#x200B;&nbsp;&nbsp;DEFAUL&#x200B;T&nbsp;(NEXT&nbsp;&#x200B;VALUE&nbsp;FO&#x200B;R&nbsp;[PIMS_&#x200B;ADDRESS_&#x200B;ID_SEQ])&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">3</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REGI&#x200B;ON_CODE&nbsp;&#x200B;smallint&#x200B;&nbsp;NULL,</td>
+<td class="L">3</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REGI&#x200B;ON_CODE&nbsp;&#x200B;smallint&#x200B;&nbsp;NULL,</td>
+</tr>
+<tr>
+<td class="L">4</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DIST&#x200B;RICT_COD&#x200B;E&nbsp;&nbsp;&nbsp;smal&#x200B;lint&nbsp;NUL&#x200B;L,</td>
+<td class="L">4</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DIST&#x200B;RICT_COD&#x200B;E&nbsp;&nbsp;&nbsp;smal&#x200B;lint&nbsp;NUL&#x200B;L,</td>
+</tr>
+<tr>
+<td class="L">5</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;PROV&#x200B;INCE_STA&#x200B;TE_ID&nbsp;&nbsp;&nbsp;&#x200B;smallint&#x200B;&nbsp;NULL,</td>
+<td class="L">5</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;PROV&#x200B;INCE_STA&#x200B;TE_ID&nbsp;&nbsp;&nbsp;&#x200B;smallint&#x200B;&nbsp;NULL,</td>
+</tr>
+<tr>
+<td class="L">6</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;COUN&#x200B;TRY_ID&nbsp;&nbsp;&#x200B;smallint&#x200B;&nbsp;NULL,</td>
+<td class="L">6</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;COUN&#x200B;TRY_ID&nbsp;&nbsp;&#x200B;smallint&#x200B;&nbsp;NULL,</td>
+</tr>
+<tr>
+<td class="L">7</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;STRE&#x200B;ET_ADDRE&#x200B;SS_1&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(200)&nbsp;NU&#x200B;LL,</td>
+<td class="L">7</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;STRE&#x200B;ET_ADDRE&#x200B;SS_1&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(200)&nbsp;NU&#x200B;LL,</td>
+</tr>
+<tr>
+<td class="L">8</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;STRE&#x200B;ET_ADDRE&#x200B;SS_2&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(200)&nbsp;NU&#x200B;LL,</td>
+<td class="L">8</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;STRE&#x200B;ET_ADDRE&#x200B;SS_2&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(200)&nbsp;NU&#x200B;LL,</td>
+</tr>
+<tr>
+<td class="L">9</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;STRE&#x200B;ET_ADDRE&#x200B;SS_3&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(200)&nbsp;NU&#x200B;LL,</td>
+<td class="L">9</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;STRE&#x200B;ET_ADDRE&#x200B;SS_3&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(200)&nbsp;NU&#x200B;LL,</td>
+</tr>
+<tr>
+<td class="L">10</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;MUNI&#x200B;CIPALITY&#x200B;_NAME&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(200)&nbsp;NU&#x200B;LL,</td>
+<td class="L">10</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;MUNI&#x200B;CIPALITY&#x200B;_NAME&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(200)&nbsp;NU&#x200B;LL,</td>
+</tr>
+<tr>
+<td class="L">11</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;POST&#x200B;AL_CODE&nbsp;&#x200B;nvarchar&#x200B;(20)&nbsp;NUL&#x200B;L,</td>
+<td class="L">11</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;POST&#x200B;AL_CODE&nbsp;&#x200B;nvarchar&#x200B;(20)&nbsp;NUL&#x200B;L,</td>
+</tr>
+<tr>
+<td class="L">12</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;OTHE&#x200B;R_COUNTR&#x200B;Y&nbsp;&nbsp;&nbsp;nvar&#x200B;char(200&#x200B;)&nbsp;NULL,</td>
+<td class="L">12</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;OTHE&#x200B;R_COUNTR&#x200B;Y&nbsp;&nbsp;&nbsp;nvar&#x200B;char(200&#x200B;)&nbsp;NULL,</td>
+</tr>
+<tr>
+<td class="L">13</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;LATI&#x200B;TUDE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;numeric(&#x200B;8,6)&nbsp;NUL&#x200B;L,</td>
+<td class="L">13</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;LATI&#x200B;TUDE&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;numeric(&#x200B;8,6)&nbsp;NUL&#x200B;L,</td>
+</tr>
+<tr>
+<td class="L">14</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;LONG&#x200B;ITUDE&nbsp;&nbsp;&nbsp;&#x200B;numeric(&#x200B;9,6)&nbsp;NUL&#x200B;L,</td>
+<td class="L">14</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;LONG&#x200B;ITUDE&nbsp;&nbsp;&nbsp;&#x200B;numeric(&#x200B;9,6)&nbsp;NUL&#x200B;L,</td>
+</tr>
+<tr>
+<td class="L">15</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;COMM&#x200B;ENT&nbsp;nvar&#x200B;char(200&#x200B;0)&nbsp;NULL,</td>
+<td class="L">15</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;COMM&#x200B;ENT&nbsp;nvar&#x200B;char(200&#x200B;0)&nbsp;NULL,</td>
+</tr>
+<tr>
+<td class="L">16</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;CONC&#x200B;URRENCY_&#x200B;CONTROL_&#x200B;NUMBER&nbsp;&nbsp;&#x200B;bigint&nbsp;N&#x200B;OT&nbsp;NULL&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;ADDRS&#x200B;S_CONCUR&#x200B;RENCY_CO&#x200B;NTROL_NU&#x200B;MBER_DEF&#x200B;&nbsp;&nbsp;DEFAUL&#x200B;T&nbsp;((1)),</td>
+<td class="L">16</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;CONC&#x200B;URRENCY_&#x200B;CONTROL_&#x200B;NUMBER&nbsp;&nbsp;&#x200B;bigint&nbsp;N&#x200B;OT&nbsp;NULL&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;ADDRS&#x200B;S_CONCUR&#x200B;RENCY_CO&#x200B;NTROL_NU&#x200B;MBER_DEF&#x200B;&nbsp;&nbsp;DEFAUL&#x200B;T&nbsp;((1)),</td>
+</tr>
+<tr>
+<td class="L">17</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;CREATE_T&#x200B;IMESTAMP&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;date&#x200B;time&nbsp;NOT&#x200B;&nbsp;NULL&nbsp;CO&#x200B;NSTRAINT&#x200B;&nbsp;ADDRSS_&#x200B;APP_CREA&#x200B;TE_TIMES&#x200B;TAMP_DEF&#x200B;&nbsp;&nbsp;DEFAUL&#x200B;T&nbsp;(getut&#x200B;cdate())&#x200B;,</td>
+<td class="L">17</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;CREATE_T&#x200B;IMESTAMP&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;date&#x200B;time&nbsp;NOT&#x200B;&nbsp;NULL&nbsp;CO&#x200B;NSTRAINT&#x200B;&nbsp;ADDRSS_&#x200B;APP_CREA&#x200B;TE_TIMES&#x200B;TAMP_DEF&#x200B;&nbsp;&nbsp;DEFAUL&#x200B;T&nbsp;(getut&#x200B;cdate())&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">18</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;CREATE_U&#x200B;SERID&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(30)&nbsp;NOT&#x200B;&nbsp;NULL,</td>
+<td class="L">18</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;CREATE_U&#x200B;SERID&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(30)&nbsp;NOT&#x200B;&nbsp;NULL,</td>
+</tr>
+<tr>
+<td class="L">19</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;CREATE_U&#x200B;SER_GUID&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;uniq&#x200B;ueidenti&#x200B;fier&nbsp;NUL&#x200B;L,</td>
+<td class="L">19</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;CREATE_U&#x200B;SER_GUID&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;uniq&#x200B;ueidenti&#x200B;fier&nbsp;NUL&#x200B;L,</td>
+</tr>
+<tr>
+<td class="L">20</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;CREATE_U&#x200B;SER_DIRE&#x200B;CTORY&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(30)&nbsp;NOT&#x200B;&nbsp;NULL,</td>
+<td class="L">20</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;CREATE_U&#x200B;SER_DIRE&#x200B;CTORY&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(30)&nbsp;NOT&#x200B;&nbsp;NULL,</td>
+</tr>
+<tr>
+<td class="L">21</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;LAST_UPD&#x200B;ATE_TIME&#x200B;STAMP&nbsp;&nbsp;&nbsp;&#x200B;datetime&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L&nbsp;CONSTR&#x200B;AINT&nbsp;ADD&#x200B;RSS_APP_&#x200B;LAST_UPD&#x200B;ATE_TIME&#x200B;STAMP_DE&#x200B;F&nbsp;&nbsp;DEFAU&#x200B;LT&nbsp;(getu&#x200B;tcdate()&#x200B;),</td>
+<td class="L">21</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;LAST_UPD&#x200B;ATE_TIME&#x200B;STAMP&nbsp;&nbsp;&nbsp;&#x200B;datetime&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L&nbsp;CONSTR&#x200B;AINT&nbsp;ADD&#x200B;RSS_APP_&#x200B;LAST_UPD&#x200B;ATE_TIME&#x200B;STAMP_DE&#x200B;F&nbsp;&nbsp;DEFAU&#x200B;LT&nbsp;(getu&#x200B;tcdate()&#x200B;),</td>
+</tr>
+<tr>
+<td class="L">22</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;LAST_UPD&#x200B;ATE_USER&#x200B;ID&nbsp;&nbsp;nvar&#x200B;char(30)&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L,</td>
+<td class="L">22</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;LAST_UPD&#x200B;ATE_USER&#x200B;ID&nbsp;&nbsp;nvar&#x200B;char(30)&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L,</td>
+</tr>
+<tr>
+<td class="L">23</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;LAST_UPD&#x200B;ATE_USER&#x200B;_GUID&nbsp;&nbsp;&nbsp;&#x200B;uniqueid&#x200B;entifier&#x200B;&nbsp;NULL,</td>
+<td class="L">23</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;LAST_UPD&#x200B;ATE_USER&#x200B;_GUID&nbsp;&nbsp;&nbsp;&#x200B;uniqueid&#x200B;entifier&#x200B;&nbsp;NULL,</td>
+</tr>
+<tr>
+<td class="L">24</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;LAST_UPD&#x200B;ATE_USER&#x200B;_DIRECTO&#x200B;RY&nbsp;&nbsp;nvar&#x200B;char(30)&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L,</td>
+<td class="L">24</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;APP_&#x200B;LAST_UPD&#x200B;ATE_USER&#x200B;_DIRECTO&#x200B;RY&nbsp;&nbsp;nvar&#x200B;char(30)&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L,</td>
+</tr>
+<tr>
+<td class="L">25</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DB_C&#x200B;REATE_TI&#x200B;MESTAMP&nbsp;&#x200B;datetime&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L&nbsp;CONSTR&#x200B;AINT&nbsp;ADD&#x200B;RSS_DB_C&#x200B;REATE_TI&#x200B;MESTAMP_&#x200B;DEF&nbsp;&nbsp;DEF&#x200B;AULT&nbsp;(ge&#x200B;tutcdate&#x200B;()),</td>
+<td class="L">25</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DB_C&#x200B;REATE_TI&#x200B;MESTAMP&nbsp;&#x200B;datetime&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L&nbsp;CONSTR&#x200B;AINT&nbsp;ADD&#x200B;RSS_DB_C&#x200B;REATE_TI&#x200B;MESTAMP_&#x200B;DEF&nbsp;&nbsp;DEF&#x200B;AULT&nbsp;(ge&#x200B;tutcdate&#x200B;()),</td>
+</tr>
+<tr>
+<td class="L">26</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DB_C&#x200B;REATE_US&#x200B;ERID&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(30)&nbsp;NOT&#x200B;&nbsp;NULL&nbsp;CO&#x200B;NSTRAINT&#x200B;&nbsp;ADDRSS_&#x200B;DB_CREAT&#x200B;E_USERID&#x200B;_DEF&nbsp;&nbsp;DE&#x200B;FAULT&nbsp;(u&#x200B;ser_name&#x200B;()),</td>
+<td class="L">26</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DB_C&#x200B;REATE_US&#x200B;ERID&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;nvarchar&#x200B;(30)&nbsp;NOT&#x200B;&nbsp;NULL&nbsp;CO&#x200B;NSTRAINT&#x200B;&nbsp;ADDRSS_&#x200B;DB_CREAT&#x200B;E_USERID&#x200B;_DEF&nbsp;&nbsp;DE&#x200B;FAULT&nbsp;(u&#x200B;ser_name&#x200B;()),</td>
+</tr>
+<tr>
+<td class="L">27</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DB_L&#x200B;AST_UPDA&#x200B;TE_TIMES&#x200B;TAMP&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;datetime&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L&nbsp;CONSTR&#x200B;AINT&nbsp;ADD&#x200B;RSS_DB_L&#x200B;AST_UPDA&#x200B;TE_TIMES&#x200B;TAMP_DEF&#x200B;&nbsp;&nbsp;DEFAUL&#x200B;T&nbsp;(getut&#x200B;cdate())&#x200B;,</td>
+<td class="L">27</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DB_L&#x200B;AST_UPDA&#x200B;TE_TIMES&#x200B;TAMP&nbsp;&nbsp;&nbsp;&nbsp;&#x200B;datetime&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L&nbsp;CONSTR&#x200B;AINT&nbsp;ADD&#x200B;RSS_DB_L&#x200B;AST_UPDA&#x200B;TE_TIMES&#x200B;TAMP_DEF&#x200B;&nbsp;&nbsp;DEFAUL&#x200B;T&nbsp;(getut&#x200B;cdate())&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">28</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DB_L&#x200B;AST_UPDA&#x200B;TE_USERI&#x200B;D&nbsp;&nbsp;&nbsp;nvar&#x200B;char(30)&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L&nbsp;CONSTR&#x200B;AINT&nbsp;ADD&#x200B;RSS_DB_L&#x200B;AST_UPDA&#x200B;TE_USERI&#x200B;D_DEF&nbsp;&nbsp;D&#x200B;EFAULT&nbsp;(&#x200B;user_nam&#x200B;e()),</td>
+<td class="L">28</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;DB_L&#x200B;AST_UPDA&#x200B;TE_USERI&#x200B;D&nbsp;&nbsp;&nbsp;nvar&#x200B;char(30)&#x200B;&nbsp;NOT&nbsp;NUL&#x200B;L&nbsp;CONSTR&#x200B;AINT&nbsp;ADD&#x200B;RSS_DB_L&#x200B;AST_UPDA&#x200B;TE_USERI&#x200B;D_DEF&nbsp;&nbsp;D&#x200B;EFAULT&nbsp;(&#x200B;user_nam&#x200B;e()),</td>
+</tr>
+<tr>
+<td class="L">29</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;CONS&#x200B;TRAINT&nbsp;A&#x200B;DDRSS_PK&#x200B;&nbsp;PRIMARY&#x200B;&nbsp;KEY&nbsp;CLU&#x200B;STERED(A&#x200B;DDRESS_I&#x200B;D)</td>
+<td class="L">29</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;CONS&#x200B;TRAINT&nbsp;A&#x200B;DDRSS_PK&#x200B;&nbsp;PRIMARY&#x200B;&nbsp;KEY&nbsp;CLU&#x200B;STERED(A&#x200B;DDRESS_I&#x200B;D)</td>
+</tr>
+<tr>
+<td class="L">30</td>
+<td class="U">&#x200B;&nbsp;ON&nbsp;[PRI&#x200B;MARY])</td>
+<td class="L">30</td>
+<td class="U">&#x200B;&nbsp;ON&nbsp;[PRI&#x200B;MARY])</td>
+</tr>
+<tr>
+<td class="L">31</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">31</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">32</td>
+<td class="U">&#x200B;EXEC&nbsp;sp_&#x200B;addexten&#x200B;dedprope&#x200B;rty&nbsp;</td>
+<td class="L">32</td>
+<td class="U">&#x200B;EXEC&nbsp;sp_&#x200B;addexten&#x200B;dedprope&#x200B;rty&nbsp;</td>
+</tr>
+<tr>
+<td class="L">33</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;@nam&#x200B;e&nbsp;=&nbsp;N'MS&#x200B;_Descrip&#x200B;tion',&nbsp;@&#x200B;value&nbsp;=&nbsp;&#x200B;N'Other&nbsp;&#x200B;country&nbsp;&#x200B;not&nbsp;list&#x200B;ed&nbsp;in&nbsp;dr&#x200B;op-down&nbsp;&#x200B;list'&nbsp;,&nbsp;</td>
+<td class="L">33</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;@nam&#x200B;e&nbsp;=&nbsp;N'MS&#x200B;_Descrip&#x200B;tion',&nbsp;@&#x200B;value&nbsp;=&nbsp;&#x200B;N'Other&nbsp;&#x200B;country&nbsp;&#x200B;not&nbsp;list&#x200B;ed&nbsp;in&nbsp;dr&#x200B;op-down&nbsp;&#x200B;list'&nbsp;,&nbsp;</td>
+</tr>
+<tr>
+<td class="L">34</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;@lev&#x200B;el0type&nbsp;&#x200B;=&nbsp;N'Sche&#x200B;ma',&nbsp;@le&#x200B;vel0name&#x200B;&nbsp;=&nbsp;N'dbo&#x200B;',&nbsp;</td>
+<td class="L">34</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;@lev&#x200B;el0type&nbsp;&#x200B;=&nbsp;N'Sche&#x200B;ma',&nbsp;@le&#x200B;vel0name&#x200B;&nbsp;=&nbsp;N'dbo&#x200B;',&nbsp;</td>
+</tr>
+<tr>
+<td class="L">35</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;@lev&#x200B;el1type&nbsp;&#x200B;=&nbsp;N'Tabl&#x200B;e',&nbsp;@lev&#x200B;el1name&nbsp;&#x200B;=&nbsp;N'PIMS&#x200B;_ADDRESS&#x200B;',&nbsp;</td>
+<td class="L">35</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;@lev&#x200B;el1type&nbsp;&#x200B;=&nbsp;N'Tabl&#x200B;e',&nbsp;@lev&#x200B;el1name&nbsp;&#x200B;=&nbsp;N'PIMS&#x200B;_ADDRESS&#x200B;',&nbsp;</td>
+</tr>
+<tr>
+<td class="L">36</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;@lev&#x200B;el2type&nbsp;&#x200B;=&nbsp;N'Colu&#x200B;mn',&nbsp;@le&#x200B;vel2name&#x200B;&nbsp;=&nbsp;N'OTH&#x200B;ER_COUNT&#x200B;RY'</td>
+<td class="L">36</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;@lev&#x200B;el2type&nbsp;&#x200B;=&nbsp;N'Colu&#x200B;mn',&nbsp;@le&#x200B;vel2name&#x200B;&nbsp;=&nbsp;N'OTH&#x200B;ER_COUNT&#x200B;RY'</td>
+</tr>
+<tr>
+<td class="L">37</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">37</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">38</td>
+<td class="U">&#x200B;ALTER&nbsp;AU&#x200B;THORIZAT&#x200B;ION&nbsp;ON&nbsp;O&#x200B;BJECT::P&#x200B;IMS_ADDR&#x200B;ESS&nbsp;TO&nbsp;d&#x200B;bo</td>
+<td class="L">38</td>
+<td class="U">&#x200B;ALTER&nbsp;AU&#x200B;THORIZAT&#x200B;ION&nbsp;ON&nbsp;O&#x200B;BJECT::P&#x200B;IMS_ADDR&#x200B;ESS&nbsp;TO&nbsp;d&#x200B;bo</td>
+</tr>
+<tr>
+<td class="L">39</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">39</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">40</td>
+<td class="U">&#x200B;ALTER&nbsp;TA&#x200B;BLE&nbsp;PIMS&#x200B;_ADDRESS</td>
+<td class="L">40</td>
+<td class="U">&#x200B;ALTER&nbsp;TA&#x200B;BLE&nbsp;PIMS&#x200B;_ADDRESS</td>
+</tr>
+<tr>
+<td class="L">41</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;PIM_R&#x200B;EGION_PI&#x200B;M_ADDRSS&#x200B;_FK</td>
+<td class="L">41</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;PIM_R&#x200B;EGION_PI&#x200B;M_ADDRSS&#x200B;_FK</td>
+</tr>
+<tr>
+<td class="L">42</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;FORE&#x200B;IGN&nbsp;KEY(&#x200B;REGION_C&#x200B;ODE)</td>
+<td class="L">42</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;FORE&#x200B;IGN&nbsp;KEY(&#x200B;REGION_C&#x200B;ODE)</td>
+</tr>
+<tr>
+<td class="L">43</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REFE&#x200B;RENCES&nbsp;P&#x200B;IMS_REGI&#x200B;ON(REGIO&#x200B;N_CODE)</td>
+<td class="L">43</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REFE&#x200B;RENCES&nbsp;P&#x200B;IMS_REGI&#x200B;ON(REGIO&#x200B;N_CODE)</td>
+</tr>
+<tr>
+<td class="L">44</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;D&#x200B;ELETE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+<td class="L">44</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;D&#x200B;ELETE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+</tr>
+<tr>
+<td class="L">45</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;U&#x200B;PDATE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+<td class="L">45</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;U&#x200B;PDATE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+</tr>
+<tr>
+<td class="L">46</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">46</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">47</td>
+<td class="U">&#x200B;ALTER&nbsp;TA&#x200B;BLE&nbsp;PIMS&#x200B;_ADDRESS</td>
+<td class="L">47</td>
+<td class="U">&#x200B;ALTER&nbsp;TA&#x200B;BLE&nbsp;PIMS&#x200B;_ADDRESS</td>
+</tr>
+<tr>
+<td class="L">48</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;PIM_P&#x200B;ROVNC_PI&#x200B;M_ADDRSS&#x200B;_FK</td>
+<td class="L">48</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;PIM_P&#x200B;ROVNC_PI&#x200B;M_ADDRSS&#x200B;_FK</td>
+</tr>
+<tr>
+<td class="L">49</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;FORE&#x200B;IGN&nbsp;KEY(&#x200B;PROVINCE&#x200B;_STATE_I&#x200B;D)</td>
+<td class="L">49</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;FORE&#x200B;IGN&nbsp;KEY(&#x200B;PROVINCE&#x200B;_STATE_I&#x200B;D)</td>
+</tr>
+<tr>
+<td class="L">50</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REFE&#x200B;RENCES&nbsp;P&#x200B;IMS_PROV&#x200B;INCE_STA&#x200B;TE(PROVI&#x200B;NCE_STAT&#x200B;E_ID)</td>
+<td class="L">50</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REFE&#x200B;RENCES&nbsp;P&#x200B;IMS_PROV&#x200B;INCE_STA&#x200B;TE(PROVI&#x200B;NCE_STAT&#x200B;E_ID)</td>
+</tr>
+<tr>
+<td class="L">51</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;D&#x200B;ELETE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+<td class="L">51</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;D&#x200B;ELETE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+</tr>
+<tr>
+<td class="L">52</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;U&#x200B;PDATE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+<td class="L">52</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;U&#x200B;PDATE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+</tr>
+<tr>
+<td class="L">53</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">53</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">54</td>
+<td class="U">&#x200B;ALTER&nbsp;TA&#x200B;BLE&nbsp;PIMS&#x200B;_ADDRESS</td>
+<td class="L">54</td>
+<td class="U">&#x200B;ALTER&nbsp;TA&#x200B;BLE&nbsp;PIMS&#x200B;_ADDRESS</td>
+</tr>
+<tr>
+<td class="L">55</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;PIM_D&#x200B;STRCT_PI&#x200B;M_ADDRSS&#x200B;_FK</td>
+<td class="L">55</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;PIM_D&#x200B;STRCT_PI&#x200B;M_ADDRSS&#x200B;_FK</td>
+</tr>
+<tr>
+<td class="L">56</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;FORE&#x200B;IGN&nbsp;KEY(&#x200B;DISTRICT&#x200B;_CODE)</td>
+<td class="L">56</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;FORE&#x200B;IGN&nbsp;KEY(&#x200B;DISTRICT&#x200B;_CODE)</td>
+</tr>
+<tr>
+<td class="L">57</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REFE&#x200B;RENCES&nbsp;P&#x200B;IMS_DIST&#x200B;RICT(DIS&#x200B;TRICT_CO&#x200B;DE)</td>
+<td class="L">57</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REFE&#x200B;RENCES&nbsp;P&#x200B;IMS_DIST&#x200B;RICT(DIS&#x200B;TRICT_CO&#x200B;DE)</td>
+</tr>
+<tr>
+<td class="L">58</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;D&#x200B;ELETE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+<td class="L">58</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;D&#x200B;ELETE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+</tr>
+<tr>
+<td class="L">59</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;U&#x200B;PDATE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+<td class="L">59</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;U&#x200B;PDATE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+</tr>
+<tr>
+<td class="L">60</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">60</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">61</td>
+<td class="U">&#x200B;ALTER&nbsp;TA&#x200B;BLE&nbsp;PIMS&#x200B;_ADDRESS</td>
+<td class="L">61</td>
+<td class="U">&#x200B;ALTER&nbsp;TA&#x200B;BLE&nbsp;PIMS&#x200B;_ADDRESS</td>
+</tr>
+<tr>
+<td class="L">62</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;PIM_C&#x200B;NTRY_PIM&#x200B;_ADDRSS_&#x200B;FK</td>
+<td class="L">62</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ADD&nbsp;&#x200B;CONSTRAI&#x200B;NT&nbsp;PIM_C&#x200B;NTRY_PIM&#x200B;_ADDRSS_&#x200B;FK</td>
+</tr>
+<tr>
+<td class="L">63</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;FORE&#x200B;IGN&nbsp;KEY(&#x200B;COUNTRY_&#x200B;ID)</td>
+<td class="L">63</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;FORE&#x200B;IGN&nbsp;KEY(&#x200B;COUNTRY_&#x200B;ID)</td>
+</tr>
+<tr>
+<td class="L">64</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REFE&#x200B;RENCES&nbsp;P&#x200B;IMS_COUN&#x200B;TRY(COUN&#x200B;TRY_ID)</td>
+<td class="L">64</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;REFE&#x200B;RENCES&nbsp;P&#x200B;IMS_COUN&#x200B;TRY(COUN&#x200B;TRY_ID)</td>
+</tr>
+<tr>
+<td class="L">65</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;D&#x200B;ELETE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+<td class="L">65</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;D&#x200B;ELETE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+</tr>
+<tr>
+<td class="L">66</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;U&#x200B;PDATE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+<td class="L">66</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;U&#x200B;PDATE&nbsp;NO&#x200B;&nbsp;ACTION&nbsp;</td>
+</tr>
+<tr>
+<td class="L">67</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">67</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">68</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_COUNTRY&#x200B;_ID_IDX</td>
+<td class="L">68</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_COUNTRY&#x200B;_ID_IDX</td>
+</tr>
+<tr>
+<td class="L">69</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(COUN&#x200B;TRY_ID)</td>
+<td class="L">69</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(COUN&#x200B;TRY_ID)</td>
+</tr>
+<tr>
+<td class="L">70</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">70</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">71</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_DISTRIC&#x200B;T_CODE_I&#x200B;DX</td>
+<td class="L">71</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_DISTRIC&#x200B;T_CODE_I&#x200B;DX</td>
+</tr>
+<tr>
+<td class="L">72</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(DIST&#x200B;RICT_COD&#x200B;E)</td>
+<td class="L">72</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(DIST&#x200B;RICT_COD&#x200B;E)</td>
+</tr>
+<tr>
+<td class="L">73</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">73</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">74</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_MUNICIP&#x200B;ALITY_NA&#x200B;ME_IDX</td>
+<td class="L">74</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_MUNICIP&#x200B;ALITY_NA&#x200B;ME_IDX</td>
+</tr>
+<tr>
+<td class="L">75</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(MUNI&#x200B;CIPALITY&#x200B;_NAME)</td>
+<td class="L">75</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(MUNI&#x200B;CIPALITY&#x200B;_NAME)</td>
+</tr>
+<tr>
+<td class="L">76</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">76</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">77</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_PROVINC&#x200B;E_STATE_&#x200B;ID_IDX</td>
+<td class="L">77</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_PROVINC&#x200B;E_STATE_&#x200B;ID_IDX</td>
+</tr>
+<tr>
+<td class="L">78</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(PROV&#x200B;INCE_STA&#x200B;TE_ID)</td>
+<td class="L">78</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(PROV&#x200B;INCE_STA&#x200B;TE_ID)</td>
+</tr>
+<tr>
+<td class="L">79</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">79</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">80</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_REGION_&#x200B;CODE_IDX</td>
+<td class="L">80</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_REGION_&#x200B;CODE_IDX</td>
+</tr>
+<tr>
+<td class="L">81</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(REGI&#x200B;ON_CODE)</td>
+<td class="L">81</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(REGI&#x200B;ON_CODE)</td>
+</tr>
+<tr>
+<td class="L">82</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">82</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">83</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_STREET_&#x200B;ADDRESS_&#x200B;1_IDX</td>
+<td class="L">83</td>
+<td class="U">&#x200B;CREATE&nbsp;N&#x200B;ONCLUSTE&#x200B;RED&nbsp;INDE&#x200B;X&nbsp;ADDRSS&#x200B;_STREET_&#x200B;ADDRESS_&#x200B;1_IDX</td>
+</tr>
+<tr>
+<td class="L">84</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(STRE&#x200B;ET_ADDRE&#x200B;SS_1)</td>
+<td class="L">84</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS(STRE&#x200B;ET_ADDRE&#x200B;SS_1)</td>
+</tr>
+<tr>
+<td class="L">85</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">85</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">86</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;RIGGER&nbsp;P&#x200B;IMS_ADDR&#x200B;SS_A_S_I&#x200B;UD_TR&nbsp;ON&#x200B;&nbsp;PIMS_AD&#x200B;DRESS&nbsp;FO&#x200B;R&nbsp;INSERT&#x200B;,&nbsp;UPDATE&#x200B;,&nbsp;DELETE&#x200B;&nbsp;AS</td>
+<td class="L">86</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;RIGGER&nbsp;P&#x200B;IMS_ADDR&#x200B;SS_A_S_I&#x200B;UD_TR&nbsp;ON&#x200B;&nbsp;PIMS_AD&#x200B;DRESS&nbsp;FO&#x200B;R&nbsp;INSERT&#x200B;,&nbsp;UPDATE&#x200B;,&nbsp;DELETE&#x200B;&nbsp;AS</td>
+</tr>
+<tr>
+<td class="L">87</td>
+<td class="U">&#x200B;SET&nbsp;NOCO&#x200B;UNT&nbsp;ON</td>
+<td class="L">87</td>
+<td class="U">&#x200B;SET&nbsp;NOCO&#x200B;UNT&nbsp;ON</td>
+</tr>
+<tr>
+<td class="L">88</td>
+<td class="U">&#x200B;BEGIN&nbsp;TR&#x200B;Y</td>
+<td class="L">88</td>
+<td class="U">&#x200B;BEGIN&nbsp;TR&#x200B;Y</td>
+</tr>
+<tr>
+<td class="L">89</td>
+<td class="U">&#x200B;DECLARE&nbsp;&#x200B;@curr_da&#x200B;te&nbsp;datet&#x200B;ime;</td>
+<td class="L">89</td>
+<td class="U">&#x200B;DECLARE&nbsp;&#x200B;@curr_da&#x200B;te&nbsp;datet&#x200B;ime;</td>
+</tr>
+<tr>
+<td class="L">90</td>
+<td class="U">&#x200B;SET&nbsp;@cur&#x200B;r_date&nbsp;=&#x200B;&nbsp;getutcd&#x200B;ate();</td>
+<td class="L">90</td>
+<td class="U">&#x200B;SET&nbsp;@cur&#x200B;r_date&nbsp;=&#x200B;&nbsp;getutcd&#x200B;ate();</td>
+</tr>
+<tr>
+<td class="L">91</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;NOT&#x200B;&nbsp;EXISTS(&#x200B;SELECT&nbsp;*&#x200B;&nbsp;FROM&nbsp;in&#x200B;serted)&nbsp;&#x200B;AND&nbsp;NOT&nbsp;&#x200B;EXISTS(S&#x200B;ELECT&nbsp;*&nbsp;&#x200B;FROM&nbsp;del&#x200B;eted)&nbsp;</td>
+<td class="L">91</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;NOT&#x200B;&nbsp;EXISTS(&#x200B;SELECT&nbsp;*&#x200B;&nbsp;FROM&nbsp;in&#x200B;serted)&nbsp;&#x200B;AND&nbsp;NOT&nbsp;&#x200B;EXISTS(S&#x200B;ELECT&nbsp;*&nbsp;&#x200B;FROM&nbsp;del&#x200B;eted)&nbsp;</td>
+</tr>
+<tr>
+<td class="L">92</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;RETU&#x200B;RN;</td>
+<td class="L">92</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;RETU&#x200B;RN;</td>
+</tr>
+<tr>
+<td class="L">93</td>
+<td class="U">&nbsp;</td>
+<td class="L">93</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">94</td>
+<td class="U">&#x200B;&nbsp;&nbsp;--&nbsp;his&#x200B;torical</td>
+<td class="L">94</td>
+<td class="U">&#x200B;&nbsp;&nbsp;--&nbsp;his&#x200B;torical</td>
+</tr>
+<tr>
+<td class="L">95</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;EXI&#x200B;STS(SELE&#x200B;CT&nbsp;*&nbsp;FRO&#x200B;M&nbsp;delete&#x200B;d)</td>
+<td class="L">95</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;EXI&#x200B;STS(SELE&#x200B;CT&nbsp;*&nbsp;FRO&#x200B;M&nbsp;delete&#x200B;d)</td>
+</tr>
+<tr>
+<td class="L">96</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;upda&#x200B;te&nbsp;PIMS_&#x200B;ADDRESS_&#x200B;HIST&nbsp;set&#x200B;&nbsp;END_DAT&#x200B;E_HIST&nbsp;=&#x200B;&nbsp;@curr_d&#x200B;ate&nbsp;wher&#x200B;e&nbsp;ADDRES&#x200B;S_ID&nbsp;in&nbsp;&#x200B;(select&nbsp;&#x200B;ADDRESS_&#x200B;ID&nbsp;from&nbsp;&#x200B;deleted)&#x200B;&nbsp;and&nbsp;END&#x200B;_DATE_HI&#x200B;ST&nbsp;is&nbsp;nu&#x200B;ll;</td>
+<td class="L">96</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;upda&#x200B;te&nbsp;PIMS_&#x200B;ADDRESS_&#x200B;HIST&nbsp;set&#x200B;&nbsp;END_DAT&#x200B;E_HIST&nbsp;=&#x200B;&nbsp;@curr_d&#x200B;ate&nbsp;wher&#x200B;e&nbsp;ADDRES&#x200B;S_ID&nbsp;in&nbsp;&#x200B;(select&nbsp;&#x200B;ADDRESS_&#x200B;ID&nbsp;from&nbsp;&#x200B;deleted)&#x200B;&nbsp;and&nbsp;END&#x200B;_DATE_HI&#x200B;ST&nbsp;is&nbsp;nu&#x200B;ll;</td>
+</tr>
+<tr>
+<td class="L">97</td>
+<td class="U">&nbsp;</td>
+<td class="L">97</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">98</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;EXI&#x200B;STS(SELE&#x200B;CT&nbsp;*&nbsp;FRO&#x200B;M&nbsp;insert&#x200B;ed)</td>
+<td class="L">98</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;EXI&#x200B;STS(SELE&#x200B;CT&nbsp;*&nbsp;FRO&#x200B;M&nbsp;insert&#x200B;ed)</td>
+</tr>
+<tr>
+<td class="L">99</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;inse&#x200B;rt&nbsp;into&nbsp;&#x200B;PIMS_ADD&#x200B;RESS_HIS&#x200B;T&nbsp;([ADDR&#x200B;ESS_ID],&#x200B;&nbsp;[REGION&#x200B;_CODE],&nbsp;&#x200B;[DISTRIC&#x200B;T_CODE],&#x200B;&nbsp;[PROVIN&#x200B;CE_STATE&#x200B;_ID],&nbsp;[C&#x200B;OUNTRY_I&#x200B;D],&nbsp;[STR&#x200B;EET_ADDR&#x200B;ESS_1],&nbsp;&#x200B;[STREET_&#x200B;ADDRESS_&#x200B;2],&nbsp;[STR&#x200B;EET_ADDR&#x200B;ESS_3],&nbsp;&#x200B;[MUNICIP&#x200B;ALITY_NA&#x200B;ME],&nbsp;[PO&#x200B;STAL_COD&#x200B;E],&nbsp;[OTH&#x200B;ER_COUNT&#x200B;RY],&nbsp;[LA&#x200B;TITUDE],&#x200B;&nbsp;[LONGIT&#x200B;UDE],&nbsp;[C&#x200B;OMMENT],&#x200B;&nbsp;[CONCUR&#x200B;RENCY_CO&#x200B;NTROL_NU&#x200B;MBER],&nbsp;[&#x200B;APP_CREA&#x200B;TE_TIMES&#x200B;TAMP],&nbsp;[&#x200B;APP_CREA&#x200B;TE_USERI&#x200B;D],&nbsp;[APP&#x200B;_CREATE_&#x200B;USER_GUI&#x200B;D],&nbsp;[APP&#x200B;_CREATE_&#x200B;USER_DIR&#x200B;ECTORY],&#x200B;&nbsp;[APP_LA&#x200B;ST_UPDAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID],&nbsp;&#x200B;[APP_LAS&#x200B;T_UPDATE&#x200B;_USER_GU&#x200B;ID],&nbsp;[AP&#x200B;P_LAST_U&#x200B;PDATE_US&#x200B;ER_DIREC&#x200B;TORY],&nbsp;[&#x200B;DB_CREAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[D&#x200B;B_CREATE&#x200B;_USERID]&#x200B;,&nbsp;[DB_LA&#x200B;ST_UPDAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[D&#x200B;B_LAST_U&#x200B;PDATE_US&#x200B;ERID],&nbsp;_&#x200B;ADDRESS_&#x200B;HIST_ID,&#x200B;&nbsp;END_DAT&#x200B;E_HIST,&nbsp;&#x200B;EFFECTIV&#x200B;E_DATE_H&#x200B;IST)</td>
+<td class="L">99</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;inse&#x200B;rt&nbsp;into&nbsp;&#x200B;PIMS_ADD&#x200B;RESS_HIS&#x200B;T&nbsp;([ADDR&#x200B;ESS_ID],&#x200B;&nbsp;[REGION&#x200B;_CODE],&nbsp;&#x200B;[DISTRIC&#x200B;T_CODE],&#x200B;&nbsp;[PROVIN&#x200B;CE_STATE&#x200B;_ID],&nbsp;[C&#x200B;OUNTRY_I&#x200B;D],&nbsp;[STR&#x200B;EET_ADDR&#x200B;ESS_1],&nbsp;&#x200B;[STREET_&#x200B;ADDRESS_&#x200B;2],&nbsp;[STR&#x200B;EET_ADDR&#x200B;ESS_3],&nbsp;&#x200B;[MUNICIP&#x200B;ALITY_NA&#x200B;ME],&nbsp;[PO&#x200B;STAL_COD&#x200B;E],&nbsp;[OTH&#x200B;ER_COUNT&#x200B;RY],&nbsp;[LA&#x200B;TITUDE],&#x200B;&nbsp;[LONGIT&#x200B;UDE],&nbsp;[C&#x200B;OMMENT],&#x200B;&nbsp;[CONCUR&#x200B;RENCY_CO&#x200B;NTROL_NU&#x200B;MBER],&nbsp;[&#x200B;APP_CREA&#x200B;TE_TIMES&#x200B;TAMP],&nbsp;[&#x200B;APP_CREA&#x200B;TE_USERI&#x200B;D],&nbsp;[APP&#x200B;_CREATE_&#x200B;USER_GUI&#x200B;D],&nbsp;[APP&#x200B;_CREATE_&#x200B;USER_DIR&#x200B;ECTORY],&#x200B;&nbsp;[APP_LA&#x200B;ST_UPDAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID],&nbsp;&#x200B;[APP_LAS&#x200B;T_UPDATE&#x200B;_USER_GU&#x200B;ID],&nbsp;[AP&#x200B;P_LAST_U&#x200B;PDATE_US&#x200B;ER_DIREC&#x200B;TORY],&nbsp;[&#x200B;DB_CREAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[D&#x200B;B_CREATE&#x200B;_USERID]&#x200B;,&nbsp;[DB_LA&#x200B;ST_UPDAT&#x200B;E_TIMEST&#x200B;AMP],&nbsp;[D&#x200B;B_LAST_U&#x200B;PDATE_US&#x200B;ERID],&nbsp;_&#x200B;ADDRESS_&#x200B;HIST_ID,&#x200B;&nbsp;END_DAT&#x200B;E_HIST,&nbsp;&#x200B;EFFECTIV&#x200B;E_DATE_H&#x200B;IST)</td>
+</tr>
+<tr>
+<td class="L">100</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;se&#x200B;lect&nbsp;[AD&#x200B;DRESS_ID&#x200B;],&nbsp;[REGI&#x200B;ON_CODE]&#x200B;,&nbsp;[DISTR&#x200B;ICT_CODE&#x200B;],&nbsp;[PROV&#x200B;INCE_STA&#x200B;TE_ID],&nbsp;&#x200B;[COUNTRY&#x200B;_ID],&nbsp;[S&#x200B;TREET_AD&#x200B;DRESS_1]&#x200B;,&nbsp;[STREE&#x200B;T_ADDRES&#x200B;S_2],&nbsp;[S&#x200B;TREET_AD&#x200B;DRESS_3]&#x200B;,&nbsp;[MUNIC&#x200B;IPALITY_&#x200B;NAME],&nbsp;[&#x200B;POSTAL_C&#x200B;ODE],&nbsp;[O&#x200B;THER_COU&#x200B;NTRY],&nbsp;[&#x200B;LATITUDE&#x200B;],&nbsp;[LONG&#x200B;ITUDE],&nbsp;&#x200B;[COMMENT&#x200B;],&nbsp;[CONC&#x200B;URRENCY_&#x200B;CONTROL_&#x200B;NUMBER],&#x200B;&nbsp;[APP_CR&#x200B;EATE_TIM&#x200B;ESTAMP],&#x200B;&nbsp;[APP_CR&#x200B;EATE_USE&#x200B;RID],&nbsp;[A&#x200B;PP_CREAT&#x200B;E_USER_G&#x200B;UID],&nbsp;[A&#x200B;PP_CREAT&#x200B;E_USER_D&#x200B;IRECTORY&#x200B;],&nbsp;[APP_&#x200B;LAST_UPD&#x200B;ATE_TIME&#x200B;STAMP],&nbsp;&#x200B;[APP_LAS&#x200B;T_UPDATE&#x200B;_USERID]&#x200B;,&nbsp;[APP_L&#x200B;AST_UPDA&#x200B;TE_USER_&#x200B;GUID],&nbsp;[&#x200B;APP_LAST&#x200B;_UPDATE_&#x200B;USER_DIR&#x200B;ECTORY],&#x200B;&nbsp;[DB_CRE&#x200B;ATE_TIME&#x200B;STAMP],&nbsp;&#x200B;[DB_CREA&#x200B;TE_USERI&#x200B;D],&nbsp;[DB_&#x200B;LAST_UPD&#x200B;ATE_TIME&#x200B;STAMP],&nbsp;&#x200B;[DB_LAST&#x200B;_UPDATE_&#x200B;USERID],&#x200B;&nbsp;(next&nbsp;v&#x200B;alue&nbsp;for&#x200B;&nbsp;[dbo].[&#x200B;PIMS_ADD&#x200B;RESS_H_I&#x200B;D_SEQ])&nbsp;&#x200B;as&nbsp;[_ADD&#x200B;RESS_HIS&#x200B;T_ID],&nbsp;n&#x200B;ull&nbsp;as&nbsp;[&#x200B;END_DATE&#x200B;_HIST],&nbsp;&#x200B;@curr_da&#x200B;te&nbsp;as&nbsp;[E&#x200B;FFECTIVE&#x200B;_DATE_HI&#x200B;ST]&nbsp;from&#x200B;&nbsp;inserte&#x200B;d;</td>
+<td class="L">100</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;se&#x200B;lect&nbsp;[AD&#x200B;DRESS_ID&#x200B;],&nbsp;[REGI&#x200B;ON_CODE]&#x200B;,&nbsp;[DISTR&#x200B;ICT_CODE&#x200B;],&nbsp;[PROV&#x200B;INCE_STA&#x200B;TE_ID],&nbsp;&#x200B;[COUNTRY&#x200B;_ID],&nbsp;[S&#x200B;TREET_AD&#x200B;DRESS_1]&#x200B;,&nbsp;[STREE&#x200B;T_ADDRES&#x200B;S_2],&nbsp;[S&#x200B;TREET_AD&#x200B;DRESS_3]&#x200B;,&nbsp;[MUNIC&#x200B;IPALITY_&#x200B;NAME],&nbsp;[&#x200B;POSTAL_C&#x200B;ODE],&nbsp;[O&#x200B;THER_COU&#x200B;NTRY],&nbsp;[&#x200B;LATITUDE&#x200B;],&nbsp;[LONG&#x200B;ITUDE],&nbsp;&#x200B;[COMMENT&#x200B;],&nbsp;[CONC&#x200B;URRENCY_&#x200B;CONTROL_&#x200B;NUMBER],&#x200B;&nbsp;[APP_CR&#x200B;EATE_TIM&#x200B;ESTAMP],&#x200B;&nbsp;[APP_CR&#x200B;EATE_USE&#x200B;RID],&nbsp;[A&#x200B;PP_CREAT&#x200B;E_USER_G&#x200B;UID],&nbsp;[A&#x200B;PP_CREAT&#x200B;E_USER_D&#x200B;IRECTORY&#x200B;],&nbsp;[APP_&#x200B;LAST_UPD&#x200B;ATE_TIME&#x200B;STAMP],&nbsp;&#x200B;[APP_LAS&#x200B;T_UPDATE&#x200B;_USERID]&#x200B;,&nbsp;[APP_L&#x200B;AST_UPDA&#x200B;TE_USER_&#x200B;GUID],&nbsp;[&#x200B;APP_LAST&#x200B;_UPDATE_&#x200B;USER_DIR&#x200B;ECTORY],&#x200B;&nbsp;[DB_CRE&#x200B;ATE_TIME&#x200B;STAMP],&nbsp;&#x200B;[DB_CREA&#x200B;TE_USERI&#x200B;D],&nbsp;[DB_&#x200B;LAST_UPD&#x200B;ATE_TIME&#x200B;STAMP],&nbsp;&#x200B;[DB_LAST&#x200B;_UPDATE_&#x200B;USERID],&#x200B;&nbsp;(next&nbsp;v&#x200B;alue&nbsp;for&#x200B;&nbsp;[dbo].[&#x200B;PIMS_ADD&#x200B;RESS_H_I&#x200B;D_SEQ])&nbsp;&#x200B;as&nbsp;[_ADD&#x200B;RESS_HIS&#x200B;T_ID],&nbsp;n&#x200B;ull&nbsp;as&nbsp;[&#x200B;END_DATE&#x200B;_HIST],&nbsp;&#x200B;@curr_da&#x200B;te&nbsp;as&nbsp;[E&#x200B;FFECTIVE&#x200B;_DATE_HI&#x200B;ST]&nbsp;from&#x200B;&nbsp;inserte&#x200B;d;</td>
+</tr>
+<tr>
+<td class="L">101</td>
+<td class="U">&nbsp;</td>
+<td class="L">101</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">102</td>
+<td class="U">&#x200B;END&nbsp;TRY</td>
+<td class="L">102</td>
+<td class="U">&#x200B;END&nbsp;TRY</td>
+</tr>
+<tr>
+<td class="L">103</td>
+<td class="U">&#x200B;BEGIN&nbsp;CA&#x200B;TCH</td>
+<td class="L">103</td>
+<td class="U">&#x200B;BEGIN&nbsp;CA&#x200B;TCH</td>
+</tr>
+<tr>
+<td class="L">104</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;IF&nbsp;@@&#x200B;trancoun&#x200B;t&nbsp;>&nbsp;0&nbsp;RO&#x200B;LLBACK&nbsp;T&#x200B;RANSACTI&#x200B;ON</td>
+<td class="L">104</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;IF&nbsp;@@&#x200B;trancoun&#x200B;t&nbsp;>&nbsp;0&nbsp;RO&#x200B;LLBACK&nbsp;T&#x200B;RANSACTI&#x200B;ON</td>
+</tr>
+<tr>
+<td class="L">105</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;EXEC&nbsp;&#x200B;pims_err&#x200B;or_handl&#x200B;ing</td>
+<td class="L">105</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;EXEC&nbsp;&#x200B;pims_err&#x200B;or_handl&#x200B;ing</td>
+</tr>
+<tr>
+<td class="L">106</td>
+<td class="U">&#x200B;END&nbsp;CATC&#x200B;H;</td>
+<td class="L">106</td>
+<td class="U">&#x200B;END&nbsp;CATC&#x200B;H;</td>
+</tr>
+<tr>
+<td class="L">107</td>
+<td class="U">&nbsp;</td>
+<td class="L">107</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">108</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">108</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">109</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;RIGGER&nbsp;P&#x200B;IMS_ADDR&#x200B;SS_I_S_I&#x200B;_TR&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS&nbsp;INST&#x200B;EAD&nbsp;OF&nbsp;I&#x200B;NSERT&nbsp;AS</td>
+<td class="L">109</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;RIGGER&nbsp;P&#x200B;IMS_ADDR&#x200B;SS_I_S_I&#x200B;_TR&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS&nbsp;INST&#x200B;EAD&nbsp;OF&nbsp;I&#x200B;NSERT&nbsp;AS</td>
+</tr>
+<tr>
+<td class="L">110</td>
+<td class="U">&#x200B;SET&nbsp;NOCO&#x200B;UNT&nbsp;ON</td>
+<td class="L">110</td>
+<td class="U">&#x200B;SET&nbsp;NOCO&#x200B;UNT&nbsp;ON</td>
+</tr>
+<tr>
+<td class="L">111</td>
+<td class="U">&#x200B;BEGIN&nbsp;TR&#x200B;Y</td>
+<td class="L">111</td>
+<td class="U">&#x200B;BEGIN&nbsp;TR&#x200B;Y</td>
+</tr>
+<tr>
+<td class="L">112</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;NOT&#x200B;&nbsp;EXISTS(&#x200B;SELECT&nbsp;*&#x200B;&nbsp;FROM&nbsp;in&#x200B;serted)&nbsp;</td>
+<td class="L">112</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;NOT&#x200B;&nbsp;EXISTS(&#x200B;SELECT&nbsp;*&#x200B;&nbsp;FROM&nbsp;in&#x200B;serted)&nbsp;</td>
+</tr>
+<tr>
+<td class="L">113</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;RETU&#x200B;RN;</td>
+<td class="L">113</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;RETU&#x200B;RN;</td>
+</tr>
+<tr>
+<td class="L">114</td>
+<td class="U">&nbsp;</td>
+<td class="L">114</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">115</td>
+<td class="U">&nbsp;</td>
+<td class="L">115</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">116</td>
+<td class="U">&#x200B;&nbsp;&nbsp;insert&#x200B;&nbsp;into&nbsp;PI&#x200B;MS_ADDRE&#x200B;SS&nbsp;("ADD&#x200B;RESS_ID"&#x200B;,</td>
+<td class="L">116</td>
+<td class="U">&#x200B;&nbsp;&nbsp;insert&#x200B;&nbsp;into&nbsp;PI&#x200B;MS_ADDRE&#x200B;SS&nbsp;("ADD&#x200B;RESS_ID"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">117</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"R&#x200B;EGION_CO&#x200B;DE",</td>
+<td class="L">117</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"R&#x200B;EGION_CO&#x200B;DE",</td>
+</tr>
+<tr>
+<td class="L">118</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"D&#x200B;ISTRICT_&#x200B;CODE",</td>
+<td class="L">118</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"D&#x200B;ISTRICT_&#x200B;CODE",</td>
+</tr>
+<tr>
+<td class="L">119</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;ROVINCE_&#x200B;STATE_ID&#x200B;",</td>
+<td class="L">119</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;ROVINCE_&#x200B;STATE_ID&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">120</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OUNTRY_I&#x200B;D",</td>
+<td class="L">120</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OUNTRY_I&#x200B;D",</td>
+</tr>
+<tr>
+<td class="L">121</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_1"&#x200B;,</td>
+<td class="L">121</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_1"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">122</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_2"&#x200B;,</td>
+<td class="L">122</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_2"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">123</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_3"&#x200B;,</td>
+<td class="L">123</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_3"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">124</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"M&#x200B;UNICIPAL&#x200B;ITY_NAME&#x200B;",</td>
+<td class="L">124</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"M&#x200B;UNICIPAL&#x200B;ITY_NAME&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">125</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;OSTAL_CO&#x200B;DE",</td>
+<td class="L">125</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;OSTAL_CO&#x200B;DE",</td>
+</tr>
+<tr>
+<td class="L">126</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"O&#x200B;THER_COU&#x200B;NTRY",</td>
+<td class="L">126</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"O&#x200B;THER_COU&#x200B;NTRY",</td>
+</tr>
+<tr>
+<td class="L">127</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ATITUDE"&#x200B;,</td>
+<td class="L">127</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ATITUDE"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">128</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ONGITUDE&#x200B;",</td>
+<td class="L">128</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ONGITUDE&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">129</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OMMENT",</td>
+<td class="L">129</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OMMENT",</td>
+</tr>
+<tr>
+<td class="L">130</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;ONCURREN&#x200B;CY_CONTR&#x200B;OL_NUMBE&#x200B;R",</td>
+<td class="L">130</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;ONCURREN&#x200B;CY_CONTR&#x200B;OL_NUMBE&#x200B;R",</td>
+</tr>
+<tr>
+<td class="L">131</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_TIMEST&#x200B;AMP",</td>
+<td class="L">131</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_TIMEST&#x200B;AMP",</td>
+</tr>
+<tr>
+<td class="L">132</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USERID&#x200B;",</td>
+<td class="L">132</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USERID&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">133</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USER_G&#x200B;UID",</td>
+<td class="L">133</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USER_G&#x200B;UID",</td>
+</tr>
+<tr>
+<td class="L">134</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USER_D&#x200B;IRECTORY&#x200B;",</td>
+<td class="L">134</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USER_D&#x200B;IRECTORY&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">135</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_T&#x200B;IMESTAMP&#x200B;",</td>
+<td class="L">135</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_T&#x200B;IMESTAMP&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">136</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID",</td>
+<td class="L">136</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID",</td>
+</tr>
+<tr>
+<td class="L">137</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_GUID&#x200B;",</td>
+<td class="L">137</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_GUID&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">138</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_DIRE&#x200B;CTORY")</td>
+<td class="L">138</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_DIRE&#x200B;CTORY")</td>
+</tr>
+<tr>
+<td class="L">139</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;sele&#x200B;ct&nbsp;"ADDR&#x200B;ESS_ID",</td>
+<td class="L">139</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;sele&#x200B;ct&nbsp;"ADDR&#x200B;ESS_ID",</td>
+</tr>
+<tr>
+<td class="L">140</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"R&#x200B;EGION_CO&#x200B;DE",</td>
+<td class="L">140</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"R&#x200B;EGION_CO&#x200B;DE",</td>
+</tr>
+<tr>
+<td class="L">141</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"D&#x200B;ISTRICT_&#x200B;CODE",</td>
+<td class="L">141</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"D&#x200B;ISTRICT_&#x200B;CODE",</td>
+</tr>
+<tr>
+<td class="L">142</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;ROVINCE_&#x200B;STATE_ID&#x200B;",</td>
+<td class="L">142</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;ROVINCE_&#x200B;STATE_ID&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">143</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OUNTRY_I&#x200B;D",</td>
+<td class="L">143</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OUNTRY_I&#x200B;D",</td>
+</tr>
+<tr>
+<td class="L">144</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_1"&#x200B;,</td>
+<td class="L">144</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_1"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">145</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_2"&#x200B;,</td>
+<td class="L">145</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_2"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">146</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_3"&#x200B;,</td>
+<td class="L">146</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_3"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">147</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"M&#x200B;UNICIPAL&#x200B;ITY_NAME&#x200B;",</td>
+<td class="L">147</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"M&#x200B;UNICIPAL&#x200B;ITY_NAME&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">148</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;OSTAL_CO&#x200B;DE",</td>
+<td class="L">148</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;OSTAL_CO&#x200B;DE",</td>
+</tr>
+<tr>
+<td class="L">149</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"O&#x200B;THER_COU&#x200B;NTRY",</td>
+<td class="L">149</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"O&#x200B;THER_COU&#x200B;NTRY",</td>
+</tr>
+<tr>
+<td class="L">150</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ATITUDE"&#x200B;,</td>
+<td class="L">150</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ATITUDE"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">151</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ONGITUDE&#x200B;",</td>
+<td class="L">151</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ONGITUDE&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">152</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OMMENT",</td>
+<td class="L">152</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OMMENT",</td>
+</tr>
+<tr>
+<td class="L">153</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;ONCURREN&#x200B;CY_CONTR&#x200B;OL_NUMBE&#x200B;R",</td>
+<td class="L">153</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;ONCURREN&#x200B;CY_CONTR&#x200B;OL_NUMBE&#x200B;R",</td>
+</tr>
+<tr>
+<td class="L">154</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_TIMEST&#x200B;AMP",</td>
+<td class="L">154</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_TIMEST&#x200B;AMP",</td>
+</tr>
+<tr>
+<td class="L">155</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USERID&#x200B;",</td>
+<td class="L">155</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USERID&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">156</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USER_G&#x200B;UID",</td>
+<td class="L">156</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USER_G&#x200B;UID",</td>
+</tr>
+<tr>
+<td class="L">157</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USER_D&#x200B;IRECTORY&#x200B;",</td>
+<td class="L">157</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_CREAT&#x200B;E_USER_D&#x200B;IRECTORY&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">158</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_T&#x200B;IMESTAMP&#x200B;",</td>
+<td class="L">158</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_T&#x200B;IMESTAMP&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">159</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID",</td>
+<td class="L">159</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID",</td>
+</tr>
+<tr>
+<td class="L">160</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_GUID&#x200B;",</td>
+<td class="L">160</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_GUID&#x200B;",</td>
+</tr>
+<tr>
+<td class="L">161</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_DIRE&#x200B;CTORY"</td>
+<td class="L">161</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_DIRE&#x200B;CTORY"</td>
+</tr>
+<tr>
+<td class="L">162</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;from&#x200B;&nbsp;inserte&#x200B;d;</td>
+<td class="L">162</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;from&#x200B;&nbsp;inserte&#x200B;d;</td>
+</tr>
+<tr>
+<td class="L">163</td>
+<td class="U">&nbsp;</td>
+<td class="L">163</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">164</td>
+<td class="U">&#x200B;END&nbsp;TRY</td>
+<td class="L">164</td>
+<td class="U">&#x200B;END&nbsp;TRY</td>
+</tr>
+<tr>
+<td class="L">165</td>
+<td class="U">&#x200B;BEGIN&nbsp;CA&#x200B;TCH</td>
+<td class="L">165</td>
+<td class="U">&#x200B;BEGIN&nbsp;CA&#x200B;TCH</td>
+</tr>
+<tr>
+<td class="L">166</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;IF&nbsp;@@&#x200B;trancoun&#x200B;t&nbsp;>&nbsp;0&nbsp;RO&#x200B;LLBACK&nbsp;T&#x200B;RANSACTI&#x200B;ON</td>
+<td class="L">166</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;IF&nbsp;@@&#x200B;trancoun&#x200B;t&nbsp;>&nbsp;0&nbsp;RO&#x200B;LLBACK&nbsp;T&#x200B;RANSACTI&#x200B;ON</td>
+</tr>
+<tr>
+<td class="L">167</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;EXEC&nbsp;&#x200B;pims_err&#x200B;or_handl&#x200B;ing</td>
+<td class="L">167</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;EXEC&nbsp;&#x200B;pims_err&#x200B;or_handl&#x200B;ing</td>
+</tr>
+<tr>
+<td class="L">168</td>
+<td class="U">&#x200B;END&nbsp;CATC&#x200B;H;</td>
+<td class="L">168</td>
+<td class="U">&#x200B;END&nbsp;CATC&#x200B;H;</td>
+</tr>
+<tr>
+<td class="L">169</td>
+<td class="U">&nbsp;</td>
+<td class="L">169</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">170</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">170</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+<tr>
+<td class="L">171</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;RIGGER&nbsp;P&#x200B;IMS_ADDR&#x200B;SS_I_S_U&#x200B;_TR&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS&nbsp;INST&#x200B;EAD&nbsp;OF&nbsp;U&#x200B;PDATE&nbsp;AS</td>
+<td class="L">171</td>
+<td class="U">&#x200B;CREATE&nbsp;T&#x200B;RIGGER&nbsp;P&#x200B;IMS_ADDR&#x200B;SS_I_S_U&#x200B;_TR&nbsp;ON&nbsp;P&#x200B;IMS_ADDR&#x200B;ESS&nbsp;INST&#x200B;EAD&nbsp;OF&nbsp;U&#x200B;PDATE&nbsp;AS</td>
+</tr>
+<tr>
+<td class="L">172</td>
+<td class="U">&#x200B;SET&nbsp;NOCO&#x200B;UNT&nbsp;ON</td>
+<td class="L">172</td>
+<td class="U">&#x200B;SET&nbsp;NOCO&#x200B;UNT&nbsp;ON</td>
+</tr>
+<tr>
+<td class="L">173</td>
+<td class="U">&#x200B;BEGIN&nbsp;TR&#x200B;Y</td>
+<td class="L">173</td>
+<td class="U">&#x200B;BEGIN&nbsp;TR&#x200B;Y</td>
+</tr>
+<tr>
+<td class="L">174</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;NOT&#x200B;&nbsp;EXISTS(&#x200B;SELECT&nbsp;*&#x200B;&nbsp;FROM&nbsp;de&#x200B;leted)&nbsp;</td>
+<td class="L">174</td>
+<td class="U">&#x200B;&nbsp;&nbsp;IF&nbsp;NOT&#x200B;&nbsp;EXISTS(&#x200B;SELECT&nbsp;*&#x200B;&nbsp;FROM&nbsp;de&#x200B;leted)&nbsp;</td>
+</tr>
+<tr>
+<td class="L">175</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;RETU&#x200B;RN;</td>
+<td class="L">175</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;RETU&#x200B;RN;</td>
+</tr>
+<tr>
+<td class="L">176</td>
+<td class="U">&nbsp;</td>
+<td class="L">176</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">177</td>
+<td class="U">&#x200B;&nbsp;&nbsp;--&nbsp;val&#x200B;idate&nbsp;co&#x200B;ncurrenc&#x200B;y&nbsp;contro&#x200B;l</td>
+<td class="L">177</td>
+<td class="U">&#x200B;&nbsp;&nbsp;--&nbsp;val&#x200B;idate&nbsp;co&#x200B;ncurrenc&#x200B;y&nbsp;contro&#x200B;l</td>
+</tr>
+<tr>
+<td class="L">178</td>
+<td class="U">&#x200B;&nbsp;&nbsp;if&nbsp;exi&#x200B;sts&nbsp;(sel&#x200B;ect&nbsp;1&nbsp;fr&#x200B;om&nbsp;inser&#x200B;ted,&nbsp;del&#x200B;eted&nbsp;whe&#x200B;re&nbsp;inser&#x200B;ted.CONC&#x200B;URRENCY_&#x200B;CONTROL_&#x200B;NUMBER&nbsp;!&#x200B;=&nbsp;delete&#x200B;d.CONCUR&#x200B;RENCY_CO&#x200B;NTROL_NU&#x200B;MBER+1&nbsp;A&#x200B;ND&nbsp;inser&#x200B;ted.ADDR&#x200B;ESS_ID&nbsp;=&#x200B;&nbsp;deleted&#x200B;.ADDRESS&#x200B;_ID)</td>
+<td class="L">178</td>
+<td class="U">&#x200B;&nbsp;&nbsp;if&nbsp;exi&#x200B;sts&nbsp;(sel&#x200B;ect&nbsp;1&nbsp;fr&#x200B;om&nbsp;inser&#x200B;ted,&nbsp;del&#x200B;eted&nbsp;whe&#x200B;re&nbsp;inser&#x200B;ted.CONC&#x200B;URRENCY_&#x200B;CONTROL_&#x200B;NUMBER&nbsp;!&#x200B;=&nbsp;delete&#x200B;d.CONCUR&#x200B;RENCY_CO&#x200B;NTROL_NU&#x200B;MBER+1&nbsp;A&#x200B;ND&nbsp;inser&#x200B;ted.ADDR&#x200B;ESS_ID&nbsp;=&#x200B;&nbsp;deleted&#x200B;.ADDRESS&#x200B;_ID)</td>
+</tr>
+<tr>
+<td class="L">179</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;rais&#x200B;error('C&#x200B;ONCURREN&#x200B;CY&nbsp;FAILU&#x200B;RE.',16,&#x200B;1)</td>
+<td class="L">179</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;rais&#x200B;error('C&#x200B;ONCURREN&#x200B;CY&nbsp;FAILU&#x200B;RE.',16,&#x200B;1)</td>
+</tr>
+<tr>
+<td class="L">180</td>
+<td class="U">&nbsp;</td>
+<td class="L">180</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">181</td>
+<td class="U">&nbsp;</td>
+<td class="L">181</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">182</td>
+<td class="U">&#x200B;&nbsp;&nbsp;--&nbsp;upd&#x200B;ate&nbsp;stat&#x200B;ement</td>
+<td class="L">182</td>
+<td class="U">&#x200B;&nbsp;&nbsp;--&nbsp;upd&#x200B;ate&nbsp;stat&#x200B;ement</td>
+</tr>
+<tr>
+<td class="L">183</td>
+<td class="U">&#x200B;&nbsp;&nbsp;update&#x200B;&nbsp;PIMS_AD&#x200B;DRESS</td>
+<td class="L">183</td>
+<td class="U">&#x200B;&nbsp;&nbsp;update&#x200B;&nbsp;PIMS_AD&#x200B;DRESS</td>
+</tr>
+<tr>
+<td class="L">184</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&#x200B;"ADDRESS&#x200B;_ID"&nbsp;=&nbsp;i&#x200B;nserted.&#x200B;"ADDRESS&#x200B;_ID",</td>
+<td class="L">184</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;set&nbsp;&#x200B;"ADDRESS&#x200B;_ID"&nbsp;=&nbsp;i&#x200B;nserted.&#x200B;"ADDRESS&#x200B;_ID",</td>
+</tr>
+<tr>
+<td class="L">185</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"R&#x200B;EGION_CO&#x200B;DE"&nbsp;=&nbsp;in&#x200B;serted."&#x200B;REGION_C&#x200B;ODE",</td>
+<td class="L">185</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"R&#x200B;EGION_CO&#x200B;DE"&nbsp;=&nbsp;in&#x200B;serted."&#x200B;REGION_C&#x200B;ODE",</td>
+</tr>
+<tr>
+<td class="L">186</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"D&#x200B;ISTRICT_&#x200B;CODE"&nbsp;=&nbsp;&#x200B;inserted&#x200B;."DISTRI&#x200B;CT_CODE"&#x200B;,</td>
+<td class="L">186</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"D&#x200B;ISTRICT_&#x200B;CODE"&nbsp;=&nbsp;&#x200B;inserted&#x200B;."DISTRI&#x200B;CT_CODE"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">187</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;ROVINCE_&#x200B;STATE_ID&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."PR&#x200B;OVINCE_S&#x200B;TATE_ID"&#x200B;,</td>
+<td class="L">187</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;ROVINCE_&#x200B;STATE_ID&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."PR&#x200B;OVINCE_S&#x200B;TATE_ID"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">188</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OUNTRY_I&#x200B;D"&nbsp;=&nbsp;ins&#x200B;erted."C&#x200B;OUNTRY_I&#x200B;D",</td>
+<td class="L">188</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OUNTRY_I&#x200B;D"&nbsp;=&nbsp;ins&#x200B;erted."C&#x200B;OUNTRY_I&#x200B;D",</td>
+</tr>
+<tr>
+<td class="L">189</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_1"&#x200B;&nbsp;=&nbsp;inser&#x200B;ted."STR&#x200B;EET_ADDR&#x200B;ESS_1",</td>
+<td class="L">189</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_1"&#x200B;&nbsp;=&nbsp;inser&#x200B;ted."STR&#x200B;EET_ADDR&#x200B;ESS_1",</td>
+</tr>
+<tr>
+<td class="L">190</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_2"&#x200B;&nbsp;=&nbsp;inser&#x200B;ted."STR&#x200B;EET_ADDR&#x200B;ESS_2",</td>
+<td class="L">190</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_2"&#x200B;&nbsp;=&nbsp;inser&#x200B;ted."STR&#x200B;EET_ADDR&#x200B;ESS_2",</td>
+</tr>
+<tr>
+<td class="L">191</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_3"&#x200B;&nbsp;=&nbsp;inser&#x200B;ted."STR&#x200B;EET_ADDR&#x200B;ESS_3",</td>
+<td class="L">191</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"S&#x200B;TREET_AD&#x200B;DRESS_3"&#x200B;&nbsp;=&nbsp;inser&#x200B;ted."STR&#x200B;EET_ADDR&#x200B;ESS_3",</td>
+</tr>
+<tr>
+<td class="L">192</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"M&#x200B;UNICIPAL&#x200B;ITY_NAME&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."MU&#x200B;NICIPALI&#x200B;TY_NAME"&#x200B;,</td>
+<td class="L">192</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"M&#x200B;UNICIPAL&#x200B;ITY_NAME&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."MU&#x200B;NICIPALI&#x200B;TY_NAME"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">193</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;OSTAL_CO&#x200B;DE"&nbsp;=&nbsp;in&#x200B;serted."&#x200B;POSTAL_C&#x200B;ODE",</td>
+<td class="L">193</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"P&#x200B;OSTAL_CO&#x200B;DE"&nbsp;=&nbsp;in&#x200B;serted."&#x200B;POSTAL_C&#x200B;ODE",</td>
+</tr>
+<tr>
+<td class="L">194</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"O&#x200B;THER_COU&#x200B;NTRY"&nbsp;=&nbsp;&#x200B;inserted&#x200B;."OTHER_&#x200B;COUNTRY"&#x200B;,</td>
+<td class="L">194</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"O&#x200B;THER_COU&#x200B;NTRY"&nbsp;=&nbsp;&#x200B;inserted&#x200B;."OTHER_&#x200B;COUNTRY"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">195</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ATITUDE"&#x200B;&nbsp;=&nbsp;inser&#x200B;ted."LAT&#x200B;ITUDE",</td>
+<td class="L">195</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ATITUDE"&#x200B;&nbsp;=&nbsp;inser&#x200B;ted."LAT&#x200B;ITUDE",</td>
+</tr>
+<tr>
+<td class="L">196</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ONGITUDE&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."LO&#x200B;NGITUDE"&#x200B;,</td>
+<td class="L">196</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"L&#x200B;ONGITUDE&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."LO&#x200B;NGITUDE"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">197</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OMMENT"&nbsp;&#x200B;=&nbsp;insert&#x200B;ed."COMM&#x200B;ENT",</td>
+<td class="L">197</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;OMMENT"&nbsp;&#x200B;=&nbsp;insert&#x200B;ed."COMM&#x200B;ENT",</td>
+</tr>
+<tr>
+<td class="L">198</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;ONCURREN&#x200B;CY_CONTR&#x200B;OL_NUMBE&#x200B;R"&nbsp;=&nbsp;ins&#x200B;erted."C&#x200B;ONCURREN&#x200B;CY_CONTR&#x200B;OL_NUMBE&#x200B;R",</td>
+<td class="L">198</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"C&#x200B;ONCURREN&#x200B;CY_CONTR&#x200B;OL_NUMBE&#x200B;R"&nbsp;=&nbsp;ins&#x200B;erted."C&#x200B;ONCURREN&#x200B;CY_CONTR&#x200B;OL_NUMBE&#x200B;R",</td>
+</tr>
+<tr>
+<td class="L">199</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_T&#x200B;IMESTAMP&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."AP&#x200B;P_LAST_U&#x200B;PDATE_TI&#x200B;MESTAMP"&#x200B;,</td>
+<td class="L">199</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_T&#x200B;IMESTAMP&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."AP&#x200B;P_LAST_U&#x200B;PDATE_TI&#x200B;MESTAMP"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">200</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID"&nbsp;=&#x200B;&nbsp;inserte&#x200B;d."APP_L&#x200B;AST_UPDA&#x200B;TE_USERI&#x200B;D",</td>
+<td class="L">200</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SERID"&nbsp;=&#x200B;&nbsp;inserte&#x200B;d."APP_L&#x200B;AST_UPDA&#x200B;TE_USERI&#x200B;D",</td>
+</tr>
+<tr>
+<td class="L">201</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_GUID&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."AP&#x200B;P_LAST_U&#x200B;PDATE_US&#x200B;ER_GUID"&#x200B;,</td>
+<td class="L">201</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_GUID&#x200B;"&nbsp;=&nbsp;inse&#x200B;rted."AP&#x200B;P_LAST_U&#x200B;PDATE_US&#x200B;ER_GUID"&#x200B;,</td>
+</tr>
+<tr>
+<td class="L">202</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_DIRE&#x200B;CTORY"&nbsp;=&#x200B;&nbsp;inserte&#x200B;d."APP_L&#x200B;AST_UPDA&#x200B;TE_USER_&#x200B;DIRECTOR&#x200B;Y"</td>
+<td class="L">202</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"A&#x200B;PP_LAST_&#x200B;UPDATE_U&#x200B;SER_DIRE&#x200B;CTORY"&nbsp;=&#x200B;&nbsp;inserte&#x200B;d."APP_L&#x200B;AST_UPDA&#x200B;TE_USER_&#x200B;DIRECTOR&#x200B;Y"</td>
+</tr>
+<tr>
+<td class="L">203</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;DB&#x200B;_LAST_UP&#x200B;DATE_TIM&#x200B;ESTAMP&nbsp;=&#x200B;&nbsp;getutcd&#x200B;ate()</td>
+<td class="L">203</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;DB&#x200B;_LAST_UP&#x200B;DATE_TIM&#x200B;ESTAMP&nbsp;=&#x200B;&nbsp;getutcd&#x200B;ate()</td>
+</tr>
+<tr>
+<td class="L">204</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;DB&#x200B;_LAST_UP&#x200B;DATE_USE&#x200B;RID&nbsp;=&nbsp;us&#x200B;er_name(&#x200B;)</td>
+<td class="L">204</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;,&nbsp;DB&#x200B;_LAST_UP&#x200B;DATE_USE&#x200B;RID&nbsp;=&nbsp;us&#x200B;er_name(&#x200B;)</td>
+</tr>
+<tr>
+<td class="L">205</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;from&#x200B;&nbsp;PIMS_AD&#x200B;DRESS</td>
+<td class="L">205</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;from&#x200B;&nbsp;PIMS_AD&#x200B;DRESS</td>
+</tr>
+<tr>
+<td class="L">206</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;inne&#x200B;r&nbsp;join&nbsp;i&#x200B;nserted</td>
+<td class="L">206</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;inne&#x200B;r&nbsp;join&nbsp;i&#x200B;nserted</td>
+</tr>
+<tr>
+<td class="L">207</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;(&#x200B;PIMS_ADD&#x200B;RESS.ADD&#x200B;RESS_ID&nbsp;&#x200B;=&nbsp;insert&#x200B;ed.ADDRE&#x200B;SS_ID);</td>
+<td class="L">207</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;&nbsp;on&nbsp;(&#x200B;PIMS_ADD&#x200B;RESS.ADD&#x200B;RESS_ID&nbsp;&#x200B;=&nbsp;insert&#x200B;ed.ADDRE&#x200B;SS_ID);</td>
+</tr>
+<tr>
+<td class="L">208</td>
+<td class="U">&nbsp;</td>
+<td class="L">208</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">209</td>
+<td class="U">&#x200B;END&nbsp;TRY</td>
+<td class="L">209</td>
+<td class="U">&#x200B;END&nbsp;TRY</td>
+</tr>
+<tr>
+<td class="L">210</td>
+<td class="U">&#x200B;BEGIN&nbsp;CA&#x200B;TCH</td>
+<td class="L">210</td>
+<td class="U">&#x200B;BEGIN&nbsp;CA&#x200B;TCH</td>
+</tr>
+<tr>
+<td class="L">211</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;IF&nbsp;@@&#x200B;trancoun&#x200B;t&nbsp;>&nbsp;0&nbsp;RO&#x200B;LLBACK&nbsp;T&#x200B;RANSACTI&#x200B;ON</td>
+<td class="L">211</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;IF&nbsp;@@&#x200B;trancoun&#x200B;t&nbsp;>&nbsp;0&nbsp;RO&#x200B;LLBACK&nbsp;T&#x200B;RANSACTI&#x200B;ON</td>
+</tr>
+<tr>
+<td class="L">212</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;EXEC&nbsp;&#x200B;pims_err&#x200B;or_handl&#x200B;ing</td>
+<td class="L">212</td>
+<td class="U">&#x200B;&nbsp;&nbsp;&nbsp;EXEC&nbsp;&#x200B;pims_err&#x200B;or_handl&#x200B;ing</td>
+</tr>
+<tr>
+<td class="L">213</td>
+<td class="U">&#x200B;END&nbsp;CATC&#x200B;H;</td>
+<td class="L">213</td>
+<td class="U">&#x200B;END&nbsp;CATC&#x200B;H;</td>
+</tr>
+<tr>
+<td class="L">214</td>
+<td class="U">&nbsp;</td>
+<td class="L">214</td>
+<td class="U">&nbsp;</td>
+</tr>
+<tr>
+<td class="L">215</td>
+<td class="U">&#x200B;GO</td>
+<td class="L">215</td>
+<td class="U">&#x200B;GO</td>
+</tr>
+</table>
+</body>
+</html>
