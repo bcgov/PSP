@@ -31,7 +31,7 @@ interface LeasePropertySelectorProp {
 export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelectorProp> = ({
   formikProps,
 }) => {
-  const { values } = formikProps;
+  const { values, setFieldValue } = formikProps;
 
   const { getPropertiesFromView: getProperties } = useProperties();
 
@@ -47,12 +47,22 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
   const addProperties = useCallback(
     (properties: FormLeaseProperty[]) => {
       if (arrayHelpersRef.current !== null && properties.length > 0) {
-        properties.forEach(property => {
-          arrayHelpersRef.current && arrayHelpersRef.current.push(property);
+        properties.forEach((leaseProperty, index) => {
+          const property = leaseProperty?.property;
+          if (
+            values.properties?.length === 0 &&
+            index === 0 &&
+            property !== undefined &&
+            property.regionName !== 'Cannot determine'
+          ) {
+            setFieldValue('regionId', property.region);
+          }
+
+          arrayHelpersRef.current && arrayHelpersRef.current.push(leaseProperty);
         });
       }
     },
-    [arrayHelpersRef],
+    [arrayHelpersRef, setFieldValue, values.properties?.length],
   );
 
   const searchProperty = async (
