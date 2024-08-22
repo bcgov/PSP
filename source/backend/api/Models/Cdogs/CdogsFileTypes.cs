@@ -6,7 +6,7 @@ namespace Pims.Api.Models.Cdogs
     /// <summary>
     /// Represents a dictionary of supported input template file types and output file types.
     /// </summary>
-    public class FileTypes
+    public class CdogsFileTypes
     {
         /// <summary>
         /// get/set - A dictionary containing file types with a list of file extensions.

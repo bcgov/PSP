@@ -69,7 +69,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
   const { hasClaim, hasRole } = useKeycloakWrapper();
   const [payeeDetails, setPayeeDetails] = useState<PayeeViewDetails | null>(null);
 
-  const projectName = exists(compensation?.alternateProject)
+  const alternateProjectName = exists(compensation?.alternateProject)
     ? compensation?.alternateProject?.code + ' - ' + compensation?.alternateProject?.description
     : '';
 
@@ -146,8 +146,8 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     ?.map(f => f.totalAmount ?? 0)
     .reduce((prev, next) => prev + next, 0);
 
-  const acqFileProject = file?.project;
-  const acqFileProduct =
+  const fileProject = file?.project;
+  const fileProduct =
     fileType === ApiGen_CodeTypes_FileTypes.Acquisition
       ? (file as ApiGen_Concepts_AcquisitionFile).product
       : null;
@@ -270,7 +270,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {compensation.isDraft ? 'Draft' : 'Final'}
         </SectionField>
         <SectionField label="Alternate project" labelWidth="4">
-          {projectName}
+          {alternateProjectName}
         </SectionField>
         <SectionField label="Final date" labelWidth="4" valueTestId="compensation-finalized-date">
           {prettyFormatDate(compensation.finalizedDate)}
@@ -329,18 +329,18 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
         {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
           <SectionField label="Product" labelWidth="4">
-            {acqFileProduct?.code ?? ''}
+            {fileProduct?.code ?? ''}
           </SectionField>
         )}
 
         <SectionField label="Business function" labelWidth="4">
-          {acqFileProject?.businessFunctionCode?.code ?? ''}
+          {fileProject?.businessFunctionCode?.code ?? ''}
         </SectionField>
         <SectionField label="Work activity" labelWidth="4">
-          {acqFileProject?.workActivityCode?.code ?? ''}
+          {fileProject?.workActivityCode?.code ?? ''}
         </SectionField>
         <SectionField label="Cost type" labelWidth="4">
-          {acqFileProject?.costTypeCode?.code ?? ''}
+          {fileProject?.costTypeCode?.code ?? ''}
         </SectionField>
         <SectionField label="Fiscal year" labelWidth="4">
           {compensation.fiscalYear ?? ''}

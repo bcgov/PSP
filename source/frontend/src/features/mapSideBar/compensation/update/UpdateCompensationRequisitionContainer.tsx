@@ -77,7 +77,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
   const updateCompensation = async (compensation: CompensationRequisitionFormModel) => {
     const compensationApiModel = compensation.toApi(payeeOptions);
 
-    const result = await updateCompensationRequisition(compensationApiModel);
+    const result = await updateCompensationRequisition(fileType, compensationApiModel);
     if (result !== undefined) {
       onSuccess();
     }

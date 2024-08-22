@@ -2,9 +2,9 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Constants;
+using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
-using FileTypes = Pims.Api.Models.Cdogs.FileTypes;
 
 namespace Pims.Api.Services
 {
@@ -13,7 +13,7 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentGenerationService
     {
-        Task<ExternalResponse<FileTypes>> GetSupportedFileTypes();
+        Task<ExternalResponse<CdogsFileTypes>> GetSupportedFileTypes();
 
         Task<ExternalResponse<string>> UploadFileTemplate(IFormFile fileRaw);
 

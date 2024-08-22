@@ -116,7 +116,6 @@ export function useLeaseDetail(leaseId?: number) {
     lease,
     setLease,
     refresh: async () => {
-      // setStaleLastUpdatedBy(true);
       await getCompleteLease();
     },
     getCompleteLease,

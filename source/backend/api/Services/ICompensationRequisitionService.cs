@@ -8,7 +8,7 @@ namespace Pims.Api.Services
     {
         PimsCompensationRequisition GetById(long compensationRequisitionId);
 
-        PimsCompensationRequisition Update(PimsCompensationRequisition compensationRequisition);
+        PimsCompensationRequisition Update(FileTypes fileType, PimsCompensationRequisition compensationRequisition);
 
         bool DeleteCompensation(long compensationId);
 

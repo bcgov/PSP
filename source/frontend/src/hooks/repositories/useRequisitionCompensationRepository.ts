@@ -51,12 +51,15 @@ export const useCompensationRequisitionRepository = () => {
 
   const updateCompensationRequisition = useApiRequestWrapper<
     (
+      fileType: ApiGen_CodeTypes_FileTypes,
       compensation: ApiGen_Concepts_CompensationRequisition,
     ) => Promise<AxiosResponse<ApiGen_Concepts_CompensationRequisition, any>>
   >({
     requestFunction: useCallback(
-      async (compensation: ApiGen_Concepts_CompensationRequisition) =>
-        await putCompensationRequisitionApi(compensation),
+      async (
+        fileType: ApiGen_CodeTypes_FileTypes,
+        compensation: ApiGen_Concepts_CompensationRequisition,
+      ) => await putCompensationRequisitionApi(fileType, compensation),
       [],
     ),
     requestName: 'updateCompensation',

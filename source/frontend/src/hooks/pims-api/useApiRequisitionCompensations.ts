@@ -10,10 +10,11 @@ export const getCompensationRequisitionApi = (compensationId: number) =>
   );
 
 export const putCompensationRequisitionApi = (
+  fileType: ApiGen_CodeTypes_FileTypes,
   compensation: ApiGen_Concepts_CompensationRequisition,
 ) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<ApiGen_Concepts_CompensationRequisition>(
-    `/compensation-requisitions/${compensation.id}`,
+    `/compensation-requisitions/${fileType}/${compensation.id}`,
     compensation,
   );
 

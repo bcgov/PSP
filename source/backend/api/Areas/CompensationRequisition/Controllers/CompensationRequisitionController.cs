@@ -89,13 +89,13 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(newCompensationRequisition));
         }
 
-        [HttpPut("{id:long}")]
+        [HttpPut("{fileType}/{id:long}")]
         [HasPermission(Permissions.CompensationRequisitionEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(CompensationRequisitionModel), 200)]
         [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateCompensationRequisition([FromRoute] long id, [FromBody] CompensationRequisitionModel compensationRequisition)
+        public IActionResult UpdateCompensationRequisition([FromRoute] FileTypes fileType, [FromRoute] long id, [FromBody] CompensationRequisitionModel compensationRequisition)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -111,7 +111,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
             }
 
             var compensationReqEntity = _mapper.Map<PimsCompensationRequisition>(compensationRequisition);
-            var compensation = _compensationRequisitionService.Update(compensationReqEntity);
+            var compensation = _compensationRequisitionService.Update(fileType, compensationReqEntity);
 
             return new JsonResult(_mapper.Map<CompensationRequisitionModel>(compensation));
         }

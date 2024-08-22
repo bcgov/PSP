@@ -1,5 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import React, { useCallback, useContext } from 'react';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
@@ -32,6 +33,8 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
   View,
 }: ICompensationListContainerProps) => {
   const sidebar = useContext(SideBarContext);
+  const history = useHistory();
+  const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const {
@@ -82,9 +85,6 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
           });
           sidebar.setStaleLastUpdatedBy(true);
           sidebar.setStaleFile(true);
-
-          // return updatedFileResponse.totalAllowableCompensation ?? null;
-          return 0;
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -218,6 +218,8 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
             if (result) {
               sidebar.setStaleLastUpdatedBy(true);
               sidebar.setStaleFile(true);
+              const backUrl = location.pathname.split('/compensation-requisition')[0];
+              history.push(backUrl);
             }
             setDisplayModal(false);
           },

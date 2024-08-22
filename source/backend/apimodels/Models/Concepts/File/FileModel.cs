@@ -23,7 +23,7 @@ namespace Pims.Api.Models.Concepts.File
         public string FileNumber { get; set; }
 
         /// <summary>
-        /// get/set - The total allowable for copmensations.
+        /// get/set - The total allowable for compensations.
         /// </summary>
         public decimal? TotalAllowableCompensation { get; set; }
 

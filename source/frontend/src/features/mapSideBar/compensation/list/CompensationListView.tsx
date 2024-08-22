@@ -91,7 +91,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           <SectionListHeader
             claims={[Claims.COMPENSATION_REQUISITION_ADD]}
             title="Compensation Requisitions"
-            addButtonText="Add a Requisition"
+            addButtonText="Add Requisition"
             addButtonIcon={<FaPlus size={'2rem'} />}
             onAdd={onAdd}
           />
