@@ -1,7 +1,5 @@
 import { useCallback } from 'react';
 
-import { SelectOption } from '@/components/common/form';
-import * as API from '@/constants/API';
 import { useAppSelector } from '@/store/hooks';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { mapLookupCode } from '@/utils';
@@ -41,23 +39,8 @@ export function useLookupCodeHelpers() {
     [getByType],
   );
 
-  /**
-   * Return an array of SelectOptions containing property classifications.
-   * @param filter - A filter to determine which classifications will be returned.
-   * @returns An array of SelectOptions for property classifications.map
-   */
-  const getPropertyClassificationTypeOptions = (
-    filter?: (value: SelectOption, index: number, array: SelectOption[]) => unknown,
-  ) => {
-    const classifications = getByType(API.PROPERTY_CLASSIFICATION_TYPES);
-    return filter
-      ? (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c)).filter(filter)
-      : (classifications ?? []).map((c: ILookupCode) => mapLookupCode(c));
-  };
-
   return {
     getOptionsByType,
-    getPropertyClassificationTypeOptions,
     getCodeById,
     getByType,
     getPublicByType,

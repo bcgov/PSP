@@ -102,7 +102,6 @@ describe('UpdateProperties component', () => {
                 displayOrder: null,
               },
               dataSourceEffectiveDateOnly: '2022-10-05T00:00:00',
-              isSensitive: false,
               isRwyBeltDomPatent: false,
               address: {
                 ...getMockApiAddress(),
@@ -115,7 +114,6 @@ describe('UpdateProperties component', () => {
                 rowVersion: 2,
               },
               isOwned: false,
-              isVisibleToOtherAgencies: false,
               landArea: 0,
               isVolumetricParcel: false,
               rowVersion: 3,

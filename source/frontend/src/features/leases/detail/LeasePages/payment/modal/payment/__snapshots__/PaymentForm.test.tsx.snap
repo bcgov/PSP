@@ -325,7 +325,7 @@ exports[`PaymentForm component > renders as expected 1`] = `
                 class="form-label"
                 for="input-amountPreTax"
               >
-                Expected payment ($) 
+                Amount (before tax) 
               </label>
               <div
                 class="input-tooltip-wrapper"
@@ -708,7 +708,7 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
                 class="form-label"
                 for="input-amountPreTax"
               >
-                Expected payment ($) 
+                Amount (before tax) 
               </label>
               <div
                 class="input-tooltip-wrapper"

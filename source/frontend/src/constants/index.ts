@@ -1,5 +1,4 @@
 export * from './accessStatus';
-export * from './addressTypes';
 export * from './areaUnitTypes';
 export * from './claims';
 export * from './countryCodes';
@@ -15,7 +14,6 @@ export * from './projectTierTypes';
 export * from './projectTypes';
 export * from './propertyAdjacentLandTypes';
 export * from './propertyAreaUnitTypes';
-export * from './propertyClassificationTypes';
 export * from './propertyDataSourceTypes';
 export * from './propertyServiceFileTypes';
 export * from './propertyStatusTypes';

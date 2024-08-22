@@ -48,8 +48,6 @@ export const defaultPropertyInfo: Partial<ApiGen_Concepts_Property> = {
   tenures: [],
   roadTypes: [],
   dataSourceEffectiveDateOnly: EpochIsoDateTime,
-  isSensitive: false,
-  isProvincialPublicHwy: false,
   pid: 0,
   pin: undefined,
   areaUnit: undefined,
@@ -59,6 +57,5 @@ export const defaultPropertyInfo: Partial<ApiGen_Concepts_Property> = {
   volumetricUnit: undefined,
   volumetricType: undefined,
   municipalZoning: '',
-  zoning: '',
   notes: '',
 };
