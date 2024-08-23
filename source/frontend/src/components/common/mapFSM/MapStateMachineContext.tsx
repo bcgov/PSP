@@ -157,7 +157,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
         } else {
-          return mapSearch.searchMany(geoFilter);
+          return mapSearch.loadMapProperties();
         }
       },
     },
