@@ -30,11 +30,15 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
 
   const { getByType } = useLookupCodeHelpers();
   const consultationTypes = getByType(API.CONSULTATION_TYPES);
+
+  // support creating a new disposition file from the map popup
   if (propertyInfo) {
     defaultFormLease.properties = [];
     defaultFormLease.properties.push(FormLeaseProperty.fromMapProperty(propertyInfo));
+    // auto-select file region based upon the location of the property
     defaultFormLease.regionId = propertyInfo.region ? propertyInfo.region.toString() : '';
   }
+
   const apiFormLease = LeaseFormModel.toApi(defaultFormLease);
   apiFormLease.consultations = getConsultations(apiFormLease, consultationTypes);
 
