@@ -1,7 +1,7 @@
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
 import { LatLngLiteral } from 'leaflet';
 import isNumber from 'lodash/isNumber';
-import { useCallback, useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { ModalProps } from '@/components/common/GenericModal';
@@ -15,8 +15,6 @@ import { AddressForm } from '@/features/mapSideBar/shared/models';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { useProperties } from '@/hooks/repositories/useProperties';
-import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { exists, isLatLngInFeatureSetBoundary, isValidId, isValidString } from '@/utils';
 
@@ -32,14 +30,8 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
   formikProps,
 }) => {
   const { values, setFieldValue } = formikProps;
-
   const { getPropertiesFromView: getProperties } = useProperties();
-
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
-  const [propertiesToConfirm, setPropertiesToConfirm] = useState<FormLeaseProperty[]>([]);
-
-  const [propertyIndexToRemove, setPropertyIndexToRemove] = useState<number | undefined>(undefined);
-
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
@@ -55,7 +47,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
             property !== undefined &&
             property.regionName !== 'Cannot determine'
           ) {
-            setFieldValue('regionId', property.region);
+            setFieldValue('regionId', property.region ? property.region.toString() : '');
           }
 
           arrayHelpersRef.current && arrayHelpersRef.current.push(leaseProperty);
@@ -84,35 +76,34 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     return result?.items ?? undefined;
   };
 
-  const confirmAdd = useCallback(() => {
-    setDisplayModal(false);
-    addProperties(propertiesToConfirm);
-    setPropertiesToConfirm([]);
-  }, [setDisplayModal, addProperties, propertiesToConfirm]);
+  const confirmAdd = useCallback(
+    (propertiesToConfirm: FormLeaseProperty[]) => {
+      setDisplayModal(false);
+      addProperties(propertiesToConfirm);
+    },
+    [setDisplayModal, addProperties],
+  );
 
   const cancelAdd = useCallback(() => {
     setDisplayModal(false);
-    setPropertiesToConfirm([]);
   }, [setDisplayModal]);
 
-  const addModalProps: ModalProps = useDeepCompareMemo(() => {
-    return {
-      variant: 'info',
-      title: 'Not inventory property',
-      message:
-        'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
-      display: false,
-      closeButton: false,
-      okButtonText: 'Add',
-      cancelButtonText: 'Cancel',
-      handleOk: confirmAdd,
-      handleCancel: cancelAdd,
-    };
-  }, [confirmAdd, cancelAdd]);
-
-  useDeepCompareEffect(() => {
-    setModalContent(addModalProps);
-  }, [addModalProps]);
+  const getAddModalProps = useCallback<(properties: FormLeaseProperty[]) => ModalProps>(
+    (properties: FormLeaseProperty[]) => {
+      return {
+        variant: 'info',
+        title: 'Not inventory property',
+        message:
+          'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
+        display: false,
+        okButtonText: 'Add',
+        cancelButtonText: 'Cancel',
+        handleOk: () => confirmAdd(properties),
+        handleCancel: cancelAdd,
+      };
+    },
+    [confirmAdd, cancelAdd],
+  );
 
   const processAddedProperties = async (newProperties: LocationFeatureDataset[]) => {
     let needsWarning = false;
@@ -150,7 +141,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     }, Promise.resolve());
 
     if (needsWarning) {
-      setPropertiesToConfirm(newFormProperties);
+      setModalContent(getAddModalProps(newFormProperties));
       setDisplayModal(true);
     } else {
       addProperties(newFormProperties);
@@ -158,42 +149,42 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
   };
 
   const cancelRemove = useCallback(() => {
-    if (propertyIndexToRemove !== undefined) {
-      setPropertyIndexToRemove(undefined);
-    }
     setDisplayModal(false);
-  }, [propertyIndexToRemove, setDisplayModal]);
+  }, [setDisplayModal]);
 
-  const confirmRemove = useCallback(() => {
-    if (propertyIndexToRemove !== undefined) {
-      arrayHelpersRef.current?.remove(propertyIndexToRemove);
-      setPropertyIndexToRemove(undefined);
-    }
-    setDisplayModal(false);
-  }, [propertyIndexToRemove, setDisplayModal]);
+  const confirmRemove = useCallback(
+    (indexToRemove: number) => {
+      if (indexToRemove !== undefined) {
+        arrayHelpersRef.current?.remove(indexToRemove);
+      }
+      setDisplayModal(false);
+    },
+    [setDisplayModal],
+  );
 
-  const removeModalProps: ModalProps = useDeepCompareMemo(() => {
-    return {
-      variant: 'info',
-      title: 'Removing Property from form',
-      message: 'Are you sure you want to remove this property from this lease/licence?',
-      display: false,
-      closeButton: false,
-      okButtonText: 'Remove',
-      cancelButtonText: 'Cancel',
-      handleOk: confirmRemove,
-      handleCancel: cancelRemove,
-    };
-  }, [confirmRemove, cancelRemove]);
+  const getRemoveModalProps = useCallback<(index: number) => ModalProps>(
+    (index: number) => {
+      return {
+        variant: 'info',
+        title: 'Removing Property from Lease/Licence',
+        message: 'Are you sure you want to remove this property from this lease/licence?',
+        display: false,
+        okButtonText: 'Remove',
+        cancelButtonText: 'Cancel',
+        handleOk: () => confirmRemove(index),
+        handleCancel: cancelRemove,
+      };
+    },
+    [confirmRemove, cancelRemove],
+  );
 
-  useDeepCompareEffect(() => {
-    setModalContent(removeModalProps);
-  }, [removeModalProps]);
-
-  const onRemoveClick = (index: number) => {
-    setPropertyIndexToRemove(index);
-    setDisplayModal(true);
-  };
+  const onRemoveClick = useCallback(
+    (index: number) => {
+      setModalContent(getRemoveModalProps(index));
+      setDisplayModal(true);
+    },
+    [getRemoveModalProps, setDisplayModal, setModalContent],
+  );
 
   return (
     <>
