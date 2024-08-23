@@ -35,6 +35,7 @@ export class FileForm {
   public id?: number;
   public name: string;
   public properties: PropertyForm[];
+  public totalAllowableCompensation: number | null;
   public rowVersion?: number;
   constructor() {
     this.name = '';
@@ -48,6 +49,7 @@ export class FileForm {
       fileProperties: this.properties.map(x => x.toFilePropertyApi(this.id)),
       fileNumber: null,
       fileStatusTypeCode: null,
+      totalAllowableCompensation: null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -57,6 +59,7 @@ export class FileForm {
     newForm.id = model.id;
     newForm.name = model.fileName || '';
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+    newForm.totalAllowableCompensation = model.totalAllowableCompensation;
     newForm.rowVersion = model.rowVersion ?? undefined;
 
     return newForm;

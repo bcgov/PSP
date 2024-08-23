@@ -10,6 +10,7 @@ import { useH120CategoryRepository } from '@/hooks/repositories/useH120CategoryR
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
@@ -47,7 +48,10 @@ export const useGenerateH120 = () => {
     }
     const filePromise = getAcquisitionFile.execute(compensation.acquisitionFileId);
     const filePropertiesPromise = getAcquisitionProperties.execute(compensation.acquisitionFileId);
-    const compReqPropertiesPromise = getCompensationRequisitionProperties.execute(compensation.id);
+    const compReqPropertiesPromise = getCompensationRequisitionProperties.execute(
+      ApiGen_CodeTypes_FileTypes.Acquisition,
+      compensation.id,
+    );
     const compReqFinalH120sPromise = getAcquisitionCompReqH120s.execute(
       compensation.acquisitionFileId,
       true,

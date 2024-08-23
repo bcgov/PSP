@@ -9,7 +9,6 @@ import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/Api
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
-import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
@@ -109,21 +108,9 @@ export const useApiAcquisitionFile = () => {
           `/acquisitionfiles/${acqFile?.id}/checklist`,
           acqFile.fileChecklistItems,
         ),
-      getFileCompensationRequisitions: (acqFileId: number) =>
-        api.get<ApiGen_Concepts_CompensationRequisition[]>(
-          `/acquisitionfiles/${acqFileId}/compensation-requisitions`,
-        ),
       getFileCompReqH120s: (acqFileId: number, finalOnly?: boolean) =>
         api.get<ApiGen_Concepts_CompensationFinancial[]>(
           `/acquisitionfiles/${acqFileId}/comp-req-h120s?finalOnly=${!!finalOnly}`,
-        ),
-      postFileCompensationRequisition: (
-        acqFileId: number,
-        compensationRequisition: ApiGen_Concepts_CompensationRequisition,
-      ) =>
-        api.post<ApiGen_Concepts_CompensationRequisition>(
-          `/acquisitionfiles/${acqFileId}/compensation-requisitions`,
-          compensationRequisition,
         ),
       getAcquisitionFileForm8s: (acqFileId: number) =>
         api.get<ApiGen_Concepts_ExpropriationPayment[]>(

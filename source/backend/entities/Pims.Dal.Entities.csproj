@@ -21,9 +21,9 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    
+    <Folder Include="ef\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ef\" />
+    <ProjectReference Include="..\core\Pims.Core.csproj" />
   </ItemGroup>
 </Project>

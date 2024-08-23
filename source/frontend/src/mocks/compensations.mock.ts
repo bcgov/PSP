@@ -7,7 +7,8 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisition = {
   id: null,
-  acquisitionFileId: 0,
+  acquisitionFileId: null,
+  leaseId: null,
   acquisitionFile: null,
   alternateProjectId: null,
   alternateProject: null,
@@ -26,7 +27,9 @@ export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisiti
   advancedPaymentServedDate: null,
   generationDate: null,
   financials: [],
-  compensationRequisitionProperties: [],
+  compReqLeaseStakeholder: [],
+  compReqAcquisitionProperties: [],
+  compReqLeaseProperties: [],
   acquisitionOwnerId: null,
   acquisitionOwner: null,
   interestHolderId: null,
@@ -55,10 +58,15 @@ export const emptyCompensationFinancial: ApiGen_Concepts_CompensationFinancial =
   ...getEmptyBaseAudit(),
 };
 
-export const getMockApiDefaultCompensation = (): ApiGen_Concepts_CompensationRequisition => ({
+export const getMockApiDefaultCompensation = (
+  acquisitionFileId: number | null = null,
+  leaseId: number | null = null,
+): ApiGen_Concepts_CompensationRequisition => ({
   ...emptyCompensationRequisition,
   id: 1,
-  acquisitionFileId: 2,
+  acquisitionFileId: acquisitionFileId,
+  leaseId: leaseId,
+  isDraft: true,
   rowVersion: 1,
 });
 
@@ -129,7 +137,9 @@ export const getMockApiCompensationWithFinancials =
         h120CategoryId: null,
       },
     ],
-    compensationRequisitionProperties: [],
+    compReqLeaseStakeholder: [],
+    compReqAcquisitionProperties: [],
+    compReqLeaseProperties: [],
     isPaymentInTrust: true,
     gstNumber: '9999',
     acquisitionOwnerId: 1,
@@ -144,7 +154,8 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
   fiscalYear: '2023/2024',
   specialInstruction: 'SPECIAL INSTRUCTION',
   detailedRemarks: 'DETAILED REMARKS',
-  compensationRequisitionProperties: [
+  compReqLeaseStakeholder: [],
+  compReqAcquisitionProperties: [
     {
       compensationRequisitionPropertyId: 10000,
       compensationRequisitionId: 1,
@@ -192,6 +203,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
       ...getEmptyBaseAudit(),
     },
   ],
+  compReqLeaseProperties: [],
   financials: [
     {
       id: 1,
@@ -417,9 +429,13 @@ export const getMockApiCompensationList = (): ApiGen_Concepts_CompensationRequis
   },
 ];
 
-export const getMockDefaultCreateCompenReq = (): ApiGen_Concepts_CompensationRequisition => ({
+export const getMockDefaultCreateCompenReq = (
+  acquisitionFileId: number | null = null,
+  leaseId: number | null = null,
+): ApiGen_Concepts_CompensationRequisition => ({
   ...emptyCompensationRequisition,
-  acquisitionFileId: 1,
+  acquisitionFileId: acquisitionFileId,
+  leaseId: leaseId,
   isDraft: true,
 });
 

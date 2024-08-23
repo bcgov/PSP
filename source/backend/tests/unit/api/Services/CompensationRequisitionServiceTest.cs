@@ -1,8 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
+using System.Net;
+using System.Text;
+using System.Threading.Tasks;
 using FluentAssertions;
 using Moq;
+using Pims.Api.Constants;
+using Pims.Api.Helpers.Exceptions;
+using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -11,7 +18,9 @@ using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
+using Sprache;
 using Xunit;
+using FileTypes = Pims.Api.Models.CodeTypes.FileTypes;
 
 namespace Pims.Api.Test.Services
 {
@@ -23,6 +32,24 @@ namespace Pims.Api.Test.Services
     public class CompensationRequisitionServiceTest
     {
         private readonly TestHelper _helper;
+
+        public static IEnumerable<object[]> FileTypesDataNoAccess =
+            new List<object[]>
+            {
+                        new object[] { FileTypes.Acquisition, new PimsCompensationRequisition() { AcquisitionFileId = 1, LeaseId = null, }, new NotAuthorizedException() },
+                        new object[] { FileTypes.Lease, new PimsCompensationRequisition() { LeaseId = 1, AcquisitionFileId = null, }, new NotAuthorizedException() },
+                        new object[] { FileTypes.Research, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
+                        new object[] { FileTypes.Disposition, new PimsCompensationRequisition(), new BadRequestException("Relationship type not valid.") },
+            };
+
+        public static IEnumerable<object[]> FileTypesUpdateNoAccess =
+    new List<object[]>
+    {
+                        new object[] { FileTypes.Acquisition, new NotAuthorizedException() },
+                        new object[] { FileTypes.Lease, new NotAuthorizedException() },
+                        new object[] { FileTypes.Research, new BadRequestException("Relationship type not valid.") },
+                        new object[] { FileTypes.Disposition, new BadRequestException("Relationship type not valid.") },
+    };
 
         public CompensationRequisitionServiceTest()
         {
@@ -49,7 +76,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
-            Action act = () => service.GetProperties(1);
+            Action act = () => service.GetAcquisitionProperties(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -70,14 +97,209 @@ namespace Pims.Api.Test.Services
             repo.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
         }
 
+        [Theory]
+        [MemberData(nameof(FileTypesUpdateNoAccess))]
+        public void GetCompensationsRequisitions_NoPermissions(FileTypes fileType, Exception exception)
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions();
+
+            Exception ex = Assert.Throws(exception.GetType(), () => service.GetFileCompensationRequisitions(fileType, 1));
+        }
+
         [Fact]
-        public void Update_NoPermission()
+        public void Get_Acquisition_CompensationsRequisitions_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateAcquisitionFile());
+
+            // Act
+            Action act = () => service.GetFileCompensationRequisitions(FileTypes.Acquisition, 1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetCompensationsRequisitions_Success()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
+
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            repository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+                .Returns(new List<PimsCompensationRequisition>()
+                {
+                    new PimsCompensationRequisition(),
+                });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            var result = service.GetFileCompensationRequisitions(FileTypes.Acquisition, 1);
+
+            // Assert
+            repository.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Theory]
+        [MemberData(nameof(FileTypesDataNoAccess))]
+        public void AddCompensationsRequisitions_NoPermissions(FileTypes fileType,PimsCompensationRequisition compReq, Exception exception)
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions();
+
+            Exception ex = Assert.Throws(exception.GetType(), () => service.AddCompensationRequisition(fileType, compReq));
+        }
+
+        [Fact]
+        public void Add_Acquisition_CompensationsRequisitions_NullException()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.AddCompensationRequisition(FileTypes.Acquisition, null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Add_Acquisition_CompensationsRequisitions_BadRequest_Missing_ParentId()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var newCompensationRequisition = new PimsCompensationRequisition()
+            {
+                AcquisitionFileId = null,
+                LeaseId = null,
+            };
+
+            // Act
+            Action act = () => service.AddCompensationRequisition(FileTypes.Acquisition, newCompensationRequisition);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void Add_Acquisition_CompensationsRequisitions_BadRequest_Duplicate_ParentId()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var newCompensationRequisition = new PimsCompensationRequisition()
+            {
+                AcquisitionFileId = 100,
+                LeaseId = 200,
+            };
+
+            // Act
+            Action act = () => service.AddCompensationRequisition(FileTypes.Acquisition, newCompensationRequisition);
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void AddCompensationsRequisitions_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newCompensationReq = EntityHelper.CreateCompensationRequisition(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            newCompensationReq.AcquisitionFileId = 100;
+            // Act
+            Action act = () => service.AddCompensationRequisition(FileTypes.Acquisition, newCompensationReq);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void AddCompensationsRequisitions_Success()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var newCompensationReq = EntityHelper.CreateCompensationRequisition(1, 1);
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+
+            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+            repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            newCompensationReq.AcquisitionFileId = 1;
+            newCompensationReq.LeaseId = null;
+
+            // Act
+            var result = service.AddCompensationRequisition(FileTypes.Acquisition, newCompensationReq);
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsCompensationRequisition>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_Lease_CompensationsRequisitions_NullException()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.AddCompensationRequisition(FileTypes.Lease, null);
+
+            // Assert
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void Update_NoPermission_AcquisitionFile()
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
-            Action act = () => service.Update(new PimsCompensationRequisition());
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition() {  CompensationRequisitionId = 1, AcquisitionFileId = 1});
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void Update_NoPermission_LeaseFile()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition() { CompensationRequisitionId = 1, LeaseId = 1 });
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -90,14 +312,13 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
 
             // Act
-            Action act = () => service.Update(null);
+            Action act = () => service.Update(FileTypes.Acquisition, null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
         }
 
-        //TODO: Fix compensation req
-        //[Fact]
+        [Fact]
         public void Update_Success_Inserts_StatusChanged_Note()
         {
             // Arrange
@@ -136,6 +357,7 @@ namespace Pims.Api.Test.Services
 
             // Act
             var result = service.Update(
+                FileTypes.Acquisition,
                 new PimsCompensationRequisition
                 {
                     Internal_Id = 1,
@@ -152,8 +374,7 @@ namespace Pims.Api.Test.Services
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Once);
         }
 
-        //TODO: Fix Compensation req
-        //[Fact]
+        [Fact]
         public void Update_Success_Skips_StatusChanged_Note()
         {
             // Arrange
@@ -178,7 +399,7 @@ namespace Pims.Api.Test.Services
 
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -194,8 +415,7 @@ namespace Pims.Api.Test.Services
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Draft' to 'Final'"))), Times.Never);
         }
 
-        //TODO: Fix compensation req
-        //[Fact]
+        [Fact]
         public void Update_Status_BackToDraft_NoPermission()
         {
             // Arrange
@@ -217,7 +437,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
-            Action act = () => service.Update(new PimsCompensationRequisition()
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -229,8 +449,8 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<BusinessRuleViolationException>();
         }
 
-        //TODO: Fix Compensation req
-        //[Fact]
+        
+        [Fact]
         public void Update_Status_BackToNull_NoPermission()
         {
             // Arrange
@@ -252,7 +472,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
-            Action act = () => service.Update(new PimsCompensationRequisition()
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -264,8 +484,7 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<BusinessRuleViolationException>();
         }
 
-        //TODO: Fix Compensation req
-        //[Fact]
+        [Fact]
         public void Update_Status_BackToDraft_AuthorizedAdmin()
         {
             // Arrange
@@ -290,7 +509,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -305,9 +524,8 @@ namespace Pims.Api.Test.Services
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Final' to 'Draft'"))), Times.Once);
         }
-
-        //TODO: Fix Compensation req
-        //[Fact]
+        
+        [Fact]
         public void Update_Status_BackToNull_AuthorizedAdmin()
         {
             // Arrange
@@ -332,7 +550,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(false);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -347,9 +565,8 @@ namespace Pims.Api.Test.Services
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Final' to 'No Status'"))), Times.Once);
         }
-
-        //TODO: Fix Compensation req
-        //[Fact]
+        
+        [Fact]
         public void Update_Success_Skips_StatusChanged_Note_FromNoStatus()
         {
             // Arrange
@@ -373,7 +590,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -389,8 +606,7 @@ namespace Pims.Api.Test.Services
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'No Status' to 'Draft'"))), Times.Once);
         }
 
-        //TODO: Fix Compensation req
-        //[Fact]
+        [Fact]
         public void Update_Success_ValidTotalAllowableCompensation()
         {
             // Arrange
@@ -418,7 +634,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -431,9 +647,8 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
-
-        //TODO: Fix Compensation req
-        //[Fact]
+        
+        [Fact]
         public void Update_Success_ValidMultipleTotalAllowableCompensation()
         {
             // Arrange
@@ -463,7 +678,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -476,9 +691,8 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
-
-        //TODO: Fix Compensation req
-        //[Fact]
+        
+        [Fact]
         public void Update_Success_TotalAllowableExceededDraft()
         {
             // Arrange
@@ -506,7 +720,7 @@ namespace Pims.Api.Test.Services
             solver.Setup(x => x.CanEditOrDeleteCompensation(It.IsAny<AcquisitionStatusTypes?>(), It.IsAny<bool?>())).Returns(true);
 
             // Act
-            var result = service.Update(new PimsCompensationRequisition()
+            var result = service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -519,9 +733,8 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
-
-        //TODO: Fix Compensation req
-        //[Fact]
+        
+        [Fact]
         public void Update_Fail_TotalAllowableExceeded()
         {
             // Arrange
@@ -552,7 +765,7 @@ namespace Pims.Api.Test.Services
 
             // Act
             // Assert
-            Action act = () => service.Update(new PimsCompensationRequisition()
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -562,9 +775,8 @@ namespace Pims.Api.Test.Services
             });
             act.Should().Throw<BusinessRuleViolationException>();
         }
-
-        //TODO: Fix Compensation req
-        //[Fact]
+        
+        [Fact]
         public void Update_Fail_ValidMultipleTotalAllowableCompensation()
         {
             // Arrange
@@ -596,7 +808,7 @@ namespace Pims.Api.Test.Services
 
             // Act
             // Assert
-            Action act = () => service.Update(new PimsCompensationRequisition()
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition()
             {
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
@@ -619,9 +831,8 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
-
-        //TODO: Fix Compensation req
-        //[Fact]
+        
+        [Fact]
         public void Delete_Success()
         {
             // Arrange
