@@ -16,12 +16,6 @@ namespace Pims.Dal.Entities
         public string Id { get => LessorTypeCode; set => LessorTypeCode = value; }
         #endregion
 
-        public static class LessorTypes
-        {
-            public const string PERSON = "PER";
-            public const string ORGANIZATION = "ORG";
-        }
-
         #region Constructors
 
         /// <summary>

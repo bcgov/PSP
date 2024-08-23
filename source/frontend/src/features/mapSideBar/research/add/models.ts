@@ -40,6 +40,7 @@ export class ResearchForm {
       researchResult: null,
       roadAlias: null,
       roadName: null,
+      totalAllowableCompensation: null,
     };
   }
 

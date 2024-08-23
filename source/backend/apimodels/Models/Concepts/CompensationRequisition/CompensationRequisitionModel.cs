@@ -12,9 +12,11 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
     {
         public long? Id { get; set; }
 
-        public long AcquisitionFileId { get; set; }
+        public long? AcquisitionFileId { get; set; }
 
         public AcquisitionFileModel AcquisitionFile { get; set; }
+
+        public long? LeaseId { get; set; }
 
         public bool? IsDraft { get; set; }
 
@@ -72,6 +74,10 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public ProjectModel AlternateProject { get; set; }
 
-        public IEnumerable<CompensationRequisitionPropertyModel> CompensationRequisitionProperties { get; set; }
+        public IEnumerable<CompReqLeaseStakeholderModel> CompReqLeaseStakeholder { get; set; }
+
+        public IEnumerable<CompReqAcquisitionPropertyModel> CompReqAcquisitionProperties { get; set; }
+
+        public IEnumerable<CompReqLeasePropertyModel> CompReqLeaseProperties { get; set; }
     }
 }

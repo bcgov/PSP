@@ -12,10 +12,10 @@ import {
   useRouteMatch,
 } from 'react-router-dom';
 
-import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
@@ -176,7 +176,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
                       formikRef={formikRef}
                       selectedMenuIndex={Number(match.params.menuIndex)}
                       file={dispositionFile}
-                      fileType={FileTypes.Disposition}
+                      fileType={ApiGen_CodeTypes_FileTypes.Disposition}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
                       defaultFileTab={FileTabType.FILE_DETAILS}
