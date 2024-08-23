@@ -387,6 +387,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       primaryContactId: null,
     },
   ],
+  totalAllowableCompensation: null,
   properties: [],
   insurances: [],
   leasePurposes: [

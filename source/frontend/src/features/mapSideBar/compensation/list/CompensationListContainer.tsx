@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
@@ -43,6 +44,10 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
   } = useAcquisitionProvider();
 
   const {
+    updateLease: { execute: updateLease },
+  } = useLeaseRepository();
+
+  const {
     deleteCompensation: { execute: deleteCompensation },
     getFileCompensationRequisitions: {
       execute: fetchCompensationRequisitions,
@@ -73,6 +78,15 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
               updatedFileResponse = await putAcquisitionFile(updatedAcquisitionFile, []);
             }
             break;
+          case ApiGen_CodeTypes_FileTypes.Lease:
+            {
+              const updatedLease = file as ApiGen_Concepts_Lease;
+              file.totalAllowableCompensation = totalAllowableCompensation;
+
+              updatedFileResponse = await updateLease(updatedLease, []);
+            }
+
+            break;
           default:
             updatedFileResponse = null;
             break;
@@ -86,6 +100,12 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
           });
           sidebar.setStaleLastUpdatedBy(true);
           sidebar.setStaleFile(true);
+
+          if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
+            return (file as ApiGen_Concepts_AcquisitionFile).totalAllowableCompensation ?? 0;
+          } else if (fileType === ApiGen_CodeTypes_FileTypes.Lease) {
+            return (file as ApiGen_Concepts_Lease).totalAllowableCompensation ?? 0;
+          }
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
@@ -100,12 +120,6 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
           throw Error(axiosError.response?.data?.error);
         }
       }
-    }
-
-    if (fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
-      return (file as ApiGen_Concepts_AcquisitionFile).totalAllowableCompensation ?? null;
-    } else {
-      return null;
     }
   };
 
