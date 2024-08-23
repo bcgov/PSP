@@ -341,7 +341,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     >
       <button
         class="c4 Button c5 btn btn-primary"
-        title="Move pin location"
+        title="move-pin-location"
         type="button"
       >
         <div

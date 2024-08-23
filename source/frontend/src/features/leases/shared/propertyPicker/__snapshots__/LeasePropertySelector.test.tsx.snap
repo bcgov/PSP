@@ -1099,7 +1099,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
             >
               <button
                 class="c14 Button c21 btn btn-primary"
-                title="Move pin location"
+                title="move-pin-location"
                 type="button"
               >
                 <div
@@ -1378,7 +1378,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
             >
               <button
                 class="c14 Button c21 btn btn-primary"
-                title="Move pin location"
+                title="move-pin-location"
                 type="button"
               >
                 <div
