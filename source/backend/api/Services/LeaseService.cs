@@ -359,7 +359,7 @@ namespace Pims.Api.Services
                     }
                     else
                     {
-                        throw new BusinessRuleViolationException("Excercised renewals must have a commencement date and expiry date");
+                        throw new BusinessRuleViolationException("Exercised renewals must have a commencement date and expiry date");
                     }
                 }
             }
