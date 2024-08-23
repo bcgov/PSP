@@ -45,10 +45,6 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsInterestHolder> UpdateInterestHolders(long acquisitionFileId, List<PimsInterestHolder> interestHolders);
 
-        IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId);
-
-        PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition);
-
         PimsExpropriationPayment AddExpropriationPayment(long acquisitionFileId, PimsExpropriationPayment expPayment);
 
         IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId);

@@ -33,6 +33,7 @@ const testResearchFile: ApiGen_Concepts_ResearchFile = {
   researchFileProjects: null,
   fileName: null,
   fileStatusTypeCode: null,
+  totalAllowableCompensation: null,
   appCreateTimestamp: '',
   appLastUpdateTimestamp: '',
   appLastUpdateUserid: null,

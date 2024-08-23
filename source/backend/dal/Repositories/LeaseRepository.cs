@@ -102,6 +102,11 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsLeaseConsultations)
                     .ThenInclude(lc => lc.ConsultationTypeCodeNavigation)
                 .Include(l => l.Project)
+                    .ThenInclude(x => x.WorkActivityCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.CostTypeCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.BusinessFunctionCode)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();

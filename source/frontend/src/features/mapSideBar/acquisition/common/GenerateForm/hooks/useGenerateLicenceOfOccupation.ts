@@ -126,5 +126,6 @@ export const useGenerateLicenceOfOccupation = () => {
       return generatedFile;
     }
   };
+
   return generateLicenceOfOccupation;
 };

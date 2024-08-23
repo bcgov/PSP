@@ -7,7 +7,7 @@ import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concept
 import { isValidId } from '@/utils';
 
 import { useGenerateAgreement } from '../../../common/GenerateForm/hooks/useGenerateAgreement';
-import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
+import AcquisitionFileStatusUpdateSolver from '../../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import { IAgreementViewProps } from './AgreementView';
 
 export interface IAgreementContainerProps {
@@ -18,8 +18,8 @@ export interface IAgreementContainerProps {
 export const AgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IAgreementContainerProps>
 > = ({ acquisitionFileId, View }) => {
-  const [statusUpdateSolver, setStatusUpdateSolver] = useState<StatusUpdateSolver>(
-    new StatusUpdateSolver(),
+  const [statusUpdateSolver, setStatusUpdateSolver] = useState<AcquisitionFileStatusUpdateSolver>(
+    new AcquisitionFileStatusUpdateSolver(),
   );
   const [acquisitionAgreements, setAcquisitionAgreements] = useState<ApiGen_Concepts_Agreement[]>(
     [],
@@ -55,7 +55,9 @@ export const AgreementContainer: React.FunctionComponent<
     }
 
     if (acquisitionFileResponse) {
-      const solverStatus = new StatusUpdateSolver(acquisitionFileResponse);
+      const solverStatus = new AcquisitionFileStatusUpdateSolver(
+        acquisitionFileResponse.fileStatusTypeCode,
+      );
       setStatusUpdateSolver(solverStatus);
     }
   }, [acquisitionFileId, getAcquisition, getAgreements]);

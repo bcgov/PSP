@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { FileTypes } from '@/constants/fileTypes';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
@@ -17,6 +16,7 @@ import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/Ta
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { isValidId } from '@/utils';
@@ -30,7 +30,7 @@ export interface IPropertyFileContainerProps {
   View: React.FunctionComponent<React.PropsWithChildren<IInventoryTabsProps>>;
   customTabs: TabInventoryView[];
   defaultTab: InventoryTabNames;
-  fileContext?: FileTypes;
+  fileContext?: ApiGen_CodeTypes_FileTypes;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
@@ -106,7 +106,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     name: 'Value',
   });
 
-  if (props.fileContext === FileTypes.Research) {
+  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Research) {
     tabViews.push({
       content: (
         <PropertyResearchTabView
@@ -153,7 +153,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
-  if (props.fileContext === FileTypes.Acquisition) {
+  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Acquisition) {
     tabViews.push({
       content: (
         <TakesDetailContainer

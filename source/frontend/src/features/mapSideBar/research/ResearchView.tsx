@@ -3,10 +3,10 @@ import { useContext } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { matchPath, Route, useHistory, useRouteMatch } from 'react-router-dom';
 
-import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { exists, getFilePropertyName, stripTrailingSlash } from '@/utils';
@@ -123,7 +123,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = props => {
                     formikRef={props.formikRef}
                     selectedMenuIndex={selectedMenuIndex}
                     file={props.researchFile}
-                    fileType={FileTypes.Research}
+                    fileType={ApiGen_CodeTypes_FileTypes.Research}
                     isEditing={props.isEditing}
                     setIsEditing={props.setEditMode}
                     defaultFileTab={FileTabType.FILE_DETAILS}
