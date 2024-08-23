@@ -30,6 +30,7 @@ import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
+import LeaseRouter from './tabs/LeaseRouter';
 import ViewSelector from './ViewSelector';
 
 export interface ILeaseContainerProps {
@@ -82,6 +83,7 @@ export enum LeasePageNames {
   SURPLUS = 'surplus',
   CHECKLIST = 'checklist',
   DOCUMENTS = 'documents',
+  CONSULTATIONS = 'consultations',
 }
 
 export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
@@ -154,6 +156,15 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
       component: DocumentsPage,
       title: 'Documents',
       claims: Claims.DOCUMENT_VIEW,
+    },
+  ],
+  [
+    LeasePageNames.CONSULTATIONS,
+    {
+      pageName: LeasePageNames.CONSULTATIONS,
+      component: LeaseRouter,
+      title: 'Consultations',
+      claims: Claims.LEASE_VIEW,
     },
   ],
 ]);

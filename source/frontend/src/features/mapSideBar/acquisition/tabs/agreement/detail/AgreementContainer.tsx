@@ -75,15 +75,13 @@ export const AgreementContainer: React.FunctionComponent<
   }, [fetchData]);
 
   return file?.id ? (
-    <>
-      <View
-        loading={loadingAgreements || loadingAcquisition || deletingAgreement}
-        agreements={acquisitionAgreements}
-        statusUpdateSolver={statusUpdateSolver}
-        onGenerate={generateAgreement}
-        onDelete={handleAgreementDeleted}
-      ></View>
-    </>
+    <View
+      loading={loadingAgreements || loadingAcquisition || deletingAgreement}
+      agreements={acquisitionAgreements}
+      statusUpdateSolver={statusUpdateSolver}
+      onGenerate={generateAgreement}
+      onDelete={handleAgreementDeleted}
+    />
   ) : null;
 };
 

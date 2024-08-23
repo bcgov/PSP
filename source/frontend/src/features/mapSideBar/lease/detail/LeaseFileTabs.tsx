@@ -18,6 +18,7 @@ interface ILeaseFileTabsProps {
 
 export enum LeaseFileTabNames {
   fileDetails = 'fileDetails',
+  consultations = 'consultations',
   tenant = 'tenant',
   payee = 'payee',
   improvements = 'improvements',

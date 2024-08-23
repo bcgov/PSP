@@ -54,6 +54,12 @@ export function isPersonResult(
   return contactResult.id.startsWith('P') && contactResult.personId !== undefined;
 }
 
+export function isOrganizationResult(
+  contactResult: IContactSearchResult,
+): contactResult is OrganizationContactResult {
+  return contactResult.id.startsWith('O');
+}
+
 export type IContactSearchResult = PersonContactResult | OrganizationContactResult;
 
 export function fromContact(baseModel: ApiGen_Concepts_Contact): IContactSearchResult {
