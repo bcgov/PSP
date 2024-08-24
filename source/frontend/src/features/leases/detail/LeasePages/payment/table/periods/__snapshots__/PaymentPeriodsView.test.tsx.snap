@@ -1133,9 +1133,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -1157,9 +1155,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -1174,16 +1170,14 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                -
+                $0.00
               </div>
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"

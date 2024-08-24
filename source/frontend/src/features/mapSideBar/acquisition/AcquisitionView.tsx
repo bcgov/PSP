@@ -12,10 +12,10 @@ import {
 } from 'react-router-dom';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
-import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
@@ -192,7 +192,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                       formikRef={formikRef}
                       selectedMenuIndex={Number(match.params.menuIndex)}
                       file={acquisitionFile}
-                      fileType={FileTypes.Acquisition}
+                      fileType={ApiGen_CodeTypes_FileTypes.Acquisition}
                       isEditing={isEditing}
                       setIsEditing={setIsEditing}
                       defaultFileTab={containerState.defaultFileTab}

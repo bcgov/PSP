@@ -8,7 +8,6 @@ import LeasePropertySelector from '../shared/propertyPicker/LeasePropertySelecto
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
-import DocumentationSubForm from './ReferenceSubForm';
 
 interface IAddLeaseFormProps {
   onSubmit: (
@@ -26,11 +25,14 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
 }) => {
   const defaultFormLease = getDefaultFormLease();
 
+  // support creating a new disposition file from the map popup
   if (propertyInfo) {
     defaultFormLease.properties = [];
     defaultFormLease.properties.push(FormLeaseProperty.fromMapProperty(propertyInfo));
+    // auto-select file region based upon the location of the property
     defaultFormLease.regionId = propertyInfo.region ? propertyInfo.region.toString() : '';
   }
+
   const apiFormLease = LeaseFormModel.toApi(defaultFormLease);
 
   const handleSubmit = async (
@@ -54,7 +56,6 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
             <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
             <LeasePropertySelector formikProps={formikProps} />
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
-            <DocumentationSubForm />
           </>
         )}
       </Formik>

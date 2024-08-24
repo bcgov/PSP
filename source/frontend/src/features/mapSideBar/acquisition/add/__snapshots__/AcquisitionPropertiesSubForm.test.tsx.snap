@@ -1211,7 +1211,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         >
           <button
             class="c7 Button c8 btn btn-primary"
-            title="Move pin location"
+            title="move-pin-location"
             type="button"
           >
             <div
@@ -1379,7 +1379,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
         >
           <button
             class="c7 Button c8 btn btn-primary"
-            title="Move pin location"
+            title="move-pin-location"
             type="button"
           >
             <div

@@ -298,7 +298,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           <label
             class="c3"
           >
-            MoTI contact:
+            MOTI contact:
           </label>
         </div>
         <div
@@ -313,6 +313,33 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               name="motiName"
               title="test moti name"
               value="test moti name"
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            MOTI region:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-region.description"
+              name="region.description"
+              value=""
             />
           </div>
         </div>
@@ -394,6 +421,24 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               value="VICTORIA"
             />
           </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Lease notes:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          a test note
         </div>
       </div>
     </div>
@@ -698,7 +743,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            MoTI contact:
+            MOTI contact:
           </label>
         </div>
         <div
@@ -711,6 +756,33 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-motiName"
               name="motiName"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            MOTI region:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-region.description"
+              name="region.description"
               value=""
             />
           </div>
@@ -792,6 +864,22 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
             />
           </div>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Lease notes:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        />
       </div>
     </div>
   </div>

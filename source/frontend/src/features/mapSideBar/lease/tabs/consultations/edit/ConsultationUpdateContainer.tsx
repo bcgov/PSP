@@ -8,7 +8,6 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { useConsultationProvider } from '@/hooks/repositories/useConsultationProvider';
 import { IApiError } from '@/interfaces/IApiError';
-import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { exists, isValidId } from '@/utils';
 
 import { LeasePageNames } from '../../../LeaseContainer';
@@ -25,10 +24,6 @@ export interface IConsultationUpdateContainerProps {
 const ConsultationUpdateContainer: React.FunctionComponent<
   React.PropsWithChildren<IConsultationUpdateContainerProps>
 > = ({ leaseId, consultationId, onSuccess, View }) => {
-  const [leaseConsultations, setLeaseConsultations] = useState<ApiGen_Concepts_ConsultationLease[]>(
-    [],
-  );
-
   const history = useHistory();
   const location = useLocation();
   const [initialValues, setInitialValues] = useState<ConsultationFormModel>(

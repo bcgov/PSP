@@ -23,6 +23,7 @@ import PeriodPaymentsView, {
 import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stakeholders/LeaseStakeholderContainer';
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { LeaseFormModel } from '@/features/leases/models';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 
 import { SideBarContext } from '../context/sidebarContext';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
@@ -183,32 +184,23 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { lease, setLease, refresh, loading } = useLeaseDetail(leaseId);
-  const { setStaleFile, staleFile, setStaleLastUpdatedBy, lastUpdatedBy } =
-    useContext(SideBarContext);
+  const {
+    setStaleFile,
+    staleFile,
+    setStaleLastUpdatedBy,
+    setLastUpdatedBy,
+    staleLastUpdatedBy,
+    lastUpdatedBy,
+  } = useContext(SideBarContext);
 
   const [isValid, setIsValid] = useState<boolean>(true);
 
   const activeTab = containerState.activeTab;
   const { setFullWidthSideBar } = useMapStateMachine();
 
-  useEffect(() => {
-    if (activeTab === LeaseFileTabNames.deposit || activeTab === LeaseFileTabNames.payments) {
-      setFullWidthSideBar(true);
-    } else {
-      setFullWidthSideBar(false);
-    }
-    return () => setFullWidthSideBar(false);
-  }, [activeTab, setFullWidthSideBar]);
-
-  useEffect(() => {
-    const refreshLease = async () => {
-      await refresh();
-      setStaleFile(false);
-    };
-    if (staleFile) {
-      refreshLease();
-    }
-  }, [staleFile, refresh, setStaleFile]);
+  const {
+    getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
+  } = useLeaseRepository();
 
   const onChildSucess = useCallback(() => {
     setStaleLastUpdatedBy(true);
@@ -250,6 +242,43 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       handleCancelConfirm();
     }
   };
+
+  const fetchLastUpdatedBy = useCallback(async () => {
+    if (leaseId) {
+      const retrieved = await getLastUpdatedBy(leaseId);
+      if (retrieved !== undefined) {
+        setLastUpdatedBy(retrieved);
+      } else {
+        setLastUpdatedBy(null);
+      }
+    }
+  }, [leaseId, getLastUpdatedBy, setLastUpdatedBy]);
+
+  useEffect(() => {
+    if (activeTab === LeaseFileTabNames.deposit || activeTab === LeaseFileTabNames.payments) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
+
+  useEffect(() => {
+    const refreshLease = async () => {
+      await refresh();
+    };
+
+    if (staleFile) {
+      refreshLease();
+      setStaleFile(false);
+    }
+  }, [staleFile, refresh, setStaleFile]);
+
+  useEffect(() => {
+    if (lastUpdatedBy === undefined || leaseId !== lastUpdatedBy?.parentId || staleLastUpdatedBy) {
+      fetchLastUpdatedBy();
+    }
+  }, [fetchLastUpdatedBy, lastUpdatedBy, leaseId, staleLastUpdatedBy]);
 
   return (
     <MapSideBarLayout
@@ -294,7 +323,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         show
       />
       <StyledFormWrapper>
-        <LoadingBackdrop show={loading} />
+        <LoadingBackdrop show={loading || getLastUpdatedByLoading} />
         <ViewSelector
           formikRef={formikRef}
           lease={lease}

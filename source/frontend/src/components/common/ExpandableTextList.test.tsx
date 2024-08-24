@@ -18,7 +18,9 @@ const storeState = {
 
 describe('ExpandableTextList component', () => {
   const mockAxios = new MockAdapter(axios);
-  const setup = (renderOptions?: RenderOptions & IExpandableTextListProps<ApiGen_Concepts_Property>) => {
+  const setup = (
+    renderOptions?: RenderOptions & IExpandableTextListProps<ApiGen_Concepts_Property>,
+  ) => {
     // render component under test
     const component = render(
       <ExpandableTextList<ApiGen_Concepts_Property>
@@ -48,7 +50,8 @@ describe('ExpandableTextList component', () => {
     const { getByText } = setup({
       items: getMockApiProperties(),
       renderFunction: (item: ApiGen_Concepts_Property) => <span>{item.pid}</span>,
-      keyFunction: (item: ApiGen_Concepts_Property, index: number) => item.id?.toString() ?? index.toString(),
+      keyFunction: (item: ApiGen_Concepts_Property, index: number) =>
+        item.id?.toString() ?? index.toString(),
       delimiter: '|',
     });
     expect(getByText('0')).toBeVisible();
@@ -60,7 +63,8 @@ describe('ExpandableTextList component', () => {
     const { getAllByText } = setup({
       items: getMockApiProperties(),
       renderFunction: (item: ApiGen_Concepts_Property) => <span>{item.pid}</span>,
-      keyFunction: (item: ApiGen_Concepts_Property, index: number) => item.id?.toString() ?? index.toString(),
+      keyFunction: (item: ApiGen_Concepts_Property, index: number) =>
+        item.id?.toString() ?? index.toString(),
       delimiter: 'delimiter',
     });
     expect(getAllByText('delimiter')).toHaveLength(2);
@@ -70,7 +74,8 @@ describe('ExpandableTextList component', () => {
     const { getByText, queryByText } = setup({
       items: getMockApiProperties(),
       renderFunction: (item: ApiGen_Concepts_Property) => <span>{item.pid}</span>,
-      keyFunction: (item: ApiGen_Concepts_Property, index: number) => item.id?.toString() ?? index.toString(),
+      keyFunction: (item: ApiGen_Concepts_Property, index: number) =>
+        item.id?.toString() ?? index.toString(),
       delimiter: '|',
       maxCollapsedLength: 2,
     });
@@ -83,7 +88,8 @@ describe('ExpandableTextList component', () => {
     const { getByText } = setup({
       items: getMockApiProperties(),
       renderFunction: (item: ApiGen_Concepts_Property) => <span>{item.pid}</span>,
-      keyFunction: (item: ApiGen_Concepts_Property, index: number) => item.id?.toString() ?? index.toString(),
+      keyFunction: (item: ApiGen_Concepts_Property, index: number) =>
+        item.id?.toString() ?? index.toString(),
       delimiter: '|',
       maxCollapsedLength: 2,
     });
@@ -94,7 +100,8 @@ describe('ExpandableTextList component', () => {
     const { queryByTestId } = setup({
       items: getMockApiProperties(),
       renderFunction: (item: ApiGen_Concepts_Property) => <span>{item.pid}</span>,
-      keyFunction: (item: ApiGen_Concepts_Property, index: number) => item.id?.toString() ?? index.toString(),
+      keyFunction: (item: ApiGen_Concepts_Property, index: number) =>
+        item.id?.toString() ?? index.toString(),
       delimiter: '|',
       maxCollapsedLength: 3,
     });
@@ -105,7 +112,8 @@ describe('ExpandableTextList component', () => {
     const { getByText } = setup({
       items: getMockApiProperties(),
       renderFunction: (item: ApiGen_Concepts_Property) => <span>{item.pid}</span>,
-      keyFunction: (item: ApiGen_Concepts_Property, index: number) => item.id?.toString() ?? index.toString(),
+      keyFunction: (item: ApiGen_Concepts_Property, index: number) =>
+        item.id?.toString() ?? index.toString(),
       delimiter: '|',
       maxCollapsedLength: 4,
     });
@@ -118,7 +126,8 @@ describe('ExpandableTextList component', () => {
     const { getByText } = setup({
       items: getMockApiProperties(),
       renderFunction: (item: ApiGen_Concepts_Property) => <span>{item.pid}</span>,
-      keyFunction: (item: ApiGen_Concepts_Property, index: number) => item.id?.toString() ?? index.toString(),
+      keyFunction: (item: ApiGen_Concepts_Property, index: number) =>
+        item.id?.toString() ?? index.toString(),
       delimiter: '|',
       maxCollapsedLength: 2,
     });
@@ -136,7 +145,8 @@ describe('ExpandableTextList component', () => {
     const { getByTestId, queryByText, getByText } = setup({
       items: getMockApiProperties(),
       renderFunction: (item: ApiGen_Concepts_Property) => <span>{item.pid}</span>,
-      keyFunction: (item: ApiGen_Concepts_Property, index: number) => item.id?.toString() ?? index.toString(),
+      keyFunction: (item: ApiGen_Concepts_Property, index: number) =>
+        item.id?.toString() ?? index.toString(),
       delimiter: '|',
       maxCollapsedLength: 2,
     });

@@ -1,21 +1,27 @@
-import { useKeycloak } from '@react-keycloak/web';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { getEmptyBaseAudit, getEmptyLease } from '@/models/defaultInitializers';
+import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import {
   act,
   createAxiosError,
   fillInput,
-  renderAsync,
+  render,
   RenderOptions,
   screen,
   selectOptions,
@@ -23,10 +29,6 @@ import {
 
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
-import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
-import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
-import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -81,12 +83,13 @@ const storeState = {
 const onClose = vi.fn();
 
 describe('AddLeaseContainer component', () => {
-  const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
-    // render component under test
-    const utils = await renderAsync(<AddLeaseContainer onClose={onClose} />, {
+  // render component under test
+  const setup = (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
+    const utils = render(<AddLeaseContainer onClose={onClose} />, {
       ...renderOptions,
       store: storeState,
       useMockAuthentication: true,
+      mockMapMachine: renderOptions.mockMapMachine,
       history,
     });
 
@@ -106,24 +109,23 @@ describe('AddLeaseContainer component', () => {
     const { asFragment, findByText } = await setup({});
     await findByText(/MOTI contact/i);
     expect(asFragment()).toMatchSnapshot();
-    await act(async () => {});
   });
 
   it('cancels the form', async () => {
-    const { getByTitle, getCloseButton } = await setup({});
+    const { getByTitle, getCloseButton } = setup({});
 
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => userEvent.click(getCloseButton()));
     await act(async () => userEvent.click(getByTitle('ok-modal')));
 
-    expect(onClose).toBeCalled();
+    expect(onClose).toHaveBeenCalled();
     expect(history.location.pathname).toBe('/');
   });
 
   it('saves the form with minimal data', async () => {
-    const { getByText, getPurposeMultiSelect, container } = await setup({});
+    const { getByText, getPurposeMultiSelect, container } = setup({});
 
-    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
@@ -138,8 +140,9 @@ describe('AddLeaseContainer component', () => {
     });
 
     const multiSelectPurposes = getPurposeMultiSelect();
+    expect(multiSelectPurposes).not.toBeNull();
+
     await act(async () => {
-      expect(multiSelectPurposes).not.toBeNull();
       userEvent.click(multiSelectPurposes);
     });
 
@@ -163,9 +166,9 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, findByText, getPurposeMultiSelect, container } = await setup({});
+    const { getByText, findByText, getPurposeMultiSelect, container } = setup({});
 
-    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
@@ -180,8 +183,9 @@ describe('AddLeaseContainer component', () => {
     });
 
     const multiSelectPurposes = getPurposeMultiSelect();
+    expect(multiSelectPurposes).not.toBeNull();
+
     await act(async () => {
-      expect(multiSelectPurposes).not.toBeNull();
       userEvent.click(multiSelectPurposes);
     });
 
@@ -206,9 +210,9 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, getPurposeMultiSelect, container } = await setup({});
+    const { getByText, getPurposeMultiSelect, getByTestId, container } = setup({});
 
-    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
@@ -223,8 +227,9 @@ describe('AddLeaseContainer component', () => {
     });
 
     const multiSelectPurposes = getPurposeMultiSelect();
+    expect(multiSelectPurposes).not.toBeNull();
+
     await act(async () => {
-      expect(multiSelectPurposes).not.toBeNull();
       userEvent.click(multiSelectPurposes);
     });
 
@@ -238,7 +243,7 @@ describe('AddLeaseContainer component', () => {
 
     await act(async () => userEvent.click(getByText(/Save/i)));
 
-    expect(addLease).toBeCalledWith(leaseData, []);
+    expect(addLease).toHaveBeenCalledWith(leaseData, []);
 
     const popup = await screen.findByText(/test message/i);
     expect(popup).toBeVisible();
@@ -247,11 +252,42 @@ describe('AddLeaseContainer component', () => {
     addLease.mockResolvedValue({ ...leaseData, id: 1 });
 
     await act(async () => {
-      userEvent.click((await screen.findAllByText('Yes'))[2]);
+      const okButton = getByTestId('ok-modal-button');
+      userEvent.click(okButton);
     });
 
-    expect(addLease).toBeCalledWith(leaseData, []);
+    expect(addLease).toHaveBeenCalledWith(leaseData, []);
     expect(history.location.pathname).toBe('/mapview/sidebar/lease/1');
+  });
+
+  it('should pre-populate the region if a property is selected', async () => {
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      selectedFeatureDataset: {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: null,
+        regionFeature: {
+          type: 'Feature',
+          properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
+          geometry: getMockPolygon(),
+        },
+        districtFeature: null,
+        municipalityFeature: null,
+        highwayFeature: null,
+        selectingComponentId: null,
+        crownLandLeasesFeature: null,
+        crownLandLicensesFeature: null,
+        crownLandTenuresFeature: null,
+        crownLandInventoryFeature: null,
+        crownLandInclusionsFeature: null,
+      },
+    };
+
+    const { findByDisplayValue } = setup({ mockMapMachine: testMockMachine });
+    const text = await findByDisplayValue(/South Coast Region/i);
+    expect(text).toBeVisible();
   });
 });
 

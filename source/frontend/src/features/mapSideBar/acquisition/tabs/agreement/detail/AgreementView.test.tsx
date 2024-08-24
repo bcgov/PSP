@@ -4,13 +4,13 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import AgreementView, { IAgreementViewProps } from './AgreementView';
-import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
+import AcquisitionFileStatusUpdateSolver from '../../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 
 // mock auth library
 
 const mockViewProps: IAgreementViewProps = {
   agreements: [],
-  statusUpdateSolver: new StatusUpdateSolver(),
+  statusUpdateSolver: new AcquisitionFileStatusUpdateSolver(),
   onGenerate: vi.fn(),
   loading: false,
   onDelete: vi.fn(),

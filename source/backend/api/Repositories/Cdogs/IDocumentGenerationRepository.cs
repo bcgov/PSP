@@ -14,7 +14,7 @@ namespace Pims.Api.Repositories.Cdogs
     {
         Task<ExternalResponse<string>> TryUploadTemplateAsync(IFormFile file);
 
-        Task<ExternalResponse<FileTypes>> TryGetFileTypesAsync();
+        Task<ExternalResponse<CdogsFileTypes>> TryGetFileTypesAsync();
 
         Task<ExternalResponse<FileDownloadResponse>> UploadAndGenerate(RenderRequest request);
 

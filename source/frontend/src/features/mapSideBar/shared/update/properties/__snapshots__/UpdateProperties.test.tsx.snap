@@ -1238,7 +1238,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                 >
                   <button
                     class="c3 Button c29 btn btn-primary"
-                    title="Move pin location"
+                    title="move-pin-location"
                     type="button"
                   >
                     <div
