@@ -104,7 +104,7 @@ describe('AddLeaseContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment, findByText } = await setup({});
-    await findByText(/First nation/i);
+    await findByText(/MOTI contact/i);
     expect(asFragment()).toMatchSnapshot();
     await act(async () => {});
   });
@@ -285,64 +285,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   expiryDate: '2020-01-02',
   stakeholders: [],
   periods: [],
-  consultations: [
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('1STNATION'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('STRATRE'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('REGPLANG'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('REGPRPSVC'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('DISTRICT'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('HQ'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('OTHER'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-  ],
+  consultations: null,
   leasePurposes: [
     {
       id: 0,

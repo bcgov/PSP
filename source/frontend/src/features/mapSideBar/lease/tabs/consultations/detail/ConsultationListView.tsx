@@ -1,7 +1,6 @@
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus, FaTrash } from 'react-icons/fa';
-import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
@@ -44,8 +43,6 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
   onDelete,
 }) => {
   const keycloak = useKeycloakWrapper();
-  const history = useHistory();
-  const match = useRouteMatch();
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const { getOptionsByType } = useLookupCodeHelpers();
