@@ -18,7 +18,7 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { defaultApiLease, getEmptyLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { renderAsync, screen } from '@/utils/test-utils';
+import { render, screen } from '@/utils/test-utils';
 
 import UpdateLeaseContainer, { UpdateLeaseContainerProps } from './UpdateLeaseContainer';
 import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
@@ -36,9 +36,11 @@ vi.mocked(useLeaseDetail).mockReturnValue({
   lease: getMockApiLease(),
   setLease: noop,
   getCompleteLease: vi.fn().mockResolvedValue(getMockApiLease()),
-  refresh: noop as any,
+  refresh: vi.fn(),
   loading: false,
 });
+
+const onEdit = vi.fn();
 
 describe('Update lease container component', () => {
   let viewProps: IUpdateLeaseFormProps;
@@ -47,13 +49,13 @@ describe('Update lease container component', () => {
     return <></>;
   });
 
-  const setup = async (renderOptions: RenderOptions & Partial<UpdateLeaseContainerProps> = {}) => {
-    // render component under test
-    const component = await renderAsync(
+  // render component under test
+  const setup = (renderOptions: RenderOptions & Partial<UpdateLeaseContainerProps> = {}) => {
+    const component = render(
       <LeaseStateContext.Provider
         value={{ lease: { ...getMockApiLease(), id: 1 }, setLease: noop }}
       >
-        <UpdateLeaseContainer View={View} formikRef={React.createRef()} onEdit={noop} />
+        <UpdateLeaseContainer View={View} formikRef={React.createRef()} onEdit={onEdit} />
       </LeaseStateContext.Provider>,
       {
         ...renderOptions,
@@ -73,31 +75,53 @@ describe('Update lease container component', () => {
     mockAxios.resetHistory();
   });
 
-  it('renders as expected', async () => {
-    const { component } = await setup({});
+  it('renders as expected', () => {
+    const { component } = setup({});
     expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('saves the form with minimal data', async () => {
-    await setup({});
+    setup({});
 
-    mockAxios.onPut().reply(200, {});
+    mockAxios.onPut().reply(200, { ...getMockApiLease(), id: 1 });
     await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
 
     expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
+    expect(onEdit).toHaveBeenCalledWith(false);
+    expect(useLeaseDetail().refresh).toHaveBeenCalled();
   });
 
-  it('triggers the confirm popup', async () => {
-    await setup({});
+  it('triggers the popup for business rule violation', async () => {
+    setup({});
 
-    mockAxios.onPut().reply(409, { error: 'test message' });
+    mockAxios.onPut().reply(400, {
+      error: 'Retired property can not be selected',
+      type: 'BusinessRuleViolationException',
+    });
     await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
 
+    expect(await screen.findByText(/Retired property can not be selected/i)).toBeVisible();
+    expect(await screen.findByText(/Close/i)).toBeVisible();
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
+  });
+
+  it('triggers the user-override popup', async () => {
+    setup({});
+
+    mockAxios.onPut().reply(409, {
+      error: 'test message',
+      errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
+    });
+    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
+
+    expect(await screen.findByText(/test message/i)).toBeVisible();
+    expect(await screen.findByText(/Yes/i)).toBeVisible();
+    expect(await screen.findByText(/No/i)).toBeVisible();
     expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
   });
 
   it('clicking on the save anyways popup saves the form', async () => {
-    await setup({});
+    setup({});
 
     mockAxios.onPut().reply(409, {
       error: 'test message',

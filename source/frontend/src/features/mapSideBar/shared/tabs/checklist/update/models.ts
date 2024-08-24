@@ -44,6 +44,7 @@ export class ChecklistFormModel {
       fileChecklistItems: allChecklistItems.map(c => c.toApi()),
       fileName: null,
       fileNumber: null,
+      totalAllowableCompensation: null,
       fileProperties: null,
       fileStatusTypeCode: null,
       ...getEmptyBaseAudit(this.rowVersion),

@@ -9,7 +9,6 @@ import { exists } from '@/utils';
 
 import DetailAdministration from './DetailAdministration';
 import DetailConsultation from './DetailConsultation';
-import DetailDocumentation from './DetailDocumentation';
 import { DetailFeeDetermination } from './DetailFeeDetermination';
 import LeaseDetailView from './LeaseDetailView';
 import { LeaseRenewalsView } from './LeaseRenewalsView';
@@ -34,7 +33,6 @@ export const LeaseDetailsForm: React.FunctionComponent<React.PropsWithChildren<u
         <DetailAdministration disabled={true} />
         <DetailConsultation />
         <DetailFeeDetermination disabled={true} />
-        <DetailDocumentation disabled={true} />
       </StyledDetails>
     </Formik>
   );

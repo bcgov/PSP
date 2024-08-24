@@ -66,6 +66,7 @@ export class DispositionFormModel implements WithDispositionTeam {
       dispositionStatusTypeCode: toTypeCodeNullable(this.dispositionStatusTypeCode),
       initiatingBranchTypeCode: toTypeCodeNullable(this.initiatingBranchTypeCode),
       physicalFileStatusTypeCode: toTypeCodeNullable(this.physicalFileStatusTypeCode),
+      totalAllowableCompensation: null,
       project: null,
       projectId: this.project?.id !== undefined && this.project?.id !== 0 ? this.project?.id : null,
       product: null,

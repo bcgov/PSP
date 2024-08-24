@@ -48,7 +48,7 @@ namespace Pims.Api.Controllers
 
         // [HasPermission(Permissions.GenerateDocuments)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(ExternalResponse<Models.Cdogs.FileTypes>), 200)]
+        [ProducesResponseType(typeof(ExternalResponse<Models.Cdogs.CdogsFileTypes>), 200)]
         [SwaggerOperation(Tags = new[] { "document-generation" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> GetSupportedDocumentTypes()
