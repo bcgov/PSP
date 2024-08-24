@@ -2,14 +2,11 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import styled from 'styled-components';
 
 import { IMapProperty } from '@/components/propertySelector/models';
-import * as API from '@/constants/API';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '../models';
 import LeasePropertySelector from '../shared/propertyPicker/LeasePropertySelector';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
-import ConsultationSubForm, { getConsultations } from './ConsultationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
 import DocumentationSubForm from './ReferenceSubForm';
 
@@ -29,15 +26,12 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
 }) => {
   const defaultFormLease = getDefaultFormLease();
 
-  const { getByType } = useLookupCodeHelpers();
-  const consultationTypes = getByType(API.CONSULTATION_TYPES);
   if (propertyInfo) {
     defaultFormLease.properties = [];
     defaultFormLease.properties.push(FormLeaseProperty.fromMapProperty(propertyInfo));
     defaultFormLease.regionId = propertyInfo.region ? propertyInfo.region.toString() : '';
   }
   const apiFormLease = LeaseFormModel.toApi(defaultFormLease);
-  apiFormLease.consultations = getConsultations(apiFormLease, consultationTypes);
 
   const handleSubmit = async (
     values: LeaseFormModel,
@@ -60,7 +54,6 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
             <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
             <LeasePropertySelector formikProps={formikProps} />
             <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
-            <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
             <DocumentationSubForm />
           </>
         )}
