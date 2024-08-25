@@ -27,6 +27,7 @@ using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Microsoft.Extensions.Configuration;
 using Pims.Core.Exceptions;
+using Pims.Api.Models;
 
 namespace Pims.Api.Test.Services
 {
