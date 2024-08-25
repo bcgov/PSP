@@ -7,10 +7,12 @@ using System.Net.Mime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -170,26 +172,14 @@ namespace Pims.Api.Repositories.Mayan
         public async Task<ExternalResponse<FileDownloadResponse>> TryDownloadFileAsync(long documentId, long fileId)
         {
             _logger.LogDebug("Downloading file {documentId}, {fileId}...", documentId, fileId);
-            string authenticationToken = await _authRepository.GetTokenAsync();
-
-            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
-            client.DefaultRequestHeaders.Accept.Clear();
-            AddAuthentication(client, authenticationToken);
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
-
-            ExternalResponse<FileDownloadResponse> result = new ExternalResponse<FileDownloadResponse>()
+            ExternalResponse<FileDownloadResponse> result = new()
             {
                 Status = ExternalResponseStatus.Error,
             };
 
             try
             {
-                Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
-                HttpResponseMessage httpResponse = await client.GetAsync(endpoint).ConfigureAwait(true);
-
-                var response = await ProcessDownloadResponse(httpResponse);
-
-                return response;
+                return await ProcessDownloadResponse(await GetFileAsync(documentId, fileId));
             }
             catch (Exception e)
             {
@@ -199,6 +189,29 @@ namespace Pims.Api.Repositories.Mayan
             }
 
             _logger.LogDebug($"Finished downloading file");
+            return result;
+        }
+
+        public async Task<ExternalResponse<FileStreamResponse>> TryStreamFileAsync(long documentId, long fileId)
+        {
+            _logger.LogDebug("Streaming file {documentId}, {fileId}...", documentId, fileId);
+            ExternalResponse<FileStreamResponse> result = new()
+            {
+                Status = ExternalResponseStatus.Error,
+            };
+
+            try
+            {
+                return await ProcessStreamResponse(await GetFileAsync(documentId, fileId));
+            }
+            catch (Exception e)
+            {
+                result.Status = ExternalResponseStatus.Error;
+                result.Message = "Exception downloading file";
+                _logger.LogError("Unexpected exception streaming file {e}", e);
+            }
+
+            _logger.LogDebug($"Finished streaming file");
             return result;
         }
 
@@ -380,6 +393,19 @@ namespace Pims.Api.Repositories.Mayan
 
             _logger.LogDebug("Finished retrieving mayan file page");
             return response;
+        }
+
+        private async Task<HttpResponseMessage> GetFileAsync(long documentId, long fileId)
+        {
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
+            client.DefaultRequestHeaders.Accept.Clear();
+            AddAuthentication(client, authenticationToken);
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(MediaTypeNames.Application.Json));
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/files/{fileId}/download/");
+            return await client.GetAsync(endpoint).ConfigureAwait(true);
         }
     }
 }
