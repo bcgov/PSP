@@ -678,6 +678,11 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   name="regionTypeCode"
                 >
                   <option
+                    value=""
+                  >
+                    N/A
+                  </option>
+                  <option
                     class="option"
                     data-testid="select-option-1"
                     value="1"
@@ -1416,6 +1421,11 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   id="input-pphStatusTypeCode"
                   name="pphStatusTypeCode"
                 >
+                  <option
+                    value=""
+                  >
+                    N/A
+                  </option>
                   <option
                     class="option"
                     data-testid="select-option-ARTERY"
