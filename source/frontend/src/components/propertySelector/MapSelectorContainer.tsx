@@ -66,7 +66,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
           return property;
         }
         const queryObject = {};
-        if (pid.length > 0) {
+        if (isValidId(+pid)) {
           queryObject['PID'] = pid;
         }
         if (isValidId(+pin)) {
