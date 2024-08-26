@@ -70,7 +70,6 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   ];
 
   const initialGstAmount = initialValues.gstAmount;
-  console.log(initialGstAmount);
 
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);
