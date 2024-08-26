@@ -70,6 +70,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   ];
 
   const initialGstAmount = initialValues.gstAmount;
+  const initialIsFlexible = initialValues.isFlexible;
 
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);
@@ -122,6 +123,12 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                     options={flexiblePeriodOptions}
                   />
                 </Col>
+                {initialIsFlexible === 'true' && formikProps.values.isFlexible === 'false' && (
+                  <StyledRedCol>
+                    You are changing the period duration from flexible to fixed. Your end date will
+                    no longer be anticipated
+                  </StyledRedCol>
+                )}
               </Row>
               <Row>
                 <Col>
@@ -181,7 +188,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         radioLabelOne="Y"
                         radioLabelTwo="N"
                         type="radio"
-                        handleChange={(field, value) =>
+                        handleChange={(_, value) =>
                           onGstChange(
                             value,
                             +formikProps.values.paymentAmount,
