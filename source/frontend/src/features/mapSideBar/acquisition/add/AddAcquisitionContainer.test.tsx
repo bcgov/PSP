@@ -1,9 +1,6 @@
 import { createMemoryHistory } from 'history';
 
-import {
-  IMapStateMachineContext,
-  useMapStateMachine,
-} from '@/components/common/mapFSM/MapStateMachineContext';
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
@@ -226,7 +223,7 @@ describe('AddAcquisitionContainer component', () => {
   });
 
   it('should pre-populate the region if a property is selected', async () => {
-    const testMockMahine: IMapStateMachineContext = {
+    const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
@@ -254,14 +251,14 @@ describe('AddAcquisitionContainer component', () => {
     };
 
     await act(async () => {
-      setup(undefined, { mockMapMachine: testMockMahine });
+      setup(undefined, { mockMapMachine: testMockMachine });
     });
     const text = await screen.findByDisplayValue(/South Coast Region/i);
     expect(text).toBeVisible();
   });
 
   it('should not pre-populate the region if a property is selected and the region cannot be determined', async () => {
-    const testMockMahine: IMapStateMachineContext = {
+    const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
@@ -289,7 +286,7 @@ describe('AddAcquisitionContainer component', () => {
     };
 
     await act(async () => {
-      setup(undefined, { mockMapMachine: testMockMahine });
+      setup(undefined, { mockMapMachine: testMockMachine });
     });
     const text = await screen.findByDisplayValue(/Select region.../i);
     expect(text).toBeVisible();

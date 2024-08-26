@@ -57,7 +57,6 @@ vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   },
 }));
 
-
 const getAcqFileInterestHoldersFn = vi.fn();
 vi.mock('@/hooks/repositories/useInterestHolderRepository');
 vi.mocked(useInterestHolderRepository).mockImplementation(
@@ -180,7 +179,10 @@ describe('UpdateCompensationRequisition Container component', () => {
   it('makes request to update the compensation with payees', async () => {
     const mockCompensationUpdate = getMockApiDefaultCompensation(1, null);
     await setup({
-      props: { compensation: mockCompensationUpdate, fileType: ApiGen_CodeTypes_FileTypes.Acquisition },
+      props: {
+        compensation: mockCompensationUpdate,
+        fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
+      },
     });
 
     // await act(async () => {});
