@@ -70,6 +70,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   ];
 
   const initialGstAmount = initialValues.gstAmount;
+  console.log(initialGstAmount);
 
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);
@@ -358,20 +359,15 @@ const GstCalculator: React.FunctionComponent<{ gstConstant: ISystemConstant }> =
   gstConstant,
 }) => {
   const formikProps = useFormikContext<FormLeasePeriod>();
-
+  const isGstEligible = formikProps.values.isGstEligible;
+  const paymentAmount = formikProps.values.paymentAmount;
+  const setFieldValue = formikProps.setFieldValue;
+  const paymentAmountTouched = formikProps.touched.paymentAmount;
   useEffect(() => {
-    onGstChange(
-      formikProps.values.isGstEligible,
-      +formikProps.values.paymentAmount,
-      gstConstant,
-      formikProps.setFieldValue,
-    );
-  }, [
-    formikProps.setFieldValue,
-    formikProps.values.paymentAmount,
-    formikProps.values.isGstEligible,
-    gstConstant,
-  ]);
+    if (paymentAmountTouched) {
+      onGstChange(isGstEligible, +paymentAmount, gstConstant, setFieldValue);
+    }
+  }, [paymentAmount, isGstEligible, gstConstant, setFieldValue, paymentAmountTouched]);
   return <></>;
 };
 
