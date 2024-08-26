@@ -51,7 +51,7 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
 
   useEffect(() => {
     onGstChange('', isGstEligible);
-  }, [isGstEligible, formikProps.values.paymentAmount, onGstChange]);
+  }, [isGstEligible, paymentAmount, onGstChange]);
 
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);
