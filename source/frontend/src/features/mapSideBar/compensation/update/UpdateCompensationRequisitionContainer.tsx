@@ -6,6 +6,7 @@ import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptio
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -74,6 +75,10 @@ const UpdateCompensationRequisitionContainer: React.FC<
     },
   } = useFinancialCodeRepository();
 
+  const {
+    getLeaseStakeholders: { execute: getLeaseStakeholders, loading: loadingLeaseStakeholders },
+  } = useLeaseStakeholderRepository();
+
   const updateCompensation = async (compensation: CompensationRequisitionFormModel) => {
     const compensationApiModel = compensation.toApi(payeeOptions);
 
@@ -136,8 +141,8 @@ const UpdateCompensationRequisitionContainer: React.FC<
           break;
         case ApiGen_CodeTypes_FileTypes.Lease:
           {
-            const payeesOptions = (file as ApiGen_Concepts_Lease).stakeholders;
-            const stakeHoldersOptions = payeesOptions.map(x =>
+            const leaseStakeHolders = await getLeaseStakeholders(file.id);
+            const stakeHoldersOptions = leaseStakeHolders.map(x =>
               PayeeOption.createLeaseStakeholder(x),
             );
 
@@ -146,7 +151,15 @@ const UpdateCompensationRequisitionContainer: React.FC<
           break;
       }
     }
-  }, [file, fileType, retrieveAcquisitionOwners, fetchInterestHolders, compensation, payeeOptions]);
+  }, [
+    file,
+    fileType,
+    retrieveAcquisitionOwners,
+    fetchInterestHolders,
+    compensation,
+    payeeOptions,
+    getLeaseStakeholders,
+  ]);
 
   const fetchFinancialCodes = useCallback(async () => {
     const fetchFinancialActivitiesCall = fetchFinancialActivities();
@@ -248,7 +261,8 @@ const UpdateCompensationRequisitionContainer: React.FC<
         loadingChartOfAccounts ||
         loadingResponsibilityCodes ||
         loadingYearlyFinancials ||
-        loadingInterestHolders
+        loadingInterestHolders ||
+        loadingLeaseStakeholders
       }
       initialValues={CompensationRequisitionFormModel.fromApi(
         compensation,
