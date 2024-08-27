@@ -7,7 +7,6 @@ using System.Net.Mime;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Azure;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -179,7 +178,8 @@ namespace Pims.Api.Repositories.Mayan
 
             try
             {
-                return await ProcessDownloadResponse(await GetFileAsync(documentId, fileId));
+                var response = await ProcessDownloadResponse(await GetFileAsync(documentId, fileId));
+                return response;
             }
             catch (Exception e)
             {
@@ -202,7 +202,8 @@ namespace Pims.Api.Repositories.Mayan
 
             try
             {
-                return await ProcessStreamResponse(await GetFileAsync(documentId, fileId));
+                var stream = await ProcessStreamResponse(await GetFileAsync(documentId, fileId));
+                return stream;
             }
             catch (Exception e)
             {

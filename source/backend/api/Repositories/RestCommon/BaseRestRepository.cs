@@ -197,7 +197,11 @@ namespace Pims.Api.Repositories.Rest
             byte[] responsePayload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
             _logger.LogTrace("Response: {response}", response);
             response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
-            long contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault(), CultureInfo.InvariantCulture) : responsePayload.Length;
+            long contentLength = responsePayload.Length;
+            if (contentLengthHeaders?.FirstOrDefault() != null)
+            {
+                contentLength = int.Parse(contentLengthHeaders.FirstOrDefault(), CultureInfo.InvariantCulture);
+            }
             result.HttpStatusCode = response.StatusCode;
             switch (response.StatusCode)
             {
@@ -244,7 +248,11 @@ namespace Pims.Api.Repositories.Rest
             Stream responsePayload = await response.Content.ReadAsStreamAsync().ConfigureAwait(true);
             _logger.LogTrace("Response: {response}", response);
             response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
-            long contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault(), CultureInfo.InvariantCulture) : responsePayload.Length;
+            long contentLength = responsePayload.Length;
+            if (contentLengthHeaders?.FirstOrDefault() != null)
+            {
+                contentLength = int.Parse(contentLengthHeaders.FirstOrDefault(), CultureInfo.InvariantCulture);
+            }
             result.HttpStatusCode = response.StatusCode;
             switch (response.StatusCode)
             {
