@@ -8,13 +8,13 @@ import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider'
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 
-import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementForm';
+import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
 
 export interface IUpdateAcquisitionAgreementContainerProps {
   acquisitionFileId: number;
   agreementId: number;
-  View: React.FC<IUpdateAcquisitionAgreementViewProps>;
+  View: React.FC<IUpdateAcquisitionAgreementFormProps>;
   onSuccess: () => void;
 }
 
