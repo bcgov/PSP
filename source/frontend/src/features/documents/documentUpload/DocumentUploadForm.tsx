@@ -112,7 +112,7 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
                 <DisplayError field={'documents'} />
                 {formikProps.values.documents.length > 0 && (
                   <div className="pt-5">
-                    {`You have attached ${formikProps.values.documents.length} files. Do you wane to proceed and save?`}
+                    {`You have attached ${formikProps.values.documents.length} files. Do you want to proceed and save?`}
                   </div>
                 )}
               </>

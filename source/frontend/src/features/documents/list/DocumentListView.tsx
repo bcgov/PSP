@@ -183,7 +183,7 @@ export const DocumentListView: React.FunctionComponent<
       <SectionListHeader
         claims={[Claims.DOCUMENT_ADD]}
         title={title ?? 'Documents'}
-        addButtonText={props.addButtonText || 'Add a Document'}
+        addButtonText={props.addButtonText || 'Add Document'}
         onAdd={() => setIsUploadVisible(true)}
       />
     );
