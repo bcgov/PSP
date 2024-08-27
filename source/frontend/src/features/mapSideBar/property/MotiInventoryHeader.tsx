@@ -6,7 +6,11 @@ import { HiCube } from 'react-icons/hi2';
 import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
-import { HeaderField } from '@/components/common/HeaderField/HeaderField';
+import {
+  HeaderContentCol,
+  HeaderField,
+  HeaderLabelCol,
+} from '@/components/common/HeaderField/HeaderField';
 import { StyledFiller } from '@/components/common/HeaderField/styles';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { InlineFlexDiv } from '@/components/common/styles';
@@ -27,6 +31,7 @@ export interface IMotiInventoryHeaderProps {
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
+  const pin = props.composedProperty.pin ?? '-';
   const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
   const geoserverMapData = props.composedProperty.geoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
@@ -89,9 +94,12 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
         </Col>
         <Col className="text-right">
           <StyledFiller>
-            <HeaderField className="justify-content-end" label="PID:">
-              {pid}
-            </HeaderField>
+            <Row className="justify-content-end">
+              <HeaderLabelCol label="PID:" />
+              <HeaderContentCol>{pid}</HeaderContentCol>
+              <HeaderLabelCol label={'PIN:'} />
+              <HeaderContentCol>{pin}</HeaderContentCol>
+            </Row>
             <HeaderField label="Land parcel type:" className="justify-content-end">
               {apiProperty?.propertyType?.description}
             </HeaderField>
