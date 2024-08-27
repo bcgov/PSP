@@ -70,6 +70,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
+
             var consultation = _leaseService.GetConsultations(id);
             return new JsonResult(_mapper.Map<IEnumerable<ConsultationLeaseModel>>(consultation));
         }
@@ -78,13 +79,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Create the lease file consultation to the lease file.
         /// </summary>
         /// <returns>The consultation items.</returns>
-        [HttpPost("{id:long}/consultations")]
-        [HasPermission(Permissions.LeaseView)]
+        [HttpPost("{leaseId:long}/consultations")]
+        [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ConsultationLeaseModel), 201)]
         [TypeFilter(typeof(NullJsonResultFilter))]
         [SwaggerOperation(Tags = new[] { "leasefile" })]
-        public IActionResult AddLeaseConsultation([FromRoute] long id, [FromBody] ConsultationLeaseModel consultation)
+        public IActionResult AddLeaseConsultation([FromRoute] long leaseId, [FromBody] ConsultationLeaseModel consultation)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -93,12 +94,12 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            if (id != consultation.LeaseId)
+            if (leaseId != consultation.LeaseId)
             {
                 throw new BadRequestException("Invalid LeaseId.");
             }
 
-            var newConsultation = _leaseService.AddConsultation(id, _mapper.Map<Dal.Entities.PimsLeaseConsultation>(consultation));
+            var newConsultation = _leaseService.AddConsultation(_mapper.Map<Dal.Entities.PimsLeaseConsultation>(consultation));
 
             return new JsonResult(_mapper.Map<ConsultationLeaseModel>(newConsultation));
         }
@@ -107,12 +108,12 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Get the lease file consultation by Id.
         /// </summary>
         /// <returns>The consultation items.</returns>
-        [HttpGet("{id:long}/consultations/{consultationId:long}")]
+        [HttpGet("{leaseId:long}/consultations/{consultationId:long}")]
         [HasPermission(Permissions.LeaseView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ConsultationLeaseModel), 200)]
         [SwaggerOperation(Tags = new[] { "leasefile" })]
-        public IActionResult GetLeaseConsultationById([FromRoute]long id, [FromRoute]long consultationId)
+        public IActionResult GetLeaseConsultationById([FromRoute] long leaseId, [FromRoute] long consultationId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -122,6 +123,11 @@ namespace Pims.Api.Areas.Lease.Controllers
                 DateTime.Now);
 
             var consultation = _leaseService.GetConsultationById(consultationId);
+
+            if (consultation.LeaseConsultationId != leaseId)
+            {
+                throw new BadRequestException("Invalid lease id for the given consultation.");
+            }
 
             return new JsonResult(_mapper.Map<ConsultationLeaseModel>(consultation));
         }
@@ -149,6 +155,10 @@ namespace Pims.Api.Areas.Lease.Controllers
             {
                 throw new BadRequestException("Invalid LeaseId.");
             }
+            if (consultationId != consultation.Id)
+            {
+                throw new BadRequestException("Invalid consultationId.");
+            }
 
             var updatedConsultation = _leaseService.UpdateConsultation(_mapper.Map<Dal.Entities.PimsLeaseConsultation>(consultation));
 
@@ -159,12 +169,12 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Delete the lease file consultation by Id.
         /// </summary>
         /// <returns>The consultation item updated.</returns>
-        [HttpDelete("{id:long}/consultations/{consultationId:long}")]
-        [HasPermission(Permissions.LeaseView)]
+        [HttpDelete("{leaseId:long}/consultations/{consultationId:long}")]
+        [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "leasefile" })]
-        public IActionResult DeleteLeaseConsultation([FromRoute] long id, [FromRoute] long consultationId)
+        public IActionResult DeleteLeaseConsultation([FromRoute] long leaseId, [FromRoute] long consultationId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -172,6 +182,12 @@ namespace Pims.Api.Areas.Lease.Controllers
                 nameof(DeleteLeaseConsultation),
                 User.GetUsername(),
                 DateTime.Now);
+
+            var existingConsultation = _leaseService.GetConsultationById(consultationId);
+            if (existingConsultation.LeaseConsultationId != leaseId)
+            {
+                throw new BadRequestException("Invalid lease id for the given consultation.");
+            }
 
             var result = _leaseService.DeleteConsultation(consultationId);
 

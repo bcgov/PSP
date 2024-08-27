@@ -200,6 +200,12 @@ export function booleanToYesNoUnknownString(value?: boolean | null): string {
   return 'Unknown';
 }
 
+export function booleanToYesNoString(value?: boolean | null): string {
+  if (value === true) return 'Yes';
+  else if (value === false) return 'No';
+  return '';
+}
+
 export const yesNoUnknownOptions: SelectOption[] = [
   { label: 'Unknown', value: '' },
   { label: 'Yes', value: 'Yes' },

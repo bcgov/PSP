@@ -6,9 +6,9 @@ export const UpdateConsultationYupSchema = Yup.object().shape({
   otherDescription: Yup.string().when('consultationTypeCode', {
     is: (consultationTypeCode: string) => consultationTypeCode && consultationTypeCode === 'OTHER',
     then: Yup.string()
-      .required('Other Description required')
-      .max(2000, 'Other Description must be at most ${max} characters'),
+      .required('Other description required')
+      .max(2000, 'Other description must be at most ${max} characters'),
     otherwise: Yup.string().nullable(),
   }),
-  comment: Yup.string().max(500, 'Other name must be at most ${max} characters'),
+  comment: Yup.string().max(500, 'Comment must be at most ${max} characters'),
 });

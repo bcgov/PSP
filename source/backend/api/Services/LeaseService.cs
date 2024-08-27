@@ -357,7 +357,7 @@ namespace Pims.Api.Services
             return _consultationRepository.GetConsultationById(consultationId);
         }
 
-        public PimsLeaseConsultation AddConsultation(long leaseId, PimsLeaseConsultation consultation)
+        public PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation)
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
 
@@ -370,8 +370,6 @@ namespace Pims.Api.Services
         public PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation)
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-
-            var currentConsultation = _consultationRepository.GetConsultationById(consultation.LeaseConsultationId);
 
             var updatedConsultation = _consultationRepository.UpdateConsultation(consultation);
             _consultationRepository.CommitTransaction();

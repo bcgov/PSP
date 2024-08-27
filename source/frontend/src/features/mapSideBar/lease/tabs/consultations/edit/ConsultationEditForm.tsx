@@ -10,6 +10,7 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledDivider } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import * as API from '@/constants/API';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
@@ -59,7 +60,9 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
     }
   };
 
-  const headerTitle = !isValidId(initialValues.id) ? 'Add Consultation' : 'Update Consultation';
+  const headerTitle = !isValidId(initialValues.id)
+    ? 'Add Approval / Consultation'
+    : 'Update Approval / Consultation';
 
   return (
     initialValues && (
@@ -80,7 +83,13 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                       required
                       labelWidth="4"
                       contentWidth="6"
-                      label="Consultation type"
+                      label="Approval / Consultation type"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-consultation-type-tooltip"
+                          toolTip="The nature of approval or consultation being recorded (ex: first nation, engineering etc.)"
+                        />
+                      }
                     >
                       <Select
                         placeholder="Select"
@@ -89,25 +98,45 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                       />
                     </SectionField>
                     {formikProps.values.consultationTypeCode === 'OTHER' && (
-                      <SectionField required labelWidth="4" contentWidth="6" label="Description">
+                      <SectionField
+                        required
+                        labelWidth="4"
+                        contentWidth="6"
+                        label="Description"
+                        tooltip={
+                          <TooltipIcon
+                            toolTipId="lease-consultation-otherdescription-tooltip"
+                            toolTip="Short description for the approval / consultation"
+                          />
+                        }
+                      >
                         <Input field="otherDescription" />
                       </SectionField>
                     )}
-                    <SectionField labelWidth="4" contentWidth="6" label="Requested on">
+                    <SectionField
+                      labelWidth="4"
+                      contentWidth="6"
+                      label="Requested on"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-consultation-requestedon-tooltip"
+                          toolTip="When the approval / consultation request was sent"
+                        />
+                      }
+                    >
                       <FastDatePicker field="requestedOn" formikProps={formikProps} />
                     </SectionField>
-                    <SectionField labelWidth="4" contentWidth="auto" label="Response received">
-                      <YesNoSelect field="isResponseReceived" />
-                    </SectionField>
-                    {formikProps.values.isResponseReceived === true && (
-                      <SectionField labelWidth="4" contentWidth="auto" label="Response received on">
-                        <FastDatePicker field="responseReceivedDate" formikProps={formikProps} />
-                      </SectionField>
-                    )}
-                    <SectionField labelWidth="4" contentWidth="12" label="Comments">
-                      <TextArea field="comment" />
-                    </SectionField>
-                    <SectionField labelWidth="4" contentWidth="6" label="Contact">
+                    <SectionField
+                      labelWidth="4"
+                      contentWidth="6"
+                      label="Contact"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-consultation-contact-tooltip"
+                          toolTip="The point of contact, or one providing the approval / consultation "
+                        />
+                      }
+                    >
                       <ContactInputContainer
                         field="contact"
                         View={ContactInputView}
@@ -123,6 +152,27 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                           />
                         </SectionField>
                       )}
+                    <SectionField labelWidth="4" contentWidth="auto" label="Response received">
+                      <YesNoSelect field="isResponseReceived" />
+                    </SectionField>
+                    {formikProps.values.isResponseReceived === true && (
+                      <SectionField labelWidth="4" contentWidth="auto" label="Response received on">
+                        <FastDatePicker field="responseReceivedDate" formikProps={formikProps} />
+                      </SectionField>
+                    )}
+                    <SectionField
+                      labelWidth="4"
+                      contentWidth="12"
+                      label="Comments"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-consultation-comments-tooltip"
+                          toolTip="Remarks / summary on the process or its results"
+                        />
+                      }
+                    >
+                      <TextArea field="comment" />
+                    </SectionField>
                     <StyledDivider />
                     <StyledFooter>
                       <SidebarFooter

@@ -52,12 +52,12 @@ const ConsultationUpdateContainer: React.FunctionComponent<
 
     if (exists(consultation)) {
       let person = null;
-      const organization = null;
+      let organization = null;
       if (isValidId(consultation.personId)) {
         person = await getPerson(consultation.personId);
       }
       if (isValidId(consultation.organizationId)) {
-        person = await getOrganization(consultation.organizationId);
+        organization = await getOrganization(consultation.organizationId);
       }
 
       const consultationFormModel = ConsultationFormModel.fromApi(

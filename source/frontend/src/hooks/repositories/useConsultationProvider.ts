@@ -76,7 +76,7 @@ export const useConsultationProvider = () => {
       [putLeaseConsultationApi],
     ),
     requestName: 'updateLeaseConsultation',
-    onError: useAxiosErrorHandler('Failed to update Lease File Consultation'),
+    throwError: true,
   });
 
   const deleteLeaseConsultation = useApiRequestWrapper<

@@ -43,7 +43,7 @@ namespace Pims.Api.Services
 
         PimsLeaseConsultation GetConsultationById(long consultationId);
 
-        PimsLeaseConsultation AddConsultation(long leaseId, PimsLeaseConsultation consultation);
+        PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation);
 
         PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation);
 

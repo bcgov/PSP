@@ -15,9 +15,9 @@ export const useApiConsultations = () => {
     () => ({
       getLeaseConsultationsApi: (leaseFileId: number) =>
         api.get<ApiGen_Concepts_ConsultationLease[]>(`/leases/${leaseFileId}/consultations`),
-      getLeaseConsultationByIdApi: (leaseFileId: number, agreementId: number) =>
+      getLeaseConsultationByIdApi: (leaseFileId: number, consultationId: number) =>
         api.get<ApiGen_Concepts_ConsultationLease>(
-          `/leases/${leaseFileId}/consultations/${agreementId}`,
+          `/leases/${leaseFileId}/consultations/${consultationId}`,
         ),
       postLeaseConsultationApi: (
         leaseFileId: number,

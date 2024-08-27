@@ -11,6 +11,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -18,7 +19,7 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { prettyFormatDate } from '@/utils';
-import { booleanToYesNoUnknownString } from '@/utils/formUtils';
+import { booleanToYesNoString } from '@/utils/formUtils';
 
 export interface IConsultationListViewProps {
   loading: boolean;
@@ -71,8 +72,8 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
         header={
           <SectionListHeader
             claims={[Claims.LEASE_EDIT]}
-            title="Consultations"
-            addButtonText="Add Consultation"
+            title="Approval / Consultations"
+            addButtonText="Add Approval / Consultation"
             addButtonIcon={<FaPlus size="2rem" />}
             onAdd={onAdd}
           />
@@ -105,8 +106,8 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                       <Row>
                         <Col>
                           {group.consultationTypeCode === 'OTHER'
-                            ? `${consultation.otherDescription} Consultation`
-                            : `${group.consultationTypeDescription} Consultation`}
+                            ? `${consultation.otherDescription} Approval / Consultation`
+                            : `${group.consultationTypeDescription} Approval / Consultation`}
                         </Col>
 
                         {keycloak.hasClaim(Claims.LEASE_EDIT) && (
@@ -152,7 +153,16 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     </div>
                   }
                 >
-                  <SectionField labelWidth="4" label="Requested on">
+                  <SectionField
+                    labelWidth="4"
+                    label="Requested on"
+                    tooltip={
+                      <TooltipIcon
+                        toolTipId={`lease-consultation-${consultation.id}-requestedon-tooltip`}
+                        toolTip="When the approval / consultation request was sent"
+                      />
+                    }
+                  >
                     {prettyFormatDate(consultation.requestedOn)}
                   </SectionField>
                   <ContactFieldContainer
@@ -161,24 +171,36 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     personId={consultation.personId}
                     organizationId={consultation.organizationId}
                     primaryContact={consultation.primaryContactId}
+                    tooltip={
+                      <TooltipIcon
+                        toolTipId={`lease-consultation-${consultation.id}-contact-tooltip`}
+                        toolTip="The point of contact, or one providing the approval / consultation "
+                      />
+                    }
                   />
                   <SectionField labelWidth="4" label="Response received">
-                    {booleanToYesNoUnknownString(consultation.isResponseReceived)}
+                    {booleanToYesNoString(consultation.isResponseReceived)}
                   </SectionField>
                   <SectionField labelWidth="4" label="Response received on">
                     {prettyFormatDate(consultation.responseReceivedDate)}
                   </SectionField>
-                  <SectionField labelWidth="4" label="Comments">
+                  <SectionField
+                    labelWidth="4"
+                    label="Comments"
+                    tooltip={
+                      <TooltipIcon
+                        toolTipId={`lease-consultation-${consultation.id}-comments-tooltip`}
+                        toolTip="Remarks / summary on the process or its results"
+                      />
+                    }
+                  >
                     {consultation.comment}
-                  </SectionField>
-                  <SectionField labelWidth="4" label="Type">
-                    {consultation.consultationTypeCode.id}
                   </SectionField>
                 </Section>
               </StyledBorder>
             ))}
             {group.consultations.length === 0 && (
-              <p className="pl-2">There are no consultations.</p>
+              <p className="pl-2">There are no approvals / consultations.</p>
             )}
           </Section>
         ))}
