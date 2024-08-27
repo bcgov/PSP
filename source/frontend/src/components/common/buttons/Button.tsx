@@ -96,7 +96,6 @@ const StyledButton = styled(BootstrapButton)`
     &.btn-primary {
       color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
       background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
-      border: none;
       &:hover,
       &:active,
       &:focus {

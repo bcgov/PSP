@@ -54,10 +54,6 @@ exports[`Disposition List View > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
-  border: none;
-}
-
 .c10.btn.btn-secondary {
   background: none;
 }

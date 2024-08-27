@@ -54,10 +54,6 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
-  border: none;
-}
-
 .c5.btn.btn-secondary {
   background: none;
 }

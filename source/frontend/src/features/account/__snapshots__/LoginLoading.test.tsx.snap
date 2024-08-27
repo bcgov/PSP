@@ -49,10 +49,6 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
   box-shadow: none;
 }
 
-.c2.btn.btn-primary {
-  border: none;
-}
-
 .c2.btn.btn-secondary {
   background: none;
 }
@@ -391,10 +387,6 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c2.btn.btn-primary {
-  border: none;
 }
 
 .c2.btn.btn-secondary {

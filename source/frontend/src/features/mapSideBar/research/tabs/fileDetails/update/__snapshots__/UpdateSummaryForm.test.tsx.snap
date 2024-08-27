@@ -54,10 +54,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
-  border: none;
-}
-
 .c10.btn.btn-secondary {
   background: none;
 }

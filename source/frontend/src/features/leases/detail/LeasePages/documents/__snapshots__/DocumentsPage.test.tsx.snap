@@ -54,10 +54,6 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
-  border: none;
-}
-
 .c6.btn.btn-secondary {
   background: none;
 }

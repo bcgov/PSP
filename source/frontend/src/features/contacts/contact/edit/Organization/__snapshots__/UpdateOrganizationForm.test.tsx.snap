@@ -55,10 +55,6 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
-  border: none;
-}
-
 .c8.btn.btn-secondary {
   background: none;
 }
@@ -1638,10 +1634,6 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c2.btn.btn-primary {
-  border: none;
 }
 
 .c2.btn.btn-secondary {

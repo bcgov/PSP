@@ -54,10 +54,6 @@ exports[`DispositionView component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
-  border: none;
-}
-
 .c3.btn.btn-secondary {
   background: none;
 }

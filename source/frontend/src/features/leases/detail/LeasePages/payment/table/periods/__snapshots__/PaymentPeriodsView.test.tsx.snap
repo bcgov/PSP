@@ -54,10 +54,6 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c3.btn.btn-primary {
-  border: none;
-}
-
 .c3.btn.btn-secondary {
   background: none;
 }
@@ -579,10 +575,6 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c3.btn.btn-primary {
-  border: none;
 }
 
 .c3.btn.btn-secondary {

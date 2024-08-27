@@ -54,10 +54,6 @@ exports[`Financial Code Filter > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c2.btn.btn-primary {
-  border: none;
-}
-
 .c2.btn.btn-secondary {
   background: none;
 }

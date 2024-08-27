@@ -54,10 +54,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
-  border: none;
-}
-
 .c4.btn.btn-secondary {
   background: none;
 }
@@ -319,10 +315,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c4.btn.btn-primary {
-  border: none;
 }
 
 .c4.btn.btn-secondary {

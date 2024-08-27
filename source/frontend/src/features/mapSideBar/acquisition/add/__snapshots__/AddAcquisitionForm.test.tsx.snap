@@ -54,10 +54,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c18.btn.btn-primary {
-  border: none;
-}
-
 .c18.btn.btn-secondary {
   background: none;
 }
