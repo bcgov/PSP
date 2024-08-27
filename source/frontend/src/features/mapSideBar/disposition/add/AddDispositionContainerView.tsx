@@ -1,6 +1,10 @@
 import { FormikHelpers, FormikProps } from 'formik';
+import { Location } from 'history';
+import { useCallback } from 'react';
 import { MdAirlineStops } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 
 import MapSideBarLayout from '../../layout/MapSideBarLayout';
@@ -34,6 +38,19 @@ const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContai
   onCancel,
   confirmBeforeAdd,
 }) => {
+  const history = useHistory();
+
+  const checkState = useCallback(
+    (location: Location) => {
+      return (
+        !location.pathname.startsWith('/mapview/sidebar/disposition') &&
+        formikRef?.current?.dirty &&
+        !formikRef?.current?.isSubmitting
+      );
+    },
+    [formikRef],
+  );
+
   return (
     <MapSideBarLayout
       showCloseButton
@@ -56,8 +73,9 @@ const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContai
           initialValues={dispositionInitialValues}
           onSubmit={onSubmit}
           confirmBeforeAdd={confirmBeforeAdd}
-        ></DispositionForm>
+        />
       </StyledFormWrapper>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </MapSideBarLayout>
   );
 };

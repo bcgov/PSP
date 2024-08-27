@@ -192,7 +192,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
       getPrimaryAddressByPid={getAddress}
       PropertySelectorPidSearchComponent={PropertySelectorPidSearchContainer}
       MapSelectorComponent={MapSelectorContainer}
-    ></View>
+    />
   );
 };
 

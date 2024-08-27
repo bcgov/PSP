@@ -1,9 +1,11 @@
 import { FormikHelpers, FormikProps } from 'formik';
-import { useMemo, useRef, useState } from 'react';
+import { Location } from 'history';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -103,6 +105,17 @@ export const AddLeaseContainer: React.FunctionComponent<
     }
   };
 
+  const checkState = useCallback(
+    (location: Location) => {
+      return (
+        !location.pathname.startsWith('/mapview/sidebar/lease/') &&
+        formikRef?.current?.dirty &&
+        !formikRef?.current?.isSubmitting
+      );
+    },
+    [formikRef],
+  );
+
   return (
     <MapSideBarLayout
       title="Create Lease/Licence"
@@ -135,6 +148,7 @@ export const AddLeaseContainer: React.FunctionComponent<
         formikRef={formikRef}
         propertyInfo={initialProperty}
       />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </MapSideBarLayout>
   );
 };

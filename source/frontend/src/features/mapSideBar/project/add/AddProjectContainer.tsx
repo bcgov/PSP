@@ -1,8 +1,10 @@
 import { FormikProps } from 'formik';
+import { Location } from 'history';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import * as API from '@/constants/API';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
@@ -97,6 +99,17 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
 
   const helper = useAddProjectForm({ onSuccess });
 
+  const checkState = useCallback(
+    (location: Location) => {
+      return (
+        !location.pathname.startsWith('/mapview/sidebar/project') &&
+        formikRef?.current?.dirty &&
+        !formikRef?.current?.isSubmitting
+      );
+    },
+    [formikRef],
+  );
+
   return (
     <MapSideBarLayout
       showCloseButton
@@ -122,6 +135,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
         validationSchema={helper.validationSchema}
         isCreating
       />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </MapSideBarLayout>
   );
 };

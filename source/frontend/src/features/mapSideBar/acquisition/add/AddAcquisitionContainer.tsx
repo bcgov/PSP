@@ -1,9 +1,11 @@
 import { FormikProps } from 'formik/dist/types';
+import { Location } from 'history';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -170,6 +172,17 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     setModalContent,
   ]);
 
+  const checkState = useCallback(
+    (location: Location) => {
+      return (
+        !location.pathname.startsWith('/mapview/sidebar/acquisition/') &&
+        formikRef?.current?.dirty &&
+        !formikRef?.current?.isSubmitting
+      );
+    },
+    [formikRef],
+  );
+
   return (
     <MapSideBarLayout
       showCloseButton
@@ -202,6 +215,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           confirmBeforeAdd={confirmBeforeAdd}
         />
       </StyledFormWrapper>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </MapSideBarLayout>
   );
 };
