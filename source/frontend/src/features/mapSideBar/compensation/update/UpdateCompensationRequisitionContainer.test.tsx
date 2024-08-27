@@ -22,6 +22,10 @@ import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitio
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { getMockApiLease, getMockLeaseStakeholders } from '@/mocks/lease.mock';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { PayeeType } from '../../acquisition/models/PayeeTypeModel';
+import { CompensationPayeeFormModel } from '../models/AcquisitionPayeeFormModel';
 
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 type Provider = typeof useCompensationRequisitionRepository;
@@ -80,6 +84,21 @@ vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
       getChartOfAccountsCodeTypes: mockGetApi,
       getResponsibilityCodeTypes: mockGetApi,
       getYearlyFinancialsCodeTypes: mockGetApi,
+    };
+  },
+}));
+
+const getLeaseFileInterestHoldersApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
+
+vi.mock('@/hooks/repositories/useLeaseStakeholderRepository', () => ({
+  useLeaseStakeholderRepository: () => {
+    return {
+      getLeaseStakeholders: getLeaseFileInterestHoldersApi,
     };
   },
 }));
@@ -177,15 +196,19 @@ describe('UpdateCompensationRequisition Container component', () => {
   });
 
   it('makes request to update the compensation with payees', async () => {
+    const acquisitionFileMock: ApiGen_Concepts_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+    };
+
     const mockCompensationUpdate = getMockApiDefaultCompensation(1, null);
     await setup({
       props: {
         compensation: mockCompensationUpdate,
         fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
+        file: acquisitionFileMock,
       },
     });
-
-    // await act(async () => {});
+    expect(getAcqFileInterestHoldersFn).toHaveBeenCalled();
 
     mockCompensationUpdate.detailedRemarks = 'my update';
     mockUpdateCompensation.mockResolvedValue(mockCompensationUpdate);
@@ -202,17 +225,18 @@ describe('UpdateCompensationRequisition Container component', () => {
       mockAcquisitionFileOwnersResponse(1)[0],
     );
 
-    updatedCompensationModel.payee.payeeKey = testPayeeOption.value;
+    updatedCompensationModel.payee = new CompensationPayeeFormModel(mockCompensationUpdate.id);
+    updatedCompensationModel.payee.payeeKey = PayeeOption.generateKey(1, PayeeType.Owner);
 
     await act(async () => {
       viewProps?.onSave(updatedCompensationModel);
     });
 
-    expect(getAcqFileInterestHoldersFn).toHaveBeenCalled();
-
-    // expect(mockUpdateCompensation).toHaveBeenCalledWith(
-    //   updatedCompensationModel.toApi([testPayeeOption]),
-    // );
+    const concept = updatedCompensationModel.toApi([testPayeeOption]);
+    expect(mockUpdateCompensation).toHaveBeenCalledWith(
+      ApiGen_CodeTypes_FileTypes.Acquisition,
+      expect.objectContaining({...concept, acquisitionOwnerId: 1}),
+    );
   });
 
   it('filters expired financial codes when updating', async () => {
@@ -247,6 +271,46 @@ describe('UpdateCompensationRequisition Container component', () => {
       expect(viewProps?.chartOfAccountsOptions).toHaveLength(1);
       expect(viewProps?.responsiblityCentreOptions).toHaveLength(1);
       expect(viewProps?.yearlyFinancialOptions).toHaveLength(1);
+    });
+  });
+
+  it('LEASE - makes request to update the compensation with payees', async () => {
+    const mockCompensationUpdate = {
+      ...getMockApiDefaultCompensation(1, null),
+      acquisitionOwnerId: null,
+    };
+    getLeaseFileInterestHoldersApi.execute.mockResolvedValue(getMockLeaseStakeholders());
+
+    await setup({
+      props: {
+        compensation: mockCompensationUpdate,
+        fileType: ApiGen_CodeTypes_FileTypes.Lease,
+        file: { ...getMockApiLease() },
+      },
+    });
+
+    expect(getLeaseFileInterestHoldersApi.execute).toHaveBeenCalled();
+
+    const updatedCompensationModel = new CompensationRequisitionFormModel(1, null, 1, '');
+    updatedCompensationModel.detailedRemarks = 'my update';
+
+    const testPayeeOption: PayeeOption = PayeeOption.createLeaseStakeholder(
+      getMockLeaseStakeholders()[0],
+    );
+
+    const leasePayeeOptions: PayeeOption[] = getMockLeaseStakeholders().map(x => PayeeOption.createLeaseStakeholder(x))
+
+    console.log(testPayeeOption);
+    updatedCompensationModel.payee.payeeKey = testPayeeOption.value;
+
+    await act(async () => {
+      viewProps?.onSave(updatedCompensationModel);
+    });
+
+    const concept = updatedCompensationModel.toApi(leasePayeeOptions);
+    expect(mockUpdateCompensation).toHaveBeenCalledWith(ApiGen_CodeTypes_FileTypes.Lease, {
+      ...concept,
+      compReqLeaseStakeholder: [],
     });
   });
 });
