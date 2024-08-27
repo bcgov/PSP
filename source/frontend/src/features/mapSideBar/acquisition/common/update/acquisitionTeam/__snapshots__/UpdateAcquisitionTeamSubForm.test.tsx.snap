@@ -54,10 +54,6 @@ exports[`AcquisitionTeamSubForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c0.btn.btn-primary {
-  border: none;
-}
-
 .c0.btn.btn-secondary {
   background: none;
 }

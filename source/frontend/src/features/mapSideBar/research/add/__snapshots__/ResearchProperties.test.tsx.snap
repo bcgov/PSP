@@ -54,10 +54,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   box-shadow: none;
 }
 
-.c14.btn.btn-primary {
-  border: none;
-}
-
 .c14.btn.btn-secondary {
   background: none;
 }

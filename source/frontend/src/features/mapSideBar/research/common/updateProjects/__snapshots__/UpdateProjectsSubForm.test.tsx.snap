@@ -54,10 +54,6 @@ exports[`UpdateProjectsSubForm > renders as expected with minimal form data 1`] 
   box-shadow: none;
 }
 
-.c0.btn.btn-primary {
-  border: none;
-}
-
 .c0.btn.btn-secondary {
   background: none;
 }
@@ -211,10 +207,6 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c3.btn.btn-primary {
-  border: none;
 }
 
 .c3.btn.btn-secondary {
@@ -520,10 +512,6 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c0.btn.btn-primary {
-  border: none;
 }
 
 .c0.btn.btn-secondary {

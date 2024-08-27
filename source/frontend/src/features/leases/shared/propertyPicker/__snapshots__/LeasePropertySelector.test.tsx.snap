@@ -54,10 +54,6 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c14.btn.btn-primary {
-  border: none;
-}
-
 .c14.btn.btn-secondary {
   background: none;
 }

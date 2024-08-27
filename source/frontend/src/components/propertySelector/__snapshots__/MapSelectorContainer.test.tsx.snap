@@ -54,10 +54,6 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
   box-shadow: none;
 }
 
-.c13.btn.btn-primary {
-  border: none;
-}
-
 .c13.btn.btn-secondary {
   background: none;
 }

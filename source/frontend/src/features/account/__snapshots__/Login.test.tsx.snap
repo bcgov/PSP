@@ -49,10 +49,6 @@ exports[`login > login renders correctly 1`] = `
   box-shadow: none;
 }
 
-.c1.btn.btn-primary {
-  border: none;
-}
-
 .c1.btn.btn-secondary {
   background: none;
 }

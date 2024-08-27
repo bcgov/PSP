@@ -54,10 +54,6 @@ exports[`AccessRequestPage > renders correctly 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
-  border: none;
-}
-
 .c7.btn.btn-secondary {
   background: none;
 }

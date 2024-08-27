@@ -60,10 +60,6 @@ exports[`AccessRequestContainer component > makes a request based on the access 
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
-  border: none;
-}
-
 .c5.btn.btn-secondary {
   background: none;
 }
@@ -786,10 +782,6 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c5.btn.btn-primary {
-  border: none;
 }
 
 .c5.btn.btn-secondary {

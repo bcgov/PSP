@@ -59,10 +59,6 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c13.btn.btn-primary {
-  border: none;
-}
-
 .c13.btn.btn-secondary {
   background: none;
 }
@@ -847,10 +843,6 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c7.btn.btn-primary {
-  border: none;
 }
 
 .c7.btn.btn-secondary {

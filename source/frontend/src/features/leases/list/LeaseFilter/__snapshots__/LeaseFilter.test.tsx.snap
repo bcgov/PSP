@@ -54,10 +54,6 @@ exports[`Lease Filter > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
-  border: none;
-}
-
 .c8.btn.btn-secondary {
   background: none;
 }

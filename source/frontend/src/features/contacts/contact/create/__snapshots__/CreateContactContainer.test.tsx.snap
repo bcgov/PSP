@@ -54,10 +54,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
   box-shadow: none;
 }
 
-.c17.btn.btn-primary {
-  border: none;
-}
-
 .c17.btn.btn-secondary {
   background: none;
 }

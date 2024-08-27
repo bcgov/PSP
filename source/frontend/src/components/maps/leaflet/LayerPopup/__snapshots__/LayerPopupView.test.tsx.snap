@@ -54,10 +54,6 @@ exports[`LayerPopupView component > renders as expected with layer popup content
   box-shadow: none;
 }
 
-.c1.btn.btn-primary {
-  border: none;
-}
-
 .c1.btn.btn-secondary {
   background: none;
 }
