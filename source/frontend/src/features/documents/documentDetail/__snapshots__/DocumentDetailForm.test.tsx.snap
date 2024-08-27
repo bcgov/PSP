@@ -361,6 +361,11 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                     name="documentStatusCode"
                   >
                     <option
+                      value=""
+                    >
+                      N/A
+                    </option>
+                    <option
                       class="option"
                       data-testid="select-option-NONE"
                       value="NONE"

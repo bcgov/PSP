@@ -210,6 +210,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
+    setIsValid(true);
     setContainerState({
       showConfirmModal: false,
       isEditing: false,
@@ -301,7 +302,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
             isOkDisabled={formikRef?.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
-            displayRequiredFieldError={isValid === false && !!formikRef.current?.submitCount}
+            displayRequiredFieldError={isValid === false}
           />
         )
       }

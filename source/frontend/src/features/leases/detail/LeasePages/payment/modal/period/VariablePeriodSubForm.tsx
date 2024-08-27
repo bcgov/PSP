@@ -33,7 +33,8 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
   const lookups = useLookupCodeHelpers();
   const paymentFrequencyOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_FREQUENCY_TYPES);
 
-  const paymentAmount = +formikProps.values.paymentAmount;
+  const isGstEligible = getIn(formikProps.values, isGstEligibleField);
+  const paymentAmount = getIn(formikProps.values, paymentAmountField) ?? 0;
   const setFieldValue = formikProps.setFieldValue;
   const onGstChange = useCallback(
     (field: string, values: boolean) => {
@@ -49,8 +50,8 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
   );
 
   useEffect(() => {
-    onGstChange('', formikProps.values.isGstEligible);
-  }, [formikProps.values.isGstEligible, formikProps.values.paymentAmount, onGstChange]);
+    onGstChange('', isGstEligible);
+  }, [isGstEligible, paymentAmount, onGstChange]);
 
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);

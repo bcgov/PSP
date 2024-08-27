@@ -393,7 +393,10 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {payeeDetails?.isGstApplicable ? 'Yes' : 'No'}
         </SectionField>
         {payeeDetails?.isGstApplicable && (
-          <SectionField label="GST amount">{formatMoney(compTaxAmount ?? 0)}</SectionField>
+          <>
+            <SectionField label="GST amount">{formatMoney(compTaxAmount ?? 0)}</SectionField>
+            <SectionField label="GST number">{compensation.gstNumber}</SectionField>
+          </>
         )}
         <SectionField label="Total amount">{formatMoney(compTotalAmount ?? 0)}</SectionField>
       </Section>
