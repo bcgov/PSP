@@ -18,7 +18,6 @@ const getColumns = (
   isPayableLease: boolean,
 ): ColumnWithProps<FormStakeholder>[] => {
   const stakeholderType = isPayableLease ? 'Payee type' : 'Contact type';
-  console.log(stakeholderTypes);
   return [
     {
       Header: (

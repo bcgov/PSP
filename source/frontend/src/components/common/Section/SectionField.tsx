@@ -4,7 +4,7 @@ import styled from 'styled-components';
 
 import { renderTooltip } from '@/utils/formUtils';
 
-interface ISectionFieldProps {
+export interface ISectionFieldProps {
   label: React.ReactNode | string | null;
   /** It accepts either a string or a custom React tooltip component  */
   tooltip?: React.ReactNode;

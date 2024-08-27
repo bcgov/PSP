@@ -32,6 +32,7 @@ namespace Pims.Api.Services
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseStakeholderRepository _stakeholderRepository;
         private readonly ILeaseRenewalRepository _renewalRepository;
+        private readonly IConsultationRepository _consultationRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
@@ -48,6 +49,7 @@ namespace Pims.Api.Services
             IInsuranceRepository insuranceRepository,
             ILeaseStakeholderRepository stakeholderRepository,
             ILeaseRenewalRepository renewalRepository,
+            IConsultationRepository consultationRepository,
             IUserRepository userRepository,
             IPropertyService propertyService,
             ILookupRepository lookupRepository)
@@ -63,6 +65,7 @@ namespace Pims.Api.Services
             _insuranceRepository = insuranceRepository;
             _stakeholderRepository = stakeholderRepository;
             _renewalRepository = renewalRepository;
+            _consultationRepository = consultationRepository;
             _userRepository = userRepository;
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
@@ -254,8 +257,6 @@ namespace Pims.Api.Services
 
             _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
-            _leaseRepository.UpdateLeaseConsultations(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseConsultations);
-
             _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
 
             List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
@@ -338,6 +339,52 @@ namespace Pims.Api.Services
         public IEnumerable<PimsLeaseStakeholderType> GetAllStakeholderTypes()
         {
             return _leaseRepository.GetAllLeaseStakeholderTypes();
+        }
+
+        public IEnumerable<PimsLeaseConsultation> GetConsultations(long leaseId)
+        {
+            _logger.LogInformation("Getting lease consultations with Lease id: {leaseId}", leaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            return _consultationRepository.GetConsultationsByLease(leaseId);
+        }
+
+        public PimsLeaseConsultation GetConsultationById(long consultationId)
+        {
+            _logger.LogInformation("Getting consultation with id: {consultationId}", consultationId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            return _consultationRepository.GetConsultationById(consultationId);
+        }
+
+        public PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            var newConsultation = _consultationRepository.AddConsultation(consultation);
+            _consultationRepository.CommitTransaction();
+
+            return newConsultation;
+        }
+
+        public PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            var updatedConsultation = _consultationRepository.UpdateConsultation(consultation);
+            _consultationRepository.CommitTransaction();
+
+            return updatedConsultation;
+        }
+
+        public bool DeleteConsultation(long consultationId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            bool deleteResult = _consultationRepository.TryDeleteConsultation(consultationId);
+            _consultationRepository.CommitTransaction();
+
+            return deleteResult;
         }
 
         private static void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals)

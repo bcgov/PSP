@@ -66,7 +66,6 @@ export const AddLeaseStakeholderForm: React.FunctionComponent<
     setSelectedStakeholders(remainingContacts);
     setSelectedContacts(remainingContacts);
   };
-  console.log(stakeholderTypesOptions, initialValues, selectedStakeholders, isPayableLease);
   return (
     <StyledSummarySection>
       <Section

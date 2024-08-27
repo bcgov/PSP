@@ -5,7 +5,6 @@ import { useCallback, useContext } from 'react';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import * as API from '@/constants/API';
-import { getConsultations } from '@/features/leases/add/ConsultationSubForm';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { useUpdateLease } from '@/features/leases/hooks/useUpdateLease';
@@ -53,7 +52,6 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
     const exec = async () => {
       if (leaseId) {
         const lease = await getCompleteLease();
-        lease.consultations = getConsultations(lease, consultationTypes);
         formikRef?.current?.resetForm({ values: LeaseFormModel.fromApi(lease) });
       }
     };

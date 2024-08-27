@@ -15,7 +15,6 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -29,7 +28,6 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c9.btn .Button__value {
@@ -362,6 +360,11 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                     id="input-documentStatusCode"
                     name="documentStatusCode"
                   >
+                    <option
+                      value=""
+                    >
+                      N/A
+                    </option>
                     <option
                       class="option"
                       data-testid="select-option-NONE"
