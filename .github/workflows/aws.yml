@@ -42,35 +42,70 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
-    name: Deploy
+  build-api:
+    name: Build Backend app
     runs-on: ubuntu-latest
-    environment: production
 
     steps:
-    - name: Send greeting
-      run: echo "Hello ${{github.event.inputs.name}}"
-    - name: Secrety
-      run: echo "secrety ${{env.MY_PROD_SECRET}}"
+    - name: build pims-api
+      run: echo "Builing app"
+    - name: store image
+      run: echo "storing app image"
 
-  deploy3:
-    name: Deploy3
+  build-frontend:
+    name: Build Frontend
     runs-on: ubuntu-latest
-    environment: test
 
     steps:
-    - name: TEST Send greeting
-      run: echo "Hello ${{github.event.inputs.name}}"
+    - name: Build Frontend app
+      run: echo "bBuilding frontendapp"
     - name: TEST Secrety
-      run: echo "secrety ${{env.MY_PROD_SECRET}}"
+      run: echo "storing frontend image"
 
-  deploy2:
-    name: Deploy2
+  deploy-dev:
+    name: Deploy to Dev
     runs-on: ubuntu-latest
+    needs: [build-api, build-frontend]
     environment: dev
 
     steps:
-    - name: DEV Send greeting
-      run: echo "Hello ${{github.event.inputs.name}}"
-    - name: DEV Secrety
-      run: echo "secrety ${{env.MY_PROD_SECRET}}"
+    - name: Deploying frontend to dev
+      run: echo "deploying to dev"
+    - name: Deploting backend to dev
+      run: echo "Deploying bakend to dev"
+
+  deploy-test:
+    name: Deploy to Test
+    runs-on: ubuntu-latest
+    needs: [deploy-dev]
+    environment: test
+
+    steps:
+    - name: Deploying frontend to test
+      run: echo "deploying to test"
+    - name: Deploting backend to test
+      run: echo "Deploying bakend to test"
+
+  deploy-uat:
+    name: Deploy to UAT
+    runs-on: ubuntu-latest
+    needs: [deploy-test]
+    environment: uat
+
+    steps:
+    - name: Deploying frontend to UAT
+      run: echo "deploying to uat"
+    - name: Deploting backend to uat
+      run: echo "Deploying bakend to uat"
+
+  deploy-prod:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    needs: [deploy-uat]
+    environment: production
+
+    steps:
+    - name: Deploying frontend to Production
+      run: echo "deploying to prod"
+    - name: Deploting backend to prod
+      run: echo "Deploying bakend to prod"
