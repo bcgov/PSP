@@ -64,8 +64,8 @@ jobs:
     - name: TEST Secrety
       run: echo "secrety ${{env.MY_PROD_SECRET}}"
 
-  deploy:
-    name: Deploy
+  deploy2:
+    name: Deploy2
     runs-on: ubuntu-latest
     environment: dev
 
