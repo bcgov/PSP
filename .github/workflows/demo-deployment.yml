@@ -1,0 +1,44 @@
+
+name: Demo - Application deploymennt
+
+on:
+  workflow_dispatch:
+    inputs:
+      name:
+        description: 'lalala'
+        default: 'fii'
+        required: true
+
+env:
+  MY_PROD_SECRET: ${{ secrets.LE_SECRET }}                   # set this to your preferred AWS region, e.g. us-west-1
+
+
+permissions:
+  contents: read
+
+jobs:
+  build-api:
+    name: Build Backend app
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: build pims-api
+      run: echo "Builing app"
+    - name: store image
+      run: echo "storing app image"
+
+  build-frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Build Frontend app
+      run: echo "bBuilding frontendapp"
+    - name: TEST Secrety
+      run: echo "storing frontend image"
+
+  deploy-dev:
+    uses: FuriousLlama/PSP/.github/workflows/demp-db-deploy.yml@main
+    with:
+      domain: dev
+    needs: [build-api, build-frontend]

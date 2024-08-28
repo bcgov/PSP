@@ -1,0 +1,57 @@
+
+name: Deploy Database
+
+on:
+  workflow_dispatch:
+    inputs:
+      domain:
+        description: 'Domain to deploy the database'
+        required: true
+
+
+permissions:
+  contents: read
+
+jobs:
+  seserser:
+    name: Build Backend app
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: build pims-api
+      run: echo "Builing app"
+    - name: store image
+      run: echo "storing app image"
+
+  deploy-frontend:
+    name: Deploy frontend
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+    - name: Copy frontend
+      run: echo "coping frontend"
+    - name: Deploy frontend
+      run: echo "deploying frontend"
+
+  deploy-backend:
+    name: Deploy backend
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+    - name: Copy backend
+      run: echo "coping backend"
+    - name: Deploy backend
+      run: echo "deploying backend"
+
+  deploy-database:
+    name: Deploy database
+    runs-on: ubuntu-latest
+    environment: dev
+
+    steps:
+    - name: Copy database
+      run: echo "coping database"
+    - name: Deploy database
+      run: echo "deploying database"
