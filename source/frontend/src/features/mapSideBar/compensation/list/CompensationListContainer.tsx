@@ -81,11 +81,10 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
           case ApiGen_CodeTypes_FileTypes.Lease:
             {
               const updatedLease = file as ApiGen_Concepts_Lease;
-              file.totalAllowableCompensation = totalAllowableCompensation;
+              updatedLease.totalAllowableCompensation = totalAllowableCompensation;
 
               updatedFileResponse = await updateLease(updatedLease, []);
             }
-
             break;
           default:
             updatedFileResponse = null;

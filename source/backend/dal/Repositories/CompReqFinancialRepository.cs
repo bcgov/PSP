@@ -48,7 +48,7 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsCompReqFinancial> GetAllByLeaseFileId(long leaseFileId, bool? finalOnly)
         {
-            this._user.ThrowIfNotAllAuthorized(Security.Permissions.CompensationRequisitionView);
+            this._user.ThrowIfNotAuthorized(Security.Permissions.CompensationRequisitionView);
 
             var query = Context.PimsCompReqFinancials
                 .Include(c => c.CompensationRequisition)
