@@ -1,4 +1,4 @@
-name: Comment on the pull request
+name: Codecov Comment on PR
 
 # read-write repo token
 # access to secrets
@@ -37,6 +37,7 @@ jobs:
             fs.writeFileSync('${{github.workspace}}/pr.zip', Buffer.from(download.data));
       - run: unzip pr.zip
       - name: "Comment on PR"
+        id: create-comment
         uses: actions/github-script@v3
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
@@ -47,9 +48,11 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               issue_number: issue_number,
-              body: See CodeCov Report Here: 'https://app.codecov.io/github/bcgov/psp/pull/' + issue_number
+              body: 'See CodeCov Report Here: https://app.codecov.io/github/bcgov/psp/pull/' + issue_number
             });
-      - name: Codecov
+            return issue_number;
+          result-encoding: string
+      - name: Codecov(API)
         if: ${{ github.event.workflow_run.name == 'API (.NET 8)' }}
         uses: codecov/codecov-action@v3.1.1
         env:
@@ -64,7 +67,8 @@ jobs:
           env_vars: C#
           # Specify whether or not CI build should fail if Codecov runs into an error during upload
           fail_ci_if_error: false
-      - name: Codecov
+          override_pr: ${{steps.create-comment.outputs.result}}
+      - name: Codecov(APP)
         if: ${{ github.event.workflow_run.name == 'APP (React)' }}
         uses: codecov/codecov-action@v3.1.1
         env:
@@ -80,3 +84,4 @@ jobs:
           env_vars: javascript
           # Specify whether or not CI build should fail if Codecov runs into an error during upload
           fail_ci_if_error: false
+          override_pr: ${{steps.create-comment.outputs.result}}
