@@ -164,7 +164,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
     {
       pageName: LeasePageNames.CONSULTATIONS,
       component: LeaseRouter,
-      title: 'Consultations',
+      title: 'Approval/Consultations',
       claims: Claims.LEASE_VIEW,
     },
   ],
