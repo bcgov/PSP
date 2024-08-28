@@ -16,7 +16,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <returns></returns>
         public static PimsLease CreateLease(int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true,
-            PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeaseStatusType pimsLeaseStatusType = null, PimsLeasePayRvblType pimsLeasePayRvblType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null)
+            PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeaseStatusType pimsLeaseStatusType = null, PimsLeasePayRvblType pimsLeasePayRvblType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null, bool generateTypeIds = false)
         {
             var lease = new PimsLease()
             {
@@ -37,14 +37,14 @@ namespace Pims.Core.Test
                 });
             }
             lease.MotiContact = $"{motiFirstName} {motiLastName}";
-            lease.LeaseProgramTypeCodeNavigation = pimsLeaseProgramType ?? new PimsLeaseProgramType() { Id = "testProgramType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseProgramTypeCodeNavigation = pimsLeaseProgramType ?? new PimsLeaseProgramType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testProgramType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeaseProgramTypeCode = "testProgramType";
             lease.LeaseStatusTypeCode = "testStatusType";
-            lease.LeaseStatusTypeCodeNavigation = pimsLeaseStatusType ?? new PimsLeaseStatusType() { Id = "testStatusType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
-            lease.LeasePayRvblTypeCodeNavigation = pimsLeasePayRvblType ?? new PimsLeasePayRvblType() { Id = "testRvblType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
-            lease.LeaseInitiatorTypeCodeNavigation = pimsLeaseInitiatorType ?? new PimsLeaseInitiatorType() { Id = "testInitiatorType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
-            lease.LeaseResponsibilityTypeCodeNavigation = pimsLeaseResponsibilityType ?? new PimsLeaseResponsibilityType() { Id = "testResponsibilityType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
-            lease.LeaseLicenseTypeCodeNavigation = pimsLeaseLicenseType ?? new PimsLeaseLicenseType() { Id = "testType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseStatusTypeCodeNavigation = pimsLeaseStatusType ?? new PimsLeaseStatusType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testStatusType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeasePayRvblTypeCodeNavigation = pimsLeasePayRvblType ?? new PimsLeasePayRvblType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testRvblType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseInitiatorTypeCodeNavigation = pimsLeaseInitiatorType ?? new PimsLeaseInitiatorType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testInitiatorType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseResponsibilityTypeCodeNavigation = pimsLeaseResponsibilityType ?? new PimsLeaseResponsibilityType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testResponsibilityType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
+            lease.LeaseLicenseTypeCodeNavigation = pimsLeaseLicenseType ?? new PimsLeaseLicenseType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             if (region != null)
             {
                 lease.RegionCodeNavigation = region;

@@ -5,7 +5,7 @@ import AddAcquisitionAgreementContainer, {
 } from './AddAcquisitionAgreementContainer';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementForm';
+import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
 import { Claims } from '@/constants/claims';
 import { mockAgreementResponseApi } from '@/mocks/agreements.mock';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
@@ -21,8 +21,8 @@ const mockPostApi = {
 };
 const onSuccess = vi.fn();
 
-let viewProps: IUpdateAcquisitionAgreementViewProps | undefined;
-const TestView: React.FC<IUpdateAcquisitionAgreementViewProps> = props => {
+let viewProps: IUpdateAcquisitionAgreementFormProps | undefined;
+const TestView: React.FC<IUpdateAcquisitionAgreementFormProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };
