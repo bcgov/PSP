@@ -47,6 +47,7 @@ jobs:
     needs: [build-api, build-frontend]
 
   deploy-dev:
+    name: Dev deploy
     uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: dev
@@ -62,6 +63,7 @@ jobs:
     needs: [deploy-dev]
 
   deploy-test:
+    name: Test deploy
     uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: test
@@ -77,6 +79,7 @@ jobs:
     needs: [deploy-test]
 
   deploy-uat:
+    name: UAT deploy
     uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: uat
@@ -92,6 +95,7 @@ jobs:
     needs: [deploy-uat]
 
   deploy-prod:
+    name: Production deploy
     uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: prod

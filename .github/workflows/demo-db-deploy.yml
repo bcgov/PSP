@@ -14,18 +14,8 @@ permissions:
   contents: read
 
 jobs:
-  seserser:
-    name: Build Backend app
-    runs-on: ubuntu-latest
-
-    steps:
-    - name: build pims-api
-      run: echo "Builing app"
-    - name: store image
-      run: echo "storing app image"
-
   deploy-frontend:
-    name: Deploy frontend
+    name: Frontend
     runs-on: ubuntu-latest
     environment: ${{inputs.domain}}
 
@@ -36,7 +26,7 @@ jobs:
       run: echo "deploying frontend to ${{inputs.domain}}"
 
   deploy-backend:
-    name: Deploy backend
+    name: Backend
     runs-on: ubuntu-latest
     environment: ${{inputs.domain}}
 
@@ -47,7 +37,7 @@ jobs:
       run: echo "deploying backend to ${{inputs.domain}}"
 
   deploy-database:
-    name: Deploy database
+    name: Database
     runs-on: ubuntu-latest
     environment: ${{inputs.domain}}
 
