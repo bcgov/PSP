@@ -37,30 +37,62 @@ jobs:
     - name: TEST Secrety
       run: echo "storing frontend image"
 
-  deploy-dev:
+  deploy-dev-gate:
+    name: Dev approval
+    runs-on: ubuntu-latest
     environment: dev
+    steps:
+    - name: store image
+      run: echo "Approval for deployment to DEV"
+    needs: [build-api, build-frontend]
+
+  deploy-dev:
     uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: dev
-    needs: [build-api, build-frontend]
+    needs: [deploy-dev-gate]
+
+  deploy-test-gate:
+    name: Test approval
+    runs-on: ubuntu-latest
+    environment: test
+    steps:
+    - name: approval
+      run: echo "Approval for deployment to TEST"
+    needs: [deploy-dev]
 
   deploy-test:
     uses: ./.github/workflows/demo-db-deploy.yml
-    environment: test
     with:
       domain: test
     needs: [deploy-dev]
 
+  deploy-uat-gate:
+    name: UAT approval
+    runs-on: ubuntu-latest
+    environment: uat
+    steps:
+    - name: approval
+      run: echo "Approval for deployment to UAT"
+    needs: [deploy-test]
+
   deploy-uat:
     uses: ./.github/workflows/demo-db-deploy.yml
-    environment: uat
     with:
       domain: uat
     needs: [deploy-test]
 
+  deploy-prod-gate:
+    name: Production approval
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+    - name: approval
+      run: echo "Approval for deployment to PRODUCTION"
+    needs: [deploy-uat]
+
   deploy-prod:
     uses: ./.github/workflows/demo-db-deploy.yml
-    environment: prod
     with:
       domain: prod
     needs: [deploy-uat]
