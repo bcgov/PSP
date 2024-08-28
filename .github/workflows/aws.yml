@@ -1,4 +1,4 @@
-name: Demo - Application deploymennt
+name: Demo - Application deploymennt2
 
 on:
   workflow_dispatch:
