@@ -65,7 +65,7 @@ jobs:
     uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: test
-    needs: [deploy-dev]
+    needs: [deploy-test-gate]
 
   deploy-uat-gate:
     name: UAT approval
@@ -80,7 +80,7 @@ jobs:
     uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: uat
-    needs: [deploy-test]
+    needs: [deploy-uat-gate]
 
   deploy-prod-gate:
     name: Production approval
@@ -95,4 +95,4 @@ jobs:
     uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: prod
-    needs: [deploy-uat]
+    needs: [deploy-prod-gate]
