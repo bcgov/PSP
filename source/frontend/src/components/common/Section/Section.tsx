@@ -30,7 +30,7 @@ export const Section: React.FC<
   className,
   ...rest
 }) => {
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(!(initiallyExpanded === true));
   return (
     <StyledFormSection
       className={clsx('form-section', className)}

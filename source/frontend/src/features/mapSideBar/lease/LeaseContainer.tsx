@@ -31,6 +31,7 @@ import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
+import LeaseRouter from './tabs/LeaseRouter';
 import ViewSelector from './ViewSelector';
 
 export interface ILeaseContainerProps {
@@ -83,6 +84,7 @@ export enum LeasePageNames {
   SURPLUS = 'surplus',
   CHECKLIST = 'checklist',
   DOCUMENTS = 'documents',
+  CONSULTATIONS = 'consultations',
 }
 
 export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
@@ -157,6 +159,15 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
       claims: Claims.DOCUMENT_VIEW,
     },
   ],
+  [
+    LeasePageNames.CONSULTATIONS,
+    {
+      pageName: LeasePageNames.CONSULTATIONS,
+      component: LeaseRouter,
+      title: 'Consultations',
+      claims: Claims.LEASE_VIEW,
+    },
+  ],
 ]);
 
 export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClose }) => {
@@ -199,6 +210,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
+    setIsValid(true);
     setContainerState({
       showConfirmModal: false,
       isEditing: false,
@@ -290,7 +302,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
             isOkDisabled={formikRef?.current?.isSubmitting}
             onSave={handleSaveClick}
             onCancel={handleCancelClick}
-            displayRequiredFieldError={isValid === false && !!formikRef.current?.submitCount}
+            displayRequiredFieldError={isValid === false}
           />
         )
       }
