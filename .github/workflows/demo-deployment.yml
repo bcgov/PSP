@@ -38,7 +38,29 @@ jobs:
       run: echo "storing frontend image"
 
   deploy-dev:
-    uses: .github/workflows/demo-db-deploy.yml
+    environment: dev
+    uses: ./.github/workflows/demo-db-deploy.yml
     with:
       domain: dev
     needs: [build-api, build-frontend]
+
+  deploy-test:
+    uses: ./.github/workflows/demo-db-deploy.yml
+    environment: test
+    with:
+      domain: test
+    needs: [deploy-dev]
+
+  deploy-uat:
+    uses: ./.github/workflows/demo-db-deploy.yml
+    environment: uat
+    with:
+      domain: uat
+    needs: [deploy-test]
+
+  deploy-prod:
+    uses: ./.github/workflows/demo-db-deploy.yml
+    environment: prod
+    with:
+      domain: prod
+    needs: [deploy-uat]

@@ -2,11 +2,12 @@
 name: Deploy Database
 
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       domain:
         description: 'Domain to deploy the database'
         required: true
+        type: string
 
 
 permissions:
@@ -26,32 +27,32 @@ jobs:
   deploy-frontend:
     name: Deploy frontend
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{inputs.domain}}
 
     steps:
     - name: Copy frontend
-      run: echo "coping frontend"
+      run: echo "coping frontend to ${{inputs.domain}}"
     - name: Deploy frontend
-      run: echo "deploying frontend"
+      run: echo "deploying frontend to ${{inputs.domain}}"
 
   deploy-backend:
     name: Deploy backend
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{inputs.domain}}
 
     steps:
     - name: Copy backend
-      run: echo "coping backend"
+      run: echo "coping backend to ${{inputs.domain}}"
     - name: Deploy backend
-      run: echo "deploying backend"
+      run: echo "deploying backend to ${{inputs.domain}}"
 
   deploy-database:
     name: Deploy database
     runs-on: ubuntu-latest
-    environment: dev
+    environment: ${{inputs.domain}}
 
     steps:
     - name: Copy database
-      run: echo "coping database"
+      run: echo "coping database to ${{inputs.domain}}"
     - name: Deploy database
-      run: echo "deploying database"
+      run: echo "deploying database to ${{inputs.domain}}"
