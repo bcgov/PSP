@@ -1,5 +1,5 @@
 
-name: Demo - Application deploymennt
+name: Demo - Application deployment
 
 on:
   workflow_dispatch:
@@ -23,7 +23,7 @@ jobs:
 
     steps:
     - name: build pims-api
-      run: echo "Builing app"
+      run: echo "Building app"
     - name: store image
       run: echo "storing app image"
 
@@ -38,7 +38,7 @@ jobs:
       run: echo "storing frontend image"
 
   deploy-dev:
-    uses: FuriousLlama/PSP/.github/workflows/demp-db-deploy.yml@main
+    uses: FuriousLlama/PSP/.github/workflows/demo-db-deploy.yml@main
     with:
       domain: dev
     needs: [build-api, build-frontend]
