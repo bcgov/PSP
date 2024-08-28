@@ -53,6 +53,17 @@ jobs:
     - name: Secrety
       run: echo "secrety ${{env.MY_PROD_SECRET}}"
 
+  deploy3:
+    name: Deploy3
+    runs-on: ubuntu-latest
+    environment: test
+
+    steps:
+    - name: TEST Send greeting
+      run: echo "Hello ${{github.event.inputs.name}}"
+    - name: TEST Secrety
+      run: echo "secrety ${{env.MY_PROD_SECRET}}"
+
   deploy:
     name: Deploy
     runs-on: ubuntu-latest
