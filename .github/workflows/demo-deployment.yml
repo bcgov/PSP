@@ -38,7 +38,7 @@ jobs:
       run: echo "storing frontend image"
 
   deploy-dev:
-    uses: FuriousLlama/PSP/.github/workflows/demo-db-deploy.yml@main
+    uses: .github/workflows/demo-db-deploy.yml@main
     with:
       domain: dev
     needs: [build-api, build-frontend]
