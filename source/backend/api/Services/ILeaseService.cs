@@ -38,5 +38,15 @@ namespace Pims.Api.Services
         PimsLease UpdateChecklistItems(long leaseId, IList<PimsLeaseChecklistItem> checklistItems);
 
         IEnumerable<PimsLeaseStakeholderType> GetAllStakeholderTypes();
+
+        IEnumerable<PimsLeaseConsultation> GetConsultations(long leaseId);
+
+        PimsLeaseConsultation GetConsultationById(long consultationId);
+
+        PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation);
+
+        PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation);
+
+        bool DeleteConsultation(long consultationId);
     }
 }

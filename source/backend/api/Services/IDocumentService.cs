@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 
 using Pims.Api.Models.Mayan;
@@ -27,7 +28,11 @@ namespace Pims.Api.Services
 
         Task<ExternalResponse<FileDownloadResponse>> DownloadFileAsync(long mayanDocumentId, long mayanFileId);
 
+        Task<ExternalResponse<FileStreamResponse>> StreamFileAsync(long mayanDocumentId, long mayanFileId);
+
         Task<ExternalResponse<FileDownloadResponse>> DownloadFileLatestAsync(long mayanDocumentId);
+
+        Task<ExternalResponse<FileStreamResponse>> StreamFileLatestAsync(long mayanDocumentId);
 
         IList<PimsDocumentTyp> GetPimsDocumentTypes();
 

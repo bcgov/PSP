@@ -97,10 +97,6 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)
                 .Include(l => l.PimsLeasePeriods)
-                .Include(l => l.PimsLeaseConsultations)
-                    .ThenInclude(lc => lc.ConsultationStatusTypeCodeNavigation)
-                .Include(l => l.PimsLeaseConsultations)
-                    .ThenInclude(lc => lc.ConsultationTypeCodeNavigation)
                 .Include(l => l.Project)
                     .ThenInclude(x => x.WorkActivityCode)
                 .Include(r => r.Project)
@@ -841,27 +837,6 @@ namespace Pims.Dal.Repositories
             }
 
             return existingLease;
-        }
-
-        /// <summary>
-        /// Update the consultations of a lease.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <param name="rowVersion"></param>
-        /// <param name="pimsLeaseConsultations"></param>
-        /// <returns></returns>
-        public PimsLease UpdateLeaseConsultations(long leaseId, long? rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations)
-        {
-            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseConsultations).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
-                 ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion)
-            {
-                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
-            }
-
-            this.Context.UpdateChild<PimsLease, long, PimsLeaseConsultation, long>(l => l.PimsLeaseConsultations, leaseId, pimsLeaseConsultations.ToArray());
-
-            return GetNoTracking(existingLease.LeaseId);
         }
 
         /// <summary>
