@@ -10,6 +10,7 @@ import {
   act,
   userEvent,
   selectOptions,
+  getByDisplayValue,
 } from '@/utils/test-utils';
 
 import { FormLeasePeriod, defaultFormLeasePeriod } from '../../models';
@@ -81,6 +82,32 @@ describe('PeriodForm component', () => {
     expect(getByText('Add Base Rent')).toBeVisible();
     expect(getByText('Add Additional Rent')).toBeVisible();
     expect(getByText('Add Variable Rent')).toBeVisible();
+  });
+
+  it('displays variable period gst when manual gst does not equal calculated gst.', async () => {
+    const { getByDisplayValue, getByTestId } = setup({
+      initialValues: {
+        ...defaultFormLeasePeriod,
+        isGstEligible: true,
+        paymentAmount: 1,
+        variableRentPaymentAmount: 1,
+        additionalRentPaymentAmount: 1,
+        isVariableRentGstEligible: true,
+        isAdditionalRentGstEligible: true,
+        variableRentGstAmount: 100,
+        gstAmount: 200,
+        additionalRentGstAmount: 300,
+      },
+    });
+
+    const variableButton = getByTestId('radio-isvariable-variable');
+    await act(async () => {
+      userEvent.click(variableButton);
+    });
+
+    expect(getByDisplayValue('$100.00')).toBeVisible();
+    expect(getByDisplayValue('$200.00')).toBeVisible();
+    expect(getByDisplayValue('$300.00')).toBeVisible();
   });
 
   it('Does not allow variability to be modified when editing', async () => {
