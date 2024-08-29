@@ -81,11 +81,12 @@ const storeState = {
 };
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 describe('AddLeaseContainer component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
-    const utils = render(<AddLeaseContainer onClose={onClose} />, {
+    const utils = render(<AddLeaseContainer onClose={onClose} onSuccess={onSuccess} />, {
       ...renderOptions,
       store: storeState,
       useMockAuthentication: true,
@@ -112,13 +113,22 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('cancels the form', async () => {
-    const { getByTitle, getCloseButton } = setup({});
+    const { getCloseButton } = setup({});
 
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => userEvent.click(getCloseButton()));
-    await act(async () => userEvent.click(getByTitle('ok-modal')));
 
     expect(onClose).toHaveBeenCalled();
+  });
+
+  it('requires confirmation when navigating away', async () => {
+    const { getByTitle } = setup({});
+
+    await act(async () => selectOptions('regionId', '1'));
+
+    await act(async () => history.push('/'));
+
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
     expect(history.location.pathname).toBe('/');
   });
 
@@ -257,7 +267,7 @@ describe('AddLeaseContainer component', () => {
     });
 
     expect(addLease).toHaveBeenCalledWith(leaseData, []);
-    expect(history.location.pathname).toBe('/mapview/sidebar/lease/1');
+    expect(onSuccess).toHaveBeenCalledWith(1);
   });
 
   it('should pre-populate the region if a property is selected', async () => {
