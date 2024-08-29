@@ -22,6 +22,7 @@ const store = mockStore({});
 const history = createMemoryHistory();
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -63,13 +64,16 @@ describe('AddResearchContainer component', () => {
     renderOptions: RenderOptions & IAddResearchContainerProps & Partial<IMapStateMachineContext>,
   ) => {
     // render component under test
-    const utils = await renderAsync(<AddResearchContainer onClose={renderOptions.onClose} />, {
-      claims: [],
-      useMockAuthentication: true,
-      store,
-      history,
-      ...renderOptions,
-    });
+    const utils = await renderAsync(
+      <AddResearchContainer onClose={renderOptions.onClose} onSuccess={renderOptions.onSuccess} />,
+      {
+        claims: [],
+        useMockAuthentication: true,
+        store,
+        history,
+        ...renderOptions,
+      },
+    );
 
     return {
       ...utils,
@@ -84,7 +88,7 @@ describe('AddResearchContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = await setup({ onClose: noop });
+    const { asFragment } = await setup({ onClose: noop, onSuccess: noop });
     await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
@@ -92,6 +96,7 @@ describe('AddResearchContainer component', () => {
   it('displays the currently selected property', async () => {
     const { findByText } = await setup({
       onClose: noop,
+      onSuccess: noop,
       mockMapMachine: {
         ...mapMachineBaseMock,
         selectedFeatureDataset: {
@@ -102,7 +107,13 @@ describe('AddResearchContainer component', () => {
           regionFeature: null,
           districtFeature: null,
           municipalityFeature: null,
+          highwayFeature: null,
           selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null,
         },
       },
     });
@@ -112,16 +123,30 @@ describe('AddResearchContainer component', () => {
     });
   });
 
-  it('should confirm and close the form when Cancel button is clicked with changes', async () => {
+  it('should confirm and close the form when navigating away', async () => {
     const { getCancelButton, getByText, getByTitle, getNameTextbox } = await setup({
       onClose: onClose,
+      onSuccess: noop,
+    });
+
+    await act(async () => userEvent.paste(getNameTextbox(), 'Test Value'));
+
+    await act(async () => history.push('/'));
+
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+    expect(history.location.pathname).toBe('/');
+  });
+
+  it('should call onClose Cancel button is clicked with changes', async () => {
+    const { getCancelButton, getByText, getByTitle, getNameTextbox } = await setup({
+      onClose: onClose,
+      onSuccess: noop,
     });
 
     expect(getByText(/Create Research File/i)).toBeVisible();
 
     await act(async () => userEvent.paste(getNameTextbox(), 'Test Value'));
     await act(async () => userEvent.click(getCancelButton()));
-    await act(async () => userEvent.click(getByTitle('ok-modal')));
 
     expect(onClose).toBeCalled();
   });
@@ -133,6 +158,7 @@ describe('AddResearchContainer component', () => {
 
     const { getByTitle } = await setup({
       onClose: noop,
+      onSuccess: noop,
       mockMapMachine: testMockMachine,
     });
 
@@ -149,6 +175,7 @@ describe('AddResearchContainer component', () => {
   it('should have the Help with choosing a name text in the component', async () => {
     await setup({
       onClose: noop,
+      onSuccess: noop,
     });
     await act(async () => {});
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();

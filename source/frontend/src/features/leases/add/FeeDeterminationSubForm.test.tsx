@@ -10,6 +10,7 @@ import { fillInput, renderAsync } from '@/utils/test-utils';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { Simulate } from 'react-dom/test-utils';
+import { SuggestedFeeCode } from '../leaseUtils';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -44,7 +45,7 @@ describe('LeaseFeeDeterminationSubForm component', () => {
 
   it('displays expected Nominal fee', async () => {
     const {
-      component: { container },
+      component: { container, getByText },
     } = await setup({});
 
     let suggestedFeeField = await container.querySelector("span[data-testid='suggestedFee']");
@@ -57,11 +58,16 @@ describe('LeaseFeeDeterminationSubForm component', () => {
     });
 
     expect(suggestedFeeField).toHaveTextContent('$1 - Nominal');
+    expect(
+      getByText('No or nominal fee determinations should include justification in the', {
+        exact: false,
+      }),
+    ).toBeVisible();
   });
 
   it('displays expected LAF fee', async () => {
     const {
-      component: { container },
+      component: { container, getByText },
     } = await setup({});
 
     let suggestedFeeField = await container.querySelector("span[data-testid='suggestedFee']");
@@ -74,11 +80,16 @@ describe('LeaseFeeDeterminationSubForm component', () => {
     });
 
     expect(suggestedFeeField).toHaveTextContent('Licence Administration Fee (LAF) *');
+    expect(
+      getByText('License administration fees are charged when there is either: a financial', {
+        exact: false,
+      }),
+    ).toBeVisible();
   });
 
   it('displays expected FMV fee', async () => {
     const {
-      component: { container },
+      component: { container, getByText },
     } = await setup({});
 
     let suggestedFeeField = await container.querySelector("span[data-testid='suggestedFee']");
@@ -93,11 +104,16 @@ describe('LeaseFeeDeterminationSubForm component', () => {
     expect(suggestedFeeField).toHaveTextContent(
       'Fair Market Value (FMV) - (Licence Administration Fee Minimum)',
     );
+    expect(
+      getByText('Fair market value fee determination should include the square footage rate', {
+        exact: false,
+      }),
+    ).toBeVisible();
   });
 
-  it('displays expected LAF fee', async () => {
+  it('displays expected any fee', async () => {
     const {
-      component: { container },
+      component: { container, getByText },
     } = await setup({});
 
     let suggestedFeeField = await container.querySelector("span[data-testid='suggestedFee']");
@@ -105,27 +121,23 @@ describe('LeaseFeeDeterminationSubForm component', () => {
     expect(suggestedFeeField).toHaveTextContent('Unknown');
 
     await act(async () => {
-      await fillInput(container, 'isPublicBenefit', 'true', 'select');
-      await fillInput(container, 'isFinancialGain', 'true', 'select');
+      await fillInput(container, 'isPublicBenefit', 'false', 'select');
+      await fillInput(container, 'isFinancialGain', 'false', 'select');
     });
 
-    expect(suggestedFeeField).toHaveTextContent('Licence Administration Fee (LAF) *');
-  });
-
-  it('displays expected LAF fee', async () => {
-    const {
-      component: { container },
-    } = await setup({});
-
-    let suggestedFeeField = await container.querySelector("span[data-testid='suggestedFee']");
-
-    expect(suggestedFeeField).toHaveTextContent('Unknown');
-
-    await act(async () => {
-      await fillInput(container, 'isPublicBenefit', 'true', 'select');
-      await fillInput(container, 'isFinancialGain', 'true', 'select');
-    });
-
-    expect(suggestedFeeField).toHaveTextContent('Licence Administration Fee (LAF) *');
+    expect(suggestedFeeField).toHaveTextContent(SuggestedFeeCode.ANY);
+    expect(
+      getByText('No or nominal fee determinations should include justification', { exact: false }),
+    ).toBeVisible();
+    expect(
+      getByText('Fair market value fee determination should include the square footage rate', {
+        exact: false,
+      }),
+    ).toBeVisible();
+    expect(
+      getByText('License administration fees are charged when there is either: a financial', {
+        exact: false,
+      }),
+    ).toBeVisible();
   });
 });

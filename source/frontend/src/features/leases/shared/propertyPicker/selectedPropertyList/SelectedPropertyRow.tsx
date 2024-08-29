@@ -1,21 +1,23 @@
 import { FormikProps, getIn } from 'formik';
 import { Col, Row } from 'react-bootstrap';
+import { RiDragMove2Line } from 'react-icons/ri';
 
-import { RemoveButton } from '@/components/common/buttons';
+import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
 import { InlineInput } from '@/components/common/form/styles';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { FormLeaseProperty, LeaseFormModel } from '@/features/leases/models';
-import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { withNameSpace } from '@/utils/formUtils';
-import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty, getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
 
 export interface ISelectedPropertyRowProps {
   index: number;
   nameSpace?: string;
   onRemove: () => void;
-  property: PropertyForm;
+  property: LocationFeatureDataset;
   formikProps: FormikProps<LeaseFormModel>;
   showSeparator?: boolean;
 }
@@ -28,7 +30,8 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   formikProps,
   showSeparator = false,
 }) => {
-  const propertyName = getPropertyName(property.toMapProperty());
+  const mapMachine = useMapStateMachine();
+  const propertyName = getPropertyName(featuresetToMapProperty(property));
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -57,7 +60,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           <DraftCircleNumber text={(index + 1).toString()} />
           <OverflowTip fullText={propertyIdentifier} className="pl-3" />
         </Col>
-        <Col md={7}>
+        <Col md={5}>
           <InlineInput
             className="mb-0 w-100 pr-3"
             label=""
@@ -65,8 +68,18 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
             displayErrorTooltips={true}
           />
         </Col>
+        <Col md={1} className="pl-3">
+          <StyledIconButton
+            title="move-pin-location"
+            onClick={() => {
+              mapMachine.startReposition(property, index);
+            }}
+          >
+            <RiDragMove2Line size={22} />
+          </StyledIconButton>
+        </Col>
         <Col md={2}>
-          <RemoveButton onRemove={onRemove} />
+          <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
         </Col>
       </Row>
       <Row className="align-items-center mb-3 no-gutters">

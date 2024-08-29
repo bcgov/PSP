@@ -1,4 +1,5 @@
 import { AxiosError, AxiosResponse } from 'axios';
+import { File } from 'buffer';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
 
@@ -28,6 +29,8 @@ export const useDocumentProvider = () => {
     getDocumentDetailApiCall,
     downloadWrappedDocumentFileApiCall,
     downloadWrappedDocumentFileLatestApiCall,
+    streamDocumentFileLatestApiCall,
+    streamDocumentFileApiCall,
     updateDocumentMetadataApiCall,
     getDocumentTypesApiCall,
     downloadDocumentFilePageImageApiCall,
@@ -208,6 +211,29 @@ export const useDocumentProvider = () => {
       }, []),
     });
 
+  // Provides functionality for stream a document file
+  const { execute: streamDocumentFile, loading: streamDocumentFileLoading } = useApiRequestWrapper<
+    (
+      mayanDocumentId: number,
+      mayanFileId: number,
+    ) => Promise<AxiosResponse<AxiosResponse<File, any>>>
+  >({
+    requestFunction: useCallback(
+      async (mayanDocumentId: number, mayanFileId: number) =>
+        await streamDocumentFileApiCall(mayanDocumentId, mayanFileId),
+      [streamDocumentFileApiCall],
+    ) as unknown as () => Promise<AxiosResponse<AxiosResponse<File, any>>>,
+    requestName: 'StreamDocumentFile',
+    rawResponse: true,
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
+      }
+      return Promise.reject(axiosError);
+    }, []),
+  });
+
   // Provides functionality for download the latest file for a document
   const {
     execute: downloadWrappedDocumentFileLatest,
@@ -222,6 +248,29 @@ export const useDocumentProvider = () => {
       [downloadWrappedDocumentFileLatestApiCall],
     ),
     requestName: 'DownloadDocumentFileLatest',
+    onError: useCallback((axiosError: AxiosError<IApiError>) => {
+      if (axiosError?.response?.status === 400) {
+        toast.error(axiosError?.response.data.error);
+        return Promise.resolve();
+      }
+      return Promise.reject(axiosError);
+    }, []),
+  });
+
+  // Provides functionality for streaming the latest file for a document
+  const {
+    execute: streamDocumentFileLatest,
+    response: streamDocumentFileLatestResponse,
+    loading: streamDocumentFileLatestLoading,
+  } = useApiRequestWrapper<
+    (documendId: number) => Promise<AxiosResponse<AxiosResponse<File, any>>>
+  >({
+    requestFunction: useCallback(
+      async (mayanDocumentId: number) => await streamDocumentFileLatestApiCall(mayanDocumentId),
+      [streamDocumentFileLatestApiCall],
+    ) as unknown as () => Promise<AxiosResponse<AxiosResponse<File, any>>>,
+    rawResponse: true,
+    requestName: 'StreamDocumentFileLatest',
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);
@@ -289,6 +338,11 @@ export const useDocumentProvider = () => {
     downloadWrappedDocumentFileLatest,
     downloadWrappedDocumentFileLatestResponse,
     downloadWrappedDocumentFileLatestLoading,
+    streamDocumentFile,
+    streamDocumentFileLoading,
+    streamDocumentFileLatest,
+    streamDocumentFileLatestResponse,
+    streamDocumentFileLatestLoading,
     retrieveDocumentTypeMetadata,
     retrieveDocumentTypeMetadataLoading,
     getDocumentTypes,

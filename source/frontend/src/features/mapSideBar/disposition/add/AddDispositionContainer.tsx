@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
@@ -19,14 +18,18 @@ import { DispositionFormModel } from '../models/DispositionFormModel';
 import { IAddDispositionContainerViewProps } from './AddDispositionContainerView';
 
 export interface IAddDispositionContainerProps {
-  onClose?: () => void;
+  onClose: () => void;
+  onSuccess: (newDispositionId: number) => void;
   View: React.FunctionComponent<React.PropsWithChildren<IAddDispositionContainerViewProps>>;
 }
 
-const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onClose, View }) => {
+const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
+  onClose,
+  onSuccess,
+  View,
+}) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const formikRef = useRef<FormikProps<DispositionFormModel>>(null);
-  const history = useHistory();
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
@@ -127,7 +130,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
     bcaLoading,
   ]);
 
-  const handleCancel = useCallback(() => onClose && onClose(), [onClose]);
+  const handleCancel = useCallback(() => onClose(), [onClose]);
 
   const handleSave = async () => {
     await formikRef?.current?.validateForm();
@@ -147,7 +150,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({ onCl
 
   const handleSuccess = async (disposition: ApiGen_Concepts_DispositionFile) => {
     mapMachine.refreshMapProperties();
-    history.replace(`/mapview/sidebar/disposition/${disposition.id}`);
+    onSuccess(disposition.id);
   };
 
   const handleSubmit = async (

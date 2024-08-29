@@ -1,6 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { Col, Row } from 'react-bootstrap';
-import { FiX } from 'react-icons/fi';
+import { FaWindowClose } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -8,12 +7,15 @@ import styled from 'styled-components';
 import { StyledIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { isValidId, pidParser } from '@/utils';
+import SimplePagination from '@/components/common/SimplePagination';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { Scrollable } from '@/features/projects/styles';
+import { exists, isValidId, pidParser } from '@/utils';
 
 import { LayerPopupContent } from './components/LayerPopupContent';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
 import { LayerPopupLinks } from './components/LayerPopupLinks';
-import { LayerPopupInformation } from './LayerPopupContainer';
+import { LayerData, LayerPopupInformation } from './LayerPopupContainer';
 import { LayerPopupTitle } from './styles';
 
 export interface ILayerPopupViewProps {
@@ -53,7 +55,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
     }
   };
 
-  const onCloseButtonPressed = (event: React.MouseEvent<HTMLElement>) => {
+  const onCloseButtonPressed = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     event.stopPropagation();
     mapMachine.closePopup();
   };
@@ -107,21 +109,37 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
     history.push('/mapview/sidebar/consolidation/new');
   };
 
+  const getFirstBounds = (layers: LayerData[]) => {
+    return layers.find(layer => exists(layer?.bounds))?.bounds;
+  };
+
   return (
     <StyledContainer>
-      <StyledRow>
-        <Col className="p-0 m-0">
-          <LayerPopupTitle>{layerPopup.title}</LayerPopupTitle>
-        </Col>
-        <Col xs="1" className="p-0 m-0">
-          <StyledIconButton className="p-0 m-0" onClick={onCloseButtonPressed}>
-            <FiX size="1.5rem" />
-          </StyledIconButton>
-        </Col>
-      </StyledRow>
-      <LayerPopupContent layerPopup={layerPopup} />
+      <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
+        <StyledCloseButton title="close" onClick={onCloseButtonPressed}>
+          <CloseIcon />
+        </StyledCloseButton>
+      </TooltipWrapper>
+      <SimplePagination<LayerData>
+        items={layerPopup.layers}
+        onZeroItemsPagination={'Location Information'}
+        onZeroItemsContent={'No layer information at this location'}
+      >
+        {item =>
+          exists(item) ? (
+            <>
+              <StyledScrollable>
+                <LayerPopupTitle>{item.title}</LayerPopupTitle>
+                <LayerPopupContent data={item.data} config={item.config} />
+              </StyledScrollable>
+            </>
+          ) : (
+            <></>
+          )
+        }
+      </SimplePagination>
       <LayerPopupLinks
-        bounds={layerPopup.bounds}
+        bounds={getFirstBounds(layerPopup.layers)}
         onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
       />
 
@@ -144,38 +162,41 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
   );
 };
 
-const StyledContainer = styled.div`
-  padding: 0.5rem 1.2rem;
-  background-color: ${props => props.theme.css.highlightBackgroundColor};
-
-  .btn-link {
-    font-size: 1.4rem;
-    line-height: 2.2rem;
-    padding: 0;
-  }
-  .list-group {
-    .list-group-item {
-      background-color: ${props => props.theme.css.highlightBackgroundColor};
-      font-size: 1.4rem;
-      border: none;
-      padding: 0;
-      padding-top: 0.8rem;
-    }
-  }
+const CloseIcon = styled(FaWindowClose)`
+  color: ${props => props.theme.css.textColor};
+  font-size: 2rem;
+  cursor: pointer;
 `;
 
-const StyledRow = styled(Row)`
+const StyledCloseButton = styled(StyledIconButton)`
+  position: fixed;
+  top: 0rem;
+  right: 1rem;
+`;
+
+const StyledContainer = styled.div`
+  position: relative;
+  min-width: 30rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
   margin: 0rem;
-  border-bottom: 0.2rem ${props => props.theme.css.borderOutlineColor} solid;
+`;
+
+const StyledScrollable = styled(Scrollable)`
+  padding: 1rem;
+  margin: 0rem;
+  background-color: ${props => props.theme.css.highlightBackgroundColor};
+  height: 25rem;
+  overflow: auto;
+  font-size: 1.4rem;
 `;
 
 const StyledFlyoutContainer = styled.div`
   position: absolute;
-  bottom: -3.5rem;
-  left: 100%;
-  background: #fffefa;
+  bottom: -18.5rem;
+  left: 100.9%;
   border: 2px solid #bcbec5;
   box-shadow: 6px 6px 12px rgb(0 0 0 / 40%);
-  min-width: 25rem;
-  background-color: ${props => props.theme.css.highlightBackgroundColor};
+  min-width: 20rem;
+  background-color: white;
 `;

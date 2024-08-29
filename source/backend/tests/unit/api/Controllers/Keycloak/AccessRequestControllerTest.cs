@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Keycloak.Controllers;
 using Pims.Api.Models.Concepts.AccessRequest;
-using Pims.Api.Models.Concepts;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Security;

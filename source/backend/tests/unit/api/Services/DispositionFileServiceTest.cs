@@ -1,24 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO.Compression;
 using System.Linq;
-using System.Threading.Channels;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using FluentAssertions;
-using MapsterMapper;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
-using NExpect.Interfaces;
 using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
@@ -1036,7 +1028,6 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
             {
-                PropertyClassificationTypeCode = "UNKNOWN",
                 PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
                 PropertyDataSourceTypeCode = "PMBC",
                 PropertyTypeCode = "UNKNOWN",
@@ -1088,7 +1079,6 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(new PimsProperty()
             {
-                PropertyClassificationTypeCode = "UNKNOWN",
                 PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
                 PropertyDataSourceTypeCode = "PMBC",
                 PropertyTypeCode = "UNKNOWN",
@@ -1107,7 +1097,6 @@ namespace Pims.Api.Test.Services
             // Assert
             // since this is a new property, the following default fields should be set.
             var updatedProperty = updatedDispositionFileProperty.Property;
-            updatedProperty.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");

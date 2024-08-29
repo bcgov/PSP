@@ -35,6 +35,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             property = new Property();
             searchProperty = new SearchProperty();
             propertyManagement = new PropertyManagement();
+
         }
 
         [StepDefinition(@"I search for a Property in the Map by different filters from row number (.*)")]

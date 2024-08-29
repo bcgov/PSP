@@ -77,14 +77,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Get all property classification types sorted by DisplayOrder and Id.
-        /// </summary>
-        public IEnumerable<PimsPropertyClassificationType> GetAllPropertyClassificationTypes()
-        {
-            return this.Context.PimsPropertyClassificationTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ThenBy(a => a.PropertyClassificationTypeCode).ToArray();
-        }
-
-        /// <summary>
         /// Get all property types sorted by DisplayOrder and Id.
         /// </summary>
         public IEnumerable<PimsPropertyType> GetAllPropertyTypes()
@@ -162,14 +154,9 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsLeaseLicenseTypes.AsNoTracking().OrderBy(a => a.LeaseLicenseTypeCode).ToArray();
         }
 
-        public IEnumerable<PimsLeaseCategoryType> GetAllLeaseCategoryTypes()
-        {
-            return this.Context.PimsLeaseCategoryTypes.AsNoTracking().OrderBy(a => a.LeaseCategoryTypeCode).ToArray();
-        }
-
         public IEnumerable<PimsLeasePurposeType> GetAllLeasePurposeTypes()
         {
-            return this.Context.PimsLeasePurposeTypes.AsNoTracking().OrderBy(a => a.LeasePurposeTypeCode).ToArray();
+            return Context.PimsLeasePurposeTypes.AsNoTracking().OrderBy(a => a.LeasePurposeTypeCode).ToArray();
         }
 
         public IEnumerable<PimsLeaseResponsibilityType> GetAllLeaseResponsibilityTypes()
@@ -292,9 +279,9 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsAcqFlTeamProfileTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsTenantType> GetAllTenantTypes()
+        public IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes()
         {
-            return this.Context.PimsTenantTypes.AsNoTracking().ToArray();
+            return this.Context.PimsLeaseStakeholderTypes.AsNoTracking().ToArray();
         }
 
         public IEnumerable<PimsAcquisitionFundingType> GetAllAcquisitionFundingTypes()

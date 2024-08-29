@@ -71,7 +71,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.ICompReqFinancialRepository, Repositories.CompReqFinancialRepository>();
             repositories.AddScoped<Repositories.IInterestHolderRepository, Repositories.InterestHolderRepository>();
             repositories.AddScoped<Repositories.IPropertyImprovementRepository, Repositories.PropertyImprovementRepository>();
-            repositories.AddScoped<Repositories.ILeaseTenantRepository, Repositories.LeaseTenantRepository>();
+            repositories.AddScoped<Repositories.ILeaseStakeholderRepository, Repositories.LeaseStakeholderRepository>();
             repositories.AddScoped<Repositories.IExpropriationPaymentRepository, Repositories.ExpropriationPaymentRepository>();
             repositories.AddScoped<Repositories.IPropertyContactRepository, Repositories.PropertyContactRepository>();
             repositories.AddScoped<Repositories.IPropertyActivityRepository, Repositories.PropertyActivityRepository>();
@@ -83,6 +83,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.IPropertyOperationRepository, Repositories.PropertyOperationRepository>();
             repositories.AddScoped<Repositories.IHistoricalNumberRepository, Repositories.HistoricalNumberRepository>();
             repositories.AddScoped<Repositories.ILeaseRenewalRepository, Repositories.LeaseRenewalRepostory>();
+            repositories.AddScoped<Repositories.IConsultationRepository, Repositories.ConsultationRepository>();
             return repositories;
         }
 

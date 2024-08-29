@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Pims.Dal.Entities;
 
 namespace Pims.Core.Test

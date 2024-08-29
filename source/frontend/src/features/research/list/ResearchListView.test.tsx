@@ -531,6 +531,7 @@ const emptyResearchFile: ApiGen_Concepts_ResearchFile = {
   fileName: null,
   fileNumber: null,
   fileStatusTypeCode: null,
+  totalAllowableCompensation: null,
   ...getEmptyBaseAudit(),
 };
 
@@ -554,7 +555,6 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
             displayOrder: null,
           },
           dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
-          isSensitive: false,
           pid: 723385,
           pin: 90069930,
           landArea: 1,
@@ -587,7 +587,6 @@ const mockResearchListViewResponse: ApiGen_Concepts_ResearchFile[] = [
             displayOrder: null,
           },
           dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
-          isSensitive: false,
           pid: 11041404,
           pin: 90072652,
           landArea: 1,

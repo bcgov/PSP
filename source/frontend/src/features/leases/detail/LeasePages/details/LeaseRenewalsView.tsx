@@ -19,7 +19,7 @@ export const LeaseRenewalsView: React.FunctionComponent<
     <Section header="Renewal Option">
       {renewals.map((renewal, index) => (
         <Section key={`lease-renewal-{index}`} header={`Renewal ${index + 1}`} noPadding>
-          <SectionField label="Excercised?" labelWidth="3">
+          <SectionField label="Exercised?" labelWidth="3">
             {booleanToYesNoUnknownString(renewal.isExercised)}
           </SectionField>
           <Row>

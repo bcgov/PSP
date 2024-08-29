@@ -32,6 +32,7 @@ describe('PeriodForm component', () => {
         formikRef={formikRef}
         initialValues={renderOptions?.initialValues ?? { ...defaultFormLeasePeriod }}
         lease={{} as any}
+        gstConstant={{ name: 'gstDecimal', value: '5' }}
       />,
       {
         ...renderOptions,
@@ -46,12 +47,12 @@ describe('PeriodForm component', () => {
     };
   };
 
-  it.skip('renders as expected', async () => {
+  it('renders as expected', async () => {
     const { asFragment } = setup({});
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it.skip('renders with data as expected', async () => {
+  it('renders with data as expected', async () => {
     const { asFragment } = setup({ initialValues: { ...defaultFormLeasePeriod } });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -160,6 +161,65 @@ describe('PeriodForm component', () => {
 
     const periodStatus = await findByDisplayValue('Not Exercised');
     expect(periodStatus).toBeVisible();
+  });
+
+  it('automatically populates the gst amount field when payment amount entered', async () => {
+    const { container, findByDisplayValue } = setup({
+      initialValues: { ...defaultFormLeasePeriod, isGstEligible: true },
+    });
+
+    await act(async () => {
+      await fillInput(container, 'paymentAmount', '1000');
+    });
+    const gstAmount = await findByDisplayValue('$50.00');
+    expect(gstAmount).toBeVisible();
+  });
+
+  it('automatically populates the gst amount field when payment amount entered for variable terms', async () => {
+    const { container, findByDisplayValue } = setup({
+      initialValues: { ...defaultFormLeasePeriod, isGstEligible: true },
+    });
+
+    await act(async () => {
+      await fillInput(container, 'paymentAmount', '1000');
+      await fillInput(container, 'isVariable', 'true', 'select');
+    });
+    const gstAmount = await findByDisplayValue('$50.00');
+    expect(gstAmount).toBeVisible();
+  });
+
+  it('automatically populates the gst amount field when additional amount entered for variable terms', async () => {
+    const { container, findByDisplayValue } = setup({
+      initialValues: {
+        ...defaultFormLeasePeriod,
+        isAdditionalRentGstEligible: true,
+        isVariable: 'true',
+      },
+    });
+
+    await act(async () => {
+      await fillInput(container, 'additionalRentPaymentAmount', '2000');
+      await fillInput(container, 'isAdditionalRentGstEligible', 'true', 'select');
+    });
+    const gstAmount = await findByDisplayValue('$100.00');
+    expect(gstAmount).toBeVisible();
+  });
+
+  it('automatically populates the gst amount field when variable amount entered for variable terms', async () => {
+    const { container, findByDisplayValue } = setup({
+      initialValues: {
+        ...defaultFormLeasePeriod,
+        isVariableRentGstEligible: true,
+        isVariable: 'true',
+      },
+    });
+
+    await act(async () => {
+      await fillInput(container, 'variableRentPaymentAmount', '3000');
+      await fillInput(container, 'isVariableRentGstEligible', 'true', 'select');
+    });
+    const gstAmount = await findByDisplayValue('$150.00');
+    expect(gstAmount).toBeVisible();
   });
 
   it('calls onSave when form is submitted', async () => {

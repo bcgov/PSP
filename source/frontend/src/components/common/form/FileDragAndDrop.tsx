@@ -1,18 +1,16 @@
 import { ChangeEvent, FunctionComponent, useState } from 'react';
 import styled from 'styled-components';
 
-import { SectionField } from '../Section/SectionField';
-
 interface IFileDragAndDropProps {
-  onSelectFile: (file: File | null) => void;
-  selectedFile: File | null;
+  onSelectFiles: (files: File[]) => void;
   validExtensions: string[];
+  multiple?: boolean;
 }
 
 const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDropProps>> = ({
-  onSelectFile,
-  selectedFile,
+  onSelectFiles,
   validExtensions,
+  multiple = true,
 }) => {
   const validDocumentExtensions: string = validExtensions.map(x => `.${x}`).join(',');
 
@@ -23,7 +21,7 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
     if (changeEvent.target !== null) {
       const target = changeEvent.target;
       if (target.files !== null && target.files.length > 0) {
-        onSelectFile(target.files[0]);
+        onSelectFiles([...target.files]);
       }
     }
   };
@@ -56,19 +54,11 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
     const files = [...event.dataTransfer.files];
 
     if (files && files.length > 0) {
-      onSelectFile(files[0]);
+      onSelectFiles([...files]);
       event.dataTransfer.clearData();
     }
 
     setIsDragging(false);
-  };
-
-  const shortenString = (text: string, maxLength: number, terminator = '...'): string => {
-    if (text.length > maxLength) {
-      return text.substring(0, maxLength - terminator.length) + terminator;
-    }
-
-    return text;
   };
 
   return (
@@ -92,17 +82,11 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
               accept={validDocumentExtensions}
               onChange={handleFileInput}
               className=""
+              multiple={multiple}
             />
           </StyledUploadLabel>
         </StyledContent>
       </DragDropZone>
-      {selectedFile !== null && (
-        <StyledSelectedFile>
-          <SectionField label="File to add" labelWidth="3">
-            {shortenString(selectedFile.name || '', 20)}
-          </SectionField>
-        </StyledSelectedFile>
-      )}
     </div>
   );
 };
@@ -143,10 +127,4 @@ const StyledUploadLabel = styled.label`
 
 const StyledFileInput = styled.input`
   display: none;
-`;
-
-const StyledSelectedFile = styled.div`
-  padding-top: 2rem;
-  overflow: hide;
-  word-wrap: break-word;
 `;

@@ -55,7 +55,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           Administration
         </div>
         <div
-          class="pl-8 col-auto"
+          class="pl-8 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"
@@ -175,48 +175,47 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           <label
             class="c3"
           >
-            Category:
+            Purpose(s):
           </label>
         </div>
         <div
           class="c4 text-left col"
         >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-categoryType.description"
-              name="categoryType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            Purpose:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-purposeType.description"
-              name="purposeType.description"
-              value=""
-            />
+          <div>
+            <div
+              class="multiselect-container multiSelectContainer disable_ms "
+              id="multiselectContainerReact"
+              style="opacity: 1;"
+            >
+              <div
+                class="search-wrapper searchWrapper "
+                style="padding: 0px;"
+              >
+                <input
+                  autocomplete="off"
+                  class="searchBox "
+                  disabled=""
+                  id="search_input"
+                  name="search_name_input"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="optionListContainer displayNone"
+              >
+                <ul
+                  class="optionContainer"
+                >
+                  <span
+                    class="notFound"
+                  >
+                    No Options Available
+                  </span>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -299,7 +298,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           <label
             class="c3"
           >
-            MoTI contact:
+            MOTI contact:
           </label>
         </div>
         <div
@@ -327,7 +326,56 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           <label
             class="c3"
           >
+            MOTI region:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-region.description"
+              name="region.description"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
             Intended use:
+            <span>
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-section-field-tooltip"
+                id="section-field-tooltip"
+              >
+                <svg
+                  class="tooltip-icon"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+              </span>
+            </span>
           </label>
         </div>
         <div
@@ -373,6 +421,24 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               value="VICTORIA"
             />
           </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Lease notes:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          a test note
         </div>
       </div>
     </div>
@@ -435,7 +501,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           Administration
         </div>
         <div
-          class="pl-8 col-auto"
+          class="pl-8 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"
@@ -554,48 +620,47 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Category:
+            Purpose(s):
           </label>
         </div>
         <div
           class="c4 text-left col"
         >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-categoryType.description"
-              name="categoryType.description"
-              value=""
-            />
-          </div>
-        </div>
-      </div>
-      <div
-        class="pb-2 row"
-      >
-        <div
-          class="pr-0 text-left col-3"
-        >
-          <label
-            class="c3"
-          >
-            Purpose:
-          </label>
-        </div>
-        <div
-          class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-purposeType.description"
-              name="purposeType.description"
-              value=""
-            />
+          <div>
+            <div
+              class="multiselect-container multiSelectContainer disable_ms "
+              id="multiselectContainerReact"
+              style="opacity: 1;"
+            >
+              <div
+                class="search-wrapper searchWrapper "
+                style="padding: 0px;"
+              >
+                <input
+                  autocomplete="off"
+                  class="searchBox "
+                  disabled=""
+                  id="search_input"
+                  name="search_name_input"
+                  placeholder=""
+                  type="text"
+                  value=""
+                />
+              </div>
+              <div
+                class="optionListContainer displayNone"
+              >
+                <ul
+                  class="optionContainer"
+                >
+                  <span
+                    class="notFound"
+                  >
+                    No Options Available
+                  </span>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -678,7 +743,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            MoTI contact:
+            MOTI contact:
           </label>
         </div>
         <div
@@ -705,7 +770,56 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           <label
             class="c3"
           >
+            MOTI region:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          <div
+            class="input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-region.description"
+              name="region.description"
+              value=""
+            />
+          </div>
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
             Intended use:
+            <span>
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-section-field-tooltip"
+                id="section-field-tooltip"
+              >
+                <svg
+                  class="tooltip-icon"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+              </span>
+            </span>
           </label>
         </div>
         <div
@@ -750,6 +864,22 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
             />
           </div>
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c3"
+          >
+            Lease notes:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        />
       </div>
     </div>
   </div>

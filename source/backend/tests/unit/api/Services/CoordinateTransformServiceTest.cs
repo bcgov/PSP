@@ -1,12 +1,9 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal.Repositories;
-using Pims.Dal.Services;
 using Xunit;
 
 namespace Pims.Api.Test.Services

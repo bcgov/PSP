@@ -74,29 +74,9 @@ namespace Pims.Api.Models.Concepts.Property
         public double? Longitude { get; set; }
 
         /// <summary>
-        /// get/set - The property name.
-        /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// get/set - The property description.
-        /// </summary>
-        public string Description { get; set; }
-
-        /// <summary>
-        /// get/set - Whether the property is sensitive data.
-        /// </summary>
-        public bool IsSensitive { get; set; }
-
-        /// <summary>
         /// get/set - Whether the property is retired.
         /// </summary>
         public bool IsRetired { get; set; }
-
-        /// <summary>
-        /// get/set - Whether the property is a provincial highway.
-        /// </summary>
-        public bool? IsProvincialPublicHwy { get; set; }
 
         /// <summary>
         /// get/set - Updated by user id.
@@ -155,11 +135,6 @@ namespace Pims.Api.Models.Concepts.Property
         public bool IsOwned { get; set; }
 
         /// <summary>
-        /// get/set - Whether or not other agencies can view this property.
-        /// </summary>
-        public bool IsVisibleToOtherAgencies { get; set; }
-
-        /// <summary>
         /// get/set - Area Unit name.
         /// </summary>
         public CodeTypeModel<string> AreaUnit { get; set; }
@@ -200,16 +175,6 @@ namespace Pims.Api.Models.Concepts.Property
         public string MunicipalZoning { get; set; }
 
         /// <summary>
-        /// get/set - The property zoning name.
-        /// </summary>
-        public string Zoning { get; set; }
-
-        /// <summary>
-        /// get/set - The property zoning potential.
-        /// </summary>
-        public string ZoningPotential { get; set; }
-
-        /// <summary>
         /// get/set - The location of the property.
         /// </summary>
         public GeometryModel Location { get; set; }
@@ -223,11 +188,6 @@ namespace Pims.Api.Models.Concepts.Property
         /// get/set - General location of the property.
         /// </summary>
         public string GeneralLocation { get; set; }
-
-        /// <summary>
-        /// get/set - Property contacts.
-        /// </summary>
-        public IList<PropertyContactModel> PropertyContacts { get; set; }
 
         /// <summary>
         /// get/set - Property Historical File numbers.

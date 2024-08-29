@@ -21,29 +21,24 @@ const map: Partial<L.Map> = {
 vi.mocked(useMap).mockReturnValue(map as unknown as ReturnType<typeof useMap>);
 
 const mockLayer: IPopupContentProps = {
-  layerPopup: {
-    config: {},
-    data: {
-      feature_area_sqm: '10000',
-      feature_length_m: '500',
-      municipality: 'Rural',
-      objectid: '0',
-      owner_type: 'Private',
-      parcel_class: 'Subdivision',
-      parcel_name: '000000000',
-      parcel_start_date: '2020-01-01',
-      parcel_status: 'Active',
-      PID: '000000001',
-      pid_number: '000000000',
-      PIN: '1',
-      plan_number: 'VIP00000',
-      regional_district: 'Fake District',
-      se_anno_cad_data: '',
-      when_updated: '2020-01-01',
-    },
-    latlng: new LatLng(48, -123),
-    title: 'Foo Bar',
-    feature: undefined,
+  config: {},
+  data: {
+    feature_area_sqm: '10000',
+    feature_length_m: '500',
+    municipality: 'Rural',
+    objectid: '0',
+    owner_type: 'Private',
+    parcel_class: 'Subdivision',
+    parcel_name: '000000000',
+    parcel_start_date: '2020-01-01',
+    parcel_status: 'Active',
+    PID: '000000001',
+    pid_number: '000000000',
+    PIN: '1',
+    plan_number: 'VIP00000',
+    regional_district: 'Fake District',
+    se_anno_cad_data: '',
+    when_updated: '2020-01-01',
   },
 };
 

@@ -1,5 +1,5 @@
-import { Formik, FormikProps } from 'formik';
-import { useState } from 'react';
+import { Formik, FormikProps, useFormikContext } from 'formik';
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -20,6 +20,9 @@ import * as API from '@/constants/API';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ISystemConstant } from '@/store/slices/systemConstants';
+import { NumberFieldValue } from '@/typings/NumberFieldValue';
+import { formatMoney, round } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { defaultFormLeasePeriod, FormLeasePeriod } from '../../models';
@@ -28,10 +31,11 @@ import { LeasePeriodSchema } from './PeriodsYupSchema';
 import VariablePeriodSubForm from './VariablePeriodSubForm';
 
 export interface IPeriodFormProps {
-  formikRef: React.Ref<FormikProps<FormLeasePeriod>>;
+  formikRef: React.RefObject<FormikProps<FormLeasePeriod>>;
   onSave: (values: FormLeasePeriod) => void;
   initialValues?: FormLeasePeriod;
   lease: ApiGen_Concepts_Lease | undefined;
+  gstConstant: ISystemConstant;
 }
 
 /**
@@ -44,6 +48,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   formikRef,
   onSave,
   lease,
+  gstConstant,
 }) => {
   const [displayWarningModal, setDisplayWarningModal] = useState(false);
   const lookups = useLookupCodeHelpers();
@@ -63,6 +68,14 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
       radioLabel: 'Variable',
     },
   ];
+
+  const initialGstAmount = initialValues.gstAmount;
+  const initialIsFlexible = initialValues.isFlexible;
+
+  const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
+    const total = Number(amount) + Number(gstAmount);
+    return isNaN(total) ? 0 : total;
+  };
 
   return (
     <>
@@ -84,12 +97,13 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
         {formikProps => {
           return (
             <StyledFormBody>
+              <GstCalculator gstConstant={gstConstant} />
               <Row>
                 <Col md={6}>
                   <SectionField
                     label="Select payment type"
                     labelWidth="12"
-                    tooltip="Predetermined Payment Period only accept fixed payment amounts. Select Variable payment type to track variable payments."
+                    tooltip="Predetermined Payment Period only accept fixed payment amounts. Select Variable payment type to track variable payments"
                   >
                     <StyledRadioGroup
                       field="isVariable"
@@ -105,10 +119,16 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                   <Select
                     label="Period duration:"
                     field="isFlexible"
-                    tooltip="Fixed Payment Period Duration has end date. Select Flexible payment period duration to track hold over payments."
+                    tooltip="Fixed Payment Period Duration has end date. Select Flexible payment period duration to track hold over payments"
                     options={flexiblePeriodOptions}
                   />
                 </Col>
+                {initialIsFlexible === 'true' && formikProps.values.isFlexible === 'false' && (
+                  <StyledRedCol>
+                    You are changing the period duration from flexible to fixed. Your end date will
+                    no longer be anticipated
+                  </StyledRedCol>
+                )}
               </Row>
               <Row>
                 <Col>
@@ -117,7 +137,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                     label="Start date:"
                     field="startDate"
                     formikProps={formikProps}
-                    tooltip="Start Date: The start date defined for the period."
+                    tooltip="Start Date: The start date defined for the period"
                   />
                 </Col>
                 <Col>
@@ -129,7 +149,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                     }
                     field="expiryDate"
                     formikProps={formikProps}
-                    tooltip="End Date: The end date specified for the period."
+                    tooltip="End Date: The end date specified for the period"
                     required={formikProps.values.isFlexible === 'false'}
                   />
                 </Col>
@@ -148,7 +168,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                     <Col>
                       <FastCurrencyInput
                         formikProps={formikProps}
-                        label="Agreed payment ($)"
+                        label="Payment (before tax)"
                         field="paymentAmount"
                       />
                     </Col>
@@ -168,15 +188,50 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         radioLabelOne="Y"
                         radioLabelTwo="N"
                         type="radio"
+                        handleChange={(_, value) =>
+                          onGstChange(
+                            value,
+                            +formikProps.values.paymentAmount,
+                            gstConstant,
+                            formikProps.setFieldValue,
+                          )
+                        }
                       />
+                      {initialGstAmount !== formikProps.values.gstAmount &&
+                        formikProps.values.isGstEligible === false && (
+                          <StyledRedCol className="pt-4">
+                            You have selected to remove subject to GST. GST amount previously added
+                            will be removed.
+                          </StyledRedCol>
+                        )}
                     </Col>
                   </Row>
+                  {formikProps.values.isGstEligible === true && (
+                    <Row>
+                      <Col xs="6">
+                        <FastCurrencyInput
+                          formikProps={formikProps}
+                          label="GST Amount"
+                          field="gstAmount"
+                        />
+                      </Col>
+                    </Row>
+                  )}
+                  <SectionField label="Total Payment" labelWidth="auto">
+                    {formatMoney(
+                      calculateTotal(
+                        formikProps.values.paymentAmount,
+                        formikProps.values.gstAmount,
+                      ),
+                    )}
+                  </SectionField>
                   <Row>
                     <Col md={6}>
                       <Select
-                        label="Term status"
+                        label="Period status"
                         field="statusTypeCode.id"
                         options={leasePeriodStatusOptions}
+                        tooltip="Exercise period to add payments"
                       />
                     </Col>
                   </Row>
@@ -195,9 +250,10 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                   <Row>
                     <Col md={6}>
                       <Select
-                        label="Term status"
+                        label="Period status"
                         field="statusTypeCode.id"
                         options={leasePeriodStatusOptions}
+                        tooltip="Exercise period to add payments"
                       />
                     </Col>
                   </Row>
@@ -209,7 +265,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         Add Base Rent
                         <TooltipIcon
                           toolTipId="base-rent-tooltip"
-                          toolTip="Fixed Amount of Rent per Payment Period, excluding Operating Expenses."
+                          toolTip="Fixed Amount of Rent per Payment Period, excluding Operating Expenses"
                         />
                       </>
                     }
@@ -218,6 +274,8 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       frequencyField="leasePmtFreqTypeCode"
                       isGstEligibleField="isGstEligible"
                       paymentAmountField="paymentAmount"
+                      gstAmountField="gstAmount"
+                      gstConstant={gstConstant}
                     />
                   </StyledSection>
                   <StyledSection
@@ -228,7 +286,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         Add Additional Rent
                         <TooltipIcon
                           toolTipId="additional-rent-tooltip"
-                          toolTip="Operating Expenses and Taxes Payable by the Tenant."
+                          toolTip="Operating Expenses and Taxes Payable by the Tenant"
                         />
                       </>
                     }
@@ -237,6 +295,8 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       frequencyField="additionalRentFreqTypeCode"
                       isGstEligibleField="isAdditionalRentGstEligible"
                       paymentAmountField="additionalRentPaymentAmount"
+                      gstAmountField="additionalRentGstAmount"
+                      gstConstant={gstConstant}
                     />
                   </StyledSection>
                   <StyledSection
@@ -247,7 +307,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         Add Variable Rent
                         <TooltipIcon
                           toolTipId="variable-rent-tooltip"
-                          toolTip="Percentage Rent or Other Amount payable by Tenant."
+                          toolTip="Percentage Rent or Other Amount payable by Tenant"
                         />
                       </>
                     }
@@ -256,6 +316,8 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                       frequencyField="variableRentFreqTypeCode"
                       isGstEligibleField="isVariableRentGstEligible"
                       paymentAmountField="variableRentPaymentAmount"
+                      gstAmountField="variableRentGstAmount"
+                      gstConstant={gstConstant}
                     />
                   </StyledSection>
                 </>
@@ -283,6 +345,38 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   );
 };
 
+const onGstChange = (
+  isGstEligible: boolean,
+  paymentAmount: number,
+  gstConstant: ISystemConstant,
+  setFieldValue: (field: string, value: any, shouldValidate?: boolean) => void,
+) => {
+  if (isGstEligible === true) {
+    const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : 5;
+
+    const calculated = round((paymentAmount as number) * (gstDecimal / 100));
+    setFieldValue('gstAmount', calculated);
+  } else {
+    setFieldValue('gstAmount', '');
+  }
+};
+
+const GstCalculator: React.FunctionComponent<{ gstConstant: ISystemConstant }> = ({
+  gstConstant,
+}) => {
+  const formikProps = useFormikContext<FormLeasePeriod>();
+  const isGstEligible = formikProps.values.isGstEligible;
+  const paymentAmount = formikProps.values.paymentAmount;
+  const setFieldValue = formikProps.setFieldValue;
+  const paymentAmountTouched = formikProps.touched.paymentAmount;
+  useEffect(() => {
+    if (paymentAmountTouched) {
+      onGstChange(isGstEligible, +paymentAmount, gstConstant, setFieldValue);
+    }
+  }, [paymentAmount, isGstEligible, gstConstant, setFieldValue, paymentAmountTouched]);
+  return <></>;
+};
+
 const StyledSection = styled(Section)`
   padding-left: 0;
   margin-left: 0;
@@ -300,6 +394,10 @@ const StyledRadioGroup = styled(RadioGroup)`
   .radio-group div:first-child .form-check {
     padding-left: 0;
   }
+`;
+
+const StyledRedCol = styled(Col)`
+  color: red;
 `;
 
 export default PeriodForm;

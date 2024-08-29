@@ -7,7 +7,8 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisition = {
   id: null,
-  acquisitionFileId: 0,
+  acquisitionFileId: null,
+  leaseId: null,
   acquisitionFile: null,
   alternateProjectId: null,
   alternateProject: null,
@@ -26,7 +27,9 @@ export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisiti
   advancedPaymentServedDate: null,
   generationDate: null,
   financials: [],
-  compensationRequisitionProperties: [],
+  compReqLeaseStakeholder: [],
+  compReqAcquisitionProperties: [],
+  compReqLeaseProperties: [],
   acquisitionOwnerId: null,
   acquisitionOwner: null,
   interestHolderId: null,
@@ -55,10 +58,15 @@ export const emptyCompensationFinancial: ApiGen_Concepts_CompensationFinancial =
   ...getEmptyBaseAudit(),
 };
 
-export const getMockApiDefaultCompensation = (): ApiGen_Concepts_CompensationRequisition => ({
+export const getMockApiDefaultCompensation = (
+  acquisitionFileId: number | null = null,
+  leaseId: number | null = null,
+): ApiGen_Concepts_CompensationRequisition => ({
   ...emptyCompensationRequisition,
   id: 1,
-  acquisitionFileId: 2,
+  acquisitionFileId: acquisitionFileId,
+  leaseId: leaseId,
+  isDraft: true,
   rowVersion: 1,
 });
 
@@ -129,7 +137,9 @@ export const getMockApiCompensationWithFinancials =
         h120CategoryId: null,
       },
     ],
-    compensationRequisitionProperties: [],
+    compReqLeaseStakeholder: [],
+    compReqAcquisitionProperties: [],
+    compReqLeaseProperties: [],
     isPaymentInTrust: true,
     gstNumber: '9999',
     acquisitionOwnerId: 1,
@@ -144,7 +154,8 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
   fiscalYear: '2023/2024',
   specialInstruction: 'SPECIAL INSTRUCTION',
   detailedRemarks: 'DETAILED REMARKS',
-  compensationRequisitionProperties: [
+  compReqLeaseStakeholder: [],
+  compReqAcquisitionProperties: [
     {
       compensationRequisitionPropertyId: 10000,
       compensationRequisitionId: 1,
@@ -192,6 +203,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
       ...getEmptyBaseAudit(),
     },
   ],
+  compReqLeaseProperties: [],
   financials: [
     {
       id: 1,
@@ -417,9 +429,13 @@ export const getMockApiCompensationList = (): ApiGen_Concepts_CompensationRequis
   },
 ];
 
-export const getMockDefaultCreateCompenReq = (): ApiGen_Concepts_CompensationRequisition => ({
+export const getMockDefaultCreateCompenReq = (
+  acquisitionFileId: number | null = null,
+  leaseId: number | null = null,
+): ApiGen_Concepts_CompensationRequisition => ({
   ...emptyCompensationRequisition,
-  acquisitionFileId: 1,
+  acquisitionFileId: acquisitionFileId,
+  leaseId: leaseId,
   isDraft: true,
 });
 
@@ -458,11 +474,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
       dataSourceEffectiveDateOnly: '2021-08-31',
       latitude: 1139847.4977669886,
       longitude: 900273.0621760854,
-      name: null,
-      description: null,
-      isSensitive: false,
       isRetired: false,
-      isProvincialPublicHwy: null,
       pphStatusUpdateUserid: null,
       pphStatusUpdateTimestamp: null,
       pphStatusUpdateUserGuid: null,
@@ -498,7 +510,6 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
       pin: 23696321,
       planNumber: null,
       isOwned: false,
-      isVisibleToOtherAgencies: false,
       areaUnit: null,
       landArea: 1,
       isVolumetricParcel: false,
@@ -507,8 +518,6 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
       volumetricType: null,
       landLegalDescription: null,
       municipalZoning: null,
-      zoning: null,
-      zoningPotential: null,
       location: {
         coordinate: {
           x: 900273.0621760854,
@@ -528,7 +537,6 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
         ],
       },
       generalLocation: null,
-      propertyContacts: null,
       historicalFileNumbers: [],
       notes: null,
       surplusDeclarationType: null,
@@ -574,11 +582,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
       dataSourceEffectiveDateOnly: '2021-08-31',
       latitude: 389961.4937399403,
       longitude: 1193535.103519257,
-      name: null,
-      description: null,
-      isSensitive: false,
       isRetired: false,
-      isProvincialPublicHwy: null,
       pphStatusUpdateUserid: null,
       pphStatusUpdateTimestamp: null,
       pphStatusUpdateUserGuid: null,
@@ -614,7 +618,6 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
       pin: null,
       planNumber: null,
       isOwned: false,
-      isVisibleToOtherAgencies: false,
       areaUnit: null,
       landArea: 1,
       isVolumetricParcel: false,
@@ -623,8 +626,6 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
       volumetricType: null,
       landLegalDescription: null,
       municipalZoning: null,
-      zoning: null,
-      zoningPotential: null,
       location: {
         coordinate: {
           x: 1193535.103519257,
@@ -650,7 +651,6 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
         ],
       },
       generalLocation: null,
-      propertyContacts: null,
       historicalFileNumbers: [],
       notes: null,
       surplusDeclarationType: null,

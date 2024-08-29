@@ -36,6 +36,11 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
   font-weight: bold;
 }
 
+.c5 {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+}
+
 <div
     class="c0 form-section"
   >
@@ -51,7 +56,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
           Fee Determination
         </div>
         <div
-          class="pl-8 col-auto"
+          class="pl-8 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"
@@ -206,6 +211,18 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
           >
             $1 - Nominal
           </span>
+          <div
+            class="c5"
+          >
+            <p
+              class="m-0"
+            >
+              <b>
+                Nominal: 
+              </b>
+              No or nominal fee determinations should include justification in the Comments field.
+            </p>
+          </div>
         </div>
       </div>
       <div
@@ -289,6 +306,11 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
   font-weight: bold;
 }
 
+.c5 {
+  font-size: 1.4rem;
+  margin-top: 1rem;
+}
+
 <div
     class="c0 form-section"
   >
@@ -304,7 +326,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
           Fee Determination
         </div>
         <div
-          class="pl-8 col-auto"
+          class="pl-8 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"
@@ -459,6 +481,9 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
           >
             Unknown
           </span>
+          <div
+            class="c5"
+          />
         </div>
       </div>
       <div
