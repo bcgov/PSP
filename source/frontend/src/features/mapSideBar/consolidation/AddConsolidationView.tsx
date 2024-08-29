@@ -1,5 +1,4 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
-import { Location } from 'history';
 import noop from 'lodash/noop';
 import { useCallback } from 'react';
 import { Tab } from 'react-bootstrap';
@@ -77,16 +76,9 @@ const AddConsolidationView: React.FunctionComponent<
 }) => {
   const history = useHistory();
 
-  const checkState = useCallback(
-    (location: Location) => {
-      return (
-        !location.pathname.startsWith('/mapview/sidebar/property') &&
-        formikRef?.current?.dirty &&
-        !formikRef?.current?.isSubmitting
-      );
-    },
-    [formikRef],
-  );
+  const checkState = useCallback(() => {
+    return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
+  }, [formikRef]);
 
   return (
     <MapSideBarLayout

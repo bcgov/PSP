@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik';
-import { Location } from 'history';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
@@ -22,7 +21,8 @@ import { ProjectForm } from '../models';
 import AddProjectForm from './AddProjectForm';
 
 export interface IAddProjectContainerProps {
-  onClose?: () => void;
+  onClose: () => void;
+  onSuccess: (newProjectId: number) => void;
 }
 
 const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainerProps>> = props => {
@@ -84,7 +84,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
 
   const formikRef = useRef<FormikProps<ProjectForm>>(null);
 
-  const close = useCallback(() => onClose && onClose(), [onClose]);
+  const close = useCallback(() => onClose(), [onClose]);
 
   const handleSave = async () => {
     const result = await (formikRef.current?.submitForm() ?? Promise.resolve());
@@ -94,21 +94,14 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
 
   const onSuccess = async (proj: ApiGen_Concepts_Project) => {
     formikRef.current?.resetForm();
-    history.replace(`/mapview/sidebar/project/${proj.id}`);
+    props.onSuccess(proj.id);
   };
 
   const helper = useAddProjectForm({ onSuccess });
 
-  const checkState = useCallback(
-    (location: Location) => {
-      return (
-        !location.pathname.startsWith('/mapview/sidebar/project') &&
-        formikRef?.current?.dirty &&
-        !formikRef?.current?.isSubmitting
-      );
-    },
-    [formikRef],
-  );
+  const checkState = useCallback(() => {
+    return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
+  }, [formikRef]);
 
   return (
     <MapSideBarLayout
