@@ -31,15 +31,17 @@ export interface IMotiInventoryHeaderProps {
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const pid = pidFormatter(props.composedProperty.pid);
-  const pin = props.composedProperty.pin ?? '-';
+
   const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
   const geoserverMapData = props.composedProperty.geoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
+
   let property: IMapProperty | null = null;
 
   if (parcelMapData?.features[0]) {
     property = mapFeatureToProperty(parcelMapData?.features[0]);
   }
+  const pin = props.composedProperty?.pin ?? apiProperty?.pin ?? property?.pin ?? '-';
 
   const isLoading = props.isLoading;
 
