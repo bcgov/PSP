@@ -45,7 +45,6 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
       variant="info"
       display={props.display}
       setDisplay={props.setDisplay}
-      closeButton={false}
       headerIcon={<FaUpload size={22} />}
       title="Add Document"
       message={
