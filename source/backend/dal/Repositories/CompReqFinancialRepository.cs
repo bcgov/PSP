@@ -42,7 +42,24 @@ namespace Pims.Dal.Repositories
             {
                 query = query.Where(c => c.CompensationRequisition.IsDraft == false);
             }
+
             return query.AsNoTracking().ToArray();
+        }
+
+        public IEnumerable<PimsCompReqFinancial> GetAllByLeaseFileId(long leaseFileId, bool? finalOnly)
+        {
+            this._user.ThrowIfNotAuthorized(Security.Permissions.CompensationRequisitionView);
+
+            var query = Context.PimsCompReqFinancials
+                .Include(c => c.CompensationRequisition)
+                .Where(c => c.CompensationRequisition.LeaseId == leaseFileId);
+
+            if (finalOnly == true)
+            {
+                query = query.Where(c => c.CompensationRequisition.IsDraft == false);
+            }
+
+            return query.AsNoTracking().ToList();
         }
 
         public IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter)
