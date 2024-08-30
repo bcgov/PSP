@@ -342,6 +342,20 @@ exports[`Document List View > renders as expected 1`] = `
                     >
                       All document types
                     </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-1"
+                      value="1"
+                    >
+                      Survey
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-2"
+                      value="2"
+                    >
+                      Privy Council
+                    </option>
                   </select>
                 </div>
               </div>

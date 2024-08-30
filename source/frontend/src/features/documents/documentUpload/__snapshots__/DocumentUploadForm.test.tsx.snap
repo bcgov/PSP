@@ -111,6 +111,9 @@ exports[`DocumentUploadView component > renders as expected 1`] = `
     <div
       class="c6 c7"
     />
+    <div
+      class="pt-4"
+    />
   </div>
 </body>
 `;

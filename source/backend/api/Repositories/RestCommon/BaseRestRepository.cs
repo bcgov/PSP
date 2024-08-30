@@ -10,6 +10,7 @@ using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
 
@@ -196,7 +197,11 @@ namespace Pims.Api.Repositories.Rest
             byte[] responsePayload = await response.Content.ReadAsByteArrayAsync().ConfigureAwait(true);
             _logger.LogTrace("Response: {response}", response);
             response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
-            long contentLength = contentLengthHeaders?.FirstOrDefault() != null ? int.Parse(contentLengthHeaders.FirstOrDefault(), CultureInfo.InvariantCulture) : responsePayload.Length;
+            long contentLength = responsePayload.Length;
+            if (contentLengthHeaders?.FirstOrDefault() != null)
+            {
+                contentLength = int.Parse(contentLengthHeaders.FirstOrDefault(), CultureInfo.InvariantCulture);
+            }
             result.HttpStatusCode = response.StatusCode;
             switch (response.StatusCode)
             {
@@ -208,6 +213,57 @@ namespace Pims.Api.Repositories.Rest
                     result.Payload = new FileDownloadResponse()
                     {
                         FilePayload = Convert.ToBase64String(responsePayload),
+                        Size = contentLength,
+                        Mimetype = response.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
+                        FileName = fileName,
+                        FileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty),
+                        FileNameWithoutExtension = Path.GetFileNameWithoutExtension(fileName),
+                    };
+
+                    break;
+                case HttpStatusCode.NoContent:
+                    result.Status = ExternalResponseStatus.Success;
+                    result.Message = "No content found";
+                    break;
+                case HttpStatusCode.Forbidden:
+                    result.Status = ExternalResponseStatus.Error;
+                    result.Message = "Forbidden";
+                    break;
+                default:
+                    result.Status = ExternalResponseStatus.Error;
+                    result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                    break;
+            }
+
+            return result;
+        }
+
+        protected async Task<ExternalResponse<FileStreamResponse>> ProcessStreamResponse(HttpResponseMessage response)
+        {
+            ExternalResponse<FileStreamResponse> result = new ExternalResponse<FileStreamResponse>()
+            {
+                Status = ExternalResponseStatus.Error,
+            };
+
+            Stream responsePayload = await response.Content.ReadAsStreamAsync().ConfigureAwait(true);
+            _logger.LogTrace("Response: {response}", response);
+            response.Content.Headers.TryGetValues("Content-Length", out IEnumerable<string> contentLengthHeaders);
+            long contentLength = responsePayload.Length;
+            if (contentLengthHeaders?.FirstOrDefault() != null)
+            {
+                contentLength = int.Parse(contentLengthHeaders.FirstOrDefault(), CultureInfo.InvariantCulture);
+            }
+            result.HttpStatusCode = response.StatusCode;
+            switch (response.StatusCode)
+            {
+                case HttpStatusCode.OK:
+                    string contentDisposition = response.Content.Headers.GetValues("Content-Disposition").FirstOrDefault();
+                    string fileName = GetFileNameFromContentDisposition(contentDisposition);
+
+                    result.Status = ExternalResponseStatus.Success;
+                    result.Payload = new FileStreamResponse()
+                    {
+                        FilePayload = responsePayload,
                         Size = contentLength,
                         Mimetype = response.Content.Headers.GetValues("Content-Type").FirstOrDefault(),
                         FileName = fileName,

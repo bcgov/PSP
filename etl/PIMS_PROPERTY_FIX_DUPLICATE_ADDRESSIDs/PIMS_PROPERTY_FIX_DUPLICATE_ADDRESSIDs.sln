@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34729.46
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "PIMS_PROPERTY_FIX_DUPLICATE_ADDRESSIDs", "PIMS_PROPERTY_FIX_DUPLICATE_ADDRESSIDs.dtproj", "{CC2C02AD-C5BE-401E-84A8-E6FE4C4F3C6F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CC2C02AD-C5BE-401E-84A8-E6FE4C4F3C6F}.Development|Default.ActiveCfg = Development
+		{CC2C02AD-C5BE-401E-84A8-E6FE4C4F3C6F}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EAEE040D-0140-4DF4-B040-43B62E31004A}
+	EndGlobalSection
+EndGlobal
