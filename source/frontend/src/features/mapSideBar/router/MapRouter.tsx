@@ -8,6 +8,7 @@ import Claims from '@/constants/claims';
 import { AddLeaseContainer } from '@/features/leases';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventoryContainer';
+import { isValidId } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
@@ -173,7 +174,14 @@ export const MapRouter: React.FunctionComponent = memo(() => {
     <Switch>
       <AppRoute
         path={`/mapview/sidebar/research/new`}
-        customRender={() => <AddResearchContainer onClose={onClose} />}
+        customRender={() => (
+          <AddResearchContainer
+            onClose={onClose}
+            onSuccess={(newResearchId: number) => {
+              history.replace(`/mapview/sidebar/research/${newResearchId}`);
+            }}
+          />
+        )}
         claim={Claims.RESEARCH_ADD}
         exact
         key={'NewResearch'}
@@ -194,7 +202,14 @@ export const MapRouter: React.FunctionComponent = memo(() => {
       />
       <AppRoute
         path={`/mapview/sidebar/acquisition/new`}
-        customRender={() => <AddAcquisitionContainer onClose={onClose} />}
+        customRender={() => (
+          <AddAcquisitionContainer
+            onClose={onClose}
+            onSuccess={(newAcquisitionId: number) => {
+              history.replace(`/mapview/sidebar/acquisition/${newAcquisitionId}`);
+            }}
+          />
+        )}
         claim={Claims.ACQUISITION_ADD}
         key={'NewAcquisition'}
         title={'Create Acquisition File'}
@@ -215,7 +230,13 @@ export const MapRouter: React.FunctionComponent = memo(() => {
       <AppRoute
         path={`/mapview/sidebar/disposition/new`}
         customRender={() => (
-          <AddDispositionContainer onClose={onClose} View={AddDispositionContainerView} />
+          <AddDispositionContainer
+            onClose={onClose}
+            View={AddDispositionContainerView}
+            onSuccess={(newDispositionId: number) => {
+              history.replace(`/mapview/sidebar/disposition/${newDispositionId}`);
+            }}
+          />
         )}
         claim={Claims.DISPOSITION_ADD}
         key={'NewDisposition'}
@@ -258,7 +279,14 @@ export const MapRouter: React.FunctionComponent = memo(() => {
       />
       <AppRoute
         path={`/mapview/sidebar/lease/new`}
-        customRender={() => <AddLeaseContainer onClose={onClose} />}
+        customRender={() => (
+          <AddLeaseContainer
+            onClose={onClose}
+            onSuccess={(newLeaseId: number) => {
+              history.replace(`/mapview/sidebar/lease/${newLeaseId}`);
+            }}
+          />
+        )}
         claim={Claims.LEASE_ADD}
         exact
         key={'NewLease'}
@@ -266,7 +294,14 @@ export const MapRouter: React.FunctionComponent = memo(() => {
       />
       <AppRoute
         path={`/mapview/sidebar/project/new`}
-        customRender={() => <AddProjectContainer onClose={onClose} />}
+        customRender={() => (
+          <AddProjectContainer
+            onClose={onClose}
+            onSuccess={(newProjectId: number) => {
+              history.replace(`/mapview/sidebar/project/${newProjectId}`);
+            }}
+          />
+        )}
         claim={Claims.PROJECT_ADD}
         exact
         key={'NewProject'}
@@ -300,7 +335,17 @@ export const MapRouter: React.FunctionComponent = memo(() => {
       <AppRoute
         path={`/mapview/sidebar/subdivision/new`}
         customRender={() => (
-          <AddSubdivisionContainer onClose={onClose} View={AddSubdivisionContainerView} />
+          <AddSubdivisionContainer
+            onClose={onClose}
+            View={AddSubdivisionContainerView}
+            onSuccess={(propertyId: number | undefined) => {
+              if (isValidId(propertyId)) {
+                history.replace(`/mapview/sidebar/property/${propertyId}`);
+              } else {
+                history.replace(`/mapview`);
+              }
+            }}
+          />
         )}
         claim={Claims.PROPERTY_EDIT}
         key={'NewSubdivision'}
@@ -309,7 +354,17 @@ export const MapRouter: React.FunctionComponent = memo(() => {
       <AppRoute
         path={`/mapview/sidebar/consolidation/new`}
         customRender={() => (
-          <AddConsolidationContainer onClose={onClose} View={AddConsolidationView} />
+          <AddConsolidationContainer
+            onClose={onClose}
+            View={AddConsolidationView}
+            onSuccess={(propertyId: number | undefined) => {
+              if (isValidId(propertyId)) {
+                history.replace(`/mapview/sidebar/property/${propertyId}`);
+              } else {
+                history.replace(`/mapview`);
+              }
+            }}
+          />
         )}
         claim={Claims.PROPERTY_EDIT}
         key={'NewConsolidation'}

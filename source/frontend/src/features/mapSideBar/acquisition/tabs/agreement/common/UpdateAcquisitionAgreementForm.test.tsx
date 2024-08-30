@@ -2,7 +2,7 @@ import { mockLookups } from '@/mocks/index.mock';
 
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import UpdateAcquisitionAgreementForm, {
-  IUpdateAcquisitionAgreementViewProps,
+  IUpdateAcquisitionAgreementFormProps,
 } from './UpdateAcquisitionAgreementForm';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
 import {
@@ -18,7 +18,7 @@ export const organizerMock = {
   canEditOrDeleteAgreement: vi.fn(),
 };
 
-const mockViewProps: IUpdateAcquisitionAgreementViewProps = {
+const mockViewProps: IUpdateAcquisitionAgreementFormProps = {
   isLoading: false,
   initialValues: new AcquisitionAgreementFormModel(1),
   onSubmit: vi.fn(),

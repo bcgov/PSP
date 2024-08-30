@@ -24,6 +24,7 @@ import { Input } from '@/components/common/form';
 const history = createMemoryHistory();
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 let viewProps: IAddSubdivisionViewProps | undefined;
 const TestView: React.FC<IAddSubdivisionViewProps> = props => {
@@ -64,7 +65,7 @@ describe('Add Subdivision Container component', () => {
   ) => {
     const ref = createRef<FormikProps<SubdivisionFormModel>>();
     const component = await renderAsync(
-      <AddSubdivisionContainer View={TestView} onClose={onClose} />,
+      <AddSubdivisionContainer View={TestView} onClose={onClose} onSuccess={onSuccess} />,
       {
         history,
         useMockAuthentication: true,
@@ -114,23 +115,6 @@ describe('Add Subdivision Container component', () => {
     expect(screen.getByText('Are you sure?')).toBeVisible();
   });
 
-  it('Changes the url when the save operation completes successfully when the response does not contain a viable property to navigate', async () => {
-    await setup({});
-
-    await act(async () => {
-      viewProps?.onSave();
-    });
-
-    expect(screen.getByText('Are you sure?')).toBeVisible();
-
-    mockAddPropertyOperation.execute.mockResolvedValue([{}]);
-    await act(async () => {
-      userEvent.click(screen.getByText('Yes'));
-    });
-
-    expect(history.location.pathname).toBe('/mapview');
-  });
-
   it('aborting the modal onsave does not change the url', async () => {
     await setup({});
 
@@ -148,7 +132,7 @@ describe('Add Subdivision Container component', () => {
     expect(history.location.pathname).toBe('/');
   });
 
-  it('Changes the url when the submit operation completes successfully when the response does not contain a viable property to navigate', async () => {
+  it('Calls onSuccess when the submit operation completes successfully when the response does not contain a viable property to navigate', async () => {
     await setup({});
 
     mockAddPropertyOperation.execute.mockResolvedValue([{}]);
@@ -158,10 +142,10 @@ describe('Add Subdivision Container component', () => {
       viewProps?.onSubmit(model, {} as any);
     });
 
-    expect(history.location.pathname).toBe('/mapview');
+    expect(onSuccess).toHaveBeenCalledWith(undefined);
   });
 
-  it('Changes the url when the submit operation completes successfully when the response contains a viable property to navigate', async () => {
+  it('Calls onSuccess when the submit operation completes successfully when the response contains a viable property to navigate', async () => {
     await setup({});
 
     mockAddPropertyOperation.execute.mockResolvedValue([{}]);
@@ -172,7 +156,7 @@ describe('Add Subdivision Container component', () => {
       viewProps?.onSubmit(model, {} as any);
     });
 
-    expect(history.location.pathname).toBe(`/mapview/sidebar/property/1`);
+    expect(onSuccess).toHaveBeenCalledWith(1);
   });
 
   it('Calls onCancel if the onCancel is called', async () => {
@@ -185,7 +169,7 @@ describe('Add Subdivision Container component', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
-  it('Displays modal if cancelled when form dirty', async () => {
+  it('calls onclose', async () => {
     const { container } = await setup({});
 
     await act(async () => {
@@ -195,40 +179,6 @@ describe('Add Subdivision Container component', () => {
       viewProps?.onCancel();
     });
 
-    expect(screen.getByText('Confirm Changes')).toBeVisible();
-  });
-
-  it('calls onclose if dirty model dismissed', async () => {
-    const { container } = await setup({});
-
-    await act(async () => {
-      viewProps?.formikRef.current?.setFieldValue('test', 1);
-    });
-    await act(async () => {
-      viewProps?.onCancel();
-    });
-
-    expect(screen.getByText('Confirm Changes')).toBeVisible();
-
-    await act(async () => {
-      userEvent.click(screen.getByText('Yes'));
-    });
-  });
-
-  it('does not call onclose if dirty modal cancelled', async () => {
-    const { container } = await setup({});
-
-    await act(async () => {
-      viewProps?.formikRef.current?.setFieldValue('test', 1);
-    });
-    await act(async () => {
-      viewProps?.onCancel();
-    });
-
-    expect(screen.getByText('Confirm Changes')).toBeVisible();
-
-    await act(async () => {
-      userEvent.click(screen.getByText('No'));
-    });
+    expect(onClose).toHaveBeenCalled();
   });
 });

@@ -152,4 +152,17 @@ describe('MotiInventoryHeader component', () => {
     expect(queryByText('Zoom Map')).not.toBeInTheDocument();
     expect(onZoom).not.toHaveBeenCalled();
   });
+
+  it('displays PIN', async () => {
+    const testPin = '9212434';
+    const result = await setup({
+      composedProperty: {
+        ...defaultComposedProperty,
+        pin: testPin,
+      },
+      isLoading: false,
+    });
+    // PID is shown
+    expect(result.getByText(testPin)).toBeVisible();
+  });
 });
