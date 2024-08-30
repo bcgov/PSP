@@ -44,7 +44,7 @@ export const LeaseRouter: React.FunctionComponent<React.PropsWithChildren<ILease
         )}
         claim={Claims.LEASE_VIEW}
         key={'consultation'}
-        title="Lease Consultation"
+        title="Lease Approval/Consultation"
       />
       <AppRoute
         exact
@@ -58,7 +58,7 @@ export const LeaseRouter: React.FunctionComponent<React.PropsWithChildren<ILease
         )}
         claim={Claims.LEASE_EDIT}
         key={'consultation'}
-        title="Add Lease Consultation"
+        title="Add Lease Approval/Consultation"
       />
       <AppRoute
         exact
@@ -73,7 +73,7 @@ export const LeaseRouter: React.FunctionComponent<React.PropsWithChildren<ILease
         )}
         claim={Claims.LEASE_EDIT}
         key={'consultation'}
-        title="Edit Lease Consultation"
+        title="Edit Lease Approval/Consultation"
       />
     </Switch>
   );

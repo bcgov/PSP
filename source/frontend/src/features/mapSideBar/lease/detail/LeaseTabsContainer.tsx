@@ -69,7 +69,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       />
     ),
     key: LeaseFileTabNames.consultations,
-    name: 'Consultations',
+    name: 'Approval/Consultations',
   });
 
   tabViews.push({
