@@ -48,7 +48,7 @@ export class Api_GenerateCompensationPayee {
       const stakeHolder: ApiGen_Concepts_LeaseStakeholder =
         compensation?.compReqLeaseStakeholder[0].leaseStakeholder;
       if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.ORG) {
-        this.name = stakeHolder.organization.name ?? '';
+        this.name = stakeHolder.organization?.name ?? '';
       } else if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.PER) {
         this.name = formatApiPersonNames(stakeHolder.person);
       }

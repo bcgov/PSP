@@ -48,7 +48,7 @@ export class Api_GenerateCompensation {
   ) {
     const allInterestHoldersPropertes = (
       file as Api_GenerateAcquisitionFile
-    ).interestHolders?.flatMap(ih => ih?.interestHolderProperties ?? []);
+    )?.interestHolders?.flatMap(ih => ih?.interestHolderProperties ?? []);
 
     if (file instanceof Api_GenerateAcquisitionFile) {
       this.properties =
@@ -77,7 +77,7 @@ export class Api_GenerateCompensation {
           return new Api_GenerateH120Property(cp?.property, interestHoldersForProperty);
         }) ?? [];
     } else if (file instanceof GenerateCompReqFileLease) {
-      this.properties = compReqProperties.map(fp => {
+      this.properties = compReqProperties?.map(fp => {
         return new Api_GenerateH120Property(fp.property, []);
       });
     }
