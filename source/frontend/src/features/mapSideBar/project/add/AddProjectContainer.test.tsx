@@ -25,7 +25,7 @@ const onSuccess = vi.fn();
 
 const DEFAULT_PROPS: IAddProjectContainerProps = {
   onClose,
-  onSuccess
+  onSuccess,
 };
 
 // Need to mock this library for unit tests

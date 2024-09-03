@@ -69,7 +69,6 @@ const mockPutLeaseApi = {
   loading: false,
 };
 
-
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
   useCompensationRequisitionRepository: () => {
     return {
