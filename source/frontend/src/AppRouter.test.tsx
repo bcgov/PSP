@@ -23,13 +23,7 @@ import { lookupCodesSlice } from './store/slices/lookupCodes';
 import { networkSlice } from './store/slices/network/networkSlice';
 import { tenantsSlice, useTenants } from './store/slices/tenants';
 import { defaultTenant } from './tenants/config/defaultTenant';
-import {
-  act,
-  renderAsync,
-  RenderOptions,
-  screen,
-  waitFor,
-} from './utils/test-utils';
+import { act, renderAsync, RenderOptions, screen, waitFor } from './utils/test-utils';
 import { vi } from 'vitest';
 import { useApiTenants } from './hooks/pims-api/useApiTenants';
 

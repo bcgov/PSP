@@ -112,7 +112,10 @@ describe('ResearchContainer component', () => {
   });
 
   it('renders research details when file is in context', async () => {
-    const typedFile: TypedFile = { ...getMockResearchFile(), fileType: ApiGen_CodeTypes_FileTypes.Research };
+    const typedFile: TypedFile = {
+      ...getMockResearchFile(),
+      fileType: ApiGen_CodeTypes_FileTypes.Research,
+    };
     const { findByText } = setup({ context: { file: typedFile } });
     await act(async () => {});
     expect(await findByText('File Summary')).toBeVisible();

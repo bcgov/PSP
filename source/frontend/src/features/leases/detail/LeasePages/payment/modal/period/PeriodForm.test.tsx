@@ -10,6 +10,7 @@ import {
   act,
   userEvent,
   selectOptions,
+  getByDisplayValue,
 } from '@/utils/test-utils';
 
 import { FormLeasePeriod, defaultFormLeasePeriod } from '../../models';
@@ -81,6 +82,32 @@ describe('PeriodForm component', () => {
     expect(getByText('Add Base Rent')).toBeVisible();
     expect(getByText('Add Additional Rent')).toBeVisible();
     expect(getByText('Add Variable Rent')).toBeVisible();
+  });
+
+  it('displays variable period gst when manual gst does not equal calculated gst.', async () => {
+    const { getByDisplayValue, getByTestId } = setup({
+      initialValues: {
+        ...defaultFormLeasePeriod,
+        isGstEligible: true,
+        paymentAmount: 1,
+        variableRentPaymentAmount: 1,
+        additionalRentPaymentAmount: 1,
+        isVariableRentGstEligible: true,
+        isAdditionalRentGstEligible: true,
+        variableRentGstAmount: 100,
+        gstAmount: 200,
+        additionalRentGstAmount: 300,
+      },
+    });
+
+    const variableButton = getByTestId('radio-isvariable-variable');
+    await act(async () => {
+      userEvent.click(variableButton);
+    });
+
+    expect(getByDisplayValue('$100.00')).toBeVisible();
+    expect(getByDisplayValue('$200.00')).toBeVisible();
+    expect(getByDisplayValue('$300.00')).toBeVisible();
   });
 
   it('Does not allow variability to be modified when editing', async () => {
@@ -185,6 +212,40 @@ describe('PeriodForm component', () => {
       await fillInput(container, 'isVariable', 'true', 'select');
     });
     const gstAmount = await findByDisplayValue('$50.00');
+    expect(gstAmount).toBeVisible();
+  });
+
+  it('automatically populates the gst amount field when additional amount entered for variable terms', async () => {
+    const { container, findByDisplayValue } = setup({
+      initialValues: {
+        ...defaultFormLeasePeriod,
+        isAdditionalRentGstEligible: true,
+        isVariable: 'true',
+      },
+    });
+
+    await act(async () => {
+      await fillInput(container, 'additionalRentPaymentAmount', '2000');
+      await fillInput(container, 'isAdditionalRentGstEligible', 'true', 'select');
+    });
+    const gstAmount = await findByDisplayValue('$100.00');
+    expect(gstAmount).toBeVisible();
+  });
+
+  it('automatically populates the gst amount field when variable amount entered for variable terms', async () => {
+    const { container, findByDisplayValue } = setup({
+      initialValues: {
+        ...defaultFormLeasePeriod,
+        isVariableRentGstEligible: true,
+        isVariable: 'true',
+      },
+    });
+
+    await act(async () => {
+      await fillInput(container, 'variableRentPaymentAmount', '3000');
+      await fillInput(container, 'isVariableRentGstEligible', 'true', 'select');
+    });
+    const gstAmount = await findByDisplayValue('$150.00');
     expect(gstAmount).toBeVisible();
   });
 

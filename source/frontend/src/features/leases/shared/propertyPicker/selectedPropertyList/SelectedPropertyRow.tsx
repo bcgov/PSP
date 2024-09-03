@@ -70,7 +70,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
         </Col>
         <Col md={1} className="pl-3">
           <StyledIconButton
-            title="Move pin location"
+            title="move-pin-location"
             onClick={() => {
               mapMachine.startReposition(property, index);
             }}
