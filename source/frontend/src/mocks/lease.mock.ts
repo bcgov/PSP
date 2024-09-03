@@ -1,6 +1,7 @@
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
+import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
@@ -8,7 +9,7 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { getEmptyPerson } from './contacts.mock';
-import { getEmptyOrganization } from './organization.mock';
+import { getEmptyOrganization, getMockOrganization } from './organization.mock';
 
 const emptyLease: ApiGen_Concepts_Lease = {
   id: 0,
@@ -451,6 +452,76 @@ export const getEmptyLeaseStakeholder = (): ApiGen_Concepts_LeaseStakeholder => 
     primaryContact: null,
     primaryContactId: null,
     lessorType: null,
+    stakeholderTypeCode: null,
+    ...getEmptyBaseAudit(),
+  };
+};
+
+export const getPersonLeaseStakeholder = (
+  id = 100,
+  leaseId = 1,
+): ApiGen_Concepts_LeaseStakeholder => {
+  return {
+    leaseStakeholderId: id,
+    leaseId: leaseId,
+    personId: 10,
+    person: {
+      id: 10,
+      surname: 'DOE',
+      firstName: 'JOHN',
+      middleNames: '',
+      nameSuffix: '',
+      preferredName: '',
+      birthDate: '',
+      comment: '',
+      addressComment: '',
+      useOrganizationAddress: false,
+      isDisabled: false,
+      propertyActivityId: 0,
+      contactMethods: [],
+      personAddresses: [],
+      personOrganizations: [],
+      rowVersion: 1,
+    },
+    organizationId: null,
+    organization: null,
+    note: null,
+    primaryContact: null,
+    primaryContactId: null,
+    lessorType: {
+      id: ApiGen_CodeTypes_LessorTypes.PER,
+      description: 'Person',
+      isDisabled: false,
+      displayOrder: null,
+    },
+    stakeholderTypeCode: null,
+    ...getEmptyBaseAudit(),
+  };
+};
+
+export const getOrganizationLeaseStakeholder = (
+  id = 100,
+  leaseId = 1,
+): ApiGen_Concepts_LeaseStakeholder => {
+  return {
+    leaseStakeholderId: id,
+    leaseId: leaseId,
+    personId: null,
+    person: null,
+    organizationId: 10,
+    organization: {
+      ...getMockOrganization(),
+      id: 10,
+    },
+    note: null,
+    primaryContact: null,
+    primaryContactId: null,
+    lessorType: {
+      id: ApiGen_CodeTypes_LessorTypes.ORG,
+      description: 'Organization',
+      isDisabled: false,
+      displayOrder: null,
+    },
     stakeholderTypeCode: null,
     ...getEmptyBaseAudit(),
   };

@@ -146,6 +146,14 @@ namespace Pims.Api.Services
             return compReqs;
         }
 
+        public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id)
+        {
+            _logger.LogInformation("Getting compensations financials for id: {acquisitionFileId}", id);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.CompensationRequisitionView);
+
+            return _compensationRequisitionRepository.GetCompensationRequisitionFinancials(id);
+        }
+
         private static string GetCompensationRequisitionStatusText(bool? isDraft)
         {
             if (isDraft.HasValue)

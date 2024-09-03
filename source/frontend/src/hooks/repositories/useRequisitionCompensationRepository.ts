@@ -4,6 +4,7 @@ import { useCallback, useMemo } from 'react';
 import {
   deleteCompensationRequisitionApi,
   getCompensationRequisitionApi,
+  getCompensationRequisitionFinancialsApi,
   getCompensationRequisitionPropertiesApi,
   getFileCompensationsApi,
   postFileCompensationRequisitionApi,
@@ -12,6 +13,7 @@ import {
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
+import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
@@ -115,6 +117,19 @@ export const useCompensationRequisitionRepository = () => {
     onError: useAxiosErrorHandler('Failed to get compensation requisitions for file'),
   });
 
+  const getCompensationRequisitionFinancials = useApiRequestWrapper<
+    (compensationId: number) => Promise<AxiosResponse<ApiGen_Concepts_CompensationFinancial[], any>>
+  >({
+    requestFunction: useCallback(
+      async (compensationId: number) =>
+        await getCompensationRequisitionFinancialsApi(compensationId),
+      [],
+    ),
+    requestName: 'getCompensationRequisitionFinancials',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to get compensation requisition financials'),
+  });
+
   return useMemo(
     () => ({
       postCompensationRequisition: postCompensationRequisition,
@@ -123,10 +138,12 @@ export const useCompensationRequisitionRepository = () => {
       getCompensationRequisition: getCompensationRequisition,
       getCompensationRequisitionProperties: getCompensationRequisitionProperties,
       getFileCompensationRequisitions: getFileCompensationRequisitions,
+      getCompensationRequisitionFinancials: getCompensationRequisitionFinancials,
     }),
     [
       deleteCompensation,
       getCompensationRequisition,
+      getCompensationRequisitionFinancials,
       getCompensationRequisitionProperties,
       getFileCompensationRequisitions,
       postCompensationRequisition,

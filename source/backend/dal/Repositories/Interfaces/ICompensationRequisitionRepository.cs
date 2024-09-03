@@ -20,5 +20,7 @@ namespace Pims.Dal.Repositories
         List<PimsPropertyAcquisitionFile> GetAcquisitionCompReqPropertiesById(long compensationRequisitionId);
 
         List<PimsPropertyLease> GetLeaseCompReqPropertiesById(long compensationRequisitionId);
+
+        IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id);
     }
 }
