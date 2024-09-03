@@ -37,9 +37,9 @@ export interface IDocumentListViewProps {
 /**
  * Page that displays document information as a list.
  */
-export const DocumentListView: React.FunctionComponent<
-  React.PropsWithChildren<IDocumentListViewProps>
-> = (props: IDocumentListViewProps) => {
+export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> = (
+  props: IDocumentListViewProps,
+) => {
   const { documentResults, isLoading, defaultFilters, hideFilters, title } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
@@ -130,6 +130,7 @@ export const DocumentListView: React.FunctionComponent<
 
   const handleModalUploadClose = () => {
     setIsUploadVisible(false);
+    props.onSuccess();
   };
 
   const handlePreview = (documentRelationship: ApiGen_Concepts_DocumentRelationship) => {
@@ -165,11 +166,6 @@ export const DocumentListView: React.FunctionComponent<
     }
   };
 
-  const onUploadSuccess = () => {
-    handleModalUploadClose();
-    props.onSuccess();
-  };
-
   const onUpdateSuccess = () => {
     handleModalDetailsClose();
     props.onSuccess();
@@ -183,7 +179,7 @@ export const DocumentListView: React.FunctionComponent<
       <SectionListHeader
         claims={[Claims.DOCUMENT_ADD]}
         title={title ?? 'Documents'}
-        addButtonText={props.addButtonText || 'Add a Document'}
+        addButtonText={props.addButtonText || 'Add Document'}
         onAdd={() => setIsUploadVisible(true)}
       />
     );
@@ -222,7 +218,7 @@ export const DocumentListView: React.FunctionComponent<
         maxDocumentCount={maxDocumentCount}
         display={isUploadVisible}
         setDisplay={setIsUploadVisible}
-        onUploadSuccess={onUploadSuccess}
+        onUploadSuccess={handleModalUploadClose}
         onClose={handleModalUploadClose}
       />
       <GenericModal

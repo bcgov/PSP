@@ -1,16 +1,16 @@
 import { FormikHelpers, FormikProps } from 'formik';
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { IMapProperty } from '@/components/propertySelector/models';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId } from '@/utils';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
@@ -21,6 +21,7 @@ import AddLeaseForm from './AddLeaseForm';
 
 export interface IAddLeaseContainerProps {
   onClose: () => void;
+  onSuccess: (newLeaseId: number) => void;
 }
 
 export const AddLeaseContainer: React.FunctionComponent<
@@ -30,7 +31,6 @@ export const AddLeaseContainer: React.FunctionComponent<
   const history = useHistory();
   const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
   const mapMachine = useMapStateMachine();
-  const { setModalContent, setDisplayModal } = useModalContext();
 
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
@@ -68,7 +68,7 @@ export const AddLeaseContainer: React.FunctionComponent<
         );
       }
       mapMachine.refreshMapProperties();
-      history.replace(`/mapview/sidebar/lease/${response.id}`);
+      props.onSuccess(response.id);
     }
   };
 
@@ -87,21 +87,12 @@ export const AddLeaseContainer: React.FunctionComponent<
   };
 
   const handleCancel = () => {
-    if (!formikRef.current?.dirty) {
-      formikRef.current?.resetForm();
-      onClose();
-    } else {
-      setModalContent({
-        ...getCancelModalProps(),
-        handleOk: () => {
-          formikRef.current?.resetForm();
-          setDisplayModal(false);
-          onClose();
-        },
-      });
-      setDisplayModal(true);
-    }
+    onClose();
   };
+
+  const checkState = useCallback(() => {
+    return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
+  }, [formikRef]);
 
   return (
     <MapSideBarLayout
@@ -135,6 +126,7 @@ export const AddLeaseContainer: React.FunctionComponent<
         formikRef={formikRef}
         propertyInfo={initialProperty}
       />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </MapSideBarLayout>
   );
 };

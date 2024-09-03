@@ -89,7 +89,7 @@ export const useApiRequestWrapper = <
         setStatus(response?.status);
         setResponse(response?.data);
         onSuccess && onSuccess(response?.data);
-        return response?.data;
+        return rawResponse ? response : response?.data;
       } catch (e) {
         if (!axios.isAxiosError(e) && throwError) {
           throw e;

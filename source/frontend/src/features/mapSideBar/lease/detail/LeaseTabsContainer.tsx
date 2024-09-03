@@ -62,6 +62,19 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
+        leasePage={leasePages.get(LeasePageNames.CONSULTATIONS)}
+        isEditing={isEditing}
+        formikRef={formikRef}
+        onSuccess={onSuccess}
+      />
+    ),
+    key: LeaseFileTabNames.consultations,
+    name: 'Approval/Consultations',
+  });
+
+  tabViews.push({
+    content: (
+      <LeaseTab
         leasePage={leasePages.get(LeasePageNames.CHECKLIST)}
         onEdit={() => setContainerState({ isEditing: true })}
         isEditing={isEditing}

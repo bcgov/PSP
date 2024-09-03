@@ -1,4 +1,5 @@
 import { FieldArray, Formik, FormikProps } from 'formik';
+import { Form } from 'react-bootstrap';
 
 import { DisplayError, SelectOption } from '@/components/common/form';
 import FileDragAndDrop from '@/components/common/form/FileDragAndDrop';
@@ -54,6 +55,7 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
 
     // forces formik to flag the change as dirty
     formikRef.current?.setFieldValue('isSelectedFile', true);
+    formikRef.current?.setFieldTouched('documents', true, true);
     onDocumentsSelected(formikRef.current.values.documents.length + files.length);
   };
 
@@ -71,53 +73,61 @@ const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
         }}
       >
         {formikProps => (
-          <FieldArray name="documents">
-            {({ push, remove }) => (
-              <>
-                <SectionField
-                  label={`Choose a max of ${maxDocumentCount} files to attach at the time`}
-                  labelWidth="12"
-                  className="mb-4"
-                >
-                  <div className="pt-2"></div>
-                  <FileDragAndDrop
-                    onSelectFiles={files => onSelectFiles(files, push)}
-                    validExtensions={ValidDocumentExtensions}
-                    multiple
-                  />
-                </SectionField>
-                <StyledScrollable>
-                  {formikProps.values.documents.map((formDocument, index) => (
-                    <SectionField
-                      key={`document-${formDocument.documentTypeId || 'DOC_ID'}-${index}`}
-                      label={null}
-                      contentWidth="12"
-                    >
-                      <SelectedDocumentRow
-                        formikProps={formikProps}
-                        namespace={`documents.${index}`}
-                        index={index}
-                        document={formDocument}
-                        documentTypes={documentTypes}
-                        documentStatusOptions={documentStatusOptions}
-                        getDocumentMetadata={getDocumentMetadata}
-                        onRemove={(index: number) => {
-                          onDocumentsSelected(formikProps.values.documents.length - 1);
-                          remove(index);
-                        }}
-                      />
-                    </SectionField>
-                  ))}
-                </StyledScrollable>
-                <DisplayError field={'documents'} />
-                {formikProps.values.documents.length > 0 && (
-                  <div className="pt-5">
-                    {`You have attached ${formikProps.values.documents.length} files. Do you wane to proceed and save?`}
-                  </div>
-                )}
-              </>
+          <>
+            <FieldArray name="documents">
+              {({ push, remove }) => (
+                <>
+                  <SectionField
+                    label={`Choose a max of ${maxDocumentCount} files to attach at the time`}
+                    labelWidth="12"
+                    className="mb-4"
+                  >
+                    <div className="pt-2"></div>
+                    <FileDragAndDrop
+                      onSelectFiles={files => onSelectFiles(files, push)}
+                      validExtensions={ValidDocumentExtensions}
+                      multiple
+                    />
+                  </SectionField>
+                  <StyledScrollable>
+                    {formikProps.values.documents.map((formDocument, index) => (
+                      <SectionField
+                        key={`document-${formDocument.documentTypeId || 'DOC_ID'}-${index}`}
+                        label={null}
+                        contentWidth="12"
+                      >
+                        <SelectedDocumentRow
+                          formikProps={formikProps}
+                          namespace={`documents.${index}`}
+                          index={index}
+                          document={formDocument}
+                          documentTypes={documentTypes}
+                          documentStatusOptions={documentStatusOptions}
+                          getDocumentMetadata={getDocumentMetadata}
+                          onRemove={(index: number) => {
+                            onDocumentsSelected(formikProps.values.documents.length - 1);
+                            remove(index);
+                          }}
+                        />
+                      </SectionField>
+                    ))}
+                  </StyledScrollable>
+                </>
+              )}
+            </FieldArray>
+            <div className="pt-4"></div>
+            <DisplayError field="documents" />
+            {formikProps.values.documents.length > maxDocumentCount && (
+              <Form.Control.Feedback type="invalid" className="pt-0">
+                {`You have a limit of ${maxDocumentCount} files per time. Some of your files have not been uploaded at this time.`}
+              </Form.Control.Feedback>
             )}
-          </FieldArray>
+            {formikProps.values.documents.length > 0 && (
+              <div className="pt-1">
+                {`You have attached ${formikProps.values.documents.length} files. Do you want to proceed and save?`}
+              </div>
+            )}
+          </>
         )}
       </Formik>
     </>

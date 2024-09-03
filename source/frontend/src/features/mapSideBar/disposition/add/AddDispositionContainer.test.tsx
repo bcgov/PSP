@@ -13,6 +13,7 @@ import { IAddDispositionContainerViewProps } from './AddDispositionContainerView
 const history = createMemoryHistory();
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 let viewProps: IAddDispositionContainerViewProps | undefined;
 const TestView: React.FC<IAddDispositionContainerViewProps> = props => {
@@ -43,7 +44,7 @@ describe('Add Disposition Container component', () => {
   ) => {
     const ref = createRef<FormikProps<DispositionFormModel>>();
     const component = await renderAsync(
-      <AddDispositionContainer View={TestView} onClose={onClose} />,
+      <AddDispositionContainer View={TestView} onClose={onClose} onSuccess={onSuccess} />,
       {
         history,
         useMockAuthentication: true,
