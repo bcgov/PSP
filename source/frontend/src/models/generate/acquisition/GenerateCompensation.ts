@@ -10,7 +10,7 @@ import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Con
 import { formatMoney } from '@/utils';
 
 import { GenerateCompReqFileLease } from '../CompensationRequisition/GenerateCompReqFileLease';
-import { ICompensationRequisitionFile } from '../CompensationRequisition/ICompReqFile';
+import { ICompensationRequisitionFile } from '../CompensationRequisition/ICompensationRequisitionFile';
 import { Api_GenerateProject } from '../GenerateProject';
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
 import { Api_GenerateCompensationFinancial } from './GenerateCompensationFinancial';
@@ -36,14 +36,14 @@ export class Api_GenerateCompensation {
   client: string;
   payee: Api_GenerateCompensationPayee;
   alternate_project: Api_GenerateProject | null;
-  readonly properties: Api_GenerateH120Property[];
+  properties: Api_GenerateH120Property[];
 
   constructor(
     compensation: ApiGen_Concepts_CompensationRequisition | null,
     compReqProperties: ApiGen_Concepts_AcquisitionFileProperty[] | ApiGen_Concepts_PropertyLease[],
     file: ICompensationRequisitionFile | null,
     h120Categories: ApiGen_Concepts_H120Category[],
-    financialActivities: ApiGen_Concepts_CompensationFinancial[],
+    finalFileFinancials: ApiGen_Concepts_CompensationFinancial[],
     client = '',
   ) {
     const allInterestHoldersPropertes = (
@@ -52,11 +52,11 @@ export class Api_GenerateCompensation {
 
     if (file instanceof Api_GenerateAcquisitionFile) {
       this.properties =
-        compReqProperties.map(fp => {
+        compReqProperties.map(cp => {
           const matchingInterestHolderProperties =
             allInterestHoldersPropertes.filter(
               ihp =>
-                ihp.acquisitionFilePropertyId === fp?.id &&
+                ihp.acquisitionFilePropertyId === cp?.id &&
                 ihp.propertyInterestTypes?.some(pit => pit.id !== 'NIP'),
             ) ?? [];
 
@@ -74,7 +74,7 @@ export class Api_GenerateCompensation {
               ) || [],
           );
 
-          return new Api_GenerateH120Property(fp?.property, interestHoldersForProperty);
+          return new Api_GenerateH120Property(cp?.property, interestHoldersForProperty);
         }) ?? [];
     } else if (file instanceof GenerateCompReqFileLease) {
       this.properties = compReqProperties.map(fp => {
@@ -98,14 +98,14 @@ export class Api_GenerateCompensation {
           new Api_GenerateCompensationFinancialSummary(
             category,
             compensation?.financials ?? [],
-            financialActivities,
+            finalFileFinancials,
           ),
       )
       .filter(summary => summary.file_pretax_total !== '$0.00' || summary.pretax_total !== '$0.00')
       .value();
 
     this.file_financial_pretax_total = formatMoney(
-      financialActivities?.reduce((acc, curr) => acc + (curr?.pretaxAmount ?? 0), 0) ?? 0,
+      finalFileFinancials?.reduce((acc, curr) => acc + (curr?.pretaxAmount ?? 0), 0) ?? 0,
     );
     this.financial_pretax_total = formatMoney(
       compensation?.financials?.reduce((acc, curr) => acc + (curr?.pretaxAmount ?? 0), 0) ?? 0,

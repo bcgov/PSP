@@ -22,6 +22,10 @@ import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Co
 import { useGenerateH120 } from './useGenerateH120';
 import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
+import { getMockApiLease, getMockLeaseProperties, getMockLeaseStakeholders } from '@/mocks/lease.mock';
 
 const generateFn = vi
   .fn()
@@ -35,6 +39,10 @@ const getPersonConceptFn = vi.fn();
 const getOrganizationConceptFn = vi.fn();
 const findElectoralDistrictFn = vi.fn();
 const getCompReqFinancialsFn = vi.fn();
+
+const getLeaseFileFn = vi.fn();
+const getLeasePropertiesFn = vi.fn();
+const getLeaseStakeholdersFn = vi.fn();
 
 vi.mock('@/features/documents/hooks/useDocumentGenerationRepository');
 vi.mocked(useDocumentGenerationRepository).mockImplementation(
@@ -74,7 +82,7 @@ vi.mocked(useCompensationRequisitionRepository).mockImplementation(
   () =>
     ({
       getCompensationRequisitionProperties: { execute: getCompensationRequisitionPropertiesFn },
-      getCompensationRequisitionFinancials: { execute: getCompReqFinancialsFn }
+      getCompensationRequisitionFinancials: { execute: getCompReqFinancialsFn },
     } as unknown as ReturnType<typeof useCompensationRequisitionRepository>),
 );
 
@@ -93,6 +101,30 @@ vi.mocked(useAdminBoundaryMapLayer).mockImplementation(
     ({
       findElectoralDistrict: findElectoralDistrictFn,
     } as unknown as ReturnType<typeof useAdminBoundaryMapLayer>),
+);
+
+vi.mock('@/hooks/repositories/useLeaseRepository');
+vi.mocked(useLeaseRepository).mockImplementation(
+  () =>
+    ({
+      getLease: { execute: getLeaseFileFn },
+    } as unknown as ReturnType<typeof useLeaseRepository>),
+);
+
+vi.mock('@/hooks/repositories/useLeaseStakeholderRepository');
+vi.mocked(useLeaseStakeholderRepository).mockImplementation(
+  () =>
+    ({
+      getLeaseStakeholders: { execute: getLeaseStakeholdersFn },
+    } as unknown as ReturnType<typeof useLeaseStakeholderRepository>),
+);
+
+vi.mock('@/hooks/repositories/usePropertyLeaseRepository');
+vi.mocked(usePropertyLeaseRepository).mockImplementation(
+  () =>
+    ({
+      getPropertyLeases: { execute: getLeasePropertiesFn },
+    } as unknown as ReturnType<typeof usePropertyLeaseRepository>),
 );
 
 let currentStore: MockStoreEnhanced<any, {}>;
@@ -133,18 +165,66 @@ describe('useGenerateH120 functions', () => {
     getInterestHoldersFn.mockResolvedValue([]);
   });
 
-  it('makes requests to expected api endpoints', async () => {
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('throws error when invalid compensation requisition', async () => {
+    const generate = setup();
+
+    await act(() =>
+      expect(generate(ApiGen_CodeTypes_FileTypes.Acquisition, null)).rejects.toThrow(
+        'user must choose a valid compensation requisition in order to generate a document',
+      ),
+    );
+  });
+
+  it('throws error when invalid file type', async () => {
+    const generate = setup();
+
+    await act(() =>
+      expect(
+        generate(ApiGen_CodeTypes_FileTypes.Research, {
+          id: 1,
+        } as ApiGen_Concepts_CompensationRequisition),
+      ).rejects.toThrow('Invalid file type.'),
+    );
+  });
+
+  it('makes requests to expected api endpoints for Acquisition file', async () => {
     const generate = setup();
     const apiCompensationWithInterestHolder: ApiGen_Concepts_CompensationRequisition = {
       ...getMockApiDefaultCompensation(),
       interestHolderId: 14,
     };
 
-    await act(async () => generate(ApiGen_CodeTypes_FileTypes.Acquisition, apiCompensationWithInterestHolder));
+    await act(async () =>
+      generate(ApiGen_CodeTypes_FileTypes.Acquisition, apiCompensationWithInterestHolder),
+    );
     expect(generateFn).toHaveBeenCalled();
     expect(getAcquisitionPropertiesFn).toHaveBeenCalled();
     expect(getCompensationRequisitionPropertiesFn).toHaveBeenCalled();
     expect(getInterestHoldersFn).toHaveBeenCalled();
+    expect(findElectoralDistrictFn).toHaveBeenCalled();
+  });
+
+  it('makes requests to expected api endpoints for Lease file', async () => {
+    getLeaseFileFn.mockResolvedValue(getMockApiLease());
+    getLeaseStakeholdersFn.mockResolvedValue(getMockLeaseStakeholders());
+    getLeasePropertiesFn.mockResolvedValue(getMockLeaseProperties());
+
+    const generate = setup();
+    await act(async () =>
+      generate(ApiGen_CodeTypes_FileTypes.Lease, getMockApiDefaultCompensation()),
+    );
+
+    expect(generateFn).toHaveBeenCalled();
+
+    expect(getLeaseFileFn).toHaveBeenCalled();
+    expect(getLeasePropertiesFn).toHaveBeenCalled();
+    expect(getLeaseStakeholdersFn).toHaveBeenCalled();
+
+    expect(getCompensationRequisitionPropertiesFn).toHaveBeenCalled();
     expect(findElectoralDistrictFn).toHaveBeenCalled();
   });
 
@@ -221,7 +301,9 @@ describe('useGenerateH120 functions', () => {
     getInterestHoldersFn.mockResolvedValue([apiInterestHolder]);
 
     const generate = setup();
-    await act(async () => generate(ApiGen_CodeTypes_FileTypes.Acquisition, apiCompensationWithInterestHolder));
+    await act(async () =>
+      generate(ApiGen_CodeTypes_FileTypes.Acquisition, apiCompensationWithInterestHolder),
+    );
     expect(apiCompensationWithInterestHolder.interestHolder?.person).toStrictEqual(
       expect.objectContaining(apiInterestHolder.person),
     );
@@ -237,9 +319,9 @@ describe('useGenerateH120 functions', () => {
   it('throws an error if no acquisition file is found', async () => {
     const generate = setup();
     getAcquisitionFileFn.mockResolvedValue(undefined);
-    await expect(generate(ApiGen_CodeTypes_FileTypes.Acquisition, getMockApiDefaultCompensation())).rejects.toThrow(
-      'Acquisition file not found',
-    );
+    await expect(
+      generate(ApiGen_CodeTypes_FileTypes.Acquisition, getMockApiDefaultCompensation()),
+    ).rejects.toThrow('Acquisition file not found');
   });
 
   it('throws an error if generation api call is unsuccessful', async () => {
@@ -248,8 +330,8 @@ describe('useGenerateH120 functions', () => {
       payload: null,
     });
     const generate = setup();
-    await expect(generate(ApiGen_CodeTypes_FileTypes.Acquisition, getMockApiDefaultCompensation())).rejects.toThrow(
-      'Failed to generate file',
-    );
+    await expect(
+      generate(ApiGen_CodeTypes_FileTypes.Acquisition, getMockApiDefaultCompensation()),
+    ).rejects.toThrow('Failed to generate file');
   });
 });

@@ -3,7 +3,7 @@ import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiG
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
 
-import { ICompensationRequisitionFile } from '../CompensationRequisition/ICompReqFile';
+import { ICompensationRequisitionFile } from '../CompensationRequisition/ICompensationRequisitionFile';
 import { Api_GenerateOrganization } from '../GenerateOrganization';
 import { Api_GenerateOwner } from '../GenerateOwner';
 import { Api_GeneratePerson } from '../GeneratePerson';

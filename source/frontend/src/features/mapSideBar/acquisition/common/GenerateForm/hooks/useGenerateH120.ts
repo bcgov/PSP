@@ -21,7 +21,7 @@ import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/Gener
 import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
 import { Api_GenerateH120Property } from '@/models/generate/acquisition/GenerateH120Property';
 import { GenerateCompReqFileLease } from '@/models/generate/CompensationRequisition/GenerateCompReqFileLease';
-import { ICompensationRequisitionFile } from '@/models/generate/CompensationRequisition/ICompReqFile';
+import { ICompensationRequisitionFile } from '@/models/generate/CompensationRequisition/ICompensationRequisitionFile';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { getLatLng } from '@/utils/mapPropertyUtils';
 
@@ -156,7 +156,7 @@ export const useGenerateH120 = () => {
             }
           }
 
-          fileData = new GenerateCompReqFileLease(file, [], leaseStakeHolders);
+          fileData = new GenerateCompReqFileLease(file, fileProperties, leaseStakeHolders);
         }
         break;
     }
@@ -165,9 +165,7 @@ export const useGenerateH120 = () => {
       fileType,
       compensation.id,
     );
-
     const compReqFinalH120sPromise = getCompensationRequisitionFinancials.execute(compensation.id);
-
     const h120CategoriesPromise = getH120Categories.execute();
 
     const [compReqProperties, h120Categories, compReqFinancialActivities] = await Promise.all([
@@ -175,16 +173,6 @@ export const useGenerateH120 = () => {
       h120CategoriesPromise,
       compReqFinalH120sPromise,
     ]);
-
-    // Run async functions batch-by-batch, with each batch of functions executed in parallel
-    const batches = chunk(fileData.properties, 5);
-    for (const currentBatch of batches) {
-      const currentBatchPromises = currentBatch.map(async property => {
-        property.electoral_dist = await getElectoralDistrict(property);
-        return property;
-      });
-      await Promise.all(currentBatchPromises);
-    }
 
     const compensationData = new Api_GenerateCompensation(
       compensation,
@@ -194,6 +182,16 @@ export const useGenerateH120 = () => {
       compReqFinancialActivities ?? [],
       client?.value,
     );
+
+    // Run async functions batch-by-batch, with each batch of functions executed in parallel
+    const batches = chunk(compensationData.properties, 5);
+    for (const currentBatch of batches) {
+      const currentBatchPromises = currentBatch.map(async property => {
+        property.electoral_dist = await getElectoralDistrict(property);
+        return property;
+      });
+      await Promise.all(currentBatchPromises);
+    }
 
     const generatedFile = await generate({
       templateType: ApiGen_CodeTypes_FormTypes.H120.toString(),

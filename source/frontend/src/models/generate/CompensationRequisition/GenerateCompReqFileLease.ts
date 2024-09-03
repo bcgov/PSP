@@ -8,7 +8,7 @@ import { Api_GenerateH120Property } from '../acquisition/GenerateH120Property';
 import { Api_GenerateOwner } from '../GenerateOwner';
 import { Api_GenerateProduct } from '../GenerateProduct';
 import { Api_GenerateProject } from '../GenerateProject';
-import { ICompensationRequisitionFile } from './ICompReqFile';
+import { ICompensationRequisitionFile } from './ICompensationRequisitionFile';
 
 export class GenerateCompReqFileLease implements ICompensationRequisitionFile {
   private readonly leaseOwners: Api_GenerateOwner[];
@@ -30,6 +30,10 @@ export class GenerateCompReqFileLease implements ICompensationRequisitionFile {
 
     this.project = new Api_GenerateProject(lease.project ?? null);
     // TODO : Product
+
+    this.properties = leaseProperties.map(p => {
+      return new Api_GenerateH120Property(p.property, []);
+    });
 
     this.leaseOwners = leaseStakeholders
       .filter(

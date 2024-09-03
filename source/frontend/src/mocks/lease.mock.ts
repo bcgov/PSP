@@ -5,6 +5,7 @@ import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_Code
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
@@ -1623,6 +1624,121 @@ export const getMockLeaseStakeholders = (leaseId = 1): ApiGen_Concepts_LeaseStak
     appCreateUserid: 'EHERRERA',
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+    rowVersion: 1,
+  },
+];
+
+export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLease[] => [
+  {
+    file: null,
+    leaseArea: 0,
+    areaUnitType: null,
+    id: 387,
+    fileId: leaseId,
+    propertyName: null,
+    location: {
+      coordinate: {
+        x: 1195345.9346225508,
+        y: 381468.28746302053,
+      },
+    },
+    displayOrder: null,
+    property: {
+      id: 442,
+      propertyType: null,
+      anomalies: [],
+      tenures: [],
+      roadTypes: [],
+      status: null,
+      dataSource: null,
+      region: {
+        id: 1,
+        description: 'South Coast Region',
+        isDisabled: false,
+        displayOrder: null,
+      },
+      district: {
+        id: 2,
+        description: 'Vancouver Island District',
+        isDisabled: false,
+        displayOrder: null,
+      },
+      dataSourceEffectiveDateOnly: '2024-09-02',
+      latitude: 381468.28746302053,
+      longitude: 1195345.9346225508,
+      isRetired: false,
+      pphStatusUpdateUserid: null,
+      pphStatusUpdateTimestamp: null,
+      pphStatusUpdateUserGuid: null,
+      isRwyBeltDomPatent: false,
+      pphStatusTypeCode: null,
+      address: {
+        id: 5,
+        streetAddress1: '100 - 1223 Admirals rd',
+        streetAddress2: null,
+        streetAddress3: null,
+        municipality: 'VICTORIA',
+        provinceStateId: 1,
+        province: null,
+        countryId: 1,
+        country: {
+          id: 1,
+          code: 'CA',
+          description: 'Canada',
+          displayOrder: 1,
+        },
+        districtCode: null,
+        district: null,
+        region: null,
+        regionCode: null,
+        countryOther: null,
+        postal: 'V9A 0H2',
+        latitude: null,
+        longitude: null,
+        comment: null,
+        rowVersion: 1,
+      },
+      pid: 9381783,
+      pin: null,
+      planNumber: 'NO_PLAN',
+      isOwned: true,
+      areaUnit: null,
+      landArea: 1448.0771,
+      isVolumetricParcel: false,
+      volumetricMeasurement: null,
+      volumetricUnit: null,
+      volumetricType: null,
+      landLegalDescription: '',
+      municipalZoning: null,
+      location: {
+        coordinate: {
+          x: 1195345.9346225508,
+          y: 381468.28746302053,
+        },
+      },
+      boundary: {
+        type: 'Polygon',
+        coordinates: [
+          [
+            [1195354.9557018392, 381427.9588649189],
+            [1195354.0951571623, 381499.711858022],
+            [1195333.99204098, 381497.40677890554],
+            [1195334.8049746372, 381429.3984455336],
+            [1195334.85423222, 381425.302975581],
+            [1195352.6783093433, 381427.6575633213],
+            [1195354.9557018392, 381427.9588649189],
+          ],
+        ],
+      },
+      generalLocation: null,
+      historicalFileNumbers: [],
+      notes: null,
+      surplusDeclarationType: null,
+      surplusDeclarationComment: null,
+      surplusDeclarationDate: '0001-01-01',
+      rowVersion: 1,
+    },
+    propertyId: 442,
     rowVersion: 1,
   },
 ];

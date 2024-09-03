@@ -15,6 +15,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 /**
@@ -87,7 +88,12 @@ export const useCompensationRequisitionRepository = () => {
     (
       fileType: ApiGen_CodeTypes_FileTypes,
       compensationId: number,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFileProperty[], any>>
+    ) => Promise<
+      AxiosResponse<
+        ApiGen_Concepts_AcquisitionFileProperty[] | ApiGen_Concepts_PropertyLease[],
+        any
+      >
+    >
   >({
     requestFunction: useCallback(
       async (fileType: ApiGen_CodeTypes_FileTypes, compensationId: number) =>
