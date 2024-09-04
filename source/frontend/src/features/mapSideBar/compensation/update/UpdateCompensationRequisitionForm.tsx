@@ -256,12 +256,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
 
               <Section header="Financial Coding">
-                {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-                  <SectionField label="Product" labelWidth="4">
-                    {(file as ApiGen_Concepts_AcquisitionFile).product?.code ?? ''}
-                  </SectionField>
-                )}
-
+                <SectionField label="Product" labelWidth="4">
+                  {file.product?.code ?? ''}
+                </SectionField>
                 <SectionField label="Business function" labelWidth="4">
                   {file.project?.businessFunctionCode?.code ?? ''}
                 </SectionField>

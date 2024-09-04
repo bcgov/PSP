@@ -150,10 +150,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     .reduce((prev, next) => prev + next, 0);
 
   const fileProject = file?.project;
-  const fileProduct =
-    fileType === ApiGen_CodeTypes_FileTypes.Acquisition
-      ? (file as ApiGen_Concepts_AcquisitionFile).product
-      : null;
+  const fileProduct = file?.product;
 
   let updateCompensationContext: UpdateCompensationContext | null;
   switch (fileType) {
@@ -328,12 +325,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
-        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-          <SectionField label="Product" labelWidth="4">
-            {fileProduct?.code ?? ''}
-          </SectionField>
-        )}
-
+        <SectionField label="Product" labelWidth="4" valueTestId="file-product">
+          {fileProduct?.code ?? ''}
+        </SectionField>
         <SectionField label="Business function" labelWidth="4">
           {fileProject?.businessFunctionCode?.code ?? ''}
         </SectionField>
