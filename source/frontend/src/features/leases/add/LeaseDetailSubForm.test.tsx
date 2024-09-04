@@ -98,10 +98,6 @@ describe('LeaseDetailSubForm component', () => {
     });
   });
 
-  afterEach(() => {
-    vi.resetAllMocks();
-  });
-
   it('renders as expected', async () => {
     const { asFragment } = await setup({});
     expect(asFragment()).toMatchSnapshot();
