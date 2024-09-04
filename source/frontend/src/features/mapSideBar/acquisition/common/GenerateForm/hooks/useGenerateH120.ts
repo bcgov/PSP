@@ -20,7 +20,7 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateCompensation } from '@/models/generate/acquisition/GenerateCompensation';
 import { Api_GenerateH120Property } from '@/models/generate/acquisition/GenerateH120Property';
-import { GenerateCompReqFileLease } from '@/models/generate/CompensationRequisition/GenerateCompReqFileLease';
+import { Api_GenerateCompReqFileLease } from '@/models/generate/CompensationRequisition/GenerateCompReqFileLease';
 import { ICompensationRequisitionFile } from '@/models/generate/CompensationRequisition/ICompensationRequisitionFile';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { getLatLng } from '@/utils/mapPropertyUtils';
@@ -156,7 +156,7 @@ export const useGenerateH120 = () => {
             }
           }
 
-          fileData = new GenerateCompReqFileLease(file, fileProperties, leaseStakeHolders);
+          fileData = new Api_GenerateCompReqFileLease(file, fileProperties, leaseStakeHolders);
         }
         break;
     }

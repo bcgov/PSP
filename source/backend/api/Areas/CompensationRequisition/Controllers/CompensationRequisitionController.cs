@@ -223,7 +223,7 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
 
             var compReqFinancials = _compensationRequisitionService.GetCompensationRequisitionFinancials(id);
 
-            return new JsonResult(_mapper.Map<IEnumerable<CompensationRequisitionModel>>(compReqFinancials));
+            return new JsonResult(_mapper.Map<IEnumerable<CompensationFinancialModel>>(compReqFinancials));
         }
     }
 }

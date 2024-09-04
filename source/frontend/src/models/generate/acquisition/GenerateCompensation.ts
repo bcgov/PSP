@@ -9,7 +9,7 @@ import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/A
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { formatMoney } from '@/utils';
 
-import { GenerateCompReqFileLease } from '../CompensationRequisition/GenerateCompReqFileLease';
+import { Api_GenerateCompReqFileLease } from '../CompensationRequisition/GenerateCompReqFileLease';
 import { ICompensationRequisitionFile } from '../CompensationRequisition/ICompensationRequisitionFile';
 import { Api_GenerateProject } from '../GenerateProject';
 import { Api_GenerateAcquisitionFile } from './GenerateAcquisitionFile';
@@ -76,7 +76,7 @@ export class Api_GenerateCompensation {
 
           return new Api_GenerateH120Property(cp?.property, interestHoldersForProperty);
         }) ?? [];
-    } else if (file instanceof GenerateCompReqFileLease) {
+    } else if (file instanceof Api_GenerateCompReqFileLease) {
       this.properties = compReqProperties?.map(fp => {
         return new Api_GenerateH120Property(fp.property, []);
       });

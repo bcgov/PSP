@@ -186,6 +186,7 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id)
         {
             return Context.PimsCompReqFinancials
+                .AsNoTracking()
                 .Include(y => y.FinancialActivityCode)
                 .Where(x => x.CompensationRequisitionId == id)
                 .ToList();

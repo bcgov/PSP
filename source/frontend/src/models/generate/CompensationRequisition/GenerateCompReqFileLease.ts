@@ -10,7 +10,7 @@ import { Api_GenerateProduct } from '../GenerateProduct';
 import { Api_GenerateProject } from '../GenerateProject';
 import { ICompensationRequisitionFile } from './ICompensationRequisitionFile';
 
-export class GenerateCompReqFileLease implements ICompensationRequisitionFile {
+export class Api_GenerateCompReqFileLease implements ICompensationRequisitionFile {
   private readonly leaseOwners: Api_GenerateOwner[];
 
   readonly file_number: string;

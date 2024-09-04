@@ -149,7 +149,7 @@ namespace Pims.Api.Services
         public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id)
         {
             _logger.LogInformation("Getting compensations financials for id: {acquisitionFileId}", id);
-            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.CompensationRequisitionView);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             return _compensationRequisitionRepository.GetCompensationRequisitionFinancials(id);
         }
