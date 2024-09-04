@@ -104,6 +104,7 @@ export class LeaseFormModel {
   cancellationReason: string | null = null;
   terminationReason: string | null = null;
   project?: IAutocompletePrediction;
+  productId: number | null;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
   securityDeposits: FormLeaseDeposit[] = [];
@@ -163,6 +164,7 @@ export class LeaseFormModel {
       ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
       : undefined;
 
+    leaseDetail.productId = apiModel.productId;
     leaseDetail.periods = apiModel?.periods?.map(t => FormLeasePeriod.fromApi(t)) || [];
     leaseDetail.stakeholders = apiModel?.stakeholders?.map(t => new FormStakeholder(t)) || [];
     leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
@@ -215,6 +217,8 @@ export class LeaseFormModel {
       otherProgramType: stringToNull(formLease.otherProgramTypeDescription),
       otherType: stringToNull(formLease.otherLeaseTypeDescription),
       project: isValidId(formLease.project?.id) ? ({ id: formLease.project?.id } as any) : null,
+      productId: formLease.productId,
+      product: null,
       consultations: null,
       stakeholders: formLease.stakeholders.map(t => FormStakeholder.toApi(t)),
       periods: formLease.periods.map(t => FormLeasePeriod.toApi(t)),
@@ -356,6 +360,8 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     terminationReason: null,
     isExpired: false,
     project: null,
+    productId: null,
+    product: null,
     fileName: null,
     fileNumber: null,
     fileChecklistItems: [],

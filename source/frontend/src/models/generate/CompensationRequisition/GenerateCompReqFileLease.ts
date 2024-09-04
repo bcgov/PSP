@@ -29,7 +29,7 @@ export class Api_GenerateCompReqFileLease implements ICompensationRequisitionFil
     this.file_name = lease.fileNumber ?? '';
 
     this.project = new Api_GenerateProject(lease.project ?? null);
-    // TODO : Product
+    this.product = new Api_GenerateProduct(lease?.product ?? null);
 
     this.properties = leaseProperties.map(p => {
       return new Api_GenerateH120Property(p.property, []);
