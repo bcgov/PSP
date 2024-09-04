@@ -10,9 +10,9 @@ export interface ILeaseRenewalsViewProps {
   renewals: ApiGen_Concepts_LeaseRenewal[];
 }
 
-export const LeaseRenewalsView: React.FunctionComponent<
-  React.PropsWithChildren<ILeaseRenewalsViewProps>
-> = ({ renewals }) => {
+export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps> = ({
+  renewals,
+}) => {
   if (renewals.length === 0)
     return <Section header="Renewal Options">No Renewal Information</Section>;
   return (
