@@ -165,7 +165,7 @@ describe('LeaseDetailSubForm component', () => {
     expect(await findByText('Expiry Date must be after Start Date')).toBeVisible();
   });
 
-  it.only('shows matching projects based on user input', async () => {
+  it('shows matching projects based on user input', async () => {
     retrieveProjectProductsFn.mockResolvedValue([]);
 
     const { getProjectSelector, findProjectSelectorItems, container } = await setup({});
