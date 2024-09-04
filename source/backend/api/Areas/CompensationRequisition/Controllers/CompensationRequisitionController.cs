@@ -204,5 +204,26 @@ namespace Pims.Api.Areas.CompensationRequisition.Controllers
 
             return new JsonResult(compensations);
         }
+
+        [HttpGet("{id:long}/financials")]
+        [HasPermission(Permissions.CompensationRequisitionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<CompensationFinancialModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "compensation-requisition" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetCompensationRequisitionFinancials([FromRoute] long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(CompensationRequisitionController),
+                nameof(GetCompensationRequisitionFinancials),
+                User.GetUsername(),
+                DateTime.Now);
+            _logger.LogInformation("Dispatching to service: {Service}", _compensationRequisitionService.GetType());
+
+            var compReqFinancials = _compensationRequisitionService.GetCompensationRequisitionFinancials(id);
+
+            return new JsonResult(_mapper.Map<IEnumerable<CompensationFinancialModel>>(compReqFinancials));
+        }
     }
 }

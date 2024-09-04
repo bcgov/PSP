@@ -41,7 +41,10 @@ export interface CompensationRequisitionDetailViewProps {
   clientConstant: string;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
-  onGenerate: (compensation: ApiGen_Concepts_CompensationRequisition) => void;
+  onGenerate: (
+    fileType: ApiGen_CodeTypes_FileTypes,
+    compensation: ApiGen_Concepts_CompensationRequisition,
+  ) => void;
 }
 
 export interface PayeeViewDetails {
@@ -252,16 +255,14 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
                   toolTip={cannotEditMessage}
                 />
               )}
-              {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-                <StyledAddButton
-                  onClick={() => {
-                    onGenerate(compensation);
-                  }}
-                >
-                  <FaMoneyCheck className="mr-2" />
-                  Generate H120
-                </StyledAddButton>
-              )}
+              <StyledAddButton
+                onClick={() => {
+                  onGenerate(fileType, compensation);
+                }}
+              >
+                <FaMoneyCheck className="mr-2" />
+                Generate H120
+              </StyledAddButton>
             </RightFlexDiv>
           </FlexDiv>
         }

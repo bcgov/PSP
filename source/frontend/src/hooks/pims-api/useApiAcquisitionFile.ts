@@ -8,7 +8,6 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
@@ -107,10 +106,6 @@ export const useApiAcquisitionFile = () => {
         api.put<ApiGen_Concepts_AcquisitionFile>(
           `/acquisitionfiles/${acqFile?.id}/checklist`,
           acqFile.fileChecklistItems,
-        ),
-      getFileCompReqH120s: (acqFileId: number, finalOnly?: boolean) =>
-        api.get<ApiGen_Concepts_CompensationFinancial[]>(
-          `/acquisitionfiles/${acqFileId}/comp-req-h120s?finalOnly=${!!finalOnly}`,
         ),
       getAcquisitionFileForm8s: (acqFileId: number) =>
         api.get<ApiGen_Concepts_ExpropriationPayment[]>(
