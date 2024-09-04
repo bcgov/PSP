@@ -710,6 +710,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c9 text-left col"
+            data-testid="file-product"
           >
             00048
           </div>
