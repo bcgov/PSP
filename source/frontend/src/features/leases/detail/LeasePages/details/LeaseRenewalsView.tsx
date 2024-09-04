@@ -14,9 +14,9 @@ export const LeaseRenewalsView: React.FunctionComponent<
   React.PropsWithChildren<ILeaseRenewalsViewProps>
 > = ({ renewals }) => {
   if (renewals.length === 0)
-    return <Section header="Renewal Option">No Renewal Information</Section>;
+    return <Section header="Renewal Options">No Renewal Information</Section>;
   return (
-    <Section header="Renewal Option">
+    <Section header="Renewal Options">
       {renewals.map((renewal, index) => (
         <Section key={`lease-renewal-{index}`} header={`Renewal ${index + 1}`} noPadding>
           <SectionField label="Exercised?" labelWidth="3">
