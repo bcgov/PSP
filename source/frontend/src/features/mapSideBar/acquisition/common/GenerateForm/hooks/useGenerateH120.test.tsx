@@ -25,7 +25,11 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
-import { getMockApiLease, getMockLeaseProperties, getMockLeaseStakeholders } from '@/mocks/lease.mock';
+import {
+  getMockApiLease,
+  getMockLeaseProperties,
+  getMockLeaseStakeholders,
+} from '@/mocks/lease.mock';
 
 const generateFn = vi
   .fn()

@@ -106,12 +106,14 @@ describe('GenerateCompensationPayee tests', () => {
     (expectedName: string, teamMember: ApiGen_Concepts_LeaseStakeholder) => {
       const compensation: ApiGen_Concepts_CompensationRequisition = {
         ...getMockApiDefaultCompensation(),
-        compReqLeaseStakeholder: [{
-          compReqLeaseStakeholderId: 1000,
-          compensationRequisitionId: 1,
-          leaseStakeholderId: 100,
-          leaseStakeholder: teamMember
-        } as ApiGen_Concepts_CompReqLeaseStakeholder],
+        compReqLeaseStakeholder: [
+          {
+            compReqLeaseStakeholderId: 1000,
+            compensationRequisitionId: 1,
+            leaseStakeholderId: 100,
+            leaseStakeholder: teamMember,
+          } as ApiGen_Concepts_CompReqLeaseStakeholder,
+        ],
       };
       const payee = new Api_GenerateCompensationPayee(compensation, []);
       expect(payee.name).toBe(expectedName);
