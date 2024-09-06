@@ -149,13 +149,14 @@ export const useComposedProperties = ({
     } else if (retrievedPin) {
       typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
+
     // Crown land doesn't necessarily have a PIMS ID or PID or PIN so we need to use the lat/long of the selected property
-    typeCheckWrapper(async () => {
-      if (exists(latLng)) {
+    if (exists(latLng)) {
+      typeCheckWrapper(async () => {
         const result = await findOneCrownLandTenure(latLng);
         setCrownResponse(result);
-      }
-    }, PROPERTY_TYPES.CROWN_TENURES);
+      }, PROPERTY_TYPES.CROWN_TENURES);
+    }
   }, [
     findByPid,
     findByPin,
@@ -164,8 +165,8 @@ export const useComposedProperties = ({
     retrievedPin,
     typeCheckWrapper,
     executeBcAssessmentSummary,
-    latLng,
     findOneCrownLandTenure,
+    latLng,
   ]);
 
   useEffect(() => {
