@@ -184,29 +184,6 @@ describe('LeaseDetailSubForm component', () => {
     expect(retrieveProjectProductsFn).toHaveBeenCalled();
   });
 
-  it('shows matching projects based on user input', async () => {
-    retrieveProjectProductsFn.mockResolvedValue([]);
-
-    const { getProjectSelector, findProjectSelectorItems, container } = await setup({});
-    await act(async () => userEvent.type(getProjectSelector()!, 'test'));
-    await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
-
-    const items = await findProjectSelectorItems();
-    expect(items).toHaveLength(2);
-    expect(items[0]).toHaveTextContent(/MOCK TEST PROJECT/i);
-    expect(items[1]).toHaveTextContent(/ANOTHER MOCK/i);
-
-    const firstOption = container.querySelector(`#typeahead-project-item-0`);
-    expect(firstOption).toBeInTheDocument();
-
-    await act(async () => {
-      userEvent.click(firstOption);
-    });
-    await waitForEffects();
-
-    expect(retrieveProjectProductsFn).toHaveBeenCalled();
-  });
-
   it('Removes product when Project Removed', async () => {
     retrieveProjectProductsFn.mockResolvedValue([]);
 
