@@ -45,7 +45,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       ? LeaseFileTabNames.tenant
       : LeaseFileTabNames.payee;
   const stakeHolderTypeName = lease?.paymentReceivableType.id === 'RCVBL' ? 'Tenant' : 'Payee';
-  //test
 
   const location = useLocation();
   const history = useHistory();
