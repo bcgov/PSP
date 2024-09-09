@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using FluentAssertions;
 using MapsterMapper;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Lease.Models.Search;
@@ -133,14 +135,34 @@ namespace Pims.Api.Test.Controllers.Reports
             lease.OtherLeaseProgramType = "program";
             lease.LeaseLicenseTypeCodeNavigation = new PimsLeaseLicenseType() { LeaseLicenseTypeCode = "OTHER", Description = "othertypedesc" };
             lease.OtherLeaseLicenseType = "type";
-            // TODO: Fix Mappings
-            //lease.LeasePurposeTypeCodeNavigation = new PimsLeasePurposeType() { LeasePurposeTypeCode = "OTHER", Description = "otherpurposedesc" };
-            //lease.OtherLeasePurposeType = "purpose";
+            lease.PimsLeaseLeasePurposes = new Collection<PimsLeaseLeasePurpose> {
+                new PimsLeaseLeasePurpose() {
+                   LeasePurposeTypeCodeNavigation = new PimsLeasePurposeType {
+                      LeasePurposeTypeCode = "OTHER", Description = "otherpurposedesc"
+                   },
+                LeasePurposeOtherDesc = "purpose"
+                },
+            };
+
             lease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType() { LeaseStatusTypeCode = "STATUS", Description = "status" };
             lease.PsFileNo = "123";
             lease.LeaseNotes = "note";
             lease.InspectionDate = new DateTime(2000, 2, 2);
             lease.InspectionNotes = "inspection note";
+            var propertyTwo = new PimsProperty()
+            {
+                PropertyId = 2,
+                PimsHistoricalFileNumbers = new Collection<PimsHistoricalFileNumber> {
+                    new PimsHistoricalFileNumber() { 
+                         HistoricalFileNumber = "123",
+                        HistoricalFileNumberTypeCodeNavigation = new PimsHistoricalFileNumberType(){ HistoricalFileNumberTypeCode = "LIS", Description = "LIS"} },
+                    new PimsHistoricalFileNumber() { 
+                        HistoricalFileNumber = "456", 
+                        HistoricalFileNumberTypeCodeNavigation = new PimsHistoricalFileNumberType(){ HistoricalFileNumberTypeCode = "PS", Description = "PS"} } }
+            };
+
+            lease.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = 3, Property = propertyTwo });
+
             var leases = new[] { lease };
 
             var page = new Paged<Entity.PimsLease>(leases);
@@ -156,12 +178,9 @@ namespace Pims.Api.Test.Controllers.Reports
             result.StartDate.Should().Be(new DateOnly(2000, 1, 1));
             result.ProgramName.Should().Be("otherprogramdesc - program");
             result.StatusType.Should().Be("status");
-            result.PurposeType.Should().Be("otherpurposedesc - purpose");
+            result.PurposeTypes.Should().Be("otherpurposedesc - purpose");
             result.LeaseTypeName.Should().Be("othertypedesc - type");
-            result.PsFileNo.Should().Be("123");
-            result.LeaseNotes.Should().Be("note");
-            result.InspectionDate.Should().Be(new DateTime(2000, 2, 2));
-            result.InspectionNotes.Should().Be("inspection note");
+            result.HistoricalFileNo.Should().Be("LIS: 123; PS: 456");
         }
 
         public static IEnumerable<object[]> Financial_Public_Values = new List<object[]>()
@@ -223,9 +242,6 @@ namespace Pims.Api.Test.Controllers.Reports
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
             result.CurrentPeriodStartDate.Should().Be(DateOnly.FromDateTime(leasePeriod.PeriodStartDate));
             result.CurrentTermEndDate.Should().Be(leasePeriod.PeriodExpiryDate.ToNullableDateOnly());
-            result.PeriodStartDate.Should().Be(DateOnly.FromDateTime(leasePeriod.PeriodStartDate));
-            result.PeriodRenewalDate.Should().Be(leasePeriod.PeriodRenewalDate.ToNullableDateOnly());
-            result.PeriodExpiryDate.Should().Be(leasePeriod.PeriodExpiryDate.ToNullableDateOnly());
             result.IsExpired.Should().Be("No");
             result.LeasePaymentFrequencyType.Should().Be("pmt");
             result.LeaseAmount.Should().Be(1000);
