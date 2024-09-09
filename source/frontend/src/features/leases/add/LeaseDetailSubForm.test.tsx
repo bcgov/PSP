@@ -22,6 +22,7 @@ import LeaseDetailSubForm from './LeaseDetailSubForm';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import React from 'react';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { getMockApiLease } from '@/mocks/lease.mock';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -214,6 +215,40 @@ describe('LeaseDetailSubForm component', () => {
 
     const productMultiSelect = container.querySelector(`#input-productId`);
     expect(productMultiSelect).not.toBeInTheDocument();
+  });
+
+  it('Show project and product values for the form when loaded', async () => {
+    const mockLease = getMockApiLease();
+    retrieveProjectProductsFn.mockResolvedValue([
+      {
+        id: 6,
+        projectProducts: [],
+        acquisitionFiles: [],
+        code: '00053EXP',
+        description: 'DIR C\u0026M \u0026 CLAIMS OVERHEAD',
+        startDate: null,
+        costEstimate: null,
+        costEstimateDate: null,
+        objective: null,
+        scope: null,
+        appCreateTimestamp: '2024-09-04T17:09:56.527',
+        appLastUpdateTimestamp: '2024-09-04T17:09:56.527',
+        appLastUpdateUserid: 'dbo',
+        appCreateUserid: 'dbo',
+        appLastUpdateUserGuid: null,
+        appCreateUserGuid: null,
+        rowVersion: 1,
+      },
+    ]);
+
+    const { container } = await setup({
+      initialValues: LeaseFormModel.fromApi(mockLease),
+    });
+    await waitForEffects();
+    expect(retrieveProjectProductsFn).toHaveBeenCalled();
+
+    const productMultiSelect = container.querySelector(`#input-productId`);
+    expect(productMultiSelect).toBeInTheDocument();
   });
 
   it('displays the cancellation reason textbox when status is changed to "Discarded"', async () => {
