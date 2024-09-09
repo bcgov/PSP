@@ -1,5 +1,5 @@
 import { FormikProps } from 'formik/dist/types';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import {
@@ -34,7 +34,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   const { retrieveProjectProducts } = useProjectProvider();
 
   const { values, setFieldValue } = formikProps;
-  const { statusTypeCode, terminationReason, cancellationReason, project } = values;
+  const { statusTypeCode, terminationReason, cancellationReason } = values;
 
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -109,12 +109,6 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
     },
     [retrieveProjectProducts],
   );
-
-  useEffect(() => {
-    if (project !== undefined) {
-      onMinistryProjectSelected([project]);
-    }
-  }, [onMinistryProjectSelected, project]);
 
   return (
     <Section header="Original Agreement">
