@@ -8,7 +8,6 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
@@ -37,7 +36,6 @@ export const useAcquisitionProvider = () => {
     getAcquisitionFileProduct,
     getAcquisitionFileChecklist,
     putAcquisitionFileChecklist,
-    getFileCompReqH120s,
     postFileForm8,
     getAcquisitionFileForm8s,
     getAllAcquisitionFileTeamMembers,
@@ -221,23 +219,6 @@ export const useAcquisitionProvider = () => {
     throwError: true,
   });
 
-  const getAcquisitionCompReqH120sApi = useApiRequestWrapper<
-    (
-      acqFileId: number,
-      finalOnly: boolean,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_CompensationFinancial[], any>>
-  >({
-    requestFunction: useCallback(
-      async (acqFileId: number, finalOnly: boolean) =>
-        await getFileCompReqH120s(acqFileId, finalOnly),
-      [getFileCompReqH120s],
-    ),
-    requestName: 'getAcquisitionCompReqH120s',
-    onError: useAxiosErrorHandler(
-      'Failed to load requisition compensation financials. Refresh the page to try again.',
-    ),
-  });
-
   const postFileForm8Api = useApiRequestWrapper<
     (
       acqFileId: number,
@@ -281,7 +262,6 @@ export const useAcquisitionProvider = () => {
       getAcquisitionProduct: getAcquisitionProductApi,
       getAcquisitionFileChecklist: getAcquisitionChecklistApi,
       updateAcquisitionChecklist: updateAcquisitionChecklistApi,
-      getAcquisitionCompReqH120s: getAcquisitionCompReqH120sApi,
       postAcquisitionForm8: postFileForm8Api,
       getAcquisitionFileForm8s: getAcquisitionForm8sApi,
       getAgreementsReport: getAgreementsReportApi,
@@ -300,7 +280,6 @@ export const useAcquisitionProvider = () => {
       getAcquisitionProductApi,
       getAcquisitionChecklistApi,
       updateAcquisitionChecklistApi,
-      getAcquisitionCompReqH120sApi,
       postFileForm8Api,
       getAcquisitionForm8sApi,
       getAgreementsReportApi,

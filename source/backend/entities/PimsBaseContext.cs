@@ -4110,6 +4110,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.OtherLeaseLicenseType).HasComment("Description of a non-standard lease/license type");
             entity.Property(e => e.OtherLeaseProgramType).HasComment("Description of a non-standard lease program type");
             entity.Property(e => e.PrimaryArbitrationCity).HasComment("The location in which primary arbtration of the lease occurred.");
+            entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
             entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
             entity.Property(e => e.PsFileNo).HasComment("Sourced from t_fileSubOverrideData.PSFile_No");
             entity.Property(e => e.RegionCode).HasComment("Foreign key to the PIMS_REGION table.");
@@ -4140,6 +4141,8 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.LeaseStatusTypeCodeNavigation).WithMany(p => p.PimsLeases)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_LSSTYP_PIM_LEASE_FK");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.PimsLeases).HasConstraintName("PIM_PRODCT_PIM_LEASE_FK");
 
             entity.HasOne(d => d.Project).WithMany(p => p.PimsLeases).HasConstraintName("PIM_PROJCT_PIM_LEASE_FK");
 

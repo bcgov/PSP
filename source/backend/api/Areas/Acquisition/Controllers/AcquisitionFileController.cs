@@ -225,30 +225,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         }
 
         /// <summary>
-        /// Gets all the compensation requisition financials for an acq file.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("{id:long}/comp-req-h120s")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<CompensationFinancialModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "comp-req-h120s" })]
-        [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetFileCompReqH120(long id, bool? finalOnly)
-        {
-            _logger.LogInformation(
-                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(AcquisitionFileController),
-                nameof(GetFileCompReqH120),
-                User.GetUsername(),
-                DateTime.Now);
-            _logger.LogInformation("Dispatching to service: {Service}", _compReqFinancialService.GetType());
-
-            var h120s = _compReqFinancialService.GetAllByAcquisitionFileId(id, finalOnly);
-
-            return new JsonResult(_mapper.Map<IEnumerable<CompensationFinancialModel>>(h120s));
-        }
-
-        /// <summary>
         /// Get all Expropriation Payments from the Acquisition File.
         /// </summary>
         /// <param name="id">Acquisition File Id.</param>

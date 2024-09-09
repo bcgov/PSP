@@ -17,6 +17,7 @@ namespace Pims.Dal.Entities;
 [Index("LeaseResponsibilityTypeCode", Name = "LEASE_LEASE_RESPONSIBILITY_TYPE_CODE_IDX")]
 [Index("LeaseStatusTypeCode", Name = "LEASE_LEASE_STATUS_TYPE_CODE_IDX")]
 [Index("LFileNo", Name = "LEASE_L_FILE_NO_IDX")]
+[Index("ProductId", Name = "LEASE_PRODUCT_ID_IDX")]
 [Index("ProjectId", Name = "LEASE_PROJECT_ID_IDX")]
 [Index("PsFileNo", Name = "LEASE_PS_FILE_NO_IDX")]
 [Index("RegionCode", Name = "LEASE_REGION_CODE_IDX")]
@@ -88,6 +89,12 @@ public partial class PimsLease
     /// </summary>
     [Column("PROJECT_ID")]
     public long? ProjectId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_PRODUCT table.
+    /// </summary>
+    [Column("PRODUCT_ID")]
+    public long? ProductId { get; set; }
 
     /// <summary>
     /// Generated identifying lease/licence number
@@ -454,6 +461,10 @@ public partial class PimsLease
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsSecurityDeposit> PimsSecurityDeposits { get; set; } = new List<PimsSecurityDeposit>();
+
+    [ForeignKey("ProductId")]
+    [InverseProperty("PimsLeases")]
+    public virtual PimsProduct Product { get; set; }
 
     [ForeignKey("ProjectId")]
     [InverseProperty("PimsLeases")]

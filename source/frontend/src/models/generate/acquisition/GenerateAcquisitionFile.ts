@@ -3,6 +3,7 @@ import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiG
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
 
+import { ICompensationRequisitionFile } from '../CompensationRequisition/ICompensationRequisitionFile';
 import { Api_GenerateOrganization } from '../GenerateOrganization';
 import { Api_GenerateOwner } from '../GenerateOwner';
 import { Api_GeneratePerson } from '../GeneratePerson';
@@ -21,25 +22,27 @@ export interface IApiGenerateAcquisitionFileInput {
   interestHolders?: ApiGen_Concepts_InterestHolder[];
 }
 
-export class Api_GenerateAcquisitionFile {
-  properties: Api_GenerateH120Property[];
-  property_coordinator?: Api_GeneratePerson | Api_GenerateOrganization;
-  primary_owner?: Api_GenerateOwner;
-  owners: Api_GenerateOwner[];
-  person_owners: Api_GenerateOwner[];
-  organization_owners: Api_GenerateOwner[];
-  all_owners_string: string;
-  all_owners_string_and: string;
+export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile {
   file_number: string;
   file_name: string;
+  project: Api_GenerateProject;
+  product: Api_GenerateProduct;
+  properties: Api_GenerateH120Property[];
+  all_owners_string: string;
+  // not in H120 template
   project_number: string;
   project_name: string;
+  owners: Api_GenerateOwner[];
+  organization_owners: Api_GenerateOwner[];
+  person_owners: Api_GenerateOwner[];
   prov_solicitor?: Api_GeneratePerson | Api_GenerateOrganization;
   prov_solicitor_attn?: Api_GeneratePerson;
   owner_solicitor?: Api_GenerateInterestHolder;
   neg_agent?: Api_GeneratePerson | Api_GenerateOrganization;
-  project?: Api_GenerateProject;
-  product?: Api_GenerateProduct;
+  primary_owner?: Api_GenerateOwner;
+  property_coordinator?: Api_GeneratePerson | Api_GenerateOrganization;
+  all_owners_string_and: string;
+  readonly interestHolders: ApiGen_Concepts_InterestHolder[];
 
   constructor({
     file,
@@ -49,10 +52,22 @@ export class Api_GenerateAcquisitionFile {
     ownerSolicitor = null,
     interestHolders = [],
   }: IApiGenerateAcquisitionFileInput) {
+    this.file_name = file?.fileName ?? '';
+    this.file_number = file?.fileNumber ?? '';
+    this.project = new Api_GenerateProject(file?.project ?? null);
+    this.product = new Api_GenerateProduct(file?.product ?? null);
+
+    this.file_name = file?.fileName ?? '';
+    this.file_number = file?.fileNumber ?? '';
+    this.project_name = this.project?.name ?? '';
+    this.project_number = this.project?.number ?? '';
+
     this.owners = file?.acquisitionFileOwners?.map(owner => new Api_GenerateOwner(owner)) ?? [];
     this.property_coordinator = this.getTeam(coordinatorContact);
     this.neg_agent = this.getTeam(negotiatingAgent, true);
-    const allInterestHoldersPropertes = interestHolders.flatMap(
+    this.interestHolders = interestHolders;
+
+    const allInterestHoldersPropertes = this.interestHolders.flatMap(
       ih => ih?.interestHolderProperties ?? [],
     );
 
@@ -80,10 +95,6 @@ export class Api_GenerateAcquisitionFile {
         return new Api_GenerateH120Property(fp?.property, interestHoldersForAcquisitionFile);
       }) ?? [];
 
-    this.file_name = file?.fileName ?? '';
-    this.file_number = file?.fileNumber ?? '';
-    this.project_name = file?.project?.description ?? '';
-    this.project_number = file?.project?.code ?? '';
     this.primary_owner = new Api_GenerateOwner(
       file?.acquisitionFileOwners?.find(owner => owner.isPrimaryContact) ?? null,
     );
@@ -98,8 +109,6 @@ export class Api_GenerateAcquisitionFile {
       file?.acquisitionFileOwners
         ?.filter(owner => owner.isOrganization)
         ?.map(owner => new Api_GenerateOwner(owner)) ?? [];
-    this.project = new Api_GenerateProject(file?.project ?? null);
-    this.product = new Api_GenerateProduct(file?.product ?? null);
     this.all_owners_string = this.owners.map(owner => owner.owner_string).join(', ');
     this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
   }
