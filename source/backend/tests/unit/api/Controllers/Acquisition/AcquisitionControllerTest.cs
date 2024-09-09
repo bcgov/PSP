@@ -107,38 +107,6 @@ namespace Pims.Api.Test.Controllers
             this._service.Verify(m => m.UpdateProperties(It.IsAny<PimsAcquisitionFile>(), It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once());
         }
 
-        /// <summary>
-        /// Get all compensation financials for a file.
-        /// </summary>
-        [Fact]
-        public void GetFileCompReqH120_Success()
-        {
-            // Arrange
-            this._compReqFinancialservice.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial>());
-
-            // Act
-            var result = this._controller.GetFileCompReqH120(1, false);
-
-            // Assert
-            this._compReqFinancialservice.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), false));
-        }
-
-        /// <summary>
-        /// get all compensation financials for a file that belong to compensation requisitions in the final status.
-        /// </summary>
-        [Fact]
-        public void GetFileCompReqH120_FinalOnly()
-        {
-            // Arrange
-            this._compReqFinancialservice.Setup(m => m.GetAllByAcquisitionFileId(It.IsAny<long>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial>());
-
-            // Act
-            var result = this._controller.GetFileCompReqH120(1, true);
-
-            // Assert
-            this._compReqFinancialservice.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>(), true));
-        }
-
         #endregion
     }
 }

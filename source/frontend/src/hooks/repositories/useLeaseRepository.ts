@@ -8,6 +8,7 @@ import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiLeases } from '../pims-api/useApiLeases';
@@ -19,6 +20,7 @@ export const useLeaseRepository = () => {
   const {
     getLastUpdatedByApi,
     getApiLease,
+    putApiLease,
     putLeaseChecklist,
     getLeaseChecklist,
     getLeaseRenewals,
@@ -35,6 +37,21 @@ export const useLeaseRepository = () => {
     requestName: 'getLastUpdatedBy',
     onSuccess: useAxiosSuccessHandler(),
     onError: useAxiosErrorHandler('Failed to retreive last-updated-by information for a lease.'),
+  });
+
+  const updateApiLease = useApiRequestWrapper<
+    (
+      lease: ApiGen_Concepts_Lease,
+      userOverrideCodes: UserOverrideCode[],
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Lease, any>>
+  >({
+    requestFunction: useCallback(
+      async (lease: ApiGen_Concepts_Lease, userOverrideCodes: UserOverrideCode[] = []) =>
+        await putApiLease(lease, userOverrideCodes),
+      [putApiLease],
+    ),
+    requestName: 'updateLease',
+    throwError: true,
   });
 
   const getLease = useApiRequestWrapper<
@@ -100,6 +117,7 @@ export const useLeaseRepository = () => {
   return useMemo(
     () => ({
       getLastUpdatedBy: getLastUpdatedBy,
+      updateLease: updateApiLease,
       getLease: getLease,
       getLeaseRenewals: getLeaseRenewalsApi,
       getLeaseChecklist: getLeaseChecklistApi,
@@ -108,6 +126,7 @@ export const useLeaseRepository = () => {
     }),
     [
       getLastUpdatedBy,
+      updateApiLease,
       getLease,
       getLeaseRenewalsApi,
       getLeaseChecklistApi,

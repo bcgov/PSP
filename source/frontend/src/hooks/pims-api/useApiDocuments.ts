@@ -1,3 +1,4 @@
+import { File } from 'buffer';
 import React from 'react';
 
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -74,6 +75,12 @@ export const useApiDocuments = () => {
         api.get<ApiGen_Requests_FileDownloadResponse>(
           `/documents/storage/${mayanDocumentId}/download-wrapped`,
         ),
+
+      streamDocumentFileApiCall: (mayanDocumentId: number, mayanFileId: number) =>
+        api.get<File>(`/documents/storage/${mayanDocumentId}/stream/${mayanFileId}`),
+
+      streamDocumentFileLatestApiCall: (mayanDocumentId: number) =>
+        api.get<File>(`/documents/storage/${mayanDocumentId}/stream`),
 
       uploadDocumentRelationshipApiCall: (
         relationshipType: ApiGen_CodeTypes_DocumentRelationType,

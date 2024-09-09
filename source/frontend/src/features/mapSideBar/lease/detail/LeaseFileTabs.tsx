@@ -18,6 +18,7 @@ interface ILeaseFileTabsProps {
 
 export enum LeaseFileTabNames {
   fileDetails = 'fileDetails',
+  consultations = 'consultations',
   tenant = 'tenant',
   payee = 'payee',
   improvements = 'improvements',
@@ -28,6 +29,7 @@ export enum LeaseFileTabNames {
   checklist = 'checklist',
   documents = 'documents',
   notes = 'notes',
+  compensation = 'compensation',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.

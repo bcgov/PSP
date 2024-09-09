@@ -2,11 +2,8 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
-import { mockApiProperty } from '@/mocks/filterData.mock';
-import { getEmptyPropertyLease } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyLease } from '@/models/defaultInitializers';
-import { toTypeCode } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { DetailFeeDetermination, IDetailFeeDeterminationProps } from './DetailFeeDetermination';

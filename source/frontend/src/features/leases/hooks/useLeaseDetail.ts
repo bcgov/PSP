@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext } from 'react';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
@@ -8,6 +8,7 @@ import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStak
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { useAxiosErrorHandler } from '@/utils';
 
@@ -15,8 +16,7 @@ import { LeaseStateContext } from './../context/LeaseContext';
 
 export function useLeaseDetail(leaseId?: number) {
   const { lease, setLease } = useContext(LeaseStateContext);
-  const { setLastUpdatedBy, lastUpdatedBy, setStaleLastUpdatedBy, staleLastUpdatedBy } =
-    useContext(SideBarContext);
+  const { setFile } = useContext(SideBarContext);
 
   leaseId = leaseId ?? lease?.id ?? undefined;
   const { getApiLease } = useApiLeases();
@@ -31,7 +31,6 @@ export function useLeaseDetail(leaseId?: number) {
   } = useLeasePeriodRepository();
 
   const {
-    getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
     getLeaseChecklist: { execute: getLeaseChecklist, loading: getLeaseChecklistLoading },
     getLeaseRenewals: { execute: getLeaseRenewals, loading: getLeaseRenewalsLoading },
   } = useLeaseRepository();
@@ -54,7 +53,7 @@ export function useLeaseDetail(leaseId?: number) {
       const leaseRenewalsPromise = getLeaseRenewals(leaseId);
 
       const [
-        lease,
+        leaseResponse,
         leaseTenants,
         propertyLeases,
         leasePeriods,
@@ -68,19 +67,24 @@ export function useLeaseDetail(leaseId?: number) {
         leaseChecklistPromise,
         leaseRenewalsPromise,
       ]);
-      if (lease) {
+
+      if (leaseResponse) {
         const mergedLeases: ApiGen_Concepts_Lease = {
-          ...lease,
+          ...leaseResponse,
           stakeholders: leaseTenants ?? [],
           fileProperties: propertyLeases ?? [],
           periods: leasePeriods ?? [],
           fileChecklistItems: leaseChecklistItems ?? [],
           renewals: leaseRenewals,
         };
+
         setLease(mergedLeases);
+        setFile({ ...mergedLeases, fileType: ApiGen_CodeTypes_FileTypes.Lease });
+
         return mergedLeases;
       }
-      return undefined;
+
+      return;
     }
   }, [
     leaseId,
@@ -91,31 +95,14 @@ export function useLeaseDetail(leaseId?: number) {
     getLeaseChecklist,
     getLeaseRenewals,
     setLease,
+    setFile,
   ]);
-
-  const fetchLastUpdatedBy = useCallback(async () => {
-    if (leaseId) {
-      const retrieved = await getLastUpdatedBy(leaseId);
-      if (retrieved !== undefined) {
-        setLastUpdatedBy(retrieved);
-      } else {
-        setLastUpdatedBy(null);
-      }
-    }
-  }, [leaseId, getLastUpdatedBy, setLastUpdatedBy]);
-
-  useEffect(() => {
-    if (lastUpdatedBy === undefined || leaseId !== lastUpdatedBy?.parentId || staleLastUpdatedBy) {
-      fetchLastUpdatedBy();
-    }
-  }, [fetchLastUpdatedBy, lastUpdatedBy, leaseId, staleLastUpdatedBy]);
 
   const loading =
     getApiLeaseById.loading ||
     propertyLeasesLoading ||
     getLeaseStakeholdersLoading ||
     leasePeriodsLoading ||
-    getLastUpdatedByLoading ||
     getLeaseRenewalsLoading ||
     getLeaseChecklistLoading;
 
@@ -129,7 +116,6 @@ export function useLeaseDetail(leaseId?: number) {
     lease,
     setLease,
     refresh: async () => {
-      setStaleLastUpdatedBy(true);
       await getCompleteLease();
     },
     getCompleteLease,

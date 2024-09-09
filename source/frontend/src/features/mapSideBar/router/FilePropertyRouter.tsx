@@ -3,9 +3,9 @@ import React, { useContext } from 'react';
 import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { FileTypes } from '@/constants';
 import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { exists, isValidId } from '@/utils';
@@ -21,7 +21,7 @@ import { PropertyFileContainer } from '../shared/detail/PropertyFileContainer';
 export interface IFilePropertyRouterProps {
   formikRef: React.Ref<FormikProps<any>>;
   file?: ApiGen_Concepts_File;
-  fileType: FileTypes;
+  fileType: ApiGen_CodeTypes_FileTypes;
   isEditing: boolean;
   setIsEditing: (value: boolean) => void;
   selectedMenuIndex: number;

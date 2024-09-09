@@ -1,8 +1,12 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
+import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_CompReqLeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseStakeholder';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists, isNullOrWhitespace } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -53,6 +57,13 @@ export class PayeeOption {
       }
     }
 
+    if (apiModel.compReqLeaseStakeholder?.length > 0) {
+      return PayeeOption.generateKey(
+        apiModel.compReqLeaseStakeholder[0].leaseStakeholderId,
+        PayeeType.LeaseStakeholder,
+      );
+    }
+
     if (apiModel.legacyPayee) {
       return PayeeOption.generateKey(apiModel.id, PayeeType.LegacyPayee);
     }
@@ -61,10 +72,13 @@ export class PayeeOption {
   }
 
   public static toApi(
+    compensationRequisitionId: number,
     payeeKey: string,
     options: PayeeOption[],
   ): ApiGen_Concepts_CompensationRequisition {
     const compensationModel: ApiGen_Concepts_CompensationRequisition = {
+      acquisitionFileId: null,
+      leaseId: null,
       isPaymentInTrust: null,
       gstNumber: null,
       acquisitionOwnerId: null,
@@ -76,7 +90,6 @@ export class PayeeOption {
       interestHolder: null,
       acquisitionFileTeamId: null,
       id: null,
-      acquisitionFileId: 0,
       acquisitionFile: null,
       isDraft: null,
       fiscalYear: null,
@@ -92,7 +105,9 @@ export class PayeeOption {
       advancedPaymentServedDate: null,
       generationDate: null,
       financials: [],
-      compensationRequisitionProperties: [],
+      compReqLeaseStakeholder: [],
+      compReqAcquisitionProperties: [],
+      compReqLeaseProperties: [],
       legacyPayee: null,
       finalizedDate: null,
       specialInstruction: null,
@@ -104,9 +119,9 @@ export class PayeeOption {
       return compensationModel;
     }
 
-    const payeeOption = options.find(x => x.value === payeeKey);
+    const payeeOption = options?.find(x => x.value === payeeKey) ?? null;
 
-    if (payeeOption === undefined) {
+    if (payeeOption === null) {
       return compensationModel;
     }
 
@@ -121,6 +136,18 @@ export class PayeeOption {
         break;
       case PayeeType.Owner:
         compensationModel.acquisitionOwnerId = payeeOption.api_id;
+        break;
+      case PayeeType.LeaseStakeholder:
+        {
+          const leaseStakeHolderPayee: ApiGen_Concepts_CompReqLeaseStakeholder = {
+            compReqLeaseStakeholderId: null,
+            compensationRequisitionId: compensationRequisitionId,
+            leaseStakeholderId: payeeOption.api_id,
+            leaseStakeholder: null,
+          } as ApiGen_Concepts_CompReqLeaseStakeholder;
+
+          compensationModel.compReqLeaseStakeholder = [leaseStakeHolderPayee];
+        }
         break;
     }
 
@@ -139,6 +166,7 @@ export class PayeeOption {
     const name = model.isOrganization
       ? `${model.lastNameAndCorpName}, Inc. No. ${model.incorporationNumber} (OR Reg. No. ${model.registrationNumber})`
       : [model.givenName, model.lastNameAndCorpName, model.otherName].filter(x => !!x).join(' ');
+
     return new PayeeOption(
       model.id || 0,
       name,
@@ -220,6 +248,42 @@ export class PayeeOption {
       `${typeDescription}`,
       PayeeOption.generateKey(model.interestHolderId, PayeeType.InterestHolder),
       PayeeType.InterestHolder,
+    );
+  }
+
+  public static createLeaseStakeholder(model: ApiGen_Concepts_LeaseStakeholder): PayeeOption {
+    let payeeName: string;
+    let payeeDescription: string;
+
+    switch (model.lessorType.id) {
+      case ApiGen_CodeTypes_LessorTypes.ORG:
+        payeeName = `${model.organization.name}, Inc. No. ${model.organization.incorporationNumber}`;
+        break;
+      case ApiGen_CodeTypes_LessorTypes.PER:
+        payeeName = formatApiPersonNames(model.person);
+        break;
+      default:
+        payeeName = ApiGen_CodeTypes_LessorTypes.UNK;
+    }
+
+    switch (model.stakeholderTypeCode.id) {
+      case ApiGen_CodeTypes_LeaseStakeholderTypes.OWNER:
+        payeeDescription = 'Owner';
+        break;
+      case ApiGen_CodeTypes_LeaseStakeholderTypes.OWNREP:
+        payeeDescription = `Owner's Representative`;
+        break;
+      default:
+        payeeDescription = model.stakeholderTypeCode.description;
+        break;
+    }
+
+    return new PayeeOption(
+      model.leaseStakeholderId || 0,
+      payeeName,
+      payeeDescription,
+      PayeeOption.generateKey(model.leaseStakeholderId, PayeeType.LeaseStakeholder),
+      PayeeType.LeaseStakeholder,
     );
   }
 

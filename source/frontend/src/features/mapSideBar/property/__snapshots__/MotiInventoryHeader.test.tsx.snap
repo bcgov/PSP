@@ -84,6 +84,20 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
           <div
             class="pl-1 text-left col-auto"
           />
+          <div
+            class="pr-0 text-left col-auto"
+          >
+            <label
+              class="c0"
+            >
+              PIN:
+            </label>
+          </div>
+          <div
+            class="pl-1 text-left col-auto"
+          >
+            -
+          </div>
         </div>
         <div
           class="justify-content-end row"

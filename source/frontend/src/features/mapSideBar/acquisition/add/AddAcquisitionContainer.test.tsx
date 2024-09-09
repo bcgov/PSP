@@ -1,9 +1,6 @@
 import { createMemoryHistory } from 'history';
 
-import {
-  IMapStateMachineContext,
-  useMapStateMachine,
-} from '@/components/common/mapFSM/MapStateMachineContext';
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
@@ -21,9 +18,11 @@ import { AcquisitionForm } from './models';
 const history = createMemoryHistory();
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 const DEFAULT_PROPS: IAddAcquisitionContainerProps = {
   onClose,
+  onSuccess,
 };
 
 // Need to mock this library for unit tests
@@ -213,20 +212,21 @@ describe('AddAcquisitionContainer component', () => {
     expect(onClose).toBeCalled();
   });
 
-  it('should confirm and close the form when Cancel button is clicked with changes', async () => {
+  it('requires confirmation when navigating away', async () => {
     const { getCancelButton, getByText, getNameTextbox, getByTitle } = await setup();
 
     expect(getByText(/Create Acquisition File/i)).toBeVisible();
 
     await act(async () => userEvent.paste(getNameTextbox(), formValues.fileName as string));
-    await act(async () => userEvent.click(getCancelButton()));
-    await act(async () => userEvent.click(getByTitle('ok-modal')));
 
-    expect(onClose).toBeCalled();
+    await act(async () => history.push('/'));
+
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
+    expect(history.location.pathname).toBe('/');
   });
 
   it('should pre-populate the region if a property is selected', async () => {
-    const testMockMahine: IMapStateMachineContext = {
+    const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
@@ -254,14 +254,14 @@ describe('AddAcquisitionContainer component', () => {
     };
 
     await act(async () => {
-      setup(undefined, { mockMapMachine: testMockMahine });
+      setup(undefined, { mockMapMachine: testMockMachine });
     });
     const text = await screen.findByDisplayValue(/South Coast Region/i);
     expect(text).toBeVisible();
   });
 
   it('should not pre-populate the region if a property is selected and the region cannot be determined', async () => {
-    const testMockMahine: IMapStateMachineContext = {
+    const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       selectedFeatureDataset: {
         location: { lng: -120.69195885, lat: 50.25163372 },
@@ -289,7 +289,7 @@ describe('AddAcquisitionContainer component', () => {
     };
 
     await act(async () => {
-      setup(undefined, { mockMapMachine: testMockMahine });
+      setup(undefined, { mockMapMachine: testMockMachine });
     });
     const text = await screen.findByDisplayValue(/Select region.../i);
     expect(text).toBeVisible();
@@ -323,7 +323,7 @@ describe('AddAcquisitionContainer component', () => {
 
     const expectedValues = formValues.toApi();
     expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);
-    expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
+    expect(onSuccess).toHaveBeenCalledWith(1);
   });
 
   it(`should save the form with owner address information when 'Other' country is selected and no province is supplied`, async () => {
@@ -390,6 +390,6 @@ describe('AddAcquisitionContainer component', () => {
 
     const expectedValues = formValues.toApi();
     expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);
-    expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1');
+    expect(onSuccess).toHaveBeenCalledWith(1);
   });
 });

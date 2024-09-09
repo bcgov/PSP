@@ -9,15 +9,16 @@ import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
+import CompensationListContainer from '../../compensation/list/CompensationListContainer';
+import CompensationListView from '../../compensation/list/CompensationListView';
 import { SideBarContext } from '../../context/sidebarContext';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
 import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import AgreementContainer from './agreement/detail/AgreementContainer';
 import AgreementView from './agreement/detail/AgreementView';
-import CompensationListContainer from './compensation/list/CompensationListContainer';
-import CompensationListView from './compensation/list/CompensationListView';
 import ExpropriationTabContainer from './expropriation/ExpropriationTabContainer';
 import ExpropriationTabContainerView from './expropriation/ExpropriationTabContainerView';
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
@@ -132,7 +133,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     tabViews.push({
       content: (
         <CompensationListContainer
-          fileId={acquisitionFile.id}
+          fileType={ApiGen_CodeTypes_FileTypes.Acquisition}
           file={acquisitionFile}
           View={CompensationListView}
         />

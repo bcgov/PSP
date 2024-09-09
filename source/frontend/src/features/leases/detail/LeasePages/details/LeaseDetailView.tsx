@@ -5,7 +5,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { prettyFormatDate } from '@/utils';
+import { exists, prettyFormatDate } from '@/utils';
 
 export interface ILeaseDetailView {
   lease: ApiGen_Concepts_Lease;
@@ -20,10 +20,17 @@ export const LeaseDetailView: React.FunctionComponent<
 > = ({ lease }) => {
   const projectName = lease.project ? `${lease.project.code} - ${lease.project.description}` : '';
 
+  const productName = exists(lease?.product)
+    ? lease?.product?.code + ' ' + lease?.product?.description
+    : '';
+
   return (
     <Section header="Details">
       <SectionField label="Ministry project" labelWidth="3">
         {projectName}
+      </SectionField>
+      <SectionField label="Product" labelWidth="3">
+        {productName}
       </SectionField>
       <SectionField
         label="Status"

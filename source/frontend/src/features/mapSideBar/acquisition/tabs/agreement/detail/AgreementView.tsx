@@ -20,12 +20,12 @@ import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concept
 import { exists, formatMoney, prettyFormatDate } from '@/utils';
 
 import { cannotEditMessage } from '../../../common/constants';
-import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
+import AcquisitionFileStatusUpdateSolver from '../../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 
 export interface IAgreementViewProps {
   loading: boolean;
   agreements: ApiGen_Concepts_Agreement[];
-  statusUpdateSolver: StatusUpdateSolver;
+  statusUpdateSolver: AcquisitionFileStatusUpdateSolver;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }

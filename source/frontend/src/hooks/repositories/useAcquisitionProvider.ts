@@ -8,8 +8,6 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
-import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
@@ -38,9 +36,6 @@ export const useAcquisitionProvider = () => {
     getAcquisitionFileProduct,
     getAcquisitionFileChecklist,
     putAcquisitionFileChecklist,
-    getFileCompensationRequisitions,
-    postFileCompensationRequisition,
-    getFileCompReqH120s,
     postFileForm8,
     getAcquisitionFileForm8s,
     getAllAcquisitionFileTeamMembers,
@@ -224,52 +219,6 @@ export const useAcquisitionProvider = () => {
     throwError: true,
   });
 
-  const getAcquisitionCompensationRequisitionsApi = useApiRequestWrapper<
-    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_CompensationRequisition[], any>>
-  >({
-    requestFunction: useCallback(
-      async (acqFileId: number) => await getFileCompensationRequisitions(acqFileId),
-      [getFileCompensationRequisitions],
-    ),
-    requestName: 'GetAcquisitionCompensationRequisitions',
-    onError: useAxiosErrorHandler(
-      'Failed to load requisition compensations. Refresh the page to try again.',
-    ),
-  });
-
-  const getAcquisitionCompReqH120sApi = useApiRequestWrapper<
-    (
-      acqFileId: number,
-      finalOnly: boolean,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_CompensationFinancial[], any>>
-  >({
-    requestFunction: useCallback(
-      async (acqFileId: number, finalOnly: boolean) =>
-        await getFileCompReqH120s(acqFileId, finalOnly),
-      [getFileCompReqH120s],
-    ),
-    requestName: 'getAcquisitionCompReqH120s',
-    onError: useAxiosErrorHandler(
-      'Failed to load requisition compensation financials. Refresh the page to try again.',
-    ),
-  });
-
-  const postFileCompensationRequisitionApi = useApiRequestWrapper<
-    (
-      acqFileId: number,
-      compRequisition: ApiGen_Concepts_CompensationRequisition,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_CompensationRequisition, any>>
-  >({
-    requestFunction: useCallback(
-      async (acqFileId: number, compRequisition: ApiGen_Concepts_CompensationRequisition) =>
-        await postFileCompensationRequisition(acqFileId, compRequisition),
-      [postFileCompensationRequisition],
-    ),
-    requestName: 'PostFileCompensationRequisition',
-    onSuccess: useAxiosSuccessHandler('Compensation requisition saved'),
-    onError: useAxiosErrorHandler('Failed to save Compensation requisition'),
-  });
-
   const postFileForm8Api = useApiRequestWrapper<
     (
       acqFileId: number,
@@ -313,9 +262,6 @@ export const useAcquisitionProvider = () => {
       getAcquisitionProduct: getAcquisitionProductApi,
       getAcquisitionFileChecklist: getAcquisitionChecklistApi,
       updateAcquisitionChecklist: updateAcquisitionChecklistApi,
-      getAcquisitionCompensationRequisitions: getAcquisitionCompensationRequisitionsApi,
-      postAcquisitionCompensationRequisition: postFileCompensationRequisitionApi,
-      getAcquisitionCompReqH120s: getAcquisitionCompReqH120sApi,
       postAcquisitionForm8: postFileForm8Api,
       getAcquisitionFileForm8s: getAcquisitionForm8sApi,
       getAgreementsReport: getAgreementsReportApi,
@@ -334,9 +280,6 @@ export const useAcquisitionProvider = () => {
       getAcquisitionProductApi,
       getAcquisitionChecklistApi,
       updateAcquisitionChecklistApi,
-      getAcquisitionCompensationRequisitionsApi,
-      postFileCompensationRequisitionApi,
-      getAcquisitionCompReqH120sApi,
       postFileForm8Api,
       getAcquisitionForm8sApi,
       getAgreementsReportApi,

@@ -191,7 +191,6 @@ function toMapProperty(
     regionName: feature?.properties?.REGION_NAME,
     district: feature?.properties?.DISTRICT_NUMBER,
     districtName: feature?.properties?.DISTRICT_NAME,
-    name: feature?.properties?.NAME,
     landArea: feature?.properties?.FEATURE_AREA_SQM,
     areaUnit: AreaUnitTypes.SquareMeters,
   };
@@ -242,7 +241,6 @@ export function featuresetToMapProperty(
       ? districtFeature?.properties?.DISTRICT_NUMBER
       : DistrictCodes.Unknown,
     districtName: districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
-    name: pimsFeature?.properties?.NAME ?? undefined,
     areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
       ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
       : AreaUnitTypes.SquareMeters,

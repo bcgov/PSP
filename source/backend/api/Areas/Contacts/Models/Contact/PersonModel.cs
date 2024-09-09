@@ -32,6 +32,11 @@ namespace Pims.Api.Areas.Contact.Models.Contact
         public IList<OrganizationModel> Organizations { get; set; }
 
         /// <summary>
+        /// get/set - Flag to note to use the organization address.
+        /// </summary>
+        public bool? UseOrganizationAddress { get; set; }
+
+        /// <summary>
         /// get/set - The person's addresses.
         /// </summary>
         public IList<AddressModel> Addresses { get; set; }

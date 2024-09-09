@@ -45,6 +45,7 @@ export interface IContactPerson extends IContactEntity {
   isDisabled: boolean;
   fullName: string;
   preferredName: string;
+  useOrganizationAddress: boolean | null;
   organizations?: IContactOrganization[];
 }
 
