@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Diagnostics.CodeAnalysis;
-using System.Drawing;
 using System.Linq;
 using FluentAssertions;
 using Pims.Api.Models.CodeTypes;
@@ -384,7 +382,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void GetMatchingIds_LeasePurpose_Success()
+        public void GetMatchingIds_LeasePurpose_ZeroResults()
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
@@ -402,11 +400,85 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(property);
 
             // Act
-            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePurposes = new List<string>() { "test" } });
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePurposes = new List<string>() { "something" } });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(0);
+        }
+
+        [Fact]
+        public void GetMatchingIds_LeasePurpose_OneResult()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var propertyOne = EntityHelper.CreateProperty(100, isCoreInventory: true);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+
+            lease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
+            {
+                LeaseLeasePurposeId = 100,
+                LeaseId = lease.LeaseId,
+                LeasePurposeTypeCode = "something",
+            });
+            propertyOne.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = propertyOne.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(propertyOne);
+
+            var propertyTwo = EntityHelper.CreateProperty(101, isCoreInventory: true);
+            var anotherLease = EntityHelper.CreateLease(2, addProperty: false, generateTypeIds: true);
+            anotherLease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
+            {
+                LeaseLeasePurposeId = 2,
+                LeaseId = anotherLease.LeaseId,
+                LeasePurposeTypeCode = "another",
+            });
+
+            propertyTwo.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = propertyTwo.Internal_Id, LeaseId = anotherLease.Internal_Id, Lease = anotherLease });
+            _helper.AddAndSaveChanges(propertyTwo);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePurposes = new List<string>() { "something" } });
 
             // Assert
             result.Should().NotBeNull();
             result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetMatchingIds_LeasePurpose_TwoResults()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+            var propertyOne = EntityHelper.CreateProperty(100, isCoreInventory: true);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
+
+            lease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
+            {
+                LeaseLeasePurposeId = 100,
+                LeaseId = lease.LeaseId,
+                LeasePurposeTypeCode = "something",
+            });
+            propertyOne.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = propertyOne.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
+            _helper.AddAndSaveChanges(propertyOne);
+
+            var propertyTwo = EntityHelper.CreateProperty(101, isCoreInventory: true);
+            var anotherLease = EntityHelper.CreateLease(2, addProperty: false, generateTypeIds: true);
+            anotherLease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
+            {
+                LeaseLeasePurposeId = 2,
+                LeaseId = anotherLease.LeaseId,
+                LeasePurposeTypeCode = "another",
+            });
+
+            propertyTwo.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = propertyTwo.Internal_Id, LeaseId = anotherLease.Internal_Id, Lease = anotherLease });
+            _helper.AddAndSaveChanges(propertyTwo);
+
+            // Act
+            var result = repository.GetMatchingIds(new PropertyFilterCriteria() { LeasePurposes = new List<string>() { "something", "another" } });
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(2);
         }
 
         [Fact]
@@ -495,6 +567,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().HaveCount(1);
         }
+
         #endregion
 
         #region GetByPid
@@ -616,14 +689,12 @@ namespace Pims.Dal.Test.Repositories
 
             var newValues = new Entity.PimsProperty();
             property.CopyValues(newValues);
-            newValues.Description = propertyDescription;
             newValues.Pid = pid;
 
             // Act
             var updatedProperty = repository.Update(newValues);
 
             // Assert
-            updatedProperty.Description.Should().Be(propertyDescription);
             updatedProperty.Pid.Should().Be(pid);
         }
 
@@ -637,7 +708,6 @@ namespace Pims.Dal.Test.Repositories
 
             var newValues = new Entity.PimsProperty();
             property.CopyValues(newValues);
-            newValues.Description = "test";
             newValues.Pid = 200;
 
             // Act
@@ -768,7 +838,6 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             transferredProperty.IsOwned.Should().BeTrue();
-            transferredProperty.PropertyClassificationTypeCode.Should().Be("COREOPER");
         }
 
         [Fact]
@@ -786,7 +855,6 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             transferredProperty.IsOwned.Should().BeFalse();
-            transferredProperty.PropertyClassificationTypeCode.Should().Be("OTHER");
         }
         #endregion
 

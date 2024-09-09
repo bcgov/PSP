@@ -5,7 +5,6 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-using NSubstitute;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
@@ -1084,114 +1083,6 @@ namespace Pims.Dal.Test.Repositories
             updatedImprovements.Should().Contain(addPropertyImprovement);
         }
         #endregion
-
-        #region Update Lease Consultations
-        [Fact]
-        public void Update_Lease_Consultations_Concurrency()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true).AddRange(lease);
-            var repository = helper.CreateRepository<LeaseRepository>(user);
-            helper.SaveChanges();
-
-            // Act
-            var addConsultation = new Dal.Entities.PimsLeaseConsultation() { LeaseId = lease.LeaseId };
-            lease.PimsLeaseConsultations.Add(addConsultation);
-            Action act = () => repository.UpdateLeaseConsultations(1, 1, lease.PimsLeaseConsultations);
-
-            // Assert
-            act.Should().Throw<DbUpdateConcurrencyException>();
-        }
-
-        [Fact]
-        public void Update_Lease_Consultations_Add()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(lease);
-            var repository = helper.CreateRepository<LeaseRepository>(user);
-
-            // Act
-            var addConsultation = new Dal.Entities.PimsLeaseConsultation()
-            {
-                LeaseId = lease.LeaseId,
-                ConsultationStatusTypeCodeNavigation = new PimsConsultationStatusType() { Id = "DRAFT", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Draft" },
-                ConsultationTypeCodeNavigation = new PimsConsultationType() { Id = "HIGHWAY", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Highway" }
-            };
-            lease.PimsLeaseConsultations.Add(addConsultation);
-            var consultations = repository.UpdateLeaseConsultations(1, 2, lease.PimsLeaseConsultations).PimsLeaseConsultations;
-            context.CommitTransaction();
-
-            // Assert
-            context.PimsLeaseConsultations.Count().Should().Be(1);
-        }
-
-        [Fact]
-        public void Update_Lease_Consultations_Update()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            lease.PimsLeaseConsultations.Add(new Dal.Entities.PimsLeaseConsultation()
-            {
-                LeaseId = lease.LeaseId,
-                ConsultationStatusTypeCodeNavigation = new PimsConsultationStatusType() { Id = "DRAFT", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Draft" },
-                ConsultationTypeCodeNavigation = new PimsConsultationType() { Id = "HIGHWAY", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Highway" }
-            });
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(lease);
-            var repository = helper.CreateRepository<LeaseRepository>(user);
-
-            // Act
-            var consultationToUpdate = lease.PimsLeaseConsultations.FirstOrDefault();
-            consultationToUpdate.ConsultationStatusTypeCode = "UPDATED";
-            var updatedConsultations = repository.UpdateLeaseConsultations(1, 2, lease.PimsLeaseConsultations).PimsLeaseConsultations;
-
-            // Assert
-            context.PimsLeaseConsultations.Count().Should().Be(1);
-            context.PimsLeaseConsultations.FirstOrDefault().ConsultationStatusTypeCode.Should().Be("UPDATED");
-        }
-
-        [Fact]
-        public void Update_Lease_Consultations_Remove()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            lease.PimsLeaseConsultations.Add(new Dal.Entities.PimsLeaseConsultation()
-            {
-                LeaseId = lease.LeaseId,
-                ConsultationStatusTypeCodeNavigation = new PimsConsultationStatusType() { Id = "DRAFT", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Draft" },
-                ConsultationTypeCodeNavigation = new PimsConsultationType() { Id = "HIGHWAY", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "Highway" }
-            });
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(lease);
-            var repository = helper.CreateRepository<LeaseRepository>(user);
-
-            // Act
-            var deleteConsultation = lease.PimsLeaseConsultations.FirstOrDefault();
-            lease.PimsLeaseConsultations.Remove(deleteConsultation);
-            context.ChangeTracker.Clear();
-            var updatedConsultations = repository.UpdateLeaseConsultations(1, 2, lease.PimsLeaseConsultations).PimsLeaseConsultations;
-            context.CommitTransaction();
-
-            // Assert
-            context.PimsLeaseConsultations.Should().BeEmpty();
-        }
-        #endregion
-
         #endregion
     }
 }

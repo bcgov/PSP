@@ -2,7 +2,6 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import { AddressTypes } from '@/constants/index';
 import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
 import { useUpdateContact } from '@/features/contacts/hooks/useUpdateContact';
 import { getEmptyAddress } from '@/mocks/address.mock';
@@ -15,6 +14,7 @@ import { toTypeCode } from '@/utils/formUtils';
 import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
 import UpdateOrganizationForm from './UpdateOrganizationForm';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -47,7 +47,7 @@ const mockAddress: ApiGen_Concepts_OrganizationAddress = {
   id: 1,
   rowVersion: null,
   organizationId: 9,
-  addressUsageType: toTypeCode(AddressTypes.Mailing),
+  addressUsageType: toTypeCode(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
   address: {
     ...getEmptyAddress(),
     streetAddress1: 'Test Street',

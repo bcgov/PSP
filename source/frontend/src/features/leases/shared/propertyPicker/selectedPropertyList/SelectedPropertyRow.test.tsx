@@ -69,7 +69,7 @@ describe('SelectedPropertyRow component', () => {
   it('calls map machine when reposition button is clicked', async () => {
     const { getByTitle } = setup({});
     await act(async () => {});
-    const moveButton = getByTitle(/Move pin location/i);
+    const moveButton = getByTitle('move-pin-location');
     userEvent.click(moveButton);
     expect(mapMachineBaseMock.startReposition).toHaveBeenCalled();
   });

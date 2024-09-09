@@ -20,7 +20,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -34,7 +33,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c4.btn .Button__value {
@@ -54,10 +52,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c4.btn.btn-primary {
-  border: none;
 }
 
 .c4.btn.btn-secondary {
@@ -289,7 +283,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -303,7 +296,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c4.btn .Button__value {
@@ -323,10 +315,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c4.btn.btn-primary {
-  border: none;
 }
 
 .c4.btn.btn-secondary {
@@ -558,7 +546,6 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -572,7 +559,6 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c3.btn .Button__value {
@@ -592,10 +578,6 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c3.btn.btn-primary {
-  border: none;
 }
 
 .c3.btn.btn-secondary {
@@ -1146,9 +1128,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -1170,9 +1150,7 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
                 role="cell"
                 style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -1187,16 +1165,14 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                -
+                $0.00
               </div>
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -1306,7 +1282,6 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -1320,7 +1295,6 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c3.btn .Button__value {
@@ -1340,10 +1314,6 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c3.btn.btn-primary {
-  border: none;
 }
 
 .c3.btn.btn-secondary {
@@ -1894,9 +1864,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
                 role="cell"
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -1918,9 +1886,7 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
                 role="cell"
                 style="box-sizing: border-box; flex: 35 0 auto; min-width: 30px; width: 35px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"
@@ -1935,16 +1901,14 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
                 style="box-sizing: border-box; flex: 50 0 auto; min-width: 30px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                -
+                $0.00
               </div>
               <div
                 class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
-              >
-                -
-              </div>
+              />
               <div
                 class="td"
                 role="cell"

@@ -1,14 +1,16 @@
 import { FormikProps } from 'formik/dist/types';
+import { Location } from 'history';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, isValidId } from '@/utils';
 import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
@@ -22,6 +24,7 @@ import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionContainerProps {
   onClose: () => void;
+  onSuccess: (newAcquisitionId: number) => void;
 }
 
 export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = props => {
@@ -89,7 +92,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     }
 
     mapMachine.refreshMapProperties();
-    history.replace(`/mapview/sidebar/acquisition/${acqFile.id}`);
+    props.onSuccess(acqFile.id);
   };
 
   const helper = useAddAcquisitionFormManagement({
@@ -99,21 +102,8 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     formikRef,
   });
 
-  const cancelFunc = () => {
-    if (!formikRef.current?.dirty) {
-      formikRef.current?.resetForm();
-      onClose();
-    } else {
-      setModalContent({
-        ...getCancelModalProps(),
-        handleOk: () => {
-          formikRef.current?.resetForm();
-          setDisplayModal(false);
-          onClose();
-        },
-      });
-      setDisplayModal(true);
-    }
+  const handleCancel = () => {
+    onClose();
   };
 
   const { initialValues } = helper;
@@ -170,6 +160,17 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     setModalContent,
   ]);
 
+  const checkState = useCallback(
+    (location: Location) => {
+      return (
+        !location.pathname.startsWith('/mapview/sidebar/acquisition/') &&
+        formikRef?.current?.dirty &&
+        !formikRef?.current?.isSubmitting
+      );
+    },
+    [formikRef],
+  );
+
   return (
     <MapSideBarLayout
       showCloseButton
@@ -182,12 +183,12 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           fill="currentColor"
         />
       }
-      onClose={cancelFunc}
+      onClose={handleCancel}
       footer={
         <SidebarFooter
           isOkDisabled={helper.loading}
           onSave={handleSave}
-          onCancel={cancelFunc}
+          onCancel={handleCancel}
           displayRequiredFieldError={isValid === false}
         />
       }
@@ -202,6 +203,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           confirmBeforeAdd={confirmBeforeAdd}
         />
       </StyledFormWrapper>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </MapSideBarLayout>
   );
 };

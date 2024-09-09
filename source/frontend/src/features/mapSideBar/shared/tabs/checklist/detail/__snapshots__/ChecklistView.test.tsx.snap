@@ -116,7 +116,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
             File Initiation
           </div>
           <div
-            class="pl-8 col-auto"
+            class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -553,7 +553,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
             Active File Management
           </div>
           <div
-            class="pl-8 col-auto"
+            class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -1757,7 +1757,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
             Crown Land
           </div>
           <div
-            class="pl-8 col-auto"
+            class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -1802,7 +1802,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
             Section 3 - Agreement
           </div>
           <div
-            class="pl-8 col-auto"
+            class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -2375,7 +2375,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
             Section 6 - Expropriation
           </div>
           <div
-            class="pl-8 col-auto"
+            class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -2923,7 +2923,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
             Acquisition Completion
           </div>
           <div
-            class="pl-8 col-auto"
+            class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"

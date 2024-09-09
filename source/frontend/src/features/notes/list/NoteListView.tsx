@@ -150,7 +150,6 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
             handleOk={onDeleteNoteConfirm}
             okButtonText="OK"
             cancelButtonText="Cancel"
-            closeButton={false}
             setDisplay={setShowDeleteConfirm}
           />
         </Section>

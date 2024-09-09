@@ -294,7 +294,6 @@ export const mockPropertyInfo: ApiGen_Concepts_Property = {
   dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
   latitude: 1088851.4995,
   longitude: 924033.5004,
-  isSensitive: false,
   isRetired: false,
   address: {
     ...getEmptyAddress(),
@@ -342,7 +341,6 @@ export const mockPropertyInfo: ApiGen_Concepts_Property = {
     displayOrder: null,
   },
   municipalZoning: 'Some municipal zoning comments',
-  zoning: 'Lorem ipsum',
   notes:
     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam porttitor nisl at elit vestibulum vestibulum. Nullam eget consectetur felis, id porta eros. Proin at massa rutrum, molestie lorem a, congue lorem.',
   rowVersion: 16,

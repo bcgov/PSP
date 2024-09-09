@@ -106,19 +106,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsReceivableToContent = By.Id("input-paymentReceivableType.description");
         private readonly By licenseDetailsCategoryLabel = By.XPath("//label[contains(text(),'Category')]");
         private readonly By licenseDetailsCategorySelector = By.Id("input-categoryTypeCode");
-        private readonly By licenseDetailsCategoryContent = By.Id("input-categoryType.description");
         private readonly By licenseDetailsCategoryOtherLabel = By.XPath("//input[@id='input-otherCategoryTypeDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
         private readonly By licenseDetailsCategoryOtherInput = By.Id("input-otherCategoryTypeDescription");
-        private readonly By licenseDetailsCategoryOtherContent = By.Id("input-otherCategoryType");
         private readonly By licenseDetailsPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
         private readonly By licenseDetailsPurposeMultiselector = By.Id("multiselect-purposes_input");
         private readonly By licenseDetailsPurposeDeleteBttns = By.CssSelector("div[id='multiselect-purposes'] i[class='custom-close']");
         private readonly By licenseDetailsPurposeOptions = By.XPath("//input[@id='multiselect-purposes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
 
-        private readonly By licenseDetailsPurposeContent = By.Id("multiselectContainerReact");
+        private readonly By licenseDetailsPurposeContent = By.CssSelector("div[id='multiselectContainerReact'] div");
         private readonly By licenseDetailsOtherPurposeLabel = By.XPath("//input[@id='input-purposeOtherDescription']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Describe other')]");
         private readonly By licenseDetailsOtherPurposeInput = By.Id("input-purposeOtherDescription");
-        private readonly By licenseDetailsOtherPurposeContent = By.Id("input-otherPurposeType");
         private readonly By licenseDetailsInitiatorLabel = By.XPath("//label[contains(text(),'Initiator')]");
         private readonly By licenseDetailsInitiatorTooltip = By.XPath("//label[contains(text(),'Initiator')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
         private readonly By licenseDetailsInitiatorSelector = By.Id("input-initiatorTypeCode");
@@ -258,20 +255,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys(lease.TypeOther);
             }
 
-            //Selecting Category if required
-            if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0 && lease.Category != "")
-            {
-                Assert.True(webDriver.FindElement(licenseDetailsCategoryLabel).Displayed);
-                ChooseSpecificSelectOption(licenseDetailsCategorySelector, lease.Category);
-            }
-
-            //If Other Category has been selected
-            if (webDriver.FindElements(licenseDetailsCategoryOtherInput).Count > 0 && lease.CategoryOther != "")
-            {
-                Assert.True(webDriver.FindElement(licenseDetailsCategoryOtherLabel).Displayed);
-                webDriver.FindElement(licenseDetailsCategoryOtherInput).SendKeys(lease.CategoryOther);
-            }
-
             //Purpose
             if (webDriver.FindElements(licenseDetailsPurposeDeleteBttns).Count > 0)
             {
@@ -285,7 +268,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     FocusAndClick(licenseDetailsPurposeMultiselector);
 
-                    Wait(2000);
+                    Wait(5000);
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
@@ -448,21 +431,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(licenseDetailsOtherTypeInput).SendKeys(lease.TypeOther);
             }
 
-            //Selecting Category if required
-            if (webDriver.FindElements(licenseDetailsCategorySelector).Count > 0 && lease.Category != "")
-            {
-                WaitUntilVisible(licenseDetailsCategorySelector);
-                Assert.True(webDriver.FindElement(licenseDetailsCategoryLabel).Displayed);
-                ChooseSpecificSelectOption(licenseDetailsCategorySelector, lease.Category);
-            }
-
-            //If Other Category has been selected
-            if (webDriver.FindElements(licenseDetailsCategoryOtherInput).Count > 0 && lease.CategoryOther != "")
-            {
-                Assert.True(webDriver.FindElement(licenseDetailsCategoryOtherLabel).Displayed);
-                webDriver.FindElement(licenseDetailsCategoryOtherInput).SendKeys(lease.CategoryOther);
-            }
-
             //Purpose
             if (webDriver.FindElements(licenseDetailsPurposeDeleteBttns).Count > 0)
             {
@@ -560,7 +528,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.FeeDeterminationFinancialGain != "")
                 ChooseSpecificSelectOption(licenseDetailsFeeDeterminationFinancialGainInput, lease.FeeDeterminationFinancialGain);
 
-            AssertTrueContentEquals(licenseDetailsFeeDeterminationSuggestedFeeContent, lease.FeeDeterminationSuggestedFee);
+            AssertTrueElementContains(licenseDetailsFeeDeterminationSuggestedFeeContent, lease.FeeDeterminationSuggestedFee);
 
             if (lease.FeeDeterminationNotes != "")
             {
@@ -935,8 +903,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     var elementIdx = i + 1;
                     AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/h2/div/div"), "Renewal " + elementIdx);
-                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/div/label[contains(text(),'Excercised')]"));
-                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/div/label[contains(text(),'Excercised')]/parent::div/following-sibling::div"), lease.LeaseRenewals[i].RenewalIsExercised);
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/div/label[contains(text(),'Exercised')]"));
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/div/label[contains(text(),'Exercised')]/parent::div/following-sibling::div"), lease.LeaseRenewals[i].RenewalIsExercised);
 
                     AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[1]/div/div/label[contains(text(),'Commencement')]"));
                     AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[1]/div/div/label[contains(text(),'Commencement')]/parent::div/following-sibling::div"), TransformDateFormat(lease.LeaseRenewals[i].RenewalCommencementDate));
@@ -948,14 +916,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[3]/div/label[contains(text(),'Notes')]/parent::div/following-sibling::div"), lease.LeaseRenewals[i].RenewalNotes);
                 }
             }
-
-            //if (webDriver.FindElements(licenseDetailsProperty1AddressNoContent).Count() > 0)
-            //    AssertTrueIsDisplayed(licenseDetailsProperty1AddressNoContent);
-            //else
-            //    AssertTrueIsDisplayed(licenseDetailsProperty1AddressContent);
-
-            //AssertTrueIsDisplayed(licenseDetailsProperty1LegalDescripLabel);
-            //AssertTrueIsDisplayed(licenseDetailsProperty1LegalDescripContent);
 
             //Lease Administration
             AssertTrueIsDisplayed(licenseDetailsAdmSubtitle);
@@ -980,14 +940,6 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.AccountType != "")
                 AssertTrueElementValueEquals(licenseDetailsReceivableToContent, lease.AccountType);
 
-            AssertTrueIsDisplayed(licenseDetailsCategoryLabel);
-
-            if(lease.Category != "")
-                AssertTrueElementValueEquals(licenseDetailsCategoryContent, lease.Category);
-
-            if (lease.CategoryOther != "")
-                AssertTrueElementValueEquals(licenseDetailsCategoryOtherContent, lease.CategoryOther);
-
             AssertTrueIsDisplayed(licenseDetailsPurposeLabel);
             if (lease.LeasePurpose.Count > 0)
             {
@@ -996,8 +948,12 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (lease.PurposeOther != "")
+            {
+                var otherIdx = lease.LeasePurpose.FindIndex(a => a.Equals("Other*"));
+                By licenseDetailsOtherPurposeContent = By.Id("input-leasePurposes["+ otherIdx +"].purposeOtherDescription");
                 AssertTrueElementValueEquals(licenseDetailsOtherPurposeContent, lease.PurposeOther);
-
+            }
+                
             AssertTrueIsDisplayed(licenseDetailsInitiatorLabel);
 
             if (lease.Initiator != "")
@@ -1177,31 +1133,6 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        private string CalculateExpiryCurrentDate(string originExpiryDate, List<LeaseRenewal> renewals)
-        {
-            var expiryDates = new List<DateTime>();
-            if (originExpiryDate != "")
-            {
-                var originExpiryDateElement = DateTime.Parse(originExpiryDate);
-                expiryDates.Add(originExpiryDateElement);
-
-            }
-
-            if (renewals.Count > 0)
-            {
-                for (var i = 0; i < renewals.Count; i++)
-                {
-                    if (renewals[i].RenewalIsExercised == "Yes")
-                    {
-                        var renewalExpiryDate = DateTime.Parse(renewals[i].RenewalExpiryDate);
-                        expiryDates.Add(renewalExpiryDate);
-                    }
-                }
-            }
-
-            expiryDates.Sort((x, y) => y.CompareTo(x));
-            System.Diagnostics.Debug.WriteLine(expiryDates);
-            return expiryDates[0].ToString("MMM d, yyyy");
-        }
+        
     }
 }

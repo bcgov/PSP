@@ -55,7 +55,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
           Summary
         </div>
         <div
-          class="pl-8 col-auto"
+          class="pl-8 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"

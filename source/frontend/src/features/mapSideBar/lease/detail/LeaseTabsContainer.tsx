@@ -1,4 +1,5 @@
 import { FormikProps } from 'formik';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import { Claims, NoteTypes } from '@/constants';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
@@ -6,8 +7,12 @@ import { LeaseFormModel } from '@/features/leases/models';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 
+import CompensationListContainer from '../../compensation/list/CompensationListContainer';
+import CompensationListView from '../../compensation/list/CompensationListView';
 import { LeaseContainerState, LeasePageNames, leasePages } from '../LeaseContainer';
 import { LeaseFileTabNames, LeaseFileTabs, LeaseTabFileView } from './LeaseFileTabs';
 import { LeaseTab } from './LeaseTab';
@@ -41,7 +46,8 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       : LeaseFileTabNames.payee;
   const stakeHolderTypeName = lease?.paymentReceivableType.id === 'RCVBL' ? 'Tenant' : 'Payee';
 
-  console.log(lease?.paymentReceivableType.id);
+  const location = useLocation();
+  const history = useHistory();
 
   tabViews.push({
     content: (
@@ -57,6 +63,19 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     ),
     key: LeaseFileTabNames.fileDetails,
     name: 'File Details',
+  });
+
+  tabViews.push({
+    content: (
+      <LeaseTab
+        leasePage={leasePages.get(LeasePageNames.CONSULTATIONS)}
+        isEditing={isEditing}
+        formikRef={formikRef}
+        onSuccess={onSuccess}
+      />
+    ),
+    key: LeaseFileTabNames.consultations,
+    name: 'Approval/Consultations',
   });
 
   tabViews.push({
@@ -190,14 +209,42 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     });
   }
 
+  if (
+    lease?.id &&
+    (lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA ||
+      lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLMOTI) &&
+    hasClaim(Claims.COMPENSATION_REQUISITION_VIEW)
+  ) {
+    tabViews.push({
+      content: (
+        <CompensationListContainer
+          fileType={ApiGen_CodeTypes_FileTypes.Lease}
+          file={lease}
+          View={CompensationListView}
+        />
+      ),
+      key: LeaseFileTabNames.compensation,
+      name: 'Compensation',
+    });
+  }
+
   const defaultTab = LeaseFileTabNames.fileDetails;
+
+  const onSetActiveTab = (tab: LeaseFileTabNames) => {
+    const previousTab = activeTab;
+    if (previousTab === LeaseFileTabNames.compensation) {
+      const backUrl = location.pathname.split('/compensation-requisition')[0];
+      history.push(backUrl);
+    }
+    setContainerState({ activeTab: tab });
+  };
 
   return (
     <LeaseFileTabs
       tabViews={tabViews}
       defaultTabKey={defaultTab}
       activeTab={activeTab ?? defaultTab}
-      setActiveTab={(tab: LeaseFileTabNames) => setContainerState({ activeTab: tab })}
+      setActiveTab={(tab: LeaseFileTabNames) => onSetActiveTab(tab)}
     />
   );
 };

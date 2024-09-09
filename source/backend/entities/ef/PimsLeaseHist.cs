@@ -57,6 +57,9 @@ public partial class PimsLeaseHist
     [Column("PROJECT_ID")]
     public long? ProjectId { get; set; }
 
+    [Column("PRODUCT_ID")]
+    public long? ProductId { get; set; }
+
     [Column("L_FILE_NO")]
     [StringLength(50)]
     public string LFileNo { get; set; }
@@ -167,6 +170,9 @@ public partial class PimsLeaseHist
     [Column("PRIMARY_ARBITRATION_CITY")]
     [StringLength(200)]
     public string PrimaryArbitrationCity { get; set; }
+
+    [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
+    public decimal? TotalAllowableCompensation { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

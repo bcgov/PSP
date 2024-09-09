@@ -30,7 +30,7 @@ export const Section: React.FC<
   className,
   ...rest
 }) => {
-  const [isCollapsed, setIsCollapsed] = useState<boolean>(!initiallyExpanded && true);
+  const [isCollapsed, setIsCollapsed] = useState<boolean>(!(initiallyExpanded === true));
   return (
     <StyledFormSection
       className={clsx('form-section', className)}
@@ -42,7 +42,7 @@ export const Section: React.FC<
           <Row className="no-gutters">
             <Col>{header}</Col>
             {isCollapsable && (
-              <Col xs="auto" className="pl-8">
+              <Col xs="auto" className="pl-8 d-flex align-items-end">
                 {isCollapsed && (
                   <ArrowDropDownIcon
                     title={`expand-${title ?? 'section'}`}

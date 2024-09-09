@@ -12,6 +12,7 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.Id, src => src.CompensationRequisitionId)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.AcquisitionFile, src => src.AcquisitionFile)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
                 .Map(dest => dest.IsDraft, src => src.IsDraft)
                 .Map(dest => dest.FiscalYear, src => src.FiscalYear)
                 .Map(dest => dest.YearlyFinancialId, src => src.YearlyFinancialId)
@@ -41,12 +42,15 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.CompensationRequisitionProperties, src => src.PimsPropAcqFlCompReqs)
+                .Map(dest => dest.CompReqLeaseStakeholder, src => src.PimsLeaseStakeholderCompReqs)
+                .Map(dest => dest.CompReqAcquisitionProperties, src => src.PimsPropAcqFlCompReqs)
+                .Map(dest => dest.CompReqLeaseProperties, src => src.PimsPropLeaseCompReqs)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
                 .Map(dest => dest.CompensationRequisitionId, src => src.Id)
                 .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
                 .Map(dest => dest.IsDraft, src => src.IsDraft)
                 .Map(dest => dest.FiscalYear, src => src.FiscalYear)
                 .Map(dest => dest.YearlyFinancialId, src => src.YearlyFinancialId)
@@ -70,7 +74,9 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompensationRequisitionProperties)
+                .Map(dest => dest.PimsLeaseStakeholderCompReqs, src => src.CompReqLeaseStakeholder)
+                .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompReqAcquisitionProperties)
+                .Map(dest => dest.PimsPropLeaseCompReqs, src => src.CompReqLeaseProperties)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

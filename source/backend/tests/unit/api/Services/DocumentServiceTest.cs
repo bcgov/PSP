@@ -6,8 +6,6 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
 
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -27,9 +25,9 @@ using Pims.Api.Models.Requests.Http;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
-using Pims.Api.Constants;
 using Microsoft.Extensions.Configuration;
 using Pims.Core.Exceptions;
+using Pims.Api.Models;
 
 namespace Pims.Api.Test.Services
 {
@@ -887,6 +885,226 @@ namespace Pims.Api.Test.Services
 
             // Assert
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+
+            Assert.Equal(ExternalResponseStatus.Error, result.Status);
+        }
+
+        [Fact]
+        public async void StreamFileAsync_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<FileStreamResponse>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new FileStreamResponse()
+                    {
+                        FileName = "Test",
+                    },
+                });
+
+            // Act
+            await service.StreamFileAsync(1, 2);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void StreamFileLatestAsync_ShouldThrowException_NotAuthorized()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions();
+
+            // Act
+            Func<Task> sut = async () => await service.StreamFileLatestAsync(1);
+
+            // Assert
+            sut.Should().ThrowAsync<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public async void StreamFileLatestAsync_UnSuccessfull()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.NotFound,
+                    Message = "ERROR",
+                    Status = ExternalResponseStatus.Error,
+                });
+
+            // Act
+            Func<Task> act = async () => await service.StreamFileLatestAsync(1);
+
+            // Assert
+            await act.Should().ThrowAsync<MayanRepositoryException>();
+        }
+
+        [Fact]
+        public async void StreamFileLatestAsync_Successfull_PayloadNull()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Ok",
+                    Status = ExternalResponseStatus.Success,
+                    Payload = null,
+                });
+
+            // Act
+            await service.StreamFileLatestAsync(1);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public async void StreamFileLatestAsync_InvalidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Ok",
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new()
+                    {
+                        Id = 12,
+                        FileLatest = new FileLatestModel()
+                        {
+                            Id = 2,
+                            Size = 1,
+                            FileName = "MyFile.exe",
+                        },
+                    },
+                });
+
+            // Act
+            var result = await service.DownloadFileLatestAsync(1);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
+            documentStorageRepository.Verify(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
+            Assert.Equal(ExternalResponseStatus.Error, result.Status);
+        }
+
+        [Fact]
+        public async void StreamFileLatestAsync_ValidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Ok",
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new()
+                    {
+                        Id = 12,
+                        FileLatest = new FileLatestModel()
+                        {
+                            Id = 2,
+                            Size = 1,
+                            FileName = "MyFile.pdf",
+                        },
+                    },
+                });
+
+            // Act
+            await service.StreamFileLatestAsync(1);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
+            documentStorageRepository.Verify(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public async void StreamFileLatestAsync_Successfull_Payload_Document()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryGetDocumentAsync(It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<DocumentDetailModel>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Ok",
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new DocumentDetailModel()
+                    {
+                        Id = 1,
+                        FileLatest = new FileLatestModel() { Id = 2, FileName = "MyFile.pdf" },
+                    },
+                });
+
+            documentStorageRepository.Setup(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<FileStreamResponse>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Message = "Ok",
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new()
+                    {
+                        Size = 1,
+                        FileName = "MyFile.pdf",
+                        EncodingType = "base64",
+                    },
+                });
+
+            // Act
+            await service.StreamFileLatestAsync(1);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public async void StreamFileAsync_InvalidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentStorageRepository.Setup(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<FileStreamResponse>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new FileStreamResponse()
+                    {
+                        FileName = "Test.exe",
+                        FileNameExtension = "exe",
+                        FileNameWithoutExtension = "Test",
+                    },
+                });
+
+            // Act
+            var result = await service.StreamFileAsync(1, 2);
+
+            // Assert
+            documentStorageRepository.Verify(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
 
             Assert.Equal(ExternalResponseStatus.Error, result.Status);
         }

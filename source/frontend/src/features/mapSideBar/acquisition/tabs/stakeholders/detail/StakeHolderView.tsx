@@ -9,7 +9,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 
-import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
+import AcquisitionFileStatusUpdateSolver from '../../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import PropertyInterestHoldersViewTable from './PropertyInterestHoldersViewTable';
 import StakeholderOrganizer from './stakeholderOrganizer';
 
@@ -32,7 +32,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
 
   const organizer = new StakeholderOrganizer(acquisitionFile, interestHolders);
 
-  const statusSolver = new StatusUpdateSolver(acquisitionFile);
+  const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
 
   const groupedInterestProperties = organizer.getInterestProperties();
   const groupedNonInterestProperties = organizer.getNonInterestProperties();

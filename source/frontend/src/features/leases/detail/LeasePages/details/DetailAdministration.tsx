@@ -26,6 +26,7 @@ export const DetailAdministration: React.FunctionComponent<
 > = ({ nameSpace, disabled }: IDetailAdministrationProps) => {
   const { values } = useFormikContext<ApiGen_Concepts_Lease>();
   const responsibilityDate = getIn(values, withNameSpace(nameSpace, 'responsibilityEffectiveDate'));
+  const note = getIn(values, withNameSpace(nameSpace, 'note'));
 
   const leasePurposes: ApiGen_Concepts_LeasePurpose[] = getIn(
     values,
@@ -63,7 +64,6 @@ export const DetailAdministration: React.FunctionComponent<
             field={withNameSpace(nameSpace, 'paymentReceivableType.description')}
           />
         </SectionField>
-
         <SectionField label="Purpose(s)" labelWidth="3">
           <Multiselect
             disable
@@ -101,8 +101,11 @@ export const DetailAdministration: React.FunctionComponent<
         <SectionField label="Effective date" labelWidth="3">
           {prettyFormatDate(responsibilityDate)}
         </SectionField>
-        <SectionField label="MoTI contact" labelWidth="3">
+        <SectionField label="MOTI contact" labelWidth="3">
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'motiName')} />
+        </SectionField>
+        <SectionField label="MOTI region" labelWidth="3">
+          <Input disabled={disabled} field={withNameSpace(nameSpace, 'region.description')} />
         </SectionField>
         <SectionField
           label="Intended use"
@@ -117,6 +120,9 @@ export const DetailAdministration: React.FunctionComponent<
           valueTestId="primaryArbitrationCity"
         >
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'primaryArbitrationCity')} />
+        </SectionField>
+        <SectionField label="Lease notes" labelWidth="3">
+          {note}
         </SectionField>
       </Section>
     </>

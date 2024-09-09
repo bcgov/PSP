@@ -29,7 +29,7 @@ describe('Empty Layout', () => {
         <TenantProvider>
           <TenantConsumer>
             {({ tenant }) => (
-              <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} }}>
+              <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} as any }}>
                 <EmptyLayout></EmptyLayout>
               </ThemeProvider>
             )}

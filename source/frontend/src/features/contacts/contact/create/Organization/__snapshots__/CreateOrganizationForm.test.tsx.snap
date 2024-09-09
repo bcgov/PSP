@@ -21,7 +21,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -35,7 +34,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c8.btn .Button__value {
@@ -55,10 +53,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c8.btn.btn-primary {
-  border: none;
 }
 
 .c8.btn.btn-secondary {
@@ -694,7 +688,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                 Mailing Address
               </div>
               <div
-                class="pl-8 col-auto"
+                class="pl-8 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c10"
@@ -948,7 +942,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                 Property Address
               </div>
               <div
-                class="pl-8 col-auto"
+                class="pl-8 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c10"
@@ -1202,7 +1196,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
                 Billing Address
               </div>
               <div
-                class="pl-8 col-auto"
+                class="pl-8 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c10"
@@ -1490,7 +1484,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -1504,7 +1497,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c2.btn .Button__value {
@@ -1524,10 +1516,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c2.btn.btn-primary {
-  border: none;
 }
 
 .c2.btn.btn-secondary {

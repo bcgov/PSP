@@ -464,8 +464,6 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsPropertyBoundaryVw> PimsPropertyBoundaryVws { get; set; }
 
-    public virtual DbSet<PimsPropertyClassificationType> PimsPropertyClassificationTypes { get; set; }
-
     public virtual DbSet<PimsPropertyContact> PimsPropertyContacts { get; set; }
 
     public virtual DbSet<PimsPropertyContactHist> PimsPropertyContactHists { get; set; }
@@ -913,7 +911,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.RegionCode)
                 .HasDefaultValue((short)-1)
                 .HasComment("Region responsible for oversight of the acquisition.");
-            entity.Property(e => e.TotalAllowableCompensation).HasComment("The maximum allowable coensation for the acquisition file.  This amount should be exceeded by the total of all assiciated H120's.");
+            entity.Property(e => e.TotalAllowableCompensation).HasComment("The maximum allowable compensation for the acquisition file.  This amount should not be exceeded by the total of all assiciated H120's.");
 
             entity.HasOne(d => d.AcqPhysFileStatusTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_ACQPFS_PIM_ACQNFL_FK");
 
@@ -4112,6 +4110,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.OtherLeaseLicenseType).HasComment("Description of a non-standard lease/license type");
             entity.Property(e => e.OtherLeaseProgramType).HasComment("Description of a non-standard lease program type");
             entity.Property(e => e.PrimaryArbitrationCity).HasComment("The location in which primary arbtration of the lease occurred.");
+            entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
             entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
             entity.Property(e => e.PsFileNo).HasComment("Sourced from t_fileSubOverrideData.PSFile_No");
             entity.Property(e => e.RegionCode).HasComment("Foreign key to the PIMS_REGION table.");
@@ -4121,6 +4120,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.TerminationReason).HasComment("Reason for the termination of the lease.  For example, \"The tenant is in violation of the terms of the agreement.\"");
             entity.Property(e => e.TfaFileNo).HasComment("Sourced from t_fileMain.TFA_File_Number");
             entity.Property(e => e.TfaFileNumber).HasComment("Sourced from t_fileMain.TFA_File_Number || - || t_fileSub.Subfile_Sequence_Code");
+            entity.Property(e => e.TotalAllowableCompensation).HasComment("The maximum allowable compensation for the lease.  This amount should not be exceeded by the total of all assiciated H120's.");
 
             entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation).WithMany(p => p.PimsLeases).HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
@@ -4141,6 +4141,8 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.LeaseStatusTypeCodeNavigation).WithMany(p => p.PimsLeases)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_LSSTYP_PIM_LEASE_FK");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.PimsLeases).HasConstraintName("PIM_PRODCT_PIM_LEASE_FK");
 
             entity.HasOne(d => d.Project).WithMany(p => p.PimsLeases).HasConstraintName("PIM_PROJCT_PIM_LEASE_FK");
 
@@ -4316,23 +4318,60 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_LESCON_I_S_U_TR");
                 });
 
-            entity.Property(e => e.LeaseConsultationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_CONSULTATION_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.ConsultationStatusTypeCode).HasDefaultValue("UNKNOWN");
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.LeaseConsultationId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_CONSULTATION_ID_SEQ])")
+                .HasComment("Generated surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user updated the record.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that updated the record.");
+            entity.Property(e => e.Comment).HasComment("Remarks / summary on the process or its results.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.ConsultationStatusTypeCode)
+                .HasDefaultValue("UNKNOWN")
+                .HasComment("Foreign key to the PIMS_CONSULTATION_STATUS_TYPE table.");
+            entity.Property(e => e.ConsultationTypeCode).HasComment("Foreign key to the PIMS_CONSULTATION_TYPE table.");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the relationship has been disabled.");
-            entity.Property(e => e.OtherDescription).HasComment("Placeholder for descriptive text when \"Describe Other\" selected.");
+                .HasComment("if the record is disabled.");
+            entity.Property(e => e.IsResponseReceived).HasComment("Has the consultation request response been received?");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
+            entity.Property(e => e.OrganizationId).HasComment("Consultation contact organization.");
+            entity.Property(e => e.OtherDescription).HasComment("Description for the approval / consultation when \"Other\" consultation type is selected.");
+            entity.Property(e => e.PersonId).HasComment("Consultation contact person exclusive of an organization.");
+            entity.Property(e => e.PrimaryContactId).HasComment("Consultation contact person within the organization.");
+            entity.Property(e => e.RequestedOn).HasComment("Date that the approval / consultation request was sent.");
+            entity.Property(e => e.ResponseReceivedDate).HasComment("Date that the consultation request response was received.");
 
             entity.HasOne(d => d.ConsultationStatusTypeCodeNavigation).WithMany(p => p.PimsLeaseConsultations)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -4345,6 +4384,12 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.Lease).WithMany(p => p.PimsLeaseConsultations)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_LEASE_PIM_LESCON_FK");
+
+            entity.HasOne(d => d.Organization).WithMany(p => p.PimsLeaseConsultations).HasConstraintName("PIM_ORG_PIM_LESCON_FK");
+
+            entity.HasOne(d => d.Person).WithMany(p => p.PimsLeaseConsultationPeople).HasConstraintName("PIM_PERSON_PIM_LESCON_FK");
+
+            entity.HasOne(d => d.PrimaryContact).WithMany(p => p.PimsLeaseConsultationPrimaryContacts).HasConstraintName("PIM_PERSON_PIM_LESCON_ORGCON_FK");
         });
 
         modelBuilder.Entity<PimsLeaseConsultationHist>(entity =>
@@ -5113,9 +5158,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.IsDisabled)
-                .HasDefaultValue(false)
-                .HasComment("Indicates if the row is inactive.");
             entity.Property(e => e.LeaseStakeholderId).HasComment("Foreign key to the LEASE_STAKEHOLDER table.");
 
             entity.HasOne(d => d.CompensationRequisition).WithMany(p => p.PimsLeaseStakeholderCompReqs)
@@ -6137,9 +6179,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.IsDisabled)
-                .HasDefaultValue(false)
-                .HasComment("Indicates if the row is inactive.");
             entity.Property(e => e.PropertyLeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
 
             entity.HasOne(d => d.CompensationRequisition).WithMany(p => p.PimsPropLeaseCompReqs)
@@ -6478,24 +6517,19 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.Description).HasComment("Property description");
             entity.Property(e => e.DistrictCode).HasComment("Foreign key to the district table.");
-            entity.Property(e => e.EncumbranceReason).HasComment("reason for property encumbreance");
             entity.Property(e => e.FileNumber).HasComment("The (ARCS/ORCS) number identifying the Property File.");
             entity.Property(e => e.FileNumberSuffix).HasComment("A suffix to distinguish between Property Files with the same number.");
             entity.Property(e => e.GeneralLocation).HasComment("Descriptive location of the property, primarily for H120 activities.");
             entity.Property(e => e.IsOwned)
                 .HasDefaultValue(true)
                 .HasComment("Is the property currently owned?");
-            entity.Property(e => e.IsProvincialPublicHwy).HasComment("Is this property a provincial public highway?");
             entity.Property(e => e.IsRetired).HasComment("If the property was the source of a subdivision operation or the target of a consolidation operation, the property is marked as retired.");
             entity.Property(e => e.IsRwyBeltDomPatent)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if this property is original federal vs. provincial ownership.");
-            entity.Property(e => e.IsSensitive).HasComment("Is this a sensitive property?");
             entity.Property(e => e.IsTaxesPayable).HasComment("Indicates if the property taxes are being paid.");
             entity.Property(e => e.IsUtilitiesPayable).HasComment("Indicates if the utilities are being paid.");
-            entity.Property(e => e.IsVisibleToOtherAgencies).HasComment("Is the property visible to other agencies?");
             entity.Property(e => e.IsVolumetricParcel)
                 .HasDefaultValue(false)
                 .HasComment("Is there a volumetric measurement for this parcel?");
@@ -6503,7 +6537,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.LandLegalDescription).HasComment("Legal description of property");
             entity.Property(e => e.Location).HasComment("Geospatial location (pin) of property");
             entity.Property(e => e.MunicipalZoning).HasComment("Municipal zoning that applies this property.");
-            entity.Property(e => e.Name).HasComment("Property name");
             entity.Property(e => e.Notes).HasComment("Notes about the property");
             entity.Property(e => e.Pid).HasComment("Property ID");
             entity.Property(e => e.Pin).HasComment("Property number");
@@ -6512,9 +6545,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.PphStatusUpdateUserGuid).HasComment("GUID of the user that updated the PPH status.");
             entity.Property(e => e.PphStatusUpdateUserid).HasComment("Userid that updated the Provincial Public Highway status.");
             entity.Property(e => e.PropertyAreaUnitTypeCode).HasComment("Foreign key to the property area unit type table.");
-            entity.Property(e => e.PropertyClassificationTypeCode)
-                .HasDefaultValue("UNKNOWN")
-                .HasComment("Foreign key to the proeprty classification type table.");
             entity.Property(e => e.PropertyDataSourceEffectiveDate).HasComment("Date the property was officially registered");
             entity.Property(e => e.PropertyDataSourceTypeCode).HasComment("Foreign key to the property data source type table.");
             entity.Property(e => e.PropertyStatusTypeCode).HasComment("Foreign key to the property status type table.");
@@ -6528,8 +6558,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.VolumeUnitTypeCode).HasComment("Foreign key to the volume unit type table.");
             entity.Property(e => e.VolumetricMeasurement).HasComment("Volumetric measurement of the parcel.");
             entity.Property(e => e.VolumetricTypeCode).HasComment("Foreign key to the volumetric type table.");
-            entity.Property(e => e.Zoning).HasComment("Current property zoning");
-            entity.Property(e => e.ZoningPotential).HasComment("Potential property zoning");
 
             entity.HasOne(d => d.Address).WithMany(p => p.PimsProperties).HasConstraintName("PIM_ADDRSS_PIM_PRPRTY_FK");
 
@@ -6540,10 +6568,6 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.PphStatusTypeCodeNavigation).WithMany(p => p.PimsProperties).HasConstraintName("PIM_PPHSTT_PIM_PRPRTY_FK");
 
             entity.HasOne(d => d.PropertyAreaUnitTypeCodeNavigation).WithMany(p => p.PimsProperties).HasConstraintName("PIM_ARUNIT_PIM_PRPRTY_FK");
-
-            entity.HasOne(d => d.PropertyClassificationTypeCodeNavigation).WithMany(p => p.PimsProperties)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("PIM_PRPCLT_PIM_PRPRTY_FK");
 
             entity.HasOne(d => d.PropertyDataSourceTypeCodeNavigation).WithMany(p => p.PimsProperties)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -6824,23 +6848,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.Entity<PimsPropertyBoundaryVw>(entity =>
         {
             entity.ToView("PIMS_PROPERTY_BOUNDARY_VW");
-        });
-
-        modelBuilder.Entity<PimsPropertyClassificationType>(entity =>
-        {
-            entity.HasKey(e => e.PropertyClassificationTypeCode).HasName("PRPCLT_PK");
-
-            entity.ToTable("PIMS_PROPERTY_CLASSIFICATION_TYPE", tb =>
-                {
-                    tb.HasTrigger("PIMS_PRPCLT_I_S_I_TR");
-                    tb.HasTrigger("PIMS_PRPCLT_I_S_U_TR");
-                });
-
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
         });
 
         modelBuilder.Entity<PimsPropertyContact>(entity =>
@@ -9085,9 +9092,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_PROP_ANOMALY_TYPE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROP_PROP_CLASSIFICATION_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_PROP_PURPOSE_H_ID_SEQ")

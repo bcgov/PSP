@@ -49,11 +49,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public long? ProductId { get; set; }
 
         /// <summary>
-        /// get/set - The acquisition file's maximum allowable compensation across all compensation requisitions.
-        /// </summary>
-        public decimal? TotalAllowableCompensation { get; set; }
-
-        /// <summary>
         /// get/set - The acquisition product.
         /// </summary>
         public ProductModel Product { get; set; }

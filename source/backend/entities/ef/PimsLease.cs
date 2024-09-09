@@ -17,6 +17,7 @@ namespace Pims.Dal.Entities;
 [Index("LeaseResponsibilityTypeCode", Name = "LEASE_LEASE_RESPONSIBILITY_TYPE_CODE_IDX")]
 [Index("LeaseStatusTypeCode", Name = "LEASE_LEASE_STATUS_TYPE_CODE_IDX")]
 [Index("LFileNo", Name = "LEASE_L_FILE_NO_IDX")]
+[Index("ProductId", Name = "LEASE_PRODUCT_ID_IDX")]
 [Index("ProjectId", Name = "LEASE_PROJECT_ID_IDX")]
 [Index("PsFileNo", Name = "LEASE_PS_FILE_NO_IDX")]
 [Index("RegionCode", Name = "LEASE_REGION_CODE_IDX")]
@@ -88,6 +89,12 @@ public partial class PimsLease
     /// </summary>
     [Column("PROJECT_ID")]
     public long? ProjectId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_PRODUCT table.
+    /// </summary>
+    [Column("PRODUCT_ID")]
+    public long? ProductId { get; set; }
 
     /// <summary>
     /// Generated identifying lease/licence number
@@ -297,6 +304,12 @@ public partial class PimsLease
     public string PrimaryArbitrationCity { get; set; }
 
     /// <summary>
+    /// The maximum allowable compensation for the lease.  This amount should not be exceeded by the total of all assiciated H120&apos;s.
+    /// </summary>
+    [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
+    public decimal? TotalAllowableCompensation { get; set; }
+
+    /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -448,6 +461,10 @@ public partial class PimsLease
 
     [InverseProperty("Lease")]
     public virtual ICollection<PimsSecurityDeposit> PimsSecurityDeposits { get; set; } = new List<PimsSecurityDeposit>();
+
+    [ForeignKey("ProductId")]
+    [InverseProperty("PimsLeases")]
+    public virtual PimsProduct Product { get; set; }
 
     [ForeignKey("ProjectId")]
     [InverseProperty("PimsLeases")]

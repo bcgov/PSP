@@ -1,7 +1,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
-
+using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Http;
@@ -30,6 +30,8 @@ namespace Pims.Api.Repositories.Mayan
         Task<ExternalResponse<DocumentDetailModel>> TryGetDocumentAsync(long documentId);
 
         Task<ExternalResponse<FileDownloadResponse>> TryDownloadFileAsync(long documentId, long fileId);
+
+        Task<ExternalResponse<FileStreamResponse>> TryStreamFileAsync(long documentId, long fileId);
 
         Task<ExternalResponse<string>> TryDeleteDocument(long documentId);
 

@@ -3,13 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
-using Humanizer;
-using MapsterMapper;
 using Moq;
 using NetTopologySuite.Geometries;
-using Pims.Api.Constants;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
@@ -305,6 +301,61 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_NewTotalAllowableCompensation_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+
+            var currentLeaseEntity = EntityHelper.CreateLease(1, addProperty: false);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var compReqFinancialRepository = this._helper.GetService<Mock<ICompReqFinancialService>>();
+
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
+
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            compReqFinancialRepository.Setup(c => c.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 50 } });
+
+            // Act
+            currentLeaseEntity.TotalAllowableCompensation = 100;
+            var result = service.Update(currentLeaseEntity, new List<UserOverrideCode>());
+
+            // Assert
+            result.Should().NotBeNull();
+            result.TotalAllowableCompensation.Equals(100);
+        }
+
+        [Fact]
+        public void Update_NewTotalAllowableCompensation_Failure_LessThenCurrentFinancials()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+
+            var currentLeaseEntity = EntityHelper.CreateLease(1, addProperty: false);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var compReqFinancialRepository = this._helper.GetService<Mock<ICompReqFinancialService>>();
+
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
+
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            compReqFinancialRepository.Setup(c => c.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } });
+
+            // Act
+            currentLeaseEntity.TotalAllowableCompensation = 99;
+            Action act = () => service.Update(currentLeaseEntity, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
         public void Update_Without_StatusNote()
         {
             // Arrange
@@ -498,7 +549,6 @@ namespace Pims.Api.Test.Services
                 {
                     newProperty = x;
                     newProperty.Internal_Id = 0;
-                    newProperty.PropertyClassificationTypeCode = "UNKNOWN";
                     newProperty.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now);
                     newProperty.PropertyDataSourceTypeCode = "PMBC";
                     newProperty.PropertyTypeCode = "UNKNOWN";
@@ -516,7 +566,6 @@ namespace Pims.Api.Test.Services
             // Assert
             // since this is a new property, the following default fields should be set.
             var updatedProperty = updatedLeaseProperty.Property;
-            newProperty.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
             newProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             newProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             newProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");

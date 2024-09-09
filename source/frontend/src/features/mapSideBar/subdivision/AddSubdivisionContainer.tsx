@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
@@ -9,7 +8,7 @@ import PropertySelectorPidSearchContainer from '@/components/propertySelector/se
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
@@ -21,38 +20,30 @@ import { SubdivisionFormModel } from './AddSubdivisionModel';
 import { IAddSubdivisionViewProps } from './AddSubdivisionView';
 
 export interface IAddSubdivisionContainerProps {
-  onClose?: () => void;
+  onClose: () => void;
+  onSuccess: (propertyId: number | undefined) => void;
   View: React.FunctionComponent<React.PropsWithChildren<IAddSubdivisionViewProps>>;
 }
 
-const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onClose, View }) => {
+const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
+  onClose,
+  onSuccess,
+  View,
+}) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const [initialForm, setInitialForm] = useState<SubdivisionFormModel>(new SubdivisionFormModel());
   const formikRef = useRef<FormikProps<SubdivisionFormModel>>(null);
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
-  const history = useHistory();
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
   const {
     addPropertyOperationApi: { execute: addPropertyOperation, loading },
   } = usePropertyOperationRepository();
-
   const handleCancel = useCallback(() => {
-    if (formikRef.current?.dirty) {
-      setModalContent({
-        ...getCancelModalProps(),
-        handleOk: () => {
-          onClose?.();
-          setDisplayModal(false);
-        },
-      });
-      setDisplayModal(true);
-    } else {
-      onClose?.();
-    }
-  }, [onClose, setDisplayModal, setModalContent]);
+    onClose();
+  }, [onClose]);
 
   const getAddress = useCallback(
     async (pid: string): Promise<AddressForm | undefined> => {
@@ -156,9 +147,9 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
   const handleSuccess = async (subdivisions: ApiGen_Concepts_PropertyOperation[]) => {
     mapMachine.refreshMapProperties();
     if (subdivisions.length === 0 || !subdivisions[0].sourceProperty) {
-      history.replace(`/mapview`);
+      onSuccess(undefined);
     } else {
-      history.replace(`/mapview/sidebar/property/${subdivisions[0].sourceProperty?.id}`);
+      onSuccess(subdivisions[0].sourceProperty?.id ?? undefined);
     }
   };
 
@@ -192,7 +183,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({ onCl
       getPrimaryAddressByPid={getAddress}
       PropertySelectorPidSearchComponent={PropertySelectorPidSearchContainer}
       MapSelectorComponent={MapSelectorContainer}
-    ></View>
+    />
   );
 };
 

@@ -11,7 +11,6 @@ using Microsoft.Extensions.Options;
 using Pims.Api.Constants;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
-
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Av;
@@ -49,12 +48,12 @@ namespace Pims.Api.Services
             this._documentService = documentService;
         }
 
-        public async Task<ExternalResponse<FileTypes>> GetSupportedFileTypes()
+        public async Task<ExternalResponse<CdogsFileTypes>> GetSupportedFileTypes()
         {
             this.Logger.LogInformation("Getting supported file Types");
 
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.GenerateDocuments, keycloakOptions);
-            ExternalResponse<FileTypes> result = await _documentGenerationRepository.TryGetFileTypesAsync();
+            ExternalResponse<CdogsFileTypes> result = await _documentGenerationRepository.TryGetFileTypesAsync();
             return result;
         }
 

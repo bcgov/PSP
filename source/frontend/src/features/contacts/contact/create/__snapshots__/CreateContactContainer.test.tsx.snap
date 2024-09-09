@@ -20,7 +20,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -34,7 +33,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c17.btn .Button__value {
@@ -54,10 +52,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c17.btn.btn-primary {
-  border: none;
 }
 
 .c17.btn.btn-secondary {
@@ -1052,7 +1046,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="pl-8 col-auto"
+                    class="pl-8 d-flex align-items-end col-auto"
                   >
                     <svg
                       class="c20"
@@ -1306,7 +1300,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                     Property Address
                   </div>
                   <div
-                    class="pl-8 col-auto"
+                    class="pl-8 d-flex align-items-end col-auto"
                   >
                     <svg
                       class="c20"
@@ -1560,7 +1554,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                     Billing Address
                   </div>
                   <div
-                    class="pl-8 col-auto"
+                    class="pl-8 d-flex align-items-end col-auto"
                   >
                     <svg
                       class="c20"

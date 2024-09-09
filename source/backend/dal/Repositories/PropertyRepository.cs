@@ -95,7 +95,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PropertyClassificationTypeCodeNavigation)
                 .Include(p => p.PimsPropPropAnomalyTypes)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
@@ -145,7 +144,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PropertyClassificationTypeCodeNavigation)
                 .Include(p => p.PimsPropPropAnomalyTypes)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
@@ -204,7 +202,6 @@ namespace Pims.Dal.Repositories
                     .Include(p => p.PropertyTypeCodeNavigation)
                     .Include(p => p.PropertyStatusTypeCodeNavigation)
                     .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                    .Include(p => p.PropertyClassificationTypeCodeNavigation)
                     .Include(p => p.PimsPropPropAnomalyTypes)
                         .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                     .Include(p => p.PimsPropPropRoadTypes)
@@ -246,7 +243,6 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyTypeCodeNavigation)
                 .Include(p => p.PropertyStatusTypeCodeNavigation)
                 .Include(p => p.PropertyDataSourceTypeCodeNavigation)
-                .Include(p => p.PropertyClassificationTypeCodeNavigation)
                 .Include(p => p.PimsPropPropAnomalyTypes)
                     .ThenInclude(t => t.PropertyAnomalyTypeCodeNavigation)
                 .Include(p => p.PimsPropPropRoadTypes)
@@ -338,13 +334,10 @@ namespace Pims.Dal.Repositories
             property.AddressId = existingProperty.AddressId;
             property.PropertyDataSourceEffectiveDate = existingProperty.PropertyDataSourceEffectiveDate;
             property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
-            property.PropertyClassificationTypeCode = existingProperty.PropertyClassificationTypeCode;
             property.SurplusDeclarationTypeCode = existingProperty.SurplusDeclarationTypeCode;
             property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
             property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
             property.IsRetired = existingProperty.IsRetired;
-            property.IsVisibleToOtherAgencies = existingProperty.IsVisibleToOtherAgencies;
-            property.IsSensitive = existingProperty.IsSensitive;
 
             if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode
                 && (property.PphStatusTypeCode != PropertyPPHStatusTypes.UNKNOWN.ToString() && existingProperty.PphStatusTypeCode != null))
@@ -432,15 +425,6 @@ namespace Pims.Dal.Repositories
 
             existingProperty.IsOwned = isOwned;
 
-            if (isOwned)
-            {
-                existingProperty.PropertyClassificationTypeCode = "COREOPER";
-            }
-            else
-            {
-                existingProperty.PropertyClassificationTypeCode = "OTHER";
-            }
-
             return existingProperty;
         }
 
@@ -500,9 +484,7 @@ namespace Pims.Dal.Repositories
 
             if (filter.LeasePurposes != null && filter.LeasePurposes.Count > 0)
             {
-                //predicate.And(p => 
-                //    p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
-                // TODO: Fix Mappings
+                predicate.And(p => p.PimsPropertyLeases.Any(pl => pl.Lease.PimsLeaseLeasePurposes.Any(plp => filter.LeasePurposes.Contains(plp.LeasePurposeTypeCode))));
             }
 
             if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))

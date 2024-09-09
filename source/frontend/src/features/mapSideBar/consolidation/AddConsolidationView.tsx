@@ -1,12 +1,15 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
 import noop from 'lodash/noop';
+import { useCallback } from 'react';
 import { Tab } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
 import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -71,6 +74,12 @@ const AddConsolidationView: React.FunctionComponent<
   MapSelectorComponent,
   PropertySelectorPidSearchComponent,
 }) => {
+  const history = useHistory();
+
+  const checkState = useCallback(() => {
+    return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
+  }, [formikRef]);
+
   return (
     <MapSideBarLayout
       showCloseButton
@@ -194,6 +203,7 @@ const AddConsolidationView: React.FunctionComponent<
           )}
         </Formik>
       </StyledFormWrapper>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </MapSideBarLayout>
   );
 };

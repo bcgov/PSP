@@ -1,5 +1,5 @@
-import { AddressTypes } from '@/constants';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
@@ -49,7 +49,7 @@ export const getMockOrganization = ({
   ],
   organizationAddresses: [
     {
-      addressUsageType: toTypeCodeNullable(AddressTypes.Mailing),
+      addressUsageType: toTypeCodeNullable(ApiGen_CodeTypes_AddressUsageTypes.MAILING),
       address: getMockApiAddress(),
       id: 1,
       organizationId: 1,
@@ -58,6 +58,7 @@ export const getMockOrganization = ({
   ],
   rowVersion: 1,
 });
+
 export const getEmptyOrganization = (): ApiGen_Concepts_Organization => {
   return {
     id: 0,

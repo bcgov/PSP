@@ -32,7 +32,6 @@ namespace Pims.Api.Test.Core.Extensions
         {
             // Arrange
             var o1 = EntityHelper.CreateProperty(1);
-            o1.Description = "test";
             o1.Location = new NetTopologySuite.Geometries.Point(1, 1, 1);
             var o2 = EntityHelper.CreateProperty(2);
 
@@ -41,7 +40,6 @@ namespace Pims.Api.Test.Core.Extensions
 
             // Assert
             o2.Pid.Should().Be(o1.Pid);
-            o2.Description.Should().Be(o1.Description);
             o2.Location.Should().Be(o1.Location);
         }
         #endregion

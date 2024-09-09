@@ -7,12 +7,12 @@ import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider'
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 
-import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementForm';
+import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
 
 export interface IAddAcquisitionAgreementContainerProps {
   acquisitionFileId: number;
-  View: React.FC<IUpdateAcquisitionAgreementViewProps>;
+  View: React.FC<IUpdateAcquisitionAgreementFormProps>;
   onSuccess: () => void;
 }
 
@@ -76,7 +76,7 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
         isLoading={loading}
         onSubmit={handleSubmit}
         onCancel={() => history.push(backUrl)}
-      ></View>
+      />
     )
   );
 };
