@@ -119,7 +119,15 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   return (
     <Section header="Original Agreement">
       <SectionField label="Ministry project" labelWidth="3">
-        <ProjectSelector field="project" />
+        <ProjectSelector
+          field="project"
+          onChange={(vals: IAutocompletePrediction[]) => {
+            onMinistryProjectSelected(vals);
+            if (vals.length === 0) {
+              formikProps.setFieldValue('productId', null);
+            }
+          }}
+        />
       </SectionField>
       {projectProducts !== undefined && (
         <SectionField label="Product" labelWidth="3">
