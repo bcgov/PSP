@@ -45,10 +45,33 @@ namespace Pims.Api.Services
 
         PimsProperty PopulateNewProperty(PimsProperty property, bool isOwned = false, bool isPropertyOfInterest = true);
 
-        void UpdateLocation(PimsProperty acquisitionProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes);
+        void UpdateLocation(PimsProperty incomingProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes);
+
+        T PopulateNewFileProperty<T>(T fileProperty)
+            where T : IFilePropertyEntity;
+
+        void UpdateFilePropertyLocation<T>(T incomingFileProperty, T filePropertyToUpdate)
+            where T : IFilePropertyEntity;
 
         IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId);
 
         IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers);
+
+        /// <summary>
+        /// Returns the spatial location and boundary polygons in lat/long (4326) for a given property.
+        /// The spatial values will be modified in-place.
+        /// </summary>
+        /// <param name="property">The property to re-project.</param>
+        /// <returns>The property with transformed spatial locations.</returns>
+        PimsProperty TransformPropertyToLatLong(PimsProperty property);
+
+        /// <summary>
+        /// Returns the spatial location and boundary polygons in lat/long (4326) for a list of file properties.
+        /// The spatial values will be modified in-place.
+        /// </summary>
+        /// <param name="fileProperties">The file properties to re-project.</param>
+        /// <returns>The file properties with transformed spatial locations.</returns>
+        List<T> TransformAllPropertiesToLatLong<T>(List<T> fileProperties)
+            where T : IFilePropertyEntity;
     }
 }

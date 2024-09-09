@@ -37,6 +37,12 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
   height: 3.8rem;
 }
 
+.c17.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c17.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -251,27 +257,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
   padding-bottom: 0;
 }
 
-.c7 {
-  gap: 5rem;
-  background-color: white;
-  border-radius: 0.5rem;
-  margin: 1.5rem;
-  margin-right: 3rem;
-  padding: 1.5rem;
-}
-
-.c7 .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-left: 2rem;
-}
-
 .c20 {
   float: right;
   cursor: pointer;
@@ -300,6 +285,27 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
 
 .c13 {
   font-weight: bold;
+}
+
+.c7 {
+  gap: 5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  margin: 1.5rem;
+  margin-right: 3rem;
+  padding: 1.5rem;
+}
+
+.c7 .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-left: 2rem;
 }
 
 .c16 {
@@ -616,27 +622,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div
-              class="c11 form-section"
-            >
-              <h2
-                class="c12"
-              >
-                <div
-                  class="no-gutters row"
-                >
-                  <div
-                    class="col"
-                  >
-                    Organization
-                  </div>
-                </div>
-              </h2>
-              <div
-                class="collapse show"
-              >
                 <div
                   class="pb-2 row"
                 >

@@ -119,14 +119,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="02. Lease and License Tenants")]
+        [Xunit.SkippableFactAttribute(DisplayName="02. Lease Checklist Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "02. Lease and License Tenants")]
-        public void _02_LeaseAndLicenseTenants()
+        [Xunit.TraitAttribute("Description", "02. Lease Checklist Tab")]
+        public void _02_LeaseChecklistTab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Lease and License Tenants", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("02. Lease Checklist Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 13
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -138,30 +138,27 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 14
- testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a new minimum Lease from row number 3", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 15
- testRunner.When("I add Tenants to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I insert Checklist information to a Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 16
- testRunner.And("I update a Lease\'s Tenants from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 17
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Lease and License Improvements")]
+        [Xunit.SkippableFactAttribute(DisplayName="03. Lease and License Tenants")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "03. Lease and License Improvements")]
-        public void _03_LeaseAndLicenseImprovements()
+        [Xunit.TraitAttribute("Description", "03. Lease and License Tenants")]
+        public void _03_LeaseAndLicenseTenants()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Lease and License Improvements", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 19
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Lease and License Tenants", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 18
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -171,31 +168,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 20
+#line 19
  testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 20
+ testRunner.When("I add Tenants to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 21
- testRunner.When("I add Improvements to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I update a Lease\'s Tenants from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 22
- testRunner.And("I update a Lease\'s Improvements from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 23
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Lease and License Insurance")]
+        [Xunit.SkippableFactAttribute(DisplayName="04. Lease and License Improvements")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "04. Lease and License Insurance")]
-        public void _04_LeaseAndLicenseInsurance()
+        [Xunit.TraitAttribute("Description", "04. Lease and License Improvements")]
+        public void _04_LeaseAndLicenseImprovements()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Lease and License Insurance", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 25
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Lease and License Improvements", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 24
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -205,31 +202,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 26
+#line 25
  testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 26
+ testRunner.When("I add Improvements to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 27
- testRunner.When("I add Insurance to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I update a Lease\'s Improvements from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 28
- testRunner.And("I update a Lease\'s Insurance from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 29
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Lease and License Deposits")]
+        [Xunit.SkippableFactAttribute(DisplayName="05. Lease and License Insurance")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "05. Lease and License Deposits")]
-        public void _05_LeaseAndLicenseDeposits()
+        [Xunit.TraitAttribute("Description", "05. Lease and License Insurance")]
+        public void _05_LeaseAndLicenseInsurance()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Lease and License Deposits", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 31
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Lease and License Insurance", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 30
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -239,31 +236,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 32
+#line 31
  testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 32
+ testRunner.When("I add Insurance to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 33
- testRunner.When("I add Deposits to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I update a Lease\'s Insurance from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 34
- testRunner.And("I update a Lease\'s Deposits from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 35
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Lease and License Payments")]
+        [Xunit.SkippableFactAttribute(DisplayName="06. Lease and License Deposits")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "06. Lease and License Payments")]
-        public void _06_LeaseAndLicensePayments()
+        [Xunit.TraitAttribute("Description", "06. Lease and License Deposits")]
+        public void _06_LeaseAndLicenseDeposits()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Lease and License Payments", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 37
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Lease and License Deposits", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 36
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -273,31 +270,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 38
+#line 37
  testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 38
+ testRunner.When("I add Deposits to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 39
- testRunner.When("I add Payments to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.And("I update a Lease\'s Deposits from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 40
- testRunner.And("I update a Lease\'s Payments from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 41
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07. Lease and License Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="08. Lease and License Documents")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "07. Lease and License Documents")]
-        public void _07_LeaseAndLicenseDocuments()
+        [Xunit.TraitAttribute("Description", "08. Lease and License Documents")]
+        public void _08_LeaseAndLicenseDocuments()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Lease and License Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 43
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Lease and License Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 48
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -307,31 +304,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 44
+#line 49
  testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 45
+#line 50
  testRunner.When("I create Digital Documents for a \"Lease\" row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 46
+#line 51
  testRunner.And("I edit a Digital Document for a \"Lease\" from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 47
+#line 52
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="08. Lease and License Notes")]
+        [Xunit.SkippableFactAttribute(DisplayName="09. Lease and License Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "08. Lease and License Notes")]
-        public void _08_LeaseAndLicenseNotes()
+        [Xunit.TraitAttribute("Description", "09. Lease and License Notes")]
+        public void _09_LeaseAndLicenseNotes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Lease and License Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 49
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Lease and License Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 54
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -341,31 +338,31 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 50
+#line 55
  testRunner.Given("I create a new minimum Lease from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 51
+#line 56
  testRunner.When("I create a new Note on the Notes Tab from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 52
+#line 57
  testRunner.And("I edit a Note on the Notes Tab from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 53
+#line 58
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="09. Lease and License from Inventory Property Pin")]
+        [Xunit.SkippableFactAttribute(DisplayName="10. Lease and License from Inventory Property Pin")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "09. Lease and License from Inventory Property Pin")]
-        public void _09_LeaseAndLicenseFromInventoryPropertyPin()
+        [Xunit.TraitAttribute("Description", "10. Lease and License from Inventory Property Pin")]
+        public void _10_LeaseAndLicenseFromInventoryPropertyPin()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Lease and License from Inventory Property Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 55
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Lease and License from Inventory Property Pin", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 60
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -375,25 +372,25 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 56
+#line 61
  testRunner.Given("I create a new Lease through a Property Pin from row number 6", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 57
+#line 62
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="10. Lease and License List View")]
+        [Xunit.SkippableFactAttribute(DisplayName="11. Lease and License List View")]
         [Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [Xunit.TraitAttribute("Description", "10. Lease and License List View")]
-        public void _10_LeaseAndLicenseListView()
+        [Xunit.TraitAttribute("Description", "11. Lease and License List View")]
+        public void _11_LeaseAndLicenseListView()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Lease and License List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 59
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Lease and License List View", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 64
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -403,10 +400,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 60
+#line 65
  testRunner.Given("I search for an existing Lease or License from row number 2", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 61
+#line 66
  testRunner.Then("Expected Lease File Content is displayed on Leases Table", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

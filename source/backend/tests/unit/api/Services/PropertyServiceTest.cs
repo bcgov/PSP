@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Reflection;
 using FluentAssertions;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
+using Pims.Api.Services.Interfaces;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
@@ -201,6 +203,200 @@ namespace Pims.Api.Test.Services
 
         #endregion
 
+        #region UpdateLocation
+        [Fact]
+        public void UpdateLocation_Requires_UserOverride()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(200);
+            property.Location = null;
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(14000, 9200));
+
+            var incomingProperty = new PimsProperty();
+            incomingProperty.Description = "updated test";
+            incomingProperty.Pid = 200;
+            incomingProperty.Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84);
+
+            // Act
+            Action act = () => service.UpdateLocation(incomingProperty, ref property, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<UserOverrideException>();
+            ex.Which.UserOverride.Should().Be(UserOverrideCode.AddLocationToProperty);
+
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Never);
+            repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>()), Times.Never);
+        }
+
+        [Fact]
+        public void UpdateLocation_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(200);
+            property.Location = null;
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
+                .Returns(new Coordinate(14000, 9200));
+
+            var incomingProperty = new PimsProperty();
+            incomingProperty.Description = "updated test";
+            incomingProperty.Pid = 200;
+            incomingProperty.Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84);
+
+            // Act
+            service.UpdateLocation(incomingProperty, ref property, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+
+            // Assert
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            repository.Verify(x => x.Update(It.Is<PimsProperty>(p => p.Location.Coordinate.Equals(new Coordinate(14000, 9200))), It.IsAny<bool>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateLocation_Boundary_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(200);
+            property.Location = null;
+            property.Boundary = null;
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
+                .Returns(new Coordinate(14000, 9200));
+            coordinateService.Setup(x => x.TransformGeometry(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Geometry>()))
+                .Callback<int, int, Geometry>((sourceSrid, targetSrid, boundary) =>
+                {
+                    // "apply" mock transformation
+                    var polygon = boundary as Polygon;
+                    polygon.SRID = targetSrid;
+                    polygon.ExteriorRing.CoordinateSequence.SetX(0, 1000);
+                    polygon.ExteriorRing.CoordinateSequence.SetY(0, 1000);
+                });
+
+            var incomingProperty = new PimsProperty();
+            incomingProperty.Description = "updated test";
+            incomingProperty.Pid = 200;
+            incomingProperty.Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84);
+            incomingProperty.Boundary = EntityHelper.CreatePolygon(SpatialReference.WGS84);
+
+            // Act
+            service.UpdateLocation(incomingProperty, ref property, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+
+            // Assert
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            coordinateService.Verify(x => x.TransformGeometry(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Geometry>()), Times.Once);
+            repository.Verify(x => x.Update(property, true), Times.Once);
+            property.Location.Coordinate.Should().Be(new Coordinate(14000, 9200));
+            property.Boundary.Should().BeOfType<Polygon>();
+            var updatedBoundary = property.Boundary as Polygon;
+            updatedBoundary.ExteriorRing.GetCoordinateN(0).Should().Be(new Coordinate(1000, 1000));
+        }
+
+        #endregion
+
+        #region PopulateNewProperty
+        [Fact]
+        public void PopulateNewProperty_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(200);
+            property.Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84);
+            property.Boundary = null;
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllCountries()).Returns(new[] { EntityHelper.CreateCountry(1, "CA") });
+            lookupRepository.Setup(x => x.GetAllProvinces()).Returns(new[] { EntityHelper.CreateProvince(1, "BC") });
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
+                .Returns(new Coordinate(14000, 9200));
+
+            // Act
+            service.PopulateNewProperty(property);
+
+            // Assert
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            coordinateService.Verify(x => x.TransformGeometry(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Geometry>()), Times.Never);
+
+            property.PropertyTypeCode.Should().Be("UNKNOWN");
+            property.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
+            property.PropertyStatusTypeCode.Should().Be("UNKNOWN");
+            property.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
+            property.Location.Coordinate.Should().Be(new Coordinate(14000, 9200));
+            property.Location.SRID.Should().Be(SpatialReference.BCALBERS); // Spatial reference should be in BC ALBERS for DB storage.
+        }
+
+        [Fact]
+        public void PopulateNewProperty_Boundary_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(200);
+            property.Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84);
+            property.Boundary = EntityHelper.CreatePolygon(SpatialReference.WGS84);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllCountries()).Returns(new[] { EntityHelper.CreateCountry(1, "CA") });
+            lookupRepository.Setup(x => x.GetAllProvinces()).Returns(new[] { EntityHelper.CreateProvince(1, "BC") });
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
+                .Returns(new Coordinate(14000, 9200));
+            coordinateService.Setup(x => x.TransformGeometry(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Geometry>()))
+                .Callback<int, int, Geometry>((sourceSrid, targetSrid, boundary) =>
+                {
+                    // "apply" mock transformation
+                    var polygon = boundary as Polygon;
+                    polygon.SRID = targetSrid;
+                    polygon.ExteriorRing.CoordinateSequence.SetX(0, 1000);
+                    polygon.ExteriorRing.CoordinateSequence.SetY(0, 1000);
+                });
+
+            var incomingProperty = new PimsProperty();
+            incomingProperty.Description = "updated test";
+            incomingProperty.Pid = 200;
+            incomingProperty.Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84);
+            incomingProperty.Boundary = EntityHelper.CreatePolygon(SpatialReference.WGS84);
+
+            // Act
+            service.PopulateNewProperty(property);
+
+            // Assert
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            coordinateService.Verify(x => x.TransformGeometry(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Geometry>()), Times.Once);
+
+            property.PropertyTypeCode.Should().Be("UNKNOWN");
+            property.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
+            property.PropertyStatusTypeCode.Should().Be("UNKNOWN");
+            property.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
+            property.Location.Coordinate.Should().Be(new Coordinate(14000, 9200));
+            property.Location.SRID.Should().Be(SpatialReference.BCALBERS); // Spatial reference should be in BC ALBERS for DB storage.
+            property.Boundary.Should().BeOfType<Polygon>();
+
+            var updatedBoundary = property.Boundary as Polygon;
+            updatedBoundary.ExteriorRing.GetCoordinateN(0).Should().Be(new Coordinate(1000, 1000));
+            updatedBoundary.SRID.Should().Be(SpatialReference.BCALBERS); // Spatial reference should be in BC ALBERS for DB storage.
+        }
+
+        #endregion
+
         #region Property Management
         [Fact]
         public void GetPropertyManagement_Success()
@@ -240,6 +436,231 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
+
+        [Fact]
+        public void GetPropertyManagement_HasNoActiveLease_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.TERMINATED.ToString()
+                    }
+                },
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.DRAFT.ToString()
+                    }
+                },
+            });
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            Assert.False(result.HasActiveLease);
+            Assert.False(result.ActiveLeaseHasExpiryDate);
+
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPropertyManagement_HasActiveLease_NoRenewal_HasTerminationDate_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.EXPIRED.ToString()
+                    }
+                },
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString(),
+                        PimsLeaseRenewals = new List<PimsLeaseRenewal>(),
+                        TerminationDate = DateTime.UtcNow.AddDays(30).Date,
+                    }
+                },
+            });
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            Assert.False(result.HasActiveLease);
+            Assert.False(result.ActiveLeaseHasExpiryDate);
+
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPropertyManagement_HasActiveLease_NoRenewal_HasNoTerminationDate_Expired_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.EXPIRED.ToString()
+                    }
+                },
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString(),
+                        PimsLeaseRenewals = new List<PimsLeaseRenewal>(),
+                        TerminationDate = null,
+                        OrigExpiryDate = DateTime.UtcNow.AddDays(-1).Date,
+                    }
+                },
+            }); ;
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            Assert.False(result.HasActiveLease);
+            Assert.False(result.ActiveLeaseHasExpiryDate);
+
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetPropertyManagement_HasActiveLease_NoRenewal_HasNoTerminationDate_Valid_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.ManagementView);
+            var repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
+
+            var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
+
+            var propertyLeasesRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeasesRepository.Setup(x => x.GetAllByPropertyId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 100,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.EXPIRED.ToString()
+                    }
+                },
+                new PimsPropertyLease()
+                {
+                    PropertyLeaseId = 200,
+                    Property = new PimsProperty()
+                    {
+                        PropertyId = 1,
+                    },
+                    Lease = new PimsLease()
+                    {
+                        LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString(),
+                        PimsLeaseRenewals = new List<PimsLeaseRenewal>(),
+                        TerminationDate = null,
+                        OrigExpiryDate = DateTime.UtcNow.Date,
+                    }
+                },
+            }); ;
+
+            // Act
+            var result = service.GetPropertyManagement(1);
+
+            // Assert
+            Assert.True(result.HasActiveLease);
+            Assert.True(result.ActiveLeaseHasExpiryDate);
+
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Once);
+            coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
+            propertyLeasesRepository.Verify(x => x.GetAllByPropertyId(It.IsAny<long>()), Times.Once);
+        }
+
 
         [Fact]
         public void Update_PropertyManagement_Success()
@@ -331,7 +752,6 @@ namespace Pims.Api.Test.Services
             activity.PropMgmtActivityStatusTypeCode.Should().Be("NOTSTARTED");
             repository.Verify(x => x.Create(It.IsAny<PimsPropertyActivity>()), Times.Once);
         }
-
 
         [Fact]
         public void Get_PropertyManagement_Activities_NoPermission()
@@ -544,6 +964,78 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.TryDelete(It.IsAny<long>()), Times.Once);
         }
         #endregion
+
+        [Fact]
+        public void Update_HistoricalFileNumbers_NoPermission()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView);
+            var repository = this._helper.GetService<Mock<IHistoricalNumberRepository>>();
+
+            List<PimsHistoricalFileNumber> historicalNumbers = new() { };
+
+            // Assert
+            Assert.Throws<NotAuthorizedException>(() => service.UpdateHistoricalFileNumbers(property.PropertyId, historicalNumbers));
+            repository.Verify(x => x.UpdateHistoricalFileNumbers(It.IsAny<long>(), It.IsAny<IEnumerable<PimsHistoricalFileNumber>>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_HistoricalFileNumbers_Duplicate_FileNumberType()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IHistoricalNumberRepository>>();
+
+            List<PimsHistoricalFileNumber> historicalNumbers = new() {
+                new()
+                {
+                    HistoricalFileNumber = "123",
+                    HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.LISNO.ToString(),
+                },
+                new()
+                {
+                    HistoricalFileNumber = "123",
+                    HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.LISNO.ToString(),
+                }
+            };
+
+            // Assert
+            Assert.Throws<DuplicateEntityException>(() => service.UpdateHistoricalFileNumbers(property.PropertyId, historicalNumbers));
+            repository.Verify(x => x.UpdateHistoricalFileNumbers(It.IsAny<long>(), It.IsAny<IEnumerable<PimsHistoricalFileNumber>>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_HistoricalFileNumbers_Duplicate_OTHER_FileNumberType()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(1);
+
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyEdit);
+            var repository = this._helper.GetService<Mock<IHistoricalNumberRepository>>();
+
+            List<PimsHistoricalFileNumber> historicalNumbers = new() {
+                new()
+                {
+                    HistoricalFileNumber = "123",
+                    HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.OTHER.ToString(),
+                    OtherHistFileNumberTypeCode = "TEST",
+                },
+                new()
+                {
+                    HistoricalFileNumber = "123",
+                    HistoricalFileNumberTypeCode = HistoricalFileNumberTypes.OTHER.ToString(),
+                    OtherHistFileNumberTypeCode = "TEST",
+                }
+            };
+
+            // Assert
+            Assert.Throws<DuplicateEntityException>(() => service.UpdateHistoricalFileNumbers(property.PropertyId, historicalNumbers));
+            repository.Verify(x => x.UpdateHistoricalFileNumbers(It.IsAny<long>(), It.IsAny<IEnumerable<PimsHistoricalFileNumber>>()), Times.Never);
+        }
 
         #endregion
     }

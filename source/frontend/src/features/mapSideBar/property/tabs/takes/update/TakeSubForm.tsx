@@ -65,7 +65,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
           variant: 'info',
           title: 'Follow-up required',
           message:
-            'You have created a Lease (Payable) Take. You also need to create a Lease/License File.',
+            'You have created a Lease (Payable) Take. You also need to create a Lease/Licence File.',
           okButtonText: 'Close',
           cancelButtonText: null,
           handleOk: () => {
@@ -290,7 +290,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
         </StyledBorderSection>
         <StyledBorderSection>
           <SectionField
-            label="Is there a new License for Construction Access (TLCA/LTC)? *"
+            label="Is there a new Licence for Construction Access (TLCA/LTC)? *"
             labelWidth="8"
           >
             <RadioGroup

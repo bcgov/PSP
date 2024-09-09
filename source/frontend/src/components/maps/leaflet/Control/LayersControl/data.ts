@@ -23,11 +23,12 @@ export const layersTree: ILayerItem[] = [
         maxZoom: MAP_MAX_ZOOM,
       },
       {
+        // only works on the vpn
         key: 'moti',
         label: 'MOTI Regions (multiple colors)',
         on: false,
-        url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_REGIONAL_BNDRY_POLY/ows?',
-        layers: 'pub:WHSE_ADMIN_BOUNDARIES.TADM_MOT_REGIONAL_BNDRY_POLY',
+        url: 'https://maps.th.gov.bc.ca/geoV05/ows?',
+        layers: 'hwy:DSA_REGION_BOUNDARY',
         transparent: true,
         opacity: 0.9,
         format: 'image/png',
@@ -37,11 +38,12 @@ export const layersTree: ILayerItem[] = [
         maxZoom: MAP_MAX_ZOOM,
       },
       {
+        // only works on the vpn
         key: 'motiHighwayDistricts',
         label: 'MOTI Highway Districts (multiple colors)',
         on: false,
-        url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY/ows?',
-        layers: 'pub:WHSE_ADMIN_BOUNDARIES.TADM_MOT_DISTRICT_BNDRY_POLY',
+        url: 'https://maps.th.gov.bc.ca/geoV05/ows?',
+        layers: 'hwy:DSA_DISTRICT_BOUNDARY',
         transparent: true,
         opacity: 0.9,
         format: 'image/png',

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import styled from 'styled-components';
 import * as Yup from 'yup';
 
-import ConsolidateSubdivideIcon from '@/assets/images/subdivisionconsolidation.svg?react';
+import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
 import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -149,18 +149,18 @@ const AddConsolidationView: React.FunctionComponent<
                     const allProperties: ApiGen_Concepts_Property[] = [];
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
-                        const formProperty = PropertyForm.fromMapProperty(property);
+                        const formProperty = PropertyForm.fromFeatureDataset(property);
                         formProperty.landArea =
-                          property.landArea && property.areaUnit
+                          formProperty.landArea && formProperty.areaUnit
                             ? convertArea(
-                                property.landArea,
-                                property.areaUnit.toLocaleLowerCase(),
+                                formProperty.landArea,
+                                formProperty.areaUnit.toLocaleLowerCase(),
                                 AreaUnitTypes.SquareMeters,
                               )
                             : 0;
                         formProperty.areaUnit = AreaUnitTypes.SquareMeters;
-                        if (property.pid) {
-                          formProperty.address = await getPrimaryAddressByPid(property.pid);
+                        if (formProperty.pid) {
+                          formProperty.address = await getPrimaryAddressByPid(formProperty.pid);
                           allProperties.push(formProperty.toApi());
                         } else {
                           toast.error('Selected property must have a PID');
@@ -223,7 +223,7 @@ const StyledFormWrapper = styled.div`
   background-color: ${props => props.theme.css.highlightBackgroundColor};
 `;
 
-const StyledSubdivideConsolidateIcon = styled(ConsolidateSubdivideIcon)`
+const StyledSubdivideConsolidateIcon = styled(SubdivisionIcon)`
   width: 3rem;
   height: 3rem;
   margin-right: 1rem;

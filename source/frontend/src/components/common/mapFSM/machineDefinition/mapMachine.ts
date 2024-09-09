@@ -250,7 +250,12 @@ const sideBarStates = {
   states: {
     fullScreen: {
       entry: assign({
-        sideBarType: () => SideBarType.NOT_DEFINED,
+        mapSideBarState: () => ({
+          type: SideBarType.NOT_DEFINED,
+          isOpen: false,
+          isCollapsed: false,
+          isFullWidth: false,
+        }),
         filePropertyLocations: () => [],
       }),
       on: {
@@ -265,30 +270,37 @@ const sideBarStates = {
     sidebarOpen: {
       entry: [
         assign({
-          sideBarType: (context: MachineContext, event: any) =>
-            event ? event.sidebarType : context.sideBarType,
+          mapSideBarState: (context: MachineContext, event: any) => ({
+            ...context.mapSideBarState,
+            type: event ? event.sidebarType : context.mapSideBarState.type,
+            isOpen: true,
+          }),
         }),
       ],
       on: {
         OPEN_SIDEBAR: {
           actions: [
             assign({
-              sideBarType: (context: MachineContext, event: any) =>
-                event ? event.sidebarType : context.sideBarType,
+              mapSideBarState: (context: MachineContext, event: any) => ({
+                ...context.mapSideBarState,
+                type: event ? event.sidebarType : context.mapSideBarState.type,
+                isOpen: true,
+              }),
             }),
           ],
           target: '#map.mapVisible.featureView.browsing',
         },
         CLOSE_SIDEBAR: {
-          actions: assign({ selectedFeatureDataset: () => null }),
-          target: 'fullScreen',
-        },
-        CHANGE_SIDEBAR: {
-          actions: [
-            assign({
-              filePropertyLocations: () => [],
+          actions: assign({
+            selectedFeatureDataset: () => null,
+            mapSideBarState: () => ({
+              type: SideBarType.NOT_DEFINED,
+              isOpen: false,
+              isCollapsed: false,
+              isFullWidth: false,
             }),
-          ],
+          }),
+          target: 'fullScreen',
         },
 
         SET_FILE_PROPERTY_LOCATIONS: {
@@ -297,6 +309,28 @@ const sideBarStates = {
               filePropertyLocations: (context: MachineContext, event: any) => event.locations || [],
             }),
             raise('REQUEST_FIT_BOUNDS'),
+          ],
+        },
+
+        TOGGLE_SIDEBAR_SIZE: {
+          actions: [
+            assign({
+              mapSideBarState: (context: MachineContext) => ({
+                ...context.mapSideBarState,
+                isCollapsed: !context.mapSideBarState.isCollapsed,
+              }),
+            }),
+          ],
+        },
+
+        SET_FULL_WIDTH_SIDEBAR: {
+          actions: [
+            assign({
+              mapSideBarState: (context: MachineContext, event: any) => ({
+                ...context.mapSideBarState,
+                isFullWidth: event.show,
+              }),
+            }),
           ],
         },
       },
@@ -333,7 +367,12 @@ export const mapMachine = createMachine<MachineContext>({
 
   // Local context for entire machine
   context: {
-    sideBarType: SideBarType.NOT_DEFINED,
+    mapSideBarState: {
+      type: SideBarType.NOT_DEFINED,
+      isOpen: false,
+      isCollapsed: false,
+      isFullWidth: false,
+    },
     requestedFlyTo: {
       location: null,
       bounds: null,

@@ -1,0 +1,311 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/6/2024 1:57:23 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{2C2EC646-A20A-4D74-96CE-BA75A55BE80D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{EFFF3A5E-5124-46C8-9580-2A8C8C3B2D8B}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{81F8CB25-1234-4D17-8A7B-41B43637ED66}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-Package1-{81F8CB25-1234-4D17-8A7B-41B43637ED66}sqldevtst.th.gov.bc.ca.PIMS_DEV;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CREATE TEMP TABLE 1"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{729CF207-E427-4978-89AB-CCA1E6007E34}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CREATE TEMP TABLE 1"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{81F8CB25-1234-4D17-8A7B-41B43637ED66}"
+          SQLTask:SqlStatementSource="-- TEMP TABLE #1 - INSERT OLD_ADDRESS_ID values INTO A TEMP TABLE&#xA;&#x9;WITH DuplicateAddresses AS (&#xA;&#x9;&#x9;SELECT PROPERTY_ID, ADDRESS_ID,&#xA;&#x9;&#x9;&#x9;&#x9;ROW_NUMBER() OVER (PARTITION BY ADDRESS_ID ORDER BY PROPERTY_ID) AS RowNum&#xA;&#x9;&#x9;FROM PIMS_PROPERTY&#xA;&#x9;&#x9;WHERE ADDRESS_ID IN (&#xA;&#x9;&#x9;&#x9;SELECT ADDRESS_ID&#xA;&#x9;&#x9;&#x9;FROM PIMS_PROPERTY&#xA;&#x9;&#x9;&#x9;GROUP BY ADDRESS_ID&#xA;&#x9;&#x9;&#x9;HAVING COUNT(*) &gt; 1&#xA;&#x9;)&#xA;&#x9;)&#xA;&#x9;-- Select data into a temporary table&#xA;&#x9;SELECT D.PROPERTY_ID, D.ADDRESS_ID, &#xA;&#x9;&#x9;A.STREET_ADDRESS_1, A.STREET_ADDRESS_2, A.STREET_ADDRESS_3, &#xA;&#x9;&#x9;A.REGION_CODE, A.DISTRICT_CODE, A.PROVINCE_STATE_ID, &#xA;&#x9;&#x9;A.COUNTRY_ID, A.MUNICIPALITY_NAME, A.OTHER_COUNTRY, &#xA;&#x9;&#x9;A.LATITUDE, A.LONGITUDE, A.COMMENT, A.POSTAL_CODE, A.APP_CREATE_USER_DIRECTORY, A.APP_LAST_UPDATE_USER_DIRECTORY&#xA;&#x9;INTO etl.TempAddresses&#xA;&#x9;FROM DuplicateAddresses AS D&#xA;&#x9;JOIN PIMS_ADDRESS AS A ON D.ADDRESS_ID = A.ADDRESS_ID&#xA;&#x9;WHERE D.RowNum &gt; 1&#xA;&#x9;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DROP etl Schema ADDRESS_ID Constraint"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{18ec0932-9de5-4b42-aebd-ba084c1052ff}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DROP etl Schema ADDRESS_ID Constraint"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{81F8CB25-1234-4D17-8A7B-41B43637ED66}"
+          SQLTask:SqlStatementSource="ALTER TABLE [etl].[PIMS_ADDRESS_TEMP]&#xA;DROP CONSTRAINT [ADDRSS_ADDRESS_ID_DEF_temp];&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\INSERT INTO PIMS_ADDRESS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BBA15109-FB44-4A59-BFC1-CFBF77F57905}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="INSERT INTO PIMS_ADDRESS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{81F8CB25-1234-4D17-8A7B-41B43637ED66}"
+          SQLTask:SqlStatementSource="INSERT into [dbo].[PIMS_ADDRESS] ( ADDRESS_ID, STREET_ADDRESS_1, STREET_ADDRESS_2, STREET_ADDRESS_3, REGION_CODE, DISTRICT_CODE, PROVINCE_STATE_ID, COUNTRY_ID, MUNICIPALITY_NAME, OTHER_COUNTRY, LATITUDE, LONGITUDE, COMMENT, POSTAL_CODE, APP_CREATE_USERID, APP_LAST_UPDATE_USERID,APP_CREATE_USER_DIRECTORY,APP_LAST_UPDATE_USER_DIRECTORY)&#xA;SELECT  T.ADDRESS_ID, T.STREET_ADDRESS_1, T.STREET_ADDRESS_2, T.STREET_ADDRESS_3, T.REGION_CODE, T.DISTRICT_CODE, T.PROVINCE_STATE_ID, T.COUNTRY_ID, T.MUNICIPALITY_NAME, T.OTHER_COUNTRY, T.LATITUDE, T.LONGITUDE, T.COMMENT, T.POSTAL_CODE,'PIMS_ETL_USER_ADDRESS_FIX','PIMS_ETL_USER_ADDRESS_FIX', T.APP_CREATE_USER_DIRECTORY , T.APP_LAST_UPDATE_USER_DIRECTORY&#xA;FROM [etl].[PIMS_ADDRESS_TEMP] AS T;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LOAD TEMP TABLE 2"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{7951D4B4-CE1A-4BF8-BA26-AC5A8B8E1ACD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LOAD TEMP TABLE 2"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{81F8CB25-1234-4D17-8A7B-41B43637ED66}"
+          SQLTask:SqlStatementSource="INSERT into [etl].[PIMS_ADDRESS_TEMP] (PROPERTY_ID, STREET_ADDRESS_1, STREET_ADDRESS_2, STREET_ADDRESS_3, REGION_CODE, DISTRICT_CODE, PROVINCE_STATE_ID, COUNTRY_ID, MUNICIPALITY_NAME, OTHER_COUNTRY, LATITUDE, LONGITUDE, COMMENT, POSTAL_CODE, APP_CREATE_USERID, APP_LAST_UPDATE_USERID,APP_CREATE_USER_DIRECTORY,APP_LAST_UPDATE_USER_DIRECTORY)&#xA;SELECT T.PROPERTY_ID, T.STREET_ADDRESS_1, T.STREET_ADDRESS_2, T.STREET_ADDRESS_3, T.REGION_CODE, T.DISTRICT_CODE, T.PROVINCE_STATE_ID, T.COUNTRY_ID, T.MUNICIPALITY_NAME, T.OTHER_COUNTRY, T.LATITUDE, T.LONGITUDE, T.COMMENT, T.POSTAL_CODE,'PIMS_ETL_USER_ADDRESS_FIX','PIMS_ETL_USER_ADDRESS_FIX', T.APP_CREATE_USER_DIRECTORY , T.APP_LAST_UPDATE_USER_DIRECTORY&#xA;FROM etl.TempAddresses AS T;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UPDATE PIMS_PROPERTY"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{80988229-816C-4AA2-8F4F-CC360D197ABB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UPDATE PIMS_PROPERTY"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{81F8CB25-1234-4D17-8A7B-41B43637ED66}"
+          SQLTask:SqlStatementSource="UPDATE T&#xA;SET T.ADDRESS_ID = S.ADDRESS_ID, T.CONCURRENCY_CONTROL_NUMBER = T.CONCURRENCY_CONTROL_NUMBER+1&#xA;FROM dbo.PIMS_PROPERTY T&#xA;JOIN etl.PIMS_ADDRESS_TEMP S&#xA;ON T.PROPERTY_ID = S.PROPERTY_ID;&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{90EB8639-75B6-49B2-82C5-A4C72D4697F7}"
+      DTS:From="Package\CREATE TEMP TABLE 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\LOAD TEMP TABLE 2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{1E893CFE-F396-4A84-B141-084F76F5F5F9}"
+      DTS:From="Package\LOAD TEMP TABLE 2"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\INSERT INTO PIMS_ADDRESS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{8BE4D2DF-BC36-4E1B-9A6D-77F54403BDFB}"
+      DTS:From="Package\INSERT INTO PIMS_ADDRESS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\UPDATE PIMS_PROPERTY" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{B5D6F89E-9202-49FE-B9CE-8F1D10411872}"
+      DTS:From="Package\UPDATE PIMS_PROPERTY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\DROP etl Schema ADDRESS_ID Constraint" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="200.666666666667,42.6666666666667"
+          Id="Package\CREATE TEMP TABLE 1"
+          TopLeft="286.249995734543,236.736846561247" />
+        <NodeLayout
+          Size="289.333333333334,42.6666666666667"
+          Id="Package\DROP etl Schema ADDRESS_ID Constraint"
+          TopLeft="1313.12498043291,400.947375967892" />
+        <NodeLayout
+          Size="233.333333333334,42.6666666666667"
+          Id="Package\INSERT INTO PIMS_ADDRESS"
+          TopLeft="936.249986048788,234.684214943664" />
+        <NodeLayout
+          Size="186.666666666667,42.6666666666667"
+          Id="Package\LOAD TEMP TABLE 2"
+          TopLeft="616.24999081716,234.684214943664" />
+        <NodeLayout
+          Size="216,42.6666666666667"
+          Id="Package\UPDATE PIMS_PROPERTY"
+          TopLeft="1346.87497993,235.368425482858" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="486.916662401209,257.043864085789">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="129.33332841595,0"
+              Start="0,0"
+              End="121.83332841595,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="121.83332841595,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="802.916657483826,256.017548276997">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="133.333328564962,0"
+              Start="0,0"
+              End="125.833328564962,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="125.833328564962,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="1169.58331938212,256.359653546594">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="177.291660547877,0"
+              Start="0,0"
+              End="169.791660547877,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="169.791660547877,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1456.33331351479,278.035092149525">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,122.912283818367"
+              Start="0,0"
+              End="0,115.412283818367">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,115.412283818367" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="LOAD [etl].[PIMS_ADDRESS_TEMP]"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="210.666666666667,40"
+          Id="ccb9eb28-bfc6-4bce-8d22-a1d175c389e9"
+          TopLeft="614.374990845099,306.526321559071" />
+        <AnnotationLayout
+          Text="CREATE etl.TempAddresses"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="170.666666666667,40"
+          Id="30100bb4-8fac-43db-b2ba-b3312d8e1933"
+          TopLeft="300.624995520339,310.631584794237" />
+        <AnnotationLayout
+          Text="INSERT INTO PIMS_ADDRESS table with new &#xA;ADDRESS_ID from etl temp table 2"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="266.666666666667,56"
+          Id="6918839a-13bc-4069-821c-67f82ca66c69"
+          TopLeft="919.374986300245,305.842111019877" />
+        <AnnotationLayout
+          Text="Fix PIMS PROPERTY with new address _ids"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="250.666666666667,40"
+          Id="a24eda74-9abc-4207-b0e7-84c8e9a24d3e"
+          TopLeft="1324.37498026527,299.000005627933" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

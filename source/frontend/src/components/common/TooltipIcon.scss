@@ -3,13 +3,18 @@
 .tooltip-icon {
   min-width: 1.4rem;
   min-height: 1.4rem;
-  color: $link-color;
+  svg {
+    min-width: 1.4rem;
+    min-height: 1.4rem;
+    max-width: 1.4rem;
+    max-height: 1.4rem;
+  }
+  color: $active-action-color;
   margin: 0rem 0.2rem;
+  align-self: center;
 }
 
 .tooltip-icon.warning {
-  min-width: 1.4rem;
-  min-height: 1.4rem;
   color: $text-warning-color;
   margin: 0rem 0.2rem;
 }

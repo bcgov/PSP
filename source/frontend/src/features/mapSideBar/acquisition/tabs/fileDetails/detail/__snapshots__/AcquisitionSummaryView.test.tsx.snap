@@ -186,9 +186,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
               class="c4"
             >
               Delivery date:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -267,9 +265,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
               class="c4"
             >
               Historical file number:
-              <span
-                class="ml-2"
-              >
+              <span>
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-section-field-tooltip"
@@ -541,9 +537,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
                 class="c4"
               >
                 Other name:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"
@@ -697,9 +691,7 @@ Canada
                 class="c4"
               >
                 Other name:
-                <span
-                  class="ml-2"
-                >
+                <span>
                   <span
                     class="tooltip-icon"
                     data-testid="tooltip-icon-section-field-tooltip"

@@ -47,7 +47,9 @@ namespace Pims.Dal.Repositories
                 .Include(pl => pl.Lease)
                     .ThenInclude(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(pl => pl.Lease)
-                    .ThenInclude(l => l.PimsLeaseTerms)
+                    .ThenInclude(l => l.PimsLeasePeriods)
+                .Include(pl => pl.Lease)
+                    .ThenInclude(l => l.PimsLeaseRenewals)
                 .Where(p => p.PropertyId == propertyId);
         }
 
@@ -78,9 +80,8 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IEnumerable<PimsPropertyLease> UpdatePropertyLeases(long leaseId, ICollection<PimsPropertyLease> pimsPropertyLeases)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-
-            this.Context.UpdateChild<PimsLease, long, PimsPropertyLease, long>(l => l.PimsPropertyLeases, leaseId, pimsPropertyLeases.ToArray());
+            User.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            Context.UpdateChild<PimsLease, long, PimsPropertyLease, long>(l => l.PimsPropertyLeases, leaseId, pimsPropertyLeases.ToArray());
 
             return GetAllByLeaseId(leaseId);
         }

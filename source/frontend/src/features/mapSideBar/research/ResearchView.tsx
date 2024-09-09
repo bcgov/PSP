@@ -2,7 +2,6 @@ import { FormikProps } from 'formik';
 import { useContext } from 'react';
 import { MdTopic } from 'react-icons/md';
 import { matchPath, Route, useHistory, useRouteMatch } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { FileTypes } from '@/constants';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
@@ -80,7 +79,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = props => {
     return (
       <MapSideBarLayout
         title={props.isEditing ? 'Update Research File' : 'Research File'}
-        icon={<MdTopic title="User Profile" size="2.5rem" className="mr-2" />}
+        icon={<MdTopic title="User Profile" size="2.5rem" />}
         header={<ResearchHeader researchFile={props.researchFile} lastUpdatedBy={lastUpdatedBy} />}
         footer={
           props.isEditing && (
@@ -142,14 +141,3 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = props => {
 };
 
 export default ResearchView;
-
-const StyledFormWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
-  text-align: left;
-  height: 100%;
-  overflow-y: auto;
-  padding-right: 1rem;
-  padding-bottom: 1rem;
-`;

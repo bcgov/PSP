@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
-using System.Diagnostics.Contracts;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -77,25 +76,26 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactCommentTextarea = By.CssSelector("textarea[name='comment']");
 
         //Contacts Form View Elements
-        private By contactTitle = By.XPath("//h1[contains(text(),'Contact')]");
+        private By contactTitle = By.XPath("//h1/div/div[contains(text(),'Contact')]");
         private By contactEditButton = By.CssSelector("button[title='Edit Contact']");
-        private By contactBreadcrumb = By.CssSelector("nav[aria-label='breadcrumb']");
+        private By contactDetailsSubtitle = By.XPath("//div[contains(text(),'Contact Details')]");
 
-        private By contactIndFullName = By.CssSelector("h2[data-testid='contact-person-fullname']");
-        private By contactIndPrefNameLabel = By.XPath("//strong[contains(text(),'Preferred name')]");
-        private By contactIndPrefNameContent = By.CssSelector("span[data-testid='contact-person-preferred']");
         private By contactIndStatusSpan = By.CssSelector("span[data-testid='contact-person-status']");
-        private By contactIndOrganizationLabel = By.XPath("//strong[contains(text(),'Organization(s)')]");
-        private By contactIndOrganizationContent = By.CssSelector("a[data-testid='contact-person-organization']");
+        private By contactIndFullName = By.CssSelector("div[data-testid='contact-person-fullname'] b");
+        private By contactIndPrefNameLabel = By.XPath("//label[contains(text(),'Preferred name')]");
+        private By contactIndPrefNameContent = By.CssSelector("div[data-testid='contact-person-preferred']");
+        private By contactIndLinkedOrgsLabel = By.XPath("//label[contains(text(),'Linked organization')]");
+        private By contactIndOrganizationContent = By.CssSelector("[data-testid='contact-person-organization'] a");
+        private By contactIndContactInfoSubtitle = By.XPath("//h3[contains(text(),'Contact Info')]");
 
-        private By contactOrgName = By.CssSelector("span[data-testid='contact-organization-fullname']");
-        private By contactOrgAliasLabel = By.XPath("//strong[contains(text(),'Alias')]");
-        private By contactOrgAliasContent = By.CssSelector("span[data-testid='contact-organization-alias']");
         private By contactOrgStatusSpan = By.CssSelector("span[data-testid='contact-organization-status']");
-        private By contactOrgIncorpNbrLabel = By.XPath("//strong[contains(text(),'Incorporation Number')]");
-        private By contactOrgIncorpNbrContent = By.CssSelector("span[data-testid='contact-organization-incorporationNumber']");
+        private By contactOrgName = By.CssSelector("div[data-testid='contact-organization-organizationName'] b");
+        private By contactOrgAliasLabel = By.XPath("//label[contains(text(),'Alias')]");
+        private By contactOrgAliasContent = By.CssSelector("div[data-testid='contact-organization-alias']");
+        private By contactOrgIncorpNbrLabel = By.XPath("//label[contains(text(),'Incorporation number')]");
+        private By contactOrgIncorpNbrContent = By.CssSelector("div[data-testid='contact-organization-incorporationNumber']");
+        private By contactOrgPrefContactSubtitle = By.XPath("//h3[contains(text(),'Preferred Contact')]");
 
-        private By contactInfoSubtitle = By.XPath("//h2[contains(text(),'Contact info')]");
         private By contactEmailLabel = By.XPath("//strong[contains(text(),'Email')]");
         private By contactEmail1Content = By.XPath("(//div[@data-testid='email-value'])[1]");
         private By contactEmailType1Content = By.XPath("(//div[@data-testid='email-value']/parent::div)[1]/div/em");
@@ -108,7 +108,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactPhoneType2Content = By.XPath("(//div[@data-testid='phone-value'])[2]/following-sibling::div/em");
 
         private By contactAddressSubtitle = By.XPath("//h2[contains(text(),'Address')]");
-        private By contactAddressMailSubtitle = By.XPath("//strong[contains(text(),'Mailing address')]");
+        private By contactAddressMailSubtitle = By.XPath("//h3[contains(text(),'Mailing address')]");
         private By contactAddressIndMailCounter = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div");
         private By contactAddressIndMailAddressLine1 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[1]");
         private By contactAddressIndMailAddressLine2 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[2]");
@@ -116,7 +116,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressIndMailAddressLine4 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[4]");
         private By contactAddressIndMailAddressLine5 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[5]");
         private By contactAddressIndMailAddressLine6 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[6]");
-        private By contactAddressMailAddressRemoveBttn = By.XPath("//span[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
+        private By contactAddressMailAddressRemoveBttn = By.XPath("//h3[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
         private By contactAddressOrgMailCounter = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div");
         private By contactAddressOrgMailAddressLine1 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[1]");
@@ -127,7 +127,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressOrgMailAddressLine6 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[6]");
         private By contactAddressPropertyAddressRemoveBttn = By.XPath("//div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
-        private By contactAddressPropertySubtitle = By.XPath("//strong[contains(text(),'Property address')]");
+        private By contactAddressPropertySubtitle = By.XPath("//h3[contains(text(),'Property address')]");
         private By contactAddressIndPropertyCounter = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div");
         private By contactAddressIndPropertyAddressLine1 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[1]");
         private By contactAddressIndPropertyAddressLine2 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[2]");
@@ -145,7 +145,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactAddressOrgPropertyAddressLine5 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[5]");
         private By contactAddressOrgPropertyAddressLine6 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[6]");
 
-        private By contactAddressBillingSubtitle = By.XPath("//strong[contains(text(),'Billing address')]");
+        private By contactAddressBillingSubtitle = By.XPath("//h3[contains(text(),'Billing address')]");
         private By contactAddressIndBillingCounter = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div");
         private By contactAddressIndBillingAddressLine1 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[1]");
         private By contactAddressIndBillingAddressLine2 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[2]");
@@ -165,8 +165,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactOrgIndividualContactsSubtitle = By.XPath("//h2[contains(text(),'Individual Contacts')]");
         private By contactOrgIndividualContactsCount = By.CssSelector("a[data-testid='contact-organization-person']");
 
-        private By commentsSubtitle = By.XPath("//strong[contains(text(),'Comments')]");
-        private By commentsIndividualContent = By.CssSelector("span[data-testid='contact-person-comment']");
+        private By commentsSubtitle = By.XPath("//h2[contains(text(),'Comments')]");
+        private By commentsIndividualContent = By.CssSelector("div[data-testid='contact-person-comment']");
         private By commentsOrganizationContent = By.CssSelector("div[data-testid='contact-organization-comment']");
 
         //Contact Modal Element
@@ -174,7 +174,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By contactsSearchTable = By.CssSelector("div[data-testid='contactsTable']");
         private By contactModalContinueSaveBttn = By.XPath("//button/div[contains(text(),'Continue Save')]");
-        //private By contactConfirmCancelBttn = By.XPath("//button/div[contains(text(),'Confirm')]");
 
         private SharedModals sharedModals;
 
@@ -848,8 +847,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 sharedModals.ModalClickOKBttn();
             }
-
-            AssertTrueIsDisplayed(contactBreadcrumb);
         }
 
         //Cancel Contact
@@ -866,27 +863,26 @@ namespace PIMS.Tests.Automation.PageObjects
         // ASSERT FUNCTIONS
         public void VerifyIndividualContactView(IndividualContact contact)
         {
-            Wait(3000);
+            Wait();
 
             AssertTrueIsDisplayed(contactTitle);
             AssertTrueIsDisplayed(contactEditButton);
+            AssertTrueIsDisplayed(contactDetailsSubtitle);
 
-            if(contact.FullName != "")
+           AssertTrueContentEquals(contactIndStatusSpan, contact.ContactStatus);
+
+            if (contact.FullName != "")
                 AssertTrueContentEquals(contactIndFullName, contact.FullName);
 
             AssertTrueIsDisplayed(contactIndPrefNameLabel);
             if(contact.PreferableName != "")
                 AssertTrueContentEquals(contactIndPrefNameContent, contact.PreferableName);
 
-            if(contact.ContactStatus != "")
-                AssertTrueContentEquals(contactIndStatusSpan, contact.ContactStatus);
-
-            AssertTrueIsDisplayed(contactIndOrganizationLabel);
-
+            AssertTrueIsDisplayed(contactIndLinkedOrgsLabel);
             if (contact.Organization != "")
                 AssertTrueContentEquals(contactIndOrganizationContent, contact.Organization);
 
-            AssertTrueIsDisplayed(contactInfoSubtitle);
+            AssertTrueIsDisplayed(contactIndContactInfoSubtitle);
             AssertTrueIsDisplayed(contactEmailLabel);
             
             if (contact.IndEmail1 != "")
@@ -1054,21 +1050,22 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             AssertTrueIsDisplayed(contactTitle);
             AssertTrueIsDisplayed(contactEditButton);
+            AssertTrueIsDisplayed(contactDetailsSubtitle);
 
-            if(contact.OrganizationName != "")
+            AssertTrueContentEquals(contactOrgStatusSpan, contact.ContactStatus);
+
+            if (contact.OrganizationName != "")
                 AssertTrueContentEquals(contactOrgName, contact.OrganizationName);
-            AssertTrueIsDisplayed(contactOrgAliasLabel);
 
+            AssertTrueIsDisplayed(contactOrgAliasLabel);
             if(contact.Alias != "")
                 AssertTrueContentEquals(contactOrgAliasContent, contact.Alias);
 
-            AssertTrueContentEquals(contactOrgStatusSpan, contact.ContactStatus);
             AssertTrueIsDisplayed(contactOrgIncorpNbrLabel);
-
             if(contact.IncorporationNumber != "")
                 AssertTrueContentEquals(contactOrgIncorpNbrContent,contact.IncorporationNumber);
 
-            AssertTrueIsDisplayed(contactInfoSubtitle);
+            AssertTrueIsDisplayed(contactOrgPrefContactSubtitle);
             AssertTrueIsDisplayed(contactEmailLabel);
 
             if (contact.OrgEmail1 != "")

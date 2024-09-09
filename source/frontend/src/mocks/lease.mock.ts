@@ -1,3 +1,5 @@
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_LeaseTenantTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTenantTypes';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
@@ -24,6 +26,7 @@ const emptyLease: ApiGen_Concepts_Lease = {
   otherType: null,
   expiryDate: null,
   startDate: EpochIsoDateTime,
+  terminationDate: null,
   renewalCount: 0,
   paymentReceivableType: null,
   type: null,
@@ -50,11 +53,16 @@ const emptyLease: ApiGen_Concepts_Lease = {
   project: null,
   cancellationReason: null,
   terminationReason: null,
-  ...getEmptyBaseAudit(),
   fileName: null,
   fileNumber: null,
-  terms: null,
+  periods: null,
   fileChecklistItems: [],
+  renewals: [],
+  primaryArbitrationCity: null,
+  ...getEmptyBaseAudit(),
+  isPublicBenefit: null,
+  isFinancialGain: null,
+  feeDeterminationNote: null,
 };
 
 export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
@@ -62,7 +70,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   id: 1,
   rowVersion: 2,
   lFileNo: 'L-0000001',
-  terms: [],
+  periods: [],
   tenantNotes: ['a note', '', ''],
   persons: [],
   organizations: [],
@@ -79,7 +87,12 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   statusType: null,
   programType: null,
   region: null,
-  type: null,
+  type: {
+    id: ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
+    description: 'License of Occupation (access)',
+    isDisabled: false,
+    displayOrder: 1,
+  },
   otherCategoryType: null,
   otherProgramType: null,
   otherPurposeType: null,
@@ -87,7 +100,12 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   tenants: [
     {
       leaseTenantId: 82,
-      tenantTypeCode: { id: 'TEN', description: null, displayOrder: null, isDisabled: false },
+      tenantTypeCode: {
+        id: ApiGen_CodeTypes_LeaseTenantTypes.TEN.toString(),
+        description: null,
+        displayOrder: null,
+        isDisabled: false,
+      },
       leaseId: 1,
       organizationId: 2,
       organization: {
@@ -260,7 +278,12 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       leaseTenantId: 83,
       leaseId: 1,
       organizationId: 3,
-      tenantTypeCode: { id: 'REP', description: null, displayOrder: null, isDisabled: false },
+      tenantTypeCode: {
+        id: ApiGen_CodeTypes_LeaseTenantTypes.REP.toString(),
+        description: null,
+        displayOrder: null,
+        isDisabled: false,
+      },
       organization: {
         ...getEmptyOrganization(),
         id: 3,
@@ -328,7 +351,12 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
       leaseTenantId: 84,
       leaseId: 1,
       organizationId: 4,
-      tenantTypeCode: { id: 'PMGR', description: null, displayOrder: null, isDisabled: false },
+      tenantTypeCode: {
+        id: ApiGen_CodeTypes_LeaseTenantTypes.PMGR.toString(),
+        description: null,
+        displayOrder: null,
+        isDisabled: false,
+      },
       organization: {
         ...getEmptyOrganization(),
         id: 4,

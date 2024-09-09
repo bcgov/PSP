@@ -6,7 +6,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsPropertyLease class, provides the many-to-many relationship between leases and properties.
     /// </summary>
-    public partial class PimsPropertyLease : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsPropertyLease : StandardIdentityBaseAppEntity<long>, IBaseAppEntity, IFilePropertyEntity
     {
         #region Properties
         [NotMapped]

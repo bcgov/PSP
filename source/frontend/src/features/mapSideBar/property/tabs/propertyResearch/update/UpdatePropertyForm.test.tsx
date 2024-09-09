@@ -47,6 +47,7 @@ const testResearchFile: ApiGen_Concepts_ResearchFileProperty = {
   file: null,
   displayOrder: null,
   property: null,
+  location: null,
   fileId: 0,
 };
 

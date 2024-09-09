@@ -58,7 +58,7 @@ const ResearchHeader: React.FunctionComponent<
         <HeaderField label="File name:" labelWidth={leftColumnLabel} contentWidth="9">
           {researchFile?.fileName}
         </HeaderField>
-        <HeaderField label="MoTI region:" labelWidth={leftColumnLabel} contentWidth="9">
+        <HeaderField label="MOTI region:" labelWidth={leftColumnLabel} contentWidth="9">
           {regions}
         </HeaderField>
         <HeaderField label="Ministry district:" labelWidth={leftColumnLabel} contentWidth="9">

@@ -12,7 +12,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By tenantEditIcon = By.XPath("//div[@role='tabpanel']/div/div/div/button");
 
         //Tenants Add Tenant(s) button
-        private By tenantAddTenantsBttn = By.XPath("//div[contains(text(),'Select Tenant(s)')]/parent::button");
+        private By tenantAddTenantsBttn = By.XPath("//div[contains(text(),'Tenants')]/following-sibling::div/button");
 
         //Tenant Add Tenant Modal Elements
         private By tenantIndividualRadioBttn = By.Id("input-persons");
@@ -24,7 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Selected tenants
         private By tenantSelectedTenantsRows = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
-        private By tenantPrimaryContact1stCell = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(5) p");
+        private By tenantPrimaryContact1stCell = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(4) p");
         private By tenantPrimaryContact1stSelect = By.Id("input-tenants.0.primaryContactId");
         private By tenantType1stSelect = By.Id("input-tenants.0.tenantType");
 
@@ -39,13 +39,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private By tenantModalSave2ndParagraph = By.CssSelector("div[class='modal-body'] p:nth-child(2)");
 
         //Insert Tenants Form Elements
-        private By tenantsSubtittle = By.XPath("//h2[contains(text(),'Add tenants & contacts to this Lease/License')]");
-        private By tenantsInstructions = By.XPath("//p[contains(text(),'If the tenants are not already set up as contacts, you will have to add them first (under')]");
+        private By tenantsSubtittle = By.XPath("//div[contains(text(),'Tenants')]");
+        private By tenantsInstructions = By.XPath("//span[contains(text(),'Note: If the tenants you are trying to find were never added to the \"contact list\" it will not show up. Please add them to the contact list')]");
         private By tenantsCounter = By.XPath("//div[@data-testid='selected-items']/preceding-sibling::p");
         private By tenantsSelectedTableSummaryColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Summary')]");
         private By tenantsSelectedTablePrimaryContactColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Primary contact')]");
-        private By tenantsSelectedTableContactInfoColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Contact Info')]");
-        private By tenantsSelectedTableTypeColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Type')]");
+        private By tenantsSelectedTableContactInfoColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Contact info')]");
+        private By tenantsSelectedTableTypeColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Contact type')]");
         private By tenantsSelectedNoRows = By.CssSelector("div[class='no-rows-message']");
         private By tenantsTotalSelected = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
 
@@ -75,10 +75,10 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search and add a new tenant
         public void AddIndividualTenant(Tenant tenant)
         {
-            WaitUntilClickable(tenantAddTenantsBttn);
+            Wait();
             webDriver.FindElement(tenantAddTenantsBttn).Click();
 
-            Wait(3000);
+            Wait();
             sharedSelectContact.SelectContact(tenant.Summary, "Individual");
 
             //Choose tenant type

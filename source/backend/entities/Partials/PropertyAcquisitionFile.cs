@@ -5,7 +5,7 @@ namespace Pims.Dal.Entities
     /// <summary>
     /// PimsPropertyAcquisitionFile class, provides an entity for the datamodel to manage the relationship between Properties and Acquisition Files.
     /// </summary>
-    public partial class PimsPropertyAcquisitionFile : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
+    public partial class PimsPropertyAcquisitionFile : StandardIdentityBaseAppEntity<long>, IBaseAppEntity, IFilePropertyEntity
     {
         #region Properties
         [NotMapped]

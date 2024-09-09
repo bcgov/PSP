@@ -4,9 +4,9 @@ import { Col, Row } from 'react-bootstrap';
 import { FaFileAlt, FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
-import { Button, StyledIconButton } from '@/components/common/buttons';
+import { StyledIconButton } from '@/components/common/buttons';
+import { StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
@@ -80,7 +80,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Leases &amp; Licenses</Styled.PageHeader>
+        <Styled.PageHeader>Leases &amp; Licences</Styled.PageHeader>
         <Styled.PageToolbar>
           <Row>
             <Col>
@@ -105,7 +105,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
         {hasClaim(Claims.LEASE_ADD) && (
           <StyledAddButton onClick={() => history.push('/mapview/sidebar/lease/new')}>
             <FaPlus />
-            &nbsp;Create a Lease/License
+            &nbsp;Create a Lease/Licence
           </StyledAddButton>
         )}
         <LeaseSearchResults
@@ -124,12 +124,5 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
     </Styled.ListPage>
   );
 };
-
-const StyledAddButton = styled(Button)`
-  &.btn.btn-primary,
-  &.btn.btn-primary:active {
-    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
-  }
-`;
 
 export default LeaseListView;

@@ -1,16 +1,17 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
-import VisibilitySensor from 'react-visibility-sensor';
 import styled from 'styled-components';
 
+import { ExpandCollapseButton } from '@/components/common/buttons/ExpandCollapseButton';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import * as Styled from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
-interface IMapSideBarLayoutProps {
+export interface IMapSideBarLayoutProps {
   title: React.ReactNode;
   header?: React.ReactNode;
-  icon: React.ReactNode | React.FunctionComponent<React.PropsWithChildren<unknown>>;
+  icon: React.ReactNode;
   footer?: React.ReactNode | React.FunctionComponent<React.PropsWithChildren<unknown>>;
   showCloseButton?: boolean;
   onClose?: () => void;
@@ -23,44 +24,97 @@ interface IMapSideBarLayoutProps {
 const MapSideBarLayout: React.FunctionComponent<
   React.PropsWithChildren<IMapSideBarLayoutProps>
 > = ({ title, header, icon, showCloseButton, ...props }) => {
+  const { mapSideBarViewState, toggleSidebarDisplay } = useMapStateMachine();
   return (
-    <VisibilitySensor partialVisibility={true}>
-      {({ isVisible }: any) => (
+    <StyledSidebarWrapper className={mapSideBarViewState.isCollapsed ? '' : 'expanded'}>
+      {mapSideBarViewState.isCollapsed ? (
         <>
-          <TitleBar>
-            <Row>
-              <Col>
-                <Styled.H1 className="mr-auto">
-                  <>
-                    {icon}
-                    {title}
-                  </>
-                </Styled.H1>
-              </Col>
-
+          <Row>
+            <Col xs={12} className="justify-content-center d-flex">
+              {icon}
+            </Col>
+          </Row>
+          <Underline className="mb-4" />
+          <Row>
+            <StyledButtonBar xs={12} className="align-items-center d-flex flex-column-reverse">
+              <TooltipWrapper tooltipId="expand-sidebar-tooltip-expand" tooltip={'Expand Screen'}>
+                <span>
+                  <ExpandCollapseButton
+                    expanded={!mapSideBarViewState.isCollapsed}
+                    toggleExpanded={toggleSidebarDisplay}
+                  />
+                </span>
+              </TooltipWrapper>
               {showCloseButton && (
-                <Col xs="auto">
-                  <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
-                    <CloseIcon title="close" onClick={props.onClose} />
-                  </TooltipWrapper>
-                </Col>
+                <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
+                  <CloseIcon title="close" onClick={props.onClose} />
+                </TooltipWrapper>
               )}
-            </Row>
-            <Underline />
-          </TitleBar>
+            </StyledButtonBar>
+          </Row>
+        </>
+      ) : (
+        <>
+          <Row>
+            <Col>
+              <Styled.H1 className="mr-auto">
+                <>
+                  <span className="mr-2">{icon}</span>
+                  {title}
+                </>
+              </Styled.H1>
+            </Col>
 
-          {header && isVisible && <Header>{header}</Header>}
-
-          <StyledBody>
-            <Content>{isVisible ? props.children : null}</Content>
-          </StyledBody>
-
-          {props.footer && isVisible && <Footer>{props.footer as React.ReactNode}</Footer>}
+            <StyledButtonBar xs="auto" className="d-flex">
+              <TooltipWrapper
+                tooltipId="expand-sidebar-tooltip-collapse"
+                tooltip={'Collapse Screen'}
+              >
+                <span>
+                  <ExpandCollapseButton
+                    expanded={!mapSideBarViewState.isCollapsed}
+                    toggleExpanded={toggleSidebarDisplay}
+                  />
+                </span>
+              </TooltipWrapper>
+              <Styled.VerticalLine />
+              {showCloseButton && (
+                <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
+                  <CloseIcon title="close" onClick={props.onClose} />
+                </TooltipWrapper>
+              )}
+            </StyledButtonBar>
+          </Row>
+          <Underline />
         </>
       )}
-    </VisibilitySensor>
+      <Content className={mapSideBarViewState.isCollapsed ? 'd-none' : ''}>
+        {header && <Header>{header}</Header>}
+        <StyledBody>{props.children}</StyledBody>
+        {props.footer && <Footer>{props.footer as React.ReactNode}</Footer>}
+      </Content>
+    </StyledSidebarWrapper>
   );
 };
+
+const StyledSidebarWrapper = styled.div`
+  &.expanded {
+    min-width: 90rem;
+    height: 100%;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  padding: 1.6rem;
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
+`;
+
+const StyledButtonBar = styled(Col)`
+  gap: 1.5rem;
+  align-items: center;
+`;
 
 const StyledBody = styled.div`
   width: 100%;
@@ -70,11 +124,10 @@ const StyledBody = styled.div`
 `;
 
 const Content = styled.div`
-  height: 100%;
   width: 100%;
+  height: 100%;
+  display: contents;
 `;
-
-const TitleBar = styled.div``;
 
 const Header = styled.div`
   position: relative;

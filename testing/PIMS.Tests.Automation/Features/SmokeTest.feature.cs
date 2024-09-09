@@ -144,14 +144,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="03. Lease and License File Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="03. Lease and License Tenants")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "03. Lease and License File Details")]
-        public void _03_LeaseAndLicenseFileDetails()
+        [Xunit.TraitAttribute("Description", "03. Lease and License Tenants")]
+        public void _03_LeaseAndLicenseTenants()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Lease and License File Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("03. Lease and License Tenants", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 16
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -166,7 +166,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I create a new minimum Lease from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 18
- testRunner.When("I add additional Information to the Lease Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I add Tenants to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 19
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -175,14 +175,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="04. Lease and License Tenants")]
+        [Xunit.SkippableFactAttribute(DisplayName="04. Lease and License Improvements")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "04. Lease and License Tenants")]
-        public void _04_LeaseAndLicenseTenants()
+        [Xunit.TraitAttribute("Description", "04. Lease and License Improvements")]
+        public void _04_LeaseAndLicenseImprovements()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Lease and License Tenants", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("04. Lease and License Improvements", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 21
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -197,7 +197,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I create a new minimum Lease from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 23
- testRunner.When("I add Tenants to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I add Improvements to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 24
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -206,14 +206,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="05. Lease and License Improvements")]
+        [Xunit.SkippableFactAttribute(DisplayName="05. Lease and License Insurance")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "05. Lease and License Improvements")]
-        public void _05_LeaseAndLicenseImprovements()
+        [Xunit.TraitAttribute("Description", "05. Lease and License Insurance")]
+        public void _05_LeaseAndLicenseInsurance()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Lease and License Improvements", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("05. Lease and License Insurance", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 26
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -228,7 +228,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I create a new minimum Lease from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 28
- testRunner.When("I add Improvements to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I add Insurance to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 29
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -237,14 +237,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="06. Lease and License Insurance")]
+        [Xunit.SkippableFactAttribute(DisplayName="06. Lease and License Deposits")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "06. Lease and License Insurance")]
-        public void _06_LeaseAndLicenseInsurance()
+        [Xunit.TraitAttribute("Description", "06. Lease and License Deposits")]
+        public void _06_LeaseAndLicenseDeposits()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Lease and License Insurance", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("06. Lease and License Deposits", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 31
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -259,7 +259,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I create a new minimum Lease from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 33
- testRunner.When("I add Insurance to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I add Deposits to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 34
  testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -268,45 +268,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07. Lease and License Deposits")]
+        [Xunit.SkippableFactAttribute(DisplayName="08. Research File Properties")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "07. Lease and License Deposits")]
-        public void _07_LeaseAndLicenseDeposits()
+        [Xunit.TraitAttribute("Description", "08. Research File Properties")]
+        public void _08_ResearchFileProperties()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("07. Lease and License Deposits", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 36
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 37
- testRunner.Given("I create a new minimum Lease from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 38
- testRunner.When("I add Deposits to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 39
- testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="08. Lease and License Payments")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "08. Lease and License Payments")]
-        public void _08_LeaseAndLicensePayments()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Lease and License Payments", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("08. Research File Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 41
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -318,26 +287,26 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 42
- testRunner.Given("I create a new minimum Lease from row number 5", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a basic Research File from row number 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 43
- testRunner.When("I add Payments to the Lease", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I add Properties to a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 44
- testRunner.Then("A new lease is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="09. Research File Details")]
+        [Xunit.SkippableFactAttribute(DisplayName="09. Research File Notes")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "09. Research File Details")]
-        public void _09_ResearchFileDetails()
+        [Xunit.TraitAttribute("Description", "09. Research File Notes")]
+        public void _09_ResearchFileNotes()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Research File Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("09. Research File Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 46
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -352,7 +321,7 @@ this.ScenarioInitialize(scenarioInfo);
  testRunner.Given("I create a basic Research File from row number 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 48
- testRunner.When("I add additional details to Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I create a new Note on the Notes Tab from row number 8", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 49
  testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
@@ -361,14 +330,14 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="10. Research File Properties")]
+        [Xunit.SkippableFactAttribute(DisplayName="10. Acquisition Checklist Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "10. Research File Properties")]
-        public void _10_ResearchFileProperties()
+        [Xunit.TraitAttribute("Description", "10. Acquisition Checklist Tab")]
+        public void _10_AcquisitionChecklistTab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Research File Properties", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("10. Acquisition Checklist Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 51
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -380,26 +349,26 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 52
- testRunner.Given("I create a basic Research File from row number 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 53
- testRunner.When("I add Properties to a Research File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I insert Checklist information to an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 54
- testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+ testRunner.Then("Acquisition File\'s Checklist has been saved successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="11. Research File Documents")]
+        [Xunit.SkippableFactAttribute(DisplayName="11. Acquisition File Agreements Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "11. Research File Documents")]
-        public void _11_ResearchFileDocuments()
+        [Xunit.TraitAttribute("Description", "11. Acquisition File Agreements Tab")]
+        public void _11_AcquisitionFileAgreementsTab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Research File Documents", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("11. Acquisition File Agreements Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 56
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
@@ -411,185 +380,27 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 57
- testRunner.Given("I create a basic Research File from row number 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+ testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 58
- testRunner.When("I create Digital Documents for a \"Research File\" row number 10", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 59
- testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="12. Research File Notes")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "12. Research File Notes")]
-        public void _12_ResearchFileNotes()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("12. Research File Notes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 61
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 62
- testRunner.Given("I create a basic Research File from row number 9", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 63
- testRunner.When("I create a new Note on the Notes Tab from row number 8", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 64
- testRunner.Then("A new Research File is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="13. Acquisition File Details")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "13. Acquisition File Details")]
-        public void _13_AcquisitionFileDetails()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("13. Acquisition File Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 66
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 67
- testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 68
- testRunner.When("I add additional information to the Acquisition File Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 69
- testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="14. Acquisition File Property Takes")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "14. Acquisition File Property Takes")]
-        public void _14_AcquisitionFilePropertyTakes()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("14. Acquisition File Property Takes", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 71
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 72
- testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 73
- testRunner.When("I add Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 74
- testRunner.And("I create Takes within Acquisition File\'s Properties", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 75
- testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="15. Acquisition Checklist Tab")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "15. Acquisition Checklist Tab")]
-        public void _15_AcquisitionChecklistTab()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("15. Acquisition Checklist Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 77
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 78
- testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 79
- testRunner.When("I insert Checklist information to an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 80
- testRunner.Then("Acquisition File\'s Checklist has been saved successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="16. Acquisition File Agreements Tab")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "16. Acquisition File Agreements Tab")]
-        public void _16_AcquisitionFileAgreementsTab()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("16. Acquisition File Agreements Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 82
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 83
- testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 84
  testRunner.When("I create Agreements within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 85
+#line 59
  testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="17. Acquisition File Stakeholders Tab")]
+        [Xunit.SkippableFactAttribute(DisplayName="12. Disposition Offers and Sale Tab")]
         [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "17. Acquisition File Stakeholders Tab")]
-        public void _17_AcquisitionFileStakeholdersTab()
+        [Xunit.TraitAttribute("Description", "12. Disposition Offers and Sale Tab")]
+        public void _12_DispositionOffersAndSaleTab()
         {
             string[] tagsOfScenario = ((string[])(null));
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("17. Acquisition File Stakeholders Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 87
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("12. Disposition Offers and Sale Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 74
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
@@ -599,97 +410,15 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 88
- testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 75
+ testRunner.Given("I create a new Disposition File from row number 1", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 89
- testRunner.When("I add Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 76
+ testRunner.When("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
+                        "e", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 90
- testRunner.And("I create Stakeholders within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 91
- testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="18. Acquisition File Compensation Tab")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "18. Acquisition File Compensation Tab")]
-        public void _18_AcquisitionFileCompensationTab()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("18. Acquisition File Compensation Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 93
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 94
- testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 95
- testRunner.When("I add additional information to the Acquisition File Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 96
- testRunner.And("I add Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 97
- testRunner.And("I create Stakeholders within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 98
- testRunner.And("I create Compensation Requisition within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 99
- testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-            }
-            this.ScenarioCleanup();
-        }
-        
-        [Xunit.SkippableFactAttribute(DisplayName="19. Acquisition File Expropriation Tab")]
-        [Xunit.TraitAttribute("FeatureTitle", "SmokeTest")]
-        [Xunit.TraitAttribute("Description", "19. Acquisition File Expropriation Tab")]
-        public void _19_AcquisitionFileExpropriationTab()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("19. Acquisition File Expropriation Tab", null, tagsOfScenario, argumentsOfScenario, featureTags);
-#line 101
-this.ScenarioInitialize(scenarioInfo);
-#line hidden
-            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                testRunner.SkipScenario();
-            }
-            else
-            {
-                this.ScenarioStart();
-#line 102
- testRunner.Given("I create a new Acquisition File from row number 18", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 103
- testRunner.When("I add additional information to the Acquisition File Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 104
- testRunner.And("I add Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 105
- testRunner.And("I create Stakeholders within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 106
- testRunner.And("I create Expropriations within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 107
- testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 77
+ testRunner.Then("A new Disposition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }
             this.ScenarioCleanup();

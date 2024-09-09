@@ -37,6 +37,12 @@ exports[`Note Results Table > matches snapshot 1`] = `
   height: 3.8rem;
 }
 
+.c5.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
 .c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -636,9 +642,12 @@ exports[`Note Results Table > matches snapshot 1`] = `
 }
 
 .c1 {
-  width: 7.5rem;
+  min-width: 5rem;
+  max-width: 5rem;
   margin-left: 1rem;
   margin-right: 1rem;
+  text-align: center;
+  padding: 0;
 }
 
 .c1:disabled {
@@ -676,8 +685,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
               Show
             </span>
             <input
-              class="c1 form-control form-control-sm"
-              disabled=""
+              class="c1 form-control"
               type="number"
               value="10"
             />

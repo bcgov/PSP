@@ -2,6 +2,7 @@ import { AxiosError } from 'axios';
 import { uniq } from 'lodash';
 import { useCallback, useRef } from 'react';
 
+import { ModalContent } from '@/components/common/GenericModal';
 import { RemoveSelfContractorContent } from '@/features/mapSideBar/acquisition/tabs/fileDetails/update/UpdateAcquisitionContainer';
 import { IApiError } from '@/interfaces/IApiError';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -9,7 +10,14 @@ import { useAxiosErrorHandlerWithConfirmation } from '@/utils';
 
 import { useModalContext } from './useModalContext';
 
-export interface IUserOverrideModalState {
+export type CustomModalOptions = Pick<ModalContent, 'variant' | 'title'>;
+
+export interface IApiUserOverrideOptions {
+  /** Optional arguments to control the look-and-feel of the UserOverride modal. The key is the user-override code to target with the custom values. */
+  modalOptions: Map<UserOverrideCode, CustomModalOptions>;
+}
+
+export interface IUserOverrideModalState extends CustomModalOptions {
   previousUserOverrideCodes: UserOverrideCode[];
   userOverrideCode: UserOverrideCode | null;
   message: string | null;
@@ -19,6 +27,7 @@ export const useApiUserOverride = <
   FunctionType extends (userOverrideCodes: UserOverrideCode[]) => Promise<any>,
 >(
   genericErrorMessage: string,
+  options?: IApiUserOverrideOptions,
 ) => {
   const overridenApiFunction = useRef<FunctionType | null>(null);
   const errorHandlerRef = useRef<((e: AxiosError<IApiError>) => void) | null>(null);
@@ -31,15 +40,23 @@ export const useApiUserOverride = <
       previousUserOverrideCodes: UserOverrideCode[],
     ) => {
       if (userOverrideCode) {
+        // allow the caller of this hook to customize the look and feel of the user override modal.
+        const customModalProps = options?.modalOptions?.get(userOverrideCode) ?? {
+          variant: 'warning',
+          title: 'User Override Required',
+        };
+
         showUserOverrideModal({
           previousUserOverrideCodes: [...previousUserOverrideCodes],
           userOverrideCode: userOverrideCode,
           message: message,
+          variant: customModalProps.variant,
+          title: customModalProps.title,
         });
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
+    [options],
   );
 
   const handleOverrideError = useAxiosErrorHandlerWithConfirmation(
@@ -85,8 +102,8 @@ export const useApiUserOverride = <
             break;
           default: {
             setModalContent({
-              variant: 'warning',
-              title: 'User Override Required',
+              variant: modalState?.variant ?? 'warning',
+              title: modalState?.title ?? 'User Override Required',
               message: modalState?.message,
               handleOk: async () => {
                 if (modalState?.userOverrideCode && overridenApiFunction.current) {

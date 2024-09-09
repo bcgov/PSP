@@ -1,17 +1,22 @@
 import isNumber from 'lodash/isNumber';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IMapProperty } from '@/components/propertySelector/models';
 import { AreaUnitTypes } from '@/constants/index';
 import { IAutocompletePrediction } from '@/interfaces';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
-import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 import {
+  emptyStringToNull,
   emptyStringtoNullable,
   fromTypeCode,
   stringToNull,
@@ -22,8 +27,45 @@ import { PropertyForm } from '../mapSideBar/shared/models';
 import { ChecklistItemFormModel } from '../mapSideBar/shared/tabs/checklist/update/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
-import { FormLeaseTerm } from './detail/LeasePages/payment/models';
+import { FormLeasePeriod } from './detail/LeasePages/payment/models';
 import { FormTenant } from './detail/LeasePages/tenant/models';
+
+export class FormLeaseRenewal {
+  id = 0;
+  leaseId = 0;
+  commencementDt: UtcIsoDateTime = '';
+  expiryDt: UtcIsoDateTime = '';
+  isExercised = false;
+  renewalNote = '';
+  rowVersion = 0;
+
+  static fromApi(apiModel?: ApiGen_Concepts_LeaseRenewal): FormLeaseRenewal {
+    const renewal = new FormLeaseRenewal();
+
+    renewal.id = apiModel.id;
+    renewal.leaseId = apiModel.leaseId;
+    renewal.commencementDt = apiModel.commencementDt || '';
+    renewal.expiryDt = apiModel.expiryDt || '';
+    renewal.isExercised = apiModel.isExercised || false;
+    renewal.renewalNote = apiModel.renewalNote || '';
+    renewal.rowVersion = apiModel.rowVersion || 0;
+
+    return renewal;
+  }
+
+  toApi(): ApiGen_Concepts_LeaseRenewal {
+    return {
+      id: this.id,
+      leaseId: this.leaseId,
+      lease: null,
+      commencementDt: emptyStringToNull(this.commencementDt),
+      expiryDt: emptyStringToNull(this.expiryDt),
+      isExercised: this.isExercised,
+      renewalNote: emptyStringToNull(this.renewalNote),
+      ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+}
 
 export class LeaseFormModel {
   id?: number;
@@ -31,8 +73,9 @@ export class LeaseFormModel {
   psFileNo = '';
   tfaFileNumber = '';
   expiryDate = '';
-  renewalDate = '';
   startDate = '';
+  renewals: FormLeaseRenewal[] = [];
+  terminationDate = '';
   responsibilityEffectiveDate = '';
   paymentReceivableTypeCode = '';
   categoryTypeCode = '';
@@ -68,9 +111,13 @@ export class LeaseFormModel {
   consultations: FormLeaseConsultation[] = [];
   securityDeposits: FormLeaseDeposit[] = [];
   securityDepositReturns: FormLeaseDepositReturn[] = [];
-  terms: FormLeaseTerm[] = [];
+  periods: FormLeasePeriod[] = [];
   tenants: FormTenant[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
+  primaryArbitrationCity: string | null;
+  isPublicBenefit: boolean;
+  isFinancialGain: boolean;
+  feeDeterminationNote: string | null = null;
   rowVersion = 0;
 
   static fromApi(apiModel?: ApiGen_Concepts_Lease): LeaseFormModel {
@@ -80,8 +127,11 @@ export class LeaseFormModel {
     leaseDetail.lFileNo = apiModel?.lFileNo || '';
     leaseDetail.psFileNo = apiModel?.psFileNo || '';
     leaseDetail.tfaFileNumber = apiModel?.tfaFileNumber || '';
-    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel!.expiryDate : '';
-    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel!.startDate : '';
+    leaseDetail.expiryDate = isValidIsoDateTime(apiModel?.expiryDate) ? apiModel.expiryDate : '';
+    leaseDetail.startDate = isValidIsoDateTime(apiModel?.startDate) ? apiModel.startDate : '';
+    leaseDetail.terminationDate = isValidIsoDateTime(apiModel?.terminationDate)
+      ? apiModel.terminationDate
+      : '';
     leaseDetail.responsibilityEffectiveDate = apiModel?.responsibilityEffectiveDate || '';
     leaseDetail.amount = parseFloat(apiModel?.amount?.toString() ?? '') || 0.0;
     leaseDetail.paymentReceivableTypeCode = fromTypeCode(apiModel?.paymentReceivableType) || '';
@@ -103,7 +153,7 @@ export class LeaseFormModel {
     leaseDetail.isResidential = apiModel?.isResidential || false;
     leaseDetail.isCommercialBuilding = apiModel?.isCommercialBuilding || false;
     leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement || false;
-    leaseDetail.rowVersion = apiModel?.rowVersion || 0;
+    leaseDetail.rowVersion = apiModel?.rowVersion || null;
     leaseDetail.description = apiModel?.description || '';
     leaseDetail.otherCategoryTypeDescription = apiModel?.otherCategoryType || '';
     leaseDetail.otherProgramTypeDescription = apiModel?.otherProgramType || '';
@@ -118,10 +168,15 @@ export class LeaseFormModel {
     );
     leaseDetail.consultations =
       sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
-    leaseDetail.terms = apiModel?.terms?.map(t => FormLeaseTerm.fromApi(t)) || [];
+    leaseDetail.periods = apiModel?.periods?.map(t => FormLeasePeriod.fromApi(t)) || [];
     leaseDetail.tenants = apiModel?.tenants?.map(t => new FormTenant(t)) || [];
+    leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
     leaseDetail.cancellationReason = apiModel.cancellationReason || '';
     leaseDetail.terminationReason = apiModel.terminationReason || '';
+    leaseDetail.primaryArbitrationCity = apiModel.primaryArbitrationCity;
+    leaseDetail.isPublicBenefit = apiModel.isPublicBenefit;
+    leaseDetail.isFinancialGain = apiModel.isFinancialGain;
+    leaseDetail.feeDeterminationNote = apiModel.feeDeterminationNote;
 
     return leaseDetail;
   }
@@ -133,7 +188,10 @@ export class LeaseFormModel {
       psFileNo: stringToNull(formLease.psFileNo),
       tfaFileNumber: stringToNull(formLease.tfaFileNumber),
       expiryDate: isValidIsoDateTime(formLease.expiryDate) ? formLease.expiryDate : null,
-      startDate: isValidIsoDateTime(formLease.startDate) ? formLease.startDate : EpochIsoDateTime,
+      startDate: isValidIsoDateTime(formLease.startDate) ? formLease.startDate : null,
+      terminationDate: isValidIsoDateTime(formLease.terminationDate)
+        ? formLease.terminationDate
+        : null,
       responsibilityEffectiveDate: isValidIsoDateTime(formLease.responsibilityEffectiveDate)
         ? formLease.responsibilityEffectiveDate
         : null,
@@ -155,7 +213,9 @@ export class LeaseFormModel {
       motiName: formLease.motiName,
       hasDigitalLicense: formLease.hasDigitalLicense ?? null,
       hasPhysicalLicense: formLease.hasPhysicalLicense ?? null,
-      fileProperties: formLease.properties?.map(p => FormLeaseProperty.toApi(p)),
+      fileProperties: formLease.properties
+        ?.map(p => FormLeaseProperty.toApi(p))
+        .filter(x => exists(x)),
       isResidential: formLease.isResidential,
       isCommercialBuilding: formLease.isCommercialBuilding,
       isOtherImprovement: formLease.isOtherImprovement,
@@ -167,17 +227,22 @@ export class LeaseFormModel {
       project: isValidId(formLease.project?.id) ? ({ id: formLease.project?.id } as any) : null,
       consultations: formLease.consultations.map(x => x.toApi()),
       tenants: formLease.tenants.map(t => FormTenant.toApi(t)),
-      terms: formLease.terms.map(t => FormLeaseTerm.toApi(t)),
+      periods: formLease.periods.map(t => FormLeasePeriod.toApi(t)),
+      renewals: formLease.renewals.map(r => r.toApi()),
       fileName: null,
       fileNumber: null,
       hasDigitalFile: formLease.hasDigitalLicense ?? false,
       hasPhysicalFile: formLease.hasPhysicalLicense ?? false,
       cancellationReason: stringToNull(formLease.cancellationReason),
       terminationReason: stringToNull(formLease.terminationReason),
+      primaryArbitrationCity: stringToNull(formLease.primaryArbitrationCity),
+      isPublicBenefit: formLease.isPublicBenefit ?? null,
+      isFinancialGain: formLease.isFinancialGain ?? null,
+      feeDeterminationNote: stringToNull(formLease.feeDeterminationNote),
       fileChecklistItems: formLease.fileChecklist.map(ck => ck.toApi()),
       isExpired: false,
       programName: null,
-      renewalCount: 0,
+      renewalCount: formLease.renewals.length,
       ...getEmptyBaseAudit(formLease.rowVersion),
     };
   }
@@ -223,19 +288,30 @@ export class FormLeaseProperty {
     return model;
   }
 
-  public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease {
+  public static fromFeatureDataset(mapProperty: LocationFeatureDataset): FormLeaseProperty {
+    const model = new FormLeaseProperty();
+    model.property = PropertyForm.fromFeatureDataset(mapProperty);
+    return model;
+  }
+
+  public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease | null {
+    if (!exists(formLeaseProperty?.property)) {
+      return null;
+    }
+
+    const apiFileProperty = formLeaseProperty?.property?.toFilePropertyApi(
+      formLeaseProperty.leaseId,
+    );
+
     return {
+      ...apiFileProperty,
       id: formLeaseProperty.id ?? 0,
-      fileId: formLeaseProperty.leaseId ?? 0,
       file: null,
-      property: formLeaseProperty.property?.toApi() ?? null,
-      propertyId: formLeaseProperty.property?.id ?? 0,
       propertyName: formLeaseProperty.name ?? null,
       leaseArea: isNumber(formLeaseProperty.landArea) ? formLeaseProperty.landArea : 0,
       areaUnitType: isNumber(formLeaseProperty.landArea)
         ? toTypeCodeNullable(formLeaseProperty.areaUnitTypeCode) ?? null
         : null,
-      displayOrder: null,
       ...getEmptyBaseAudit(formLeaseProperty.rowVersion),
     };
   }
@@ -294,6 +370,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     tenants: [],
     startDate: EpochIsoDateTime,
     expiryDate: EpochIsoDateTime,
+    terminationDate: null,
     lFileNo: '',
     tfaFileNumber: '',
     psFileNo: '',
@@ -305,8 +382,8 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     returnNotes: '',
     hasDigitalLicense: null,
     hasPhysicalLicense: null,
-    fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
-    paymentReceivableType: toTypeCodeNullable('RCVBL'),
+    fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
+    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     categoryType: null,
     purposeType: null,
     programType: null,
@@ -319,7 +396,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     otherPurposeType: null,
     otherProgramType: null,
     consultations: [],
-    terms: [],
+    periods: [],
     id: 0,
     programName: null,
     documentationReference: null,
@@ -333,8 +410,13 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     terminationReason: null,
     isExpired: false,
     project: null,
-    ...getEmptyBaseAudit(),
     fileName: null,
     fileNumber: null,
     fileChecklistItems: [],
+    isPublicBenefit: null,
+    isFinancialGain: null,
+    feeDeterminationNote: null,
+    renewals: [],
+    primaryArbitrationCity: null,
+    ...getEmptyBaseAudit(),
   });

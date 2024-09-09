@@ -6,7 +6,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
     class="Toastify"
   />
   <div />
-  .c2.btn {
+  .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -37,49 +37,55 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   height: 3.8rem;
 }
 
-.c2.btn:hover {
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c2.btn:focus {
+.c3.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c2.btn.btn-primary {
+.c3.btn.btn-primary {
   border: none;
 }
 
-.c2.btn.btn-secondary {
+.c3.btn.btn-secondary {
   background: none;
 }
 
-.c2.btn.btn-info {
+.c3.btn.btn-info {
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c2.btn.btn-info:hover,
-.c2.btn.btn-info:active,
-.c2.btn.btn-info:focus {
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
   background: none;
 }
 
-.c2.btn.btn-light {
+.c3.btn.btn-light {
   border: none;
 }
 
-.c2.btn.btn-dark {
+.c3.btn.btn-dark {
   border: none;
 }
 
-.c2.btn.btn-link {
+.c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   background: none;
@@ -100,9 +106,9 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   padding: 0;
 }
 
-.c2.btn.btn-link:hover,
-.c2.btn.btn-link:active,
-.c2.btn.btn-link:focus {
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +117,14 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   outline: none;
 }
 
-.c2.btn.btn-link:disabled,
-.c2.btn.btn-link.disabled {
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
   background: none;
   pointer-events: none;
 }
 
-.c2.btn:disabled,
-.c2.btn:disabled:hover {
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,24 +135,29 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   opacity: 0.65;
 }
 
-.c2.Button .Button__icon {
+.c3.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c2.Button--icon-only:focus {
+.c3.Button--icon-only:focus {
   outline: none;
 }
 
-.c2.Button--icon-only .Button__icon {
+.c3.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c4 {
+.c5 {
   font-size: 0.87em;
   line-height: 1.9;
 }
 
-.c3 {
+.c1 {
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+.c4 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -165,7 +176,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   border-bottom-width: 0.1rem;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
 }
 
@@ -182,16 +193,16 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           class="row"
         >
           <div
-            class="pr-0 text-left col-3"
+            class="pr-0 text-left col-4"
           >
-            <strong>
-              <label>
-                Lease/License #
-              </label>
-            </strong>
+            <label
+              class="c1"
+            >
+              Lease/Licence #
+            </label>
           </div>
           <div
-            class="pl-1 text-left col-9"
+            class="pl-1 text-left col-8"
           >
             <span
               class="pr-4"
@@ -199,7 +210,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               L-0000001
             </span>
             <span
-              class="c1"
+              class="c2"
             />
           </div>
         </div>
@@ -207,16 +218,16 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           class="row"
         >
           <div
-            class="pr-0 text-left col-3"
+            class="pr-0 text-left col-4"
           >
-            <strong>
-              <label>
-                Property:
-              </label>
-            </strong>
+            <label
+              class="c1"
+            >
+              Property:
+            </label>
           </div>
           <div
-            class="pl-1 text-left col-9"
+            class="pl-1 text-left col-8"
           >
             <div />
           </div>
@@ -225,16 +236,16 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           class="row"
         >
           <div
-            class="pr-0 text-left col-3"
+            class="pr-0 text-left col-4"
           >
-            <strong>
-              <label>
-                Tenant:
-              </label>
-            </strong>
+            <label
+              class="c1"
+            >
+              Tenant:
+            </label>
           </div>
           <div
-            class="pl-1 text-left col-9"
+            class="pl-1 text-left col-8"
           >
             <div>
               <span>
@@ -242,7 +253,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
                 <br />
               </span>
               <button
-                class="c2 Button btn btn-link"
+                class="c3 Button btn btn-link"
                 data-testid="expand"
                 type="button"
               >
@@ -256,16 +267,38 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           </div>
         </div>
         <div
-          class="row"
+          class="flex-nowrap row"
         >
           <div
-            class="pr-0 text-left col-3"
+            class="pr-0 text-left col-4"
           >
-            <strong>
-              <label>
-                Lease Start:
-              </label>
-            </strong>
+            <label
+              class="c1"
+            >
+              Commencement:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
           </div>
           <div
             class="pl-1 text-left col-3"
@@ -273,11 +306,33 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           <div
             class="pr-0 text-left col-auto"
           >
-            <strong>
-              <label>
-                Expiry:
-              </label>
-            </strong>
+            <label
+              class="c1"
+            >
+              Expiry:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
           </div>
           <div
             class="pl-1 text-left col-auto"
@@ -294,16 +349,16 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           class="row"
         >
           <div
-            class="pr-0 text-left col-3"
+            class="pr-0 text-left col-4"
           >
-            <strong>
-              <label>
-                Historical File #:
-              </label>
-            </strong>
+            <label
+              class="c1"
+            >
+              Historical file #:
+            </label>
           </div>
           <div
-            class="pl-1 text-left col-9"
+            class="pl-1 text-left col-8"
           >
             <div />
           </div>
@@ -313,7 +368,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
         class="col"
       >
         <div
-          class="c3"
+          class="c4"
         >
           <div
             class="no-gutters row"
@@ -322,7 +377,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               class="text-right col"
             >
               <span
-                class="c4"
+                class="c5"
               >
                 <strong>
                   Created: 
@@ -347,7 +402,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               class="text-right col"
             >
               <span
-                class="c4"
+                class="c5"
               >
                 <strong>
                   Updated: 

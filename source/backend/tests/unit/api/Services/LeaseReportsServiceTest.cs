@@ -58,7 +58,7 @@ namespace Pims.Api.Test.Services
 
             var lease = EntityHelper.CreateLease(1);
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
             this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true)).Returns(new List<PimsLease>() { lease });
@@ -77,7 +77,7 @@ namespace Pims.Api.Test.Services
             var lease = EntityHelper.CreateLease(1);
             lease.OrigExpiryDate = new DateTime(2022, 4, 1);
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
-            var term = new PimsLeaseTerm() { TermStartDate = DateTime.Now, TermExpiryDate = DateTime.Now.AddDays(10) };
+            var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
             this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true)).Returns(new List<PimsLease>() { lease });

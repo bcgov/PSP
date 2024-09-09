@@ -12,7 +12,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 
 .c0 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
-  height: calc(100% - 2.5rem);
   overflow-y: auto;
 }
 
@@ -274,9 +273,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                     class="c6"
                   >
                     Delivery date:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"
@@ -355,9 +352,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                     class="c6"
                   >
                     Historical file number:
-                    <span
-                      class="ml-2"
-                    >
+                    <span>
                       <span
                         class="tooltip-icon"
                         data-testid="tooltip-icon-section-field-tooltip"

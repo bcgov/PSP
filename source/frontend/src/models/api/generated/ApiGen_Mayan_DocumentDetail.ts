@@ -11,8 +11,10 @@ import { ApiGen_Mayan_FileLatest } from './ApiGen_Mayan_FileLatest';
 export interface ApiGen_Mayan_DocumentDetail {
   id: number;
   label: string | null;
+  language: string | null;
   datetime_created: UtcIsoDateTime;
   description: string | null;
+  uuid: string | null;
   file_latest: ApiGen_Mayan_FileLatest | null;
   document_type: ApiGen_Mayan_DocumentType | null;
 }

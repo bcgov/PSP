@@ -2,13 +2,23 @@
 import * as Yup from 'yup';
 
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { exists } from '@/utils';
 
 import { isLeaseCategoryVisible } from './AdministrationSubForm';
 
 export const AddLeaseYupSchema = Yup.object().shape({
   statusTypeCode: Yup.string().required('Required'),
-  startDate: Yup.date().required('Required'),
-  expiryDate: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
+  startDate: Yup.date().when('statusTypeCode', {
+    is: (statusTypeCode: string) =>
+      statusTypeCode && statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE.toString(),
+    then: Yup.date().required('Required'),
+    otherwise: Yup.date().nullable(),
+  }),
+  expiryDate: Yup.date().when('startDate', {
+    is: (startDate: Date) => exists(startDate),
+    then: Yup.date().min(Yup.ref('startDate'), 'Expiry Date must be after Start Date'),
+    otherwise: Yup.date().nullable(),
+  }),
   paymentReceivableTypeCode: Yup.string().required('Payment Receivable Type is required'),
   regionId: Yup.string().required('MOTI Region Type is required'),
   programTypeCode: Yup.string().required('Program Type is required'),
@@ -64,6 +74,10 @@ export const AddLeaseYupSchema = Yup.object().shape({
   properties: Yup.array().of(
     Yup.object().shape({
       name: Yup.string().max(250, 'Property name must be at most ${max} characters'),
+      isRetired: Yup.boolean().notOneOf(
+        [true],
+        'Selected property is retired and can not be added to the file',
+      ),
     }),
   ),
   consultations: Yup.array().of(
@@ -97,4 +111,15 @@ export const AddLeaseYupSchema = Yup.object().shape({
       .max(500, 'Termination reason must be at most ${max} characters'),
     otherwise: Yup.string().nullable(),
   }),
+  primaryArbitrationCity: Yup.string()
+    .nullable()
+    .max(200, 'Primary arbitration city must be at most ${max} characters'),
+  feeDeterminationNote: Yup.string()
+    .nullable()
+    .max(1000, 'Fee determination notes must be at most ${max} characters'),
+  renewals: Yup.array().of(
+    Yup.object().shape({
+      renewalNote: Yup.string().max(2000, 'Renewal note must be at most ${max} characters'),
+    }),
+  ),
 });

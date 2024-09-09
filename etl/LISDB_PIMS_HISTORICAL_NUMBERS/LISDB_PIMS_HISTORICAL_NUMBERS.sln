@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34729.46
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "LISDB_PIMS_HISTORICAL_NUMBERS", "LISDB_PIMS_HISTORICAL_NUMBERS.dtproj", "{0AA9F02B-0289-4166-88BB-EB17F41FAB09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0AA9F02B-0289-4166-88BB-EB17F41FAB09}.Development|Default.ActiveCfg = Development
+		{0AA9F02B-0289-4166-88BB-EB17F41FAB09}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F57A8BB8-2688-4772-9016-0B6382A944B6}
+	EndGlobalSection
+EndGlobal

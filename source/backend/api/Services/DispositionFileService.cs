@@ -15,7 +15,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -29,7 +28,6 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IDispositionFileRepository _dispositionFileRepository;
         private readonly IDispositionFilePropertyRepository _dispositionFilePropertyRepository;
-        private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
@@ -55,7 +53,6 @@ namespace Pims.Api.Services
             _logger = logger;
             _dispositionFileRepository = dispositionFileRepository;
             _dispositionFilePropertyRepository = dispositionFilePropertyRepository;
-            _coordinateService = coordinateService;
             _propertyRepository = propertyRepository;
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
@@ -77,6 +74,12 @@ namespace Pims.Api.Services
 
             MatchProperties(dispositionFile, userOverrides);
             ValidatePropertyRegions(dispositionFile);
+
+            // Update marker locations in the context of this file
+            foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
+            {
+                _propertyService.PopulateNewFileProperty(incomingDispositionProperty);
+            }
 
             var newDispositionFile = _dispositionFileRepository.Add(dispositionFile);
             _dispositionFileRepository.CommitTransaction();
@@ -162,8 +165,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             var properties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(id);
-            ReprojectPropertyLocationsToWgs84(properties);
-            return properties;
+            return _propertyService.TransformAllPropertiesToLatLong(properties);
         }
 
         public IEnumerable<PimsDispositionFileTeam> GetTeamMembers()
@@ -422,7 +424,7 @@ namespace Pims.Api.Services
                 {
                     _checklistRepository.Add(incomingItem);
                 }
-                else if (existingItem.DspChklstItemStatusTypeCode != incomingItem.DspChklstItemStatusTypeCode)
+                else if (existingItem.ChklstItemStatusTypeCode != incomingItem.ChklstItemStatusTypeCode)
                 {
                     _checklistRepository.Update(incomingItem);
                 }
@@ -483,7 +485,7 @@ namespace Pims.Api.Services
 
         public PimsDispositionFile UpdateProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
-            _logger.LogInformation("Updating disposition file properties...");
+            _logger.LogInformation("Updating disposition file properties with DispositionFile id: {id}", dispositionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.DispositionEdit, Permissions.PropertyView, Permissions.PropertyAdd);
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFile.Internal_Id);
 
@@ -493,8 +495,8 @@ namespace Pims.Api.Services
 
             ValidatePropertyRegions(dispositionFile);
 
-            // Get the current properties in the research file
-            var currentProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
+            // Get the current properties in the disposition file
+            var currentFileProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
@@ -502,22 +504,37 @@ namespace Pims.Api.Services
                 // If the property is not new, check if the name has been updated.
                 if (incomingDispositionProperty.Internal_Id != 0)
                 {
-                    PimsDispositionFileProperty existingProperty = currentProperties.FirstOrDefault(x => x.Internal_Id == incomingDispositionProperty.Internal_Id);
+                    var needsUpdate = false;
+                    PimsDispositionFileProperty existingProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingDispositionProperty.Internal_Id);
                     if (existingProperty.PropertyName != incomingDispositionProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incomingDispositionProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+
+                    var incomingGeom = incomingDispositionProperty.Location;
+                    var existingGeom = existingProperty.Location;
+                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    {
+                        _propertyService.UpdateFilePropertyLocation(incomingDispositionProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (needsUpdate)
+                    {
                         _dispositionFilePropertyRepository.Update(existingProperty);
                     }
                 }
                 else
                 {
                     // New property needs to be added
-                    _dispositionFilePropertyRepository.Add(incomingDispositionProperty);
+                    var newFileProperty = _propertyService.PopulateNewFileProperty(incomingDispositionProperty);
+                    _dispositionFilePropertyRepository.Add(newFileProperty);
                 }
             }
 
             // The ones not on the new set should be deleted
-            List<PimsDispositionFileProperty> differenceSet = currentProperties.Where(x => !dispositionFile.PimsDispositionFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
+            List<PimsDispositionFileProperty> differenceSet = currentFileProperties.Where(x => !dispositionFile.PimsDispositionFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
                 _dispositionFilePropertyRepository.Delete(deletedProperty);
@@ -679,19 +696,6 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ReprojectPropertyLocationsToWgs84(IEnumerable<PimsDispositionFileProperty> dispositionPropertyFiles)
-        {
-            foreach (var dispositionProperty in dispositionPropertyFiles)
-            {
-                if (dispositionProperty.Property.Location != null)
-                {
-                    var oldCoords = dispositionProperty.Property.Location.Coordinate;
-                    var newCoords = _coordinateService.TransformCoordinates(SpatialReference.BCALBERS, SpatialReference.WGS84, oldCoords);
-                    dispositionProperty.Property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.WGS84);
-                }
-            }
-        }
-
         private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes)
         {
             foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
@@ -787,7 +791,7 @@ namespace Pims.Api.Services
             {
                 return;
             }
-            var checklistStatusTypes = _lookupRepository.GetAllDispositionChecklistItemStatusTypes();
+            var checklistStatusTypes = _lookupRepository.GetAllChecklistItemStatusTypes();
             foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
             {
                 if (!pimsDispositionChecklistItems.Any(cli => cli.DspChklstItemTypeCode == itemType.DspChklstItemTypeCode) && DateOnly.FromDateTime(dispositionFile.AppCreateTimestamp) >= itemType.EffectiveDate)
@@ -796,9 +800,9 @@ namespace Pims.Api.Services
                     {
                         DspChklstItemTypeCode = itemType.DspChklstItemTypeCode,
                         DspChklstItemTypeCodeNavigation = itemType,
-                        DspChklstItemStatusTypeCode = "INCOMP",
+                        ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                         DispositionFileId = dispositionFile.DispositionFileId,
-                        DspChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == "INCOMP"),
+                        ChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString()),
                     };
 
                     pimsDispositionChecklistItems.Add(checklistItem);

@@ -4,9 +4,11 @@ $pims-blue-20: #d9eaf7;
 $pims-blue-80: #1a5496;
 
 $pims-blue-50: #428bca;
+$pims-blue-30: #8ec6ff;
 
 $pims-yellow-10: #fef1d8;
 $pims-yellow-30: #fcba19;
+$pims-yellow-60: #f89725;
 $pims-red-10: #f2dede;
 $pims-red-80: #a12622;
 $pims-white: #f2f2f2;
@@ -21,6 +23,7 @@ $pims-green-20: #dff0d8;
 $pims-green-80: #2e8540;
 
 $active-action-color: $pims-blue-50;
+$hover-action-color: $pims-blue-30;
 $border-outline-color: $pims-grey-80;
 $warning-background-color: $pims-yellow-10;
 $number-background-color: $pims-yellow-30;
@@ -35,11 +38,13 @@ $link-color: #{'var(--surface-color-primary-button-default)'};
 $link-hover-color: #{'var(--surface-color-primary-button-hover)'};
 
 $completed-color: $pims-green-80;
-$selected-color: $pims-green-20;
+$completed-background-color: $pims-green-20;
 
-$disabled-color: $pims-grey-20;
-$disabled-field-background-color: $pims-grey-10;
+$file-status-grey-color: $pims-grey-80;
+$file-status-grey-background-color: $pims-grey-10;
 
-$slide-out-blue: $pims-blue-80;
+$file-status-blue-color: $pims-blue-80;
 
 $font-danger-color: $pims-red-80;
+
+$variable-color: $pims-yellow-60;

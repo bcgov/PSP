@@ -6,9 +6,14 @@ exports[`ResearchHeader component > renders as expected when provided no researc
     class="Toastify"
   />
   <div />
-  .c2 {
+  .c3 {
   font-size: 0.87em;
   line-height: 1.9;
+}
+
+.c1 {
+  font-weight: bold;
+  white-space: nowrap;
 }
 
 .c0 {
@@ -19,7 +24,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
   border-bottom-width: 0.1rem;
 }
 
-.c1 {
+.c2 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -42,11 +47,11 @@ exports[`ResearchHeader component > renders as expected when provided no researc
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              File #:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            File #:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -58,11 +63,11 @@ exports[`ResearchHeader component > renders as expected when provided no researc
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              File name:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            File name:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -74,11 +79,11 @@ exports[`ResearchHeader component > renders as expected when provided no researc
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              MoTI region:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            MOTI region:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -90,11 +95,11 @@ exports[`ResearchHeader component > renders as expected when provided no researc
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Ministry district:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            Ministry district:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -106,11 +111,11 @@ exports[`ResearchHeader component > renders as expected when provided no researc
         <div
           class="pr-0 text-left col-3"
         >
-          <strong>
-            <label>
-              Historical File #:
-            </label>
-          </strong>
+          <label
+            class="c1"
+          >
+            Historical file #:
+          </label>
         </div>
         <div
           class="pl-1 text-left col-9"
@@ -123,7 +128,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
       class="col"
     >
       <div
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -132,7 +137,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             class="text-right col"
           >
             <span
-              class="c2"
+              class="c3"
             >
               <strong>
                 Created: 
@@ -157,7 +162,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
             class="text-right col"
           >
             <span
-              class="c2"
+              class="c3"
             >
               <strong>
                 Updated: 

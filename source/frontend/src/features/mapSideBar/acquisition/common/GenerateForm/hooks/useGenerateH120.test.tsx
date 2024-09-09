@@ -20,11 +20,13 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 
 import { useGenerateH120 } from './useGenerateH120';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
 
 const generateFn = vi
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
 const getAcquisitionFileFn = vi.fn();
+const getCompensationRequisitionPropertiesFn = vi.fn();
 const getAcquisitionPropertiesFn = vi.fn();
 const getAcquisitionCompReqH120s = vi.fn();
 const getH120sCategoryFn = vi.fn();
@@ -65,6 +67,14 @@ vi.mocked(useInterestHolderRepository).mockImplementation(
     ({
       getAcquisitionInterestHolders: { execute: getInterestHoldersFn },
     } as unknown as ReturnType<typeof useInterestHolderRepository>),
+);
+
+vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
+vi.mocked(useCompensationRequisitionRepository).mockImplementation(
+  () =>
+    ({
+      getCompensationRequisitionProperties: { execute: getCompensationRequisitionPropertiesFn },
+    } as unknown as ReturnType<typeof useCompensationRequisitionRepository>),
 );
 
 vi.mock('@/hooks/pims-api/useApiContacts');
@@ -116,13 +126,23 @@ describe('useGenerateH120 functions', () => {
   beforeEach(() => {
     findElectoralDistrictFn.mockResolvedValue({ properties: { ED_NAME: 'MOCK DISTRICT' } });
     getAcquisitionPropertiesFn.mockResolvedValue(mockAcquisitionFileResponse().fileProperties);
+    getCompensationRequisitionPropertiesFn.mockResolvedValue(
+      mockAcquisitionFileResponse().fileProperties,
+    );
+    getInterestHoldersFn.mockResolvedValue([]);
   });
 
   it('makes requests to expected api endpoints', async () => {
     const generate = setup();
-    await act(async () => generate(getMockApiDefaultCompensation()));
+    const apiCompensationWithInterestHolder: ApiGen_Concepts_CompensationRequisition = {
+      ...getMockApiDefaultCompensation(),
+      interestHolderId: 14,
+    };
+
+    await act(async () => generate(apiCompensationWithInterestHolder));
     expect(generateFn).toHaveBeenCalled();
     expect(getAcquisitionPropertiesFn).toHaveBeenCalled();
+    expect(getCompensationRequisitionPropertiesFn).toHaveBeenCalled();
     expect(getInterestHoldersFn).toHaveBeenCalled();
     expect(findElectoralDistrictFn).toHaveBeenCalled();
   });
@@ -205,6 +225,7 @@ describe('useGenerateH120 functions', () => {
       expect.objectContaining(apiInterestHolder.person),
     );
   });
+
   it('throws an error if no compensation is passed', async () => {
     const generate = setup();
     await expect(generate({} as any)).rejects.toThrow(

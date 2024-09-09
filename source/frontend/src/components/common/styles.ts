@@ -106,8 +106,10 @@ export const StyledAddButton = styled(Button)`
   &.btn.btn-primary:active {
     background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
   }
-  &.btn.btn-primary:hover {
+  &.btn.btn-primary:hover,
+  &.btn.btn-primary:focus {
     background-color: ${props => props.theme.css.pimsGreen80};
+    outline-color: ${props => props.theme.css.pimsGreen80};
   }
 `;
 
@@ -150,7 +152,7 @@ export const CloseButton = styled(Button)`
     cursor: pointer;
     fill: ${props => props.theme.bcTokens.typographyColorSecondary};
     &:hover {
-      fill: ${props => props.theme.css.typographyColorSecondaryInvert};
+      fill: ${props => props.theme.bcTokens.typographyColorSecondaryInvert};
     }
   }
 `;
@@ -163,6 +165,13 @@ export const PopupTray = styled.div`
   text-align: left;
   transition: transform 0.5s ease-in-out;
   position: relative;
+`;
+
+export const VerticalLine = styled.div`
+  border-left: 0.1rem solid ${props => props.theme.bcTokens.typographyColorSecondaryInvert};
+  width: 0.1rem;
+  height: 80%;
+  margin: auto;
 `;
 
 export const Backdrop = styled.div<LoadingBackdropProps>`

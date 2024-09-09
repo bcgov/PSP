@@ -51,7 +51,7 @@ export class FormTenant {
   public readonly mobile?: string;
   public readonly isDisabled?: boolean;
   public readonly organizationPersons?: ApiGen_Concepts_PersonOrganization[];
-  public readonly primaryContactId?: number;
+  public readonly primaryContactId?: string;
   public readonly initialPrimaryContact?: ApiGen_Concepts_Person;
   public readonly lessorTypeCode?: ApiGen_Base_CodeType<string>;
   public readonly tenantType?: string;
@@ -95,7 +95,11 @@ export class FormTenant {
       organizationId: !isValidId(model.personId) ? model.organizationId ?? null : null,
       lessorType: model.lessorTypeCode ?? null,
       tenantTypeCode: toTypeCodeNullable(model.tenantType),
-      primaryContactId: !isValidId(model.personId) ? model.primaryContactId ?? null : null,
+      primaryContactId: !isValidId(model.personId)
+        ? isValidId(Number(model.primaryContactId))
+          ? Number(model.primaryContactId)
+          : null
+        : null,
       note: model.note ?? null,
       leaseId: model.leaseId ?? 0,
       leaseTenantId: null,
@@ -138,7 +142,7 @@ export class FormTenant {
         undefined;
       this.lessorTypeCode = apiModel.lessorType ?? undefined;
       this.tenantType = fromTypeCode(apiModel.tenantTypeCode) ?? undefined;
-      this.primaryContactId = apiModel.primaryContactId ?? undefined;
+      this.primaryContactId = apiModel.primaryContactId?.toString() ?? undefined;
       this.initialPrimaryContact = apiModel.primaryContact ?? undefined;
     } else if (exists(selectedContactModel)) {
       // In this case, construct a tenant using a contact.
@@ -164,7 +168,7 @@ export class FormTenant {
         this.organizationPersons = selectedContactModel?.organization?.organizationPersons ?? [];
 
         const primaryContact = getDefaultContact(selectedContactModel.organization);
-        this.primaryContactId = primaryContact?.id;
+        this.primaryContactId = primaryContact?.id.toString();
         this.initialPrimaryContact = primaryContact ?? undefined;
       }
 

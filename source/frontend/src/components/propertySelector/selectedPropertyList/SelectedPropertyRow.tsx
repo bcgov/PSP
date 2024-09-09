@@ -1,3 +1,5 @@
+import { getIn, useFormikContext } from 'formik';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { RemoveButton } from '@/components/common/buttons';
@@ -18,6 +20,13 @@ export interface ISelectedPropertyRowProps {
 export const SelectedPropertyRow: React.FunctionComponent<
   React.PropsWithChildren<ISelectedPropertyRowProps>
 > = ({ nameSpace, onRemove, index, property }) => {
+  const { setFieldTouched, touched } = useFormikContext();
+  useEffect(() => {
+    if (getIn(touched, `${nameSpace}.name`) !== true) {
+      setFieldTouched(`${nameSpace}.name`);
+    }
+  }, [nameSpace, setFieldTouched, touched]);
+
   const propertyName = getPropertyName(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
@@ -49,6 +58,7 @@ export const SelectedPropertyRow: React.FunctionComponent<
           field={withNameSpace(nameSpace, 'name')}
           displayErrorTooltips={true}
           defaultValue=""
+          errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
         />
       </Col>
       <Col md={2}>

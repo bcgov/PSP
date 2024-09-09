@@ -1,9 +1,9 @@
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { FaCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
+import styled from 'styled-components';
 
-import Active from '@/assets/images/active.svg?react';
-import Inactive from '@/assets/images/inactive.svg?react';
 import { Select, SelectOption } from '@/components/common/form';
 import { ColumnWithProps } from '@/components/Table';
 import { getPrimaryContact } from '@/features/contacts/contactUtils';
@@ -18,11 +18,23 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       Header: '',
       accessor: 'isDisabled',
       align: 'right',
-      width: 10,
-      maxWidth: 10,
-      minWidth: 10,
-      Cell: (props: CellProps<FormTenant>) =>
-        props.row.original.isDisabled ? <Inactive /> : <Active />,
+      width: 16,
+      maxWidth: 16,
+      minWidth: 16,
+      Cell: (props: CellProps<FormTenant>) => {
+        const original = props.row.original;
+        const status =
+          original.original !== undefined
+            ? original.original.id.startsWith('O') === true
+              ? original.original.organization.isDisabled
+              : original.isDisabled
+            : original.isDisabled;
+        return (
+          <StatusIndicators className={status ? 'inactive' : 'active'}>
+            <FaCircle size={10} className="mr-2" />
+          </StatusIndicators>
+        );
+      },
     },
     {
       Header: '',
@@ -57,12 +69,15 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
       minWidth: 150,
       width: 120,
       Cell: (props: CellProps<FormTenant>) => {
-        const original = props.row.original;
-        const persons = original?.organizationPersons?.map(op => op.person);
-        let primaryContact = original.initialPrimaryContact;
-        if (original.primaryContactId !== original.initialPrimaryContact?.id) {
-          primaryContact = original.primaryContactId
-            ? getPrimaryContact(original.primaryContactId, original) ?? undefined
+        const tenant = props.row.original;
+        const persons =
+          tenant.original !== undefined && isValidId(tenant.organizationId)
+            ? tenant?.original.organization.organizationPersons?.map(op => op.person)
+            : tenant?.organizationPersons?.map(op => op.person);
+        let initialPrimaryContact = tenant.initialPrimaryContact;
+        if (Number(tenant.primaryContactId) !== initialPrimaryContact?.id) {
+          initialPrimaryContact = tenant.primaryContactId
+            ? getPrimaryContact(Number(tenant.primaryContactId), tenant) ?? undefined
             : undefined;
         }
         const primaryContactOptions: SelectOption[] =
@@ -70,7 +85,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
             label: formatApiPersonNames(person),
             value: person?.id ?? 0,
           })) ?? [];
-        if (isValidId(props?.row?.original?.personId)) {
+        if (isValidId(tenant?.personId)) {
           return <p>Not applicable</p>;
         } else if (persons?.length && persons?.length > 1) {
           return (
@@ -85,7 +100,7 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
         } else if (persons?.length === 1) {
           return (
             <p key={`tenants.primaryContact.${persons[0]?.id ?? props?.row?.index}`}>
-              {formatApiPersonNames(primaryContact ?? persons[0])}
+              {formatApiPersonNames(initialPrimaryContact ?? persons[0])}
             </p>
           );
         } else {
@@ -129,4 +144,12 @@ const getColumns = (tenantTypes: SelectOption[]): ColumnWithProps<FormTenant>[] 
     },
   ];
 };
+
+export const StatusIndicators = styled.div`
+  color: ${props => props.theme.css.borderOutlineColor};
+  &.active {
+    color: ${props => props.theme.bcTokens.iconsColorSuccess};
+  }
+`;
+
 export default getColumns;
