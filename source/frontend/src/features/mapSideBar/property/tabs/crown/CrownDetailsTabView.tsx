@@ -4,7 +4,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { TANTALIS_CrownLandTenures_Feature_Properties } from '@/models/layers/crownLand';
-import { exists, prettyFormatDate } from '@/utils';
+import { exists, formatUTCDateTime } from '@/utils';
 
 export interface ICrownDetailsTabViewProps {
   crownFeature?: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties> | undefined;
@@ -41,7 +41,7 @@ export const CrownDetailsTabView: React.FunctionComponent<ICrownDetailsTabViewPr
             {crownFeature?.properties?.TENURE_DOCUMENT ?? ''}
           </SectionField>
           <SectionField label="Tenure expiry">
-            {prettyFormatDate(crownFeature?.properties?.TENURE_EXPIRY)}
+            {formatUTCDateTime(crownFeature?.properties?.TENURE_EXPIRY, 'MMM D, YYYY', false)}
           </SectionField>
           <SectionField label="Tenure legal description">
             {crownFeature?.properties?.TENURE_LEGAL_DESCRIPTION ?? ''}
