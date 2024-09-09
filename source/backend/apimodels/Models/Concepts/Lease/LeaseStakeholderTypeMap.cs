@@ -1,5 +1,5 @@
 using Mapster;
-using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Address;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Lease
@@ -14,7 +14,7 @@ namespace Pims.Api.Models.Concepts.Lease
                 .Map(dest => dest.IsPayableRelated, src => src.IsPayableRelated)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
                 .Map(dest => dest.DisplayOrder, src => src.DisplayOrder)
-                .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
+                .Inherits<Entity.IBaseEntity, CodeTypeModel>();
         }
     }
 }
