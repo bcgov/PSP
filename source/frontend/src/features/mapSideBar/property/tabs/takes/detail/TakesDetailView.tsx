@@ -15,7 +15,7 @@ import AreaContainer from '@/components/measurements/AreaContainer';
 import { Claims, Roles } from '@/constants';
 import * as API from '@/constants/API';
 import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/add/models';
-import StatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/statusUpdateSolver';
+import AcquisitionFileStatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
@@ -61,7 +61,9 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
 
   const file = fileProperty.file;
 
-  const statusSolver = new StatusUpdateSolver(isAcquisitionFile(file) ? file : null);
+  const statusSolver = new AcquisitionFileStatusUpdateSolver(
+    isAcquisitionFile(file) ? file.fileStatusTypeCode : null,
+  );
 
   const canEditTakes = (take: ApiGen_Concepts_Take) => {
     if (

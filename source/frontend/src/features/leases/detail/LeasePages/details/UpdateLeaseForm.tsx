@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
 import AdministrationSubForm from '@/features/leases/add/AdministrationSubForm';
-import ConsultationSubForm from '@/features/leases/add/ConsultationSubForm';
 import FeeDeterminationSubForm from '@/features/leases/add/FeeDeterminationSubForm';
 import LeaseDetailSubForm from '@/features/leases/add/LeaseDetailSubForm';
 import RenewalSubForm from '@/features/leases/add/RenewalSubForm';
@@ -40,7 +39,6 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
               <RenewalSubForm formikProps={formikProps} />
               <LeasePropertySelector formikProps={formikProps} />
               <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
-              <ConsultationSubForm formikProps={formikProps}></ConsultationSubForm>
               <FeeDeterminationSubForm formikProps={formikProps}></FeeDeterminationSubForm>
             </>
           </>

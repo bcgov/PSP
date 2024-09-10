@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
 
 namespace Pims.Api.Models.Concepts.Lease
@@ -196,6 +197,16 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - The project associated with this lease.
         /// </summary>
         public ProjectModel Project { get; set; }
+
+        /// <summary>
+        /// get/set - The Lease product's id.
+        /// </summary>
+        public long? ProductId { get; set; }
+
+        /// <summary>
+        /// get/set - The Lease product.
+        /// </summary>
+        public ProductModel Product { get; set; }
 
         /// <summary>
         /// get/set - is public benefit.

@@ -10,7 +10,7 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useInitialMapSelectorProperties } from '@/hooks/useInitialMapSelectorProperties';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId } from '@/utils';
@@ -25,6 +25,7 @@ import { ResearchForm } from './models';
 
 export interface IAddResearchContainerProps {
   onClose: () => void;
+  onSuccess: (newResearchId: number) => void;
 }
 
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
@@ -133,8 +134,8 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           );
         }
         mapMachine.refreshMapProperties();
-        history.replace(`/mapview/sidebar/research/${response.id}`);
         formikRef.current?.resetForm({ values: ResearchForm.fromApi(response) });
+        props.onSuccess(response.id);
       }
     } finally {
       formikRef.current?.setSubmitting(false);
@@ -145,22 +146,13 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     return formikRef.current?.submitForm() ?? Promise.resolve();
   };
 
-  const cancelFunc = (resetForm: () => void, dirty: boolean) => {
-    if (!dirty) {
-      resetForm();
-      onClose();
-    } else {
-      setModalContent({
-        ...getCancelModalProps(),
-        handleOk: () => {
-          resetForm();
-          setDisplayModal(false);
-          onClose();
-        },
-      });
-      setDisplayModal(true);
-    }
+  const cancelFunc = () => {
+    onClose();
   };
+
+  const checkState = useCallback(() => {
+    return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
+  }, [formikRef]);
 
   return (
     <Formik<ResearchForm>
@@ -182,22 +174,17 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
             <SidebarFooter
               isOkDisabled={formikProps?.isSubmitting || bcaLoading}
               onSave={handleSave}
-              onCancel={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
+              onCancel={cancelFunc}
               displayRequiredFieldError={!formikProps.isValid && !!formikProps.submitCount}
             />
           }
           showCloseButton
-          onClose={() => cancelFunc(formikProps.resetForm, formikProps.dirty)}
+          onClose={cancelFunc}
         >
           <StyledFormWrapper>
             <AddResearchForm confirmBeforeAdd={confirmBeforeAdd} />
           </StyledFormWrapper>
-          <ConfirmNavigation
-            navigate={history.push}
-            shouldBlockNavigation={() => {
-              return formikProps.dirty && !formikProps.isSubmitting && !initialForm.id;
-            }}
-          />
+          <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
         </MapSideBarLayout>
       )}
     </Formik>

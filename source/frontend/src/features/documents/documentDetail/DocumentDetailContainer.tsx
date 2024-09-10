@@ -62,7 +62,6 @@ export const DocumentDetailContainer: React.FunctionComponent<
     return {
       ...deleteModalProps,
       display: false,
-      closeButton: false,
       handleOk: confirmCancel,
     };
   }, [deleteModalProps, confirmCancel]);

@@ -26,7 +26,6 @@ exports[`AccessRequestContainer component > makes a request based on the access 
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -40,7 +39,6 @@ exports[`AccessRequestContainer component > makes a request based on the access 
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c5.btn .Button__value {
@@ -60,10 +58,6 @@ exports[`AccessRequestContainer component > makes a request based on the access 
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c5.btn.btn-primary {
-  border: none;
 }
 
 .c5.btn.btn-secondary {
@@ -756,7 +750,6 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -770,7 +763,6 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c5.btn .Button__value {
@@ -790,10 +782,6 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c5.btn.btn-primary {
-  border: none;
 }
 
 .c5.btn.btn-secondary {

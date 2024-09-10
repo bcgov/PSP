@@ -531,6 +531,7 @@ const emptyResearchFile: ApiGen_Concepts_ResearchFile = {
   fileName: null,
   fileNumber: null,
   fileStatusTypeCode: null,
+  totalAllowableCompensation: null,
   ...getEmptyBaseAudit(),
 };
 

@@ -66,7 +66,7 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
           return property;
         }
         const queryObject = {};
-        if (pid.length > 0) {
+        if (isValidId(+pid)) {
           queryObject['PID'] = pid;
         }
         if (isValidId(+pin)) {
@@ -91,9 +91,9 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
         setActiveTab={setActiveSelectorTab}
         MapSelectorView={
           <PropertyMapSelectorFormView
-            onSelectedProperty={(property: LocationFeatureDataset) => {
+            onSelectedProperty={async (property: LocationFeatureDataset) => {
               setLastSelectedProperty(property);
-              addProperties([property], modifiedMapProperties, addWithPimsFeature);
+              await addProperties([property], modifiedMapProperties, addWithPimsFeature);
             }}
             onRepositionedProperty={(
               property: LocationFeatureDataset,
@@ -126,8 +126,12 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
       {activeSelectorTab === SelectorTabNames.list ? (
         <Button
           variant="secondary"
-          onClick={() => {
-            addProperties(searchSelectedProperties, modifiedMapProperties, addWithPimsFeature);
+          onClick={async () => {
+            await addProperties(
+              searchSelectedProperties,
+              modifiedMapProperties,
+              addWithPimsFeature,
+            );
             setSearchSelectedProperties([]);
           }}
         >
@@ -138,10 +142,10 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
   );
 };
 
-const addProperties = (
+const addProperties = async (
   newProperties: LocationFeatureDataset[],
   selectedProperties: LocationFeatureDataset[],
-  addCallback: (properties: LocationFeatureDataset[]) => void,
+  addCallback: (properties: LocationFeatureDataset[]) => Promise<void>,
 ) => {
   const propertiesToAdd: LocationFeatureDataset[] = [];
   newProperties.forEach((property: LocationFeatureDataset) => {
@@ -156,7 +160,7 @@ const addProperties = (
   });
 
   if (propertiesToAdd.length > 0) {
-    addCallback(propertiesToAdd);
+    await addCallback(propertiesToAdd);
   }
 };
 

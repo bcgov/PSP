@@ -28,7 +28,6 @@ export interface ITenantProps {
 export const ViewStakeholderForm: React.FunctionComponent<
   React.PropsWithChildren<ITenantProps>
 > = ({ nameSpace, stakeholders, loading, leaseStakeholderTypes, isPayableLease }) => {
-  console.log(leaseStakeholderTypes, isPayableLease);
   return (
     <FormSectionOne>
       <Formik

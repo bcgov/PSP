@@ -10,7 +10,7 @@ import AcquisitionAgreementForm from '../form/AcquisitionAgreementForm';
 import { AcquisitionAgreementFormYupSchema } from '../form/AcquisitionAgreementFormYupSchema';
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
 
-export interface IUpdateAcquisitionAgreementViewProps {
+export interface IUpdateAcquisitionAgreementFormProps {
   isLoading: boolean;
   initialValues: AcquisitionAgreementFormModel | null;
   onSubmit: (
@@ -21,7 +21,7 @@ export interface IUpdateAcquisitionAgreementViewProps {
 }
 
 const UpdateAcquisitionAgreementForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdateAcquisitionAgreementViewProps>
+  React.PropsWithChildren<IUpdateAcquisitionAgreementFormProps>
 > = ({ isLoading, initialValues, onSubmit, onCancel }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 

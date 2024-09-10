@@ -121,6 +121,7 @@ export class UpdateResearchSummaryFormModel {
       researchFilePurposes: this.researchFilePurposes?.map(x => x.toApi()) ?? null,
       researchFileProjects: ResearchFileProjectFormModel.toApiList(this.researchFileProjects),
       fileProperties: [],
+      totalAllowableCompensation: null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }

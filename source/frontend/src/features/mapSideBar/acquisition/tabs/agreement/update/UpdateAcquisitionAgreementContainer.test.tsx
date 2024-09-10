@@ -1,6 +1,6 @@
 import { mockAgreementResponseApi } from '@/mocks/agreements.mock';
 import { createMemoryHistory } from 'history';
-import { IUpdateAcquisitionAgreementViewProps } from '../common/UpdateAcquisitionAgreementForm';
+import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
 import { RenderOptions, act, render, waitForEffects } from '@/utils/test-utils';
 import UpdateAcquisitionAgreementContainer, {
   IUpdateAcquisitionAgreementContainerProps,
@@ -39,8 +39,8 @@ vi.mock('@/hooks/repositories/useAgreementProvider', () => ({
   },
 }));
 
-let viewProps: IUpdateAcquisitionAgreementViewProps | undefined;
-const TestView: React.FC<IUpdateAcquisitionAgreementViewProps> = props => {
+let viewProps: IUpdateAcquisitionAgreementFormProps | undefined;
+const TestView: React.FC<IUpdateAcquisitionAgreementFormProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };

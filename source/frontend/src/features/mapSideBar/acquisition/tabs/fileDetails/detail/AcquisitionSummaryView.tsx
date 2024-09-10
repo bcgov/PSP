@@ -17,10 +17,10 @@ import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { cannotEditMessage } from '../../../common/constants';
+import AcquisitionFileStatusUpdateSolver from './AcquisitionFileStatusUpdateSolver';
 import AcquisitionOwnersSummaryContainer from './AcquisitionOwnersSummaryContainer';
 import AcquisitionOwnersSummaryView from './AcquisitionOwnersSummaryView';
 import { DetailAcquisitionFile } from './models';
-import StatusUpdateSolver from './statusUpdateSolver';
 
 export interface IAcquisitionSummaryViewProps {
   acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
@@ -61,7 +61,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     x => x.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE,
   );
 
-  const statusSolver = new StatusUpdateSolver(acquisitionFile);
+  const statusSolver = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
 
   const canEditDetails = () => {
     if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditDetails()) {
