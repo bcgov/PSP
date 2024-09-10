@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useContext, useEffect, useMemo } from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 
 import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
@@ -16,6 +16,7 @@ import AcquisitionView from '../acquisition/AcquisitionView';
 import AddAcquisitionContainer from '../acquisition/add/AddAcquisitionContainer';
 import AddConsolidationContainer from '../consolidation/AddConsolidationContainer';
 import AddConsolidationView from '../consolidation/AddConsolidationView';
+import { SideBarContext } from '../context/sidebarContext';
 import AddDispositionContainer from '../disposition/add/AddDispositionContainer';
 import AddDispositionContainerView from '../disposition/add/AddDispositionContainerView';
 import DispositionContainer from '../disposition/DispositionContainer';
@@ -33,6 +34,7 @@ import AddSubdivisionContainerView from '../subdivision/AddSubdivisionView';
 export const MapRouter: React.FunctionComponent = memo(() => {
   const location = useLocation();
   const history = useHistory();
+  const { setFile } = useContext(SideBarContext);
 
   const { openSidebar, closeSidebar } = useMapStateMachine();
 
@@ -167,6 +169,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
 
   const onClose = () => {
     history.push('/mapview');
+    setFile(undefined); // clean up file context when sidebar is closed
   };
 
   const pidQueryString = queryString.parse(location.search).pid?.toString() ?? '';

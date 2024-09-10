@@ -131,20 +131,20 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
     const retrieved = await retrieveAcquisitionFile(acquisitionFileId);
-    if (!exists(retrieved)) {
-      return;
+    if (exists(retrieved)) {
+      // retrieve related entities (ie properties, checklist items) in parallel
+      const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
+      const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
+      const acquisitionProperties = await acquisitionPropertiesTask;
+      const acquisitionChecklist = await acquisitionChecklistTask;
+
+      retrieved.fileProperties = acquisitionProperties ?? null;
+      retrieved.fileChecklistItems = acquisitionChecklist ?? [];
+      setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Acquisition });
+      setStaleFile(false);
+    } else {
+      setFile(undefined);
     }
-
-    // retrieve related entities (ie properties, checklist items) in parallel
-    const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
-    const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
-    const acquisitionProperties = await acquisitionPropertiesTask;
-    const acquisitionChecklist = await acquisitionChecklistTask;
-
-    retrieved.fileProperties = acquisitionProperties ?? null;
-    retrieved.fileChecklistItems = acquisitionChecklist ?? [];
-    setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Acquisition });
-    setStaleFile(false);
   }, [
     acquisitionFileId,
     retrieveAcquisitionFileProperties,

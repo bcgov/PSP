@@ -32,7 +32,7 @@ jobs:
       working-directory: ./openshift/4.0/templates/Logging
 
     steps:
-    - uses: actions/checkout@v1
+    - uses: actions/checkout@v4
     - name: Set ENV variable
       run: |
         if [[ ${{github.event.ref}} == 'refs/heads/test' ]]; then
@@ -55,7 +55,7 @@ jobs:
         time: '180s'
     - name: Check Extracted Logs
       run: |
-        docker cp pims-logging:/logging/. . 
+        docker cp pims-logging:/logging/. .
         exitcode=$(docker inspect pims-logging --format='{{.State.ExitCode}}')
         if [[ "$(ls -A pims* 2>/dev/null | wc -l)" != "0" ]]; then
             ls -A pims* && rm -f pims*
