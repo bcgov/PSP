@@ -69,5 +69,10 @@ describe('Date utils', () => {
       expect(formatUTCDateTime('2023-07-31T17:00:00', 'YYYY-MM-DD')).toBe('2023-07-31'); // 5pm UTC = 10am PST
       expect(formatUTCDateTime('2023-08-01T02:00:00', 'YYYY-MM-DD')).toBe('2023-07-31'); // 2am (next day) UTC = 7pm PST
     });
+    it('should format UTC Date discarding the time portion when not converting to local timezone', () => {
+      vi.spyOn(console, 'warn').mockImplementationOnce(() => {}); // ignore console warning by moment
+      expect(formatUTCDateTime('2027-01-17Z', 'MMM D, YYYY', false)).toBe('Jan 17, 2027');
+      expect(formatUTCDateTime(new Date('2027-01-17Z'), 'MMM D, YYYY', false)).toBe('Jan 17, 2027');
+    });
   });
 });
