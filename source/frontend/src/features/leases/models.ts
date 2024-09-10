@@ -18,6 +18,7 @@ import {
   emptyStringToNull,
   fromTypeCode,
   stringToNull,
+  stringToNumberOrNull,
   toTypeCodeNullable,
 } from '@/utils/formUtils';
 
@@ -217,7 +218,7 @@ export class LeaseFormModel {
       otherProgramType: stringToNull(formLease.otherProgramTypeDescription),
       otherType: stringToNull(formLease.otherLeaseTypeDescription),
       project: isValidId(formLease.project?.id) ? ({ id: formLease.project?.id } as any) : null,
-      productId: formLease.productId,
+      productId: stringToNumberOrNull(formLease.productId),
       product: null,
       consultations: null,
       stakeholders: formLease.stakeholders.map(t => FormStakeholder.toApi(t)),
