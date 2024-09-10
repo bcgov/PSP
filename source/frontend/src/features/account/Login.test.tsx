@@ -141,7 +141,11 @@ describe('login', () => {
     });
     const { getByText } = renderLogin();
     expect(getByText('MOTI Property Information Management System (PIMS)')).toBeInTheDocument();
-    expect(getByText('PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.')).toBeInTheDocument();
+    expect(
+      getByText(
+        'PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('a spinner is displayed if keycloak has not yet been initialized', () => {
