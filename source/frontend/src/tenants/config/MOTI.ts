@@ -18,8 +18,8 @@ export const config: ITenantConfig2 = {
     login: {
       title: 'MOTI Property Information Management System (PIMS)',
       heading:
-        'PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure',
-      body: 'WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.',
+        'PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.',
+      body: 'By signing in you acknowledge that not all data included within has been vetted for completeness and accuracy. Please exercise caution by verifying information prior to relying on it.',
       backgroundImage: '/tenants/MOTI/background-image.jpg',
     },
     layers: [],
