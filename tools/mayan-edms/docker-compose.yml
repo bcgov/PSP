@@ -10,7 +10,7 @@ x-mayan-container: &mayan-container
     MAYAN_LOCK_MANAGER_BACKEND_ARGUMENTS: "{'redis_url':'redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/2'}"
 
   build:
-    context: https://github.com/bcgov/mayan-openshift.git#4.7.3
+    context: https://github.com/bcgov/mayan-openshift.git#dev
     dockerfile: ./docker/Dockerfile
   networks:
     - psp
