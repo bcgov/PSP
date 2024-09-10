@@ -54,14 +54,24 @@ export const prettyFormatDateTime = (date?: string | Date | Moment | null) => {
  * Returns a date formatted for display in the current time zone of the user.
  * @param date UTC date/time string.
  * @param format (Optional) Date time string format to use. Default value: 'YYYY-MM-DD hh:mm a'
+ * @param convertToLocalTime (Optional) Whether to convert date to the user's local timezone. Defaults to true.
  * @returns A string representing the input date in the supplied date/time format
  */
 export const formatUTCDateTime = (
   date?: string | Date | Moment | null,
   format = 'YYYY-MM-DD hh:mm a',
+  convertToLocalTime = true,
 ) => {
   if (typeof date === 'string' && isValidIsoDateTime(date)) {
-    return moment.utc(date).local().format(format);
+    return convertToLocalTime
+      ? moment.utc(date).local().format(format)
+      : moment.utc(date).format(format);
   }
-  return exists(date) ? moment.utc(date).local().format(format) : '';
+  if (exists(date)) {
+    return convertToLocalTime
+      ? moment.utc(date).local().format(format)
+      : moment.utc(date).format(format);
+  } else {
+    return '';
+  }
 };
