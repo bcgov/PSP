@@ -144,7 +144,7 @@ describe('login', () => {
       'MOTI Property Information Management System (PIMS)',
     );
     expect(getAllByRole('heading')[1]).toHaveTextContent(
-      'PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure',
+      'PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.',
     );
   });
 

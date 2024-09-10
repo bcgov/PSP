@@ -184,8 +184,8 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
 
 .c0 .unauth {
   font-size: 2.4rem;
-  margin: 9.1rem auto;
-  background-color: rgba(250,250,250,0.9);
+  margin: 15rem auto;
+  background-color: rgba(255,255,255);
   padding-top: 1.5rem;
   padding-bottom: 2rem;
   max-width: 75rem;
@@ -199,21 +199,23 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
   justify-content: center;
 }
 
-.c0 .unauth .block {
-  padding: 2rem 0;
-  max-width: 65rem;
-  max-height: 47.5rem;
+.c0 .unauth .logo-title {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
-  border-radius: 0.4rem;
-  min-width: 90%;
 }
 
 .c0 .unauth h1 {
   padding-bottom: 1.8rem;
   font-family: 'BCSans',Fallback,sans-serif;
   font-weight: 700;
-  font-size: 2.4rem;
-  font-style: italic;
+  font-size: 2.6rem;
 }
 
 .c0 .unauth h6 {
@@ -229,9 +231,72 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
   margin-bottom: 0.2rem;
 }
 
+.c0 .unauth .message-container {
+  border: 1px solid rgba(205,211,216);
+  box-shadow: 10px 5px 5px rgba(205,211,216,0.2);
+  max-width: 65rem;
+  min-width: 90%;
+}
+
+.c0 .unauth .message-header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 4.8rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c0 .unauth .message-header .message-title {
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  margin-left: 0;
+}
+
+.c0 .unauth .message-body {
+  padding-top: 2.4rem;
+  padding-bottom: 2.4rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  text-align: left;
+}
+
+.c0 .unauth .message-body p {
+  font-size: 1.7rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.c0 .unauth .spacer {
+  padding: 0px;
+  margin: 0px;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+}
+
+.c0 .unauth .message-footer {
+  -webkit-align-items: right;
+  -webkit-box-align: right;
+  -ms-flex-align: right;
+  align-items: right;
+}
+
+.c0 .unauth .foot-note {
+  padding: 1rem;
+}
+
 .c0 .unauth .btn {
   margin-top: 3rem;
   margin-bottom: 3rem;
+  margin-left: 10rem;
 }
 
 .c0 .unauth .btn-link {
@@ -247,26 +312,6 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
 
 .c0 .unauth .bceid {
   margin-bottom: -3rem;
-}
-
-.c0 .unauth .jumbotron {
-  background-color: white;
-  padding: 2rem;
-  margin-left: 4rem;
-  margin-right: 4rem;
-  width: 90%;
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-  -ms-flex-pack: left;
-  justify-content: left;
-  border: 0.1rem;
-  border-style: solid;
-  border-color: #707070;
-  text-align: left;
-}
-
-.c0 .unauth .jumbotron p {
-  margin: 1rem;
 }
 
 .c0 .unauth .blockText {
@@ -300,34 +345,105 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
   <div
     class="unauth container-fluid"
   >
-    <img
-      alt="PIMS logo"
-      class="pims-logo"
-      src=""
-    />
+    <div
+      class="row"
+    >
+      <div
+        class="col-1"
+      />
+      <div
+        class="col-md-3 col-1"
+      >
+        <img
+          alt="PIMS logo"
+          class="pims-logo"
+          src=""
+        />
+      </div>
+      <div
+        class="logo-title col-md-6 col-16"
+      >
+        <h1 />
+      </div>
+    </div>
     <div
       class="sign-in row"
+    >
+      <div
+        class="message-container"
+      >
+        <div
+          class="message-header"
+        >
+          <div
+            class="header-icon"
+          >
+            <svg
+              fill="currentColor"
+              height="27"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="27"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 1.74.5 3.37 1.41 4.84.95 1.54 2.2 2.86 3.16 4.4.47.75.81 1.45 1.17 2.26.26.55.47 1.5 1.26 1.5s1-.95 1.25-1.5c.37-.81.7-1.51 1.17-2.26.96-1.53 2.21-2.85 3.16-4.4C18.5 12.37 19 10.74 19 9c0-3.87-3.13-7-7-7zm0 9.75a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"
+              />
+            </svg>
+          </div>
+          <p
+            class="message-title"
+          >
+            Welcome!
+          </p>
+        </div>
+        <div
+          class="message-body"
+        >
+          <p />
+          <hr
+            class="spacer"
+          />
+          <p />
+        </div>
+        <div
+          class="message-footer row"
+        >
+          <div
+            class="col-md-6 col-16"
+          />
+          <div
+            class="col-md-6 col-16"
+          >
+            <button
+              class="c2 Button Button--disabled btn btn-primary"
+              disabled=""
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                Sign In
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
     >
       <div
         class="col-md-3 col-1"
       />
       <div
-        class="block col-md-6 col-16"
+        class="foot-note col-md-6 col-16"
       >
-        <h1 />
-        <h6 />
-        <p />
-        <button
-          class="c2 Button Button--disabled btn btn-primary"
-          disabled=""
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            Sign In
-          </div>
-        </button>
         <p>
           Sign into PIMS with your government issued IDIR
         </p>
@@ -525,8 +641,8 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
 
 .c0 .unauth {
   font-size: 2.4rem;
-  margin: 9.1rem auto;
-  background-color: rgba(250,250,250,0.9);
+  margin: 15rem auto;
+  background-color: rgba(255,255,255);
   padding-top: 1.5rem;
   padding-bottom: 2rem;
   max-width: 75rem;
@@ -540,21 +656,23 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
   justify-content: center;
 }
 
-.c0 .unauth .block {
-  padding: 2rem 0;
-  max-width: 65rem;
-  max-height: 47.5rem;
+.c0 .unauth .logo-title {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
   text-align: center;
-  border-radius: 0.4rem;
-  min-width: 90%;
 }
 
 .c0 .unauth h1 {
   padding-bottom: 1.8rem;
   font-family: 'BCSans',Fallback,sans-serif;
   font-weight: 700;
-  font-size: 2.4rem;
-  font-style: italic;
+  font-size: 2.6rem;
 }
 
 .c0 .unauth h6 {
@@ -570,9 +688,72 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
   margin-bottom: 0.2rem;
 }
 
+.c0 .unauth .message-container {
+  border: 1px solid rgba(205,211,216);
+  box-shadow: 10px 5px 5px rgba(205,211,216,0.2);
+  max-width: 65rem;
+  min-width: 90%;
+}
+
+.c0 .unauth .message-header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  height: 4.8rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+}
+
+.c0 .unauth .message-header .message-title {
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  margin-left: 0;
+}
+
+.c0 .unauth .message-body {
+  padding-top: 2.4rem;
+  padding-bottom: 2.4rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  text-align: left;
+}
+
+.c0 .unauth .message-body p {
+  font-size: 1.7rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.c0 .unauth .spacer {
+  padding: 0px;
+  margin: 0px;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+}
+
+.c0 .unauth .message-footer {
+  -webkit-align-items: right;
+  -webkit-box-align: right;
+  -ms-flex-align: right;
+  align-items: right;
+}
+
+.c0 .unauth .foot-note {
+  padding: 1rem;
+}
+
 .c0 .unauth .btn {
   margin-top: 3rem;
   margin-bottom: 3rem;
+  margin-left: 10rem;
 }
 
 .c0 .unauth .btn-link {
@@ -588,26 +769,6 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
 
 .c0 .unauth .bceid {
   margin-bottom: -3rem;
-}
-
-.c0 .unauth .jumbotron {
-  background-color: white;
-  padding: 2rem;
-  margin-left: 4rem;
-  margin-right: 4rem;
-  width: 90%;
-  -webkit-box-pack: left;
-  -webkit-justify-content: left;
-  -ms-flex-pack: left;
-  justify-content: left;
-  border: 0.1rem;
-  border-style: solid;
-  border-color: #707070;
-  text-align: left;
-}
-
-.c0 .unauth .jumbotron p {
-  margin: 1rem;
 }
 
 .c0 .unauth .blockText {
@@ -641,40 +802,111 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
   <div
     class="unauth container-fluid"
   >
-    <img
-      alt="PIMS logo"
-      class="pims-logo"
-      src="/tenants/MOTI/PIMS-logo-with-text.png"
-    />
+    <div
+      class="row"
+    >
+      <div
+        class="col-1"
+      />
+      <div
+        class="col-md-3 col-1"
+      >
+        <img
+          alt="PIMS logo"
+          class="pims-logo"
+          src="/tenants/MOTI/PIMS-logo.png"
+        />
+      </div>
+      <div
+        class="logo-title col-md-6 col-16"
+      >
+        <h1>
+          MOTI Property Information Management System (PIMS)
+        </h1>
+      </div>
+    </div>
     <div
       class="sign-in row"
+    >
+      <div
+        class="message-container"
+      >
+        <div
+          class="message-header"
+        >
+          <div
+            class="header-icon"
+          >
+            <svg
+              fill="currentColor"
+              height="27"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="27"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M12 2C8.13 2 5 5.13 5 9c0 1.74.5 3.37 1.41 4.84.95 1.54 2.2 2.86 3.16 4.4.47.75.81 1.45 1.17 2.26.26.55.47 1.5 1.26 1.5s1-.95 1.25-1.5c.37-.81.7-1.51 1.17-2.26.96-1.53 2.21-2.85 3.16-4.4C18.5 12.37 19 10.74 19 9c0-3.87-3.13-7-7-7zm0 9.75a2.5 2.5 0 0 1 0-5 2.5 2.5 0 0 1 0 5z"
+              />
+            </svg>
+          </div>
+          <p
+            class="message-title"
+          >
+            Welcome!
+          </p>
+        </div>
+        <div
+          class="message-body"
+        >
+          <p>
+            PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.
+          </p>
+          <hr
+            class="spacer"
+          />
+          <p>
+            By signing in you acknowledge that not all data included within has been vetted for completeness and accuracy. Please exercise caution by verifying information prior to relying on it.
+          </p>
+        </div>
+        <div
+          class="message-footer row"
+        >
+          <div
+            class="col-md-6 col-16"
+          />
+          <div
+            class="col-md-6 col-16"
+          >
+            <button
+              class="c2 Button Button--disabled btn btn-primary"
+              disabled=""
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                Sign In
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="row"
     >
       <div
         class="col-md-3 col-1"
       />
       <div
-        class="block col-md-6 col-16"
+        class="foot-note col-md-6 col-16"
       >
-        <h1>
-          MOTI Property Information Management System (PIMS)
-        </h1>
-        <h6>
-          PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure
-        </h6>
-        <p>
-          WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.
-        </p>
-        <button
-          class="c2 Button Button--disabled btn btn-primary"
-          disabled=""
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            Sign In
-          </div>
-        </button>
         <p>
           Sign into PIMS with your government issued IDIR
         </p>
