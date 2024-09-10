@@ -26,5 +26,3 @@ spec:
       uri: "https://github.com/bcgov/mayan-openshift"
       ref: dev
   runPolicy: Serial
-status:
-  lastVersion: 61
