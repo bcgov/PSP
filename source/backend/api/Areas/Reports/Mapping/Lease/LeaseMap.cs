@@ -25,7 +25,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
             var historicalString = src.property?.Property?.GetHistoricalNumbersAsString();
             var currentRenewal = src.lease.PimsLeaseRenewals.FirstOrDefault(renewal => renewal != null && renewal.IsExercised == true && DateTime.Now > renewal.CommencementDt && DateTime.Now <= renewal.ExpiryDt);
 
-            var additionalRenewalsCount = src.lease.PimsLeaseRenewals.FirstOrDefault(r => r.LeaseRenewalId == currentRenewal.LeaseRenewalId) == null ? src.lease.PimsLeaseRenewals.Count : src.lease.PimsLeaseRenewals.Count - 1;
+            var additionalRenewalsCount = src.lease.PimsLeaseRenewals.FirstOrDefault(r => r.LeaseRenewalId == currentRenewal?.LeaseRenewalId) == null ? src.lease.PimsLeaseRenewals.Count : src.lease.PimsLeaseRenewals.Count - 1;
 
             dest.LFileNo = src.lease.LFileNo;
             dest.HistoricalFileNo = historicalString;
