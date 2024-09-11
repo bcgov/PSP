@@ -223,11 +223,9 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
 }
 
 .c0 .unauth p {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-family: 'BCSans',Fallback,sans-serif;
   line-height: 130%;
-  margin-left: 3rem;
-  margin-right: 3rem;
   margin-bottom: 0.2rem;
 }
 
@@ -271,6 +269,8 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
 
 .c0 .unauth .message-body p {
   font-size: 1.7rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -290,7 +290,7 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
 }
 
 .c0 .unauth .foot-note {
-  padding: 1rem;
+  padding-top: 3rem;
 }
 
 .c0 .unauth .btn {
@@ -680,11 +680,9 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
 }
 
 .c0 .unauth p {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   font-family: 'BCSans',Fallback,sans-serif;
   line-height: 130%;
-  margin-left: 3rem;
-  margin-right: 3rem;
   margin-bottom: 0.2rem;
 }
 
@@ -728,6 +726,8 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
 
 .c0 .unauth .message-body p {
   font-size: 1.7rem;
+  margin-left: 3rem;
+  margin-right: 3rem;
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
@@ -747,7 +747,7 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
 }
 
 .c0 .unauth .foot-note {
-  padding: 1rem;
+  padding-top: 3rem;
 }
 
 .c0 .unauth .btn {
