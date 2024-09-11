@@ -82,7 +82,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const mapMachineProcessFitBounds = mapMachine.processFitBounds;
   const mapMachineRequestedFitBounds = mapMachine.requestedFitBounds;
   useEffect(() => {
-    if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
+    if (
+      isMapReady &&
+      mapMachinePendingRefresh &&
+      mapRef.current !== null &&
+      mapMachineRequestedFitBounds
+    ) {
       mapRef.current.fitBounds(mapMachineRequestedFitBounds, {
         maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM,
       });
