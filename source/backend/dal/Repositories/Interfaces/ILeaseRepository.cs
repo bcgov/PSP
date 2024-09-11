@@ -17,6 +17,8 @@ namespace Pims.Dal.Repositories
 
         PimsLease Get(long id);
 
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds);
+
         PimsLease GetNoTracking(long id);
 
         LastUpdatedByModel GetLastUpdateBy(long leaseId);

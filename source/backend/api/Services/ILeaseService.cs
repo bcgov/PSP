@@ -9,6 +9,8 @@ namespace Pims.Api.Services
     {
         PimsLease GetById(long leaseId);
 
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds);
+
         LastUpdatedByModel GetLastUpdateInformation(long leaseId);
 
         Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false);
