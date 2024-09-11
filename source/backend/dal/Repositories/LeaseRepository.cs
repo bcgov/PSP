@@ -115,6 +115,38 @@ namespace Pims.Dal.Repositories
             return lease;
         }
 
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            IEnumerable<PimsLease> leases = this.Context.PimsLeases.AsSplitQuery().AsNoTracking()
+                .Include(l => l.PimsPropertyLeases)
+                .Include(l => l.RegionCodeNavigation)
+                .Include(l => l.LeaseProgramTypeCodeNavigation)
+                .Include(l => l.LeasePayRvblTypeCodeNavigation)
+                .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
+                .Include(l => l.LeaseInitiatorTypeCodeNavigation)
+                .Include(l => l.PimsLeaseLeasePurposes)
+                    .ThenInclude(p => p.LeasePurposeTypeCodeNavigation)
+                .Include(l => l.LeaseStatusTypeCodeNavigation)
+                .Include(l => l.PimsLeaseStakeholders)
+                .Include(t => t.PimsPropertyImprovements)
+                .Include(l => l.PimsInsurances)
+                .Include(l => l.PimsSecurityDeposits)
+                .Include(l => l.PimsLeasePeriods)
+                    .ThenInclude(l => l.PimsLeasePayments)
+                .Include(l => l.Project)
+                    .ThenInclude(x => x.WorkActivityCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.CostTypeCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Product)
+                .Where(l => leaseIds.Any(leaseId => leaseId == l.LeaseId)) ?? throw new KeyNotFoundException();
+            return leases;
+        }
+
         /// <summary>
         /// Retrieves the lease with the specified id last update information.
         /// </summary>

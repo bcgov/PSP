@@ -11,6 +11,7 @@ export const LoginStyled = styled(Container)`
     props.theme.tenant.login.backgroundImage
       ? `url("${props.theme.tenant.login.backgroundImage}")`
       : ''};
+
   background-size: cover;
   background-position: center;
   overflow: auto;
@@ -30,74 +31,116 @@ export const LoginStyled = styled(Container)`
 
   .unauth {
     font-size: 2.4rem;
-    margin: 9.1rem auto;
-    background-color: rgba(250, 250, 250, 0.9); //allows for slight transparency
+    margin: 15rem auto;
+    background-color: rgba(255, 255, 255);
     padding-top: 1.5rem;
     padding-bottom: 2rem;
     max-width: 75rem;
     border-radius: 0.4rem;
+
     .sign-in {
       justify-content: center;
     }
-    .block {
-      background-color: ${props => props.theme.css.highlightBackgroundColor};
-      padding: 2rem 0;
-      max-width: 65rem;
-      max-height: 47.5rem;
+
+    .logo-title {
+      display: flex;
+      align-items: center;
       text-align: center;
-      border-radius: 0.4rem;
-      min-width: 90%;
     }
+
     h1 {
       padding-bottom: 1.8rem;
       font-family: 'BCSans', Fallback, sans-serif;
       font-weight: 700;
-      font-size: 2.4rem;
-      font-style: italic;
+      font-size: 2.6rem;
       color: ${props => props.theme.css.headerTextColor};
     }
+
     h6 {
       margin-bottom: 2rem;
     }
+
     p {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: ${props => props.theme.bcTokens.typographyColorSecondary};
       font-family: 'BCSans', Fallback, sans-serif;
       line-height: 130%;
-      margin-left: 3rem;
-      margin-right: 3rem;
       margin-bottom: 0.2rem;
     }
+
+    .message-container {
+      border: 1px solid rgba(205, 211, 216);
+      box-shadow: 10px 5px 5px rgba(205, 211, 216, 0.2);
+      max-width: 65rem;
+      min-width: 90%;
+    }
+
+    .message-header {
+      display: flex;
+      height: 4.8rem;
+      padding-left: 1.6rem;
+      padding-right: 1.6rem;
+      justify-content: flex-start;
+      color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
+      background-color: ${props => props.theme.css.filterBoxColor};
+
+      .message-title {
+        font-family: BcSans-Bold;
+        font-size: 2.2rem;
+        align-self: center;
+        margin-left: 0;
+      }
+    }
+
+    .message-body {
+      padding-top: 2.4rem;
+      padding-bottom: 2.4rem;
+      padding-left: 1.6rem;
+      padding-right: 1.6rem;
+      text-align: left;
+
+      p {
+        font-size: 1.7rem;
+        margin-left: 3rem;
+        margin-right: 3rem;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+      }
+    }
+
+    .spacer {
+      padding: 0px;
+      margin: 0px;
+      margin-left: 1.6rem;
+      margin-right: 1.6rem;
+    }
+
+    .message-footer {
+      align-items: right;
+    }
+
+    .foot-note {
+      padding-top: 3rem;
+    }
+
     .btn {
       margin-top: 3rem;
       margin-bottom: 3rem;
+      margin-left: 10rem;
     }
+
     .btn-link {
       margin-left: 3rem;
       margin-top: 1rem;
       font-size: 1.2rem;
     }
+
     .btn-link:focus,
     .btn-link:active {
       background: none !important;
     }
     .bceid {
       margin-bottom: -3rem;
-    }
-    .jumbotron {
-      background-color: white;
-      padding: 2rem;
-      margin-left: 4rem;
-      margin-right: 4rem;
-      width: 90%;
-      justify-content: left;
-      border: 0.1rem;
-      border-style: solid;
-      border-color: #707070;
-      text-align: left;
-      p {
-        margin: 1rem;
-      }
     }
     .blockText {
       margin: 0 auto 3.8rem auto;

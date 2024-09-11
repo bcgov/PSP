@@ -270,7 +270,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsProperty GetAllAssociationsById(long id)
         {
-            PimsProperty property = this.Context.PimsProperties.AsNoTracking()
+            PimsProperty property = this.Context.PimsProperties.AsNoTracking().AsSplitQuery()
                 .Include(p => p.PimsPropertyLeases)
                     .ThenInclude(pl => pl.Lease)
                     .ThenInclude(l => l.LeaseStatusTypeCodeNavigation)

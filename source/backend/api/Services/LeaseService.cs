@@ -85,6 +85,19 @@ namespace Pims.Api.Services
             return lease;
         }
 
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds)
+        {
+            _logger.LogInformation("Getting all leases with ids {leaseIds}", leaseIds);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            var leases = _leaseRepository.GetAllByIds(leaseIds).ToList();
+            leaseIds.ForEach(leaseId =>
+            {
+                pimsUser.ThrowInvalidAccessToLeaseFile(leases.FirstOrDefault(lease => lease.LeaseId == leaseId).RegionCode);
+            });
+            return leases;
+        }
+
         public LastUpdatedByModel GetLastUpdateInformation(long leaseId)
         {
             _logger.LogInformation("Retrieving last updated-by information...");
