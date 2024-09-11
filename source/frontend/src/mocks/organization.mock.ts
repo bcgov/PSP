@@ -58,6 +58,7 @@ export const getMockOrganization = ({
   ],
   rowVersion: 1,
 });
+
 export const getEmptyOrganization = (): ApiGen_Concepts_Organization => {
   return {
     id: 0,

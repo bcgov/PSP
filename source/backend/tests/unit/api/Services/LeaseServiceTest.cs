@@ -9,6 +9,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
+using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
@@ -297,6 +298,61 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<NotAuthorizedException>();
             leaseRepository.Verify(x => x.Update(It.IsAny<PimsLease>(), It.IsAny<bool>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_NewTotalAllowableCompensation_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+
+            var currentLeaseEntity = EntityHelper.CreateLease(1, addProperty: false);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var compReqFinancialRepository = this._helper.GetService<Mock<ICompReqFinancialService>>();
+
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
+
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            compReqFinancialRepository.Setup(c => c.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 50 } });
+
+            // Act
+            currentLeaseEntity.TotalAllowableCompensation = 100;
+            var result = service.Update(currentLeaseEntity, new List<UserOverrideCode>());
+
+            // Assert
+            result.Should().NotBeNull();
+            result.TotalAllowableCompensation.Equals(100);
+        }
+
+        [Fact]
+        public void Update_NewTotalAllowableCompensation_Failure_LessThenCurrentFinancials()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+
+            var currentLeaseEntity = EntityHelper.CreateLease(1, addProperty: false);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var compReqFinancialRepository = this._helper.GetService<Mock<ICompReqFinancialService>>();
+
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
+
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            compReqFinancialRepository.Setup(c => c.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } });
+
+            // Act
+            currentLeaseEntity.TotalAllowableCompensation = 99;
+            Action act = () => service.Update(currentLeaseEntity, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>();
         }
 
         [Fact]

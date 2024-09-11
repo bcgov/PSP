@@ -27,7 +27,6 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -63,6 +62,13 @@ const mockPutAcquisitionApi = {
   loading: false,
 };
 
+const mockPutLeaseApi = {
+  error: undefined,
+  response: { ...getMockApiLease(), totalAllowableCompensation: 1000 },
+  execute: vi.fn(),
+  loading: false,
+};
+
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
   useCompensationRequisitionRepository: () => {
     return {
@@ -77,6 +83,14 @@ vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       updateAcquisitionFile: mockPutAcquisitionApi,
+    };
+  },
+}));
+
+vi.mock('@/hooks/repositories/useLeaseRepository', () => ({
+  useLeaseRepository: () => {
+    return {
+      updateLease: mockPutLeaseApi,
     };
   },
 }));
@@ -323,7 +337,7 @@ describe('compensation list view container', () => {
     );
   });
 
-  it('returns an updated total allowable compensation if the update operation was successful', async () => {
+  it('returns an updated total allowable compensation for ACQUISITION if the update operation was successful', async () => {
     await setup({});
     await act(async () => {
       viewProps?.onUpdateTotalCompensation(1000);
@@ -332,6 +346,26 @@ describe('compensation list view container', () => {
     expect(mockPutAcquisitionApi.execute).toHaveBeenCalledWith(
       expect.objectContaining({
         ...mockAcquisitionFileResponse(),
+        totalAllowableCompensation: 1000,
+      }),
+      [],
+    );
+  });
+
+  it('returns an updated total allowable compensation for LEASE if the update operation was successful', async () => {
+    const leaseFileMock: ApiGen_Concepts_Lease = { ...getMockApiLease(), fileProperties: [] };
+
+    await setup({
+      fileType: ApiGen_CodeTypes_FileTypes.Lease,
+      file: leaseFileMock,
+    });
+
+    await act(async () => {
+      viewProps?.onUpdateTotalCompensation(1000);
+    });
+
+    expect(mockPutLeaseApi.execute).toHaveBeenCalledWith(
+      expect.objectContaining({
         totalAllowableCompensation: 1000,
       }),
       [],

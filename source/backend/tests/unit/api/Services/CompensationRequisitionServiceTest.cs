@@ -449,7 +449,6 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<BusinessRuleViolationException>();
         }
 
-        
         [Fact]
         public void Update_Status_BackToNull_NoPermission()
         {
@@ -816,6 +815,88 @@ namespace Pims.Api.Test.Services
                 IsDraft = false,
                 PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } },
             });
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void Update_Lease_Fail_ValidMultipleTotalAllowableCompensation()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqFinancialsService = this._helper.GetService<Mock<ICompReqFinancialService>>();
+
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+
+            compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, LeaseId = 1, IsDraft = true }); ;
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, LeaseId = 1, IsDraft = null });
+
+            compReqFinancialsService.Setup(x => x.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { CompensationRequisitionId = 1, TotalAmt = 1000 },
+                new PimsCompReqFinancial() { CompensationRequisitionId = 2, TotalAmt = 100 }, });
+
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsLease()
+            {
+                TotalAllowableCompensation = 299,
+                PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { CompensationRequisitionId = 1,
+                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
+                LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString()
+            });
+
+            // Act
+            Action act = () => service.Update(FileTypes.Lease, new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                LeaseId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = false,
+                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } },
+            });
+
+            //Assert
+            act.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void Update_Lease_Fail_TotalAllowableExceeded()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionEdit);
+            var compReqFinancialsService = this._helper.GetService<Mock<ICompReqFinancialService>>();
+
+            var compRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+
+            compRepository.Setup(x => x.Update(It.IsAny<PimsCompensationRequisition>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, LeaseId = 1, IsDraft = true }); ;
+            compRepository.Setup(x => x.GetById(It.IsAny<long>()))
+                .Returns(new PimsCompensationRequisition { Internal_Id = 1, LeaseId = 1, IsDraft = null });
+
+            compReqFinancialsService.Setup(x => x.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
+                new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { CompensationRequisitionId = 1, TotalAmt = 1000 },
+                new PimsCompReqFinancial() { CompensationRequisitionId = 2, TotalAmt = 100 }, });
+
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(new PimsLease()
+            {
+                TotalAllowableCompensation = 99,
+                PimsCompensationRequisitions = new List<PimsCompensationRequisition>() { new PimsCompensationRequisition() { CompensationRequisitionId = 1,
+                    PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
+                LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString()
+            });
+
+            // Act
+            Action act = () => service.Update(FileTypes.Lease, new PimsCompensationRequisition()
+            {
+                Internal_Id = 1,
+                LeaseId = 1,
+                ConcurrencyControlNumber = 2,
+                IsDraft = false,
+                PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } },
+            });
+
+            //Assert
             act.Should().Throw<BusinessRuleViolationException>();
         }
 

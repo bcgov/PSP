@@ -57,6 +57,9 @@ public partial class PimsLeaseHist
     [Column("PROJECT_ID")]
     public long? ProjectId { get; set; }
 
+    [Column("PRODUCT_ID")]
+    public long? ProductId { get; set; }
+
     [Column("L_FILE_NO")]
     [StringLength(50)]
     public string LFileNo { get; set; }

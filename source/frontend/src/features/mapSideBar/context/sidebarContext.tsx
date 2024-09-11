@@ -130,6 +130,7 @@ export const SideBarContextProvider = (props: {
     }
   }, [fileProperties, setFilePropertyLocations]);
 
+  // Automatically render "draft" property markers when opening a PIMS file.
   useEffect(() => {
     resetFilePropertyLocations();
   }, [resetFilePropertyLocations]);

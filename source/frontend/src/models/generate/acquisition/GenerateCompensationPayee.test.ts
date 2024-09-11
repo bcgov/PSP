@@ -13,6 +13,9 @@ import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Co
 import { formatMoney } from '@/utils';
 
 import { Api_GenerateCompensationPayee } from './GenerateCompensationPayee';
+import { getOrganizationLeaseStakeholder, getPersonLeaseStakeholder } from '@/mocks/lease.mock';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
+import { ApiGen_Concepts_CompReqLeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseStakeholder';
 
 describe('GenerateCompensationPayee tests', () => {
   it('can generate an empty payee without throwing an error', () => {
@@ -89,6 +92,28 @@ describe('GenerateCompensationPayee tests', () => {
       const compensation: ApiGen_Concepts_CompensationRequisition = {
         ...getMockApiDefaultCompensation(),
         acquisitionFileTeam: teamMember,
+      };
+      const payee = new Api_GenerateCompensationPayee(compensation, []);
+      expect(payee.name).toBe(expectedName);
+    },
+  );
+
+  it.each([
+    ['JOHN DOE', getPersonLeaseStakeholder()],
+    ['Test Organization', getOrganizationLeaseStakeholder()],
+  ])(
+    'can generate with Lease Stakeholder: %s',
+    (expectedName: string, teamMember: ApiGen_Concepts_LeaseStakeholder) => {
+      const compensation: ApiGen_Concepts_CompensationRequisition = {
+        ...getMockApiDefaultCompensation(),
+        compReqLeaseStakeholder: [
+          {
+            compReqLeaseStakeholderId: 1000,
+            compensationRequisitionId: 1,
+            leaseStakeholderId: 100,
+            leaseStakeholder: teamMember,
+          } as ApiGen_Concepts_CompReqLeaseStakeholder,
+        ],
       };
       const payee = new Api_GenerateCompensationPayee(compensation, []);
       expect(payee.name).toBe(expectedName);

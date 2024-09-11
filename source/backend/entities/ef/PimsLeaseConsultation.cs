@@ -9,7 +9,6 @@ namespace Pims.Dal.Entities;
 [Table("PIMS_LEASE_CONSULTATION")]
 [Index("ConsultationStatusTypeCode", Name = "LESCON_CONSULTATION_STATUS_TYPE_CODE_IDX")]
 [Index("ConsultationTypeCode", Name = "LESCON_CONSULTATION_TYPE_CODE_IDX")]
-[Index("ConsultationTypeCode", "LeaseId", Name = "LESCON_LEASE_CONSULTATION_TUC", IsUnique = true)]
 [Index("LeaseId", Name = "LESCON_LEASE_ID_IDX")]
 [Index("OrganizationId", Name = "LESCON_ORGANIZATION_ID_IDX")]
 [Index("PersonId", Name = "LESCON_PERSON_ID_IDX")]

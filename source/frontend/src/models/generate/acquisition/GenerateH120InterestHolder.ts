@@ -4,9 +4,9 @@ import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/A
 import { formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateH120InterestHolder {
-  interestHolderName: string;
-  interestHolderType: string;
-  interestHolderString: string;
+  readonly interestHolderName: string;
+  readonly interestHolderType: string;
+  readonly interestHolderString: string;
 
   constructor(
     interestHolder: ApiGen_Concepts_InterestHolder | null,
