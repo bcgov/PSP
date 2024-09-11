@@ -28,11 +28,12 @@ namespace PIMS.Tests.Automation.Drivers
 
         private IWebDriver CreateChromeWebDriver()
         {
-            var options = new ChromeOptions();
+            ChromeOptions options = new ChromeOptions();
+
             if (runAutomationHeadless)
-                options.AddArguments("window-size=1920,1080", "headless", "no-sandbox");
+                options.AddArguments("window-size=1920,1080", "headless", "no-sandbox", "disable-popup-blocking");
             else
-                options.AddArguments("start-maximized");
+                options.AddArguments("start-maximized", "no-sandbox", "disable-popup-blocking");
             
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options);
             chromeDriver.Url = Configuration.GetValue<string>("Base_url");
@@ -44,7 +45,7 @@ namespace PIMS.Tests.Automation.Drivers
         {
             var options = new EdgeOptions();
             if (runAutomationHeadless)
-                options.AddArguments("window-size=1920,1080", "headless");
+                options.AddArguments("window-size=1920,1080", "headless", "disable notifications");
             else
                 options.AddArguments("start-maximized");
            
