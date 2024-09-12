@@ -20,8 +20,9 @@ import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Conce
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
+import CrownDetailsTabView from './tabs/crown/CrownDetailsTabView';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
@@ -68,9 +69,9 @@ export const getLeaseInfo = async (
 /**
  * container responsible for logic related to map sidebar display. Synchronizes the state of the parcel detail forms with the corresponding query parameters (push/pull).
  */
-export const PropertyContainer: React.FunctionComponent<
-  React.PropsWithChildren<IPropertyContainerProps>
-> = ({ composedPropertyState }) => {
+export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps> = ({
+  composedPropertyState,
+}) => {
   const showPropertyInfoTab = isValidId(composedPropertyState?.id);
   const { hasClaim } = useKeycloakWrapper();
   const { getLease } = useLeaseRepository();
@@ -120,6 +121,18 @@ export const PropertyContainer: React.FunctionComponent<
     key: InventoryTabNames.title,
     name: 'Title',
   });
+
+  if (exists(composedPropertyState.composedProperty?.crownTenureFeature)) {
+    tabViews.push({
+      content: (
+        <CrownDetailsTabView
+          crownFeature={composedPropertyState.composedProperty?.crownTenureFeature}
+        />
+      ),
+      key: InventoryTabNames.crown,
+      name: 'Crown',
+    });
+  }
 
   tabViews.push({
     content: (

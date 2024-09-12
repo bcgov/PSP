@@ -4,6 +4,7 @@ import { ColumnWithProps, Table, TableProps } from '.';
 import { IIdentifiedObject } from './Table';
 
 const setSort = vi.fn();
+const isActiveRow = vi.fn(() => false);
 
 interface test extends IIdentifiedObject {
   name: string;
@@ -46,6 +47,7 @@ const setup = <T extends IIdentifiedObject>(
       name={tableProps?.name ?? 'default'}
       columns={tableProps?.columns ?? (testColumns as any)}
       data={(tableProps?.data ?? testData) as any}
+      isRowActive={isActiveRow}
     />,
     {
       ...rest,
@@ -270,5 +272,12 @@ describe('Generic table component', () => {
     expect(selectRowOneButton).toHaveAttribute('type', 'checkbox');
     expect(selectRowOneButton).toBeChecked();
     expect(selectRowTwoButton).toBeChecked();
+  });
+
+  it('set active class for row when isActiveRow function evals to true', async () => {
+    isActiveRow.mockImplementationOnce(() => true);
+    const { container } = setup({ props: { pageSize: 5 } });
+
+    expect(container.querySelectorAll('div.tr-wrapper div.tr.active')).toHaveLength(1);
   });
 });

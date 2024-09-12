@@ -149,6 +149,7 @@ export interface TableProps<T extends object = object, TFilter extends object = 
   filterable?: boolean;
   filter?: TFilter;
   onFilterChange?: (values: any) => void;
+  isRowActive?: (objectId: number) => boolean;
   /** have page selection menu drop-up to avoid container growing in some scenarios */
   pageSizeMenuDropUp?: boolean;
   /**
@@ -658,9 +659,14 @@ export const Table = <T extends IIdentifiedObject, TFilter extends object = obje
     };
 
     const renderRow = (row: Row<T>, index: number) => {
+      const isActiveRow = props.isRowActive && props.isRowActive(+row.original.id);
+
       return (
         <div key={index} className="tr-wrapper">
-          <div {...row.getRowProps()} className={cx('tr', row.isSelected ? 'selected' : '')}>
+          <div
+            {...row.getRowProps()}
+            className={cx('tr', row.isSelected ? 'selected' : '', isActiveRow ? 'active' : '')}
+          >
             {/* If canRowExpand prop is passed only allow expansions on those rows */}
             {props.canRowExpand &&
               props.canRowExpand(row) &&

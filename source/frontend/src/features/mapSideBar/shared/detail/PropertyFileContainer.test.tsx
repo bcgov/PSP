@@ -8,6 +8,7 @@ import {
   IInventoryTabsProps,
   InventoryTabNames,
 } from '@/features/mapSideBar/property/InventoryTabs';
+import { getMockCrownTenuresLayerResponse } from '@/mocks/crownTenuresLayerResponse.mock';
 import { mockLtsaResponse, mockWfsGetPropertyById } from '@/mocks/index.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
@@ -18,20 +19,6 @@ import { act, render, RenderOptions } from '@/utils/test-utils';
 import PropertyFileContainer, { IPropertyFileContainerProps } from './PropertyFileContainer';
 
 const mockAxios = new MockAdapter(axios);
-
-// mock auth library
-
-// Need to mock this library for unit tests
-vi.mock('react-visibility-sensor', () => {
-  return {
-    default: vi.fn().mockImplementation(({ children }) => {
-      if (children instanceof Function) {
-        return children({ isVisible: true });
-      }
-      return children;
-    }),
-  };
-});
 
 let viewProps: IInventoryTabsProps | undefined;
 
@@ -80,7 +67,11 @@ describe('PropertyFileContainer component', () => {
       .reply(200, (getMockResearchFile().fileProperties ?? [])[0].property);
     mockAxios.onGet(new RegExp('ogs-internal/ows.*')).reply(200, mockWfsGetPropertyById);
     mockAxios
-      .onGet(new RegExp('https://openmaps.gov.bc.ca.*'))
+      .onGet(
+        new RegExp(
+          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW/ows*',
+        ),
+      )
       .reply(200, { features: [{ properties: { PROPERTY_ID: 200 } }] });
     mockAxios
       .onGet(new RegExp('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca*'))
@@ -94,10 +85,16 @@ describe('PropertyFileContainer component', () => {
       acquisitionAssociations: [],
       dispositionAssociations: [],
     });
+    // Crown land layer
+    mockAxios
+      .onGet(
+        new RegExp('https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_TENURES_SVW/wfs*'),
+      )
+      .reply(200, { features: [] });
   });
 
   afterEach(() => {
-    mockAxios.resetHistory();
+    mockAxios.reset();
     vi.clearAllMocks();
   });
 
@@ -146,6 +143,22 @@ describe('PropertyFileContainer component', () => {
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
     expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.research);
+    expect(viewProps?.tabViews[3].key).toBe(InventoryTabNames.property);
+    expect(viewProps?.tabViews[4].key).toBe(InventoryTabNames.pims);
+  });
+
+  it('shows the crown tab if the property has a TANTALIS record', async () => {
+    mockAxios
+      .onGet(
+        new RegExp('https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_TENURES_SVW/wfs*'),
+      )
+      .reply(200, getMockCrownTenuresLayerResponse());
+    await setup();
+
+    expect(viewProps?.tabViews).toHaveLength(5);
+    expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
+    expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.crown);
+    expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.value);
     expect(viewProps?.tabViews[3].key).toBe(InventoryTabNames.property);
     expect(viewProps?.tabViews[4].key).toBe(InventoryTabNames.pims);
   });
