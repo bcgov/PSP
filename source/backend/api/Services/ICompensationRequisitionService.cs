@@ -19,5 +19,7 @@ namespace Pims.Api.Services
         IEnumerable<PimsCompensationRequisition> GetFileCompensationRequisitions(FileTypes fileType, long fileId);
 
         PimsCompensationRequisition AddCompensationRequisition(FileTypes fileType, PimsCompensationRequisition compensationRequisition);
+
+        IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id);
     }
 }

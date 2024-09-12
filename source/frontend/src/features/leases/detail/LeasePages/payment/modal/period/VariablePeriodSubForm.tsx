@@ -36,6 +36,7 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
   const isGstEligible = getIn(formikProps.values, isGstEligibleField);
   const paymentAmount = getIn(formikProps.values, paymentAmountField) ?? 0;
   const setFieldValue = formikProps.setFieldValue;
+  const touched = getIn(formikProps.touched, paymentAmountField);
   const onGstChange = useCallback(
     (field: string, values: boolean) => {
       if (values === true) {
@@ -50,8 +51,10 @@ const VariablePeriodSubForm: React.FunctionComponent<IVariablePeriodSubFormProps
   );
 
   useEffect(() => {
-    onGstChange('', isGstEligible);
-  }, [isGstEligible, paymentAmount, onGstChange]);
+    if (touched) {
+      onGstChange('', isGstEligible);
+    }
+  }, [isGstEligible, paymentAmount, onGstChange, touched]);
 
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);

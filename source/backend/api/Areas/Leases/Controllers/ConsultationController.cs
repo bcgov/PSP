@@ -124,7 +124,7 @@ namespace Pims.Api.Areas.Lease.Controllers
 
             var consultation = _leaseService.GetConsultationById(consultationId);
 
-            if (consultation.LeaseConsultationId != leaseId)
+            if (consultation.LeaseId != leaseId)
             {
                 throw new BadRequestException("Invalid lease id for the given consultation.");
             }
@@ -136,13 +136,13 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// Update the lease file consultation by Id.
         /// </summary>
         /// <returns>The consultation item updated.</returns>
-        [HttpPut("{id:long}/consultations/{consultationId:long}")]
+        [HttpPut("{leaseId:long}/consultations/{consultationId:long}")]
         [HasPermission(Permissions.LeaseEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(ConsultationLeaseModel), 200)]
         [TypeFilter(typeof(NullJsonResultFilter))]
         [SwaggerOperation(Tags = new[] { "leasefile" })]
-        public IActionResult UpdateLeaseConsultation([FromRoute] long id, [FromRoute] long consultationId, [FromBody] ConsultationLeaseModel consultation)
+        public IActionResult UpdateLeaseConsultation([FromRoute] long leaseId, [FromRoute] long consultationId, [FromBody] ConsultationLeaseModel consultation)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -151,7 +151,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            if (id != consultation.LeaseId)
+            if (leaseId != consultation.LeaseId)
             {
                 throw new BadRequestException("Invalid LeaseId.");
             }
@@ -184,7 +184,7 @@ namespace Pims.Api.Areas.Lease.Controllers
                 DateTime.Now);
 
             var existingConsultation = _leaseService.GetConsultationById(consultationId);
-            if (existingConsultation.LeaseConsultationId != leaseId)
+            if (existingConsultation.LeaseId != leaseId)
             {
                 throw new BadRequestException("Invalid lease id for the given consultation.");
             }

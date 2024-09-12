@@ -238,4 +238,16 @@ describe('Compensation Detail View Component', () => {
     const advancedPaymntServedDate = queryByTestId('advanced-payment-served-date');
     expect(advancedPaymntServedDate).toHaveTextContent('Sep 18, 2023');
   });
+
+  it('Displays the Product information', async () => {
+    const mockCompensation = getMockApiDefaultCompensation();
+    const { queryByTestId } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_VIEW],
+      props: {
+        compensation: mockCompensation,
+      },
+    });
+
+    expect(queryByTestId('file-product')).toHaveTextContent('00048');
+  });
 });

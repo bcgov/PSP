@@ -146,6 +146,14 @@ namespace Pims.Api.Services
             return compReqs;
         }
 
+        public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id)
+        {
+            _logger.LogInformation("Getting compensations financials for id: {acquisitionFileId}", id);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            return _compensationRequisitionRepository.GetCompensationRequisitionFinancials(id);
+        }
+
         private static string GetCompensationRequisitionStatusText(bool? isDraft)
         {
             if (isDraft.HasValue)
@@ -266,7 +274,10 @@ namespace Pims.Api.Services
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
+            var currentLeaseFile = _leaseRepository.Get((long)currentCompensation.LeaseId);
+            CheckTotalAllowableCompensation(currentLeaseFile, compensationRequisition);
             compensationRequisition.FinalizedDate = GetFinalizedDate(currentCompensation.IsDraft, compensationRequisition.IsDraft, currentCompensation.FinalizedDate);
+
             PimsCompensationRequisition updatedEntity = _compensationRequisitionRepository.Update(compensationRequisition);
 
             AddLeaseNoteIfStatusChanged(compensationRequisition.Internal_Id, (long)compensationRequisition.LeaseId, currentCompensation.IsDraft, compensationRequisition.IsDraft);
@@ -339,6 +350,22 @@ namespace Pims.Api.Services
             IEnumerable<PimsCompReqFinancial> allUnchangedFinancialsForFile = allFinancialsForFile.Where(f => f.CompensationRequisitionId != newCompensation.Internal_Id);
             decimal newTotalCompensation = allUnchangedFinancialsForFile.Concat(newCompensation.PimsCompReqFinancials).Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
             if (newTotalCompensation > currentAcquisitionFile.TotalAllowableCompensation)
+            {
+                throw new BusinessRuleViolationException("Your compensation requisition cannot be saved in FINAL status, as its compensation amount exceeds total allowable compensation for this file.");
+            }
+        }
+
+        private void CheckTotalAllowableCompensation(PimsLease currentLeaseFile, PimsCompensationRequisition newCompensation)
+        {
+            if (!currentLeaseFile.TotalAllowableCompensation.HasValue || (newCompensation.IsDraft.HasValue && newCompensation.IsDraft.Value))
+            {
+                return;
+            }
+
+            IEnumerable<PimsCompReqFinancial> allFinancialsForFile = _compReqFinancialService.GetAllByLeaseFileId(currentLeaseFile.LeaseId, true);
+            IEnumerable<PimsCompReqFinancial> allUnchangedFinancialsForFile = allFinancialsForFile.Where(f => f.CompensationRequisitionId != newCompensation.CompensationRequisitionId);
+            decimal newTotalCompensation = allUnchangedFinancialsForFile.Concat(newCompensation.PimsCompReqFinancials).Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
+            if (newTotalCompensation > currentLeaseFile.TotalAllowableCompensation)
             {
                 throw new BusinessRuleViolationException("Your compensation requisition cannot be saved in FINAL status, as its compensation amount exceeds total allowable compensation for this file.");
             }

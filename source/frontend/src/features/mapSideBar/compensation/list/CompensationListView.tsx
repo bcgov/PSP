@@ -97,32 +97,28 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           />
         }
       >
-        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-          <>
-            <SectionField
-              label={
-                <>
-                  <FaHandHoldingUsd size={24} className="mr-4" />
-                  Total allowable compensation
-                </>
-              }
-              tooltip={`This is the maximum allowable for this file. Edit to set or change this value.`}
-              labelWidth="8"
-              className="summary-row"
-              valueClassName="text-right d-flex justify-content-end"
-            >
-              <ToggleSaveInputContainer
-                onSave={async (value: string) => {
-                  return (await onUpdateTotalCompensation(Number(value)))?.toString() ?? '';
-                }}
-                initialValue={file.totalAllowableCompensation?.toString() ?? ''}
-                asCurrency
-                View={ToggleSaveInputView}
-              />
-            </SectionField>
-            <hr />
-          </>
-        )}
+        <SectionField
+          label={
+            <>
+              <FaHandHoldingUsd size={24} className="mr-4" />
+              Total allowable compensation
+            </>
+          }
+          tooltip={`This is the maximum allowable for this file. Edit to set or change this value.`}
+          labelWidth="8"
+          className="summary-row"
+          valueClassName="text-right d-flex justify-content-end"
+        >
+          <ToggleSaveInputContainer
+            onSave={async (value: string) => {
+              return (await onUpdateTotalCompensation(Number(value)))?.toString() ?? '';
+            }}
+            initialValue={file.totalAllowableCompensation?.toString() ?? ''}
+            asCurrency
+            View={ToggleSaveInputView}
+          />
+        </SectionField>
+        <hr />
 
         <SectionField
           label={
@@ -139,6 +135,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           {formatMoney(fileCompensationTotal)}
         </SectionField>
         <hr />
+
         <SectionField
           label={
             <>

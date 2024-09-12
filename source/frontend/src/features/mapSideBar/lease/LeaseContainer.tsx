@@ -77,6 +77,8 @@ export enum LeasePageNames {
   DETAILS = 'details',
   TENANT = 'tenant',
   EDIT_TENANT = 'edit-tenant',
+  PAYEE = 'payee',
+  EDIT_PAYEE = 'edit-payee',
   PAYMENTS = 'payments',
   IMPROVEMENTS = 'improvements',
   INSURANCE = 'insurance',
@@ -106,6 +108,14 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
       pageName: LeasePageNames.TENANT,
       component: LeaseStakeholderContainer,
       title: 'Tenant',
+    },
+  ],
+  [
+    LeasePageNames.PAYEE,
+    {
+      pageName: LeasePageNames.PAYEE,
+      component: LeaseStakeholderContainer,
+      title: 'Payee',
     },
   ],
   [
@@ -164,7 +174,7 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
     {
       pageName: LeasePageNames.CONSULTATIONS,
       component: LeaseRouter,
-      title: 'Consultations',
+      title: 'Approval/Consultations',
       claims: Claims.LEASE_VIEW,
     },
   ],
@@ -202,7 +212,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
   } = useLeaseRepository();
 
-  const onChildSucess = useCallback(() => {
+  const onChildSuccess = useCallback(() => {
     setStaleLastUpdatedBy(true);
   }, [setStaleLastUpdatedBy]);
 
@@ -334,7 +344,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
           activeEditForm={containerState.activeEditForm}
           activeTab={containerState.activeTab}
           setContainerState={setContainerState}
-          onSuccess={onChildSucess}
+          onSuccess={onChildSuccess}
         />
       </StyledFormWrapper>
     </MapSideBarLayout>

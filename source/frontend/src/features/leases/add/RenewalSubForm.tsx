@@ -23,7 +23,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
   const fieldName = 'renewals';
 
   return (
-    <Section header="Renewal Option">
+    <Section header="Renewal Options">
       <FieldArray
         name={fieldName}
         render={arrayHelpers => (
@@ -116,7 +116,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                 arrayHelpers.push(renewal);
               }}
             >
-              + Add a Renew
+              + Add a Renewal
             </LinkButton>
           </>
         )}
