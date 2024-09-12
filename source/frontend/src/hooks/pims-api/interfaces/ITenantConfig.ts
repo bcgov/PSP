@@ -37,6 +37,8 @@ export interface ITenantConfig2 {
   layers: ILayerItem[];
   // the url that should be used to query the PSP properties layer.
   propertiesUrl: string;
+  // the url that should be used to display PSP properties on the map.
+  minimalPropertiesUrl: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
   parcelMapFullyAttributed: ILayerConfig;
   electoralLayerUrl: string;
