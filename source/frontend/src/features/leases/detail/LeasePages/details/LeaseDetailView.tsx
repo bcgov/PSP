@@ -1,14 +1,21 @@
 import { Col, Row } from 'react-bootstrap';
+import { FaFileContract } from 'react-icons/fa';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
+import { StyledAddButton } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import { Claims } from '@/constants';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 
 export interface ILeaseDetailView {
   lease: ApiGen_Concepts_Lease;
+  onGenerate: (lease?: ApiGen_Concepts_Lease) => void;
 }
 
 /**
@@ -17,15 +24,53 @@ export interface ILeaseDetailView {
  */
 export const LeaseDetailView: React.FunctionComponent<
   React.PropsWithChildren<ILeaseDetailView>
-> = ({ lease }) => {
-  const projectName = lease.project ? `${lease.project.code} - ${lease.project.description}` : '';
+> = ({ lease, onGenerate }) => {
+  const { hasClaim } = useKeycloakWrapper();
+
+  const projectName = exists(lease?.project)
+    ? `${lease?.project?.code} - ${lease?.project?.description}`
+    : '';
 
   const productName = exists(lease?.product)
     ? lease?.product?.code + ' ' + lease?.product?.description
     : '';
 
+  const leaseTypeCode = exists(lease?.type?.id) ? lease?.type?.id : null;
+
   return (
-    <Section header="Details">
+    <Section
+      header={
+        <SimpleSectionHeader title="Details">
+          {hasClaim(Claims.LEASE_VIEW) &&
+            exists(leaseTypeCode) &&
+            leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA && (
+              <StyledAddButton onClick={() => onGenerate(lease)}>
+                <FaFileContract
+                  size={24}
+                  id={`generate-h1005-a`}
+                  title="Generate H1005(a)"
+                  className="mr-2"
+                />
+                Generate H1005(a)
+              </StyledAddButton>
+            )}
+
+          {hasClaim(Claims.LEASE_VIEW) &&
+            exists(leaseTypeCode) &&
+            leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY && (
+              <StyledAddButton onClick={() => onGenerate(lease)}>
+                <FaFileContract
+                  size={24}
+                  id={`generate-h1005`}
+                  title="Generate H1005"
+                  className="mr-2"
+                />
+                Generate H1005
+              </StyledAddButton>
+            )}
+        </SimpleSectionHeader>
+      }
+    >
       <SectionField label="Ministry project" labelWidth="3">
         {projectName}
       </SectionField>
