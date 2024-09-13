@@ -152,7 +152,10 @@ export class PropertyForm {
         ? enumFromValue(model?.pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
         : AreaUnitTypes.SquareMeters,
       isRetired: model?.pimsFeature?.properties?.IS_RETIRED ?? false,
-      legalDescription: model?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ?? '',
+      legalDescription:
+        model?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
+        model?.parcelFeature?.properties?.LEGAL_DESCRIPTION ??
+        '',
     });
   }
 
