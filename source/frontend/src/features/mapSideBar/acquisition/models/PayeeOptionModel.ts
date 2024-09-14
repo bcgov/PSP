@@ -257,7 +257,9 @@ export class PayeeOption {
 
     switch (model.lessorType.id) {
       case ApiGen_CodeTypes_LessorTypes.ORG:
-        payeeName = `${model.organization.name}, Inc. No. ${model.organization.incorporationNumber}`;
+        payeeName = `${model?.organization?.name ?? ''}, Inc. No. ${
+          model?.organization?.incorporationNumber ?? ''
+        }`;
         break;
       case ApiGen_CodeTypes_LessorTypes.PER:
         payeeName = formatApiPersonNames(model.person);

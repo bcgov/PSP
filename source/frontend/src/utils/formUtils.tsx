@@ -10,7 +10,7 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 
-import { exists, isValidId, isValidString } from './utils';
+import { exists, isString, isValidId, isValidString } from './utils';
 
 /**
  * append the passed name and index to the existing namespace, ideal for nesting forms within formik.
@@ -119,6 +119,14 @@ export function toTypeCodeNullable<T = string>(
   return exists(value) ? toTypeCode(value) : null;
 }
 
+export function toNullableId<T extends string | number>(value: T): number | null {
+  if (isString(value)) {
+    const numberValue = Number.parseInt(value);
+    return isValidId(numberValue) ? numberValue : null;
+  }
+  return isValidId(value) ? value : null;
+}
+
 export function toTypeCode<T = string>(value: T): ApiGen_Base_CodeType<T> {
   return { id: value, description: null, displayOrder: null, isDisabled: false };
 }
@@ -190,6 +198,12 @@ export function booleanToYesNoUnknownString(value?: boolean | null): string {
   if (value === true) return 'Yes';
   else if (value === false) return 'No';
   return 'Unknown';
+}
+
+export function booleanToYesNoString(value?: boolean | null): string {
+  if (value === true) return 'Yes';
+  else if (value === false) return 'No';
+  return '';
 }
 
 export const yesNoUnknownOptions: SelectOption[] = [

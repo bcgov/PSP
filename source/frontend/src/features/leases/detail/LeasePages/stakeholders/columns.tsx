@@ -18,7 +18,6 @@ const getColumns = (
   isPayableLease: boolean,
 ): ColumnWithProps<FormStakeholder>[] => {
   const stakeholderType = isPayableLease ? 'Payee type' : 'Contact type';
-  console.log(stakeholderTypes);
   return [
     {
       Header: (
@@ -33,13 +32,13 @@ const getColumns = (
       maxWidth: 16,
       minWidth: 16,
       Cell: (props: CellProps<FormStakeholder>) => {
-        const original = props.row.original;
+        const stakeholderStatus = props.row.original;
         const status =
-          original.original !== undefined
-            ? original.original.id.startsWith('O') === true
-              ? original.original.organization.isDisabled
-              : original.isDisabled
-            : original.isDisabled;
+          stakeholderStatus.original !== undefined
+            ? stakeholderStatus.original.id.startsWith('O') === true
+              ? stakeholderStatus.original.organization.isDisabled
+              : stakeholderStatus.isDisabled
+            : stakeholderStatus.isDisabled;
         return (
           <StatusIndicators className={status ? 'inactive' : 'active'}>
             <FaCircle size={10} className="mr-2" />
@@ -54,13 +53,13 @@ const getColumns = (
       width: 16,
       maxWidth: 16,
       Cell: (props: CellProps<FormStakeholder>) => {
-        const original = props.row.original;
+        const stakeholderId = props.row.original;
         const status =
-          original.original !== undefined
-            ? original.original.id.startsWith('O') === true
-              ? original.original.organization.isDisabled
-              : original.isDisabled
-            : original.isDisabled;
+          stakeholderId.original !== undefined
+            ? stakeholderId.original.id.startsWith('O') === true
+              ? stakeholderId.original.organization.isDisabled
+              : stakeholderId.isDisabled
+            : stakeholderId.isDisabled;
         return isValidId(props.row.original.personId) ? (
           <StatusIndicators className={status ? 'inactive' : 'active'}>
             <FaRegUser size={16} />

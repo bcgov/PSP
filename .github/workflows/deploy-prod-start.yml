@@ -52,7 +52,7 @@ jobs:
     needs: ci-cd-start-notification
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: master
           fetch-depth: 0
@@ -74,6 +74,7 @@ jobs:
           [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master
           RELEASE_TAG=$RELEASE_VERSION ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           RELEASE_TAG=$RELEASE_VERSION ./openshift/4.0/player.sh deploy app $DESTINATION -apply
+          oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
@@ -85,7 +86,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -108,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Login to OpenShift
         uses: redhat-actions/oc-login@v1
         with:
@@ -129,7 +130,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup .NET 8
         uses: actions/setup-dotnet@v3

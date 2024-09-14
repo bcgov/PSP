@@ -32,9 +32,11 @@ namespace Pims.Api.Services
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseStakeholderRepository _stakeholderRepository;
         private readonly ILeaseRenewalRepository _renewalRepository;
+        private readonly IConsultationRepository _consultationRepository;
         private readonly IUserRepository _userRepository;
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
+        private readonly ICompReqFinancialService _compReqFinancialService;
 
         public LeaseService(
             ClaimsPrincipal user,
@@ -48,9 +50,11 @@ namespace Pims.Api.Services
             IInsuranceRepository insuranceRepository,
             ILeaseStakeholderRepository stakeholderRepository,
             ILeaseRenewalRepository renewalRepository,
+            IConsultationRepository consultationRepository,
             IUserRepository userRepository,
             IPropertyService propertyService,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            ICompReqFinancialService compReqFinancialService)
             : base(user, logger)
         {
             _logger = logger;
@@ -63,9 +67,11 @@ namespace Pims.Api.Services
             _insuranceRepository = insuranceRepository;
             _stakeholderRepository = stakeholderRepository;
             _renewalRepository = renewalRepository;
+            _consultationRepository = consultationRepository;
             _userRepository = userRepository;
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
+            _compReqFinancialService = compReqFinancialService;
         }
 
         public PimsLease GetById(long leaseId)
@@ -77,6 +83,19 @@ namespace Pims.Api.Services
 
             var lease = _leaseRepository.Get(leaseId);
             return lease;
+        }
+
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds)
+        {
+            _logger.LogInformation("Getting all leases with ids {leaseIds}", leaseIds);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            var leases = _leaseRepository.GetAllByIds(leaseIds).ToList();
+            leaseIds.ForEach(leaseId =>
+            {
+                pimsUser.ThrowInvalidAccessToLeaseFile(leases.FirstOrDefault(lease => lease.LeaseId == leaseId).RegionCode);
+            });
+            return leases;
         }
 
         public LastUpdatedByModel GetLastUpdateInformation(long leaseId)
@@ -226,6 +245,8 @@ namespace Pims.Api.Services
 
             ValidateRenewalDates(lease, lease.PimsLeaseRenewals);
 
+            ValidateNewTotalAllowableCompensation(lease.LeaseId, lease.TotalAllowableCompensation);
+
             _leaseRepository.Update(lease, false);
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
 
@@ -254,8 +275,6 @@ namespace Pims.Api.Services
 
             _propertyLeaseRepository.UpdatePropertyLeases(lease.Internal_Id, leaseWithProperties.PimsPropertyLeases);
 
-            _leaseRepository.UpdateLeaseConsultations(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseConsultations);
-
             _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
 
             List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
@@ -270,6 +289,7 @@ namespace Pims.Api.Services
             }
 
             _leaseRepository.CommitTransaction();
+
             return _leaseRepository.GetNoTracking(lease.LeaseId);
         }
 
@@ -340,6 +360,52 @@ namespace Pims.Api.Services
             return _leaseRepository.GetAllLeaseStakeholderTypes();
         }
 
+        public IEnumerable<PimsLeaseConsultation> GetConsultations(long leaseId)
+        {
+            _logger.LogInformation("Getting lease consultations with Lease id: {leaseId}", leaseId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            return _consultationRepository.GetConsultationsByLease(leaseId);
+        }
+
+        public PimsLeaseConsultation GetConsultationById(long consultationId)
+        {
+            _logger.LogInformation("Getting consultation with id: {consultationId}", consultationId);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            return _consultationRepository.GetConsultationById(consultationId);
+        }
+
+        public PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            var newConsultation = _consultationRepository.AddConsultation(consultation);
+            _consultationRepository.CommitTransaction();
+
+            return newConsultation;
+        }
+
+        public PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            var updatedConsultation = _consultationRepository.UpdateConsultation(consultation);
+            _consultationRepository.CommitTransaction();
+
+            return updatedConsultation;
+        }
+
+        public bool DeleteConsultation(long consultationId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+
+            bool deleteResult = _consultationRepository.TryDeleteConsultation(consultationId);
+            _consultationRepository.CommitTransaction();
+
+            return deleteResult;
+        }
+
         private static void ValidateRenewalDates(PimsLease lease, ICollection<PimsLeaseRenewal> renewals)
         {
             if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
@@ -399,6 +465,22 @@ namespace Pims.Api.Services
                     throw new BusinessRuleViolationException("The commencement date of your renewal should be later than the previous expiry date (agreement or renewal)");
                 }
                 currentEndDate = endDate;
+            }
+        }
+
+        private void ValidateNewTotalAllowableCompensation(long currentLeaseFileId, decimal? newAllowableCompensation)
+        {
+            if (newAllowableCompensation is null)
+            {
+                return;
+            }
+
+            IEnumerable<PimsCompReqFinancial> allFinalFinancialsOnFile = _compReqFinancialService.GetAllByLeaseFileId(currentLeaseFileId, true);
+            var currentActualCompensation = allFinalFinancialsOnFile.Aggregate(0m, (acc, f) => acc + (f.TotalAmt ?? 0m));
+            if (newAllowableCompensation < currentActualCompensation)
+            {
+                throw new BusinessRuleViolationException("The Total Allowable Compensation value cannot be saved because the value provided is less than current sum of the final compensation requisitions in this file. " +
+                    "\n\nTo continue, adjust the value to accommodate the existing compensation requisitions in the file or contact your system administrator to adjust final compensations.");
             }
         }
 

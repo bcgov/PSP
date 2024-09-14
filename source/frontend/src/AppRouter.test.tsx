@@ -154,7 +154,6 @@ vi.mocked(useApiAcquisitionFile).mockReturnValue({
   getAcquisitionFileProduct: vi.fn(),
   getAcquisitionFileChecklist: vi.fn(),
   putAcquisitionFileChecklist: vi.fn(),
-  getFileCompReqH120s: vi.fn(),
   getAcquisitionFileForm8s: vi.fn(),
   postFileForm8: vi.fn(),
 });

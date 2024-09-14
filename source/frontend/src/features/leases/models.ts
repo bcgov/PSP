@@ -7,20 +7,18 @@ import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
-import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { ILookupCode } from '@/store/slices/lookupCodes/interfaces/ILookupCode';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 import {
   emptyStringToNull,
-  emptyStringtoNullable,
   fromTypeCode,
   stringToNull,
+  stringToNumberOrNull,
   toTypeCodeNullable,
 } from '@/utils/formUtils';
 
@@ -107,9 +105,9 @@ export class LeaseFormModel {
   cancellationReason: string | null = null;
   terminationReason: string | null = null;
   project?: IAutocompletePrediction;
+  productId: number | null;
   tenantNotes: string[] = [];
   properties: FormLeaseProperty[] = [];
-  consultations: FormLeaseConsultation[] = [];
   securityDeposits: FormLeaseDeposit[] = [];
   securityDepositReturns: FormLeaseDepositReturn[] = [];
   periods: FormLeasePeriod[] = [];
@@ -167,11 +165,7 @@ export class LeaseFormModel {
       ? { id: apiModel?.project?.id || 0, text: apiModel?.project?.description || '' }
       : undefined;
 
-    const sortedConsultations = apiModel?.consultations?.sort(
-      (a, b) => (a.consultationType?.displayOrder || 0) - (b.consultationType?.displayOrder || 0),
-    );
-    leaseDetail.consultations =
-      sortedConsultations?.map(c => FormLeaseConsultation.fromApi(c)) || [];
+    leaseDetail.productId = apiModel.productId;
     leaseDetail.periods = apiModel?.periods?.map(t => FormLeasePeriod.fromApi(t)) || [];
     leaseDetail.stakeholders = apiModel?.stakeholders?.map(t => new FormStakeholder(t)) || [];
     leaseDetail.renewals = apiModel?.renewals?.map(r => FormLeaseRenewal.fromApi(r)) || [];
@@ -224,7 +218,9 @@ export class LeaseFormModel {
       otherProgramType: stringToNull(formLease.otherProgramTypeDescription),
       otherType: stringToNull(formLease.otherLeaseTypeDescription),
       project: isValidId(formLease.project?.id) ? ({ id: formLease.project?.id } as any) : null,
-      consultations: formLease.consultations.map(x => x.toApi()),
+      productId: stringToNumberOrNull(formLease.productId),
+      product: null,
+      consultations: null,
       stakeholders: formLease.stakeholders.map(t => FormStakeholder.toApi(t)),
       periods: formLease.periods.map(t => FormLeasePeriod.toApi(t)),
       renewals: formLease.renewals.map(r => r.toApi()),
@@ -322,53 +318,6 @@ export class FormLeaseProperty {
   }
 }
 
-export class FormLeaseConsultation {
-  public id = 0;
-  public consultationType = '';
-  public consultationTypeDescription = '';
-  public consultationStatusType = '';
-  public consultationStatusTypeDescription = '';
-  public consultationTypeOtherDescription = '';
-  public parentLeaseId = 0;
-  public rowVersion: number | undefined = undefined;
-
-  static fromApi(apiModel: ApiGen_Concepts_ConsultationLease): FormLeaseConsultation {
-    const model = new FormLeaseConsultation();
-    model.id = apiModel.id || 0;
-    model.consultationType = fromTypeCode(apiModel.consultationType) || '';
-    model.consultationTypeDescription = apiModel.consultationType?.description || '';
-    model.consultationStatusType = fromTypeCode(apiModel.consultationStatusType) || '';
-    model.consultationStatusTypeDescription = apiModel.consultationStatusType?.description || '';
-    model.consultationTypeOtherDescription = apiModel.otherDescription || '';
-    model.parentLeaseId = apiModel.parentLeaseId || 0;
-    model.rowVersion = apiModel.rowVersion || 0;
-    return model;
-  }
-
-  static fromApiLookup(parentLease: number, typeModel: ILookupCode): FormLeaseConsultation {
-    const model = new FormLeaseConsultation();
-    model.id = 0;
-    model.consultationType = typeModel.id.toString() || '';
-    model.consultationTypeDescription = typeModel?.name || '';
-    model.consultationStatusType = 'UNKNOWN';
-    model.consultationStatusTypeDescription = 'Unknown';
-    model.parentLeaseId = parentLease;
-    model.rowVersion = undefined;
-    return model;
-  }
-
-  public toApi(): ApiGen_Concepts_ConsultationLease {
-    return {
-      id: this.id,
-      consultationType: toTypeCodeNullable(this.consultationType) || null,
-      consultationStatusType: toTypeCodeNullable(this.consultationStatusType) || null,
-      parentLeaseId: this.parentLeaseId,
-      otherDescription: emptyStringtoNullable(this.consultationTypeOtherDescription),
-      ...getEmptyBaseAudit(this.rowVersion),
-    };
-  }
-}
-
 export const getDefaultFormLease: () => LeaseFormModel = () =>
   LeaseFormModel.fromApi({
     fileProperties: [],
@@ -412,6 +361,8 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     terminationReason: null,
     isExpired: false,
     project: null,
+    productId: null,
+    product: null,
     fileName: null,
     fileNumber: null,
     fileChecklistItems: [],

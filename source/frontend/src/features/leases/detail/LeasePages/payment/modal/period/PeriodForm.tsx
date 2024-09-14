@@ -70,6 +70,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   ];
 
   const initialGstAmount = initialValues.gstAmount;
+  const initialIsFlexible = initialValues.isFlexible;
 
   const calculateTotal = (amount: NumberFieldValue, gstAmount: NumberFieldValue): number => {
     const total = Number(amount) + Number(gstAmount);
@@ -122,6 +123,12 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                     options={flexiblePeriodOptions}
                   />
                 </Col>
+                {initialIsFlexible === 'true' && formikProps.values.isFlexible === 'false' && (
+                  <StyledRedCol>
+                    You are changing the period duration from flexible to fixed. Your end date will
+                    no longer be anticipated
+                  </StyledRedCol>
+                )}
               </Row>
               <Row>
                 <Col>
@@ -181,7 +188,7 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
                         radioLabelOne="Y"
                         radioLabelTwo="N"
                         type="radio"
-                        handleChange={(field, value) =>
+                        handleChange={(_, value) =>
                           onGstChange(
                             value,
                             +formikProps.values.paymentAmount,
@@ -358,20 +365,15 @@ const GstCalculator: React.FunctionComponent<{ gstConstant: ISystemConstant }> =
   gstConstant,
 }) => {
   const formikProps = useFormikContext<FormLeasePeriod>();
-
+  const isGstEligible = formikProps.values.isGstEligible;
+  const paymentAmount = formikProps.values.paymentAmount;
+  const setFieldValue = formikProps.setFieldValue;
+  const paymentAmountTouched = formikProps.touched.paymentAmount;
   useEffect(() => {
-    onGstChange(
-      formikProps.values.isGstEligible,
-      +formikProps.values.paymentAmount,
-      gstConstant,
-      formikProps.setFieldValue,
-    );
-  }, [
-    formikProps.setFieldValue,
-    formikProps.values.paymentAmount,
-    formikProps.values.isGstEligible,
-    gstConstant,
-  ]);
+    if (paymentAmountTouched) {
+      onGstChange(isGstEligible, +paymentAmount, gstConstant, setFieldValue);
+    }
+  }, [paymentAmount, isGstEligible, gstConstant, setFieldValue, paymentAmountTouched]);
   return <></>;
 };
 

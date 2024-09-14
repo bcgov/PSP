@@ -20,7 +20,7 @@ jobs:
       working-directory: ./source/database/mssql/scripts/dbscripts
 
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
       - name: Set up random env variable
         run: |
           passvar=$(date +%s | sha256sum | base64 | head -c 29)A8!

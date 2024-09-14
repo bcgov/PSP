@@ -270,7 +270,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsProperty GetAllAssociationsById(long id)
         {
-            PimsProperty property = this.Context.PimsProperties.AsNoTracking()
+            PimsProperty property = this.Context.PimsProperties.AsNoTracking().AsSplitQuery()
                 .Include(p => p.PimsPropertyLeases)
                     .ThenInclude(pl => pl.Lease)
                     .ThenInclude(l => l.LeaseStatusTypeCodeNavigation)
@@ -484,9 +484,7 @@ namespace Pims.Dal.Repositories
 
             if (filter.LeasePurposes != null && filter.LeasePurposes.Count > 0)
             {
-                //predicate.And(p => 
-                //    p.PimsPropertyLeases.Any(pl => filter.LeasePurposes.Contains(pl.Lease.LeasePurposeTypeCode)));
-                // TODO: Fix Mappings
+                predicate.And(p => p.PimsPropertyLeases.Any(pl => pl.Lease.PimsLeaseLeasePurposes.Any(plp => filter.LeasePurposes.Contains(plp.LeasePurposeTypeCode))));
             }
 
             if (!string.IsNullOrEmpty(filter.LeasePayRcvblType))

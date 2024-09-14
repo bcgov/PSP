@@ -11,6 +11,7 @@ import { ApiGen_Concepts_LeasePeriod } from './ApiGen_Concepts_LeasePeriod';
 import { ApiGen_Concepts_LeasePurpose } from './ApiGen_Concepts_LeasePurpose';
 import { ApiGen_Concepts_LeaseRenewal } from './ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from './ApiGen_Concepts_LeaseStakeholder';
+import { ApiGen_Concepts_Product } from './ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 import { ApiGen_Concepts_PropertyLease } from './ApiGen_Concepts_PropertyLease';
 
@@ -57,6 +58,8 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   primaryArbitrationCity: string | null;
   isExpired: boolean;
   project: ApiGen_Concepts_Project | null;
+  productId: number | null;
+  product: ApiGen_Concepts_Product | null;
   isPublicBenefit: boolean | null;
   isFinancialGain: boolean | null;
   feeDeterminationNote: string | null;

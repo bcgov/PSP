@@ -41,7 +41,10 @@ export interface CompensationRequisitionDetailViewProps {
   clientConstant: string;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
-  onGenerate: (compensation: ApiGen_Concepts_CompensationRequisition) => void;
+  onGenerate: (
+    fileType: ApiGen_CodeTypes_FileTypes,
+    compensation: ApiGen_Concepts_CompensationRequisition,
+  ) => void;
 }
 
 export interface PayeeViewDetails {
@@ -147,10 +150,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
     .reduce((prev, next) => prev + next, 0);
 
   const fileProject = file?.project;
-  const fileProduct =
-    fileType === ApiGen_CodeTypes_FileTypes.Acquisition
-      ? (file as ApiGen_Concepts_AcquisitionFile).product
-      : null;
+  const fileProduct = file?.product;
 
   let updateCompensationContext: UpdateCompensationContext | null;
   switch (fileType) {
@@ -252,16 +252,14 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
                   toolTip={cannotEditMessage}
                 />
               )}
-              {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-                <StyledAddButton
-                  onClick={() => {
-                    onGenerate(compensation);
-                  }}
-                >
-                  <FaMoneyCheck className="mr-2" />
-                  Generate H120
-                </StyledAddButton>
-              )}
+              <StyledAddButton
+                onClick={() => {
+                  onGenerate(fileType, compensation);
+                }}
+              >
+                <FaMoneyCheck className="mr-2" />
+                Generate H120
+              </StyledAddButton>
             </RightFlexDiv>
           </FlexDiv>
         }
@@ -327,12 +325,9 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Financial Coding" isCollapsable initiallyExpanded>
-        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-          <SectionField label="Product" labelWidth="4">
-            {fileProduct?.code ?? ''}
-          </SectionField>
-        )}
-
+        <SectionField label="Product" labelWidth="4" valueTestId="file-product">
+          {fileProduct?.code ?? ''}
+        </SectionField>
         <SectionField label="Business function" labelWidth="4">
           {fileProject?.businessFunctionCode?.code ?? ''}
         </SectionField>
@@ -393,7 +388,10 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {payeeDetails?.isGstApplicable ? 'Yes' : 'No'}
         </SectionField>
         {payeeDetails?.isGstApplicable && (
-          <SectionField label="GST amount">{formatMoney(compTaxAmount ?? 0)}</SectionField>
+          <>
+            <SectionField label="GST amount">{formatMoney(compTaxAmount ?? 0)}</SectionField>
+            <SectionField label="GST number">{compensation.gstNumber}</SectionField>
+          </>
         )}
         <SectionField label="Total amount">{formatMoney(compTotalAmount ?? 0)}</SectionField>
       </Section>

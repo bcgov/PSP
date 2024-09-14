@@ -81,11 +81,12 @@ const storeState = {
 };
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 describe('AddLeaseContainer component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
-    const utils = render(<AddLeaseContainer onClose={onClose} />, {
+    const utils = render(<AddLeaseContainer onClose={onClose} onSuccess={onSuccess} />, {
       ...renderOptions,
       store: storeState,
       useMockAuthentication: true,
@@ -106,19 +107,28 @@ describe('AddLeaseContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment, findByText } = setup({});
-    await findByText(/First nation/i);
+    const { asFragment, findByText } = await setup({});
+    await findByText(/MOTI contact/i);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('cancels the form', async () => {
-    const { getByTitle, getCloseButton } = setup({});
+    const { getCloseButton } = setup({});
 
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => userEvent.click(getCloseButton()));
-    await act(async () => userEvent.click(getByTitle('ok-modal')));
 
     expect(onClose).toHaveBeenCalled();
+  });
+
+  it('requires confirmation when navigating away', async () => {
+    const { getByTitle } = setup({});
+
+    await act(async () => selectOptions('regionId', '1'));
+
+    await act(async () => history.push('/'));
+
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
     expect(history.location.pathname).toBe('/');
   });
 
@@ -257,7 +267,7 @@ describe('AddLeaseContainer component', () => {
     });
 
     expect(addLease).toHaveBeenCalledWith(leaseData, []);
-    expect(history.location.pathname).toBe('/mapview/sidebar/lease/1');
+    expect(onSuccess).toHaveBeenCalledWith(1);
   });
 
   it('should pre-populate the region if a property is selected', async () => {
@@ -321,64 +331,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   expiryDate: '2020-01-02',
   stakeholders: [],
   periods: [],
-  consultations: [
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('1STNATION'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('STRATRE'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('REGPLANG'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('REGPRPSVC'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('DISTRICT'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('HQ'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('OTHER'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-  ],
+  consultations: null,
   leasePurposes: [
     {
       id: 0,

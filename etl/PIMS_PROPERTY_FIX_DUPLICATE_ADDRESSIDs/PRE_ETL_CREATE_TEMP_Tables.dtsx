@@ -1,0 +1,325 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/6/2024 1:47:36 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{754BCC57-FDF1-4C9C-ADB4-0F7F72DA3C31}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{BD0E280C-49FC-4CF0-8385-B647C5BD6967}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{E5F0FFF5-5031-43E1-81EA-778431C1FB45}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=localhost, 5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Auto Translate=False;Application Name=SSIS-Package-{E5F0FFF5-5031-43E1-81EA-778431C1FB45}sqldevtst.th.gov.bc.ca.PIMS_DEV;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Seq Container for Backup Tables"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{180B7D6C-A0F8-4660-9A36-8F24B3367D22}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Seq Container for Backup Tables">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Seq Container for Backup Tables\BKP PIMS ADDRESS Table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0C05B036-064E-4D15-812E-6AF2F61CA006}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="BKP PIMS ADDRESS Table"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E5F0FFF5-5031-43E1-81EA-778431C1FB45}"
+              SQLTask:SqlStatementSource="SELECT * INTO etl.PIMS_ADDRESS_BKP_PSP8704 from dbo.PIMS_ADDRESS;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Seq Container for Backup Tables\BKP PIMS PROPERTY Table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2DE9D330-37BA-4460-9830-21650D1A171F}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="BKP PIMS PROPERTY Table"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E5F0FFF5-5031-43E1-81EA-778431C1FB45}"
+              SQLTask:SqlStatementSource="SELECT * INTO etl.PIMS_PROPERTY_BKP_PSP8704 FROM dbo.PIMS_PROPERTY;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Seq Container for Backup Tables.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{11756C88-DE20-40E7-920E-F7DF196148CC}"
+          DTS:From="Package\Seq Container for Backup Tables\BKP PIMS PROPERTY Table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Seq Container for Backup Tables\BKP PIMS ADDRESS Table" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Seq Container for TEMP tables"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{8E5A0627-C373-42FA-86E6-0223D42EF286}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Seq Container for TEMP tables">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Seq Container for TEMP tables\assign ADDRESS_ID NEXT IN SEQ"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{C8CF40E7-6AF0-4192-8196-6A8DEE2B35EF}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="assign ADDRESS_ID NEXT IN SEQ"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E5F0FFF5-5031-43E1-81EA-778431C1FB45}"
+              SQLTask:SqlStatementSource="ALTER TABLE [etl].[PIMS_ADDRESS_TEMP] ADD  CONSTRAINT [ADDRSS_ADDRESS_ID_DEF_temp]  DEFAULT (NEXT VALUE FOR [PIMS_ADDRESS_ID_SEQ]) FOR [ADDRESS_ID];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Seq Container for TEMP tables\CREATE  etl schema PIMS_ADDRESS_TEMP table"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{EF53EA2A-34BF-4D82-AE07-769BC2D7B319}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="CREATE  etl schema PIMS_ADDRESS_TEMP table"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E5F0FFF5-5031-43E1-81EA-778431C1FB45}"
+              SQLTask:SqlStatementSource="CREATE TABLE [etl].[PIMS_ADDRESS_TEMP](&#xA;&#x9;[ADDRESS_ID] [bigint] NOT NULL,&#xA;&#x9;[PROPERTY_ID] [bigint] NULL,&#xA;&#x9;[REGION_CODE] [smallint] NULL,&#xA;&#x9;[DISTRICT_CODE] [smallint] NULL,&#xA;&#x9;[PROVINCE_STATE_ID] [smallint] NULL,&#xA;&#x9;[COUNTRY_ID] [smallint] NULL,&#xA;&#x9;[STREET_ADDRESS_1] [nvarchar](200) NULL,&#xA;&#x9;[STREET_ADDRESS_2] [nvarchar](200) NULL,&#xA;&#x9;[STREET_ADDRESS_3] [nvarchar](200) NULL,&#xA;&#x9;[MUNICIPALITY_NAME] [nvarchar](200) NULL,&#xA;&#x9;[POSTAL_CODE] [nvarchar](20) NULL,&#xA;&#x9;[OTHER_COUNTRY] [nvarchar](200) NULL,&#xA;&#x9;[LATITUDE] [numeric](8, 6) NULL,&#xA;&#x9;[LONGITUDE] [numeric](9, 6) NULL,&#xA;&#x9;[COMMENT] [nvarchar](2000) NULL,&#xA;&#x9;[CONCURRENCY_CONTROL_NUMBER] [bigint]  NULL,&#xA;&#x9;[APP_CREATE_TIMESTAMP] [datetime]  NULL,&#xA;&#x9;[APP_CREATE_USERID] [nvarchar](30)  NULL,&#xA;&#x9;[APP_CREATE_USER_GUID] [uniqueidentifier] NULL,&#xA;&#x9;[APP_CREATE_USER_DIRECTORY] [nvarchar](30)  NULL,&#xA;&#x9;[APP_LAST_UPDATE_TIMESTAMP] [datetime]  NULL,&#xA;&#x9;[APP_LAST_UPDATE_USERID] [nvarchar](30)  NULL,&#xA;&#x9;[APP_LAST_UPDATE_USER_GUID] [uniqueidentifier] NULL,&#xA;&#x9;[APP_LAST_UPDATE_USER_DIRECTORY] [nvarchar](30)  NULL,&#xA;&#x9;[DB_CREATE_TIMESTAMP] [datetime]  NULL,&#xA;&#x9;[DB_CREATE_USERID] [nvarchar](30)  NULL,&#xA;&#x9;[DB_LAST_UPDATE_TIMESTAMP] [datetime]  NULL,&#xA;&#x9;[DB_LAST_UPDATE_USERID] [nvarchar](30)  NULL,&#xA; CONSTRAINT [ADDRSS_PK] PRIMARY KEY CLUSTERED &#xA;(&#xA;&#x9;[ADDRESS_ID] ASC&#xA;)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]&#xA;) ON [PRIMARY]&#xA;&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Seq Container for TEMP tables\DROP ETL SCHEMA TABLES IF EXISTS"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{D6F9A877-8229-4D40-9317-BC3DD831ECD2}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="DROP ETL SCHEMA TABLES IF EXISTS"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{E5F0FFF5-5031-43E1-81EA-778431C1FB45}"
+              SQLTask:SqlStatementSource="DROP TABLE IF EXISTS [etl].[PIMS_ADDRESS_TEMP];&#xA;&#xA;DROP TABLE IF EXISTS [etl].[TempAddresses];&#xA;&#xA;DROP TABLE IF EXISTS [etl].[PIMS_ADDRESS_BKP_PSP8704] ;&#xA;&#xA;DROP TABLE IF EXISTS [etl].[PIMS_PROPERTY_BKP_PSP8704];" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Seq Container for TEMP tables.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{87BE99DC-ED1F-4211-85FE-B5ED0D48B1D0}"
+          DTS:From="Package\Seq Container for TEMP tables\DROP ETL SCHEMA TABLES IF EXISTS"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Seq Container for TEMP tables\CREATE  etl schema PIMS_ADDRESS_TEMP table" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Seq Container for TEMP tables.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{E17D513F-3F44-4CAE-BF73-B8B3E64186A0}"
+          DTS:From="Package\Seq Container for TEMP tables\CREATE  etl schema PIMS_ADDRESS_TEMP table"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\Seq Container for TEMP tables\assign ADDRESS_ID NEXT IN SEQ" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{93521673-78FE-4A11-9666-67331984E310}"
+      DTS:From="Package\Seq Container for TEMP tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Seq Container for Backup Tables" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="213.333333333334,42.6666666666667"
+          Id="Package\Seq Container for Backup Tables\BKP PIMS ADDRESS Table"
+          TopLeft="52.1666491205492,112.84211126457" />
+        <NodeLayout
+          Size="296,42.6666666666667"
+          Id="Package\Seq Container for Backup Tables\BKP PIMS PROPERTY Table"
+          TopLeft="12.1666497165959,23.2105306301092" />
+        <EdgeLayout
+          Id="Package\Seq Container for Backup Tables.PrecedenceConstraints[Constraint]"
+          TopLeft="159.499982751906,65.8771972967759">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.9649139677939"
+              Start="0,0"
+              End="0,39.4649139677939">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.4649139677939" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="314.666666666667,210.666666666667"
+          Size="314.666666666667,253.333333333334"
+          Id="Package\Seq Container for Backup Tables"
+          TopLeft="646.249990370124,152.578950240341" />
+        <NodeLayout
+          Size="252,42.6666666666667"
+          Id="Package\Seq Container for TEMP tables\assign ADDRESS_ID NEXT IN SEQ"
+          TopLeft="55.9166572603089,202.666672539293" />
+        <NodeLayout
+          Size="328,42.6666666666667"
+          Id="Package\Seq Container for TEMP tables\CREATE  etl schema PIMS_ADDRESS_TEMP table"
+          TopLeft="10.9166579308611,100.719302199334" />
+        <NodeLayout
+          Size="278.666666666667,42.6666666666667"
+          Id="Package\Seq Container for TEMP tables\DROP ETL SCHEMA TABLES IF EXISTS"
+          TopLeft="37.7916575303924,13.1403531824563" />
+        <EdgeLayout
+          Id="Package\Seq Container for TEMP tables.PrecedenceConstraints[Constraint]"
+          TopLeft="176.020824397293,55.8070198491229">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,44.9122823502109"
+              Start="0,0"
+              End="0,37.4122823502109">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,37.4122823502109" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Seq Container for TEMP tables.PrecedenceConstraints[Constraint 1]"
+          TopLeft="178.416657595585,143.385968866">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.2807036732922"
+              Start="0,0"
+              End="0,51.7807036732922">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.7807036732922" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="372.666666666667,300"
+          Size="372.666666666667,342.666666666667"
+          Id="Package\Seq Container for TEMP tables"
+          TopLeft="115.624998277053,112.894738967069" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="488.29166494372,281.736844603705">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="157.958325426404,0"
+              Start="0,0"
+              End="150.458325426404,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="150.458325426404,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

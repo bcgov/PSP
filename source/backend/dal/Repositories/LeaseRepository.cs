@@ -97,16 +97,13 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)
                 .Include(l => l.PimsLeasePeriods)
-                .Include(l => l.PimsLeaseConsultations)
-                    .ThenInclude(lc => lc.ConsultationStatusTypeCodeNavigation)
-                .Include(l => l.PimsLeaseConsultations)
-                    .ThenInclude(lc => lc.ConsultationTypeCodeNavigation)
                 .Include(l => l.Project)
                     .ThenInclude(x => x.WorkActivityCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.CostTypeCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Product)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.PimsPropertyImprovements = lease.PimsPropertyImprovements.OrderBy(i => i.PropertyImprovementTypeCode).ToArray();
@@ -116,6 +113,38 @@ namespace Pims.Dal.Repositories
                 return t;
             }).ToArray();
             return lease;
+        }
+
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds)
+        {
+            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            IEnumerable<PimsLease> leases = this.Context.PimsLeases.AsSplitQuery().AsNoTracking()
+                .Include(l => l.PimsPropertyLeases)
+                .Include(l => l.RegionCodeNavigation)
+                .Include(l => l.LeaseProgramTypeCodeNavigation)
+                .Include(l => l.LeasePayRvblTypeCodeNavigation)
+                .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                .Include(l => l.LeaseResponsibilityTypeCodeNavigation)
+                .Include(l => l.LeaseInitiatorTypeCodeNavigation)
+                .Include(l => l.PimsLeaseLeasePurposes)
+                    .ThenInclude(p => p.LeasePurposeTypeCodeNavigation)
+                .Include(l => l.LeaseStatusTypeCodeNavigation)
+                .Include(l => l.PimsLeaseStakeholders)
+                .Include(t => t.PimsPropertyImprovements)
+                .Include(l => l.PimsInsurances)
+                .Include(l => l.PimsSecurityDeposits)
+                .Include(l => l.PimsLeasePeriods)
+                    .ThenInclude(l => l.PimsLeasePayments)
+                .Include(l => l.Project)
+                    .ThenInclude(x => x.WorkActivityCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.CostTypeCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Product)
+                .Where(l => leaseIds.Any(leaseId => leaseId == l.LeaseId)) ?? throw new KeyNotFoundException();
+            return leases;
         }
 
         /// <summary>
@@ -841,27 +870,6 @@ namespace Pims.Dal.Repositories
             }
 
             return existingLease;
-        }
-
-        /// <summary>
-        /// Update the consultations of a lease.
-        /// </summary>
-        /// <param name="leaseId"></param>
-        /// <param name="rowVersion"></param>
-        /// <param name="pimsLeaseConsultations"></param>
-        /// <returns></returns>
-        public PimsLease UpdateLeaseConsultations(long leaseId, long? rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations)
-        {
-            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseConsultations).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
-                 ?? throw new KeyNotFoundException();
-            if (existingLease.ConcurrencyControlNumber != rowVersion)
-            {
-                throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
-            }
-
-            this.Context.UpdateChild<PimsLease, long, PimsLeaseConsultation, long>(l => l.PimsLeaseConsultations, leaseId, pimsLeaseConsultations.ToArray());
-
-            return GetNoTracking(existingLease.LeaseId);
         }
 
         /// <summary>

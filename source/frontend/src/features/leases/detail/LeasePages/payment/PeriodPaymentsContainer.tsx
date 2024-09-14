@@ -33,7 +33,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
   LeasePageProps<IPeriodPaymentsViewProps>
 > = ({ formikRef, onSuccess, componentView }) => {
   const { lease } = useContext(LeaseStateContext);
-  const generateH1005a = useGenerateLicenceOfOccupation();
+  const generateLicenceOfOccupation = useGenerateLicenceOfOccupation();
   const [editModalValues, setEditModalValues] = useState<FormLeasePeriod | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined
@@ -160,7 +160,7 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
 
   const onGenerate = () => {
     if (exists(lease)) {
-      generateH1005a(lease);
+      generateLicenceOfOccupation(lease);
     }
   };
 

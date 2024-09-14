@@ -17,6 +17,8 @@ namespace Pims.Dal.Repositories
 
         PimsLease Get(long id);
 
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds);
+
         PimsLease GetNoTracking(long id);
 
         LastUpdatedByModel GetLastUpdateBy(long leaseId);
@@ -32,8 +34,6 @@ namespace Pims.Dal.Repositories
         void DeleteLeaseDocument(long leaseDocumentId);
 
         PimsLease Update(PimsLease lease, bool commitTransaction = true);
-
-        PimsLease UpdateLeaseConsultations(long leaseId, long? rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations);
 
         PimsLease UpdateLeaseRenewals(long leaseId, long? rowVersion, ICollection<PimsLeaseRenewal> renewals);
 

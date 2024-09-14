@@ -197,6 +197,14 @@ export function isValidIsoDateTime(value: string | null | undefined): value is s
   return isValidString(value) && value !== EpochIsoDateTime;
 }
 
+export function isString(value: unknown): value is string {
+  return typeof value === 'string';
+}
+
+export function isNumber(value: unknown): value is number {
+  return typeof value === 'number';
+}
+
 /**
  * Add a simple retry wrapper to help avoid chunk errors in deployed pims application, recursively calls promise based on attemptsLeft parameter.
  * @param lazyComponent

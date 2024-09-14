@@ -9,6 +9,8 @@ namespace Pims.Api.Services
     {
         PimsLease GetById(long leaseId);
 
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds);
+
         LastUpdatedByModel GetLastUpdateInformation(long leaseId);
 
         Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false);
@@ -38,5 +40,15 @@ namespace Pims.Api.Services
         PimsLease UpdateChecklistItems(long leaseId, IList<PimsLeaseChecklistItem> checklistItems);
 
         IEnumerable<PimsLeaseStakeholderType> GetAllStakeholderTypes();
+
+        IEnumerable<PimsLeaseConsultation> GetConsultations(long leaseId);
+
+        PimsLeaseConsultation GetConsultationById(long consultationId);
+
+        PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation);
+
+        PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation);
+
+        bool DeleteConsultation(long consultationId);
     }
 }
