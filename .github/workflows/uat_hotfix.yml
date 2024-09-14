@@ -192,7 +192,7 @@ jobs:
     if: always()
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-latest
-    needs: [mayan-sync, sync-keycloak]
+    needs: [mayan-sync, keycloak-sync]
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@v4
