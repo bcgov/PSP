@@ -90,31 +90,6 @@ jobs:
           oc wait --for=condition=complete job/$JOB_NAME --timeout=120s
           oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
 
-
-  sync-keycloak:
-    name: Sync Keycloak
-    needs: database-upgrade
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@v4
-
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: "8.0.x"
-
-      - name: Install dependencies for keycloak sync
-        run: dotnet restore
-        working-directory: ${{env.sync-directory}}
-
-      - name: Build keycloak sync
-        run: dotnet build
-        working-directory: ${{env.sync-directory}}
-
-      - name: Start keycloak sync
-        run: dotnet run
-        working-directory: ${{env.sync-directory}}
 ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
 ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
@@ -137,6 +112,27 @@ jobs:
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso-test | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso-test | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso-test | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+
+## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
+  keycloak-sync:
+    name: sync keycloak
+    needs: database-upgrade
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: $NAMESPACE_OVERRIDE
+      - name: call scripts to sync keycloak
+        shell: bash
+        run: |
+          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=$NAMESPACE_OVERRIDE -p BRANCH=$DESTINATION -p API_URL=http://pims-api-test:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+
 
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
