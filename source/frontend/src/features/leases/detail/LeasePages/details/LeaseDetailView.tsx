@@ -13,17 +13,17 @@ import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 
-export interface ILeaseDetailView {
+export interface ILeaseDetailViewProps {
   lease: ApiGen_Concepts_Lease;
   onGenerate: (lease?: ApiGen_Concepts_Lease) => void;
 }
 
 /**
  * Sub-form displaying the original and renewal period information presented in styled boxes.
- * @param {ILeaseDetailView} param0
+ * @param {ILeaseDetailViewProps} param0
  */
 export const LeaseDetailView: React.FunctionComponent<
-  React.PropsWithChildren<ILeaseDetailView>
+  React.PropsWithChildren<ILeaseDetailViewProps>
 > = ({ lease, onGenerate }) => {
   const { hasClaim } = useKeycloakWrapper();
 
