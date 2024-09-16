@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 14.5.1                     */
 /* Target DBMS:           MS SQL Server 2019                              */
-/* Project file:          PIMS S88.00.dez                                 */
-/* Project name:          PIMS S88.00                                     */
+/* Project file:          PIMS S89.00.dez                                 */
+/* Project name:          PIMS S89.00                                     */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2024-08-22 13:35                                */
+/* Created on:            2024-09-06 10:14                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -37,6 +37,14 @@ GO
 
 
 DROP VIEW [dbo].[PIMS_PROPERTY_VW]
+GO
+
+
+DROP VIEW [dbo].[PIMS_PROPERTY_BOUNDARY_LITE_VW]
+GO
+
+
+DROP VIEW [dbo].[PIMS_PROPERTY_LOCATION_LITE_VW]
 GO
 
 
@@ -651,6 +659,10 @@ ALTER TABLE [dbo].[PIMS_LEASE] DROP CONSTRAINT [PIM_REGION_PIM_LEASE_FK]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_LEASE] DROP CONSTRAINT [PIM_PRODCT_PIM_LEASE_FK]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_LEASE] DROP CONSTRAINT [PIM_LSPRGT_PIM_LEASE_FK]
 GO
 
@@ -676,10 +688,6 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_LEASE] DROP CONSTRAINT [PIM_PROJCT_PIM_LEASE_FK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE] DROP CONSTRAINT [PIM_PRODCT_PIM_LEASE_FK]
 GO
 
 
@@ -968,6 +976,10 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_RESEARCH_FILE_PROJECT] DROP CONSTRAINT [PIM_PROJCT_PIM_RFLPRJ_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [PIM_OUTCMT_PIM_LESCON_FK]
 GO
 
 
@@ -7363,6 +7375,10 @@ ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_CONSULTATION
 GO
 
 
+ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_CONSULTATION_OUTCOME_TYPE_CODE_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_IS_DISABLED_DEF]
 GO
 
@@ -7415,10 +7431,6 @@ ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_PK]
 GO
 
 
-ALTER TABLE [dbo].[PIMS_LEASE_CONSULTATION] DROP CONSTRAINT [LESCON_LEASE_CONSULTATION_TUC]
-GO
-
-
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LEASE_CONSULTATION', 'COLUMN', N'LEASE_CONSULTATION_ID'
 GO
 
@@ -7444,6 +7456,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LEASE_CONSULTATION', 'COLUMN', N'CONSULTATION_STATUS_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_LEASE_CONSULTATION', 'COLUMN', N'CONSULTATION_OUTCOME_TYPE_CODE'
 GO
 
 
@@ -14202,6 +14218,87 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_REQUEST_SOURCE_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_CONSULTATION_OUTCOME_TYPE"                        */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE] DROP CONSTRAINT [OUTCMT_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE] DROP CONSTRAINT [OUTCMT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE] DROP CONSTRAINT [OUTCMT_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE] DROP CONSTRAINT [OUTCMT_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE] DROP CONSTRAINT [OUTCMT_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE] DROP CONSTRAINT [OUTCMT_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE] DROP CONSTRAINT [OUTCMT_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'CONSULTATION_OUTCOME_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_CONSULTATION_OUTCOME_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE]
 GO
 
 
