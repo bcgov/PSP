@@ -1,0 +1,97 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: keycloak-sync
+  namespace: 3cd915-dev
+spec:
+  params:
+    - default: dev
+      description: The git branch to use from the bcgov repo when executing
+      name: BRANCH
+      type: string
+    - default: tools/keycloak/sync
+      description: The path of the keycloak solution in the repo
+      name: KEYCLOAK_CONTEXT_DIR
+      type: string
+    - default: pims-api-sso
+      description: The name of the OC secret that contains the keycloak secret
+      name: KEYCLOAK_SECRET_NAME
+      type: string
+    - default: pims-api-sso
+      description: >-
+        The name of the OC secret that contains the keycloak service account
+        secret
+      name: KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME
+      type: string
+    - default: 'http://pims-api:8080/api'
+      description: The route of the openshift service hosting the PSP api
+      name: API_URL
+      type: string
+    - default: DEVELOPMENT
+      description: 'The target env, to load the appropriate appsettings file.'
+      name: ASPNETCORE_ENVIRONMENT
+      type: string
+  tasks:
+    - name: git-clone
+      params:
+        - name: url
+          value: 'https://github.com/bcgov/PSP'
+        - name: revision
+          value: $(params.BRANCH)
+        - name: refspec
+          value: ''
+        - name: submodules
+          value: 'true'
+        - name: depth
+          value: '1'
+        - name: sslVerify
+          value: 'true'
+        - name: crtFileName
+          value: ca-bundle.crt
+        - name: subdirectory
+          value: ''
+        - name: sparseCheckoutDirectories
+          value: '$(params.KEYCLOAK_CONTEXT_DIR)/*,source/backend/*'
+        - name: deleteExisting
+          value: 'true'
+        - name: httpProxy
+          value: ''
+        - name: httpsProxy
+          value: ''
+        - name: noProxy
+          value: ''
+        - name: verbose
+          value: 'true'
+        - name: gitInitImage
+          value: >-
+            registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:66f219b4d54a41b945cb5715ecd1fbb5d25431cf8dad4b06914a4cdc65b298cc
+        - name: userHome
+          value: /home/git
+      taskRef:
+        kind: ClusterTask
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: psp
+    - name: keycloak-sync
+      params:
+        - name: KEYCLOAK_CONTEXT_DIR
+          value: $(params.KEYCLOAK_CONTEXT_DIR)
+        - name: KEYCLOAK_SECRET_NAME
+          value: $(params.KEYCLOAK_SECRET_NAME)
+        - name: KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME
+          value: $(params.KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME)
+        - name: ASPNETCORE_ENVIRONMENT
+          value: $(params.ASPNETCORE_ENVIRONMENT)
+        - name: API_URL
+          value: $(params.API_URL)
+      runAfter:
+        - git-clone
+      taskRef:
+        kind: Task
+        name: keycloak-sync
+      workspaces:
+        - name: psp
+          workspace: psp
+  workspaces:
+    - name: psp
