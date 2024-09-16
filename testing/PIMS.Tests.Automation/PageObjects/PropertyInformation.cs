@@ -349,6 +349,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditPropertyInfoBttn()
         {
+            Wait();
             FocusAndClick(propertyDetailsEditBttn);
         }
 
@@ -465,7 +466,11 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 FocusAndClick(propertyDetailsTenureStatusInput);
                 while (webDriver.FindElements(propertyDetailsTenureDeleteBttns).Count > 0)
-                    webDriver.FindElements(propertyDetailsTenureDeleteBttns)[0].Click();  
+                {
+                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
+                    webDriver.FindElements(propertyDetailsTenureDeleteBttns)[0].Click();
+                }
+                webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
             }
 
             //TENURE STATUS
@@ -473,10 +478,12 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string status in property.TenureStatus)
                 {
+                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
                     FocusAndClick(propertyDetailsTenureStatusInput);
 
                     WaitUntilClickable(propertyDetailsTenureOptions);
                     ChooseMultiSelectSpecificOption(propertyDetailsTenureOptions, status);
+                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
                 }
             }
 

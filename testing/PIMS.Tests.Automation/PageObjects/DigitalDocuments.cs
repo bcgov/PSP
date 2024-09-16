@@ -1,31 +1,37 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using System.Xml.Linq;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class DigitalDocuments: PageObjectBase
     {
         //Documents Tab Element
-        private By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
+        private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
 
         //Documents Tab List Header
-        private By documentsFileTitle = By.XPath("//div[contains(text(),'File Documents')]");
-        private By documentsTitle = By.XPath("//div[contains(text(),'Documents')]");
-        private By addFileDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
-        private By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
+        private readonly By documentsFileTitle = By.XPath("//div[contains(text(),'File Documents')]");
+        private readonly By documentsTitle = By.XPath("//div[contains(text(),'Documents')]");
+        private readonly By addFileDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
+        private readonly By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
 
         //Upload Documents Dialog General Elements
-        private By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
-        private By documentUploadDocTypeLabel = By.XPath("//label[contains(text(),'Document type')]");
-        private By documentUploadDocTypeModalSelect = By.XPath("//div[@class='modal-body']/div/div[2]/div/select[@id='input-documentTypeId']");
-        private By documentUploadDocTypeModalSelect1stOption = By.CssSelector("div[class='modal-content'] select[data-testid='document-type'] option:nth-child(1)");
-        private By documentUploadChooseDocLabel = By.XPath("//label[contains(text(),'Choose document to upload')]");
-        private By documentUploadDragDropArea = By.XPath("//div[contains(text(),'Drag files here to attach or')]");
-        private By documentUploadDocInput = By.Id("uploadInput");
-        private By documentUploadDocInfoSubtitle = By.XPath("//h2/div/div[contains(text(),'Document Information')]");
-        private By documentUploadStatusLabel = By.XPath("//div[contains(text(),'Document Information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
+        private readonly By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
+        private readonly By documentUploadInstructionsLabel = By.XPath("//label[contains(text(),'Choose a max of 10 files to attach at the time')]");
+        private readonly By documentUploadDragDropArea = By.XPath("//div[contains(text(),'Drag files here to attach or')]");
+        private readonly By documentUploadDocInput = By.Id("uploadInput");
+
+        private By documentUploadDocTypeModalSelect = By.CssSelector("select[data-testid='documents.0.document-type']");
         private By documentUploadStatusSelect = By.Id("input-documentStatusCode");
-        private By documentUploadDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
+
+
+
+        //private By documentUploadDocTypeLabel = By.XPath("//label[contains(text(),'Document type')]");
+        //private By documentUploadDocTypeModalSelect1stOption = By.CssSelector("div[class='modal-content'] select[data-testid='document-type'] option:nth-child(1)");
+
+        //private By documentUploadDocInfoSubtitle = By.XPath("//h2/div/div[contains(text(),'Document Information')]");
+        //private By documentUploadStatusLabel = By.XPath("//div[contains(text(),'Document Information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
+        //private By documentUploadDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
 
         //Upload Documents Other Type Fields
         private By documentOtherTypePINLabel = By.XPath("//div[@class='pb-2 row'][1]/div/label[contains(text(),'PIN')]");
@@ -318,7 +324,7 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(documentPaginationPrevPageLink);
         }
 
-        public void AddNewDocument(string fileType)
+        public void AddNewDocumentButton(string fileType)
         {
             if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project") || fileType.Equals("Property Management"))
             {
@@ -334,9 +340,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentFields(string documentType)
         {
-            WaitUntilExist(documentUploadDocTypeModalSelect1stOption);
-            ChooseSpecificSelectOption(documentUploadDocTypeModalSelect, documentType);
-
             switch (documentType)
             {
                 case "BC assessment search":
@@ -516,7 +519,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UploadDocument(string documentFile)
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(documentUploadDocInput).SendKeys(documentFile);
         }
 
@@ -579,7 +582,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void View1stDocument()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(documentTableResults1stViewBttn).Click();
         }
 
@@ -617,148 +620,298 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(documentEditBttn);
         }
 
-        public void CreateNewDocumentType(DigitalDocument document)
+        public void InsertDocumentTypeStatus(DigitalDocument document)
         {
+            Wait();
+
+            WaitUntilExist(documentUploadDocTypeModalSelect);
+            ChooseSpecificSelectOption(documentUploadDocTypeModalSelect, document.DocumentType);
             ChooseSpecificSelectOption(documentUploadStatusSelect, document.DocumentStatus);
+
+            //if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyInput).Count > 0)
+            //    webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).SendKeys(document.CanadaLandSurvey);
+
+            //if (document.CivicAddress != "" && webDriver.FindElements(documentCivicAddressInput).Count > 0)
+            //    webDriver.FindElement(documentCivicAddressInput).SendKeys(document.CivicAddress);
+            
+            //if (document.CrownGrant != "" && webDriver.FindElements(documentCrownGrantTypeCrownInput).Count > 0)
+            //    webDriver.FindElement(documentCrownGrantTypeCrownInput).SendKeys(document.CrownGrant);
+            
+            //if (document.Date != "" && webDriver.FindElements(documentPhotosCorrespondenceTypeDateInput).Count > 0)
+            //    webDriver.FindElement(documentPhotosCorrespondenceTypeDateInput).SendKeys(document.Date);
+            
+            //if (document.DateSigned != "" && webDriver.FindElements(documentDateSignedInput).Count > 0)
+            //    webDriver.FindElement(documentDateSignedInput).SendKeys(document.DateSigned);
+            
+            //if (document.DistrictLot != "" && webDriver.FindElements(documentFieldNotesTypeDistrictLotInput).Count > 0)
+            //    webDriver.FindElement(documentFieldNotesTypeDistrictLotInput).SendKeys(document.DistrictLot);
+            
+            //if (document.ElectoralDistrict != "" && webDriver.FindElements(documentDistrictRoadRegisterTypeElectoralDistrictInput).Count > 0)
+            //    webDriver.FindElement(documentDistrictRoadRegisterTypeElectoralDistrictInput).SendKeys(document.ElectoralDistrict);
+            
+            //if (document.EndDate != "" && webDriver.FindElements(documentHistoricFileTypeEndDateInput).Count > 0)
+            //    webDriver.FindElement(documentHistoricFileTypeEndDateInput).SendKeys(document.EndDate);
+            
+            //if (document.FieldBook != "" && webDriver.FindElements(documentFieldNotesTypeYearInput).Count > 0)
+            //    webDriver.FindElement(documentFieldNotesTypeYearInput).SendKeys(document.FieldBook);
+            
+            //if (document.File != "" && webDriver.FindElements(documentHistoricFileTypeFileInput).Count > 0)
+            //    webDriver.FindElement(documentHistoricFileTypeFileInput).SendKeys(document.File);
+            
+            //if (document.GazetteDate != "" && webDriver.FindElements(documentGazetteDateInput).Count > 0)
+            //    webDriver.FindElement(documentGazetteDateInput).SendKeys(document.GazetteDate);
+            
+            //if (document.GazettePage != "" && webDriver.FindElements(documentGazettePageInput).Count > 0)
+            //    webDriver.FindElement(documentGazettePageInput).SendKeys(document.GazettePage);
+            
+            //if (document.GazettePublishedDate != "" && webDriver.FindElements(documentGazettePublishedDateInput).Count > 0   )
+            //    webDriver.FindElement(documentGazettePublishedDateInput).SendKeys(document.GazettePublishedDate);
+            
+            //if (document.GazetteType != "" && webDriver.FindElements(documentGazettePublishedTypeInput).Count > 0)
+            //    webDriver.FindElement(documentGazettePublishedTypeInput).SendKeys(document.GazetteType);
+            
+            //if (document.HighwayDistrict != "" && webDriver.FindElements(documentDistrictRoadRegisterTypeHighwayDistrictInput).Count > 0)
+            //    webDriver.FindElement(documentDistrictRoadRegisterTypeHighwayDistrictInput).SendKeys(document.HighwayDistrict);
+            
+            //if (document.IndianReserveOrNationalPark != "" && webDriver.FindElements(documentCanLandSurveyTypeIndianReserveInput).Count > 0)
+            //    webDriver.FindElement(documentCanLandSurveyTypeIndianReserveInput).SendKeys(document.IndianReserveOrNationalPark);
+            
+            //if (document.Jurisdiction != "" && webDriver.FindElements(documentBCAssessmentTypeJurisdictionInput).Count > 0)
+            //    webDriver.FindElement(documentBCAssessmentTypeJurisdictionInput).SendKeys(document.Jurisdiction);
+            
+            //if (document.LandDistrict != "" && webDriver.FindElements(documentFieldNotesTypeLandDistrictInput).Count > 0)
+            //    webDriver.FindElement(documentFieldNotesTypeLandDistrictInput).SendKeys(document.LandDistrict);
+            
+            //if (document.LegalSurveyPlan != "" && webDriver.FindElements(documentLegalSurveyInput).Count > 0)
+            //    webDriver.FindElement(documentLegalSurveyInput).SendKeys(document.LegalSurveyPlan);
+            
+            //if (document.LTSAScheduleFiling != "" && webDriver.FindElements(documentGazetteLTSAInput).Count > 0)
+            //    webDriver.FindElement(documentGazetteLTSAInput).SendKeys(document.LTSAScheduleFiling);
+            
+            //if (document.MO != "" && webDriver.FindElements(documentMinisterialOrderTypeMOInput).Count > 0)
+            //    webDriver.FindElement(documentMinisterialOrderTypeMOInput).SendKeys(document.MO);
+            
+            //if (document.MoTIFile != "" && webDriver.FindElements(documentTypeMotiFileInput).Count > 0)
+            //    webDriver.FindElement(documentTypeMotiFileInput).SendKeys(document.MoTIFile);
+            
+            //if (document.MoTIPlan != "" && webDriver.FindElements(documentMOTIPlanInput).Count > 0)
+            //    webDriver.FindElement(documentMOTIPlanInput).SendKeys(document.MoTIPlan);
+            
+            //if (document.OIC != "" && webDriver.FindElements(documentOICTypeInput).Count > 0)
+            //    webDriver.FindElement(documentOICTypeInput).SendKeys(document.OIC);
+            
+            //if (document.OICRoute != "" && webDriver.FindElements(documentOICTypeOICRouteInput).Count > 0)
+            //    webDriver.FindElement(documentOICTypeOICRouteInput).SendKeys(document.OICRoute);
+            
+            //if (document.OICType != "" && webDriver.FindElements(documentOICTypeOICTypeInput).Count > 0)
+            //    webDriver.FindElement(documentOICTypeOICTypeInput).SendKeys(document.OICType);
+            
+            //if (document.Owner != "" && webDriver.FindElements(documentTypeOwnerInput).Count > 0)
+            //    webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.Owner);
+            
+            //if (document.PhysicalLocation != "" && webDriver.FindElements(documentTypeOwnerInput).Count > 0)
+            //    webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.PhysicalLocation);
+            
+            //if (document.PIDNumber != "" && webDriver.FindElements(documentTypePropIdInput).Count > 0)
+            //    webDriver.FindElement(documentTypePropIdInput).SendKeys(document.PIDNumber);
+            
+            //if (document.PINNumber != "" && webDriver.FindElements(documentOtherTypePINInput).Count > 0)
+            //    webDriver.FindElement(documentOtherTypePINInput).SendKeys(document.PINNumber);
+            
+            //if (document.Plan != "" && webDriver.FindElements(documentPAPlanNbrInput).Count > 0)
+            //    webDriver.FindElement(documentPAPlanNbrInput).SendKeys(document.Plan);
+            
+            //if (document.PlanRevision != "" && webDriver.FindElements(documentPAPlanRevisionInput).Count > 0)
+            //    webDriver.FindElement(documentPAPlanRevisionInput).SendKeys(document.PlanRevision);
+            
+            //if (document.PlanType != "" && webDriver.FindElements(documentLegalSurveyPlanTypeInput).Count > 0)
+            //    webDriver.FindElement(documentLegalSurveyPlanTypeInput).SendKeys(document.PlanType);
+            
+            //if (document.Project != "" && webDriver.FindElements(documentPAPlanProjectInput).Count > 0)
+            //    webDriver.FindElement(documentPAPlanProjectInput).SendKeys(document.Project);
+            
+            //if (document.ProjectName != "" && webDriver.FindElements(documentPAPlanProjectNameInput).Count > 0)
+            //    webDriver.FindElement(documentPAPlanProjectNameInput).SendKeys(document.ProjectName);
+            
+            //if (document.PropertyIdentifier != "" && webDriver.FindElements(documentTypePropertyIdentifierInput).Count > 0)
+            //    webDriver.FindElement(documentTypePropertyIdentifierInput).SendKeys(document.PropertyIdentifier);
+            
+            //if (document.PublishedDate != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyPublishDateInput).Count > 0)
+            //    webDriver.FindElement(documentMoTIPlanLegalSurveyPublishDateInput).SendKeys(document.PublishedDate);
+            
+            //if (document.RelatedGazette != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyRelatedGazetteInput).Count > 0)
+            //    webDriver.FindElement(documentMoTIPlanLegalSurveyRelatedGazetteInput).SendKeys(document.RelatedGazette);
+            
+            //if (document.RoadName != "" && webDriver.FindElements(documentRoadNameInput).Count > 0)
+            //    webDriver.FindElement(documentRoadNameInput).SendKeys(document.RoadName);
+            
+            //if (document.Roll != "" && webDriver.FindElements(documentBCAssessmentTypeRollInput).Count > 0)
+            //    webDriver.FindElement(documentBCAssessmentTypeRollInput).SendKeys(document.Roll);
+            
+            //if (document.Section != "" && webDriver.FindElements(documentHistoricFileTypeSectionInput).Count > 0)
+            //    webDriver.FindElement(documentHistoricFileTypeSectionInput).SendKeys(document.Section);
+            
+            //if (document.ShortDescriptor != "" && webDriver.FindElements(documentShortDescriptorInput).Count > 0)
+            //    webDriver.FindElement(documentShortDescriptorInput).SendKeys(document.ShortDescriptor);
+            
+            //if (document.StartDate != "" && webDriver.FindElements(documentHistoricFileTypeStartDateInput).Count > 0)
+            //    webDriver.FindElement(documentHistoricFileTypeStartDateInput).SendKeys(document.StartDate);
+            
+            //if (document.Title != "" && webDriver.FindElements(documentTitleSearchTypeTitleInput).Count > 0)
+            //    webDriver.FindElement(documentTitleSearchTypeTitleInput).SendKeys(document.Title);
+            
+            //if (document.Transfer != "" && webDriver.FindElements(documentTransferAdmTypeTransferInput).Count > 0)
+            //    webDriver.FindElement(documentTransferAdmTypeTransferInput).SendKeys(document.Transfer);
+            
+            //if (document.Year != "" && webDriver.FindElements(documentYearInput).Count > 0)
+            //    webDriver.FindElement(documentYearInput).SendKeys(document.Year);
+            
+            //if (document.YearPrivyCouncil != "" && webDriver.FindElements(documentPrivyCouncilTypePrivyInput).Count > 0)
+            //    webDriver.FindElement(documentPrivyCouncilTypePrivyInput).SendKeys(document.YearPrivyCouncil);
+        }
+
+        public void InsertDocumentTypeDetails(DigitalDocument document)
+        {
+            Wait();
 
             if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyInput).Count > 0)
                 webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).SendKeys(document.CanadaLandSurvey);
 
             if (document.CivicAddress != "" && webDriver.FindElements(documentCivicAddressInput).Count > 0)
                 webDriver.FindElement(documentCivicAddressInput).SendKeys(document.CivicAddress);
-            
+
             if (document.CrownGrant != "" && webDriver.FindElements(documentCrownGrantTypeCrownInput).Count > 0)
                 webDriver.FindElement(documentCrownGrantTypeCrownInput).SendKeys(document.CrownGrant);
-            
+
             if (document.Date != "" && webDriver.FindElements(documentPhotosCorrespondenceTypeDateInput).Count > 0)
                 webDriver.FindElement(documentPhotosCorrespondenceTypeDateInput).SendKeys(document.Date);
-            
+
             if (document.DateSigned != "" && webDriver.FindElements(documentDateSignedInput).Count > 0)
                 webDriver.FindElement(documentDateSignedInput).SendKeys(document.DateSigned);
-            
+
             if (document.DistrictLot != "" && webDriver.FindElements(documentFieldNotesTypeDistrictLotInput).Count > 0)
                 webDriver.FindElement(documentFieldNotesTypeDistrictLotInput).SendKeys(document.DistrictLot);
-            
+
             if (document.ElectoralDistrict != "" && webDriver.FindElements(documentDistrictRoadRegisterTypeElectoralDistrictInput).Count > 0)
                 webDriver.FindElement(documentDistrictRoadRegisterTypeElectoralDistrictInput).SendKeys(document.ElectoralDistrict);
-            
+
             if (document.EndDate != "" && webDriver.FindElements(documentHistoricFileTypeEndDateInput).Count > 0)
                 webDriver.FindElement(documentHistoricFileTypeEndDateInput).SendKeys(document.EndDate);
-            
+
             if (document.FieldBook != "" && webDriver.FindElements(documentFieldNotesTypeYearInput).Count > 0)
                 webDriver.FindElement(documentFieldNotesTypeYearInput).SendKeys(document.FieldBook);
-            
+
             if (document.File != "" && webDriver.FindElements(documentHistoricFileTypeFileInput).Count > 0)
                 webDriver.FindElement(documentHistoricFileTypeFileInput).SendKeys(document.File);
-            
+
             if (document.GazetteDate != "" && webDriver.FindElements(documentGazetteDateInput).Count > 0)
                 webDriver.FindElement(documentGazetteDateInput).SendKeys(document.GazetteDate);
-            
+
             if (document.GazettePage != "" && webDriver.FindElements(documentGazettePageInput).Count > 0)
                 webDriver.FindElement(documentGazettePageInput).SendKeys(document.GazettePage);
-            
-            if (document.GazettePublishedDate != "" && webDriver.FindElements(documentGazettePublishedDateInput).Count > 0   )
+
+            if (document.GazettePublishedDate != "" && webDriver.FindElements(documentGazettePublishedDateInput).Count > 0)
                 webDriver.FindElement(documentGazettePublishedDateInput).SendKeys(document.GazettePublishedDate);
-            
+
             if (document.GazetteType != "" && webDriver.FindElements(documentGazettePublishedTypeInput).Count > 0)
                 webDriver.FindElement(documentGazettePublishedTypeInput).SendKeys(document.GazetteType);
-            
+
             if (document.HighwayDistrict != "" && webDriver.FindElements(documentDistrictRoadRegisterTypeHighwayDistrictInput).Count > 0)
                 webDriver.FindElement(documentDistrictRoadRegisterTypeHighwayDistrictInput).SendKeys(document.HighwayDistrict);
-            
+
             if (document.IndianReserveOrNationalPark != "" && webDriver.FindElements(documentCanLandSurveyTypeIndianReserveInput).Count > 0)
                 webDriver.FindElement(documentCanLandSurveyTypeIndianReserveInput).SendKeys(document.IndianReserveOrNationalPark);
-            
+
             if (document.Jurisdiction != "" && webDriver.FindElements(documentBCAssessmentTypeJurisdictionInput).Count > 0)
                 webDriver.FindElement(documentBCAssessmentTypeJurisdictionInput).SendKeys(document.Jurisdiction);
-            
+
             if (document.LandDistrict != "" && webDriver.FindElements(documentFieldNotesTypeLandDistrictInput).Count > 0)
                 webDriver.FindElement(documentFieldNotesTypeLandDistrictInput).SendKeys(document.LandDistrict);
-            
+
             if (document.LegalSurveyPlan != "" && webDriver.FindElements(documentLegalSurveyInput).Count > 0)
                 webDriver.FindElement(documentLegalSurveyInput).SendKeys(document.LegalSurveyPlan);
-            
+
             if (document.LTSAScheduleFiling != "" && webDriver.FindElements(documentGazetteLTSAInput).Count > 0)
                 webDriver.FindElement(documentGazetteLTSAInput).SendKeys(document.LTSAScheduleFiling);
-            
+
             if (document.MO != "" && webDriver.FindElements(documentMinisterialOrderTypeMOInput).Count > 0)
                 webDriver.FindElement(documentMinisterialOrderTypeMOInput).SendKeys(document.MO);
-            
+
             if (document.MoTIFile != "" && webDriver.FindElements(documentTypeMotiFileInput).Count > 0)
                 webDriver.FindElement(documentTypeMotiFileInput).SendKeys(document.MoTIFile);
-            
+
             if (document.MoTIPlan != "" && webDriver.FindElements(documentMOTIPlanInput).Count > 0)
                 webDriver.FindElement(documentMOTIPlanInput).SendKeys(document.MoTIPlan);
-            
+
             if (document.OIC != "" && webDriver.FindElements(documentOICTypeInput).Count > 0)
                 webDriver.FindElement(documentOICTypeInput).SendKeys(document.OIC);
-            
+
             if (document.OICRoute != "" && webDriver.FindElements(documentOICTypeOICRouteInput).Count > 0)
                 webDriver.FindElement(documentOICTypeOICRouteInput).SendKeys(document.OICRoute);
-            
+
             if (document.OICType != "" && webDriver.FindElements(documentOICTypeOICTypeInput).Count > 0)
                 webDriver.FindElement(documentOICTypeOICTypeInput).SendKeys(document.OICType);
-            
+
             if (document.Owner != "" && webDriver.FindElements(documentTypeOwnerInput).Count > 0)
                 webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.Owner);
-            
+
             if (document.PhysicalLocation != "" && webDriver.FindElements(documentTypeOwnerInput).Count > 0)
                 webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.PhysicalLocation);
-            
+
             if (document.PIDNumber != "" && webDriver.FindElements(documentTypePropIdInput).Count > 0)
                 webDriver.FindElement(documentTypePropIdInput).SendKeys(document.PIDNumber);
-            
+
             if (document.PINNumber != "" && webDriver.FindElements(documentOtherTypePINInput).Count > 0)
                 webDriver.FindElement(documentOtherTypePINInput).SendKeys(document.PINNumber);
-            
+
             if (document.Plan != "" && webDriver.FindElements(documentPAPlanNbrInput).Count > 0)
                 webDriver.FindElement(documentPAPlanNbrInput).SendKeys(document.Plan);
-            
+
             if (document.PlanRevision != "" && webDriver.FindElements(documentPAPlanRevisionInput).Count > 0)
                 webDriver.FindElement(documentPAPlanRevisionInput).SendKeys(document.PlanRevision);
-            
+
             if (document.PlanType != "" && webDriver.FindElements(documentLegalSurveyPlanTypeInput).Count > 0)
                 webDriver.FindElement(documentLegalSurveyPlanTypeInput).SendKeys(document.PlanType);
-            
+
             if (document.Project != "" && webDriver.FindElements(documentPAPlanProjectInput).Count > 0)
                 webDriver.FindElement(documentPAPlanProjectInput).SendKeys(document.Project);
-            
+
             if (document.ProjectName != "" && webDriver.FindElements(documentPAPlanProjectNameInput).Count > 0)
                 webDriver.FindElement(documentPAPlanProjectNameInput).SendKeys(document.ProjectName);
-            
+
             if (document.PropertyIdentifier != "" && webDriver.FindElements(documentTypePropertyIdentifierInput).Count > 0)
                 webDriver.FindElement(documentTypePropertyIdentifierInput).SendKeys(document.PropertyIdentifier);
-            
+
             if (document.PublishedDate != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyPublishDateInput).Count > 0)
                 webDriver.FindElement(documentMoTIPlanLegalSurveyPublishDateInput).SendKeys(document.PublishedDate);
-            
+
             if (document.RelatedGazette != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyRelatedGazetteInput).Count > 0)
                 webDriver.FindElement(documentMoTIPlanLegalSurveyRelatedGazetteInput).SendKeys(document.RelatedGazette);
-            
+
             if (document.RoadName != "" && webDriver.FindElements(documentRoadNameInput).Count > 0)
                 webDriver.FindElement(documentRoadNameInput).SendKeys(document.RoadName);
-            
+
             if (document.Roll != "" && webDriver.FindElements(documentBCAssessmentTypeRollInput).Count > 0)
                 webDriver.FindElement(documentBCAssessmentTypeRollInput).SendKeys(document.Roll);
-            
+
             if (document.Section != "" && webDriver.FindElements(documentHistoricFileTypeSectionInput).Count > 0)
                 webDriver.FindElement(documentHistoricFileTypeSectionInput).SendKeys(document.Section);
-            
+
             if (document.ShortDescriptor != "" && webDriver.FindElements(documentShortDescriptorInput).Count > 0)
                 webDriver.FindElement(documentShortDescriptorInput).SendKeys(document.ShortDescriptor);
-            
+
             if (document.StartDate != "" && webDriver.FindElements(documentHistoricFileTypeStartDateInput).Count > 0)
                 webDriver.FindElement(documentHistoricFileTypeStartDateInput).SendKeys(document.StartDate);
-            
+
             if (document.Title != "" && webDriver.FindElements(documentTitleSearchTypeTitleInput).Count > 0)
                 webDriver.FindElement(documentTitleSearchTypeTitleInput).SendKeys(document.Title);
-            
+
             if (document.Transfer != "" && webDriver.FindElements(documentTransferAdmTypeTransferInput).Count > 0)
                 webDriver.FindElement(documentTransferAdmTypeTransferInput).SendKeys(document.Transfer);
-            
+
             if (document.Year != "" && webDriver.FindElements(documentYearInput).Count > 0)
                 webDriver.FindElement(documentYearInput).SendKeys(document.Year);
-            
+
             if (document.YearPrivyCouncil != "" && webDriver.FindElements(documentPrivyCouncilTypePrivyInput).Count > 0)
                 webDriver.FindElement(documentPrivyCouncilTypePrivyInput).SendKeys(document.YearPrivyCouncil);
         }
@@ -1335,27 +1488,40 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(documentViewYearPrivyCouncilContent, document.YearPrivyCouncil);
         }
 
+        public void VerifyInitUploadDocumentForm()
+        {
+            WaitUntilVisible(documentsUploadHeader);
+
+            AssertTrueIsDisplayed(documentsUploadHeader);
+            AssertTrueIsDisplayed(documentUploadInstructionsLabel);
+            AssertTrueIsDisplayed(documentUploadDragDropArea);
+            AssertTrueIsDisplayed(documentUploadDocInput);
+        }
+
         private void VerifyGeneralUploadDocumentForm()
         {
             WaitUntilVisible(documentsUploadHeader);
 
             AssertTrueIsDisplayed(documentsUploadHeader);
-            AssertTrueIsDisplayed(documentUploadDocTypeLabel);
-            AssertTrueIsDisplayed(documentUploadDocTypeModalSelect);
-            AssertTrueIsDisplayed(documentUploadChooseDocLabel);
+            AssertTrueIsDisplayed(documentUploadInstructionsLabel);
             AssertTrueIsDisplayed(documentUploadDragDropArea);
-            //AssertTrueIsDisplayed(documentUploadDocInput);
-            AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);
-            AssertTrueIsDisplayed(documentUploadStatusLabel);
-            AssertTrueIsDisplayed(documentUploadStatusSelect);
-            AssertTrueIsDisplayed(documentUploadDetailsSubtitle);
+            AssertTrueIsDisplayed(documentUploadDocInput);
+
+
+            //AssertTrueIsDisplayed(documentUploadDocTypeModalSelect);
+            //AssertTrueIsDisplayed(documentUploadChooseDocLabel);
+
+            //AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);
+            //AssertTrueIsDisplayed(documentUploadStatusLabel);
+            //AssertTrueIsDisplayed(documentUploadStatusSelect);
+            //AssertTrueIsDisplayed(documentUploadDetailsSubtitle);
         }
 
         private void VerifyOtherTypeFields()
         {
             WaitUntilVisible(documentOtherTypePINLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentOtherTypePINLabel);
             AssertTrueIsDisplayed(documentOtherTypePINInput);
             AssertTrueIsDisplayed(documentOtherTypePropIdLabel);
@@ -1370,7 +1536,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentFieldNotesTypeDistrictLotLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentFieldNotesTypeDistrictLotLabel);
             AssertTrueIsDisplayed(documentFieldNotesTypeDistrictLotInput);
             AssertTrueIsDisplayed(documentFieldNotesTypeYearLabel);
@@ -1383,7 +1549,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentDistrictRoadRegisterTypeElectoralDistrictLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeElectoralDistrictLabel);
             AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeElectoralDistrictInput);
             AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeHighwayDistrictLabel);
@@ -1396,7 +1562,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentCivicAddressLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentCivicAddressLabel);
             AssertTrueIsDisplayed(documentCivicAddressInput);
             //webDriver.FindElement(documentCivicAddressInput).Click();
@@ -1423,7 +1589,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentDateSignedLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentDateSignedLabel);
             AssertTrueIsDisplayed(documentDateSignedInput);
 
@@ -1453,7 +1619,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentDateSignedLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentDateSignedLabel);
             AssertTrueIsDisplayed(documentDateSignedInput);
             AssertTrueIsDisplayed(documentMinisterialOrderTypeMOLabel);
@@ -1470,7 +1636,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentCanLandSurveyTypeCanLandSurveyLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyLabel);
             AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyInput);
             //webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).Click();
@@ -1488,7 +1654,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentCivicAddressLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentCivicAddressLabel);
             AssertTrueIsDisplayed(documentCivicAddressInput);
             AssertTrueIsDisplayed(documentPhotosCorrespondenceTypeDateLabel);
@@ -1505,7 +1671,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentMiscNotesTypePIDLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentMiscNotesTypePIDLabel);
             AssertTrueIsDisplayed(documentMiscNotesTypePIDInput);
         }
@@ -1514,7 +1680,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentOwnerLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentOwnerLabel);
             AssertTrueIsDisplayed(documentTypeOwnerInput);
             AssertTrueIsDisplayed(documentTitleSearchTypePIDLabel);
@@ -1527,7 +1693,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentHistoricFileTypeEndDateLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentHistoricFileTypeEndDateLabel);
             AssertTrueIsDisplayed(documentHistoricFileTypeEndDateInput);
 
@@ -1549,7 +1715,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentCrownGrantTypeCrownLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentCrownGrantTypeCrownLabel);
             AssertTrueIsDisplayed(documentCrownGrantTypeCrownInput);
             //webDriver.FindElement(documentCrownGrantTypeCrownInput).Click();
@@ -1561,7 +1727,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentPrivyCouncilTypePrivyLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentPrivyCouncilTypePrivyLabel);
             AssertTrueIsDisplayed(documentPrivyCouncilTypePrivyInput);
             //webDriver.FindElement(documentPrivyCouncilTypePrivyInput).Click();
@@ -1573,7 +1739,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentOICTypeOICLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentOICTypeOICLabel);
             AssertTrueIsDisplayed(documentOICTypeInput);
             AssertTrueIsDisplayed(documentOICTypeOICRouteLabel);
@@ -1590,7 +1756,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentLegalSurveyNbrLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentLegalSurveyNbrLabel);
             AssertTrueIsDisplayed(documentLegalSurveyInput);
             AssertTrueIsDisplayed(documentMOTIPlanLabel);
@@ -1603,7 +1769,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentLegalSurveyNbrLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentLegalSurveyNbrLabel);
             AssertTrueIsDisplayed(documentLegalSurveyInput);
             AssertTrueIsDisplayed(documentMOTIFileLabel);
@@ -1620,7 +1786,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentGazetteDateLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentGazetteDateLabel);
             AssertTrueIsDisplayed(documentGazetteDateInput);
             AssertTrueIsDisplayed(documentGazettePageLabel);
@@ -1656,7 +1822,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentPAPlanNbrLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentPAPlanNbrLabel);
             AssertTrueIsDisplayed(documentPAPlanNbrInput);
             //webDriver.FindElement(documentPAPlanNbrInput).Click();
@@ -1679,7 +1845,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(documentShortDescriptorLabel);
 
-            VerifyGeneralUploadDocumentForm();
+            VerifyInitUploadDocumentForm();
             AssertTrueIsDisplayed(documentShortDescriptorLabel);
             AssertTrueIsDisplayed(documentShortDescriptorInput);
         }

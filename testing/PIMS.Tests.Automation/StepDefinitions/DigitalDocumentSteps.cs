@@ -44,11 +44,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < digitalDocumentList.Count; i++)
             {
                 //Add a New Document
-                digitalDocumentsTab.AddNewDocument(fileType);
+                digitalDocumentsTab.AddNewDocumentButton(fileType);
 
                 //Verify and create a new Document
-                digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
-                digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[i]);
+                //digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
+                digitalDocumentsTab.VerifyInitUploadDocumentForm();
 
                 //Upload one digital document
                 Random random = new Random();
@@ -56,9 +56,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 var document = documentFiles.ElementAt(index);
 
                 digitalDocumentsTab.UploadDocument(document.Url);
-
-                //Save digital document
+                digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[i]);
                 digitalDocumentsTab.SaveDigitalDocument();
+
+                //Insert Document Details
+                digitalDocumentsTab.ViewLastDocument(i);
+                digitalDocumentsTab.EditDocument();
+                digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[i]);
 
                 //Verify Details View Form
                 digitalDocumentsTab.ViewLastDocument(i);
@@ -79,11 +83,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < digitalDocumentList.Count; i++)
             {
                 //Add a New Document
-                digitalDocumentsTab.AddNewDocument("Property Management");
+                digitalDocumentsTab.AddNewDocumentButton("Property Management");
 
                 //Verify and create a new Document
-                digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
-                digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[i]);
+                digitalDocumentsTab.VerifyInitUploadDocumentForm();
+                //digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
+                digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[i]);
 
                 //Upload one digital document
                 Random random = new Random();
@@ -115,8 +120,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateDigitalDocumentIndex(rowNumber);
 
             //Add new digital document
-            digitalDocumentsTab.AddNewDocument(fileType);
-            digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[0]);
+            digitalDocumentsTab.AddNewDocumentButton(fileType);
+            digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
             Random random = new Random();
             var index2 = random.Next(0, documentFiles.Count());
