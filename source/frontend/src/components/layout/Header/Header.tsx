@@ -54,14 +54,6 @@ export const Header = () => {
   );
 };
 
-/**
- * Determine if the network action resulted in an error.
- * @param action A generic network action.
- * @returns True if the network action resulted in an error.
- */
-// const isNetworkError = (action: any): action is IGenericNetworkAction =>
-//   (action as IGenericNetworkAction).type === 'ERROR';
-
 const StyledContainer = styled.div`
   display: flex;
   align-items: center;
