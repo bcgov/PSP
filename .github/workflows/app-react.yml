@@ -73,14 +73,14 @@ jobs:
         uses: sonarsource/sonarqube-scan-action@master
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ vars.SONAR_URL }}
-          PROJECT_KEY: ${{vars.PROJECT_KEY_APP}}
+          SONAR_HOST_URL: https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca/
+          PROJECT_KEY: 21faa627-fe70-4a67-89e3-1262a32d2e2c
           PROJECT_NAME: PIMS-APP
         with:
           projectBaseDir: ${{env.working-directory}}
           args: >
-            -Dsonar.projectKey=${{vars.PROJECT_KEY_APP}}
-            -Dsonar.projectName=${{vars.PROJECT_NAME}}
+            -Dsonar.projectKey=21faa627-fe70-4a67-89e3-1262a32d2e2c
+            -Dsonar.projectName=PIMS-APP
             -Dsonar.qualitygate.wait=true
 
       # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set
