@@ -141,20 +141,20 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c10.c10.btn {
+.c11.c11.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c10.c10.btn .text {
+.c11.c11.btn .text {
   display: none;
 }
 
-.c10.c10.btn:hover,
-.c10.c10.btn:active,
-.c10.c10.btn:focus {
+.c11.c11.btn:hover,
+.c11.c11.btn:active,
+.c11.c11.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -168,21 +168,21 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c10.c10.btn:hover .text,
-.c10.c10.btn:active .text,
-.c10.c10.btn:focus .text {
+.c11.c11.btn:hover .text,
+.c11.c11.btn:active .text,
+.c11.c11.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c12.required::before {
+.c13.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c11 {
+.c12 {
   font-weight: bold;
 }
 
@@ -192,7 +192,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   margin-bottom: 0.5rem;
 }
 
-.c8 {
+.c9 {
   float: right;
   cursor: pointer;
 }
@@ -237,13 +237,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   margin: 0;
 }
 
-.c9 {
+.c10 {
   border: solid 0.2rem;
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
 }
 
-.c7 {
+.c8 {
   color: white;
   font-size: 1.4rem;
   border-radius: 50%;
@@ -263,6 +263,10 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.c7 svg {
+  vertical-align: baseline;
 }
 
 <div
@@ -335,13 +339,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       First nation
                     </span>
@@ -376,13 +380,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Strategic Real Estate (SRE)
                     </span>
@@ -417,13 +421,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Regional planning
                     </span>
@@ -458,13 +462,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Regional property services
                     </span>
@@ -499,22 +503,37 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       District
                     </span>
+                    <svg
+                      class="error"
+                      data-testid="error-icon"
+                      fill="currentColor"
+                      height="22"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="22"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+                      />
+                    </svg>
                   </div>
                   <div
                     class="px-0 col"
                   >
                     <div
-                      class="c7"
+                      class="c8"
                     >
                       2
                     </div>
@@ -525,7 +544,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-8 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c8"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -552,7 +571,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             class="collapse"
           >
             <div
-              class="c9"
+              class="c10"
             >
               <div
                 class="c1 form-section"
@@ -579,7 +598,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                             class="px-1 col-auto"
                           >
                             <button
-                              class="c4 Button c10 btn btn-link"
+                              class="c4 Button c11 btn btn-link"
                               data-testid="consultations[0].delete-btn"
                               title="Delete Consultation"
                               type="button"
@@ -642,7 +661,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Requested on:
                         <span>
@@ -670,7 +689,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     >
                       Jan 1, 2024
                     </div>
@@ -682,7 +701,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Contact:
                         <span>
@@ -710,7 +729,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     />
                   </div>
                   <div
@@ -720,13 +739,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Response received:
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     >
                       Yes
                     </div>
@@ -738,13 +757,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Response received on:
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     >
                       Dec 1, 2024
                     </div>
@@ -756,7 +775,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Comments:
                         <span>
@@ -784,7 +803,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     >
                       test comment
                     </div>
@@ -793,7 +812,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c9"
+              class="c10"
             >
               <div
                 class="c1 form-section"
@@ -820,7 +839,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                             class="px-1 col-auto"
                           >
                             <button
-                              class="c4 Button c10 btn btn-link"
+                              class="c4 Button c11 btn btn-link"
                               data-testid="consultations[1].delete-btn"
                               title="Delete Consultation"
                               type="button"
@@ -883,7 +902,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Requested on:
                         <span>
@@ -911,7 +930,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     >
                       Jan 1, 2024
                     </div>
@@ -923,7 +942,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Contact:
                         <span>
@@ -951,7 +970,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     />
                   </div>
                   <div
@@ -961,13 +980,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Response received:
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     >
                       Yes
                     </div>
@@ -979,13 +998,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Response received on:
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     >
                       Dec 1, 2024
                     </div>
@@ -997,7 +1016,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c11"
+                        class="c12"
                       >
                         Comments:
                         <span>
@@ -1025,7 +1044,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c12 text-left col"
+                      class="c13 text-left col"
                     >
                       test comment
                     </div>
@@ -1048,13 +1067,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Headquarter (HQ)
                     </span>
@@ -1089,13 +1108,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Other
                     </span>
