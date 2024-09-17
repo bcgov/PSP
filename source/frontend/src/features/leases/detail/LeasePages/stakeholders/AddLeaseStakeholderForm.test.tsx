@@ -18,6 +18,8 @@ import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/tes
 import AddLeaseStakeholderForm, { IAddLeaseStakeholderFormProps } from './AddLeaseStakeholderForm';
 import { FormStakeholder } from './models';
 import { createRef } from 'react';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
+import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -36,69 +38,62 @@ vi.mock('@/hooks/pims-api/useApiContacts', () => ({
   },
 }));
 
-export const leaseStakeholderTypesList = [
+export const leaseStakeholderTypesList: ApiGen_Concepts_LeaseStakeholderType[] = [
   {
+    id: 1,
     code: 'ASGN',
     description: 'Assignee',
     isPayableRelated: false,
-    isDisplayed: true,
     isDisabled: false,
     displayOrder: null,
-    rowVersion: null,
   },
   {
+    id: 2,
     code: 'OWNER',
     description: 'Owner',
     isPayableRelated: true,
-    isDisplayed: true,
     isDisabled: false,
     displayOrder: null,
-    rowVersion: null,
   },
   {
+    id: 3,
     code: 'OWNREP',
     description: 'Owner Representative',
     isPayableRelated: true,
-    isDisplayed: true,
     isDisabled: false,
     displayOrder: null,
-    rowVersion: null,
   },
   {
+    id: 4,
     code: 'PMGR',
     description: 'Property manager',
     isPayableRelated: false,
-    isDisplayed: true,
     isDisabled: false,
     displayOrder: null,
-    rowVersion: null,
   },
   {
+    id: 5,
     code: 'REP',
     description: 'Representative',
     isPayableRelated: false,
-    isDisplayed: true,
     isDisabled: false,
     displayOrder: null,
-    rowVersion: null,
   },
   {
+    id: 6,
     code: 'TEN',
     description: 'Tenant',
     isPayableRelated: false,
-    isDisplayed: true,
     isDisabled: false,
     displayOrder: null,
-    rowVersion: null,
   },
   {
+    id: 7,
     code: 'UNK',
     description: 'Unknown',
     isPayableRelated: false,
-    isDisplayed: true,
     isDisabled: false,
     displayOrder: null,
-    rowVersion: null,
   },
 ];
 
