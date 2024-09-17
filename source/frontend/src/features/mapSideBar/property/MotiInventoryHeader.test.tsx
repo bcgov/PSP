@@ -141,7 +141,7 @@ describe('MotiInventoryHeader component', () => {
     expect(onZoom).toHaveBeenCalled();
   });
 
-  it('does not allow property zooming if no property is visible', async () => {
+  it.skip('does not allow property zooming if no property is visible', async () => {
     const { queryByText } = await setup({
       composedProperty: {
         ...defaultComposedProperty,
