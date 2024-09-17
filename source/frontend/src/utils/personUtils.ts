@@ -7,5 +7,5 @@ export function formatApiPersonNames(person: ApiGen_Concepts_Person | null | und
 }
 
 export function formatNames(nameParts: Array<string | undefined | null>): string {
-  return nameParts.filter(n => exists(n) && n.trim() !== '').join('');
+  return nameParts.filter(n => exists(n) && n.trim() !== '').join(' ');
 }
