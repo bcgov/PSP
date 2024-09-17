@@ -8,12 +8,12 @@ import { isValidId } from '@/utils';
 import { LeasePageNames } from '../../../LeaseContainer';
 import { IConsultationListViewProps } from './ConsultationListView';
 
-interface IConsultationListProps {
+export interface IConsultationListProps {
   leaseId: number;
   View: React.FunctionComponent<React.PropsWithChildren<IConsultationListViewProps>>;
 }
 
-const ConsultationListContainer: React.FunctionComponent<
+export const ConsultationListContainer: React.FunctionComponent<
   React.PropsWithChildren<IConsultationListProps>
 > = ({ leaseId, View }) => {
   const [leaseConsultations, setLeaseConsultations] = useState<ApiGen_Concepts_ConsultationLease[]>(
