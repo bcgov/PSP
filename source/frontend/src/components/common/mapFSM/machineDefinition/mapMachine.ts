@@ -146,8 +146,6 @@ const mapRequestStates = {
             requestedFitBounds: (context: MachineContext) => {
               if (context.filePropertyLocations.length > 0) {
                 return latLngBounds(context.filePropertyLocations);
-              } else {
-                return defaultBounds;
               }
             },
           }),

@@ -152,8 +152,8 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                           />
                         </SectionField>
                       )}
-                    <SectionField labelWidth="4" contentWidth="auto" label="Response received">
-                      <YesNoSelect field="isResponseReceived" />
+                    <SectionField labelWidth="4" contentWidth="2" label="Response received">
+                      <YesNoSelect field="isResponseReceived" notNullable />
                     </SectionField>
                     {formikProps.values.isResponseReceived === true && (
                       <SectionField labelWidth="4" contentWidth="auto" label="Response received on">

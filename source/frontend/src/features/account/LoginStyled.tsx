@@ -61,12 +61,10 @@ export const LoginStyled = styled(Container)`
     }
 
     p {
-      font-size: 1.2rem;
+      font-size: 1.4rem;
       color: ${props => props.theme.bcTokens.typographyColorSecondary};
       font-family: 'BCSans', Fallback, sans-serif;
       line-height: 130%;
-      margin-left: 3rem;
-      margin-right: 3rem;
       margin-bottom: 0.2rem;
     }
 
@@ -103,6 +101,8 @@ export const LoginStyled = styled(Container)`
 
       p {
         font-size: 1.7rem;
+        margin-left: 3rem;
+        margin-right: 3rem;
         margin-top: 1rem;
         margin-bottom: 1rem;
       }
@@ -120,7 +120,7 @@ export const LoginStyled = styled(Container)`
     }
 
     .foot-note {
-      padding: 1rem;
+      padding-top: 3rem;
     }
 
     .btn {

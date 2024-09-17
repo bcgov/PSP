@@ -1,0 +1,28 @@
+kind: BuildConfig
+apiVersion: build.openshift.io/v1
+metadata:
+  name: mayan-bcgov
+  namespace: 3cd915-tools
+  generation: 2
+  labels:
+    app: mayan-bcgov
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: "mayan-bcgov:latest-dev"
+  resources: {}
+  successfulBuildsHistoryLimit: 5
+  failedBuildsHistoryLimit: 5
+  strategy:
+    type: Docker
+    dockerStrategy:
+      dockerfilePath: docker/Dockerfile
+  postCommit: {}
+  source:
+    type: Git
+    git:
+      uri: "https://github.com/bcgov/mayan-openshift"
+      ref: dev
+  runPolicy: Serial
