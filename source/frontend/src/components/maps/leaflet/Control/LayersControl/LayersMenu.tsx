@@ -270,7 +270,7 @@ export const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
           <TreeMenu hasSearch={false} data={layers}>
             {({ items }) => {
               return (
-                <FormSection className="bg-white">
+                <FormSection className="bg-white p-3">
                   <LayersTree items={items} />
                 </FormSection>
               );
