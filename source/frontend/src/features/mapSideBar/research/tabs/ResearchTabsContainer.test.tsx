@@ -1,9 +1,7 @@
 import { createMemoryHistory } from 'history';
 import { act } from 'react-test-renderer';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
@@ -82,7 +80,7 @@ describe('ResearchFileTabs component', () => {
   });
 
   it('notes tab can be changed to', async () => {
-    const { getAllByText } = setup(
+    const { getAllByText, container } = setup(
       {
         researchFile: getMockResearchFile(),
         setIsEditing,
