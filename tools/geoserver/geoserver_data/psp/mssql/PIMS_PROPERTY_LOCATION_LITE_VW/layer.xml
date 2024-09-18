@@ -1,0 +1,16 @@
+<layer>
+  <name>PIMS_PROPERTY_LOCATION_LITE_VW</name>
+  <id>LayerInfoImpl--e178501:19176ab16e3:-6a2e</id>
+  <type>VECTOR</type>
+  <defaultStyle>
+    <id>StyleInfoImpl--6f1be9d3:18e0be2a7ff:-7ffc</id>
+  </defaultStyle>
+  <resource class="featureType">
+    <id>FeatureTypeInfoImpl--e178501:19176ab16e3:-6a2f</id>
+  </resource>
+  <attribution>
+    <logoWidth>0</logoWidth>
+    <logoHeight>0</logoHeight>
+  </attribution>
+  <dateCreated>2024-08-21 20:43:26.920 UTC</dateCreated>
+</layer>
