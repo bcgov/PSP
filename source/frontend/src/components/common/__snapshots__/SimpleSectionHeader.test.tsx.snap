@@ -1,0 +1,35 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`SimpleSectionHeader component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c0 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c0 .btn {
+  margin: 0;
+}
+
+<div
+    class="c0 no-gutters row"
+  >
+    <div
+      class="d-flex justify-content-start px-2 my-1 col-auto"
+    >
+      TEST TITLE
+    </div>
+  </div>
+</DocumentFragment>
+`;
