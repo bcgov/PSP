@@ -99,7 +99,8 @@ namespace Pims.Dal.Keycloak
 
             if (update.AccessRequestStatusTypeCode == AccessRequestStatusTypes.APPROVED)
             {
-
+                // Copy access request notes to the user's notes on approval
+                user.Note = update.Note;
                 user.PimsUserRoles.Clear();
                 user.PimsRegionUsers.Clear();
                 user.IsDisabled = false;
@@ -125,7 +126,7 @@ namespace Pims.Dal.Keycloak
             if (resetRoles)
             {
                 var roleIds = euser.PimsUserRoles.Select(ur => ur.RoleId).ToArray();
-                for(int i = 0; i < roleIds.Length; i++)
+                for (int i = 0; i < roleIds.Length; i++)
                 {
                     _userRepository.RemoveRole(euser, roleIds[i]);
                 }
