@@ -11,8 +11,8 @@ import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_P
 import { logError } from '@/store/slices/network/networkSlice';
 
 export interface IContact {
-  person: ApiGen_Concepts_Person;
-  organization: ApiGen_Concepts_Organization;
+  person: ApiGen_Concepts_Person | null;
+  organization: ApiGen_Concepts_Organization | null;
 }
 
 /**
