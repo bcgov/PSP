@@ -4,10 +4,11 @@ import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { exists } from '@/utils';
 
 import { wmsHeaders } from '../Control/LayersControl/wmsHeaders';
 
-const featureGroup = new L.FeatureGroup();
+const featureGroup = new L.FeatureGroup<L.TileLayer.WMS>();
 export const LeafletLayerListener = () => {
   const { activeLayers } = useMapStateMachine();
   const mapInstance = useMap();
@@ -24,26 +25,20 @@ export const LeafletLayerListener = () => {
 
   useEffect(() => {
     if (mapInstance) {
-      const currentLayers = Object.keys((featureGroup as any)._layers)
-        .map(k => (featureGroup as any)._layers[k])
-        .map(l => l.options)
-        .filter(x => !!x);
-      const mapLayers = flatten(activeLayers.map(l => l.nodes)).filter((x: any) => x.on);
-      const layersToAdd = mapLayers.filter(
-        (layer: any) => !currentLayers.find(x => x.key === layer.key),
-      );
-      const layersToRemove = currentLayers.filter(
-        (layer: any) => !mapLayers.find((x: any) => x.key === layer.key),
-      );
+      const currentLayers = featureGroup.getLayers().filter(exists);
+      const mapLayers = flatten(activeLayers.map(l => l.nodes));
 
-      layersToAdd.forEach((node: any) => {
-        const layer = wmsHeaders(node.url, node);
-        featureGroup.addLayer(layer);
-      });
-
-      featureGroup.eachLayer((layer: any) => {
-        if (layersToRemove.find(l => l.key === layer?.options?.key)) {
-          featureGroup.removeLayer(layer);
+      mapLayers.forEach(configLayer => {
+        const currentLayer = currentLayers.find(l => (l as any).options.key === configLayer.key);
+        if (configLayer.on === true) {
+          if (!currentLayer) {
+            const newLayer = wmsHeaders(configLayer.url, configLayer);
+            featureGroup.addLayer(newLayer);
+          }
+        } else {
+          if (currentLayer) {
+            featureGroup.removeLayer(currentLayer);
+          }
         }
       });
     }

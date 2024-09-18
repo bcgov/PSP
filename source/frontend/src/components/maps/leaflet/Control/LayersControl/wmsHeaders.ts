@@ -26,5 +26,5 @@ class WmsHeaders extends L.TileLayer.WMS {
  * @param url the target WMS url
  * @param options {L.TileLayerOptions}
  */
-export const wmsHeaders = (url: string, options: ILayerItem) =>
+export const wmsHeaders = (url: string, options: ILayerItem): L.TileLayer.WMS =>
   options.authenticated ? new WmsHeaders(url, options) : new L.TileLayer.WMS(url, options);

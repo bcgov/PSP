@@ -335,4 +335,26 @@ export const layersTree: ILayerItem[] = [
       },
     ],
   },
+  {
+    key: 'pims_testing',
+    label: 'Pims',
+    on: true,
+    nodes: [
+      {
+        key: 'pims_properties',
+        label: 'Pims Properties',
+        on: true,
+        layers: 'psp:PIMS_PROPERTY_BOUNDARY_VW_testing',
+        url: 'http://localhost:3000/ogs-internal/ows?',
+        transparent: true,
+        format: 'image/png',
+        zIndex: 500,
+        id: 'pims_properties',
+        color: '#AAD589',
+        maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+        maxZoom: MAP_MAX_ZOOM,
+        authenticated: true,
+      },
+    ],
+  },
 ];
