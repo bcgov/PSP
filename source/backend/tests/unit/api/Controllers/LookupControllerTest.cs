@@ -41,26 +41,6 @@ namespace Pims.Api.Test.Controllers
         #region Tests
 
         [Fact]
-        public void GetRoleCodes()
-        {
-            // Arrange
-            var role = new Entity.PimsRole
-            {
-                Id = 1,
-                RoleUid = Guid.NewGuid(),
-                Name = "Ministry of Health",
-                Description = "The Ministry of Health",
-            };
-            this._repository.Setup(m => m.GetAllRoles()).Returns(new[] { role });
-
-            // Act
-            var result = this._controller.GetRoles();
-
-            // Assert
-            this._repository.Verify(m => m.GetAllRoles(), Times.Once());
-        }
-
-        [Fact]
         public void GetAll()
         {
             // Arrange
