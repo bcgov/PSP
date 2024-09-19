@@ -80,7 +80,7 @@ describe('ResearchFileTabs component', () => {
   });
 
   it('notes tab can be changed to', async () => {
-    const { getAllByText, container } = setup(
+    const { getAllByText } = setup(
       {
         researchFile: getMockResearchFile(),
         setIsEditing,
