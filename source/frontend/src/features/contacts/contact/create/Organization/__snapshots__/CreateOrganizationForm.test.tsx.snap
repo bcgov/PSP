@@ -190,6 +190,7 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
 .c10 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c4 {

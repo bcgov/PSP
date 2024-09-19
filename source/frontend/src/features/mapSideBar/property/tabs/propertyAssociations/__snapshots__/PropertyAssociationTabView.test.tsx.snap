@@ -9,6 +9,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
   .c4 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c0 {
