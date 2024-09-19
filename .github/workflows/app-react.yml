@@ -14,7 +14,7 @@ jobs:
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -32,7 +32,7 @@ jobs:
       GIT_BRANCH: "${{github.ref}}"
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Extract Branch Name
         shell: bash
@@ -57,36 +57,30 @@ jobs:
         env:
           REACT_APP_TENANT: MOTI
 
-      - name: Codecov
-        uses: codecov/codecov-action@v3.1.1
-        env: 
-          CODECOV_TOKEN: ${{ secrets.CODECOV }}
+      - name: Save PR number and scan results
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.pull_request.number }} > ./pr/NR
+          cp ${{env.working-directory}}/coverage/coverage-final.json ./pr
+
+      - uses: actions/upload-artifact@v4
         with:
-          # User defined upload name. Visible in Codecov UI
-          name: PIMS
-          # Path to coverage file to upload
-          file: ${{env.working-directory}}/coverage/coverage-final.json
-          # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
-          flags: unittests
-          # Environment variables to tag the upload with (e.g. PYTHON | OS,PYTHON)
-          env_vars: javascript
-          # Specify whether or not CI build should fail if Codecov runs into an error during upload
-          fail_ci_if_error: false
+          name: pr-codecov
+          path: pr/
 
       - name: SonarQube Scan
         id: scan
         uses: sonarsource/sonarqube-scan-action@master
-        if: false
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: ${{ secrets.SONAR_URL }}
-          PROJECT_KEY: ${{secrets.PROJECT_KEY_APP}}
+          SONAR_HOST_URL: https://sonarqube-3cd915-tools.apps.silver.devops.gov.bc.ca/
+          PROJECT_KEY: 21faa627-fe70-4a67-89e3-1262a32d2e2c
           PROJECT_NAME: PIMS-APP
         with:
           projectBaseDir: ${{env.working-directory}}
           args: >
-            -Dsonar.projectKey=${{env.PROJECT_KEY}}
-            -Dsonar.projectName=${{env.PROJECT_NAME}}
+            -Dsonar.projectKey=21faa627-fe70-4a67-89e3-1262a32d2e2c
+            -Dsonar.projectName=PIMS-APP
             -Dsonar.qualitygate.wait=true
 
       # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set

@@ -34,7 +34,7 @@ exports[`Contact PersonView component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c5 {
+.c6 {
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
   border-bottom: solid 0.2rem;
@@ -43,7 +43,7 @@ exports[`Contact PersonView component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c6 {
+.c7 {
   text-align: left;
 }
 
@@ -57,6 +57,11 @@ exports[`Contact PersonView component > renders as expected 1`] = `
 
 .c2.active {
   border: 1px solid;
+}
+
+.c5 a {
+  font-weight: bold;
+  color: !important;
 }
 
 <div
@@ -136,7 +141,7 @@ exports[`Contact PersonView component > renders as expected 1`] = `
             />
           </svg>
           <b>
-            Test name full
+            test person
           </b>
         </div>
       </div>
@@ -176,15 +181,39 @@ exports[`Contact PersonView component > renders as expected 1`] = `
         <div
           class="c4 text-left col"
           data-testid="contact-person-organization"
-        />
+        >
+          <div
+            class="c5"
+          >
+            <svg
+              class="mr-2"
+              fill="currentColor"
+              height="20"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 448 512"
+              width="20"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M128 148v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12zm140 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-128 96h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm128 0h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm-76 84v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm76 12h40c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12zm180 124v36H0v-36c0-6.6 5.4-12 12-12h19.5V24c0-13.3 10.7-24 24-24h337c13.3 0 24 10.7 24 24v440H436c6.6 0 12 5.4 12 12zM79.5 463H192v-67c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v67h112.5V49L80 48l-.5 415z"
+              />
+            </svg>
+            <a
+              href="/contact/Onull"
+            >
+              Dairy Queen Forever! Property Management
+            </a>
+          </div>
+        </div>
       </div>
       <h3
-        class="c5 mt-10"
+        class="c6 mt-10"
       >
         Contact Info
       </h3>
       <div
-        class="c6 pb-4 row"
+        class="c7 pb-4 row"
       >
         <div
           class="col-md-3"
@@ -202,7 +231,7 @@ exports[`Contact PersonView component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c6 row"
+        class="c7 row"
       >
         <div
           class="col-md-3"
@@ -214,9 +243,23 @@ exports[`Contact PersonView component > renders as expected 1`] = `
         <div
           class="col-md-9"
         >
-          <span>
-            N.A
-          </span>
+          <div
+            class="c7 row"
+          >
+            <div
+              class="col"
+              data-testid="phone-value"
+            >
+              1 604-998-3251
+            </div>
+            <div
+              class="col"
+            >
+              <em>
+                Landline
+              </em>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -238,6 +281,15 @@ exports[`Contact PersonView component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
+.c2 {
+  font-family: 'BCSans-Bold';
+  font-size: 2.2rem;
+  border-bottom: solid 0.2rem;
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
 <div
     class="c0 form-section"
   >
@@ -249,6 +301,76 @@ exports[`Contact PersonView component > renders as expected 1`] = `
       >
         Address
       </h2>
+      <h3
+        class="c2 mt-10"
+      >
+        Mailing address
+      </h3>
+      <div
+        class="pt-4 row"
+      >
+        <div
+          class="col-md-3"
+        />
+        <div
+          class="col"
+          data-testid="contact-person-address"
+        >
+          <div>
+            123 Main Street 
+          </div>
+          <div>
+            PO Box 456 
+          </div>
+          <div>
+            Across Dairy Queen 
+          </div>
+          <div>
+            West Podunk BC 
+          </div>
+          <div>
+            V9B B0B 
+          </div>
+          <div>
+            Canada
+          </div>
+        </div>
+      </div>
+      <h3
+        class="c2 mt-10"
+      >
+        Mailing address
+      </h3>
+      <div
+        class="pt-4 row"
+      >
+        <div
+          class="col-md-3"
+        />
+        <div
+          class="col"
+          data-testid="contact-person-address"
+        >
+          <div>
+            123 Main Street 
+          </div>
+          <div>
+            PO Box 123 
+          </div>
+          <div>
+            Next to the Dairy Queen 
+          </div>
+          <div>
+            East Podunk BC 
+          </div>
+          <div>
+            I4M B0B 
+          </div>
+          <div>
+            Canada
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   .c0 {

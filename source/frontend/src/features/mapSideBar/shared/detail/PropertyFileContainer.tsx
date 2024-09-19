@@ -19,9 +19,10 @@ import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStak
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { isValidId } from '@/utils';
+import { exists, getLatLng, isValidId } from '@/utils';
 
 import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
+import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 
 export interface IPropertyFileContainerProps {
@@ -34,19 +35,23 @@ export interface IPropertyFileContainerProps {
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
-  React.PropsWithChildren<IPropertyFileContainerProps>
+  IPropertyFileContainerProps
 > = props => {
   const pid = props.fileProperty?.property?.pid ?? undefined;
   const id = props.fileProperty?.property?.id ?? undefined;
+  const location = props.fileProperty?.property?.location ?? undefined;
+  const latLng = useMemo(() => getLatLng(location) ?? undefined, [location]);
 
   const composedProperties = useComposedProperties({
     pid,
     id,
+    latLng,
     propertyTypes: [
       PROPERTY_TYPES.ASSOCIATIONS,
       PROPERTY_TYPES.LTSA,
       PROPERTY_TYPES.PIMS_API,
       PROPERTY_TYPES.BC_ASSESSMENT,
+      PROPERTY_TYPES.CROWN_TENURES,
     ],
   });
 
@@ -93,6 +98,19 @@ export const PropertyFileContainer: React.FunctionComponent<
     key: InventoryTabNames.title,
     name: 'Title',
   });
+
+  if (exists(composedProperties.composedProperty?.crownTenureFeature)) {
+    tabViews.push({
+      content: (
+        <CrownDetailsTabView
+          crownFeature={composedProperties.composedProperty?.crownTenureFeature}
+        />
+      ),
+      key: InventoryTabNames.crown,
+      name: 'Crown',
+    });
+  }
+
   tabViews.push({
     content: (
       <BcAssessmentTabView

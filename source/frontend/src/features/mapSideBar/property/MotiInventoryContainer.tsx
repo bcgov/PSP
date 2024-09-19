@@ -35,6 +35,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const mapMachine = useMapStateMachine();
+  const selectedFeatureData = mapMachine.mapLocationFeatureDataset;
 
   const formikRef = useRef<FormikProps<any>>(null);
 
@@ -42,6 +43,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
     id: props.id,
     pid:
       props?.pid === undefined || props?.pid === '' || isNaN(+props.pid) ? undefined : +props.pid,
+    latLng: selectedFeatureData?.location ?? undefined,
     propertyTypes: [
       PROPERTY_TYPES.ASSOCIATIONS,
       PROPERTY_TYPES.LTSA,
@@ -49,6 +51,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
       PROPERTY_TYPES.BC_ASSESSMENT,
       PROPERTY_TYPES.PARCEL_MAP,
       PROPERTY_TYPES.PIMS_GEOSERVER,
+      PROPERTY_TYPES.CROWN_TENURES,
     ],
   });
 

@@ -212,7 +212,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
   } = useLeaseRepository();
 
-  const onChildSucess = useCallback(() => {
+  const onChildSuccess = useCallback(() => {
     setStaleLastUpdatedBy(true);
   }, [setStaleLastUpdatedBy]);
 
@@ -266,7 +266,11 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   }, [leaseId, getLastUpdatedBy, setLastUpdatedBy]);
 
   useEffect(() => {
-    if (activeTab === LeaseFileTabNames.deposit || activeTab === LeaseFileTabNames.payments) {
+    if (
+      activeTab === LeaseFileTabNames.deposit ||
+      activeTab === LeaseFileTabNames.payments ||
+      activeTab === LeaseFileTabNames.notes
+    ) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);
@@ -344,7 +348,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
           activeEditForm={containerState.activeEditForm}
           activeTab={containerState.activeTab}
           setContainerState={setContainerState}
-          onSuccess={onChildSucess}
+          onSuccess={onChildSuccess}
         />
       </StyledFormWrapper>
     </MapSideBarLayout>

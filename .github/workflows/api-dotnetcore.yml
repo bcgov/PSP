@@ -14,7 +14,7 @@ jobs:
     outputs:
       backend: ${{ steps.filter.outputs.backend }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -32,7 +32,7 @@ jobs:
       GIT_BRANCH: "${{github.ref}}"
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Extract Branch Name
         shell: bash
@@ -104,21 +104,16 @@ jobs:
           cd ..
           head TestResults/coverage.opencover.xml
 
-      - name: Codecov
-        uses: codecov/codecov-action@v3.1.1
-        env:
-          CODECOV_TOKEN: ${{ secrets.CODECOV }}
+      - name: Save PR number and scan results
+        run: |
+          mkdir -p ./pr
+          echo ${{ github.event.pull_request.number }} > ./pr/NR
+          cp ${{env.working-directory}}/tests/unit/TestResults/coverage.opencover.xml ./pr
+
+      - uses: actions/upload-artifact@v4
         with:
-          # User defined upload name. Visible in Codecov UI
-          name: PIMS
-          # Path to coverage file to upload
-          file: ${{env.working-directory}}/tests/unit/TestResults/coverage.opencover.xml
-          # Flag upload to group coverage metrics (e.g. unittests | integration | ui,chrome)
-          flags: unittests
-          # Environment variables to tag the upload with (e.g. PYTHON | OS,PYTHON)
-          env_vars: C#
-          # Specify whether or not CI build should fail if Codecov runs into an error during upload
-          fail_ci_if_error: false
+          name: pr-codecov
+          path: pr/
 
       - name: SonarScanner for .NET 8 with pull request decoration support
         id: scan

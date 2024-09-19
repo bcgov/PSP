@@ -16,7 +16,7 @@ export class ConsultationFormModel {
   public consultationStatusTypeDescription: string;
   public otherDescription: string;
   public requestedOn: string;
-  public isResponseReceived: boolean | null;
+  public isResponseReceived: boolean;
   public responseReceivedDate: string;
   public comment: string;
   public rowVersion: number;
@@ -29,7 +29,7 @@ export class ConsultationFormModel {
     this.consultationStatusTypeDescription = '';
     this.otherDescription = '';
     this.requestedOn = '';
-    this.isResponseReceived = null;
+    this.isResponseReceived = false;
     this.responseReceivedDate = '';
     this.comment = '';
     this.rowVersion = 0;
@@ -48,7 +48,7 @@ export class ConsultationFormModel {
       apiModel.consultationStatusTypeCode?.description ?? '';
     consultation.otherDescription = apiModel.otherDescription ?? '';
     consultation.requestedOn = apiModel.requestedOn ?? '';
-    consultation.isResponseReceived = apiModel.isResponseReceived ?? null;
+    consultation.isResponseReceived = apiModel.isResponseReceived ?? false;
     consultation.responseReceivedDate = apiModel.responseReceivedDate ?? '';
     consultation.comment = apiModel.comment ?? '';
     consultation.rowVersion = apiModel.rowVersion ?? 0;

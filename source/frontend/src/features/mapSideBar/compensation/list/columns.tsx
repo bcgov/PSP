@@ -1,4 +1,3 @@
-import { Col } from 'react-bootstrap';
 import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
@@ -28,8 +27,8 @@ export function createCompensationTableColumns(
       Header: 'Final Date',
       align: 'left',
       sortable: false,
-      minWidth: 40,
-      maxWidth: 40,
+      minWidth: 30,
+      maxWidth: 30,
       Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         return stringToFragment(prettyFormatDate(cellProps.row.original.finalizedDate));
       },
@@ -39,8 +38,8 @@ export function createCompensationTableColumns(
       accessor: 'id',
       align: 'left',
       sortable: false,
-      minWidth: 40,
-      maxWidth: 40,
+      minWidth: 35,
+      maxWidth: 35,
       Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         const { hasClaim } = useKeycloakWrapper();
         return hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) ? (
@@ -58,8 +57,8 @@ export function createCompensationTableColumns(
       Header: 'Amount',
       align: 'left',
       sortable: false,
-      width: 30,
-      maxWidth: 30,
+      width: 40,
+      maxWidth: 40,
       Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         const totalAmount = cellProps.row.original.financials?.reduce(
           (total: number, method: ApiGen_Concepts_CompensationFinancial) => {
@@ -86,8 +85,8 @@ export function createCompensationTableColumns(
       Header: 'Actions',
       align: 'left',
       sortable: false,
-      width: 15,
-      maxWidth: 15,
+      width: 20,
+      maxWidth: 20,
       Cell: (cellProps: CellProps<ApiGen_Concepts_CompensationRequisition>) => {
         const { hasClaim, hasRole } = useKeycloakWrapper();
         const canEditDetails = (isDraft: boolean | null) => {
@@ -99,19 +98,17 @@ export function createCompensationTableColumns(
         return (
           <StyledDiv className="no-gutters">
             {hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) && (
-              <Col>
-                <Button
-                  icon={
-                    <FaEye
-                      size={24}
-                      id={`compensation-view-${cellProps.row.id}`}
-                      data-testid={`compensation-view-${cellProps.row.id}`}
-                      title="Compensation view details"
-                    />
-                  }
-                  onClick={() => cellProps.row.original.id && onShow(cellProps.row.original.id)}
-                ></Button>
-              </Col>
+              <Button
+                icon={
+                  <FaEye
+                    size={24}
+                    id={`compensation-view-${cellProps.row.id}`}
+                    data-testid={`compensation-view-${cellProps.row.id}`}
+                    title="Compensation view details"
+                  />
+                }
+                onClick={() => cellProps.row.original.id && onShow(cellProps.row.original.id)}
+              ></Button>
             )}
             {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
               canEditDetails(cellProps.row.original.isDraft) && (
