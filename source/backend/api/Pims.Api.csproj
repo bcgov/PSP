@@ -74,6 +74,16 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Areas\Leases\Models\Lease\" />
+    <Compile Remove="Areas\Leases\Models\Lease\**" />
+    <Content Remove="Areas\Leases\Models\Lease\**" />
+    <EmbeddedResource Remove="Areas\Leases\Models\Lease\**" />
+    <EntityDeploy Remove="Areas\Leases\Models\Lease\**" />
+    <None Remove="Areas\Leases\Models\Lease\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Areas\Contacts\Mapping\Contact\" />
+    <Folder Include="Areas\Keycloak\Mapping\AccessRequest\" />
+    <Folder Include="Areas\Keycloak\Mapping\Role\" />
+    <Folder Include="Areas\Keycloak\Mapping\User\" />
   </ItemGroup>
 </Project>
