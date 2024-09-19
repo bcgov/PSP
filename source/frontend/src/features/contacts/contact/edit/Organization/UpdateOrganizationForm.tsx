@@ -18,8 +18,9 @@ import * as Styled from '@/features/contacts/contact/edit/styles';
 import { IEditableOrganizationForm } from '@/features/contacts/formModels';
 import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
 import useUpdateContact from '@/features/contacts/hooks/useUpdateContact';
-import { IContactPerson } from '@/interfaces/IContact';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { isValidId } from '@/utils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { OrganizationSubForm } from '../../Organization/OrganizationSubForm';
 import { onValidateOrganization } from '../../utils/contactUtils';
@@ -87,7 +88,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
   const [showConfirmation, setShowConfirmation] = useState(false);
 
   const organizationId = getIn(values, 'id');
-  const persons = getIn(values, 'persons') as Partial<IContactPerson>[];
+  const persons = getIn(values, 'persons') as Partial<ApiGen_Concepts_Person>[];
 
   const onCancel = () => {
     if (dirty) {
@@ -153,18 +154,24 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
                 tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page"
               >
                 {persons &&
-                  persons.map((person, index: number) => (
-                    <Styled.ContactLink key={'organization-person-' + person.id + '-contact'}>
-                      <Link
-                        to={'/contact/P' + person.id}
-                        data-testid={`contact-organization-person-${index}`}
-                        key={`org-person-${index}`}
-                        className="d-block"
-                      >
-                        {person.fullName}
-                      </Link>
-                    </Styled.ContactLink>
-                  ))}
+                  persons.map((person, index: number) =>
+                    person?.id ? (
+                      <Styled.ContactLink key={'organization-person-' + person.id + '-contact'}>
+                        <Link
+                          to={'/contact/P' + person.id}
+                          data-testid={`contact-organization-person-${index}`}
+                          key={`org-person-${index}`}
+                          className="d-block"
+                        >
+                          {
+                            formatApiPersonNames(
+                              person as ApiGen_Concepts_Person,
+                            ) /**cast is safe due to id check above*/
+                          }
+                        </Link>
+                      </Styled.ContactLink>
+                    ) : null,
+                  )}
               </SectionField>
             </Section>
             <Section header="Mailing Address" isCollapsable initiallyExpanded>

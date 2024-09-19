@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,20 +44,6 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
-
-        /// <summary>
-        /// Get all of the role code values.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("roles")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.RoleModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "lookup" })]
-        public IActionResult GetRoles()
-        {
-            var roleCodes = _mapper.Map<Model.RoleModel[]>(_lookupRepository.GetAllRoles());
-            return new JsonResult(roleCodes.ToArray());
-        }
 
         /// <summary>
         /// Get all of the code values.
