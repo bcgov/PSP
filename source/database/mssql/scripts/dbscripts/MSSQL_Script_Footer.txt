@@ -1,0 +1,10 @@
+If Xact_State()=1
+Begin
+    Print 'Committing Tranaction...'
+    Commit tran
+End
+Else If Xact_State()=-1
+Begin
+    Print 'Rolling Back Transaction...'
+    RollBack Tran
+End
