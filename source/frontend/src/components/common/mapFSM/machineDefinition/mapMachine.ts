@@ -346,7 +346,7 @@ const advancedFilterSideBarStates = {
     closed: {
       on: {
         TOGGLE_FILTER: {
-          target: 'filtering',
+          target: 'mapFilterOpened',
         },
         TOGGLE_LAYERS: {
           target: 'layerControl',
@@ -356,7 +356,7 @@ const advancedFilterSideBarStates = {
     layerControl: {
       on: {
         TOGGLE_FILTER: {
-          target: 'filtering',
+          target: 'mapFilterOpened',
         },
         TOGGLE_LAYERS: {
           target: 'closed',
@@ -366,13 +366,14 @@ const advancedFilterSideBarStates = {
         },
       },
     },
-    filtering: {
-      entry: [send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter })],
-      exit: [send({ type: 'REFRESH_PROPERTIES' })],
+    mapFilterOpened: {
+      entry: [
+        send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter }),
+        assign({ isFiltering: () => true }),
+      ],
       on: {
         TOGGLE_FILTER: {
           target: 'closed',
-          actions: [assign({ showDisposed: () => false }), assign({ showRetired: () => false })],
         },
         TOGGLE_LAYERS: {
           target: 'layerControl',
@@ -385,6 +386,18 @@ const advancedFilterSideBarStates = {
         },
         SET_SHOW_RETIRED: {
           actions: assign({ showRetired: (_, event: any) => event.show }),
+        },
+        RESET_FILTER: {
+          target: 'closed',
+          actions: [
+            send({ type: 'REFRESH_PROPERTIES' }),
+            assign({
+              isFiltering: () => false,
+              showDisposed: () => false,
+              showRetired: () => false,
+              activePimsPropertyIds: () => [],
+            }),
+          ],
         },
       },
     },
@@ -423,6 +436,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureData: emptyFeatureData,
     filePropertyLocations: [],
     activePimsPropertyIds: [],
+    isFiltering: false,
     showDisposed: false,
     showRetired: false,
     activeLayers: [],
