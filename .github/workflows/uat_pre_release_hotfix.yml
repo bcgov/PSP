@@ -172,7 +172,7 @@ jobs:
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
 
-## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
+  ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
@@ -186,7 +186,7 @@ jobs:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
-          namespace: $NAMESPACE_OVERRIDE
+          namespace: ${{ env.NAMESPACE_OVERRIDE }}
       - name: call scripts to sync keycloak
         shell: bash
         run: |

@@ -1,14 +1,14 @@
 <featureType>
   <id>FeatureTypeInfoImpl--e178501:19176ab16e3:-6a2f</id>
-  <name>PIMS_PROPERTY_LOCATION_MINIMAL_VW</name>
-  <nativeName>PIMS_PROPERTY_LOCATION_MINIMAL_VW</nativeName>
+  <name>PIMS_PROPERTY_LOCATION_LITE_VW</name>
+  <nativeName>PIMS_PROPERTY_LOCATION_LITE_VW</nativeName>
   <namespace>
     <id>NamespaceInfoImpl-7e0faa3c:17c208de014:-7ff5</id>
   </namespace>
-  <title>PIMS_PROPERTY_LOCATION_MINIMAL_VW</title>
+  <title>PIMS_PROPERTY_LOCATION_LITE_VW</title>
   <keywords>
     <string>features</string>
-    <string>PIMS_PROPERTY_LOCATION_MINIMAL_VW</string>
+    <string>PIMS_PROPERTY_LOCATION_LITE_VW</string>
   </keywords>
   <nativeCRS class="projected">PROJCS[&quot;NAD83 / BC Albers&quot;, 
   GEOGCS[&quot;NAD83&quot;, 
