@@ -11,6 +11,7 @@ import PropertyOfInterestPng from '@/assets/images/pins/land-poi.png';
 import CoreInventoryPng from '@/assets/images/pins/land-reg.png';
 import OtherInterestPng from '@/assets/images/pins/other-interest.png';
 import RetiredPng from '@/assets/images/pins/retired.png';
+import { ResetButton } from '@/components/common/buttons';
 import { Check, Select, SelectOption } from '@/components/common/form';
 import { Multiselect } from '@/components/common/form/Multiselect';
 import { ProjectSelector } from '@/components/common/form/ProjectSelector/ProjectSelector';
@@ -37,11 +38,13 @@ const FormObserver: React.FC<IFormObserverProps> = ({ onChange }) => {
 
 export interface IFilterContentFormProps {
   onChange: (model: PropertyFilterFormModel) => void;
+  onReset: () => void;
   isLoading: boolean;
 }
 
 export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentFormProps>> = ({
   onChange,
+  onReset,
   isLoading,
 }) => {
   const initialFilter = useMemo(() => {
@@ -102,6 +105,10 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
       <Form>
         <FormObserver onChange={onChange} />
         <LoadingBackdrop show={isLoading} parentScreen />
+        <StyledResetContainer>
+          <ResetButton onClick={onReset} />
+          <span>Reset to Default</span>
+        </StyledResetContainer>
         <Section header="Show Ownership" isCollapsable initiallyExpanded>
           <SectionField label={null} contentWidth="12">
             <Row>
@@ -252,4 +259,11 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
 
 const StyledSpan = styled.span`
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
+`;
+
+const StyledResetContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  background-color: ${props => props.theme.css.pimsWhite};
 `;
