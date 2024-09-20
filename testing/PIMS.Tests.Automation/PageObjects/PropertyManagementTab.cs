@@ -8,121 +8,121 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementTabLink = By.CssSelector("a[data-rb-event-key='management']");
 
         //View Summary Elements
-        private By managementSummaryTitle = By.XPath("//div[contains(text(),'Summary')]");
-        private By managementPropertyPurposeLabel = By.XPath("//label[contains(text(),'Property purpose')]");
-        private By managementPropertyPurposeContent = By.XPath("//div[contains(text(),'Summary')]/parent::div/parent::h2/parent::div/div/div/div/div//div[@id='multiselectContainerReact']/div/span");
-        private By managementLeaseLabel = By.XPath("//label[contains(text(),'Active Lease/License')]");
-        private By managementLeaseContent = By.XPath("//label[contains(text(),'Active Lease/License')]/parent::div/following-sibling::div");
-        private By managementUtilitiesPayableLabel = By.XPath("//label[contains(text(),'Utilities payable')]");
-        private By managementUtilitiesPayableContent = By.XPath("//label[contains(text(),'Utilities payable')]/parent::div/following-sibling::div");
-        private By managementTaxesPayableLabel = By.XPath("//label[contains(text(),'Taxes payable')]");
-        private By managementTaxesPayableContent = By.XPath("//label[contains(text(),'Taxes payable')]/parent::div/following-sibling::div");
-        private By managementAdditionalDetailsLabel = By.XPath("//label[contains(text(),'Additional details')]");
-        private By managementAdditionalDetailsContent = By.XPath("//label[contains(text(),'Additional details')]/parent::div/following-sibling::div");
+        private readonly By managementSummaryTitle = By.XPath("//div[contains(text(),'Summary')]");
+        private readonly By managementPropertyPurposeLabel = By.XPath("//label[contains(text(),'Property purpose')]");
+        private readonly By managementPropertyPurposeContent = By.XPath("//div[contains(text(),'Summary')]/parent::div/parent::h2/parent::div/div/div/div/div//div[@id='multiselectContainerReact']/div/span");
+        private readonly By managementLeaseLabel = By.XPath("//label[contains(text(),'Active Lease/License')]");
+        private readonly By managementLeaseContent = By.XPath("//label[contains(text(),'Active Lease/License')]/parent::div/following-sibling::div");
+        private readonly By managementUtilitiesPayableLabel = By.XPath("//label[contains(text(),'Utilities payable')]");
+        private readonly By managementUtilitiesPayableContent = By.XPath("//label[contains(text(),'Utilities payable')]/parent::div/following-sibling::div");
+        private readonly By managementTaxesPayableLabel = By.XPath("//label[contains(text(),'Taxes payable')]");
+        private readonly By managementTaxesPayableContent = By.XPath("//label[contains(text(),'Taxes payable')]/parent::div/following-sibling::div");
+        private readonly By managementAdditionalDetailsLabel = By.XPath("//label[contains(text(),'Additional details')]");
+        private readonly By managementAdditionalDetailsContent = By.XPath("//label[contains(text(),'Additional details')]/parent::div/following-sibling::div");
 
         //Create Summary Elements
-        private By managementSummaryEditBttn = By.XPath("//div[contains(text(),'Summary')]/parent::div/parent::h2/following-sibling::div/div/button[@data-testid='edit-button']");
-        private By managementPropertyPurposeInput = By.Id("multiselect-managementPurposes_input");
-        private By managementPropertyPurposeOptions = By.XPath("//input[@id='multiselect-managementPurposes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
-        private By managementPropertyPurposeDeleteBttns = By.CssSelector("div[id='multiselect-managementPurposes'] i[class='custom-close']");
-        private By managementCreateLeaseLabel = By.XPath("//label[contains(text(),'Lease/Licensed')]");
-        private By managementUtilitiesPayableSelect = By.Id("input-isUtilitiesPayable");
-        private By managementTaxesPayableSelect = By.Id("input-isTaxesPayable");
-        private By managementAdditionalDetailsTextarea = By.Id("input-additionalDetails");
+        private readonly By managementSummaryEditBttn = By.XPath("//div[contains(text(),'Summary')]/parent::div/parent::h2/following-sibling::div/div/button[@data-testid='edit-button']");
+        private readonly By managementPropertyPurposeInput = By.Id("multiselect-managementPurposes_input");
+        private readonly By managementPropertyPurposeOptions = By.XPath("//input[@id='multiselect-managementPurposes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By managementPropertyPurposeDeleteBttns = By.CssSelector("div[id='multiselect-managementPurposes'] i[class='custom-close']");
+        private readonly By managementCreateLeaseLabel = By.XPath("//label[contains(text(),'Lease/Licensed')]");
+        private readonly By managementUtilitiesPayableSelect = By.Id("input-isUtilitiesPayable");
+        private readonly By managementTaxesPayableSelect = By.Id("input-isTaxesPayable");
+        private readonly By managementAdditionalDetailsTextarea = By.Id("input-additionalDetails");
 
         //View Property Contacts List Elements
-        private By managementContactTitle = By.XPath("//div[contains(text(),'Property Contact')]");
-        private By managementeAddContactBttn = By.XPath("//div[contains(text(),'Property Contact')]/following-sibling::div/button");
-        private By managementContactsTable = By.CssSelector("div[data-testid='PropertyContactsTable']");
-        private By managementContactsBodyCount = By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']");
-        private By managementContactsDeleteBttns = By.CssSelector("button[title='Delete contact']");
-        private By managementContactsFirstDeleteBttn = By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) [title='Delete contact']");
+        private readonly By managementContactTitle = By.XPath("//div[contains(text(),'Property Contact')]");
+        private readonly By managementeAddContactBttn = By.XPath("//div[contains(text(),'Property Contact')]/following-sibling::div/button");
+        private readonly By managementContactsTable = By.CssSelector("div[data-testid='PropertyContactsTable']");
+        private readonly By managementContactsBodyCount = By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By managementContactsDeleteBttns = By.CssSelector("button[title='Delete contact']");
+        private readonly By managementContactsFirstDeleteBttn = By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) [title='Delete contact']");
 
         //Create Property Contacts Elements
-        private By managementContactDetailsTitle = By.XPath("//div[contains(text(),'Contact Details')]");
-        private By managementContactLabel = By.XPath("//div[contains(text(),'Contact Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Contact')]");
-        private By managementContactsDiv = By.XPath("//div[contains(text(),'Select from contacts')]");
-        private By managementContactsButton = By.XPath("//div[contains(text(),'Select from contacts')]/parent::div/following-sibling::div/button");
-        private By managementContactsPrimaryContactLabel = By.XPath("//label[contains(text(),'Primary contact')]");
-        private By managementContactPrimaryContactSelect = By.Id("input-primaryContactId");
-        private By managementContactsPurposeDescriptionLabel = By.XPath("//label[contains(text(),'Purpose description')]");
-        private By managementContactsPurposeDescriptionTextarea = By.Id("input-purposeDescription");
+        private readonly By managementContactDetailsTitle = By.XPath("//div[contains(text(),'Contact Details')]");
+        private readonly By managementContactLabel = By.XPath("//div[contains(text(),'Contact Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Contact')]");
+        private readonly By managementContactsDiv = By.XPath("//div[contains(text(),'Select from contacts')]");
+        private readonly By managementContactsButton = By.XPath("//div[contains(text(),'Select from contacts')]/parent::div/following-sibling::div/button");
+        private readonly By managementContactsPrimaryContactLabel = By.XPath("//label[contains(text(),'Primary contact')]");
+        private readonly By managementContactPrimaryContactSelect = By.Id("input-primaryContactId");
+        private readonly By managementContactsPurposeDescriptionLabel = By.XPath("//label[contains(text(),'Purpose description')]");
+        private readonly By managementContactsPurposeDescriptionTextarea = By.Id("input-purposeDescription");
 
         //View Activity List Elements
-        private By managementActivitiesTitle = By.XPath("//div[contains(text(),'Activities List')]");
-        private By managementeAddActivityBttn = By.XPath("//div[contains(text(),'Activities List')]/following-sibling::div/button");
-        private By managementActivitiesTable = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable']");
-        private By managementActivitiesBodyCount = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']");
-        private By managementActivitiesDeleteBttns = By.CssSelector("button[title='Delete']");
-        private By managementActivityPaginationOptions = By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
+        private readonly By managementActivitiesTitle = By.XPath("//div[contains(text(),'Activities List')]");
+        private readonly By managementeAddActivityBttn = By.XPath("//div[contains(text(),'Activities List')]/following-sibling::div/button");
+        private readonly By managementActivitiesTable = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable']");
+        private readonly By managementActivitiesBodyCount = By.CssSelector("div[data-testid='PropertyManagementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By managementActivitiesDeleteBttns = By.CssSelector("button[title='Delete']");
+        private readonly By managementActivityPaginationOptions = By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
         
 
         //Create Activity Elements
         //Activity Details
-        private By managementActCloseTrayBttn = By.CssSelector("button[id='close-tray']");
-        private By managementActEditButton = By.CssSelector("button[title='Edit property activity']");
-        private By managementActivityDetailsTitle = By.XPath("//div[contains(text(),'Activity Details')]");
-        private By managementActTypeLabel = By.XPath("//label[contains(text(),'Activity type')]");
-        private By managementActTypeInput = By.Id("input-activityTypeCode");
-        private By managementActTypeContent = By.XPath("//label[contains(text(),'Activity type')]/parent::div/following-sibling::div");
-        private By managementActSubTypeLabel = By.XPath("//label[contains(text(),'Sub-type')]");
-        private By managementActSubTypeInput = By.Id("input-activitySubtypeCode");
-        private By managementActSubTypeContent = By.XPath("//label[contains(text(),'Sub-type')]/parent::div/following-sibling::div");
-        private By managementActStatusLabel = By.XPath("//label[contains(text(),'Activity status')]");
-        private By managementActStatusInput = By.Id("input-activityStatusCode");
-        private By managementActStatusContent = By.XPath("//label[contains(text(),'Activity status')]/parent::div/following-sibling::div");
-        private By managementActRequestAddedDateLabel = By.XPath("//label[contains(text(),'Requested added date')]");
-        private By managementActRequestAddedDateInput = By.Id("datepicker-requestedDate");
-        private By managementActRequestAddedDateContent = By.XPath("//label[contains(text(),'Requested added date')]/parent::div/following-sibling::div");
-        private By managementActCompletionDateLabel = By.XPath("//label[contains(text(),'Completion date')]");
-        private By managementActCompletionDateInput = By.Id("datepicker-completionDate");
-        private By managementActCompletionDateContent = By.XPath("//label[contains(text(),'Completion date')]/parent::div/following-sibling::div");
-        private By managementActDescriptionLabel = By.XPath("//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
-        private By managementActDescriptionInput = By.Id("input-description");
-        private By managementActDescriptionContent = By.XPath("//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
-        private By managementActMinistryContactLabel = By.XPath("//label[contains(text(),'Ministry contacts')]");
-        private By managementActMinistryContactInput = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
-        private By managementActMinistryContactBttn = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/div/div/div/button");
-        private By managementActMinistryContactAddContactLink = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/following-sibling::button");
-        private By managementActMinistryContactDeleteBttns = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/button");
-        private By managementActMinistryContactContent = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/a/span");
-        private By managementActRequestedSourceLabel = By.XPath("//label[contains(text(),'Requested source')]");
-        private By managementActRequestedSourceInput = By.Id("input-requestedSource");
-        private By managementActRequestedSourceContent = By.XPath("//label[contains(text(),'Requested source')]/parent::div/following-sibling::div");
-        private By managementActInvolvedPartiesLabel = By.XPath("//label[contains(text(),'Involved parties')]");
-        private By managementActInvolvedPartiesInput = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
-        private By managementActInvolvedPartiesBttn = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div/button");
-        private By managementActInvolvedPartiesAddContactLink = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/following-sibling::button");
-        private By managementActInvolvedPartiesDeleteBttns = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/button");
-        private By managementActInvolvedPartiesContent = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/a/span");
-        private By managementActServiceProviderLabel = By.XPath("//label[contains(text(),'Service provider')]");
-        private By managementActServiceProviderInput = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/div[contains(text(),'Select from contacts')]");
-        private By managementActServiceProviderBttn = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/button");
-        private By managementActServiceProviderContent = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/a/span");
+        private readonly By managementActCloseTrayBttn = By.CssSelector("button[id='close-tray']");
+        private readonly By managementActEditButton = By.CssSelector("button[title='Edit property activity']");
+        private readonly By managementActivityDetailsTitle = By.XPath("//div[contains(text(),'Activity Details')]");
+        private readonly By managementActTypeLabel = By.XPath("//label[contains(text(),'Activity type')]");
+        private readonly By managementActTypeInput = By.Id("input-activityTypeCode");
+        private readonly By managementActTypeContent = By.XPath("//label[contains(text(),'Activity type')]/parent::div/following-sibling::div");
+        private readonly By managementActSubTypeLabel = By.XPath("//label[contains(text(),'Sub-type')]");
+        private readonly By managementActSubTypeInput = By.Id("input-activitySubtypeCode");
+        private readonly By managementActSubTypeContent = By.XPath("//label[contains(text(),'Sub-type')]/parent::div/following-sibling::div");
+        private readonly By managementActStatusLabel = By.XPath("//label[contains(text(),'Activity status')]");
+        private readonly By managementActStatusInput = By.Id("input-activityStatusCode");
+        private readonly By managementActStatusContent = By.XPath("//label[contains(text(),'Activity status')]/parent::div/following-sibling::div");
+        private readonly By managementActRequestAddedDateLabel = By.XPath("//label[contains(text(),'Requested added date')]");
+        private readonly By managementActRequestAddedDateInput = By.Id("datepicker-requestedDate");
+        private readonly By managementActRequestAddedDateContent = By.XPath("//label[contains(text(),'Requested added date')]/parent::div/following-sibling::div");
+        private readonly By managementActCompletionDateLabel = By.XPath("//label[contains(text(),'Completion date')]");
+        private readonly By managementActCompletionDateInput = By.Id("datepicker-completionDate");
+        private readonly By managementActCompletionDateContent = By.XPath("//label[contains(text(),'Completion date')]/parent::div/following-sibling::div");
+        private readonly By managementActDescriptionLabel = By.XPath("//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]");
+        private readonly By managementActDescriptionInput = By.Id("input-description");
+        private readonly By managementActDescriptionContent = By.XPath("//div[contains(text(),'Activity Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Description')]/parent::div/following-sibling::div");
+        private readonly By managementActMinistryContactLabel = By.XPath("//label[contains(text(),'Ministry contacts')]");
+        private readonly By managementActMinistryContactInput = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
+        private readonly By managementActMinistryContactBttn = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/div/div/div/button");
+        private readonly By managementActMinistryContactAddContactLink = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/following-sibling::button");
+        private readonly By managementActMinistryContactDeleteBttns = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/button");
+        private readonly By managementActMinistryContactContent = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/a/span");
+        private readonly By managementActRequestedSourceLabel = By.XPath("//label[contains(text(),'Requested source')]");
+        private readonly By managementActRequestedSourceInput = By.Id("input-requestedSource");
+        private readonly By managementActRequestedSourceContent = By.XPath("//label[contains(text(),'Requested source')]/parent::div/following-sibling::div");
+        private readonly By managementActInvolvedPartiesLabel = By.XPath("//label[contains(text(),'Involved parties')]");
+        private readonly By managementActInvolvedPartiesInput = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
+        private readonly By managementActInvolvedPartiesBttn = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div/button");
+        private readonly By managementActInvolvedPartiesAddContactLink = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/following-sibling::button");
+        private readonly By managementActInvolvedPartiesDeleteBttns = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/button");
+        private readonly By managementActInvolvedPartiesContent = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/a/span");
+        private readonly By managementActServiceProviderLabel = By.XPath("//label[contains(text(),'Service provider')]");
+        private readonly By managementActServiceProviderInput = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/div[contains(text(),'Select from contacts')]");
+        private readonly By managementActServiceProviderBttn = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/button");
+        private readonly By managementActServiceProviderContent = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/a/span");
 
-        private By managementActInvoiceTotalsSubtitle = By.XPath("//div[contains(text(),'Invoices Total')]");
-        private By managementActInvoiceTotalPretaxLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total (before tax)')]");
-        private By managementActInvoiceTotalPretaxContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total (before tax)')]/parent::div/following-sibling::div");
-        private By managementActInvoiceTotalGSTLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]");
-        private By managementActInvoiceTotalGSTContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]/parent::div/following-sibling::div");
-        private By managementActInvoiceTotalPSTLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PST amount')]");
-        private By managementActInvoiceTotalPSTContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PST amount')]/parent::div/following-sibling::div");
-        private By managementActInvoiceGrandTotalLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]");
-        private By managementActInvoiceGrandTotalContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]/parent::div/following-sibling::div");
+        private readonly By managementActInvoiceTotalsSubtitle = By.XPath("//div[contains(text(),'Invoices Total')]");
+        private readonly By managementActInvoiceTotalPretaxLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total (before tax)')]");
+        private readonly By managementActInvoiceTotalPretaxContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total (before tax)')]/parent::div/following-sibling::div");
+        private readonly By managementActInvoiceTotalGSTLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]");
+        private readonly By managementActInvoiceTotalGSTContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]/parent::div/following-sibling::div");
+        private readonly By managementActInvoiceTotalPSTLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PST amount')]");
+        private readonly By managementActInvoiceTotalPSTContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PST amount')]/parent::div/following-sibling::div");
+        private readonly By managementActInvoiceGrandTotalLabel = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]");
+        private readonly By managementActInvoiceGrandTotalContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]/parent::div/following-sibling::div");
 
         //Invoices View Element
-        private By managementAddInvoiceBttn = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/parent::div/preceding-sibling::div/div/button");
-        private By managementInvoicesTotalSubtitle = By.XPath("//div[contains(text(),'Invoices Total')]");
-        private By managementActPretaxAmountLabel = By.XPath("//label[contains(text(),'Total (before tax)')]");
-        private By managementActPretaxAmountInput = By.Id("input-pretaxAmount");
-        private By managementActGSTAmountLabel = By.XPath("//label[contains(text(),'GST amount')]");
-        private By managementActGSTAmountInput = By.Id("input-gstAmount");
-        private By managementActPSTAmountLabel = By.XPath("//label[contains(text(),'PST amount')]");
-        private By managementActPSTAmountInput = By.Id("input-pstAmount");
-        private By managementActTotalAmountLabel = By.XPath("//label[contains(text(),'Total amount')]");
-        private By managementActTotalAmountInput = By.Id("input-totalAmount");
+        private readonly By managementAddInvoiceBttn = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/parent::div/preceding-sibling::div/div/button");
+        private readonly By managementInvoicesTotalSubtitle = By.XPath("//div[contains(text(),'Invoices Total')]");
+        private readonly By managementActPretaxAmountLabel = By.XPath("//label[contains(text(),'Total (before tax)')]");
+        private readonly By managementActPretaxAmountInput = By.Id("input-pretaxAmount");
+        private readonly By managementActGSTAmountLabel = By.XPath("//label[contains(text(),'GST amount')]");
+        private readonly By managementActGSTAmountInput = By.Id("input-gstAmount");
+        private readonly By managementActPSTAmountLabel = By.XPath("//label[contains(text(),'PST amount')]");
+        private readonly By managementActPSTAmountInput = By.Id("input-pstAmount");
+        private readonly By managementActTotalAmountLabel = By.XPath("//label[contains(text(),'Total amount')]");
+        private readonly By managementActTotalAmountInput = By.Id("input-totalAmount");
 
-        private By managementActAddDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/parent::div/div/button");
+        private readonly By managementActAddDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/parent::div/div/button");
 
         private SharedModals sharedModals;
         private SharedSelectContact sharedSelectContact;
@@ -159,7 +159,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
-            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/div[1]/button")).Click();
+            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/button[1]")).Click();
 
         }
 
@@ -205,6 +205,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     webDriver.FindElements(managementPropertyPurposeDeleteBttns)[0].Click();
                 }
+                webDriver.FindElement(managementPropertyPurposeLabel).Click();
             }
             //Add Property Purpose
             if (managementProperty.ManagementPropertyPurpose.First() != "")
@@ -212,10 +213,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearMultiSelectInput(managementPropertyPurposeInput);
                 foreach (string purpose in managementProperty.ManagementPropertyPurpose)
                 {
+                    webDriver.FindElement(managementPropertyPurposeLabel).Click();
                     FocusAndClick(managementPropertyPurposeInput);
 
                     WaitUntilClickable(managementPropertyPurposeOptions);
                     ChooseMultiSelectSpecificOption(managementPropertyPurposeOptions, purpose);
+                    webDriver.FindElement(managementPropertyPurposeLabel).Click();
                 }
             }
             if (managementProperty.ManagementUtilitiesPayable != "")
@@ -357,7 +360,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SavePropertyManagement()
         {
             ButtonElement("Save");
-
             WaitUntilVisible(managementSummaryEditBttn);
         }
 
@@ -534,7 +536,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLastInsertedPropertyContactTable(PropertyContact contact)
         {
-            Wait();
+            Wait(3000);
 
             var lastInsertedContactIndex = webDriver.FindElements(managementContactsBodyCount).Count;
 
@@ -628,7 +630,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void AddInvoice(ManagementPropertyActivityInvoice invoice, int index)
         {
-            WaitUntilClickable(managementAddInvoiceBttn);
+            Wait();
             webDriver.FindElement(managementAddInvoiceBttn).Click();
 
             Wait();

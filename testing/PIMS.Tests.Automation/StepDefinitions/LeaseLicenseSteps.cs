@@ -667,11 +667,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
 
             //Close Main Information Window
-            propertyInformation.ClosePropertyInfoModal();
+            propertyInformation.HideLeftSideForms();
 
             //Start a new lease from pop-up
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Lease/License");
+
+            //Open Left Side Forms
+            propertyInformation.ShowLeftSideForms();
 
             //Fill basic information on the form
             leaseDetails.CreateMinimumLicenseDetails(lease);

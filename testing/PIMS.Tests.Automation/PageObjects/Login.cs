@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
-using PIMS.Tests.Automation.Classes;
-using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -14,13 +12,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By submitUserBttn = By.Name("btnSubmit");
 
         private By initToastBody = By.CssSelector("div[class='Toastify__toast-body']");
-
-        private SharedModals sharedModal;
+        private WebDriverWait wait;
 
 
         public Login(IWebDriver webDriver) : base(webDriver)
         {
-            sharedModal = new SharedModals(webDriver);
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
         }
 
         public void LoginToPIMS()
@@ -43,9 +40,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(submitUserBttn);
             webDriver.FindElement(submitUserBttn).Click();
 
-            //WaitUntilVisible(initToastBody);
             WaitUntilSpinnerDisappear();
-
         }
     }
 }

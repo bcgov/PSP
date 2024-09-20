@@ -294,8 +294,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveProject()
         {
-            WaitUntilClickable(projectSaveButton);
-            FocusAndClick(projectSaveButton);
+            Wait();
+            webDriver.FindElement(projectSaveButton).Click();
 
             Wait();
             if (webDriver.FindElements(projectOverrideConfirmationModal).Count() > 0)

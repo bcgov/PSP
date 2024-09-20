@@ -55,6 +55,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             subdivisionConsolidationProps.SaveSubdivision();
         }
 
+        [StepDefinition(@"I create a Subdivision without finishing from row number (.*)")]
+        public void CreateWithoutSaveSubdivision(int rowNumber)
+        {
+            //TEST COVERAGE: PSP-7952, PSP-7953, PSP-7958
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Subdivision Menu
+            PopulateSubdivisionData(rowNumber);
+            subdivisionConsolidationProps.NavigateToCreateNewSubdivision();
+
+            //Create a Subdivision
+            subdivisionConsolidationProps.CreateSubdivision(propertySubdivision);
+        }
+
         [StepDefinition(@"I create a Consolidation from row number (.*)")]
         public void CreateConsolidation(int rowNumber)
         {
@@ -110,7 +126,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Subdivision has the same Child twice error")]
         public void SubdivisionSameDestinationTwiceError()
         {
-
             subdivisionConsolidationProps.VerifyInvalidSubdivisionChildMessage();
             subdivisionConsolidationProps.Dispose();
         }

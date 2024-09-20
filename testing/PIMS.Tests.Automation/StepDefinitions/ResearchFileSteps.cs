@@ -232,11 +232,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
 
             //Close Property Information Modal
-            propertyInformation.ClosePropertyInfoModal();
+            propertyInformation.HideLeftSideForms();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Research File");
+
+            //Open Left Side Forms
+            propertyInformation.ShowLeftSideForms();
 
             //Fill basic Research File information
             researchFiles.CreateResearchFile(researchFile);
