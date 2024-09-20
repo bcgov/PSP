@@ -7,24 +7,26 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { H2, H3 } from '@/components/common/styles';
 import { AddressField } from '@/features/contacts/interfaces';
-import { IContactOrganization, IContactPerson } from '@/interfaces/IContact';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import * as Styled from '../../styles';
 import { toAddressFields } from '../utils/contactUtils';
 import ContactInfoSubForm from './ContactInfoSubForm';
 
 export interface PersonFormViewProps {
-  person: IContactPerson;
+  person: ApiGen_Concepts_Person;
 }
 
 const PersonFormView: React.FunctionComponent<React.PropsWithChildren<PersonFormViewProps>> = ({
   person,
 }) => {
   let personAddresses: AddressField[];
-  if (person.addresses === undefined) {
+  if (person.personAddresses === undefined) {
     personAddresses = [];
   } else {
-    personAddresses = toAddressFields(person.addresses);
+    personAddresses = toAddressFields(person.personAddresses);
   }
 
   return (
@@ -46,7 +48,7 @@ const PersonFormView: React.FunctionComponent<React.PropsWithChildren<PersonForm
 
         <SectionField label="Individual name" labelWidth="4" valueTestId="contact-person-fullname">
           <FaRegUser size={20} className="mr-2" />
-          <b>{person.fullName}</b>
+          <b>{formatApiPersonNames(person)}</b>
         </SectionField>
 
         <SectionField label="Preferred name" labelWidth="4" valueTestId="contact-person-preferred">
@@ -58,15 +60,20 @@ const PersonFormView: React.FunctionComponent<React.PropsWithChildren<PersonForm
           labelWidth="4"
           valueTestId="contact-person-organization"
         >
-          {person.organizations &&
-            person.organizations.map((organization: IContactOrganization, index: number) => (
-              <Styled.ContactLink key={'contact-person-' + person.id + '-organization'}>
-                <FaRegBuilding size={20} className="mr-2" />
-                <Link to={'/contact/O' + organization.id} key={'person-org-' + index}>
-                  {organization.name}
-                </Link>
-              </Styled.ContactLink>
-            ))}
+          {person.personOrganizations &&
+            person.personOrganizations.map(
+              (personOrganization: ApiGen_Concepts_PersonOrganization, index: number) => (
+                <Styled.ContactLink key={'contact-person-' + person.id + '-organization'}>
+                  <FaRegBuilding size={20} className="mr-2" />
+                  <Link
+                    to={'/contact/O' + personOrganization.organizationId}
+                    key={'person-org-' + index}
+                  >
+                    {personOrganization?.organization?.name}
+                  </Link>
+                </Styled.ContactLink>
+              ),
+            )}
         </SectionField>
 
         <H3 className="mt-10">Contact Info</H3>

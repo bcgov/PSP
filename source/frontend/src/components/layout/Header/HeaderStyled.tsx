@@ -46,10 +46,6 @@ export const HeaderStyled = styled(Navbar)`
     flex-direction: row-reverse;
     align-items: center;
     padding: 0;
-    :hover {
-      color: red;
-      cursor: pointer;
-    }
   }
 
   .modal-content .label {

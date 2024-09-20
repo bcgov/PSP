@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { EmptyHeader, Footer } from '@/components/layout';
+import { EmptyHeader } from '@/components/layout';
+import EmptyFooter from '@/components/layout/Footer/EmptyFooter';
 
 import FooterStyled from './Footer';
 import HeaderStyled from './Header';
@@ -18,7 +19,7 @@ const EmptyLayout: React.FC<React.PropsWithChildren<React.HTMLAttributes<HTMLEle
         </HeaderStyled>
         {children}
         <FooterStyled>
-          <Footer />
+          <EmptyFooter />
         </FooterStyled>
       </Styled.EmptyAppGridContainer>
     </>
