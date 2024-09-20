@@ -123,11 +123,6 @@
         public string PropertyActivityInvoicePSTApplicable { get; set; } = null!;
         public string PropertyActivityInvoicePSTAmount { get; set; } = null!;
         public string PropertyActivityInvoiceTotalAmount { get; set; } = null!;
-
-        public static implicit operator List<object>(ManagementPropertyActivityInvoice v)
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public class PropertyHistory
