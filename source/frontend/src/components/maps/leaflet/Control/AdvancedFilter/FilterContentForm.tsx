@@ -106,7 +106,7 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
         <FormObserver onChange={onChange} />
         <LoadingBackdrop show={isLoading} parentScreen />
         <StyledResetContainer>
-          <ResetButton onClick={onReset} />
+          <StyledResetButton onClick={onReset} />
           <span>Reset to Default</span>
         </StyledResetContainer>
         <Section header="Show Ownership" isCollapsable initiallyExpanded>
@@ -264,6 +264,20 @@ const StyledSpan = styled.span`
 const StyledResetContainer = styled.div`
   display: flex;
   flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
   width: 100%;
+  min-height: 6.5rem;
+  margin: 0;
+  padding: 0 3.2rem;
+  box-sizing: border-box;
   background-color: ${props => props.theme.css.pimsWhite};
+`;
+
+const StyledResetButton = styled(ResetButton)`
+  &&.btn {
+    &.btn-info {
+      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    }
+  }
 `;
