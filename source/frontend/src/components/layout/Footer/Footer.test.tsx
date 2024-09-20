@@ -1,7 +1,9 @@
-import renderer from 'react-test-renderer';
-
-import Footer from './Footer';
+import configureMockStore from 'redux-mock-store';
+import thunk from 'redux-thunk';
 import IApiVersion from '@/hooks/pims-api/interfaces/IApiVersion';
+import { createMemoryHistory } from 'history';
+import { RenderOptions, render } from '@/utils/test-utils';
+import Footer from './Footer';
 
 const defaultVersion: IApiVersion = {
   environment: 'test',
@@ -14,6 +16,21 @@ const mockGetVersion = vi.fn(async () => {
   return Promise.resolve({ data: defaultVersion });
 });
 
+const mockStore = configureMockStore([thunk]);
+const history = createMemoryHistory();
+
+const store = mockStore({});
+
+const setup = (renderOptions: RenderOptions = {}) => {
+  const utils = render(<Footer />, {
+    store,
+    history,
+    useMockAuthentication: true,
+    keycloakMock: renderOptions.keycloakMock,
+  });
+  return { ...utils };
+};
+
 vi.mock('@/hooks/pims-api/useApiHealth', () => ({
   useApiHealth: () => ({
     getVersion: mockGetVersion,
@@ -22,7 +39,7 @@ vi.mock('@/hooks/pims-api/useApiHealth', () => ({
 
 describe('Footer', () => {
   it('renders correctly', () => {
-    const tree = renderer.create(<Footer />).toJSON();
-    expect(tree).toMatchSnapshot();
+    const { asFragment } = setup({});
+    expect(asFragment()).toMatchSnapshot();
   });
 });

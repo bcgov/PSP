@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -45,20 +44,6 @@ namespace Pims.Api.Controllers
         #endregion
 
         #region Endpoints
-
-        /// <summary>
-        /// Get all of the role code values.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet("roles")]
-        [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<Model.RoleModel>), 200)]
-        [SwaggerOperation(Tags = new[] { "lookup" })]
-        public IActionResult GetRoles()
-        {
-            var roleCodes = _mapper.Map<Model.RoleModel[]>(_lookupRepository.GetAllRoles());
-            return new JsonResult(roleCodes.ToArray());
-        }
 
         /// <summary>
         /// Get all of the code values.
@@ -146,6 +131,7 @@ namespace Pims.Api.Controllers
                 var historicalNumberTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllHistoricalNumberTypes());
                 var leaseChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseChecklistSectionTypes());
                 var leasePaymentCategoryTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePaymentCategoryTypes());
+                var consultationOutcomeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllConsultationOutcomeTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -220,6 +206,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(historicalNumberTypes);
                 codes.AddRange(leaseChecklistSectionTypes);
                 codes.AddRange(leasePaymentCategoryTypes);
+                codes.AddRange(consultationOutcomeTypes);
 
                 var response = new JsonResult(codes);
 

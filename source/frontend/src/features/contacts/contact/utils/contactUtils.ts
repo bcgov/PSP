@@ -3,7 +3,8 @@ import isEmpty from 'lodash/isEmpty';
 
 import { CountryCodes } from '@/constants/index';
 import { AddressField } from '@/features/contacts/interfaces';
-import { IContactAddress } from '@/interfaces/IContact';
+import { ApiGen_Concepts_OrganizationAddress } from '@/models/api/generated/ApiGen_Concepts_OrganizationAddress';
+import { ApiGen_Concepts_PersonAddress } from '@/models/api/generated/ApiGen_Concepts_PersonAddress';
 
 import { IEditableOrganizationForm, IEditablePersonForm } from '../../formModels';
 import {
@@ -51,27 +52,35 @@ export const onValidatePerson = (values: IEditablePersonForm, otherCountryId?: s
   }
 };
 
-export const toAddressFields = (addresses: IContactAddress[]) => {
+export const toAddressFields = (
+  addresses: ApiGen_Concepts_PersonAddress[] | ApiGen_Concepts_OrganizationAddress[],
+) => {
   return addresses
     .sort(sortAddresses)
-    .reduce((accumulator: AddressField[], value: IContactAddress) => {
-      accumulator.push({
-        label: value.addressType.description || '',
-        streetAddress1: value.streetAddress1,
-        streetAddress2: value.streetAddress2,
-        streetAddress3: value.streetAddress3,
-        municipalityAndProvince: [
-          value.municipality !== undefined ? value.municipality : '',
-          value.province?.provinceStateCode ?? '',
-        ]
-          .filter(x => !isEmpty(x))
-          .join(' '),
-        country:
-          value.country?.countryCode === CountryCodes.Other
-            ? value.countryOther ?? ''
-            : value.country?.description,
-        postal: value.postal,
-      });
-      return accumulator;
-    }, []);
+    .reduce(
+      (
+        accumulator: AddressField[],
+        value: ApiGen_Concepts_PersonAddress | ApiGen_Concepts_OrganizationAddress,
+      ) => {
+        accumulator.push({
+          label: value?.addressUsageType?.description || '',
+          streetAddress1: value?.address?.streetAddress1,
+          streetAddress2: value?.address?.streetAddress2,
+          streetAddress3: value?.address?.streetAddress3,
+          municipalityAndProvince: [
+            value?.address?.municipality !== undefined ? value?.address?.municipality : '',
+            value?.address?.province?.code ?? '',
+          ]
+            .filter(x => !isEmpty(x))
+            .join(' '),
+          country:
+            value?.address?.country?.code === CountryCodes.Other
+              ? value?.address?.countryOther ?? ''
+              : value?.address?.country?.description,
+          postal: value?.address?.postal,
+        });
+        return accumulator;
+      },
+      [],
+    );
 };

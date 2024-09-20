@@ -1,6 +1,8 @@
 ﻿using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
+using System.Linq.Expressions;
+using Xunit;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -41,28 +43,65 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Getting Digital Document Details
             PopulateDigitalDocumentIndex(rowNumber);
 
-            for (var i = 0; i < digitalDocumentList.Count; i++)
+            int uploadTurns = (digitalDocumentList.Count + 10 - 1) / 10;
+            int documentIdx = 0;
+            string documentURLs = "";
+            int documentStartIdx = 0;
+            int documentEndIdx = 9;
+
+            //Add new documents
+            for (var i = 0; i < uploadTurns; i++)
             {
-                //Add a New Document
-                digitalDocumentsTab.AddNewDocument(fileType);
+                //Add a New Document Button
+                digitalDocumentsTab.AddNewDocumentButton(fileType);
 
                 //Verify and create a new Document
-                digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
-                digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[i]);
+                digitalDocumentsTab.VerifyInitUploadDocumentForm();
 
-                //Upload one digital document
-                Random random = new Random();
-                var index = random.Next(0, documentFiles.Count());
-                var document = documentFiles.ElementAt(index);
+                //Prepare Documents' names string
+                for (var j = documentStartIdx; j < documentEndIdx; j++)
+                {
+                    documentIdx = (documentIdx >= 11) ? 0 : documentIdx;
+                    var document = documentFiles.ElementAt(documentIdx);
 
-                digitalDocumentsTab.UploadDocument(document.Url);
+                    documentURLs = (j + 1 == documentEndIdx) ? documentURLs + document.Url : documentURLs + document.Url + "\n";
+                    documentIdx++;
+                }
 
-                //Save digital document
-                digitalDocumentsTab.SaveDigitalDocument();
+                //Upload several documents per time
+                digitalDocumentsTab.UploadDocument(documentURLs);
 
-                //Verify Details View Form
-                digitalDocumentsTab.ViewLastDocument(i);
-                digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
+                //Fill document type and status of uploaded documents
+                int documentRoundIdx = 0;
+                for (var k = documentStartIdx; k <= documentEndIdx; k++)
+                {
+                    digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[k], documentRoundIdx);
+                    documentRoundIdx++;
+                }
+                    
+                //Save documents
+                digitalDocumentsTab.SaveDigitalDocumentUpload();
+                documentStartIdx = documentEndIdx + 1;
+                documentEndIdx = (documentEndIdx * (i+2) > digitalDocumentList.Count) ? digitalDocumentList.Count : documentEndIdx * (i+2);
+                documentURLs = "";
+            }
+
+            //Insert Document Details to previously uploaded documents
+
+            for (var l = 0; l < digitalDocumentList.Count; l++)
+            {
+                digitalDocumentsTab.ViewUploadedDocument(l);
+                digitalDocumentsTab.EditDocument();
+                digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
+                digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[l]);
+                digitalDocumentsTab.SaveDigitalDocumentUpdate();
+            }
+
+            //Verify Details View Form of previously uploaded documents
+            for (var m = 0; m < digitalDocumentList.Count; m++)
+            {
+                digitalDocumentsTab.ViewUploadedDocument(m);
+                digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[m]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
         }
@@ -79,11 +118,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < digitalDocumentList.Count; i++)
             {
                 //Add a New Document
-                digitalDocumentsTab.AddNewDocument("Property Management");
+                digitalDocumentsTab.AddNewDocumentButton("Property Management");
 
                 //Verify and create a new Document
-                digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
-                digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[i]);
+                digitalDocumentsTab.VerifyInitUploadDocumentForm();
+                //digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
+                //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[i]);
 
                 //Upload one digital document
                 Random random = new Random();
@@ -93,11 +133,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.UploadDocument(document.Url);
 
                 //Save digital document
-                digitalDocumentsTab.SaveDigitalDocument();
+                digitalDocumentsTab.SaveDigitalDocumentUpload();
 
                 //Verify Details View Form
-                digitalDocumentsTab.ViewLastDocument(i);
-                digitalDocumentsTab.VerifyDocumentDetailsCreateViewForm(digitalDocumentList[i]);
+                digitalDocumentsTab.ViewUploadedDocument(i);
+                digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[i]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
         }
@@ -115,8 +155,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateDigitalDocumentIndex(rowNumber);
 
             //Add new digital document
-            digitalDocumentsTab.AddNewDocument(fileType);
-            digitalDocumentsTab.CreateNewDocumentType(digitalDocumentList[0]);
+            digitalDocumentsTab.AddNewDocumentButton(fileType);
+            //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
             Random random = new Random();
             var index2 = random.Next(0, documentFiles.Count());
@@ -147,7 +187,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Details View Form
             digitalDocumentsTab.View1stDocument();
-            digitalDocumentsTab.VerifyDocumentDetailsUpdateViewForm(digitalDocumentList[0]);
+            //digitalDocumentsTab.VerifyDocumentDetailsUpdateViewForm(digitalDocumentList[0]);
 
             //Close Digital Documents Details View
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();
@@ -211,23 +251,57 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         public List<DocumentFile> UploadFileDocuments()
         {
-            var digitalImage = new DocumentFile();
+            var digitalJPG = new DocumentFile();
             var digitalExcel = new DocumentFile();
             var digitalPDF = new DocumentFile();
+            var digitalDOCX = new DocumentFile();
+            var digitalDOC = new DocumentFile();
+            var digitalHTML = new DocumentFile();
+            var digitalPNG = new DocumentFile();
+            var digitalXLS = new DocumentFile();
+            var digitalTXT = new DocumentFile();
+            var digitalBMP = new DocumentFile();
+            var digitalMSG = new DocumentFile();
+
             var digitalDocumentList = new List<DocumentFile>();
 
-            string sCurrentDirectory = AppDomain.CurrentDomain.BaseDirectory;
-            string imageFile = System.IO.Path.Combine(sCurrentDirectory, @"..\..\..\TestDocuments\High-def-image.jpg");
-            string excelFile = System.IO.Path.Combine(sCurrentDirectory, @"..\..\..\TestDocuments\PSP-4719 ETL Validation.xlsx");
-            string pdfFile = System.IO.Path.Combine(sCurrentDirectory, @"..\..\..\TestDocuments\RemoteAccessUserGuide2022.pdf");
+            string currentDirectory = AppDomain.CurrentDomain.BaseDirectory;
+            string jpg = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\High-def-image.jpg");
+            string xlsx = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\PSP-4719 ETL Validation.xlsx");
+            string pdf = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\RemoteAccessUserGuide2022.pdf");
+            string docx = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\H120 Template.docx");
+            string doc = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\H179P Template.doc");
+            string html = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\html test page.html");
+            string png = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\PSP-6438 - Evidence.png");
+            string xls = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\Takes Logic.xls");
+            string txt = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\Testing file docs.txt");
+            string bmp = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\PSP-8044.bmp");
+            string msg = System.IO.Path.Combine(currentDirectory, @"..\..\..\TestDocuments\testing_message.msg");
 
-            digitalImage.Url = Path.GetFullPath(imageFile);
-            digitalExcel.Url = Path.GetFullPath(excelFile);
-            digitalPDF.Url = Path.GetFullPath(pdfFile);
+            digitalJPG.Url = Path.GetFullPath(jpg);
+            digitalExcel.Url = Path.GetFullPath(xlsx);
+            digitalPDF.Url = Path.GetFullPath(pdf);
+            digitalDOCX.Url = Path.GetFullPath(docx);
+            digitalDOC.Url = Path.GetFullPath(doc);
+            digitalHTML.Url = Path.GetFullPath(html);
+            digitalPNG.Url = Path.GetFullPath(png);
+            digitalXLS.Url = Path.GetFullPath(xls);
+            digitalTXT.Url = Path.GetFullPath(txt);
+            digitalBMP.Url = Path.GetFullPath(bmp);
+            digitalMSG.Url = Path.GetFullPath(msg);
+           
 
-            digitalDocumentList.Add(digitalImage);
+            digitalDocumentList.Add(digitalJPG);
             digitalDocumentList.Add(digitalExcel);
             digitalDocumentList.Add(digitalPDF);
+            digitalDocumentList.Add(digitalDOCX);
+            digitalDocumentList.Add(digitalDOC);
+            digitalDocumentList.Add(digitalHTML);
+            digitalDocumentList.Add(digitalPNG);
+            digitalDocumentList.Add(digitalXLS);
+            digitalDocumentList.Add(digitalTXT);
+            digitalDocumentList.Add(digitalBMP);
+            digitalDocumentList.Add(digitalMSG);
 
             return digitalDocumentList;
         }

@@ -371,7 +371,7 @@ namespace Pims.Api.Services
         public PimsLeaseConsultation GetConsultationById(long consultationId)
         {
             _logger.LogInformation("Getting consultation with id: {consultationId}", consultationId);
-            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
 
             return _consultationRepository.GetConsultationById(consultationId);
         }

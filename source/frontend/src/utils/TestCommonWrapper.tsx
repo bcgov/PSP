@@ -8,7 +8,7 @@ import { vi } from 'vitest';
 
 import ModalContainer from '@/components/common/ModalContainer';
 import { ModalContextProvider } from '@/contexts/modalContext';
-import { IOrganization } from '@/interfaces';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { TenantConsumer, TenantProvider } from '@/tenants';
 
 import TestProviderWrapper from './TestProviderWrapper';
@@ -16,7 +16,7 @@ import TestRouterWrapper from './TestRouterWrapper';
 
 interface TestProviderWrapperParams {
   store?: any;
-  organizations?: IOrganization[];
+  organizations?: ApiGen_Concepts_Organization[];
   claims?: string[];
   roles?: string[];
   history?: MemoryHistory;
