@@ -138,7 +138,7 @@ export const getMockPerson = ({
   firstName: firstName,
   middleNames: '',
   comment: null,
-  preferredName: null,
+  preferredName: 'Preferred',
   personOrganizations: [
     {
       person: null,

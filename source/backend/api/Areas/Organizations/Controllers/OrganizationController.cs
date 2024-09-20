@@ -87,7 +87,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
         [HttpPost]
         [HasPermission(Permissions.ContactAdd)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(Areas.Contact.Models.Contact.ContactModel), 201)]
+        [ProducesResponseType(typeof(OrganizationModel), 201)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "organization" })]
         public IActionResult AddOrganization([FromBody] OrganizationModel model, bool userOverride = false)
@@ -109,7 +109,7 @@ namespace Pims.Api.Areas.Organizations.Controllers
             try
             {
                 var createdOrganization = _organizationService.AddOrganization(entity, userOverride);
-                var response = _mapper.Map<Areas.Contact.Models.Contact.OrganizationModel>(createdOrganization);
+                var response = _mapper.Map<OrganizationModel>(createdOrganization);
 
                 return new JsonResult(response);
             }

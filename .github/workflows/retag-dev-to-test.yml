@@ -127,7 +127,7 @@ jobs:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
-          namespace: $NAMESPACE_OVERRIDE
+          namespace: ${{ env.NAMESPACE_OVERRIDE }}
       - name: call scripts to sync keycloak
         shell: bash
         run: |
