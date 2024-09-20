@@ -20,7 +20,7 @@ import { TenantContext } from '@/tenants';
  */
 export const usePimsPropertyLayer = () => {
   const {
-    tenant: { propertiesUrl, boundaryLayerUrl },
+    tenant: { propertiesUrl, boundaryLayerUrl, minimalPropertiesUrl },
   } = useContext(TenantContext);
 
   const {
@@ -49,6 +49,15 @@ export const usePimsPropertyLayer = () => {
       [propertiesUrl],
     ),
     requestName: 'LOAD_PROPERTIES',
+  });
+
+  const loadPropertyLayerMinimal = useApiRequestWrapper({
+    requestFunction: useCallback(() => {
+      return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(
+        minimalPropertiesUrl,
+      );
+    }, [minimalPropertiesUrl]),
+    requestName: 'LOAD_PROPERTIES_MINIMAL',
   });
 
   const findOneByBoundary = useCallback(
@@ -80,9 +89,15 @@ export const usePimsPropertyLayer = () => {
   return useMemo(
     () => ({
       loadPropertyLayer,
+      loadPropertyLayerMinimal,
       findOneByBoundary,
       findOneByBoundaryLoading: findOneWhereContainsWrappedLoading,
     }),
-    [loadPropertyLayer, findOneByBoundary, findOneWhereContainsWrappedLoading],
+    [
+      loadPropertyLayer,
+      findOneByBoundary,
+      findOneWhereContainsWrappedLoading,
+      loadPropertyLayerMinimal,
+    ],
   );
 };

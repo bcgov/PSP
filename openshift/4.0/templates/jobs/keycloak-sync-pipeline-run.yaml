@@ -1,0 +1,67 @@
+kind: Template
+apiVersion: template.openshift.io/v1
+metadata:
+  name: keycloak-sync
+  annotations:
+    description: "This template creates a task to synchronize keycloak."
+    tags: "keycloak,sync,sso"
+objects:
+  - kind: PipelineRun
+    apiVersion: tekton.dev/v1beta1
+    metadata:
+      generateName: keycloak-sync-
+      namespace: ${NAMESPACE}
+      labels:
+        tekton.dev/pipeline: keycloak-sync
+    spec:
+      params:
+        - name: BRANCH
+          value: ${BRANCH}
+        - name: KEYCLOAK_CONTEXT_DIR
+          value: ${KEYCLOAK_CONTEXT_DIR}
+        - name: KEYCLOAK_SECRET_NAME
+          value: ${KEYCLOAK_SECRET_NAME}
+        - name: KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME
+          value: ${KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME}
+          #NOTE: API_URL must be an internal openshift URI to avoid interactions with the whitelist.
+        - name: API_URL
+          value: ${API_URL}
+        - name: ASPNETCORE_ENVIRONMENT
+          value: ${ASPNETCORE_ENVIRONMENT}
+      pipelineRef:
+        name: keycloak-sync
+      podTemplate:
+        #NOTE: The below user/group is defaulted by the git-clone task run prior to this - required for write/execute permissions on the cloned repo.
+        securityContext:
+          fsGroup: 65532
+          runAsUser: 65532
+      serviceAccountName: pipeline
+      timeouts:
+        pipeline: 1h0m0s
+      workspaces:
+        - name: psp
+          persistentVolumeClaim:
+            claimName: keycloak-sync
+parameters:
+  - name: BRANCH
+    description: The github branch to pull the keycloak sync source
+    required: true
+  - name: KEYCLOAK_CONTEXT_DIR
+    description: The path within the github repo where the keycloak sync source is located
+    value: tools/keycloak/sync
+  - name: KEYCLOAK_SECRET_NAME
+    description: The name of the secret in the target namespace that contains the pims-api SSO secret
+    value: pims-api-sso
+  - name: KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME
+    description: The name of the secret in the target namespace that contains the pims-api service account SSO secret
+    value: pims-api-sso
+  - name: NAMESPACE
+    description: The namespace to deploy this template
+    required: true
+  - name: API_URL
+    required: true
+    description: The route of the openshift service hosting the PSP api
+  - name: ASPNETCORE_ENVIRONMENT
+    required: true
+    description: The environment corresponding to the appsettings file that should be used
+    

@@ -35,6 +35,12 @@ COMPOSE_PROFILES=all_in_one,postgresql,rabbitmq,redis
 
 # Change if you use external services.
 MAYAN_DOCKER_WAIT="postgresql:5432 rabbitmq:5672 redis:6379"
+MAYAN_COMMON_DISABLED_APPS=['mayan.apps.ocr.apps.OCRApp','mayan.apps.checkouts.apps.CheckoutsApp','mayan.apps.linking.apps.LinkingApp','mayan.apps.mailer.apps.MailerApp','mayan.apps.web_links.apps.WebLinksApp','mayan.apps.document_signatures.apps.DocumentSignaturesApp','mayan.apps.redactions.apps.RedactionsApp','mayan.apps.signature_captures.apps.SignatureCapturesApp','mayan.apps.source_compressed.apps.SourceCompressedApp','mayan.apps.source_interactive.apps.SourceInteractiveApp','mayan.apps.source_periodic.apps.SourcePeriodicApp','mayan.apps.source_emails.apps.SourceEmailsApp','mayan.apps.source_sane_scanners.apps.SourceSaneScannersApp','mayan.apps.source_staging_folders.apps.SourceStagingFoldersApp','mayan.apps.source_staging_storages.apps.SourceStagingStorageApp','mayan.apps.source_generated_files.apps.SourceGeneratedFileApp','mayan.apps.source_stored_files.apps.SourceStoredFileApp','mayan.apps.source_watch_folders.apps.SourceWatchFoldersApp','mayan.apps.source_watch_storages.apps.SourceWatchStorageApp','mayan.apps.source_web_forms.apps.SourceWebFormsApp','mayan.apps.file_metadata_clamav.apps.FileMetadataClamAVApp']
+MAYAN_COMMON_PROJECT_TITLE='Mayan EDMS'
+MAYAN_DOCUMENTS_FILE_PAGE_IMAGE_CACHE_MAXIMUM_SIZE='5242880000'
+MAYAN_DOCUMENT_PARSING_AUTO_PARSING='true'
+MAYAN_OCR_AUTO_OCR='false'
+MAYAN_SEARCH_DISABLE='true'
 
 
 #########################################################
