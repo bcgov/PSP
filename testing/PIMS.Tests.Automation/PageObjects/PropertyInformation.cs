@@ -17,12 +17,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyLeafletZoomMapZoomBttn = By.XPath("//button/div[contains(text(),'Zoom map')]");
         private readonly By propertyLeafletEllipsisBttn = By.CssSelector("button[data-testid='fly-out-ellipsis']");
 
-        private readonly By propertyCloseWindowBttn = By.XPath("//div[@class='col']/h1[contains(text(),'Property Information')]/parent::div/following-sibling::div");
+        private readonly By propertyHideWindowBttn = By.XPath("//div[@class='col']/h1/parent::div/following-sibling::div/span/button");
+        private readonly By propertyShowWindowBttn = By.XPath("//div/div/div/div/div/div/span/button");
         private readonly By propertyMoreOptionsMenu = By.CssSelector("div[class='list-group list-group-flush']");
-        private readonly By propertyViewInfoBttn = By.XPath("//button/div[contains(text(),'View Property info')]");
+        private readonly By propertyViewInfoBttn = By.XPath("//div[contains(text(),'View Property Info')]/parent::button");
         private readonly By propertyNewResearchFileBttn = By.XPath("//div[contains(text(),'Research File')]/parent::button");
         private readonly By propertyNewAcquisitionFileBttn = By.XPath("//div[contains(text(),'Acquisition File')]/parent::button");
-        private readonly By propertyNewLeaseFileBttn = By.XPath("//div[contains(text(),'Lease/Licence')]/parent::button");
+        private readonly By propertyNewLeaseFileBttn = By.XPath("//div[contains(text(),'Lease/Licence File')]/parent::button");
         private readonly By propertyNewDispositionFileBttn = By.XPath("//div[contains(text(),'Disposition File')]/parent::button");
         private readonly By propertyNewSubdivisionFileBttn = By.XPath("//div[contains(text(),'Create Subdivision')]/parent::button");
         private readonly By propertyNewConsolidationFileBttn = By.XPath("//div[contains(text(),'Create Consolidation')]/parent::button");
@@ -253,12 +254,20 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals = new SharedModals(webDriver);
         }
 
-        public void ClosePropertyInfoModal()
+        public void HideLeftSideForms()
         {
             WaitUntilSpinnerDisappear();
 
-            WaitUntilVisible(propertyCloseWindowBttn);
-            webDriver.FindElement(propertyCloseWindowBttn).Click();
+            WaitUntilVisible(propertyHideWindowBttn);
+            webDriver.FindElement(propertyHideWindowBttn).Click();
+        }
+
+        public void ShowLeftSideForms()
+        {
+            WaitUntilSpinnerDisappear();
+
+            WaitUntilVisible(propertyShowWindowBttn);
+            webDriver.FindElement(propertyShowWindowBttn).Click();
         }
 
         public void CloseLTSAPopUp()
@@ -349,6 +358,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditPropertyInfoBttn()
         {
+            Wait();
             FocusAndClick(propertyDetailsEditBttn);
         }
 
@@ -465,7 +475,11 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 FocusAndClick(propertyDetailsTenureStatusInput);
                 while (webDriver.FindElements(propertyDetailsTenureDeleteBttns).Count > 0)
-                    webDriver.FindElements(propertyDetailsTenureDeleteBttns)[0].Click();  
+                {
+                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
+                    webDriver.FindElements(propertyDetailsTenureDeleteBttns)[0].Click();
+                }
+                webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
             }
 
             //TENURE STATUS
@@ -473,10 +487,12 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string status in property.TenureStatus)
                 {
+                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
                     FocusAndClick(propertyDetailsTenureStatusInput);
 
                     WaitUntilClickable(propertyDetailsTenureOptions);
                     ChooseMultiSelectSpecificOption(propertyDetailsTenureOptions, status);
+                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
                 }
             }
 

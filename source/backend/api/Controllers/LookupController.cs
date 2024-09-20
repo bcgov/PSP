@@ -131,6 +131,7 @@ namespace Pims.Api.Controllers
                 var historicalNumberTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllHistoricalNumberTypes());
                 var leaseChecklistSectionTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseChecklistSectionTypes());
                 var leasePaymentCategoryTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePaymentCategoryTypes());
+                var consultationOutcomeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllConsultationOutcomeTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -205,6 +206,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(historicalNumberTypes);
                 codes.AddRange(leaseChecklistSectionTypes);
                 codes.AddRange(leasePaymentCategoryTypes);
+                codes.AddRange(consultationOutcomeTypes);
 
                 var response = new JsonResult(codes);
 

@@ -31,6 +31,8 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public CodeTypeModel<string> ConsultationStatusTypeCode { get; set; }
 
+        public CodeTypeModel<string> ConsultationOutcomeTypeCode { get; set; }
+
         public string OtherDescription { get; set; }
 
         public DateOnly? RequestedOn { get; set; }

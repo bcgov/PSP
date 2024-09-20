@@ -180,6 +180,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 sharedFileProperties.SelectPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
                 sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
             }
 
             //Search for a property by PIN
@@ -187,6 +188,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 sharedFileProperties.SelectPropertyByPIN(acquisitionFile.AcquisitionSearchProperties.PIN);
                 sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
             }
 
             //Search for a property by Plan
@@ -194,6 +196,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 sharedFileProperties.SelectPropertyByPlan(acquisitionFile.AcquisitionSearchProperties.PlanNumber);
                 sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
             }
 
             //Search for a property by Address
@@ -201,6 +204,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 sharedFileProperties.SelectPropertyByAddress(acquisitionFile.AcquisitionSearchProperties.Address);
                 sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
             }
 
             //Search for a property by Legal Description
@@ -208,6 +212,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 sharedFileProperties.SelectPropertyByLegalDescription(acquisitionFile.AcquisitionSearchProperties.LegalDescription);
                 sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
             }
 
             //Search for Multiple PIDs
@@ -217,6 +222,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 {
                     sharedFileProperties.SelectPropertyByPID(prop);
                     sharedFileProperties.SelectFirstOptionFromSearch();
+                    sharedFileProperties.ResetSearch();
                 }
             }
 
@@ -225,6 +231,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 sharedFileProperties.SelectPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
                 sharedFileProperties.SelectFirstOptionFromSearch();
+                sharedFileProperties.ResetSearch();
             }
 
             //Save Research File
@@ -782,12 +789,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
 
-            //Close Property Information Modal
-            propertyInformation.ClosePropertyInfoModal();
+            //Close Left Side Forms
+            propertyInformation.HideLeftSideForms();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
+
+            //Open Left Side Forms
+            propertyInformation.ShowLeftSideForms();
 
             //Validate Acquisition File Details Create Form
             acquisitionFilesDetails.VerifyAcquisitionFileCreate();
@@ -805,11 +815,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
 
             //Close Property Information Modal
-            propertyInformation.ClosePropertyInfoModal();
+            propertyInformation.HideLeftSideForms();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
+
+            //Open Left Side Forms
+            propertyInformation.ShowLeftSideForms();
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
@@ -824,11 +837,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
 
             //Close Property Information Modal
-            propertyInformation.ClosePropertyInfoModal();
+            propertyInformation.HideLeftSideForms();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Acquisition File");
+
+            //Open Left Side Forms
+            propertyInformation.ShowLeftSideForms();
 
             //Fill basic Acquisition File information
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
