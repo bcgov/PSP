@@ -179,7 +179,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddCompensationBttn()
         {
-            WaitUntilClickable(compensationAddBttn);
+            Wait();
             webDriver.FindElement(compensationAddBttn).Click();
 
             WaitUntilSpinnerDisappear();
