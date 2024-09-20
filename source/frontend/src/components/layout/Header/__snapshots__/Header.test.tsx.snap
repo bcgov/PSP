@@ -130,7 +130,8 @@ exports[`App Header > renders correctly 1`] = `
 }
 
 .c6 .dropdown-item {
-  border-top: 0.2rem solid _accentColor_6badca;
+  background-color: #053662;
+  border-top: 0.2rem solid;
 }
 
 .c5 {

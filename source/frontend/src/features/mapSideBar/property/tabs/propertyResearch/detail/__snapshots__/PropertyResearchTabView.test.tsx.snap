@@ -6,13 +6,14 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
     class="Toastify"
   />
   <div />
-  .c2 {
+  .c3 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -20,26 +21,30 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
 .c0 {
+  background-color: #f2f2f2;
+}
+
+.c1 {
   text-align: right;
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 mr-3 my-1"
+      class="c1 mr-3 my-1"
     >
       <button
         class="btn btn-link"
@@ -61,10 +66,10 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
       </button>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -86,13 +91,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Descriptive name:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             The Research Property name
           </div>
@@ -104,13 +109,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Purpose:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Type A, Type B
           </div>
@@ -122,13 +127,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Legal opinion req'd?:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Yes
           </div>
@@ -140,13 +145,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Legal opinion obtained?:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             Yes
           </div>
@@ -158,13 +163,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Document reference:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             A document reference
           </div>
@@ -172,10 +177,10 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
       </div>
     </div>
     <div
-      class="c1 form-section"
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -197,13 +202,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Summary notes:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           />
         </div>
         Research summary notes
