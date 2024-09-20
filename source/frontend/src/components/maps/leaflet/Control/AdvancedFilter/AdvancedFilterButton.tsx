@@ -46,9 +46,9 @@ const ControlButton = styled(Button)<{ $active?: boolean }>`
     width: 5.2rem;
     height: 5.2rem;
     background-color: ${({ theme, $active }) =>
-      $active ? theme.bcTokens.surfaceColorPrimaryButtonDefault : '#fff'};
+      $active ? theme.bcTokens.surfaceColorPrimaryButtonDefault : '#FFFFFF'};
     color: ${({ theme, $active }) =>
-      $active ? '#fff' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
+      $active ? '#FFFFFF' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
     border-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
     box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
     transition: 1s;
