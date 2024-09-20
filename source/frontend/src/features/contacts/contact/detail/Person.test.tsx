@@ -1,30 +1,21 @@
 import { createMemoryHistory } from 'history';
 
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import {
-  IContactAddress,
-  IContactMethod,
-  IContactOrganization,
-  IContactPerson,
-} from '@/interfaces/IContact';
 import { phoneFormatter } from '@/utils/formUtils';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PersonFormView, { PersonFormViewProps } from './Person';
 import { fakeAddresses } from './utils';
 import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
-
-const fakePerson: IContactPerson = {
-  id: 1,
-  isDisabled: false,
-  fullName: 'Test name full',
-  preferredName: 'Preferred',
-  useOrganizationAddress: false,
-  organizations: [],
-  addresses: [],
-  contactMethods: [],
-  comment: '',
-};
+import { getMockPerson } from '@/mocks/contacts.mock';
+import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { getMockOrganization } from '@/mocks/organization.mock';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
+import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
+import { ApiGen_Concepts_PersonAddress } from '@/models/api/generated/ApiGen_Concepts_PersonAddress';
+import { getMockAddresses } from '@/mocks/bcAssessment.mock';
+import { getMockApiAddress } from '@/mocks/address.mock';
 
 const history = createMemoryHistory();
 
@@ -41,14 +32,16 @@ describe('Contact PersonView component', () => {
     };
   };
   it('renders as expected', () => {
-    const { component } = setup({ person: fakePerson });
+    const { component } = setup({
+      person: getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
+    });
     expect(component.asFragment()).toMatchSnapshot();
   });
 
   it('Shows status information', () => {
     const { component } = setup({
       person: {
-        ...fakePerson,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
         isDisabled: true,
       },
     });
@@ -62,8 +55,10 @@ describe('Contact PersonView component', () => {
     const preferredName = 'My corp alias';
     const { component } = setup({
       person: {
-        ...fakePerson,
-        fullName: testName,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
+        firstName: 'John',
+        middleNames: 'Doe',
+        surname: 'Smith',
         preferredName: preferredName,
       },
     });
@@ -79,7 +74,9 @@ describe('Contact PersonView component', () => {
   });
 
   it('Shows email information', () => {
-    const personalEmail: IContactMethod = {
+    const personalEmail: ApiGen_Concepts_ContactMethod = {
+      personId: 1,
+      organizationId: null,
       id: 1,
       rowVersion: 0,
       contactMethodType: {
@@ -90,7 +87,9 @@ describe('Contact PersonView component', () => {
       },
       value: 'test@bench.com',
     };
-    const workEmail: IContactMethod = {
+    const workEmail: ApiGen_Concepts_ContactMethod = {
+      personId: 1,
+      organizationId: null,
       id: 2,
       rowVersion: 0,
       contactMethodType: {
@@ -102,10 +101,10 @@ describe('Contact PersonView component', () => {
       value: 'test@bench.net',
     };
 
-    const contactInfo: IContactMethod[] = [personalEmail, workEmail];
+    const contactInfo: ApiGen_Concepts_ContactMethod[] = [personalEmail, workEmail];
     const { component } = setup({
       person: {
-        ...fakePerson,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
         contactMethods: contactInfo,
       },
     });
@@ -119,7 +118,9 @@ describe('Contact PersonView component', () => {
   });
 
   it('Shows phone information', () => {
-    const faxPhone: IContactMethod = {
+    const faxPhone: ApiGen_Concepts_ContactMethod = {
+      personId: 1,
+      organizationId: null,
       id: 1,
       rowVersion: 0,
       contactMethodType: {
@@ -130,7 +131,9 @@ describe('Contact PersonView component', () => {
       },
       value: '123456789',
     };
-    const personalPhone: IContactMethod = {
+    const personalPhone: ApiGen_Concepts_ContactMethod = {
+      personId: 1,
+      organizationId: null,
       id: 2,
       rowVersion: 0,
       contactMethodType: {
@@ -141,7 +144,9 @@ describe('Contact PersonView component', () => {
       },
       value: '800123123',
     };
-    const workPhone: IContactMethod = {
+    const workPhone: ApiGen_Concepts_ContactMethod = {
+      personId: 1,
+      organizationId: null,
       id: 3,
       rowVersion: 0,
       contactMethodType: {
@@ -152,7 +157,9 @@ describe('Contact PersonView component', () => {
       },
       value: '555123123',
     };
-    const workMobile: IContactMethod = {
+    const workMobile: ApiGen_Concepts_ContactMethod = {
+      personId: 1,
+      organizationId: null,
       id: 4,
       rowVersion: 0,
       contactMethodType: {
@@ -163,7 +170,9 @@ describe('Contact PersonView component', () => {
       },
       value: '800123123',
     };
-    const personalMobile: IContactMethod = {
+    const personalMobile: ApiGen_Concepts_ContactMethod = {
+      personId: 1,
+      organizationId: null,
       id: 5,
       rowVersion: 0,
       contactMethodType: {
@@ -175,7 +184,7 @@ describe('Contact PersonView component', () => {
       value: '750748789',
     };
 
-    const contactInfo: IContactMethod[] = [
+    const contactInfo: ApiGen_Concepts_ContactMethod[] = [
       faxPhone,
       personalPhone,
       workPhone,
@@ -184,7 +193,7 @@ describe('Contact PersonView component', () => {
     ];
     const { component } = setup({
       person: {
-        ...fakePerson,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
         contactMethods: contactInfo,
       },
     });
@@ -201,20 +210,20 @@ describe('Contact PersonView component', () => {
   });
 
   it('Shows organization information', () => {
-    const organization: IContactOrganization = {
-      id: '1',
-      isDisabled: false,
-      name: 'Test Corp Incorporated',
-      alias: 'Test Inc',
-      incorporationNumber: '123456',
-      comment: 'test comment',
-    };
-
-    const organizationsInfo: IContactOrganization[] = [organization];
+    const organizationsInfo: ApiGen_Concepts_PersonOrganization[] = [
+      {
+        id: 1,
+        organizationId: 2,
+        person: null,
+        personId: null,
+        organization: getMockOrganization(),
+        rowVersion: 1,
+      },
+    ];
     const { component } = setup({
       person: {
-        ...fakePerson,
-        organizations: organizationsInfo,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
+        personOrganizations: organizationsInfo,
       },
     });
 
@@ -222,42 +231,28 @@ describe('Contact PersonView component', () => {
     expect(organizationElements.length).toBe(1);
 
     // Verify that the display is in the correct order
-    expect(organizationElements[0].textContent).toBe(organization.name);
+    expect(organizationElements[0].textContent).toBe(organizationsInfo[0].organization.name);
   });
 
   it('Shows address information', () => {
-    const mailingAddress: IContactAddress = {
-      id: 1,
+    const mailingAddress: ApiGen_Concepts_PersonAddress = {
+      personId: 1,
+      id: 2,
       rowVersion: 0,
-      streetAddress1: 'Test Street',
-      municipality: 'Victoria',
-      province: {
-        provinceStateId: 1,
-        provinceStateCode: 'BC',
-        description: 'British Columbia',
-      },
-      country: { countryId: 1, countryCode: 'CA', description: 'Canada' },
-      postal: 'v0v 1v1',
-      addressType: {
+      address: getMockApiAddress(),
+      addressUsageType: {
         id: ApiGen_CodeTypes_AddressUsageTypes.MAILING,
-        description: 'Mailing Address',
+        description: 'Residential Mailing',
         isDisabled: false,
         displayOrder: null,
       },
     };
-    const residentialAddress: IContactAddress = {
+    const residentialAddress: ApiGen_Concepts_PersonAddress = {
+      personId: 1,
       id: 2,
       rowVersion: 0,
-      streetAddress1: 'Fixture Street',
-      municipality: 'Vancouver',
-      province: {
-        provinceStateId: 1,
-        provinceStateCode: 'BC',
-        description: 'British Columbia',
-      },
-      country: { countryId: 1, countryCode: 'CA', description: 'Canada' },
-      postal: 'v0v 1v1',
-      addressType: {
+      address: getMockApiAddress(),
+      addressUsageType: {
         id: ApiGen_CodeTypes_AddressUsageTypes.RESIDNT,
         description: 'Residential Address',
         isDisabled: false,
@@ -265,11 +260,11 @@ describe('Contact PersonView component', () => {
       },
     };
 
-    const addressInfo: IContactAddress[] = [mailingAddress, residentialAddress];
+    const addressInfo: ApiGen_Concepts_PersonAddress[] = [mailingAddress, residentialAddress];
     const { component } = setup({
       person: {
-        ...fakePerson,
-        addresses: addressInfo,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
+        personAddresses: addressInfo,
       },
     });
 
@@ -278,28 +273,30 @@ describe('Contact PersonView component', () => {
 
     // Verify that the display is in the correct order
     expect(addressElements[0].textContent).toBe(
-      `${mailingAddress.streetAddress1} ${mailingAddress.municipality} ${
-        mailingAddress.province!.provinceStateCode
-      } ${mailingAddress.postal} ${mailingAddress.country?.description}`,
+      `${mailingAddress.address.streetAddress1} N/A ${mailingAddress.address.municipality} ${
+        mailingAddress.address.province!.code
+      } ${mailingAddress.address.postal} ${mailingAddress.address.country?.description}`,
     );
     expect(addressElements[1].textContent).toBe(
-      `${residentialAddress.streetAddress1} ${residentialAddress.municipality} ${
-        residentialAddress.province!.provinceStateCode
-      } ${residentialAddress.postal} ${residentialAddress.country?.description}`,
+      `${residentialAddress.address.streetAddress1} N/A ${
+        residentialAddress.address.municipality
+      } ${residentialAddress.address.province!.code} ${residentialAddress.address.postal} ${
+        residentialAddress.address.country?.description
+      }`,
     );
   });
 
   it(`Shows address information when 'Other' country selected and no province is supplied`, () => {
-    const mailingAddress: IContactAddress = {
-      id: 1,
+    const mailingAddress: ApiGen_Concepts_PersonAddress = {
+      personId: 1,
+      id: 2,
       rowVersion: 0,
-      streetAddress1: 'Test Street',
-      municipality: 'Amsterdam',
-      province: undefined,
-      country: { countryId: 4, countryCode: 'OTHER', description: 'Other' },
-      countryOther: 'Netherlands',
-      postal: '123456',
-      addressType: {
+      address: {
+        ...getMockApiAddress(),
+        countryOther: 'other country info',
+        country: { id: 1, code: 'OTHER', description: 'Other', displayOrder: 1 },
+      },
+      addressUsageType: {
         id: ApiGen_CodeTypes_AddressUsageTypes.MAILING,
         description: 'Mailing Address',
         isDisabled: false,
@@ -307,11 +304,11 @@ describe('Contact PersonView component', () => {
       },
     };
 
-    const addressInfo: IContactAddress[] = [mailingAddress];
+    const addressInfo: ApiGen_Concepts_PersonAddress[] = [mailingAddress];
     const { component } = setup({
       person: {
-        ...fakePerson,
-        addresses: addressInfo,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
+        personAddresses: addressInfo,
       },
     });
 
@@ -319,7 +316,7 @@ describe('Contact PersonView component', () => {
 
     // Verify that the display is in the correct order
     expect(addressElement.textContent).toBe(
-      `${mailingAddress.streetAddress1} ${mailingAddress.municipality} ${mailingAddress.postal} ${mailingAddress.countryOther}`,
+      `${mailingAddress.address.streetAddress1} N/A ${mailingAddress.address.municipality} ${mailingAddress.address.province.code} ${mailingAddress.address.postal} ${mailingAddress.address.countryOther}`,
     );
   });
 
@@ -327,7 +324,7 @@ describe('Contact PersonView component', () => {
     const testComment = 'A test comment :)';
     const { component } = setup({
       person: {
-        ...fakePerson,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
         comment: testComment,
       },
     });
@@ -339,8 +336,8 @@ describe('Contact PersonView component', () => {
   it('Orders address information correctly', () => {
     const { component } = setup({
       person: {
-        ...fakePerson,
-        addresses: fakeAddresses,
+        ...getMockPerson({ id: 1, surname: 'person', firstName: 'test' }),
+        personAddresses: fakeAddresses,
       },
     });
 
