@@ -6,13 +6,15 @@ import { Link } from 'react-router-dom';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { H2, H3 } from '@/components/common/styles';
-import { IContactOrganization, IContactPerson } from '@/interfaces/IContact';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import * as Styled from '../../styles';
 import { toAddressFields } from '../utils/contactUtils';
 import ContactInfoSubForm from './ContactInfoSubForm';
 export interface OrganizationViewProps {
-  organization: IContactOrganization;
+  organization: ApiGen_Concepts_Organization;
 }
 
 interface AddressField {
@@ -27,10 +29,10 @@ interface AddressField {
 
 const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ organization }) => {
   let organizationAddresses: AddressField[];
-  if (organization.addresses === undefined) {
+  if (organization.organizationAddresses === undefined) {
     organizationAddresses = [];
   } else {
-    organizationAddresses = toAddressFields(organization.addresses);
+    organizationAddresses = toAddressFields(organization.organizationAddresses);
   }
 
   return (
@@ -81,19 +83,23 @@ const OrganizationView: React.FunctionComponent<OrganizationViewProps> = ({ orga
               valueTestId="contact-organization-person-list"
               tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page"
             >
-              {organization.persons &&
-                organization.persons.map((person: IContactPerson, index: number) => (
-                  <Styled.ContactLink key={'organization-person-' + person.id + '-contact'}>
-                    <Link
-                      to={'/contact/P' + person.id}
-                      key={`organization-person-${index}`}
-                      className="d-block"
-                      data-testid={`contact-organization-person`}
+              {organization.organizationPersons &&
+                organization.organizationPersons.map(
+                  (personOrganization: ApiGen_Concepts_PersonOrganization, index: number) => (
+                    <Styled.ContactLink
+                      key={'organization-person-' + personOrganization?.personId + '-contact'}
                     >
-                      {person.fullName}
-                    </Link>
-                  </Styled.ContactLink>
-                ))}
+                      <Link
+                        to={'/contact/P' + personOrganization?.personId}
+                        key={`organization-person-${index}`}
+                        className="d-block"
+                        data-testid={`contact-organization-person`}
+                      >
+                        {formatApiPersonNames(personOrganization.person)}
+                      </Link>
+                    </Styled.ContactLink>
+                  ),
+                )}
             </SectionField>
           </Col>
         </Row>

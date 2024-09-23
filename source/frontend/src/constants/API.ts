@@ -59,6 +59,7 @@ export const CONTACT_METHOD_TYPES = 'PimsContactMethodType';
 export const COUNTRY_TYPES = 'PimsCountry';
 export const CONSULTATION_TYPES = 'PimsConsultationType';
 export const CONSULTATION_STATUS_TYPES = 'PimsConsultationStatusType';
+export const CONSULTATION_OUTCOME_TYPES = 'PimsConsultationOutcomeType';
 export const INSURANCE_TYPES = 'PimsInsuranceType';
 export const LEASE_CATEGORY_TYPES = 'PimsLeaseCategoryType';
 export const LEASE_INITIATOR_TYPES = 'PimsLeaseInitiatorType';

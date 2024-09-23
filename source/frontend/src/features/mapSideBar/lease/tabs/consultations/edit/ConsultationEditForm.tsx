@@ -17,6 +17,7 @@ import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { isOrganizationResult } from '@/interfaces';
+import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';
 import { exists, isValidId } from '@/utils';
 
 import { UpdateConsultationYupSchema } from './EditConsultationYupSchema';
@@ -42,6 +43,7 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
 
   const { getOptionsByType } = useLookupCodeHelpers();
   const consultationTypeCodes = getOptionsByType(API.CONSULTATION_TYPES);
+  const consultationOutcomeTypeCodes = getOptionsByType(API.CONSULTATION_OUTCOME_TYPES);
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     if (!dirty) {
@@ -161,9 +163,33 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                       </SectionField>
                     )}
                     <SectionField
+                      required
+                      labelWidth="4"
+                      contentWidth="6"
+                      label="Outcome"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-consultation-outcome-type-tooltip"
+                          toolTip="The result of the approval / consultation process"
+                        />
+                      }
+                    >
+                      <Select
+                        placeholder="Select"
+                        options={consultationOutcomeTypeCodes}
+                        field="consultationOutcomeTypeCode"
+                      />
+                    </SectionField>
+                    <SectionField
                       labelWidth="4"
                       contentWidth="12"
                       label="Comments"
+                      required={
+                        formikProps.values.consultationOutcomeTypeCode ===
+                          ApiGen_CodeTypes_ConsultationOutcomeTypes.APPRDENIED ||
+                        formikProps.values.consultationOutcomeTypeCode ===
+                          ApiGen_CodeTypes_ConsultationOutcomeTypes.CONSDISCONT
+                      }
                       tooltip={
                         <TooltipIcon
                           toolTipId="lease-consultation-comments-tooltip"

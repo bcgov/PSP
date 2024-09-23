@@ -173,7 +173,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments.UploadDocument(template.Url);
 
             //Save new template
-            digitalDocuments.SaveCDOGTemplate();
+            digitalDocuments.SaveDigitalDocumentUpdate();
 
             //Verify Document List
             digitalDocuments.VerifyDocumentsListView("CDOGS Templates");

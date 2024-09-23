@@ -275,7 +275,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 if (sharedModals.ModalContent().Contains("You have created a Lease (Payable) Take"))
                 {
-                    Assert.Contains("Follow-up required", sharedModals.ModalHeader());
+                    Assert.Contains("Acknowledgement", sharedModals.ModalHeader());
                     Assert.Contains("You have created a Lease (Payable) Take. You also need to create a Lease/Licence File.", sharedModals.ModalContent());
                 }
                 else
