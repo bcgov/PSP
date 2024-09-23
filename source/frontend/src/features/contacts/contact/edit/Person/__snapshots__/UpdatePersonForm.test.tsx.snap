@@ -194,6 +194,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
 .c13 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c7 {

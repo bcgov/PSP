@@ -177,6 +177,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
 .c11 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c2 {

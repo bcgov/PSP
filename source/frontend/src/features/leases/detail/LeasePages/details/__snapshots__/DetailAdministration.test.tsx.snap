@@ -9,6 +9,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
   .c2 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
@@ -455,6 +456,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
   .c2 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
