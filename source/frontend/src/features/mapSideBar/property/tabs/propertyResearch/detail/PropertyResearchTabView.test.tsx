@@ -18,7 +18,7 @@ describe('PropertyResearchTabView component', () => {
   const setup = (renderOptions: RenderOptions & IPropertyResearchTabViewProps) => {
     const component = render(
       <PropertyResearchTabView
-        researchFile={renderOptions.researchFile}
+        researchFileProperty={renderOptions.researchFileProperty}
         setEditMode={renderOptions.setEditMode}
       />,
       {
@@ -33,7 +33,7 @@ describe('PropertyResearchTabView component', () => {
   };
 
   it('renders as expected when provided valid data object', () => {
-    const { asFragment } = setup({ researchFile: fakePropertyResearch, setEditMode });
+    const { asFragment } = setup({ researchFileProperty: fakePropertyResearch, setEditMode });
     expect(asFragment()).toMatchSnapshot();
   });
 });

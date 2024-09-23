@@ -128,7 +128,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     tabViews.push({
       content: (
         <PropertyResearchTabView
-          researchFile={props.fileProperty as ApiGen_Concepts_ResearchFileProperty}
+          researchFileProperty={props.fileProperty as ApiGen_Concepts_ResearchFileProperty}
           setEditMode={props.setEditing}
         />
       ),

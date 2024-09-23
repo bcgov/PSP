@@ -20,7 +20,7 @@ interface PropertyResearchFile {
 }
 
 export interface IPropertyResearchTabViewProps {
-  researchFile: ApiGen_Concepts_ResearchFileProperty;
+  researchFileProperty: ApiGen_Concepts_ResearchFileProperty;
   setEditMode: (isEditing: boolean) => void;
 }
 
@@ -28,24 +28,24 @@ export const PropertyResearchTabView: React.FunctionComponent<
   React.PropsWithChildren<IPropertyResearchTabViewProps>
 > = props => {
   const detail: PropertyResearchFile = {
-    id: props.researchFile.id || 0,
-    descriptiveName: props.researchFile.propertyName || '',
+    id: props.researchFileProperty.id || 0,
+    descriptiveName: props.researchFileProperty.propertyName || '',
     purpose:
-      props.researchFile.purposeTypes
-        ?.map(x => x.propertyPurposeType?.description || '')
+      props.researchFileProperty.propertyResearchPurposeTypes
+        ?.map(x => x.propertyResearchPurposeTypeCode?.description || '')
         .join(', ') || '',
-    legalOpinionRequired: exists(props.researchFile.isLegalOpinionRequired)
-      ? props.researchFile.isLegalOpinionRequired
+    legalOpinionRequired: exists(props.researchFileProperty.isLegalOpinionRequired)
+      ? props.researchFileProperty.isLegalOpinionRequired
         ? 'Yes'
         : 'No'
       : '',
-    legalOpinionObtained: exists(props.researchFile.isLegalOpinionObtained)
-      ? props.researchFile.isLegalOpinionObtained
+    legalOpinionObtained: exists(props.researchFileProperty.isLegalOpinionObtained)
+      ? props.researchFileProperty.isLegalOpinionObtained
         ? 'Yes'
         : 'No'
       : '',
-    documentReference: props.researchFile.documentReference || '',
-    summaryNotes: props.researchFile.researchSummary || '',
+    documentReference: props.researchFileProperty.documentReference || '',
+    summaryNotes: props.researchFileProperty.researchSummary || '',
   };
 
   const { hasClaim } = useKeycloakWrapper();
