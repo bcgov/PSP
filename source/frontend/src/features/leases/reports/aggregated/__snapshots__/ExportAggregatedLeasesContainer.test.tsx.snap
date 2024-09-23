@@ -43,6 +43,7 @@ exports[`PaymentsContainer component > renders as expected 1`] = `
   -webkit-align-self: center;
   -ms-flex-item-align: center;
   align-self: center;
+  color: #428bca;
 }
 
 .c3:hover {

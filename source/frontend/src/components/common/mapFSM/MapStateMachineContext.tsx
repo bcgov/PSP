@@ -40,6 +40,7 @@ export interface IMapStateMachineContext {
   isRepositioning: boolean;
   selectingComponentId: string | null;
   isFiltering: boolean;
+  isShowingMapFilter: boolean;
   isShowingMapLayers: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
@@ -69,7 +70,7 @@ export interface IMapStateMachineContext {
     selectingComponentId?: string,
   ) => void;
   finishReposition: () => void;
-  toggleMapFilter: () => void;
+  toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
@@ -79,6 +80,7 @@ export interface IMapStateMachineContext {
   setShowDisposed: (show: boolean) => void;
   setShowRetired: (show: boolean) => void;
   setFullWidthSideBar: (fullWidth: boolean) => void;
+  resetMapFilter: () => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -337,8 +339,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_SIDEBAR_SIZE' });
   }, [serviceSend]);
 
-  const toggleMapFilter = useCallback(() => {
+  const toggleMapFilterDisplay = useCallback(() => {
     serviceSend({ type: 'TOGGLE_FILTER' });
+  }, [serviceSend]);
+
+  const resetMapFilter = useCallback(() => {
+    serviceSend({ type: 'RESET_FILTER' });
   }, [serviceSend]);
 
   const toggleMapLayerControl = useCallback(() => {
@@ -354,8 +360,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     return state.context.mapLocationFeatureDataset !== null && !isRepositioning;
   }, [isRepositioning, state.context.mapLocationFeatureDataset]);
 
-  const isFiltering = useMemo(() => {
-    return state.matches({ mapVisible: { advancedFilterSideBar: 'filtering' } });
+  const isShowingMapFilter = useMemo(() => {
+    return state.matches({ mapVisible: { advancedFilterSideBar: 'mapFilterOpened' } });
   }, [state]);
 
   const isShowingMapLayers = useMemo(() => {
@@ -366,7 +372,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     <MapStateMachineContext.Provider
       value={{
         mapSideBarViewState: state.context.mapSideBarState,
-        isShowingSearchBar: !state.context.mapSideBarState.isOpen && !isFiltering,
+        isShowingSearchBar: !state.context.mapSideBarState.isOpen && !state.context.isFiltering,
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
@@ -385,7 +391,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
         isRepositioning: isRepositioning,
         selectingComponentId: state.context.selectingComponentId,
-        isFiltering: isFiltering,
+        isFiltering: state.context.isFiltering,
+        isShowingMapFilter: isShowingMapFilter,
         isShowingMapLayers: isShowingMapLayers,
         activeLayers: state.context.activeLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
@@ -408,7 +415,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         finishSelection,
         startReposition,
         finishReposition,
-        toggleMapFilter,
+        toggleMapFilterDisplay,
         toggleMapLayerControl,
         toggleSidebarDisplay,
         setFilePropertyLocations,
@@ -418,6 +425,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setMapLayers,
         setDefaultMapLayers,
         setFullWidthSideBar,
+        resetMapFilter,
       }}
     >
       {children}

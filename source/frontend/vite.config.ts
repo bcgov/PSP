@@ -16,6 +16,9 @@ export default defineConfig({
     env: {
       DEBUG_PRINT_LIMIT: '999999',
     },
+    css: {
+      include: /_variables.module.scss/,
+    },
     coverage: {
       reporter: [['lcov'], ['text'], ['json', { file: 'coverage-final.json' }]],
       reportOnFailure: false,
