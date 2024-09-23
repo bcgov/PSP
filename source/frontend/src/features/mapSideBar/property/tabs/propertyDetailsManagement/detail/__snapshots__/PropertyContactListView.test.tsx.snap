@@ -223,6 +223,7 @@ exports[`PropertyContactListView component > renders as expected when provided v
 .c5 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {

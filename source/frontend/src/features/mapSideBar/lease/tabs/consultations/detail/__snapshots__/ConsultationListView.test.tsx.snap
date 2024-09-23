@@ -195,6 +195,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
 .c8 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c0 {

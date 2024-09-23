@@ -35,7 +35,7 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
             <Col xs="auto">Form Type:</Col>
             <Col xs="auto">
               <Form.Group aria-label="Select activity type">
-                <Form.Control as="select" onChange={onSelectChange}>
+                <Form.Control as="select" onChange={onSelectChange} className="form-select">
                   <option>Select a form type</option>
                   {props.formDocumentTypes?.map(types => {
                     return (

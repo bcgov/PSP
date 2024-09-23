@@ -261,6 +261,7 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
 .c19 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c13 {
