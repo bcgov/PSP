@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected PageObjectBase(IWebDriver webDriver)
         {
             this.webDriver = webDriver;
-            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
+            wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
         }
 
         protected virtual void Wait(int milliseconds = 2000) => Thread.Sleep(milliseconds);

@@ -144,6 +144,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
 .c3 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {

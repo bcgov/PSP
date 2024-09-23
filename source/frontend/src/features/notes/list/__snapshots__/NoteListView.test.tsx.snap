@@ -9,6 +9,7 @@ exports[`Note List View > renders as expected 1`] = `
   .c6 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c4 {

@@ -112,7 +112,10 @@ const ProjectContainer: React.FunctionComponent<
   const title = containerState.isEditing ? 'Update Project' : 'Project';
 
   useEffect(() => {
-    if (containerState.activeTab === ProjectTabNames.notes) {
+    if (
+      containerState.activeTab === ProjectTabNames.notes ||
+      containerState.activeTab === ProjectTabNames.documents
+    ) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);

@@ -269,7 +269,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     if (
       activeTab === LeaseFileTabNames.deposit ||
       activeTab === LeaseFileTabNames.payments ||
-      activeTab === LeaseFileTabNames.notes
+      activeTab === LeaseFileTabNames.notes ||
+      activeTab === LeaseFileTabNames.documents
     ) {
       setFullWidthSideBar(true);
     } else {
