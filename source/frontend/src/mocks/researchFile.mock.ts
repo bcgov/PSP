@@ -59,7 +59,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
       fileId: 1,
       isLegalOpinionRequired: null,
       propertyName: null,
-      purposeTypes: null,
+      propertyResearchPurposeTypes: null,
       researchSummary: null,
       documentReference: null,
       isLegalOpinionObtained: null,

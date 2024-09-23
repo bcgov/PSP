@@ -33,9 +33,9 @@ namespace Pims.Api.Models.Concepts.ResearchFile
         public new ResearchFileModel File { get; set; }
 
         /// <summary>
-        /// get/set - The property's purpose types.
+        /// get/set - The property's research purpose types.
         /// </summary>
-        public IList<PropertyPurposeModel> PurposeTypes { get; set; }
+        public IList<PropertyResearchFilePurposeModel> PropertyResearchPurposeTypes { get; set; }
         #endregion
     }
 }
