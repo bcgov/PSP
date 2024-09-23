@@ -263,13 +263,13 @@ export const isPimsFeature = (
 export const isPimsLocation = (
   feature: Supercluster.PointFeature<MarkerFeature>,
 ): feature is Supercluster.PointFeature<PIMS_Property_Location_View> => {
-  return feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_') ?? false;
 };
 
 export const isPimsBoundary = (
   feature: Supercluster.PointFeature<MarkerFeature>,
 ): feature is Supercluster.PointFeature<PIMS_Property_Boundary_View> => {
-  return feature.id?.toString().startsWith('PIMS_PROPERTY_BOUNDARY_VW') ?? false;
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_BOUNDARY_') ?? false;
 };
 
 export const isFaParcelMap = (
