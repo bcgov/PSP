@@ -367,10 +367,7 @@ const advancedFilterSideBarStates = {
       },
     },
     mapFilterOpened: {
-      entry: [
-        send({ type: 'REFRESH_PROPERTIES', searchCriteria: defaultPropertyFilter }),
-        assign({ isFiltering: () => true }),
-      ],
+      entry: [assign({ isFiltering: () => true })],
       on: {
         TOGGLE_FILTER: {
           target: 'closed',
