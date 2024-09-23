@@ -3,6 +3,7 @@ import { useContext } from 'react';
 import { TenantContext } from '@/tenants';
 
 import { layersTree } from '../Control/LayersControl/data';
+import { ILayerItem } from '../Control/LayersControl/types';
 
 export const useConfiguredMapLayers = () => {
   const {
@@ -19,9 +20,9 @@ export const useConfiguredMapLayers = () => {
 
     return {
       ...parent,
-      nodes: allNodes?.map((node: any, index) => ({
+      nodes: allNodes?.map((node: ILayerItem, index) => ({
         ...node,
-        zIndex: (parentIndex + 1) * index,
+        zIndex: node.zIndexAbsolute === true ? node.zIndex : (parentIndex + 1) * index,
         opacity: node?.opacity !== undefined ? Number(node?.opacity) : 0.8,
       })),
     };

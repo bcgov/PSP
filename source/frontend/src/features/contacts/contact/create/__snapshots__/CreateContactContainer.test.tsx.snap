@@ -254,6 +254,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
 .c20 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c12 {
