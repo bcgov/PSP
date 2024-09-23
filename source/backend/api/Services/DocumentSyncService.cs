@@ -180,7 +180,7 @@ namespace Pims.Api.Services
                     var needsLabelUpdate = matchingDocumentType.DocumentTypeDescription != documentTypeModel.Label;
                     var needsCategoryUpdate = !(subtypeCodes.All(documentTypeModel.Categories.Contains) && subtypeCodes.Count == documentTypeModel.Categories.Count);
                     var needsOrderUpdate = matchingDocumentType.DisplayOrder != documentTypeModel.DisplayOrder;
-                    var needsToBeEnabled = matchingDocumentType.IsDisabled != true;
+                    var needsToBeEnabled = matchingDocumentType.IsDisabled == true;
                     if (needsLabelUpdate || needsCategoryUpdate || needsOrderUpdate || needsToBeEnabled)
                     {
                         matchingDocumentType.DocumentTypeDescription = documentTypeModel.Label;
