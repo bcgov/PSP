@@ -15,6 +15,10 @@ SQLFOLDER=${FOLDER}${SUBFOLDER}
 FILE=${FOLDER}${SUBFOLDER}'\master.sql'
 SCRIPTHOME=${PWD}
 
+echo $SQLFOLDER
+echo $FILE
+echo $SCRIPTHOME
+
 # Initialize the destination file
 cp 'MSSQL_Script_Header.txt' "$FILE"
 echo >> "$FILE"

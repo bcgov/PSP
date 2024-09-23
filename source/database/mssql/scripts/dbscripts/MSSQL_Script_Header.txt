@@ -1,4 +1,4 @@
 :On Error Exit
 SET XACT_ABORT ON
 GO
-Begin Transaction
+BEGIN TRANSACTION
