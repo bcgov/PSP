@@ -865,7 +865,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
               class="form-group"
             >
               <select
-                class="form-control"
+                class="form-select form-control"
                 id="input-isRwyBeltDomPatent"
                 name="isRwyBeltDomPatent"
               >

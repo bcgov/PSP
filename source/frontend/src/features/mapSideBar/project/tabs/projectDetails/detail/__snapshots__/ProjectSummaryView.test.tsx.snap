@@ -9,6 +9,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   .c4 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c0 {

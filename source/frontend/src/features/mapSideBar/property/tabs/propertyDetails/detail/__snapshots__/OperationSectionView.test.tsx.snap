@@ -9,6 +9,7 @@ exports[`Operation section view > matches snapshot 1`] = `
   .c6 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
@@ -428,6 +429,7 @@ exports[`Operation section view > matches snapshot 1`] = `
   .c6 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
