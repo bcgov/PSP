@@ -2,7 +2,11 @@ import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/index';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { getEmptyProperty, getEmptyResearchFile } from '@/models/defaultInitializers';
+import {
+  getEmptyBaseAudit,
+  getEmptyProperty,
+  getEmptyResearchFile,
+} from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyResearchTabView, { IPropertyResearchTabViewProps } from './PropertyResearchTabView';
@@ -48,28 +52,28 @@ const fakePropertyResearch: ApiGen_Concepts_ResearchFileProperty = {
   isLegalOpinionObtained: true,
   documentReference: 'A document reference',
   researchSummary: 'Research summary notes',
-  purposeTypes: [
+  propertyResearchPurposeTypes: [
     {
-      propertyPurposeType: {
+      propertyResearchPurposeTypeCode: {
         id: 'TYPE_A',
         description: 'Type A',
         displayOrder: null,
         isDisabled: false,
       },
       id: 0,
-      propertyResearchFileId: 0,
       rowVersion: null,
+      ...getEmptyBaseAudit(),
     },
     {
-      propertyPurposeType: {
+      propertyResearchPurposeTypeCode: {
         id: 'TYPE_B',
         description: 'Type B',
         displayOrder: null,
         isDisabled: false,
       },
       id: 0,
-      propertyResearchFileId: 0,
       rowVersion: null,
+      ...getEmptyBaseAudit(),
     },
   ],
   fileId: 0,
