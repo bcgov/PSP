@@ -14,7 +14,8 @@ exports[`DepositsContainer > renders as expected 1`] = `
 
 .c2 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 

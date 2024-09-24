@@ -1,0 +1,10 @@
+If XACT_STATE()=1
+  BEGIN
+  PRINT 'Committing Tranaction...'
+  COMMIT TRANSACTION
+  END
+ELSE IF XACT_STATE()=-1
+  BEGIN
+  PRINT 'Rolling Back Transaction...'
+  ROLLBACK TRANSACTION
+  END

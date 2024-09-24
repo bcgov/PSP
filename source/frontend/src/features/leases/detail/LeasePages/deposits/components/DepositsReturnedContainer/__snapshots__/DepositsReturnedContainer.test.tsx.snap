@@ -8,7 +8,8 @@ exports[`DepositsReturnedContainer component > renders as expected 1`] = `
   <div />
   .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -28,6 +29,18 @@ exports[`DepositsReturnedContainer component > renders as expected 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c3 [id^='edit-depositreturn'] {
+  color: #428bca;
+}
+
+.c3 [id^='delete-depositreturn'] {
+  color: #428bca;
+}
+
+.c3 [id^='delete-depositreturn']:hover {
+  color: #CE3E39;
 }
 
 .c3 .btn.btn-primary {

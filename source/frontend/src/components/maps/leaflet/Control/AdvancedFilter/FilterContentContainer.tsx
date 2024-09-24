@@ -11,12 +11,9 @@ export interface IFilterContentContainerProps {
   View: React.FunctionComponent<IFilterContentFormProps>;
 }
 
-export const FilterContentContainer: React.FC<
-  React.PropsWithChildren<IFilterContentContainerProps>
-> = ({ View }) => {
-  const mapMachine = useMapStateMachine();
-
-  const { isFiltering, setVisiblePimsProperties, setShowDisposed, setShowRetired } = mapMachine;
+export const FilterContentContainer: React.FC<IFilterContentContainerProps> = ({ View }) => {
+  const { isFiltering, setVisiblePimsProperties, setShowDisposed, setShowRetired, resetMapFilter } =
+    useMapStateMachine();
 
   const { getMatchingProperties } = usePimsPropertyRepository();
 
@@ -34,8 +31,8 @@ export const FilterContentContainer: React.FC<
   );
 
   const onChange = useCallback(
-    (model: PropertyFilterFormModel) => {
-      filterProperties(model.toApi());
+    async (model: PropertyFilterFormModel) => {
+      await filterProperties(model.toApi());
       setShowDisposed(model.isDisposed);
       setShowRetired(model.isRetired);
     },
@@ -44,7 +41,13 @@ export const FilterContentContainer: React.FC<
 
   // Only render if the map state is filtering.
   if (isFiltering) {
-    return <View onChange={onChange} isLoading={getMatchingProperties.loading} />;
+    return (
+      <View
+        onChange={onChange}
+        onReset={resetMapFilter}
+        isLoading={getMatchingProperties.loading}
+      />
+    );
   } else {
     return <></>;
   }

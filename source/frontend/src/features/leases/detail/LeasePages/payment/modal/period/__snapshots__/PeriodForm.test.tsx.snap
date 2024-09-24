@@ -12,6 +12,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
@@ -122,6 +123,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
 
 .c0 .check-field label {
   width: 100%;
+  color: #474543;
 }
 
 .c0 .form-group {
@@ -806,6 +808,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
@@ -916,6 +919,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
 
 .c0 .check-field label {
   width: 100%;
+  color: #474543;
 }
 
 .c0 .form-group {

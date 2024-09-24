@@ -2,14 +2,10 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { forwardRef } from 'react';
 
-import {
-  IMapStateMachineContext,
-  useMapStateMachine,
-} from '@/components/common/mapFSM/MapStateMachineContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { FilterContentContainer, IFilterContentContainerProps } from './FilterContentContainer';
 import { IFilterContentFormProps } from './FilterContentForm';
@@ -69,8 +65,14 @@ describe('FilterContentContainer component', () => {
   it('fetches filter data from the api', async () => {
     mockGetApi.execute.mockResolvedValue([1, 2]);
     setup({});
-    viewProps.onChange(new PropertyFilterFormModel());
-    expect(mockGetApi.execute).toBeCalledWith(new PropertyFilterFormModel().toApi());
-    await waitFor(() => expect(mapMachineBaseMock.setVisiblePimsProperties).toBeCalledWith([1, 2]));
+    await act(async () => viewProps.onChange(new PropertyFilterFormModel()));
+    expect(mockGetApi.execute).toHaveBeenCalledWith(new PropertyFilterFormModel().toApi());
+    expect(mapMachineBaseMock.setVisiblePimsProperties).toHaveBeenCalledWith([1, 2]);
+  });
+
+  it(`resets the map filter state when "onReset" is called`, async () => {
+    setup({});
+    await act(async () => viewProps.onReset());
+    expect(mapMachineBaseMock.resetMapFilter).toHaveBeenCalled();
   });
 });

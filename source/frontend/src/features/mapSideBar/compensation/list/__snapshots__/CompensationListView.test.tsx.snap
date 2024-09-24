@@ -8,7 +8,8 @@ exports[`compensation list view > renders as expected 1`] = `
   <div />
   .c2 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -45,6 +46,10 @@ exports[`compensation list view > renders as expected 1`] = `
 
 .c3 .btn {
   margin: 0;
+}
+
+.c1 > {
+  font: #474543;
 }
 
 .c1 .summary-row {
@@ -288,7 +293,8 @@ exports[`compensation list view > renders as expected 1`] = `
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 

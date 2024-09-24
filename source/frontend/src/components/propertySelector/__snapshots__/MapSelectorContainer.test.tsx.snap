@@ -50,15 +50,37 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 .c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c13.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c13.btn.btn-primary:hover,
+.c13.btn.btn-primary:active,
+.c13.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c13.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c13.btn.btn-secondary:hover,
+.c13.btn.btn-secondary:active,
+.c13.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c13.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 .c13.btn.btn-info:hover,
 .c13.btn.btn-info:active,
 .c13.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c13.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c13.btn.btn-light:hover,
+.c13.btn.btn-light:active,
+.c13.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c13.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c13.btn.btn-dark:hover,
+.c13.btn.btn-dark:active,
+.c13.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c13.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c13.btn.btn-danger:hover,
+.c13.btn.btn-danger:active,
+.c13.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c13.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c13.btn.btn-warning:hover,
+.c13.btn.btn-warning:active,
+.c13.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -103,6 +171,7 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 .c13.btn.btn-link:hover,
 .c13.btn.btn-link:active,
 .c13.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,6 +182,7 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 
 .c13.btn.btn-link:disabled,
 .c13.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -161,9 +231,11 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 
 .c14 {
   font-size: 1.4rem;
+  color: #42814A;
 }
 
 .c4 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
   border-bottom: solid 0.2rem;
@@ -209,9 +281,11 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 
 .c5.c5.c5 .form-label {
   font-weight: bold;
+  color: #474543;
 }
 
 .c7 {
+  color: var(--theme-blue-100);
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
@@ -223,6 +297,7 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 .c0 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
+  background-color: #f2f2f2;
 }
 
 .c0 .tab-content .tab-pane {
@@ -231,6 +306,7 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 
 .c2 {
   background-color: white;
+  color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
@@ -240,18 +316,22 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 }
 
 .c2 .nav-item {
+  color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.2rem;
 }
 
 .c2 .nav-item:hover {
+  color: var(--surface-color-primary-button-hover);
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c2 .nav-item.active {
+  background-color: #f2f2f2;
   font-family: 'BCSans-Bold';
+  color: var(--surface-color-primary-button-hover);
   border-color: transparent;
 }
 
@@ -264,6 +344,7 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 }
 
 .c10 {
+  background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
 
