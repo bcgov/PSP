@@ -1,0 +1,1831 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FilterContentForm component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c1.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c1.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c1.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c1.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c1.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c1.btn.btn-primary:hover,
+.c1.btn.btn-primary:active,
+.c1.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c1.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c1.btn.btn-secondary:hover,
+.c1.btn.btn-secondary:active,
+.c1.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c1.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c1.btn.btn-info:hover,
+.c1.btn.btn-info:active,
+.c1.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c1.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c1.btn.btn-light:hover,
+.c1.btn.btn-light:active,
+.c1.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c1.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c1.btn.btn-dark:hover,
+.c1.btn.btn-dark:active,
+.c1.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c1.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c1.btn.btn-danger:hover,
+.c1.btn.btn-danger:active,
+.c1.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c1.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c1.btn.btn-warning:hover,
+.c1.btn.btn-warning:active,
+.c1.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c1.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c1.btn.btn-link:hover,
+.c1.btn.btn-link:active,
+.c1.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c1.btn.btn-link:disabled,
+.c1.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c1.btn:disabled,
+.c1.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c1.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c1.Button--icon-only:focus {
+  outline: none;
+}
+
+.c1.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c8 button.close {
+  font-size: 2.4rem;
+}
+
+.c5 {
+  float: right;
+  cursor: pointer;
+  font-size: 3.2rem;
+}
+
+.c4 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2rem;
+}
+
+.c3 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c9 {
+  font-weight: bold;
+}
+
+.c7 {
+  color: #474543;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 6.5rem;
+  margin: 0;
+  padding: 0 3.2rem;
+  box-sizing: border-box;
+  background-color: #f2f2f2;
+}
+
+.c2.c2.btn.btn-info {
+  color: #013366;
+}
+
+<form
+    action="#"
+  >
+    <div
+      class="c0"
+    >
+      <button
+        class="c1 Button Button--icon-only c2 btn btn-info"
+        data-testid="reset-button"
+        id="reset-button"
+        title="reset-button"
+        type="reset"
+      >
+        <div
+          class="Button__icon"
+        >
+          <svg
+            fill="currentColor"
+            height="20"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M212.333 224.333H12c-6.627 0-12-5.373-12-12V12C0 5.373 5.373 0 12 0h48c6.627 0 12 5.373 12 12v78.112C117.773 39.279 184.26 7.47 258.175 8.007c136.906.994 246.448 111.623 246.157 248.532C504.041 393.258 393.12 504 256.333 504c-64.089 0-122.496-24.313-166.51-64.215-5.099-4.622-5.334-12.554-.467-17.42l33.967-33.967c4.474-4.474 11.662-4.717 16.401-.525C170.76 415.336 211.58 432 256.333 432c97.268 0 176-78.716 176-176 0-97.267-78.716-176-176-176-58.496 0-110.28 28.476-142.274 72.333h98.274c6.627 0 12 5.373 12 12v48c0 6.627-5.373 12-12 12z"
+            />
+          </svg>
+        </div>
+      </button>
+      <span>
+        Reset to Default
+      </span>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Show Ownership
+          </div>
+          <div
+            class="pl-8 d-flex align-items-end col-auto"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m7 14 5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          />
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="row"
+            >
+              <div
+                class="col-1"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="check-field"
+                  >
+                    <div
+                      class="form-check"
+                    >
+                      <input
+                        checked=""
+                        class="form-check-input position-static"
+                        id="input-isCoreInventory"
+                        name="isCoreInventory"
+                        type="checkbox"
+                        value="true"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-1"
+              >
+                <img
+                  class=""
+                  height="36"
+                  src="/src/assets/images/pins/land-reg.png"
+                />
+              </div>
+              <div
+                class="pl-5 col"
+              >
+                <span
+                  class="c7 mb-3"
+                >
+                  Core Inventory
+                </span>
+              </div>
+            </div>
+            <div
+              class="pt-4 row"
+            >
+              <div
+                class="col-1"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="check-field"
+                  >
+                    <div
+                      class="form-check"
+                    >
+                      <input
+                        checked=""
+                        class="form-check-input position-static"
+                        id="input-isPropertyOfInterest"
+                        name="isPropertyOfInterest"
+                        type="checkbox"
+                        value="true"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-1"
+              >
+                <img
+                  class=""
+                  height="36"
+                  src="/src/assets/images/pins/land-poi.png"
+                />
+              </div>
+              <div
+                class="pl-5 col"
+              >
+                <span
+                  class="c7 mb-3"
+                >
+                  Property of Interest
+                </span>
+              </div>
+            </div>
+            <div
+              class="pt-4 row"
+            >
+              <div
+                class="col-1"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="check-field"
+                  >
+                    <div
+                      class="form-check"
+                    >
+                      <input
+                        checked=""
+                        class="form-check-input position-static"
+                        id="input-isOtherInterest"
+                        name="isOtherInterest"
+                        type="checkbox"
+                        value="true"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-1"
+              >
+                <img
+                  class=""
+                  height="36"
+                  src="/src/assets/images/pins/other-interest.png"
+                />
+              </div>
+              <div
+                class="pl-5 col"
+              >
+                <span
+                  class="c7 mb-3"
+                >
+                  Other Interest
+                </span>
+              </div>
+            </div>
+            <div
+              class="pt-4 row"
+            >
+              <div
+                class="col-1"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="check-field"
+                  >
+                    <div
+                      class="form-check"
+                    >
+                      <input
+                        class="form-check-input position-static"
+                        id="input-isDisposed"
+                        name="isDisposed"
+                        type="checkbox"
+                        value="false"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-1"
+              >
+                <img
+                  class=""
+                  height="36"
+                  src="/src/assets/images/pins/disposed.png"
+                />
+              </div>
+              <div
+                class="pl-5 col"
+              >
+                <span
+                  class="c7 mb-3"
+                >
+                  Disposed
+                </span>
+              </div>
+            </div>
+            <div
+              class="pt-4 row"
+            >
+              <div
+                class="col-1"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div
+                    class="check-field"
+                  >
+                    <div
+                      class="form-check"
+                    >
+                      <input
+                        class="form-check-input position-static"
+                        id="input-isRetired"
+                        name="isRetired"
+                        type="checkbox"
+                        value="false"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="col-1"
+              >
+                <img
+                  class=""
+                  height="36"
+                  src="/src/assets/images/pins/retired.png"
+                />
+              </div>
+              <div
+                class="pl-5 col"
+              >
+                <span
+                  class="c7 mb-3"
+                >
+                  Retired
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Project
+          </div>
+          <div
+            class="pl-8 d-flex align-items-end col-auto"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m7 14 5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          />
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="c8 form-group"
+              data-testid="typeahead-projectPrediction"
+            >
+              <div
+                class="rbt"
+                style="outline: none; position: relative;"
+                tabindex="-1"
+              >
+                <div
+                  style="display: flex; flex: 1; height: 100%; position: relative;"
+                >
+                  <input
+                    aria-autocomplete="both"
+                    aria-expanded="false"
+                    aria-haspopup="listbox"
+                    autocomplete="off"
+                    class="rbt-input-main form-control rbt-input"
+                    id="typeahead-projectPrediction"
+                    name="typeahead-projectPrediction"
+                    placeholder="Type to search for a Project"
+                    role="combobox"
+                    type="text"
+                    value=""
+                  />
+                  <input
+                    aria-hidden="true"
+                    class="rbt-input-hint"
+                    readonly=""
+                    style="background-color: transparent; border-color: transparent; box-shadow: none; color: rgba(0, 0, 0, 0.54); left: 0px; pointer-events: none; position: absolute; top: 0px; width: 100%;"
+                    tabindex="-1"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="rbt-aux pr-3"
+                >
+                  <svg
+                    color="#bcbec5"
+                    fill="currentColor"
+                    height="1.6rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="color: rgb(188, 190, 197);"
+                    viewBox="0 0 512 512"
+                    width="1.6rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Tenure
+          </div>
+          <div
+            class="pl-8 d-flex align-items-end col-auto"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m7 14 5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c9"
+            >
+              Status:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-tenureStatuses"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-tenureStatuses_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        Closed Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Fee Simple - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Fee Simple - Crown (Non-MoTI)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Fee Simple - MoTI
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Fee Simple - Private
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Highway/Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Indian Reserve (IR)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Leased/Licensed
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Land Act Reserve (Section 16/17/12/14
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Non-SRW Interests - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Non-SRW Interests - MoTI
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Special Use Permit (SUP)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Statutory Right of Way (SRW) - BCTFA
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Statutory Right of Way (SRW) - MoTI
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Statutory Right of Way (SRW) - Other
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Unsurveyed Crown Land
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Unknown
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c9"
+            >
+              Province Public Highway:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-tenurePPH"
+                name="tenurePPH"
+              >
+                <option
+                  value=""
+                >
+                  Select a highway
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARTERY"
+                  value="ARTERY"
+                >
+                  Arterial Hwy
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMBO"
+                  value="COMBO"
+                >
+                  Combination (PPH & Non-PPH)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NONPPH"
+                  value="NONPPH"
+                >
+                  Non-Provincial Public Highway (Non-PPH)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PPH"
+                  value="PPH"
+                >
+                  Provincial Public Highway (PPH)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c9"
+            >
+              Highway / Road Details:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-tenureRoadTypes"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-tenureRoadTypes_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        Arterial
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Bylaw
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Common law dedication
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Crown grant deletion
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Controlled Access
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Federal
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Forest Service Road
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gazetted
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Municipal
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Order in Council (OIC)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Public Road (FLNRORD Juridiction)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Section 107 Plan
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        S.42 (Court declared)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        S.56 (2) Highway
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        SRW plan (with no gazette)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Subdivision
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Untenured (no dedicated highway)
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Lease / Licence
+          </div>
+          <div
+            class="pl-8 d-flex align-items-end col-auto"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m7 14 5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-12"
+          >
+            <label
+              class="c9"
+            >
+              Lease Transaction:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                data-testid="leasePayRcvblType"
+                id="input-leasePayRcvblType"
+                name="leasePayRcvblType"
+              >
+                <option
+                  value=""
+                >
+                  Select Lease Transaction
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PYBLBCTFA"
+                  value="PYBLBCTFA"
+                >
+                  Payable (BCTFA as tenant)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PYBLMOTI"
+                  value="PYBLMOTI"
+                >
+                  Payable (MOTI as tenant)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-RCVBL"
+                  value="RCVBL"
+                >
+                  Receivable
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-all"
+                  value="all"
+                >
+                  Payable and Receivable
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c9"
+            >
+              Status:
+            </label>
+          </div>
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-leaseStatus"
+                name="leaseStatus"
+              >
+                <option
+                  value=""
+                >
+                  Select a Lease Status
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ACTIVE"
+                  value="ACTIVE"
+                >
+                  Archived
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIVED"
+                  value="ARCHIVED"
+                >
+                  Active
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DISCARD"
+                  value="DISCARD"
+                >
+                  Discarded
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DRAFT"
+                  value="DRAFT"
+                >
+                  Draft
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DUPLICATE"
+                  value="DUPLICATE"
+                >
+                  Duplicate
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-INACTIVE"
+                  value="INACTIVE"
+                >
+                  Inactive
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-TERMINATED"
+                  value="TERMINATED"
+                >
+                  Terminated
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c9"
+            >
+              Type(s):
+            </label>
+          </div>
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-leaseTypes"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-leaseTypes_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        MOTI Project Use License
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        License of Occupation (access)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        License of Occupation (titled)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        License of Occupation (use)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        License of Occupation (utilities)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        License of Prov Public Highway
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Ground Lease
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Lease - Registered
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Lease - Unregistered
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Manufactured Home Act
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Residential Tenancy Act
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Road Crossing
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c9"
+            >
+              Purpose(s):
+            </label>
+          </div>
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-leasePurposes"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-leasePurposes_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        Access (Industrial/Commercial)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Access (Residential)
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Agricultural
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        BC Ferries
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Camping
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Commercial Building
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Emergency Services
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Encroachment
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Fencing/Gate
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gardening
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Gravel
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Grazing
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Logging/Timber Harvest
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Marine Facility
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Mobile Home Pad
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Maintenance Yard
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other*
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Park
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Parking
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Park and Ride
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Pipeline
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Preload
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Private transportation
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Railway
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Rest Area/Pullout
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Sidewalks/Landscaping
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Signage
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Special Event
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Staging Area
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Stockpiling
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Storage
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Tourist Info
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Trail
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Utilities-infrastructure
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Utilities-overhead xing
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Utilities-underground xing
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Water Reservoir
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Weigh Scale
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Crossing
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c3 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Anomaly
+          </div>
+          <div
+            class="pl-8 d-flex align-items-end col-auto"
+          >
+            <svg
+              class="c5"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                collapse-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m7 14 5-5 5 5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          />
+          <div
+            class="c6 text-left col-12"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-anomalies"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-anomalies_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        Access
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Assignment of rent
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Potential for business loss claims
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Building liens
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Certification of pending litigation
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Charge holders in general
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Charge to the Crown
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Disturbance
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Duplicate title
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        E&F clause
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Legal notations
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Mortgage/security interests
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</DocumentFragment>
+`;

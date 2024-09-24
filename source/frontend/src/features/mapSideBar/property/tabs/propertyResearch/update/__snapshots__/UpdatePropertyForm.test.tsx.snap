@@ -7,12 +7,14 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
   />
   <div />
   .c0 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
 .c2 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 

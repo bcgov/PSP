@@ -41,8 +41,8 @@ exports[`ProjectHeader component > renders as expected 1`] = `
   padding: 0.2rem 0.5rem;
   margin-left: 0.4rem;
   gap: 0.5rem;
-  color: undefined;
-  background-color: undefined;
+  color: #2e8540;
+  background-color: #dff0d8;
 }
 
 .c4 {

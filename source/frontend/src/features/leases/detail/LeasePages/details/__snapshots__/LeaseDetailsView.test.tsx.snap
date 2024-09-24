@@ -50,15 +50,37 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
 .c3.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c3.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c3.btn.btn-primary:hover,
+.c3.btn.btn-primary:active,
+.c3.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c3.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c3.btn.btn-secondary:hover,
+.c3.btn.btn-secondary:active,
+.c3.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c3.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
 .c3.btn.btn-info:hover,
 .c3.btn.btn-info:active,
 .c3.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c3.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c3.btn.btn-light:hover,
+.c3.btn.btn-light:active,
+.c3.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c3.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c3.btn.btn-dark:hover,
+.c3.btn.btn-dark:active,
+.c3.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c3.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-danger:hover,
+.c3.btn.btn-danger:active,
+.c3.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c3.btn.btn-warning:hover,
+.c3.btn.btn-warning:active,
+.c3.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -103,6 +171,7 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
 .c3.btn.btn-link:hover,
 .c3.btn.btn-link:active,
 .c3.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,6 +182,7 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
 
 .c3.btn.btn-link:disabled,
 .c3.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -143,7 +213,8 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -155,14 +226,14 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
+.c6.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
+.c5 {
   font-weight: bold;
 }
 
@@ -180,6 +251,17 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
 
 .c2 .btn {
   margin: 0;
+}
+
+.c4.btn.btn-primary,
+.c4.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
 }
 
 <div
@@ -206,7 +288,7 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
               class="d-flex justify-content-end my-1 col-auto"
             >
               <button
-                class="c3 Button btn btn-primary"
+                class="c3 Button c4 btn btn-primary"
                 type="button"
               >
                 <div
@@ -248,13 +330,13 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c4"
+            class="c5"
           >
             Ministry project:
           </label>
         </div>
         <div
-          class="c5 text-left col"
+          class="c6 text-left col"
         >
           TESTPROJ - Test Project
         </div>
@@ -266,13 +348,13 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c4"
+            class="c5"
           >
             Product:
           </label>
         </div>
         <div
-          class="c5 text-left col"
+          class="c6 text-left col"
         />
       </div>
       <div
@@ -282,7 +364,7 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c4"
+            class="c5"
           >
             Status:
             <span>
@@ -310,7 +392,7 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
           </label>
         </div>
         <div
-          class="c5 text-left col-4"
+          class="c6 text-left col-4"
         >
           Active
         </div>
@@ -322,13 +404,13 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c4"
+            class="c5"
           >
             Account type:
           </label>
         </div>
         <div
-          class="c5 text-left col-5"
+          class="c6 text-left col-5"
         >
           Receivable
         </div>
@@ -346,13 +428,13 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
               class="pr-0 text-left col-6"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Commencement:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             />
           </div>
         </div>
@@ -366,13 +448,13 @@ exports[`LeaseDetailView component > renders minimally as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Expiry:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             />
           </div>
         </div>

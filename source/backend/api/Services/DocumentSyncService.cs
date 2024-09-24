@@ -162,6 +162,7 @@ namespace Pims.Api.Services
                 var matchingDocumentType = pimsDocumentTypes.FirstOrDefault(x => x.DocumentType == documentTypeModel.Name);
                 if (matchingDocumentType == null)
                 {
+                    // New documents
                     var newPimsDocType = new PimsDocumentTyp()
                     {
                         DocumentType = documentTypeModel.Name,
@@ -173,16 +174,19 @@ namespace Pims.Api.Services
                 }
                 else
                 {
+                    // Existing documents
                     var subtypeCodes = matchingDocumentType.PimsDocumentCategorySubtypes.Select(x => x.DocumentCategoryTypeCode).ToList();
 
                     var needsLabelUpdate = matchingDocumentType.DocumentTypeDescription != documentTypeModel.Label;
                     var needsCategoryUpdate = !(subtypeCodes.All(documentTypeModel.Categories.Contains) && subtypeCodes.Count == documentTypeModel.Categories.Count);
                     var needsOrderUpdate = matchingDocumentType.DisplayOrder != documentTypeModel.DisplayOrder;
-                    if (needsLabelUpdate || needsCategoryUpdate || needsOrderUpdate)
+                    var needsToBeEnabled = matchingDocumentType.IsDisabled == true;
+                    if (needsLabelUpdate || needsCategoryUpdate || needsOrderUpdate || needsToBeEnabled)
                     {
                         matchingDocumentType.DocumentTypeDescription = documentTypeModel.Label;
                         matchingDocumentType.PimsDocumentCategorySubtypes = subcategories;
                         matchingDocumentType.DisplayOrder = documentTypeModel.DisplayOrder;
+                        matchingDocumentType.IsDisabled = false;
 
                         updatedDocumentTypes.Add(documentTypeRepository.Update(matchingDocumentType));
                     }
