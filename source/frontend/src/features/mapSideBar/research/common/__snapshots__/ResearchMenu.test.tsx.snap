@@ -11,6 +11,7 @@ exports[`ResearchMenu component > renders as expected when provided no research 
   padding: 0px;
   margin: 0px;
   width: 100%;
+  color: var(--surface-color-primary-button-default);
 }
 
 .c1 {
@@ -25,6 +26,7 @@ exports[`ResearchMenu component > renders as expected when provided no research 
 }
 
 .c4 {
+  background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
   opacity: 0.8;
@@ -45,6 +47,10 @@ exports[`ResearchMenu component > renders as expected when provided no research 
   align-items: center;
 }
 
+.c4.selected {
+  background-color: #FCBA19;
+}
+
 .c2 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -59,7 +65,7 @@ exports[`ResearchMenu component > renders as expected when provided no research 
   -ms-flex-align: flex-end;
   align-items: flex-end;
   width: 100%;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #606060;
 }
 
 .c3 {

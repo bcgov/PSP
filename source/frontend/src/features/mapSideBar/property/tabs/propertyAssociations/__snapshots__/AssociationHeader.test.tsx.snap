@@ -8,6 +8,7 @@ exports[`AssociationHeader component > renders as expected when provided valid d
   <div />
   .c0 {
   color: white;
+  background-color: #428bca;
   font-size: 1.5rem;
   border-radius: 50%;
   width: 2.5rem;

@@ -118,7 +118,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   };
 
   useEffect(() => {
-    if (activeTab === FileTabType.NOTES) {
+    if (activeTab === FileTabType.NOTES || activeTab === FileTabType.DOCUMENTS) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);

@@ -172,7 +172,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   };
 
   useEffect(() => {
-    if (activeTab === FileTabType.NOTES) {
+    if (activeTab === FileTabType.NOTES || activeTab === FileTabType.DOCUMENTS) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);
