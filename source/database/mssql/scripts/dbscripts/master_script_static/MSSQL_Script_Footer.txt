@@ -1,10 +1,19 @@
+PRINT '======= DB TRANSACTION FINISH ========'
+PRINT '- Success: Committing Transaction...'
+COMMIT TRANSACTION;
+END TRY
+
+BEGIN CATCH
+PRINT '======= DB TRANSACTION CATCH ========'
 If XACT_STATE()=1
   BEGIN
-  PRINT 'Committing Tranaction...'
-  COMMIT TRANSACTION
+  PRINT '- Success: Committing Transaction...'
+  COMMIT TRANSACTION;
   END
 ELSE IF XACT_STATE()=-1
   BEGIN
-  PRINT 'Rolling Back Transaction...'
-  ROLLBACK TRANSACTION
-  END
+  PRINT '- Error: Rolling Back Transaction...'
+  ROLLBACK TRANSACTION;
+  END;
+END CATCH;
+GO
