@@ -1,0 +1,465 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LeaseDetailView component > renders minimally as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c3.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c3.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c3.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c3.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c3.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c3.btn.btn-primary:hover,
+.c3.btn.btn-primary:active,
+.c3.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c3.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c3.btn.btn-secondary:hover,
+.c3.btn.btn-secondary:active,
+.c3.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c3.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c3.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c3.btn.btn-light:hover,
+.c3.btn.btn-light:active,
+.c3.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c3.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c3.btn.btn-dark:hover,
+.c3.btn.btn-dark:active,
+.c3.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c3.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-danger:hover,
+.c3.btn.btn-danger:active,
+.c3.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c3.btn.btn-warning:hover,
+.c3.btn.btn-warning:active,
+.c3.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c3.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c3.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c3.Button--icon-only:focus {
+  outline: none;
+}
+
+.c3.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c6.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c5 {
+  font-weight: bold;
+}
+
+.c2 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c2 .btn {
+  margin: 0;
+}
+
+.c4.btn.btn-primary,
+.c4.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="c2 no-gutters row"
+          >
+            <div
+              class="d-flex justify-content-start px-2 my-1 col-auto"
+            >
+              Details
+            </div>
+            <div
+              class="d-flex justify-content-end my-1 col-auto"
+            >
+              <button
+                class="c3 Button c4 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    class="mr-2"
+                    fill="currentColor"
+                    height="24"
+                    id="generate-h1005-a"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 384 512"
+                    width="24"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      Generate H1005(a)
+                    </title>
+                    <path
+                      d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 64c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm192.81 248H304c8.84 0 16 7.16 16 16s-7.16 16-16 16h-47.19c-16.45 0-31.27-9.14-38.64-23.86-2.95-5.92-8.09-6.52-10.17-6.52s-7.22.59-10.02 6.19l-7.67 15.34a15.986 15.986 0 0 1-14.31 8.84c-.38 0-.75-.02-1.14-.05-6.45-.45-12-4.75-14.03-10.89L144 354.59l-10.61 31.88c-5.89 17.66-22.38 29.53-41 29.53H80c-8.84 0-16-7.16-16-16s7.16-16 16-16h12.39c4.83 0 9.11-3.08 10.64-7.66l18.19-54.64c3.3-9.81 12.44-16.41 22.78-16.41s19.48 6.59 22.77 16.41l13.88 41.64c19.77-16.19 54.05-9.7 66 14.16 2.02 4.06 5.96 6.5 10.16 6.5zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z"
+                    />
+                  </svg>
+                  Generate H1005(a)
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c5"
+          >
+            Ministry project:
+          </label>
+        </div>
+        <div
+          class="c6 text-left col"
+        >
+          TESTPROJ - Test Project
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c5"
+          >
+            Product:
+          </label>
+        </div>
+        <div
+          class="c6 text-left col"
+        />
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c5"
+          >
+            Status:
+            <span>
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-lease-status-tooltip"
+                id="lease-status-tooltip"
+              >
+                <svg
+                  class="tooltip-icon"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+              </span>
+            </span>
+          </label>
+        </div>
+        <div
+          class="c6 text-left col-4"
+        >
+          Active
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c5"
+          >
+            Account type:
+          </label>
+        </div>
+        <div
+          class="c6 text-left col-5"
+        >
+          Receivable
+        </div>
+      </div>
+      <div
+        class="row"
+      >
+        <div
+          class="col"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-6"
+            >
+              <label
+                class="c5"
+              >
+                Commencement:
+              </label>
+            </div>
+            <div
+              class="c6 text-left col"
+            />
+          </div>
+        </div>
+        <div
+          class="col"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c5"
+              >
+                Expiry:
+              </label>
+            </div>
+            <div
+              class="c6 text-left col"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

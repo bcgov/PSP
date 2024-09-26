@@ -232,7 +232,10 @@ export function featuresetToMapProperty(
       parcelFeature?.properties?.PLAN_NUMBER ??
       undefined,
     address: address ?? formattedAddress ?? undefined,
-    legalDescription: parcelFeature?.properties?.LEGAL_DESCRIPTION ?? undefined,
+    legalDescription:
+      pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
+      parcelFeature?.properties?.LEGAL_DESCRIPTION ??
+      undefined,
     region: isNumber(regionFeature?.properties?.REGION_NUMBER)
       ? regionFeature?.properties?.REGION_NUMBER
       : RegionCodes.Unknown,

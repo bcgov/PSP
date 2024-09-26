@@ -6,7 +6,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c8.btn {
+  .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,53 +35,121 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c8.btn .Button__value {
+.c9.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c8.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c9.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c8.btn.btn-secondary {
-  background: none;
+.c9.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c8.btn.btn-info {
+.c9.btn.btn-primary:hover,
+.c9.btn.btn-primary:active,
+.c9.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c9.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c9.btn.btn-secondary:hover,
+.c9.btn.btn-secondary:active,
+.c9.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c9.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c8.btn.btn-light {
+.c9.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c8.btn.btn-dark {
+.c9.btn.btn-light:hover,
+.c9.btn.btn-light:active,
+.c9.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c9.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c8.btn.btn-link {
+.c9.btn.btn-dark:hover,
+.c9.btn.btn-dark:active,
+.c9.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c9.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c9.btn.btn-danger:hover,
+.c9.btn.btn-danger:active,
+.c9.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c9.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c9.btn.btn-warning:hover,
+.c9.btn.btn-warning:active,
+.c9.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -100,9 +168,10 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   padding: 0;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +180,15 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,44 +199,45 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c8.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 .react-datepicker__calendar-icon {
+.c6 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
-.c5 .react-datepicker__view-calendar-icon input {
+.c6 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c5 .react-datepicker-wrapper {
+.c6 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c6.c6.form-control.is-valid {
+.c7.c7.form-control.is-valid {
   background-image: none;
 }
 
-.c6.c6.form-control.is-invalid {
+.c7.c7.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c10 {
+.c11 {
   margin-top: 0.5rem;
   margin-bottom: 1.5rem;
   border-bottom-style: solid;
@@ -174,7 +245,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   border-bottom-width: 0.1rem;
 }
 
-.c7 {
+.c8 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -182,15 +253,16 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   padding-left: 1.2rem;
   padding-right: 2.8rem;
   background-image: none;
-  border: solid 0.1rem;
+  color: #474543;
+  border: #606060 solid 0.1rem;
   cursor: default;
 }
 
-.c7.is-invalid {
-  border: solid 0.1rem;
+.c8.is-invalid {
+  border: #CE3E39 solid 0.1rem;
 }
 
-.c9.c9.btn {
+.c10.c10.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   padding-top: 0.8rem;
@@ -198,30 +270,33 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   padding-right: 1.2rem;
   height: 1.6rem;
   right: 0rem;
+  color: #9F9D9C;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c9.c9.btn .text {
+.c10.c10.btn .text {
   display: none;
 }
 
-.c9.c9.btn:hover,
-.c9.c9.btn:active,
-.c9.c9.btn:focus {
+.c10.c10.btn:hover,
+.c10.c10.btn:active,
+.c10.c10.btn:focus {
+  color: #CE3E39;
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -229,18 +304,18 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
-.c12 {
+.c13 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -266,7 +341,11 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c11 {
+.c1 {
+  background-color: #f2f2f2;
+}
+
+.c12 {
   margin-right: 1rem;
   padding-bottom: 1rem;
   z-index: 0;
@@ -276,13 +355,13 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
     class="c0"
   >
     <div
-      class=""
+      class="c1"
     >
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -304,7 +383,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Approval / Consultation type:
                 <span>
@@ -332,7 +411,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 required text-left col-6"
+              class="c5 required text-left col-6"
             >
               <div
                 class="form-group"
@@ -407,7 +486,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Requested on:
                 <span>
@@ -435,10 +514,10 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 text-left col-6"
+              class="c5 text-left col-6"
             >
               <div
-                class="c5 form-group"
+                class="c6 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -457,7 +536,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c6 form-control date-picker"
+                      class="c7 form-control date-picker"
                       id="datepicker-requestedOn"
                       name="requestedOn"
                       placeholder="MMM DD, YYYY"
@@ -476,7 +555,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Contact:
                 <span>
@@ -504,7 +583,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 text-left col-6"
+              class="c5 text-left col-6"
             >
               <div
                 class="form-group"
@@ -516,11 +595,11 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                     class="col"
                   >
                     <div
-                      class="c7"
+                      class="c8"
                     >
                       Select from contacts
                       <button
-                        class="c8 Button c9 btn btn-link"
+                        class="c9 Button c10 btn btn-link"
                         title="remove"
                         type="button"
                       >
@@ -564,7 +643,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                     class="pl-0 col-auto"
                   >
                     <button
-                      class="c8 Button Button--icon-only px-2 btn btn-primary"
+                      class="c9 Button Button--icon-only px-2 btn btn-primary"
                       title="Select Contact"
                       type="button"
                     >
@@ -599,19 +678,19 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Response received:
               </label>
             </div>
             <div
-              class="c4 text-left col-2"
+              class="c5 text-left col-2"
             >
               <div
                 class="form-group"
               >
                 <select
-                  class="form-control"
+                  class="form-select form-control"
                   id="input-isResponseReceived"
                   name="isResponseReceived"
                 >
@@ -636,16 +715,16 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Response received on:
               </label>
             </div>
             <div
-              class="c4 text-left col-auto"
+              class="c5 text-left col-auto"
             >
               <div
-                class="c5 form-group"
+                class="c6 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -664,7 +743,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c6 form-control date-picker"
+                      class="c7 form-control date-picker"
                       id="datepicker-responseReceivedDate"
                       name="responseReceivedDate"
                       placeholder="MMM DD, YYYY"
@@ -683,7 +762,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Outcome:
                 <span>
@@ -711,7 +790,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 required text-left col-6"
+              class="c5 required text-left col-6"
             >
               <div
                 class="form-group"
@@ -772,7 +851,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Comments:
                 <span>
@@ -800,7 +879,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 required text-left col-12"
+              class="c5 required text-left col-12"
             >
               <div
                 class="textarea input form-group"
@@ -817,13 +896,13 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c10"
+            class="c11"
           />
           <div
-            class="c11"
+            class="c12"
           >
             <div
-              class="c12 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+              class="c13 justify-content-end mb-12 mt-12 p-0 no-gutters row"
             >
               <div
                 class="pr-3 col-auto"
@@ -832,7 +911,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                 class="pr-6 col-auto"
               >
                 <button
-                  class="c8 Button btn btn-secondary"
+                  class="c9 Button btn btn-secondary"
                   type="button"
                 >
                   <div
@@ -846,7 +925,7 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
                 class="col-auto"
               >
                 <button
-                  class="c8 Button Button--disabled mr-9 btn btn-primary"
+                  class="c9 Button Button--disabled mr-9 btn btn-primary"
                   disabled=""
                   type="button"
                 >

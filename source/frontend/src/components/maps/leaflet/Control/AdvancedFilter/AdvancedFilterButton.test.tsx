@@ -15,11 +15,10 @@ import AdvancedFilterButton, { IAdvanceFilterButtonProps } from './AdvancedFilte
 const toggle = vi.fn();
 
 describe('AdvancedFilterButton', () => {
-  const setup = async (
-    renderOptions: RenderOptions & { props?: IAdvanceFilterButtonProps } = {},
-  ) => {
+  const setup = (renderOptions: RenderOptions & { props?: IAdvanceFilterButtonProps } = {}) => {
     const props: IAdvanceFilterButtonProps = renderOptions.props || {
       onToggle: toggle,
+      active: false,
     };
 
     // create a promise to wait for the map to be ready (which happens after initial render)
@@ -43,40 +42,49 @@ describe('AdvancedFilterButton', () => {
   };
 
   it('renders as expected', async () => {
-    const { asFragment } = await setup();
+    const { mapReady, asFragment } = setup();
+    await waitFor(() => mapReady);
     expect(asFragment()).toMatchSnapshot();
   });
 
   it(`renders the advanced filter button in the 'closed' state by default`, async () => {
-    const { mapReady, getAdvancedFilterButton } = await setup();
+    const { mapReady, getAdvancedFilterButton } = setup();
     await waitFor(() => mapReady);
 
     const button = getAdvancedFilterButton();
-    expect(button).toBeInTheDocument();
-    expect(button.className).not.toContain('open');
+    expect(button).toBeVisible();
+    expect(button.classList).not.toContain('open');
   });
 
-  it(`when filter bar is closed, clicking the button calls 'toggle' callback`, async () => {
-    const { mapReady, getAdvancedFilterButton } = await setup({
+  it(`calls 'toggle' callback when the button is clicked`, async () => {
+    const { mapReady, getAdvancedFilterButton } = setup({
       props: { onToggle: toggle },
     });
     await waitFor(() => mapReady);
 
     const button = getAdvancedFilterButton();
-    expect(button).toBeInTheDocument();
+    expect(button).toBeVisible();
     await act(async () => userEvent.click(button));
     expect(toggle).toHaveBeenCalled();
   });
 
-  it(`when filter bar is open, clicking the button calls 'toggle' callback`, async () => {
-    const { mapReady, getAdvancedFilterButton } = await setup({
-      props: { onToggle: toggle },
-    });
-    await waitFor(() => mapReady);
+  it.each([
+    [true, '#FFFFFF', '#013366'],
+    [false, '#013366', '#FFFFFF'],
+  ])(
+    `applies appropriate styling when 'active' prop value is '%s'`,
+    async (active: boolean, expectedCssColor: string, expectedCssBgColor: string) => {
+      const { mapReady, getAdvancedFilterButton } = setup({
+        props: { onToggle: toggle, active },
+      });
+      await waitFor(() => mapReady);
 
-    const button = getAdvancedFilterButton();
-    expect(button).toBeInTheDocument();
-    await act(async () => userEvent.click(button));
-    expect(toggle).toHaveBeenCalled();
-  });
+      const button = getAdvancedFilterButton();
+      expect(button).toBeVisible();
+      expect(button).toHaveStyle({
+        color: expectedCssColor,
+        'background-color': expectedCssBgColor,
+      });
+    },
+  );
 });

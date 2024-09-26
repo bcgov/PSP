@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
@@ -28,6 +29,8 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   defaultTab,
   setIsEditing,
 }) => {
+  const { setFullWidthSideBar } = useMapStateMachine();
+
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
@@ -113,6 +116,15 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   const onSetActiveTab = (tab: FileTabType) => {
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    if (activeTab === FileTabType.NOTES || activeTab === FileTabType.DOCUMENTS) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
 
   return (
     <FileTabs

@@ -6,7 +6,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c5.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,53 +35,121 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn .Button__value {
+.c6.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c5.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c6.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c5.btn.btn-secondary {
-  background: none;
+.c6.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-primary:hover,
+.c6.btn.btn-primary:active,
+.c6.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c6.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c6.btn.btn-secondary:hover,
+.c6.btn.btn-secondary:active,
+.c6.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c6.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-light:hover,
+.c6.btn.btn-light:active,
+.c6.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c6.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-dark:hover,
+.c6.btn.btn-dark:active,
+.c6.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c6.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c6.btn.btn-danger:hover,
+.c6.btn.btn-danger:active,
+.c6.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c6.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c6.btn.btn-warning:hover,
+.c6.btn.btn-warning:active,
+.c6.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -100,9 +168,10 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   padding: 0;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +180,15 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,44 +199,45 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c7 .react-datepicker__calendar-icon {
+.c8 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
-.c7 .react-datepicker__view-calendar-icon input {
+.c8 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c7 .react-datepicker-wrapper {
+.c8 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c8.c8.form-control.is-valid {
+.c9.c9.form-control.is-valid {
   background-image: none;
 }
 
-.c8.c8.form-control.is-invalid {
+.c9.c9.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c12 {
+.c13 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -192,7 +263,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c6 {
+.c7 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -200,54 +271,57 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   padding-left: 1.2rem;
   padding-right: 2.8rem;
   background-image: none;
-  border: solid 0.1rem;
+  color: #9F9D9C;
+  border: #606060 solid 0.1rem;
   cursor: pointer;
 }
 
-.c6.is-invalid {
-  border: solid 0.1rem;
+.c7.is-invalid {
+  border: #CE3E39 solid 0.1rem;
 }
 
-.c9 .react-datepicker__calendar-icon {
+.c10 .react-datepicker__calendar-icon {
   width: 3rem;
   height: 3rem;
   margin-top: 0.5rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
-.c9 .react-datepicker__view-calendar-icon input {
+.c10 .react-datepicker__view-calendar-icon input {
   padding: 0.6rem 1rem 0.5rem 0.6rem;
 }
 
-.c9 .react-datepicker-wrapper {
+.c10 .react-datepicker-wrapper {
   max-width: 16rem;
 }
 
-.c9 .react-datepicker-year-header {
+.c10 .react-datepicker-year-header {
   font-size: 1.6rem;
   padding: 0.55rem 0;
 }
 
-.c9 .react-datepicker__navigation {
+.c10 .react-datepicker__navigation {
   top: 0.39rem;
 }
 
-.c10.c10.form-control.is-valid {
+.c11.c11.form-control.is-valid {
   background-image: none;
 }
 
-.c10.c10.form-control.is-invalid {
+.c11.c11.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -255,18 +329,22 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
-.c11 {
+.c1 {
+  background-color: #f2f2f2;
+}
+
+.c12 {
   margin-right: 1rem;
   padding-bottom: 1rem;
   z-index: 0;
@@ -276,13 +354,13 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
     class="c0"
   >
     <div
-      class=""
+      class="c1"
     >
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -304,16 +382,16 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Purchaser name(s):
               </label>
             </div>
             <div
-              class="c4 text-left col-7"
+              class="c5 text-left col-7"
             >
               <button
-                class="c5 Button mb-3 btn btn-link"
+                class="c6 Button mb-3 btn btn-link"
                 data-testid="add-purchaser-button"
                 type="button"
               >
@@ -332,13 +410,13 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Purchaser agent:
               </label>
             </div>
             <div
-              class="c4 text-left col-6"
+              class="c5 text-left col-6"
             >
               <div
                 class="form-group"
@@ -350,7 +428,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                     class="col"
                   >
                     <div
-                      class="c6"
+                      class="c7"
                     >
                       Select from contacts
                     </div>
@@ -370,7 +448,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                     class="pl-0 col-auto"
                   >
                     <button
-                      class="c5 Button Button--icon-only px-2 btn btn-primary"
+                      class="c6 Button Button--icon-only px-2 btn btn-primary"
                       title="Select Contact"
                       type="button"
                     >
@@ -405,13 +483,13 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Purchaser solicitor:
               </label>
             </div>
             <div
-              class="c4 text-left col-6"
+              class="c5 text-left col-6"
             >
               <div
                 class="form-group"
@@ -423,7 +501,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                     class="col"
                   >
                     <div
-                      class="c6"
+                      class="c7"
                     >
                       Select from contacts
                     </div>
@@ -443,7 +521,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                     class="pl-0 col-auto"
                   >
                     <button
-                      class="c5 Button Button--icon-only px-2 btn btn-primary"
+                      class="c6 Button Button--icon-only px-2 btn btn-primary"
                       title="Select Contact"
                       type="button"
                     >
@@ -478,7 +556,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Last condition removal date:
                 <span>
@@ -506,10 +584,10 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
-                class="c7 form-group"
+                class="c8 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -528,7 +606,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c8 form-control date-picker"
+                      class="c9 form-control date-picker"
                       id="datepicker-finalConditionRemovalDate"
                       name="finalConditionRemovalDate"
                       placeholder="MMM DD, YYYY"
@@ -547,16 +625,16 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Sale completion date:
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
-                class="c7 form-group"
+                class="c8 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -575,7 +653,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c8 form-control date-picker"
+                      class="c9 form-control date-picker"
                       id="datepicker-saleCompletionDate"
                       name="saleCompletionDate"
                       placeholder="MMM DD, YYYY"
@@ -594,16 +672,16 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Fiscal year of sale:
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
-                class="c9 form-group"
+                class="c10 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -621,7 +699,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
                       />
                     </svg>
                     <input
-                      class="c10 form-control"
+                      class="c11 form-control"
                       id="datepicker-saleFiscalYear"
                       name="saleFiscalYear"
                       placeholder="YYYY"
@@ -640,13 +718,13 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Final sale price, incl. GST ($):
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
@@ -674,13 +752,13 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Realtor commission ($):
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
@@ -708,19 +786,19 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 GST required:
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
               >
                 <select
-                  class="form-control"
+                  class="form-select form-control"
                   id="input-isGstRequired"
                   name="isGstRequired"
                 >
@@ -745,13 +823,13 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Net Book Value ($):
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
@@ -779,7 +857,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Total cost of sales ($):
                 <span>
@@ -807,7 +885,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
@@ -835,7 +913,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Net proceeds before SPP cost ($):
                 <span>
@@ -863,7 +941,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
@@ -892,7 +970,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 SPP Amount ($):
                 <span>
@@ -920,7 +998,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
@@ -948,7 +1026,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Net proceeds after SPP cost ($):
                 <span>
@@ -976,7 +1054,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
@@ -1005,13 +1083,13 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Remediation cost ($):
               </label>
             </div>
             <div
-              class="c4 text-left col-5"
+              class="c5 text-left col-5"
             >
               <div
                 class="form-group"
@@ -1036,10 +1114,10 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c11"
+      class="c12"
     >
       <div
-        class="c12 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+        class="c13 justify-content-end mb-12 mt-12 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"
@@ -1048,7 +1126,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
           class="pr-6 col-auto"
         >
           <button
-            class="c5 Button btn btn-secondary"
+            class="c6 Button btn btn-secondary"
             type="button"
           >
             <div
@@ -1062,7 +1140,7 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
           class="col-auto"
         >
           <button
-            class="c5 Button mr-9 btn btn-primary"
+            class="c6 Button mr-9 btn btn-primary"
             type="button"
           >
             <div

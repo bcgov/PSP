@@ -32,5 +32,5 @@ Scenario: 05. Research File from Pin
 	Then A new Research File is created successfully
 
 Scenario: 06. Research File List View
-	Given I search for Research Files from row number 8
+	Given I search for Research Files from row number 4
 	Then Research File Properties remain unchanged

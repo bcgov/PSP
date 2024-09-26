@@ -50,15 +50,37 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
 .c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c7.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c7.btn.btn-primary:hover,
+.c7.btn.btn-primary:active,
+.c7.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c7.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c7.btn.btn-secondary:hover,
+.c7.btn.btn-secondary:active,
+.c7.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c7.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
 .c7.btn.btn-info:hover,
 .c7.btn.btn-info:active,
 .c7.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c7.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c7.btn.btn-light:hover,
+.c7.btn.btn-light:active,
+.c7.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c7.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c7.btn.btn-dark:hover,
+.c7.btn.btn-dark:active,
+.c7.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c7.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-danger:hover,
+.c7.btn.btn-danger:active,
+.c7.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c7.btn.btn-warning:hover,
+.c7.btn.btn-warning:active,
+.c7.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -103,6 +171,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
 .c7.btn.btn-link:hover,
 .c7.btn.btn-link:active,
 .c7.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,6 +182,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
 
 .c7.btn.btn-link:disabled,
 .c7.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -146,18 +216,32 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
   white-space: nowrap;
 }
 
-.c10 {
+.c8.btn.btn-primary,
+.c8.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
+}
+
+.c11 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c0 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
 .c4 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -169,14 +253,14 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c9.required::before {
+.c10.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c8 {
+.c9 {
   font-weight: bold;
 }
 
@@ -215,12 +299,12 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
   flex-direction: row-reverse;
 }
 
-.c12 {
+.c13 {
   font-size: 16px;
   font-weight: 600;
 }
 
-.c11 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -408,7 +492,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                   </svg>
                 </span>
                 <button
-                  class="c7 Button btn btn-primary"
+                  class="c7 Button c8 btn btn-primary"
                   type="button"
                 >
                   <div
@@ -446,13 +530,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Status:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
             data-testid="compensation-status"
           >
             Draft
@@ -465,13 +549,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Alternate project:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -481,13 +565,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Final date:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
             data-testid="compensation-finalized-date"
           />
         </div>
@@ -498,13 +582,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Agreement date:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -514,13 +598,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Expropriation notice served date:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -530,13 +614,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Expropriation vesting date:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -546,13 +630,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Advanced payment served date:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
             data-testid="advanced-payment-served-date"
           />
         </div>
@@ -563,13 +647,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-12"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Special instructions:
             </label>
           </div>
           <div
-            class="c9 pre-wrap col"
+            class="c10 pre-wrap col"
           >
             <p
               style="white-space: pre-wrap;"
@@ -630,13 +714,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Properties:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           >
             <p>
               <label>
@@ -670,7 +754,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
-              class="c10"
+              class="c11"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -703,13 +787,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Product:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
             data-testid="file-product"
           >
             00048
@@ -722,13 +806,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Business function:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -738,13 +822,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Work activity:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -754,13 +838,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Cost type:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -770,13 +854,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Fiscal year:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -786,13 +870,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               STOB:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -802,13 +886,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Service line:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
         <div
@@ -818,13 +902,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Responsibility centre:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           />
         </div>
       </div>
@@ -847,7 +931,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
-              class="c10"
+              class="c11"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -880,16 +964,16 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Payee:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           >
             <div
-              class="c11"
+              class="c12"
             >
               <label />
             </div>
@@ -902,13 +986,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Amount (before tax):
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           >
             $0.00
           </div>
@@ -920,13 +1004,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               GST applicable?:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           >
             No
           </div>
@@ -938,13 +1022,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Total amount:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           >
             $0.00
           </div>
@@ -969,7 +1053,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
-              class="c10"
+              class="c11"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -1009,13 +1093,13 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             class="pr-0 text-left col-12"
           >
             <label
-              class="c8"
+              class="c9"
             >
               Detailed remarks:
             </label>
           </div>
           <div
-            class="c9 text-left col"
+            class="c10 text-left col"
           >
             <p
               style="white-space: pre-wrap;"
@@ -1031,7 +1115,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c12"
+          class="c13"
         >
           <div
             class="row"

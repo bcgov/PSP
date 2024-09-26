@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
@@ -38,6 +39,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+  const { setFullWidthSideBar } = useMapStateMachine();
 
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
 
@@ -168,6 +170,15 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     }
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    if (activeTab === FileTabType.NOTES || activeTab === FileTabType.DOCUMENTS) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
 
   return (
     <FileTabs

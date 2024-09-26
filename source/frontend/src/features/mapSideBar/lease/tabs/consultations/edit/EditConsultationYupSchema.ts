@@ -1,7 +1,7 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
-import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from './../../../../../../models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';
+import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';
 
 export const UpdateConsultationYupSchema = Yup.object().shape({
   consultationTypeCode: Yup.string().required('Consultation type is required'),

@@ -6,7 +6,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
     class="Toastify"
   />
   <div />
-  .c12.btn {
+  .c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,53 +35,121 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   cursor: pointer;
 }
 
-.c12.btn .Button__value {
+.c13.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c12.btn.btn-secondary {
-  background: none;
+.c13.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-primary:hover,
+.c13.btn.btn-primary:active,
+.c13.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c13.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c13.btn.btn-secondary:hover,
+.c13.btn.btn-secondary:active,
+.c13.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c13.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-light:hover,
+.c13.btn.btn-light:active,
+.c13.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c13.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-dark:hover,
+.c13.btn.btn-dark:active,
+.c13.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c13.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c13.btn.btn-danger:hover,
+.c13.btn.btn-danger:active,
+.c13.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c13.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c13.btn.btn-warning:hover,
+.c13.btn.btn-warning:active,
+.c13.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -100,9 +168,10 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   padding: 0;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +180,15 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,63 +199,66 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   opacity: 0.65;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 button.close {
+.c6 button.close {
   font-size: 2.4rem;
 }
 
-.c6 .react-datepicker__calendar-icon {
+.c7 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
-.c6 .react-datepicker__view-calendar-icon input {
+.c7 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c6 .react-datepicker-wrapper {
+.c7 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c7.c7.form-control.is-valid {
+.c8.c8.form-control.is-valid {
   background-image: none;
 }
 
-.c7.c7.form-control.is-invalid {
+.c8.c8.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c10 button.close {
+.c11 button.close {
   font-size: 2.4rem;
 }
 
-.c11 {
+.c12 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -193,24 +266,24 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
 }
 
-.c9 {
+.c10 {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-.c14 {
+.c15 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -236,12 +309,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   overflow-y: auto;
 }
 
-.c13 {
+.c1 {
+  background-color: #f2f2f2;
+}
+
+.c14 {
   margin-right: 1rem;
   padding-bottom: 1rem;
 }
 
-.c8 textarea.form-control {
+.c9 textarea.form-control {
   min-width: 100%;
   height: 7rem;
   resize: none;
@@ -251,13 +328,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
     class="c0"
   >
     <div
-      class=""
+      class="c1"
     >
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -279,13 +356,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Status:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="form-group"
@@ -325,16 +402,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Alternate project:
               </label>
             </div>
             <div
-              class="c4 text-left col-6"
+              class="c5 text-left col-6"
             >
               <div
-                class="c5 form-group"
+                class="c6 form-group"
                 data-testid="typeahead-alternateProject"
               >
                 <div
@@ -397,13 +474,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Final date:
               </label>
             </div>
             <div
-              class="c4 text-left col-4"
+              class="c5 text-left col-4"
               data-testid="compensation-finalized-date"
             />
           </div>
@@ -414,16 +491,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Agreement date:
               </label>
             </div>
             <div
-              class="c4 text-left col-4"
+              class="c5 text-left col-4"
             >
               <div
-                class="c6 form-group"
+                class="c7 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -442,7 +519,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c7 form-control date-picker"
+                      class="c8 form-control date-picker"
                       id="datepicker-agreementDateTime"
                       name="agreementDateTime"
                       placeholder="MMM DD, YYYY"
@@ -461,16 +538,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Expropriation notice served date:
               </label>
             </div>
             <div
-              class="c4 text-left col-4"
+              class="c5 text-left col-4"
             >
               <div
-                class="c6 form-group"
+                class="c7 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -489,7 +566,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c7 form-control date-picker"
+                      class="c8 form-control date-picker"
                       id="datepicker-expropriationNoticeServedDateTime"
                       name="expropriationNoticeServedDateTime"
                       placeholder="MMM DD, YYYY"
@@ -508,16 +585,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Expropriation vesting date:
               </label>
             </div>
             <div
-              class="c4 text-left col-4"
+              class="c5 text-left col-4"
             >
               <div
-                class="c6 form-group"
+                class="c7 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -536,7 +613,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c7 form-control date-picker"
+                      class="c8 form-control date-picker"
                       id="datepicker-expropriationVestingDateTime"
                       name="expropriationVestingDateTime"
                       placeholder="MMM DD, YYYY"
@@ -555,16 +632,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Advanced payment served date:
               </label>
             </div>
             <div
-              class="c4 text-left col-4"
+              class="c5 text-left col-4"
             >
               <div
-                class="c6 form-group"
+                class="c7 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -583,7 +660,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c7 form-control date-picker"
+                      class="c8 form-control date-picker"
                       id="datepicker-advancedPaymentServedDate"
                       name="advancedPaymentServedDate"
                       placeholder="MMM DD, YYYY"
@@ -602,16 +679,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-12"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Special instructions:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
-                class="c8 textarea input form-group"
+                class="c9 textarea input form-group"
               >
                 <textarea
                   class="form-control"
@@ -625,10 +702,10 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -676,13 +753,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Selected Properties:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="table"
@@ -766,7 +843,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                         title=""
                       >
                         <div
-                          class="c9"
+                          class="c10"
                         >
                           PID: 023-214-937
                         </div>
@@ -804,7 +881,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                         title=""
                       >
                         <div
-                          class="c9"
+                          class="c10"
                         >
                           PID: 024-996-777
                         </div>
@@ -818,10 +895,10 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -843,13 +920,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Product:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               00048
             </div>
@@ -861,13 +938,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Business function:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             />
           </div>
           <div
@@ -877,13 +954,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Work activity:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             />
           </div>
           <div
@@ -893,13 +970,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Cost type:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             />
           </div>
           <div
@@ -909,13 +986,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Fiscal year:
               </label>
             </div>
             <div
-              class="c4 required text-left col-4"
+              class="c5 required text-left col-4"
             >
               <div
                 class="form-group"
@@ -962,16 +1039,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 STOB:
               </label>
             </div>
             <div
-              class="c4 required text-left col"
+              class="c5 required text-left col"
             >
               <div
-                class="c10 form-group"
+                class="c11 form-group"
                 data-testid="typeahead-select-stob"
               >
                 <div
@@ -1015,16 +1092,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Service line:
               </label>
             </div>
             <div
-              class="c4 required text-left col"
+              class="c5 required text-left col"
             >
               <div
-                class="c10 form-group"
+                class="c11 form-group"
                 data-testid="typeahead-select-serviceLine"
               >
                 <div
@@ -1068,16 +1145,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Responsibility centre:
               </label>
             </div>
             <div
-              class="c4 required text-left col"
+              class="c5 required text-left col"
             >
               <div
-                class="c10 form-group"
+                class="c11 form-group"
                 data-testid="typeahead-select-responsibilityCentre"
               >
                 <div
@@ -1117,10 +1194,10 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -1134,7 +1211,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pl-8 d-flex align-items-end col-auto"
             >
               <svg
-                class="c11"
+                class="c12"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -1167,13 +1244,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Payee:
               </label>
             </div>
             <div
-              class="c4 required text-left col"
+              class="c5 required text-left col"
             >
               <div
                 class="form-group"
@@ -1215,13 +1292,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Payment in Trust?:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="form-group"
@@ -1251,7 +1328,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 GST number:
                 <span>
@@ -1279,7 +1356,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="input form-group"
@@ -1301,13 +1378,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Amount (before tax):
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="form-group"
@@ -1336,13 +1413,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 GST amount:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="form-group"
@@ -1371,7 +1448,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-4"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Total amount:
                 <span>
@@ -1399,7 +1476,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="form-group"
@@ -1424,10 +1501,10 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -1441,7 +1518,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pl-8 d-flex align-items-end col-auto"
             >
               <svg
-                class="c11"
+                class="c12"
                 fill="currentColor"
                 height="1em"
                 stroke="currentColor"
@@ -1468,7 +1545,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           class="collapse show"
         >
           <button
-            class="c12 Button btn btn-link"
+            class="c13 Button btn btn-link"
             data-testid="add-financial-activity"
             type="button"
           >
@@ -1482,7 +1559,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <div
           class="collapse show"
@@ -1494,16 +1571,16 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="pr-0 text-left col-12"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Detailed remarks:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
-                class="c8 textarea input form-group"
+                class="c9 textarea input form-group"
               >
                 <textarea
                   class="form-control"
@@ -1518,10 +1595,10 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
       </div>
     </div>
     <div
-      class="c13"
+      class="c14"
     >
       <div
-        class="c14 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+        class="c15 justify-content-end mb-12 mt-12 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"
@@ -1530,7 +1607,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           class="pr-6 col-auto"
         >
           <button
-            class="c12 Button btn btn-secondary"
+            class="c13 Button btn btn-secondary"
             type="button"
           >
             <div
@@ -1544,7 +1621,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           class="col-auto"
         >
           <button
-            class="c12 Button Button--disabled mr-9 btn btn-primary"
+            class="c13 Button Button--disabled mr-9 btn btn-primary"
             disabled=""
             type="button"
           >
