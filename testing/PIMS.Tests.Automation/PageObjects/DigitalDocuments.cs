@@ -28,9 +28,9 @@ namespace PIMS.Tests.Automation.PageObjects
         
 
         //Upload Documents Other Type Fields
-        private readonly By documentOtherTypePINLabel = By.XPath("//div[@class='pb-2 row'][1]/div/label[contains(text(),'PIN')]");
+        private readonly By documentOtherTypePINLabel = By.XPath("//div[@class='pb-2 row'][2]/div/label[contains(text(),'PIN')]");
         private readonly By documentOtherTypePINInput = By.Id("input-documentMetadata.71");
-        private readonly By documentOtherTypePropIdLabel = By.XPath("//div[@class='pb-2 row'][2]/div/label[contains(text(),'Property identifier')]");
+        private readonly By documentOtherTypePropIdLabel = By.XPath("//div[@class='pb-2 row'][3]/div/label[contains(text(),'Property identifier')]");
         private readonly By documentRoadNameInput = By.Id("input-documentMetadata.75");
         private readonly By documentShortDescriptorLabel = By.XPath("//label[contains(text(),'Short descriptor')]");
 
@@ -86,9 +86,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Upload Photos/Images/Video and Correspondence Fields
         private readonly By documentCivicAddressInput = By.CssSelector("input[data-testid='metadata-input-CIVIC_ADDRESS']");
-        private readonly By documentPhotosCorrespondenceTypeDateLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Date')]");
+        private readonly By documentPhotosCorrespondenceTypeDateLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Date')]");
         private readonly By documentPhotosCorrespondenceTypeDateInput = By.Id("input-documentMetadata.57");
-        private readonly By documentOwnerLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Owner')]");
+        private readonly By documentOwnerLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Owner')]");
         private readonly By documentTypeOwnerInput = By.Id("input-documentMetadata.51");
         private readonly By documentPhotosCorrespondenceTypePropIdLabel = By.XPath("//label[contains(text(),'Property identifier')]");
         private readonly By documentTypePropertyIdentifierInput = By.Id("input-documentMetadata.94");
@@ -167,7 +167,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentGazetteLTSALabel = By.XPath("//label[contains(text(),'LTSA schedule filing')]");
         private readonly By documentGazetteLTSAInput = By.Id("input-documentMetadata.39");
         private readonly By documentGazetteLegalSurveyMotiPlanLabel = By.XPath("//label[contains(text(),'MoTI plan #')]");
-        private readonly By documentRoadNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Road name')]");
+        private readonly By documentRoadNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Road name')]");
         private readonly By documentGazetteRoadNameMandatory = By.XPath("//div[contains(text(),'Road name is required')]");
 
         //Upload PA plans Fields

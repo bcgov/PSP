@@ -47,7 +47,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             int documentIdx = 0;
             string documentURLs = "";
             int documentStartIdx = 0;
-            int documentEndIdx = 9;
+            int documentEndIdx = (digitalDocumentList.Count > 9) ? 9 : digitalDocumentList.Count - 1;
 
             //Add new documents
             for (var i = 0; i < uploadTurns; i++)
@@ -59,12 +59,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.VerifyInitUploadDocumentForm();
 
                 //Prepare Documents' names string
-                for (var j = documentStartIdx; j < documentEndIdx; j++)
+                for (var j = documentStartIdx; j <= documentEndIdx; j++)
                 {
                     documentIdx = (documentIdx >= 11) ? 0 : documentIdx;
                     var document = documentFiles.ElementAt(documentIdx);
 
-                    documentURLs = (j + 1 == documentEndIdx) ? documentURLs + document.Url : documentURLs + document.Url + "\n";
+                    documentURLs = (j + 1 > documentEndIdx) ? documentURLs + document.Url : documentURLs + document.Url + "\n";
                     documentIdx++;
                 }
 
@@ -82,12 +82,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Save documents
                 digitalDocumentsTab.SaveDigitalDocumentUpload();
                 documentStartIdx = documentEndIdx + 1;
-                documentEndIdx = (documentEndIdx * (i+2) > digitalDocumentList.Count) ? digitalDocumentList.Count : documentEndIdx * (i+2);
+                documentEndIdx = (documentEndIdx * (i+2) > digitalDocumentList.Count -1) ? digitalDocumentList.Count -1 : documentEndIdx * (i+2);
                 documentURLs = "";
             }
 
-            //Insert Document Details to previously uploaded documents
+            //Order Documents by Document Type
+            digitalDocumentsTab.OrderByDocumentFileType();
 
+            //Insert Document Details to previously uploaded documents
             for (var l = 0; l < digitalDocumentList.Count; l++)
             {
                 digitalDocumentsTab.ViewUploadedDocument(l);
@@ -96,6 +98,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[l]);
                 digitalDocumentsTab.SaveDigitalDocumentUpdate();
             }
+
+            //Go back to 1st page
+            digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
 
             //Verify Details View Form of previously uploaded documents
             for (var m = 0; m < digitalDocumentList.Count; m++)
@@ -115,29 +120,70 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Getting Digital Document Details
             PopulateDigitalDocumentIndex(rowNumber);
 
-            for (var i = 0; i < digitalDocumentList.Count; i++)
+            int uploadTurns = (digitalDocumentList.Count + 10 - 1) / 10;
+            int documentIdx = 0;
+            string documentURLs = "";
+            int documentStartIdx = 0;
+            int documentEndIdx = (digitalDocumentList.Count > 9) ? 9 : digitalDocumentList.Count - 1;
+
+            //Add new documents
+            for (var i = 0; i < uploadTurns; i++)
             {
-                //Add a New Document
+                //Add a New Document Button
                 digitalDocumentsTab.AddNewDocumentButton("Property Management");
 
                 //Verify and create a new Document
                 digitalDocumentsTab.VerifyInitUploadDocumentForm();
-                //digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[i].DocumentType);
-                //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[i]);
 
-                //Upload one digital document
-                Random random = new Random();
-                var index = random.Next(0, documentFiles.Count());
-                var document = documentFiles.ElementAt(index);
+                //Prepare Documents' names string
+                for (var j = documentStartIdx; j <= documentEndIdx; j++)
+                {
+                    documentIdx = (documentIdx >= 11) ? 0 : documentIdx;
+                    var document = documentFiles.ElementAt(documentIdx);
 
-                digitalDocumentsTab.UploadDocument(document.Url);
+                    documentURLs = (j + 1 > documentEndIdx) ? documentURLs + document.Url : documentURLs + document.Url + "\n";
+                    documentIdx++;
+                }
 
-                //Save digital document
+                //Upload several documents per time
+                digitalDocumentsTab.UploadDocument(documentURLs);
+
+                //Fill document type and status of uploaded documents
+                int documentRoundIdx = 0;
+                for (var k = documentStartIdx; k <= documentEndIdx; k++)
+                {
+                    digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[k], documentRoundIdx);
+                    documentRoundIdx++;
+                }
+
+                //Save documents
                 digitalDocumentsTab.SaveDigitalDocumentUpload();
+                documentStartIdx = documentEndIdx + 1;
+                documentEndIdx = (documentEndIdx * (i+2) > digitalDocumentList.Count -1) ? digitalDocumentList.Count -1 : documentEndIdx * (i+2);
+                documentURLs = "";
+            }
 
-                //Verify Details View Form
-                digitalDocumentsTab.ViewUploadedDocument(i);
-                digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[i]);
+            //Order Documents by Document Type
+            digitalDocumentsTab.OrderByDocumentFileType();
+
+            //Insert Document Details to previously uploaded documents
+            for (var l = 0; l < digitalDocumentList.Count; l++)
+            {
+                digitalDocumentsTab.ViewUploadedDocument(l);
+                digitalDocumentsTab.EditDocument();
+                digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
+                digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[l]);
+                digitalDocumentsTab.SaveDigitalDocumentUpdate();
+            }
+
+            //Go back to 1st page
+            digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
+
+            //Verify Details View Form of previously uploaded documents
+            for (var m = 0; m < digitalDocumentList.Count; m++)
+            {
+                digitalDocumentsTab.ViewUploadedDocument(m);
+                digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[m]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
         }

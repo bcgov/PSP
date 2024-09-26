@@ -25,7 +25,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistFileInitiation6Label = By.XPath("//label[contains(text(),'Update property data in the system')]");
         private By checklistFileInitiation6Content = By.XPath("//label[contains(text(),'Update property data in the system')]/parent::div/following-sibling::div/div/div[2]/span");
 
-        private By checklistReferralApprovalsTitle = By.XPath("//h2/div/div[contains(text(),'Referrals and Approvals')]");
+        private By checklistReferralApprovalsTitle = By.XPath("//h2/div/div[contains(text(),'Approvals / Consultations')]");
         private By checklistReferralApprovals1Label = By.XPath("//label[contains(text(),'First Nations')]");
         private By checklistReferralApprovals1Content = By.XPath("//label[contains(text(),'First Nations')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistReferralApprovals2Label = By.XPath("//label[contains(text(),'Strategic Real Estate (SRE)')]");

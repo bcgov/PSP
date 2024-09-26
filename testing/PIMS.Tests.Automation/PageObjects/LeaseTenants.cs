@@ -25,8 +25,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Selected tenants
         private By tenantSelectedTenantsRows = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
         private By tenantPrimaryContact1stCell = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(4) p");
-        private By tenantPrimaryContact1stSelect = By.Id("input-tenants.0.primaryContactId");
-        private By tenantType1stSelect = By.Id("input-tenants.0.tenantType");
+        private By tenantPrimaryContact1stSelect = By.Id("input-stakeholders.0.primaryContactId");
+        private By tenantType1stSelect = By.Id("input-stakeholders.0.stakeholderType");
 
         //Total Tenants by Type Elements
         private By tenantsTotalTenantsView = By.XPath("//div[contains(text(),'Tenant')]/parent::div/parent::h2/following-sibling::div/div");
@@ -82,7 +82,7 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedSelectContact.SelectContact(tenant.Summary, "Individual");
 
             //Choose tenant type
-            WaitUntilClickable(tenantType1stSelect);
+            Wait();
             ChooseSpecificSelectOption(tenantType1stSelect, tenant.TenantType);
 
             //Verify that the Primary Contact displays "Not applicable"

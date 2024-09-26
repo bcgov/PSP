@@ -3,7 +3,8 @@
     public class Lease
     {
         public string MinistryProjectCode { get; set; } = null!;
-        public string MinistryProject { get; set; } = null!;    
+        public string MinistryProject { get; set; } = null!;
+        public string MinistryProduct { get; set; } = null!;
         public string LeaseStatus { get; set; } = null!;
         public string LeaseTerminationDate { get; set; } = null!;
         public string LeaseTerminationReason { get; set; } = null!;

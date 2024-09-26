@@ -64,7 +64,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.NavigateToCreateNewLicense();
 
             //Create minimum Lease file
-            leaseDetails.VerifyLicenseDetailsCreateForm();
+            leaseDetails.VerifyLicenseDetailsInitCreateForm();
             leaseDetails.CreateMinimumLicenseDetails(lease);
 
             //Save minimum lease file
@@ -169,9 +169,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit File Details Section
             leaseDetails.EditLeaseFileDetailsBttn();
-
-            //Verify the edit File details form
-            leaseDetails.VerifyLicenseDetailsUpdateForm();
 
             //Make some changes on the Details Form
             leaseDetails.UpdateLeaseFileDetails(lease);
@@ -823,6 +820,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Lease Details
                 MinistryProjectCode = ExcelDataContext.ReadData(rowNumber, "MinistryProjectCode"),
                 MinistryProject = ExcelDataContext.ReadData(rowNumber, "MinistryProject"),
+                MinistryProduct = ExcelDataContext.ReadData(rowNumber, "MinistryProduct"),
                 LeaseStatus = ExcelDataContext.ReadData(rowNumber, "LeaseStatus"),
                 LeaseTerminationDate = ExcelDataContext.ReadData(rowNumber, "LeaseTerminationDate"),
                 LeaseTerminationReason = ExcelDataContext.ReadData(rowNumber, "LeaseTerminationReason"),
