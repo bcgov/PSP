@@ -151,6 +151,21 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     </div>
                   }
                 >
+                  {consultation?.consultationTypeCode?.id === 'OTHER' && (
+                    <SectionField
+                      labelWidth="4"
+                      contentWidth="6"
+                      label="Description"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-consultation-otherdescription-tooltip"
+                          toolTip="Short description for the approval / consultation"
+                        />
+                      }
+                    >
+                      {consultation?.otherDescription}
+                    </SectionField>
+                  )}
                   <SectionField
                     labelWidth="4"
                     label="Requested on"
@@ -269,7 +284,7 @@ const getOutcomeIcon = (consultations: ApiGen_Concepts_ConsultationLease[]) => {
     return (
       <TooltipWrapper
         tooltipId="error-outcome-tooltip"
-        tooltip="All approvals granted and/or consultations completed"
+        tooltip="At least one approval declined or consultation discontinued"
       >
         <FaTimesCircle size={22} className="error" data-testid="error-icon" />
       </TooltipWrapper>
@@ -285,7 +300,7 @@ const getOutcomeIcon = (consultations: ApiGen_Concepts_ConsultationLease[]) => {
     return (
       <TooltipWrapper
         tooltipId="ok-outcome-tooltip"
-        tooltip="At least one approval declined or consultation discontinued"
+        tooltip="All approvals granted and/or consultations completed"
       >
         <FaCheckCircle size={22} className="ok" data-testid="ok-icon" />
       </TooltipWrapper>
