@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus, FaTrash } from 'react-icons/fa';
+import { FaCheckCircle, FaExclamationCircle, FaPlus, FaTimesCircle, FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
@@ -12,11 +12,13 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { prettyFormatDate } from '@/utils';
 import { booleanToYesNoString } from '@/utils/formUtils';
@@ -83,16 +85,17 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
           <Section
             key={index}
             header={
-              <Row>
+              <StyledConsultationHeader>
                 <Col xs="auto">
-                  <span className="pl-2">{group.consultationTypeDescription}</span>
+                  <span className="px-2">{group.consultationTypeDescription}</span>
+                  {getOutcomeIcon(group.consultations)}
                 </Col>
                 <Col className="px-0">
                   {group.consultations.length > 0 && (
                     <StyledIconWrapper>{group.consultations.length}</StyledIconWrapper>
                   )}
                 </Col>
-              </Row>
+              </StyledConsultationHeader>
             }
             noPadding
             isCollapsable={!group.hasItems}
@@ -105,7 +108,6 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     <div>
                       <Row>
                         <Col>{consultation.consultationOutcomeTypeCode?.description}</Col>
-
                         {keycloak.hasClaim(Claims.LEASE_EDIT) && (
                           <>
                             <Col xs="auto" className="px-1">
@@ -149,6 +151,21 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     </div>
                   }
                 >
+                  {consultation?.consultationTypeCode?.id === 'OTHER' && (
+                    <SectionField
+                      labelWidth="4"
+                      contentWidth="6"
+                      label="Description"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId="lease-consultation-otherdescription-tooltip"
+                          toolTip="Short description for the approval / consultation"
+                        />
+                      }
+                    >
+                      {consultation?.otherDescription}
+                    </SectionField>
+                  )}
                   <SectionField
                     labelWidth="4"
                     label="Requested on"
@@ -235,3 +252,67 @@ const StyledIconWrapper = styled.div`
   justify-content: center;
   align-items: center;
 `;
+
+const StyledConsultationHeader = styled(Row)`
+  svg.info {
+    color: ${props => props.theme.bcTokens.surfaceColorBackgroundDarkBlue};
+  }
+  svg.error {
+    color: ${props => props.theme.bcTokens.typographyColorDanger};
+  }
+  svg.ok {
+    color: ${props => props.theme.css.completedColor};
+  }
+  svg {
+    vertical-align: baseline;
+  }
+`;
+
+const getOutcomeIcon = (consultations: ApiGen_Concepts_ConsultationLease[]) => {
+  if (consultations.length === 0) {
+    return null;
+  }
+
+  if (
+    consultations.find(c =>
+      [
+        ApiGen_CodeTypes_ConsultationOutcomeTypes.APPRDENIED.toString(),
+        ApiGen_CodeTypes_ConsultationOutcomeTypes.CONSDISCONT.toString(),
+      ].includes(c?.consultationOutcomeTypeCode?.id),
+    )
+  ) {
+    return (
+      <TooltipWrapper
+        tooltipId="error-outcome-tooltip"
+        tooltip="At least one approval declined or consultation discontinued"
+      >
+        <FaTimesCircle size={22} className="error" data-testid="error-icon" />
+      </TooltipWrapper>
+    );
+  } else if (
+    consultations.every(c =>
+      [
+        ApiGen_CodeTypes_ConsultationOutcomeTypes.APPRGRANTED.toString(),
+        ApiGen_CodeTypes_ConsultationOutcomeTypes.CONSCOMPLTD.toString(),
+      ].includes(c?.consultationOutcomeTypeCode?.id),
+    )
+  ) {
+    return (
+      <TooltipWrapper
+        tooltipId="ok-outcome-tooltip"
+        tooltip="All approvals granted and/or consultations completed"
+      >
+        <FaCheckCircle size={22} className="ok" data-testid="ok-icon" />
+      </TooltipWrapper>
+    );
+  } else {
+    return (
+      <TooltipWrapper
+        tooltipId="info-outcome-tooltip"
+        tooltip="One or more approval(s) / consultation(s) is in-progress"
+      >
+        <FaExclamationCircle size={22} className="info" data-testid="info-icon" />
+      </TooltipWrapper>
+    );
+  }
+};
