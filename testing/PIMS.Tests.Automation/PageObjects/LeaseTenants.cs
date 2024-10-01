@@ -7,47 +7,52 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Tenants Tab Element
         private By licenseTenantLink = By.XPath("//a[contains(text(),'Tenant')]");
+        private By licensePayeeLink = By.XPath("//a[contains(text(),'Payee')]");
 
         //Tenants Edit Element
-        private By tenantEditIcon = By.XPath("//div[@role='tabpanel']/div/div/div/button");
+        private By StakeholderEditButton = By.XPath("//div[@role='tabpanel']/div/div/div/button");
 
         //Tenants Add Tenant(s) button
-        private By tenantAddTenantsBttn = By.XPath("//div[contains(text(),'Tenants')]/following-sibling::div/button");
+        private By stakeholderAddTenantsBttn = By.XPath("//div[contains(text(),'Tenants')]/following-sibling::div/button");
+        private By stakeholderAddPayeesBttn = By.XPath("//div[contains(text(),'Payee')]/following-sibling::div/button");
 
         //Tenant Add Tenant Modal Elements
-        private By tenantIndividualRadioBttn = By.Id("input-persons");
-        private By tenantOrganizationRadioBttn = By.Id("input-organizations");
-        private By tenantSearchInput = By.Id("input-summary");
+        private By stakeholderOrganizationRadioBttn = By.Id("input-organizations");
+        private By stakeholderSearchInput = By.Id("input-summary");
         private By tenantSearchBttn = By.Id("search-button");
-        private By tenantFirstResultRadioBttn = By.CssSelector("div[data-testid='contactsTable'] div[class='tr-wrapper']:nth-child(1) div:nth-child(1) input");
-        private By tenantsAddSelectedButton = By.XPath("//div[contains(text(), 'Select')]/parent::button[@title='ok-modal']");
+        private By stakeholderFirstResultRadioBttn = By.CssSelector("div[data-testid='contactsTable'] div[class='tr-wrapper']:nth-child(1) div:nth-child(1) input");
+        private By stakeholderAddSelectedButton = By.XPath("//div[contains(text(), 'Select')]/parent::button[@title='ok-modal']");
 
         //Selected tenants
-        private By tenantSelectedTenantsRows = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
-        private By tenantPrimaryContact1stCell = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(4) p");
-        private By tenantPrimaryContact1stSelect = By.Id("input-stakeholders.0.primaryContactId");
-        private By tenantType1stSelect = By.Id("input-stakeholders.0.stakeholderType");
+        private By stakeholderPrimaryContact1stCell = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(4) p");
+        private By stakeholderPrimaryContact1stSelect = By.Id("input-stakeholders.0.primaryContactId");
+        private By stakeholderType1stSelect = By.Id("input-stakeholders.0.stakeholderType");
 
         //Total Tenants by Type Elements
-        private By tenantsTotalTenantsView = By.XPath("//div[contains(text(),'Tenant')]/parent::div/parent::h2/following-sibling::div/div");
-        private By tenantsTotalRepresentativeView = By.XPath("//div[contains(text(),'Representative')]/parent::div/parent::h2/following-sibling::div/div");
-        private By tenantsTotalManagerView = By.XPath("//div[contains(text(),'Property Manager')]/parent::div/parent::h2/following-sibling::div/div");
-        private By tenantsTotalUnknownView = By.XPath("//div[contains(text(),'Unknown')]/parent::div/parent::h2/following-sibling::div/div");
+        private By stakeholderTotalTenantsView = By.XPath("//div[contains(text(),'Tenant')]/parent::div/parent::h2/following-sibling::div/div");
+        private By stakeholderTotalRepresentativeView = By.XPath("//div[contains(text(),'Property manager')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Representative')]/parent::div/parent::h2/following-sibling::div/div");
+        private By stakeholderTotalManagerView = By.XPath("//div[contains(text(),'Property Manager')]/parent::div/parent::h2/following-sibling::div/div");
+        private By stakeholderTotalUnknownView = By.XPath("//div[contains(text(),'Unknown')]/parent::div/parent::h2/following-sibling::div/div");
+        private By stakeholderTotalOwnerView = By.XPath("//div[@class='tab-content']/div/div/div/div[1]/div/div");
+        private By stakeholderTotalOwnerRepView = By.XPath("//div[contains(text(),'Owner Representative')]/parent::div/parent::h2/following-sibling::div/div");
 
         //Confirm Tenants Save Modal
-        private By tenantsModal = By.CssSelector("div[class='modal-content']");
-        private By tenantModalSave2ndParagraph = By.CssSelector("div[class='modal-body'] p:nth-child(2)");
+        private By stakeholderModal = By.CssSelector("div[class='modal-content']");
+        private By stakeholderModalSave2ndParagraph = By.CssSelector("div[class='modal-body'] p:nth-child(2)");
 
         //Insert Tenants Form Elements
-        private By tenantsSubtittle = By.XPath("//div[contains(text(),'Tenants')]");
-        private By tenantsInstructions = By.XPath("//span[contains(text(),'Note: If the tenants you are trying to find were never added to the \"contact list\" it will not show up. Please add them to the contact list')]");
-        private By tenantsCounter = By.XPath("//div[@data-testid='selected-items']/preceding-sibling::p");
-        private By tenantsSelectedTableSummaryColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Summary')]");
-        private By tenantsSelectedTablePrimaryContactColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Primary contact')]");
-        private By tenantsSelectedTableContactInfoColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Contact info')]");
-        private By tenantsSelectedTableTypeColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Contact type')]");
-        private By tenantsSelectedNoRows = By.CssSelector("div[class='no-rows-message']");
-        private By tenantsTotalSelected = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
+        private By stakeholderTenantSubtittle = By.XPath("//div[contains(text(),'Tenants')]");
+        private By stakeholderPayeeSubtittle = By.XPath("//div[contains(text(),'Payees')]");
+        private By stakeholderTenantInstructions = By.XPath("//span[contains(text(),'Note: If the tenants you are trying to find were never added to the \"contact list\" it will not show up. Please add them to the contact list')]");
+        private By stakeholderPayeeInstructions = By.XPath("//span[contains(text(),'Note: If the payees you are trying to find were never added to the \"contact list\" it will not show up. Please add them to the contact list')]");
+        private By stakeholderCounter = By.XPath("//div[@data-testid='selected-items']/preceding-sibling::p");
+        private By stakeholderSelectedTableSummaryColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Summary')]");
+        private By stakeholderSelectedTablePrimaryContactColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Primary contact')]");
+        private By stakeholderSelectedTableContactInfoColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Contact info')]");
+        private By stakeholderTenantSelectedTableTypeColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Contact type')]");
+        private By stakeholderPayeeSelectedTableTypeColumn = By.XPath("//div[@data-testid='selected-items']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payee type')]");
+        private By stakeholderSelectedNoRows = By.CssSelector("div[class='no-rows-message']");
+        private By stakeholderTotalSelected = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']");
 
         SharedModals sharedModals;
         SharedSelectContact sharedSelectContact;
@@ -59,80 +64,96 @@ namespace PIMS.Tests.Automation.PageObjects
         }
 
         //Navigates to Tenants Section
-        public void NavigateToTenantSection()
+        public void NavigateToStakeholderSection(string leaseType)
         {
-            WaitUntilClickable(licenseTenantLink);
-            FocusAndClick(licenseTenantLink);
+            if (leaseType == "Receivable")
+            {
+                WaitUntilClickable(licenseTenantLink);
+                FocusAndClick(licenseTenantLink);
+            }
+            else
+            {
+                WaitUntilClickable(licensePayeeLink);
+                FocusAndClick(licensePayeeLink);
+            } 
         }
 
         //Edit Tenant section
-        public void EditTenant()
+        public void EditStakeholderButton()
         {
-            Wait(2000);
-            webDriver.FindElement(tenantEditIcon).Click();
+            Wait();
+            webDriver.FindElement(StakeholderEditButton).Click();
         }
 
         //Search and add a new tenant
-        public void AddIndividualTenant(Tenant tenant)
+        public void AddIndividualStakeholder(string leaseType, Stakeholder stakeholder)
         {
             Wait();
-            webDriver.FindElement(tenantAddTenantsBttn).Click();
+
+            if (leaseType == "Receivable")
+                webDriver.FindElement(stakeholderAddTenantsBttn).Click();
+            else
+                webDriver.FindElement(stakeholderAddPayeesBttn).Click();
 
             Wait();
-            sharedSelectContact.SelectContact(tenant.Summary, "Individual");
+            sharedSelectContact.SelectContact(stakeholder.Summary, "Individual");
 
-            //Choose tenant type
+            //Choose stakeholder type
             Wait();
-            ChooseSpecificSelectOption(tenantType1stSelect, tenant.TenantType);
+            ChooseSpecificSelectOption(stakeholderType1stSelect, stakeholder.TenantType);
 
             //Verify that the Primary Contact displays "Not applicable"
-            Assert.Equal("Not applicable", webDriver.FindElement(tenantPrimaryContact1stCell).Text);
+            Assert.Equal("Not applicable", webDriver.FindElement(stakeholderPrimaryContact1stCell).Text);
         }
 
-        public void AddOrganizationTenant(Tenant tenant)
+        public void AddOrganizationTenant(string leaseType, Stakeholder stakeholder)
         {
-            WaitUntilClickable(tenantAddTenantsBttn);
-            FocusAndClick(tenantAddTenantsBttn);
+            Wait();
 
-            Wait(2000);
-            webDriver.FindElement(tenantSearchInput).SendKeys(tenant.Summary);
-            webDriver.FindElement(tenantOrganizationRadioBttn).Click();
+            if (leaseType == "Receivable")
+                webDriver.FindElement(stakeholderAddTenantsBttn).Click();
+            else
+                webDriver.FindElement(stakeholderAddPayeesBttn).Click();
+
+            Wait();
+            webDriver.FindElement(stakeholderSearchInput).SendKeys(stakeholder.Summary);
+            webDriver.FindElement(stakeholderOrganizationRadioBttn).Click();
             webDriver.FindElement(tenantSearchBttn).Click();
 
-            ScrollToElement(tenantSearchInput);
-            WaitUntilClickable(tenantFirstResultRadioBttn);
-            webDriver.FindElement(tenantFirstResultRadioBttn).Click();
+            ScrollToElement(stakeholderSearchInput);
+            WaitUntilClickable(stakeholderFirstResultRadioBttn);
+            webDriver.FindElement(stakeholderFirstResultRadioBttn).Click();
 
-            WaitUntilClickable(tenantsAddSelectedButton);
-            webDriver.FindElement(tenantsAddSelectedButton).Click();
+            WaitUntilClickable(stakeholderAddSelectedButton);
+            webDriver.FindElement(stakeholderAddSelectedButton).Click();
 
             //Choose a primary contact if there's the option
-            if (webDriver.FindElements(tenantPrimaryContact1stSelect).Count > 0)
+            if (webDriver.FindElements(stakeholderPrimaryContact1stSelect).Count > 0)
             {
-                WaitUntilClickable(tenantPrimaryContact1stSelect);
-                ChooseSpecificSelectOption(tenantPrimaryContact1stSelect, tenant.PrimaryContact);
+                WaitUntilClickable(stakeholderPrimaryContact1stSelect);
+                ChooseSpecificSelectOption(stakeholderPrimaryContact1stSelect, stakeholder.PrimaryContact);
             }
 
-            //Choose tenant type
-            ChooseSpecificSelectOption(tenantType1stSelect, tenant.TenantType);
+            //Choose stakeholder type
+            ChooseSpecificSelectOption(stakeholderType1stSelect, stakeholder.TenantType);
         }
 
-        public void DeleteLastTenant()
+        public void DeleteLastStakeholder()
         {
-            Wait(2000);
+            Wait();
 
-            var totalTenantsSelected = webDriver.FindElements(tenantsTotalSelected).Count;
-            var deleteLastTenant = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalTenantsSelected +") svg:has(title)");
+            var totalStakeholderSelected = webDriver.FindElements(stakeholderTotalSelected).Count;
+            var deleteLastTenant = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalStakeholderSelected +") svg:has(title)");
             webDriver.FindElement(deleteLastTenant).Click();
         }
 
-        public void EditTenant(Tenant tenant)
+        public void EditStakeholder(Stakeholder tenant)
         {
-            Wait(2000);
-            var totalTenantsIndex = webDriver.FindElements(tenantsTotalSelected).Count -1;
-            By lastTenantSelector = By.Id("input-tenants."+ totalTenantsIndex +".tenantType");
+            Wait();
+            var totalStakeholderIndex = webDriver.FindElements(stakeholderTotalSelected).Count -1;
+            By lastStakeholderSelector = By.Id("input-tenants."+ totalStakeholderIndex +".tenantType");
 
-            ChooseSpecificSelectOption(lastTenantSelector, tenant.TenantType);
+            ChooseSpecificSelectOption(lastStakeholderSelector, tenant.TenantType);
         }
 
         public void SaveTenant()
@@ -142,10 +163,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             //If primary contact hasn't been selected for any of the tenants
-            if (webDriver.FindElements(tenantsModal).Count > 0)
+            if (webDriver.FindElements(stakeholderModal).Count > 0)
             {
                 Assert.True(sharedModals.ModalHeader() == "Confirm save");
-                Assert.True(webDriver.FindElement(tenantModalSave2ndParagraph).Text == "Do you wish to save without providing a primary contact?");
+                Assert.True(webDriver.FindElement(stakeholderModalSave2ndParagraph).Text == "Do you wish to save without providing a primary contact?");
                 sharedModals.ModalClickOKBttn();
             }
         }
@@ -153,39 +174,61 @@ namespace PIMS.Tests.Automation.PageObjects
         public int TotalTenants()
         {
             Wait();
-            return webDriver.FindElements(tenantsTotalTenantsView).Count;
-            
+            return webDriver.FindElements(stakeholderTotalTenantsView).Count;
         }
 
         public int TotalRepresentatives()
         {
             Wait();
-            return webDriver.FindElements(tenantsTotalRepresentativeView).Count;
+            return webDriver.FindElements(stakeholderTotalRepresentativeView).Count;
         }
 
         public int TotalManagers()
         {
             Wait();
-            return webDriver.FindElements(tenantsTotalManagerView).Count;
+            return webDriver.FindElements(stakeholderTotalManagerView).Count;
         }
 
         public int TotalUnknown()
         {
             Wait();
-            return webDriver.FindElements(tenantsTotalUnknownView).Count;
+            return webDriver.FindElements(stakeholderTotalUnknownView).Count;
         }
 
-        public void VerifyTenantsInitForm()
+        public int TotalOwners()
         {
-            AssertTrueIsDisplayed(tenantsSubtittle);
-            AssertTrueIsDisplayed(tenantsInstructions);
-            AssertTrueIsDisplayed(tenantAddTenantsBttn);
-            AssertTrueIsDisplayed(tenantsCounter);
-            AssertTrueIsDisplayed(tenantsSelectedTableSummaryColumn);
-            AssertTrueIsDisplayed(tenantsSelectedTablePrimaryContactColumn);
-            AssertTrueIsDisplayed(tenantsSelectedTableContactInfoColumn);
-            AssertTrueIsDisplayed(tenantsSelectedTableTypeColumn);
-            AssertTrueIsDisplayed(tenantsSelectedNoRows);
+            Wait();
+            return webDriver.FindElements(stakeholderTotalOwnerView).Count;
+        }
+
+        public int TotalOwnerRepresentatives()
+        {
+            Wait();
+            return webDriver.FindElements(stakeholderTotalOwnerRepView).Count;
+        }
+
+        public void VerifyStakeholdersInitForm(string accountType)
+        {
+            if (accountType == "Receivable")
+            {
+                AssertTrueIsDisplayed(stakeholderTenantSubtittle);
+                AssertTrueIsDisplayed(stakeholderTenantInstructions);
+                AssertTrueIsDisplayed(stakeholderAddTenantsBttn);
+                AssertTrueIsDisplayed(stakeholderTenantSelectedTableTypeColumn);
+            }
+            else
+            {
+                AssertTrueIsDisplayed(stakeholderPayeeSubtittle);
+                AssertTrueIsDisplayed(stakeholderPayeeInstructions);
+                AssertTrueIsDisplayed(stakeholderAddPayeesBttn);
+                AssertTrueIsDisplayed(stakeholderPayeeSelectedTableTypeColumn);
+            }
+            
+            AssertTrueIsDisplayed(stakeholderCounter);
+            AssertTrueIsDisplayed(stakeholderSelectedTableSummaryColumn);
+            AssertTrueIsDisplayed(stakeholderSelectedTablePrimaryContactColumn);
+            AssertTrueIsDisplayed(stakeholderSelectedTableContactInfoColumn);
+            AssertTrueIsDisplayed(stakeholderSelectedNoRows);
         }
     }
 }

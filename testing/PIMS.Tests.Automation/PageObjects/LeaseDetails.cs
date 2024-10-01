@@ -17,8 +17,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/Licence #')]");
         private readonly By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[1]");
         private readonly By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[2]");
-        private readonly By licenseHeaderProperty = By.XPath("//label[contains(text(),'Property')]");
-        private readonly By licenseHeaderPropertyContent = By.XPath("//label[contains(text(),'Property')]/parent::div/following-sibling::div/div/span");
+        private readonly By licenseHeaderProperty = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]");
+        private readonly By licenseHeaderPropertyContent = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]/parent::div/following-sibling::div/div/span");
         private readonly By licenseHeaderTenantLabel = By.XPath("//label[contains(text(),'Tenant')]");
         private readonly By licenseHeaderStartDateLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div[2]/div/div/div/div/div[4]/div/label[contains(text(),'Commencement')]");
         private readonly By licenseHeaderStartDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[1]");
@@ -187,6 +187,39 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //MAIN DETAILS
+
+            //Status
+            if (lease.LeaseStatus != "")
+                ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
+
+            //Termination reason
+            if (lease.LeaseTerminationReason != "")
+            {
+                AssertTrueIsDisplayed(licenseDetailsTerminateDateLabel);
+                AssertTrueIsDisplayed(licenseDetailsViewTerminationTooltip);
+                ClearInput(licenseDetailsTerminateDateInput);
+                webDriver.FindElement(licenseDetailsTerminateDateInput).SendKeys(lease.LeaseTerminationDate);
+                webDriver.FindElement(licenseDetailsTerminateDateInput).SendKeys(Keys.Enter);
+
+                AssertTrueIsDisplayed(licenseDetailsTerminatedReasonLabel);
+                ClearInput(licenseDetailsTerminateReasonInput);
+                webDriver.FindElement(licenseDetailsTerminateReasonInput).Click();
+                webDriver.FindElement(licenseDetailsTerminateReasonInput).SendKeys(lease.LeaseTerminationReason);
+            }
+
+            //Cancellation reason
+            if (lease.LeaseCancellationReason != "")
+            {
+                AssertTrueIsDisplayed(licenseDetailsCancelReasonLabel);
+                ClearInput(licenseDetailsCancelReasonInput);
+                webDriver.FindElement(licenseDetailsCancelReasonInput).Click();
+                webDriver.FindElement(licenseDetailsCancelReasonInput).SendKeys(lease.LeaseCancellationReason);
+            }
+
+            //Account Type
+            if (lease.AccountType != "")
+                ChooseSpecificSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
+            
             //Start Date
             if (lease.LeaseStartDate != "")
             {
@@ -883,14 +916,15 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyLicensePropertyViewForm(List<LeaseProperty> properties)
         {
             VerifyLicensePropertiesHeader();
-
             AssertTrueIsDisplayed(leasePropertiesSubtitle);
 
             for (var i = 0; i < properties.Count; i++)
             {
                 var elementIdx = i + 1;
+
                 AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/label[contains(text(),'PID')]"));
-                AssertTrueElementContains(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[1]/div[2]"), "PID: " + properties[i].PID);
+                if(properties[i].PID != "")
+                    AssertTrueElementContains(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div[1]/div[2]"), "PID: " + properties[i].PID);
 
                 AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/label[contains(text(),'Descriptive name')]"));
                 if (properties[i].DescriptiveName != "")

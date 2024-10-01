@@ -45,10 +45,10 @@
         public string FeeDeterminationSuggestedFee { get; set; } = null!;
         public string FeeDeterminationNotes { get; set; } = null!;
 
-        public string PhysicalLeaseExist { get; set; } = null!;
-        public string DigitalLeaseExist { get; set; } = null!;
-        public string DocumentLocation { get; set; } = null!;
-        public string LeaseNotes { get; set; } = null!;
+        //public string PhysicalLeaseExist { get; set; } = null!;
+        //public string DigitalLeaseExist { get; set; } = null!;
+        //public string DocumentLocation { get; set; } = null!;
+        //public string LeaseNotes { get; set; } = null!;
 
         public int SearchPropertiesIndex { get; set; } = 0;
         public SearchProperty SearchProperties { get; set; } = new SearchProperty() { };
@@ -65,7 +65,9 @@
         public int RepresentativeNumber { get; set; } = 0;
         public int PropertyManagerNumber { get; set; } = 0;
         public int UnknownTenantNumber { get; set; } = 0;
-        public List<Tenant> LeaseTenants { get; set; } = new List<Tenant>();
+        public int OwnerPayeeNumber { get; set; } = 0;
+        public int OwnerRepresentativeNumber { get; set; } = 0;
+        public List<Stakeholder> LeaseTenants { get; set; } = new List<Stakeholder>();
 
         public string CommercialImprovementUnit { get; set; } = null!;
         public string CommercialImprovementBuildingSize { get; set; } = null!;
@@ -167,7 +169,7 @@
         public string LeaseLicenceCompletionSelect2 { get; set; } = null!;        
     }
 
-    public class Tenant
+    public class Stakeholder
     {
         public string ContactType { get; set; } = null!;
         public string Summary { get; set;} = null!;
