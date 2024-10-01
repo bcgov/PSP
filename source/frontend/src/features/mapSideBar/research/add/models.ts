@@ -52,7 +52,7 @@ export class ResearchForm {
       documentReference: null,
       isLegalOpinionObtained: null,
       isLegalOpinionRequired: null,
-      purposeTypes: null,
+      propertyResearchPurposeTypes: null,
       researchSummary: null,
     };
   }
