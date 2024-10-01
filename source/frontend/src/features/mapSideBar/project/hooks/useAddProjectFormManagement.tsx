@@ -36,14 +36,19 @@ export function useAddProjectForm(props: IUseAddProjectFormProps) {
       formikHelpers: FormikHelpers<ProjectForm>,
       userOverrideCodes: UserOverrideCode[],
     ) => {
-      const project = values.toApi();
-      const response = await addProject.execute(project, userOverrideCodes);
+      formikHelpers.setSubmitting(true);
+      try {
+        const project = values.toApi();
+        const response = await addProject.execute(project, userOverrideCodes);
 
-      if (exists(response) && isValidId(response?.id)) {
-        formikHelpers.resetForm();
-        if (typeof onSuccess === 'function') {
-          onSuccess(response);
+        if (exists(response) && isValidId(response?.id)) {
+          formikHelpers.resetForm();
+          if (typeof onSuccess === 'function') {
+            onSuccess(response);
+          }
         }
+      } finally {
+        formikHelpers.setSubmitting(false);
       }
     },
     [addProject, onSuccess],

@@ -636,6 +636,176 @@ namespace Pims.Api.Test.Services
 
         #endregion
 
+        #region Consultations
+        [Fact]
+        public void GetConsultations_NoPermission()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+
+            var service = this.CreateLeaseService();
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.GetConsultationsByLease(It.IsAny<long>())).Returns(new List<PimsLeaseConsultation>());
+
+            // Act
+            Action act = () => service.GetConsultations(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            consultationRepository.Verify(x => x.GetConsultationsByLease(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void GetConsultations_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.GetConsultationsByLease(It.IsAny<long>())).Returns(new List<PimsLeaseConsultation>());
+
+            // Act
+            var result = service.GetConsultations(1);
+
+            // Assert
+            consultationRepository.Verify(x => x.GetConsultationsByLease(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetConsultationById_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateLeaseService();
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.GetConsultationById(It.IsAny<long>())).Returns(new PimsLeaseConsultation());
+
+            // Act
+            Action act = () => service.GetConsultationById(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            consultationRepository.Verify(x => x.GetConsultationById(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void GetConsultationById_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.GetConsultationById(It.IsAny<long>())).Returns(new PimsLeaseConsultation());
+
+            // Act
+            var result = service.GetConsultationById(1);
+
+            // Assert
+            consultationRepository.Verify(x => x.GetConsultationById(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void AddConsultation_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateLeaseService();
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+
+            // Act
+            Action act = () => service.AddConsultation(new PimsLeaseConsultation());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            consultationRepository.Verify(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Never);
+        }
+
+        [Fact]
+        public void AddConsultation_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+
+            // Act
+            var result = service.AddConsultation(new PimsLeaseConsultation());
+
+            // Assert
+            consultationRepository.Verify(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Once);
+        }
+
+        [Fact]
+        public void Update_Consultation_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateLeaseService();
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+
+            // Act
+            Action act = () => service.UpdateConsultation(new PimsLeaseConsultation());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            consultationRepository.Verify(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Consultation_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+
+            // Act
+            var result = service.UpdateConsultation(new PimsLeaseConsultation());
+
+            // Assert
+            consultationRepository.Verify(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Once);
+        }
+
+        [Fact]
+        public void Delete_Consultation_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateLeaseService();
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.TryDeleteConsultation(It.IsAny<long>())).Returns(true);
+
+            // Act
+            Action act = () => service.DeleteConsultation(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            consultationRepository.Verify(x => x.TryDeleteConsultation(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void Delete_Consultation_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+
+            consultationRepository.Setup(x => x.TryDeleteConsultation(It.IsAny<long>())).Returns(true);
+
+            // Act
+            var result = service.DeleteConsultation(1);
+
+            // Assert
+            consultationRepository.Verify(x => x.TryDeleteConsultation(It.IsAny<long>()), Times.Once);
+            result.Should().BeTrue();
+        }
+        #endregion
+
         #endregion
     }
 }

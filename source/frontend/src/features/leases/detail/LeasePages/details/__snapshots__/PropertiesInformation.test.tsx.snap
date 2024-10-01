@@ -9,11 +9,13 @@ exports[`LeasePropertiesInformation component > renders as expected 1`] = `
   .c2 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -39,14 +41,16 @@ exports[`LeasePropertiesInformation component > renders as expected 1`] = `
 .c6 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #42814A;
   border-radius: 0.5rem;
 }
 
 .c7 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #053662;
   border-radius: 0.5rem;
 }
 

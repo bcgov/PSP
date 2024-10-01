@@ -12,8 +12,8 @@
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="57"
-  DTS:VersionGUID="{D964A069-45BD-4156-8F06-443B81810E43}">
+  DTS:VersionBuild="58"
+  DTS:VersionGUID="{8F53B208-6B33-411E-A77F-7D285783938B}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,11 +26,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=sqlprd.th.gov.bc.ca;User ID=PIMS_UAT;Initial Catalog=PIMS_UAT;Provider=SQLNCLI11.1;Auto Translate=False;Application Name=SSIS-Package-{C854C770-B13C-477E-8DD4-44721E1B9FCF}sqldevtst.th.gov.bc.ca.PIMS_DEV;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"></DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectionString="Data Source=sqlprd.th.gov.bc.ca;User ID=PIMS_UAT;Initial Catalog=PIMS_UAT;Provider=SQLNCLI11.1;Auto Translate=False;Application Name=SSIS-Package-{C854C770-B13C-477E-8DD4-44721E1B9FCF}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -3307,7 +3303,7 @@ AAAAAAAAAAAAAA==]]></arrayElement>
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{C854C770-B13C-477E-8DD4-44721E1B9FCF}"
-          SQLTask:SqlStatementSource="UPDATE PIMS_PROPERTY SET PIMS_PROPERTY.LOCATION = geometry::STGeomFromText( tpl.LOCATION , 3008 ), CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1&#xA;FROM PIMS_PROPERTY p&#xA;INNER JOIN&#xA;dbo.TEMP_PROPERTY_LOCATION tpl&#xA;ON tpl.PROPERTY_ID = p.PROPERTY_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="UPDATE PIMS_PROPERTY SET PIMS_PROPERTY.LOCATION = geometry::STGeomFromText( tpl.LOCATION , 3005 ), CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1&#xA;FROM PIMS_PROPERTY p&#xA;INNER JOIN&#xA;dbo.TEMP_PROPERTY_LOCATION tpl&#xA;ON tpl.PROPERTY_ID = p.PROPERTY_ID" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
   </DTS:Executables>

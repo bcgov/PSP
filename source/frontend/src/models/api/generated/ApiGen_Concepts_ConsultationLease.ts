@@ -23,6 +23,7 @@ export interface ApiGen_Concepts_ConsultationLease extends ApiGen_Base_BaseAudit
   primaryContact: ApiGen_Concepts_Person | null;
   consultationTypeCode: ApiGen_Base_CodeType<string> | null;
   consultationStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  consultationOutcomeTypeCode: ApiGen_Base_CodeType<string> | null;
   otherDescription: string | null;
   requestedOn: UtcIsoDate | null;
   isResponseReceived: boolean | null;

@@ -104,11 +104,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                   header={
                     <div>
                       <Row>
-                        <Col>
-                          {group.consultationTypeCode === 'OTHER'
-                            ? `${consultation.otherDescription} Approval / Consultation`
-                            : `${group.consultationTypeDescription} Approval / Consultation`}
-                        </Col>
+                        <Col>{consultation.consultationOutcomeTypeCode?.description}</Col>
 
                         {keycloak.hasClaim(Claims.LEASE_EDIT) && (
                           <>

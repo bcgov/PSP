@@ -7,12 +7,14 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
   />
   <div />
   .c0 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
 .c2 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -41,6 +43,7 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
@@ -181,7 +184,7 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
               class="form-group"
             >
               <select
-                class="form-control"
+                class="form-select form-control"
                 id="input-insurances.0.isInsuranceInPlaceSelect"
                 name="insurances.0.isInsuranceInPlaceSelect"
               >
@@ -328,7 +331,8 @@ exports[`Lease Insurance > renders as expected 1`] = `
   <div />
   .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 

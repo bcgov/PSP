@@ -1,0 +1,1209 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ConsultationListView component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c4.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c4.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c4.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c4.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c4.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c11.c11.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c11.c11.btn .text {
+  display: none;
+}
+
+.c11.c11.btn:hover,
+.c11.c11.btn:active,
+.c11.c11.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c11.c11.btn:hover .text,
+.c11.c11.btn:active .text,
+.c11.c11.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c13.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c12 {
+  font-weight: bold;
+}
+
+.c5.btn.btn-primary,
+.c5.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
+}
+
+.c6.c6 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c9 {
+  float: right;
+  cursor: pointer;
+  font-size: 3.2rem;
+}
+
+.c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c7 {
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c3 .btn {
+  margin: 0;
+}
+
+.c10 {
+  border: solid 0.2rem var(--theme-blue-90);
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.c8 {
+  background-color: #428bca;
+  color: white;
+  font-size: 1.4rem;
+  border-radius: 50%;
+  opacity: 0.8;
+  width: 2.2rem;
+  height: 2.2rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            <div
+              class="c3 no-gutters row"
+            >
+              <div
+                class="px-2 my-1 col-auto"
+              >
+                Approval / Consultations
+              </div>
+              <div
+                class="my-1 col-auto"
+              >
+                <button
+                  class="c4 Button c5 c6 btn btn-primary"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                      />
+                    </svg>
+                     Add Approval / Consultation
+                  </div>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="pl-2"
+                    >
+                      First nation
+                    </span>
+                  </div>
+                  <div
+                    class="px-0 col"
+                  />
+                </div>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="pl-2"
+                    >
+                      Strategic Real Estate (SRE)
+                    </span>
+                  </div>
+                  <div
+                    class="px-0 col"
+                  />
+                </div>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="pl-2"
+                    >
+                      Regional planning
+                    </span>
+                  </div>
+                  <div
+                    class="px-0 col"
+                  />
+                </div>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="pl-2"
+                    >
+                      Regional property services
+                    </span>
+                  </div>
+                  <div
+                    class="px-0 col"
+                  />
+                </div>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="pl-2"
+                    >
+                      District
+                    </span>
+                  </div>
+                  <div
+                    class="px-0 col"
+                  >
+                    <div
+                      class="c8"
+                    >
+                      2
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pl-8 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse"
+          >
+            <div
+              class="c10"
+            >
+              <div
+                class="c1 form-section"
+              >
+                <h2
+                  class="c2"
+                >
+                  <div
+                    class="no-gutters row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      <div>
+                        <div
+                          class="row"
+                        >
+                          <div
+                            class="col"
+                          >
+                            Approval Denied
+                          </div>
+                          <div
+                            class="px-1 col-auto"
+                          >
+                            <button
+                              class="c4 Button c11 btn btn-link"
+                              data-testid="consultations[0].delete-btn"
+                              title="Delete Consultation"
+                              type="button"
+                            >
+                              <div
+                                class="Button__value"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  height="2rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 448 512"
+                                  width="2rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="px-2 col-auto"
+                          >
+                            <button
+                              class="btn btn-link"
+                              data-testid="consultations[0].edit-btn"
+                              title="Edit Consultation"
+                              type="button"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="2rem"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 576 512"
+                                width="2rem"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+                <div
+                  class="collapse show"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Requested on:
+                        <span>
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon-lease-consultation-1-requestedon-tooltip"
+                            id="lease-consultation-1-requestedon-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    >
+                      Jan 1, 2024
+                    </div>
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Contact:
+                        <span>
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon-lease-consultation-1-contact-tooltip"
+                            id="lease-consultation-1-contact-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    />
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Response received:
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    >
+                      Yes
+                    </div>
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Response received on:
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    >
+                      Dec 1, 2024
+                    </div>
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Comments:
+                        <span>
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon-lease-consultation-1-comments-tooltip"
+                            id="lease-consultation-1-comments-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    >
+                      test comment
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c10"
+            >
+              <div
+                class="c1 form-section"
+              >
+                <h2
+                  class="c2"
+                >
+                  <div
+                    class="no-gutters row"
+                  >
+                    <div
+                      class="col"
+                    >
+                      <div>
+                        <div
+                          class="row"
+                        >
+                          <div
+                            class="col"
+                          >
+                            Approval Denied
+                          </div>
+                          <div
+                            class="px-1 col-auto"
+                          >
+                            <button
+                              class="c4 Button c11 btn btn-link"
+                              data-testid="consultations[1].delete-btn"
+                              title="Delete Consultation"
+                              type="button"
+                            >
+                              <div
+                                class="Button__value"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  height="2rem"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 448 512"
+                                  width="2rem"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                          </div>
+                          <div
+                            class="px-2 col-auto"
+                          >
+                            <button
+                              class="btn btn-link"
+                              data-testid="consultations[1].edit-btn"
+                              title="Edit Consultation"
+                              type="button"
+                            >
+                              <svg
+                                fill="currentColor"
+                                height="2rem"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 576 512"
+                                width="2rem"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path
+                                  d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                                />
+                              </svg>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </h2>
+                <div
+                  class="collapse show"
+                >
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Requested on:
+                        <span>
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon-lease-consultation-2-requestedon-tooltip"
+                            id="lease-consultation-2-requestedon-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    >
+                      Jan 1, 2024
+                    </div>
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Contact:
+                        <span>
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon-lease-consultation-2-contact-tooltip"
+                            id="lease-consultation-2-contact-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    />
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Response received:
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    >
+                      Yes
+                    </div>
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Response received on:
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    >
+                      Dec 1, 2024
+                    </div>
+                  </div>
+                  <div
+                    class="pb-2 row"
+                  >
+                    <div
+                      class="pr-0 text-left col-4"
+                    >
+                      <label
+                        class="c12"
+                      >
+                        Comments:
+                        <span>
+                          <span
+                            class="tooltip-icon"
+                            data-testid="tooltip-icon-lease-consultation-2-comments-tooltip"
+                            id="lease-consultation-2-comments-tooltip"
+                          >
+                            <svg
+                              class="tooltip-icon"
+                              fill="currentColor"
+                              height="1em"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 512 512"
+                              width="1em"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                              />
+                            </svg>
+                          </span>
+                        </span>
+                      </label>
+                    </div>
+                    <div
+                      class="c13 text-left col"
+                    >
+                      test comment
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="pl-2"
+                    >
+                      Headquarter (HQ)
+                    </span>
+                  </div>
+                  <div
+                    class="px-0 col"
+                  />
+                </div>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+        <div
+          class="c7 form-section"
+        >
+          <h2
+            class="c2"
+          >
+            <div
+              class="no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="pl-2"
+                    >
+                      Other
+                    </span>
+                  </div>
+                  <div
+                    class="px-0 col"
+                  />
+                </div>
+              </div>
+            </div>
+          </h2>
+          <div
+            class="collapse show"
+          >
+            <p
+              class="pl-2"
+            >
+              There are no approvals / consultations.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

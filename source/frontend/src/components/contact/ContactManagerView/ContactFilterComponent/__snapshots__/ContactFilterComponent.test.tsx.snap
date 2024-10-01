@@ -58,15 +58,37 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 .c9.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c9.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c9.btn.btn-primary:hover,
+.c9.btn.btn-primary:active,
+.c9.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c9.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c9.btn.btn-secondary:hover,
+.c9.btn.btn-secondary:active,
+.c9.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c9.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -76,20 +98,66 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 .c9.btn.btn-info:hover,
 .c9.btn.btn-info:active,
 .c9.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c9.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c9.btn.btn-light:hover,
+.c9.btn.btn-light:active,
+.c9.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c9.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c9.btn.btn-dark:hover,
+.c9.btn.btn-dark:active,
+.c9.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c9.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c9.btn.btn-danger:hover,
+.c9.btn.btn-danger:active,
+.c9.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c9.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c9.btn.btn-warning:hover,
+.c9.btn.btn-warning:active,
+.c9.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -111,6 +179,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 .c9.btn.btn-link:hover,
 .c9.btn.btn-link:active,
 .c9.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -121,6 +190,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 
 .c9.btn.btn-link:disabled,
 .c9.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -233,6 +303,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 }
 
 .c0 {
+  background-color: #d9eaf7;
   border-radius: 0.4rem;
   padding: 1rem;
   max-width: 85%;
@@ -255,6 +326,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   display: inline-block;
   margin: 0rem 0.5rem;
   padding: 0.2rem;
+  color: #42814A;
 }
 
 @media only screen and (max-width:1199px) {
