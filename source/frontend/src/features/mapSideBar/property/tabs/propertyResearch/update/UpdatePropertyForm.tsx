@@ -41,7 +41,7 @@ const UpdatePropertyForm: React.FunctionComponent<
     });
 
   const initialPurposeList = purposeFilterOptions.filter(x =>
-    values.purposeTypes?.map(x => x.propertyPurposeTypeCode).includes(x.id),
+    values.propertyResearchPurposeTypes?.map(x => x.propertyResearchPurposeTypeCode).includes(x.id),
   );
 
   const [selectedPurposes, setSelectedPurposes] = useState<MultiSelectOption[]>(initialPurposeList);
@@ -52,11 +52,11 @@ const UpdatePropertyForm: React.FunctionComponent<
     setSelectedPurposes(selectedList);
     const mapped = selectedList.map<PropertyResearchFilePurposeFormModel>(x => {
       const purposeType = new PropertyResearchFilePurposeFormModel();
-      purposeType.propertyPurposeTypeCode = x.id;
+      purposeType.propertyResearchPurposeTypeCode = x.id;
       purposeType.propertyPurposeTypeDescription = x.text;
       return purposeType;
     });
-    props.formikProps.setFieldValue('purposeTypes', mapped);
+    props.formikProps.setFieldValue('propertyResearchPurposeTypes', mapped);
   }
 
   return (
