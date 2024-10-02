@@ -16,12 +16,12 @@ export const ProjectTray = ({ onLinkClick }: ISideTrayPageProps) => {
     <>
       <Styled.TrayHeader>Projects</Styled.TrayHeader>
       {hasClaim(Claims.PROJECT_VIEW) && (
-        <Link onClick={onLinkClick} to="/project/list">
+        <Link onClick={onLinkClick} to="/project/list" className="nav-item">
           Manage Projects
         </Link>
       )}
       {hasClaim(Claims.PROJECT_ADD) && (
-        <Link onClick={onLinkClick} to="/mapview/sidebar/project/new">
+        <Link onClick={onLinkClick} to="/mapview/sidebar/project/new" className="nav-item">
           Create Project
         </Link>
       )}

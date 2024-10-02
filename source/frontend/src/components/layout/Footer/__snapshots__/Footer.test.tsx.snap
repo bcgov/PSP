@@ -104,6 +104,7 @@ exports[`Footer > renders correctly 1`] = `
       class="main-footer"
     >
       <a
+        class="nav-item"
         href="http://www.gov.bc.ca/gov/content/home/disclaimer"
         rel="noopener noreferrer"
         target="_blank"
@@ -111,6 +112,7 @@ exports[`Footer > renders correctly 1`] = `
         Disclaimer
       </a>
       <a
+        class="nav-item"
         href="http://www.gov.bc.ca/gov/content/home/privacy"
         rel="noopener noreferrer"
         target="_blank"
@@ -118,6 +120,7 @@ exports[`Footer > renders correctly 1`] = `
         Privacy
       </a>
       <a
+        class="nav-item"
         href="http://www.gov.bc.ca/gov/content/home/accessible-government"
         rel="noopener noreferrer"
         target="_blank"
@@ -125,6 +128,7 @@ exports[`Footer > renders correctly 1`] = `
         Accessibility
       </a>
       <a
+        class="nav-item"
         href="http://www.gov.bc.ca/gov/content/home/copyright"
         rel="noopener noreferrer"
         target="_blank"
