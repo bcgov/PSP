@@ -64,7 +64,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.NavigateToCreateNewLicense();
 
             //Create minimum Lease file
-            leaseDetails.VerifyLicenseDetailsCreateForm();
+            leaseDetails.VerifyLicenseDetailsInitCreateForm();
             leaseDetails.CreateMinimumLicenseDetails(lease);
 
             //Save minimum lease file
@@ -101,13 +101,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedSearchProperties.NavigateToSearchTab();
             sharedSearchProperties.VerifySearchPropertiesFeature();
 
-            //Search for a property by Plan
-            if (lease.SearchProperties.PlanNumber != "")
-            {
-                sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOptionFromSearch();
-            }
-
             //Search for a property by PID
             if (lease.SearchProperties.PID != "")
             {
@@ -126,6 +119,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.SearchProperties.Address != "")
             {
                 sharedSearchProperties.SelectPropertyByAddress(lease.SearchProperties.Address);
+                sharedSearchProperties.SelectFirstOptionFromSearch();
+            }
+
+            //Search for a property by Plan
+            if (lease.SearchProperties.PlanNumber != "")
+            {
+                sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
                 sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
@@ -169,9 +169,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit File Details Section
             leaseDetails.EditLeaseFileDetailsBttn();
-
-            //Verify the edit File details form
-            leaseDetails.VerifyLicenseDetailsUpdateForm();
 
             //Make some changes on the Details Form
             leaseDetails.UpdateLeaseFileDetails(lease);
@@ -261,41 +258,44 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //TENANTS
             //Navigate to Tenants
-            tenant.NavigateToTenantSection();
+            tenant.NavigateToStakeholderSection(lease.AccountType);
 
-            //Edit Tenants Section
-            tenant.EditTenant();
+            //Edit stakeholders Section
+            tenant.EditStakeholderButton();
 
-            //Verify Tenants Initial Form
-            tenant.VerifyTenantsInitForm();
+            //Verify stakeholders Initial Form
+            tenant.VerifyStakeholdersInitForm(lease.AccountType);
 
             //Go back to initial view form
             leaseDetails.CancelLicense();
 
-            //Adding an individual Tenant
+            //Adding an individual stakeholder
             if (lease.LeaseTenants.Count > 0)
             {
                 for (var i = 0; i < lease.LeaseTenants.Count; i++)
                 {
-                    //Edit Tenants Section
-                    tenant.EditTenant();
+                    //Edit stakeholders Section
+                    tenant.EditStakeholderButton();
 
                     if (lease.LeaseTenants[i].ContactType == "Individual")
-                        tenant.AddIndividualTenant(lease.LeaseTenants[i]);
+                        tenant.AddIndividualStakeholder(lease.AccountType, lease.LeaseTenants[i]);
                     else
-                        tenant.AddOrganizationTenant(lease.LeaseTenants[i]);
+                        tenant.AddOrganizationTenant(lease.AccountType, lease.LeaseTenants[i]);
 
-                    //Saving Tenants
+                    //Saving stakeholders
                     tenant.SaveTenant();
                 }
 
             }
 
-            //Assert quantity of tenants
-            Assert.True(tenant.TotalTenants().Equals(lease.TenantsNumber));
-            Assert.True(tenant.TotalRepresentatives().Equals(lease.RepresentativeNumber));
-            Assert.True(tenant.TotalManagers().Equals(lease.PropertyManagerNumber));
-            Assert.True(tenant.TotalUnknown().Equals(lease.UnknownTenantNumber));
+            //Assert quantity of stakeholders
+            Assert.Equal(lease.TenantsNumber, tenant.TotalTenants());
+            Assert.Equal(lease.RepresentativeNumber, tenant.TotalRepresentatives());
+            Assert.Equal(lease.PropertyManagerNumber, tenant.TotalManagers());
+            Assert.Equal(lease.UnknownTenantNumber, tenant.TotalUnknown());
+
+            Assert.Equal(lease.OwnerRepresentativeNumber, tenant.TotalOwnerRepresentatives());
+            Assert.Equal(lease.OwnerPayeeNumber, tenant.TotalOwners());
         }
 
         [StepDefinition(@"I update a Lease's Tenants from row number (.*)")]
@@ -312,33 +312,36 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.SelectFirstOption();
 
             //Navigate to Tenants section
-            tenant.NavigateToTenantSection();
+            tenant.NavigateToStakeholderSection(lease.AccountType);
 
-            //Edit Tenants
+            //Edit stakeholders
             if (lease.TenantsQuantity > 0)
             {
-                //Delete last Tenant
-                tenant.EditTenant();
-                tenant.DeleteLastTenant();
+                //Delete last stakeholder
+                tenant.EditStakeholderButton();
+                tenant.DeleteLastStakeholder();
 
-                //Save tenants changes
+                //Save stakeholders changes
                 tenant.SaveTenant();
 
                 for (int i = 0; i < lease.LeaseTenants.Count; i++)
                 {
-                    //Edit last Tenant
-                    tenant.EditTenant();
-                    tenant.EditTenant(lease.LeaseTenants[i]);
+                    //Edit last stakeholder
+                    tenant.EditStakeholderButton();
+                    tenant.EditStakeholder(lease.LeaseTenants[i]);
 
-                    //Save tenants changes
+                    //Save stakeholders changes
                     tenant.SaveTenant();
                 }
 
-                //Assert quantity of tenants
-                Assert.True(tenant.TotalTenants().Equals(lease.TenantsNumber));
-                Assert.True(tenant.TotalRepresentatives().Equals(lease.RepresentativeNumber));
-                Assert.True(tenant.TotalManagers().Equals(lease.PropertyManagerNumber));
-                Assert.True(tenant.TotalUnknown().Equals(lease.UnknownTenantNumber));
+                //Assert quantity of stakeholders
+                Assert.Equal(lease.TenantsNumber, tenant.TotalTenants());
+                Assert.Equal(lease.RepresentativeNumber, tenant.TotalRepresentatives());
+                Assert.Equal(lease.PropertyManagerNumber, tenant.TotalManagers());
+                Assert.Equal(lease.UnknownTenantNumber, tenant.TotalUnknown());
+
+                Assert.Equal(lease.OwnerRepresentativeNumber, tenant.TotalOwnerRepresentatives());
+                Assert.Equal(lease.OwnerPayeeNumber, tenant.TotalOwners());
             }
         }
 
@@ -823,6 +826,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Lease Details
                 MinistryProjectCode = ExcelDataContext.ReadData(rowNumber, "MinistryProjectCode"),
                 MinistryProject = ExcelDataContext.ReadData(rowNumber, "MinistryProject"),
+                MinistryProduct = ExcelDataContext.ReadData(rowNumber, "MinistryProduct"),
                 LeaseStatus = ExcelDataContext.ReadData(rowNumber, "LeaseStatus"),
                 LeaseTerminationDate = ExcelDataContext.ReadData(rowNumber, "LeaseTerminationDate"),
                 LeaseTerminationReason = ExcelDataContext.ReadData(rowNumber, "LeaseTerminationReason"),
@@ -865,10 +869,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.FeeDeterminationSuggestedFee = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationSuggestedFee");
             lease.FeeDeterminationNotes = ExcelDataContext.ReadData(rowNumber, "FeeDeterminationNotes");
 
-            lease.PhysicalLeaseExist = ExcelDataContext.ReadData(rowNumber, "PhysicalLeaseExist");
-            lease.DigitalLeaseExist = ExcelDataContext.ReadData(rowNumber, "DigitalLeaseExist");
-            lease.DocumentLocation = ExcelDataContext.ReadData(rowNumber, "DocumentLocation");
-            lease.LeaseNotes = ExcelDataContext.ReadData(rowNumber, "LeaseNotes");
+            //lease.PhysicalLeaseExist = ExcelDataContext.ReadData(rowNumber, "PhysicalLeaseExist");
+            //lease.DigitalLeaseExist = ExcelDataContext.ReadData(rowNumber, "DigitalLeaseExist");
+            //lease.DocumentLocation = ExcelDataContext.ReadData(rowNumber, "DocumentLocation");
+            //lease.LeaseNotes = ExcelDataContext.ReadData(rowNumber, "LeaseNotes");
             lease.SearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseSearchPropertiesIndex"));
 
             if (lease.SearchPropertiesIndex > 0)
@@ -936,6 +940,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.RepresentativeNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "RepresentativeNumber"));
             lease.PropertyManagerNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyManagerNumber"));
             lease.UnknownTenantNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "UnknownTenantNumber"));
+            lease.OwnerPayeeNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerPayeeNumber"));
+            lease.OwnerRepresentativeNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerRepresentativeNumber"));
             if (lease.TenantsStartRow != 0 && lease.TenantsQuantity != 0)
                 PopulateTenantsCollection(lease.TenantsStartRow, lease.TenantsQuantity);
             
@@ -1067,7 +1073,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                Tenant tenant = new()
+                Stakeholder tenant = new()
                 {
                     ContactType = ExcelDataContext.ReadData(i, "ContactType"),
                     Summary = ExcelDataContext.ReadData(i, "Summary"),

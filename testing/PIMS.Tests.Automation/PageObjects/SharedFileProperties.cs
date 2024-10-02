@@ -339,13 +339,13 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInLeaseTotal).Count();
 
-            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row'][" + propertyIndex + "]/div[3]/button"));
-            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row'][" + propertyIndex + "]/div[3]/button")).Click();
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row'][" + propertyIndex + "]/div[4]/button"));
+            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row'][" + propertyIndex + "]/div[4]/button")).Click();
 
             Wait();
             if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
-                Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
+                Assert.True(sharedModals.ModalHeader() == "Removing Property from Lease/Licence");
                 Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/licence?");
 
                 sharedModals.ModalClickOKBttn();
