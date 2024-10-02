@@ -1,10 +1,8 @@
-PRINT '======= DB TRANSACTION FINISH ========'
-PRINT '- Success: Committing Transaction...'
-COMMIT TRANSACTION;
-END TRY
+   --End script section
 
-BEGIN CATCH
-PRINT '======= DB TRANSACTION CATCH ========'
+PRINT '======= DB TRANSACTION FINISH ========'
+GO
+
 If XACT_STATE()=1
   BEGIN
   PRINT '- Success: Committing Transaction...'
@@ -15,5 +13,9 @@ ELSE IF XACT_STATE()=-1
   PRINT '- Error: Rolling Back Transaction...'
   ROLLBACK TRANSACTION;
   END;
-END CATCH;
+ELSE IF XACT_STATE()=0
+  BEGIN
+  PRINT '- Error: No pending transactions...'
+  ROLLBACK TRANSACTION;
+  END;
 GO

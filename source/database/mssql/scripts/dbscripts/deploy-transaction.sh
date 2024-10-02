@@ -16,9 +16,15 @@ then
     exit 0
    fi
    i="${SQLFOLDER}"/master.sql;
+
+   # Print the current version of the DB state
+   echo " * Current Database version and concurrency value"
+   sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -Q "SET NOCOUNT ON; SELECT static_variable_value, concurrency_control_number FROM pims_static_variable WHERE static_variable_name = 'DBVERSION';" -W -h -1
+
    echo "* Executing from '${i}'"
-   echo "======= DB TRANSACTION START ========"
+   echo "======= sqlcmd START ========"
    sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$i" -b -I
+   echo "======= sqlcmd END ========"
    count=$?
    if [ $count -ne 0 ];
      then
@@ -27,6 +33,9 @@ then
     else
       echo "======= SCRIPT ${i} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
    fi
+   # Print the final version of the database after the script execution
+   echo " * Final Database version and concurrency value"
+   sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -Q "SET NOCOUNT ON; SELECT static_variable_value, concurrency_control_number FROM pims_static_variable WHERE static_variable_name = 'DBVERSION';" -W -h -1
 fi
 
 echo "======= END ========"

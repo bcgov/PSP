@@ -11,6 +11,8 @@ generate_file()
   FILE="${SQLFOLDER}/master.sql"
   SCRIPTHOME=${PWD}
 
+  now_datetime=$(date +'%m/%d/%Y %r')
+
   echo "Generating master script in for files in '[dbscripts]/$SQLFOLDER'."
   echo " '[dbscripts]/$FILE'."
 
@@ -23,9 +25,8 @@ generate_file()
   cp 'master_script_static/MSSQL_Script_Header.txt' "$FILE"
   echo >> "$FILE"
 
-  # exit 0
+  echo "-- File generated on ${now_datetime}" | cat - "$FILE" > temp && mv temp "$FILE"
 
-  #cd "$SQLFOLDER"
 
   # Enable extended globbing
   shopt -s extglob nullglob
@@ -35,11 +36,9 @@ generate_file()
     [[ "$sql_file" = *"master.sql" ]] && continue
 
     echo "  Processing '${sql_file}'..."
-    echo "PRINT '- Executing" $sql_file "'" >> "${FILE}"
-    echo ':r' $sql_file >> "${FILE}"
+    echo "   PRINT '- Executing" $sql_file "'" >> "${FILE}"
+    echo '   :r' $sql_file >> "${FILE}"
   done
-
-  #cd $SCRIPTHOME
 
   # Finalize the destination file
   echo >> "$FILE"
@@ -53,7 +52,6 @@ generate_file()
 do_path=0
 do_sprint=0
 valid=1
-#SQLFOLDER=''
 
 # Retrieve the parameters passed
 while getopts f:s: option
