@@ -39,7 +39,7 @@ export const ProjectExportForm: React.FunctionComponent<IProjectExportFormProps>
       }}
     >
       <Form placeholder={undefined}>
-        <SectionField label="Export Type">
+        <SectionField className="pl-9" label="Export Type">
           <Select
             field="exportType"
             options={projectExportOptions}

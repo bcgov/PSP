@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
+import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
 import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
@@ -16,14 +17,19 @@ export const SubdivisionConsolidationTray = ({ onLinkClick }: ISideTrayPageProps
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Subdivision & Consolidation</Styled.TrayHeader>
+        <Styled.TrayHeader>
+          <span className="mr-2">
+            <SubdivisionIcon fill="currentColor" />
+          </span>
+          Subdivision & Consolidation
+        </Styled.TrayHeader>
         {hasClaim(Claims.PROPERTY_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/sidebar/subdivision/new">
+          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/mapview/sidebar/subdivision/new">
             Create a Subdivision
           </Link>
         )}
         {hasClaim(Claims.PROPERTY_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/sidebar/consolidation/new">
+          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/mapview/sidebar/consolidation/new">
             Create a Consolidation
           </Link>
         )}
