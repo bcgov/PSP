@@ -45,6 +45,7 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsLeasePayment> GetAllTracking(DateTime startDate, DateTime endDate)
         {
             return this.Context.PimsLeasePayments
+                .AsSplitQuery()
                 .Include(p => p.LeasePaymentCategoryTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.Lease)

@@ -21,7 +21,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
                 .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.File, src => src.ResearchFile)
                 .Map(dest => dest.FileId, src => src.ResearchFileId)
-                .Map(dest => dest.PurposeTypes, src => src.PimsPrfPropResearchPurposeTypes)
+                .Map(dest => dest.PropertyResearchPurposeTypes, src => src.PimsPrfPropResearchPurposeTypes)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config.NewConfig<ResearchFilePropertyModel, Entity.PimsPropertyResearchFile>()
@@ -36,7 +36,7 @@ namespace Pims.Api.Models.Concepts.ResearchFile
                 .Map(dest => dest.IsLegalOpinionObtained, src => src.IsLegalOpinionObtained)
                 .Map(dest => dest.DocumentReference, src => src.DocumentReference)
                 .Map(dest => dest.ResearchSummary, src => src.ResearchSummary)
-                .Map(dest => dest.PimsPrfPropResearchPurposeTypes, src => src.PurposeTypes)
+                .Map(dest => dest.PimsPrfPropResearchPurposeTypes, src => src.PropertyResearchPurposeTypes)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
     }

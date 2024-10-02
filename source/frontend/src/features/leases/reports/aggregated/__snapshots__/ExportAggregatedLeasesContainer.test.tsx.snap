@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`PaymentsContainer component > renders as expected 1`] = `
+exports[`ExportAggregatedLeasesContainer component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -24,6 +24,17 @@ exports[`PaymentsContainer component > renders as expected 1`] = `
   flex-shrink: 0;
 }
 
+.c3 {
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+  color: #428bca;
+}
+
+.c3:hover {
+  cursor: pointer;
+}
+
 .c1 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -37,17 +48,6 @@ exports[`PaymentsContainer component > renders as expected 1`] = `
 
 .c0 {
   list-style-type: none;
-}
-
-.c3 {
-  -webkit-align-self: center;
-  -ms-flex-item-align: center;
-  align-self: center;
-  color: #428bca;
-}
-
-.c3:hover {
-  cursor: pointer;
 }
 
 <ul

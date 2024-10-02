@@ -1,36 +1,38 @@
-import { ApiGen_Concepts_PropertyPurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyPurpose';
+import { ApiGen_Concepts_PropertyResearchFilePurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyResearchFilePurpose';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { getEmptyResearchFile } from '@/models/defaultInitializers';
+import { getEmptyBaseAudit, getEmptyResearchFile } from '@/models/defaultInitializers';
 import { exists } from '@/utils/utils';
 
 export class PropertyResearchFilePurposeFormModel {
   public id?: number;
-  public propertyPurposeTypeCode?: string;
+  public propertyResearchPurposeTypeCode?: string;
   public propertyPurposeTypeDescription?: string;
   public version?: number;
 
   public static fromApi(
-    base: ApiGen_Concepts_PropertyPurpose,
+    base: ApiGen_Concepts_PropertyResearchFilePurpose,
   ): PropertyResearchFilePurposeFormModel {
     const newModel = new PropertyResearchFilePurposeFormModel();
     newModel.id = base.id;
-    newModel.propertyPurposeTypeCode = base.propertyPurposeType?.id ?? undefined;
-    newModel.propertyPurposeTypeDescription = base.propertyPurposeType?.description ?? undefined;
+    newModel.propertyResearchPurposeTypeCode =
+      base.propertyResearchPurposeTypeCode?.id ?? undefined;
+    newModel.propertyPurposeTypeDescription =
+      base.propertyResearchPurposeTypeCode?.description ?? undefined;
     newModel.version = base.rowVersion ?? undefined;
     return newModel;
   }
 
-  public toApi(): ApiGen_Concepts_PropertyPurpose {
+  public toApi(): ApiGen_Concepts_PropertyResearchFilePurpose {
     return {
       id: this.id ?? 0,
-      propertyPurposeType: {
-        id: this.propertyPurposeTypeCode ?? null,
+      propertyResearchPurposeTypeCode: {
+        id: this.propertyResearchPurposeTypeCode ?? null,
         description: this.propertyPurposeTypeDescription ?? null,
         displayOrder: null,
         isDisabled: false,
       },
       rowVersion: this.version ?? null,
-      propertyResearchFileId: 0,
+      ...getEmptyBaseAudit(),
     };
   }
 }
@@ -45,7 +47,7 @@ export class UpdatePropertyFormModel {
   public researchSummary?: string;
   public propertyId?: number;
 
-  public purposeTypes?: PropertyResearchFilePurposeFormModel[];
+  public propertyResearchPurposeTypes?: PropertyResearchFilePurposeFormModel[];
   public rowVersion?: number;
 
   public researchFileRowVersion: number | null = null;
@@ -72,8 +74,9 @@ export class UpdatePropertyFormModel {
     model.researchFileRowVersion = base?.file?.rowVersion ?? null;
     model.researchFileId = base?.fileId ?? null;
 
-    model.purposeTypes = base.purposeTypes?.map((x: ApiGen_Concepts_PropertyPurpose) =>
-      PropertyResearchFilePurposeFormModel.fromApi(x),
+    model.propertyResearchPurposeTypes = base.propertyResearchPurposeTypes?.map(
+      (x: ApiGen_Concepts_PropertyResearchFilePurpose) =>
+        PropertyResearchFilePurposeFormModel.fromApi(x),
     );
     model.rowVersion = base.rowVersion ?? undefined;
     return model;
@@ -103,7 +106,7 @@ export class UpdatePropertyFormModel {
       location: null,
       fileId: this.researchFileId ?? 0,
       file: { ...getEmptyResearchFile(), rowVersion: this.researchFileRowVersion },
-      purposeTypes: this.purposeTypes?.map(x => x.toApi()) ?? null,
+      propertyResearchPurposeTypes: this.propertyResearchPurposeTypes?.map(x => x.toApi()) ?? null,
       rowVersion: this.rowVersion ?? null,
     };
   }
