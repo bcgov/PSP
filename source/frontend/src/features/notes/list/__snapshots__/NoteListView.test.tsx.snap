@@ -14,7 +14,8 @@ exports[`Note List View > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -46,7 +47,7 @@ exports[`Note List View > renders as expected 1`] = `
 }
 
 .c8 {
-  color: _linkColor_6badca;
+  color: var(--surface-color-primary-button-default);
   width: 1.6rem;
   height: 1.6rem;
 }

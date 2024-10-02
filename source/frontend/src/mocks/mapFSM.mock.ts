@@ -46,6 +46,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isSelecting: false,
   isRepositioning: false,
   isFiltering: false,
+  isShowingMapFilter: false,
   isShowingMapLayers: false,
   showDisposed: false,
   showRetired: false,
@@ -68,7 +69,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   finishReposition: vi.fn(),
   setFilePropertyLocations: vi.fn(),
   setVisiblePimsProperties: vi.fn(),
-  toggleMapFilter: vi.fn(),
+  toggleMapFilterDisplay: vi.fn(),
 
   toggleMapLayerControl: vi.fn(),
   setShowDisposed: vi.fn(),
@@ -77,4 +78,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setDefaultMapLayers: vi.fn(),
   toggleSidebarDisplay: vi.fn(),
   setFullWidthSideBar: vi.fn(),
+  resetMapFilter: vi.fn(),
 };

@@ -10,6 +10,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
+  background-color: #f2f2f2;
 }
 
 .c1 {
@@ -29,7 +30,6 @@ exports[`LayersMenu View > renders as expected 1`] = `
 
 .c1 .form-group .form-check label {
   font-weight: bold;
-  color: _textColor_6badca;
   font-size: 1.6rem;
 }
 

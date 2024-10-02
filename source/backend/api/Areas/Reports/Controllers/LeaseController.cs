@@ -172,7 +172,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         [HasPermission(Permissions.PropertyView)]
         [Produces(ContentTypes.CONTENTTYPEEXCELX)]
         [ProducesResponseType(200)]
-        [SwaggerOperation(Tags = new[] { "lease", "payements", "report" })]
+        [SwaggerOperation(Tags = new[] { "lease", "payments", "report" })]
         public IActionResult ExportLeasePayments(int fiscalYearStart)
         {
             var acceptHeader = (string)this.Request.Headers["Accept"];

@@ -170,8 +170,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddNotes(string notes)
         {
-            WaitUntilClickable(licenseDepositEditNotesBttn);
-            webDriver.FindElement(licenseDepositEditNotesBttn).Click();
+            Wait();
+            FocusAndClick(licenseDepositEditNotesBttn);
 
             WaitUntilVisible(licenseDepositNotesTextarea);
             webDriver.FindElement(licenseDepositNotesTextarea).SendKeys(notes);

@@ -13,6 +13,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
 }
 
 .c0 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
@@ -22,7 +23,8 @@ exports[`ChecklistView component > renders as expected 1`] = `
 
 .c4 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -56,6 +58,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
 }
 
 .c11 {
+  color: #474543;
   min-width: 11rem;
 }
 
@@ -69,6 +72,11 @@ exports[`ChecklistView component > renders as expected 1`] = `
   font-size: 1.1rem;
   font-style: italic;
   text-align: right;
+  color: #428bca;
+}
+
+.c8 .tooltip-icon {
+  color: #428bca;
 }
 
 .c10 {
