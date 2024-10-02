@@ -25,7 +25,7 @@ generate_file()
   cp 'master_script_static/MSSQL_Script_Header.txt' "$FILE"
   echo >> "$FILE"
 
-  echo "-- File generated on ${now_datetime}" | cat - "$FILE" > temp && mv temp "$FILE"
+  echo "-- File generated on ${now_datetime}." | cat - "$FILE" > temp && mv temp "$FILE"
 
 
   # Enable extended globbing
