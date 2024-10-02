@@ -3,7 +3,7 @@ using System.ComponentModel;
 namespace Pims.Api.Models.Report.Lease
 {
     /// <summary>
-    /// model represents a single row fo rthe lease payment report.
+    /// Model that represents a single row for the lease payment report.
     /// </summary>
     public class LeasePaymentReportModel
     {
@@ -102,14 +102,14 @@ namespace Pims.Api.Models.Report.Lease
         public string PaymentDueString { get; set; }
 
         /// <summary>
-        /// get/set - The payment type
+        /// get/set - The payment type.
         /// </summary>
         [DisplayName("Payment type")]
         [CsvHelper.Configuration.Attributes.Name("Payment type")]
         public string PaymentType { get; set; }
 
         /// <summary>
-        /// get/set - The payment type
+        /// get/set - The rent category.
         /// </summary>
         [DisplayName("Rent category")]
         [CsvHelper.Configuration.Attributes.Name("Rent category")]
@@ -163,6 +163,13 @@ namespace Pims.Api.Models.Report.Lease
         [DisplayName("Latest payment date")]
         [CsvHelper.Configuration.Attributes.Name("Latest payment date")]
         public string LatestPaymentDate { get; set; }
+
+        /// <summary>
+        /// get/set - Notes regarding this payment.
+        /// </summary>
+        [DisplayName("Payment notes")]
+        [CsvHelper.Configuration.Attributes.Name("Payment notes")]
+        public string PaymentNote { get; set; }
         #endregion
     }
 }

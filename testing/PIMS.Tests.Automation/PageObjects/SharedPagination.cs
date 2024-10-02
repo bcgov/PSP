@@ -24,7 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ChoosePaginationOption(int pagination)
         {
-            Wait(2000);
+            Wait();
 
             WaitUntilVisible(searchTableEntriesSpan);
             FocusAndClick(searchTableEntriesSpan);

@@ -9,34 +9,35 @@ import { render, RenderOptions } from '@/utils/test-utils';
 
 import { UpdatePropertyFormModel } from './models';
 import UpdatePropertyForm from './UpdatePropertyForm';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 const testResearchFile: ApiGen_Concepts_ResearchFileProperty = {
   id: 1,
   propertyName: 'Corner of Nakya PL ',
   propertyId: 495,
 
-  purposeTypes: [
+  propertyResearchPurposeTypes: [
     {
       id: 22,
-      propertyPurposeType: {
+      propertyResearchPurposeTypeCode: {
         id: 'FORM12',
         description: 'Form 12',
         isDisabled: false,
         displayOrder: null,
       },
-      propertyResearchFileId: 1,
       rowVersion: 1,
+      ...getEmptyBaseAudit(),
     },
     {
       id: 23,
-      propertyPurposeType: {
+      propertyResearchPurposeTypeCode: {
         id: 'DOTHER',
         description: 'District Other',
         isDisabled: false,
         displayOrder: null,
       },
-      propertyResearchFileId: 1,
       rowVersion: 1,
+      ...getEmptyBaseAudit(),
     },
   ],
   rowVersion: 10,
