@@ -6,10 +6,6 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
-  findByTitle,
-  getByTestId,
-  getByTitle,
-  mockKeycloak,
   render,
   RenderOptions,
   userEvent,

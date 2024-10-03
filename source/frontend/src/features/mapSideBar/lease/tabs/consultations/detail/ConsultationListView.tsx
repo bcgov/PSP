@@ -90,11 +90,6 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                   <span className="px-2">{group.consultationTypeDescription}</span>
                   {getOutcomeIcon(group.consultations)}
                 </Col>
-                <Col className="px-0">
-                  {group.consultations.length > 0 && (
-                    <StyledIconWrapper>{group.consultations.length}</StyledIconWrapper>
-                  )}
-                </Col>
               </StyledConsultationHeader>
             }
             noPadding
@@ -237,20 +232,6 @@ const StyledBorder = styled.div`
   border: solid 0.2rem ${props => props.theme.css.headerBorderColor};
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
-`;
-
-const StyledIconWrapper = styled.div`
-  background-color: ${props => props.theme.css.activeActionColor};
-  color: white;
-  font-size: 1.4rem;
-  border-radius: 50%;
-  opacity: 0.8;
-  width: 2.2rem;
-  height: 2.2rem;
-  padding: 1rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;
 
 const StyledConsultationHeader = styled(Row)`
