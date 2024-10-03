@@ -21,8 +21,11 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
         [DisplayName("Product")]
         public string Product { get; set; }
 
-        [DisplayName("Acquisition File # and Name")]
-        public string AcquisitionNumberAndName { get; set; }
+        [DisplayName("File Type")]
+        public string FileType { get; set; }
+
+        [DisplayName("File # and Name")]
+        public string FileNumberAndName { get; set; }
 
         [DisplayName("Fiscal Year")]
         public string FiscalYear { get; set; }
@@ -93,7 +96,7 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             ExportDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
             MinistryProject = GetMinistryProjectName(financial.CompensationRequisition?.AcquisitionFile?.Project);
             Product = GetMinistryProductName(financial.CompensationRequisition?.AcquisitionFile?.Product);
-            AcquisitionNumberAndName = GetAcquisitionFileName(financial.CompensationRequisition?.AcquisitionFile);
+            FileNumberAndName = GetAcquisitionFileName(financial.CompensationRequisition?.AcquisitionFile);
             FiscalYear = financial.CompensationRequisition?.FiscalYear ?? string.Empty;
             AlternateProject = GetMinistryProjectName(financial.CompensationRequisition?.AlternateProject);
             RequisitionNumber = financial.CompensationRequisition?.Internal_Id ?? 0;

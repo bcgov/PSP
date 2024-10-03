@@ -89,7 +89,7 @@ namespace Pims.Api.Test
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.AcquisitionNumberAndName.Should().Be("9999 - test");
+            model.FileNumberAndName.Should().Be("9999 - test");
         }
 
         [Fact]
@@ -108,7 +108,7 @@ namespace Pims.Api.Test
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.AcquisitionNumberAndName.Should().Be(string.Empty);
+            model.FileNumberAndName.Should().Be(string.Empty);
         }
 
         [Fact]
