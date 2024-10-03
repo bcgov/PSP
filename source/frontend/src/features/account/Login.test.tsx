@@ -45,7 +45,7 @@ const TestLogin = ({
     <TenantProvider>
       <TenantConsumer>
         {({ tenant }) => (
-          <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} }}>
+          <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} as any }}>
             <Provider store={store ?? defaultStore}>
               <Router history={history}>
                 <Login />
@@ -139,13 +139,13 @@ describe('login', () => {
       keycloak: { authenticated: false } as unknown as Keycloak.KeycloakInstance,
       initialized: true,
     });
-    const { getAllByRole } = renderLogin();
-    expect(getAllByRole('heading')[0]).toHaveTextContent(
-      'MOTI Property Information Management System (PIMS)',
-    );
-    expect(getAllByRole('heading')[1]).toHaveTextContent(
-      'PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure',
-    );
+    const { getByText } = renderLogin();
+    expect(getByText('MOTI Property Information Management System (PIMS)')).toBeInTheDocument();
+    expect(
+      getByText(
+        'PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.',
+      ),
+    ).toBeInTheDocument();
   });
 
   it('a spinner is displayed if keycloak has not yet been initialized', () => {

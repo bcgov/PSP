@@ -1,14 +1,25 @@
 import { FormikProps } from 'formik/dist/types';
+import { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { FastDatePicker, ProjectSelector, Select, TextArea } from '@/components/common/form';
+import {
+  FastDatePicker,
+  ProjectSelector,
+  Select,
+  SelectOption,
+  TextArea,
+} from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import * as API from '@/constants/API';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
+import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
+import { isValidId } from '@/utils';
 
 import { LeaseFormModel } from '../models';
 
@@ -20,14 +31,19 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   formikProps,
 }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
+  const { retrieveProjectProducts } = useProjectProvider();
 
   const { values, setFieldValue } = formikProps;
-  const { statusTypeCode, terminationReason, cancellationReason } = values;
+  const { statusTypeCode, terminationReason, cancellationReason, project } = values;
 
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const leaseStatusTypes = getOptionsByType(API.LEASE_STATUS_TYPES);
   const paymentReceivableTypes = getOptionsByType(API.LEASE_PAYMENT_RECEIVABLE_TYPES);
+
+  const [projectProducts, setProjectProducts] = useState<ApiGen_Concepts_Product[] | undefined>(
+    undefined,
+  );
 
   const statusChangeModalContent = (status: string): React.ReactNode => {
     return (
@@ -78,11 +94,52 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
     }
   };
 
+  const onMinistryProjectSelected = useCallback(
+    async (param: IAutocompletePrediction[]) => {
+      if (param.length > 0) {
+        if (isValidId(param[0].id)) {
+          const result = await retrieveProjectProducts(param[0].id);
+          if (result !== undefined) {
+            setProjectProducts(result);
+          }
+        }
+      } else {
+        setProjectProducts(undefined);
+      }
+    },
+    [retrieveProjectProducts],
+  );
+
+  useEffect(() => {
+    if (project !== undefined) {
+      onMinistryProjectSelected([project]);
+    }
+  }, [onMinistryProjectSelected, project]);
+
   return (
     <Section header="Original Agreement">
       <SectionField label="Ministry project" labelWidth="3">
-        <ProjectSelector field="project" />
+        <ProjectSelector
+          field="project"
+          onChange={(vals: IAutocompletePrediction[]) => {
+            onMinistryProjectSelected(vals);
+            if (vals.length === 0) {
+              formikProps.setFieldValue('productId', null);
+            }
+          }}
+        />
       </SectionField>
+      {projectProducts !== undefined && (
+        <SectionField label="Product" labelWidth="3">
+          <Select
+            field="productId"
+            options={projectProducts.map<SelectOption>(x => {
+              return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
+            })}
+            placeholder="Select..."
+          />
+        </SectionField>
+      )}
       <SectionField
         label="Status"
         labelWidth="3"
@@ -144,7 +201,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
             tooltip={
               <TooltipIcon
                 toolTipId="lease-commencement-tooltip"
-                toolTip="The start date defined in the original agreement."
+                toolTip="The start date defined in the original agreement"
                 placement="right"
               />
             }
@@ -163,7 +220,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
             tooltip={
               <TooltipIcon
                 toolTipId="lease-expiry-tooltip"
-                toolTip="The end date specified in the original agreement."
+                toolTip="The end date specified in the original agreement"
                 placement="right"
               />
             }
@@ -177,11 +234,10 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
           <SectionField
             label="Termination"
             labelWidth="3"
-            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED}
             tooltip={
               <TooltipIcon
                 toolTipId="lease-termination-tooltip"
-                toolTip="The expiry date of the last agreement if by effluxion of time or the early termination date for cause."
+                toolTip="The expiry date of the last agreement if by effluxion of time or the early termination date for cause"
                 placement="right"
               />
             }

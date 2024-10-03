@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { FileTypes } from '@/constants/fileTypes';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
@@ -16,12 +15,14 @@ import TakesDetailContainer from '@/features/mapSideBar/property/tabs/takes/deta
 import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/TakesDetailView';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { isValidId } from '@/utils';
+import { exists, getLatLng, isValidId } from '@/utils';
 
 import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
+import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 
 export interface IPropertyFileContainerProps {
@@ -30,32 +31,36 @@ export interface IPropertyFileContainerProps {
   View: React.FunctionComponent<React.PropsWithChildren<IInventoryTabsProps>>;
   customTabs: TabInventoryView[];
   defaultTab: InventoryTabNames;
-  fileContext?: FileTypes;
+  fileContext?: ApiGen_CodeTypes_FileTypes;
 }
 
 export const PropertyFileContainer: React.FunctionComponent<
-  React.PropsWithChildren<IPropertyFileContainerProps>
+  IPropertyFileContainerProps
 > = props => {
   const pid = props.fileProperty?.property?.pid ?? undefined;
   const id = props.fileProperty?.property?.id ?? undefined;
+  const location = props.fileProperty?.property?.location ?? undefined;
+  const latLng = useMemo(() => getLatLng(location) ?? undefined, [location]);
 
   const composedProperties = useComposedProperties({
     pid,
     id,
+    latLng,
     propertyTypes: [
       PROPERTY_TYPES.ASSOCIATIONS,
       PROPERTY_TYPES.LTSA,
       PROPERTY_TYPES.PIMS_API,
       PROPERTY_TYPES.BC_ASSESSMENT,
+      PROPERTY_TYPES.CROWN_TENURES,
     ],
   });
 
   const { getLease } = useLeaseRepository();
-  const { getLeaseTenants } = useLeaseTenantRepository();
+  const { getLeaseStakeholders } = useLeaseStakeholderRepository();
   const { getLeaseRenewals } = useLeaseRepository();
   const [LeaseAssociationInfo, setLeaseAssociationInfo] = useState<LeaseAssociationInfo>({
     leaseDetails: [],
-    leaseTenants: [],
+    leaseStakeholders: [],
     leaseRenewals: [],
     loading: false,
   });
@@ -67,11 +72,11 @@ export const PropertyFileContainer: React.FunctionComponent<
       getLeaseInfo(
         leaseAssociations,
         getLease.execute,
-        getLeaseTenants.execute,
+        getLeaseStakeholders.execute,
         getLeaseRenewals.execute,
         setLeaseAssociationInfo,
       ),
-    [leaseAssociations, getLease.execute, getLeaseTenants.execute, getLeaseRenewals.execute],
+    [leaseAssociations, getLease.execute, getLeaseStakeholders.execute, getLeaseRenewals.execute],
   );
 
   // After API property object has been received, we query relevant map layers to find
@@ -93,6 +98,19 @@ export const PropertyFileContainer: React.FunctionComponent<
     key: InventoryTabNames.title,
     name: 'Title',
   });
+
+  if (exists(composedProperties.composedProperty?.crownTenureFeature)) {
+    tabViews.push({
+      content: (
+        <CrownDetailsTabView
+          crownFeature={composedProperties.composedProperty?.crownTenureFeature}
+        />
+      ),
+      key: InventoryTabNames.crown,
+      name: 'Crown',
+    });
+  }
+
   tabViews.push({
     content: (
       <BcAssessmentTabView
@@ -106,11 +124,11 @@ export const PropertyFileContainer: React.FunctionComponent<
     name: 'Value',
   });
 
-  if (props.fileContext === FileTypes.Research) {
+  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Research) {
     tabViews.push({
       content: (
         <PropertyResearchTabView
-          researchFile={props.fileProperty as ApiGen_Concepts_ResearchFileProperty}
+          researchFileProperty={props.fileProperty as ApiGen_Concepts_ResearchFileProperty}
           setEditMode={props.setEditing}
         />
       ),
@@ -143,7 +161,7 @@ export const PropertyFileContainer: React.FunctionComponent<
             false
           }
           associations={composedProperties.propertyAssociationWrapper?.response}
-          associatedLeaseTenants={LeaseAssociationInfo.leaseTenants}
+          associatedLeaseStakeholders={LeaseAssociationInfo.leaseStakeholders}
           associatedLeaseRenewals={LeaseAssociationInfo.leaseRenewals}
           associatedLeases={LeaseAssociationInfo.leaseDetails}
         />
@@ -153,7 +171,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
-  if (props.fileContext === FileTypes.Acquisition) {
+  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Acquisition) {
     tabViews.push({
       content: (
         <TakesDetailContainer

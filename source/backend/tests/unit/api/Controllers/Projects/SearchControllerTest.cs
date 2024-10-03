@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Moq;
 using Pims.Api.Areas.Projects.Controllers;
 using Pims.Api.Areas.Projects.Models;
@@ -11,7 +6,6 @@ using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Security;
 using Xunit;
-using ApiModel = Pims.Api.Areas.Projects.Models;
 using Entity = Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Test.Controllers.Projects

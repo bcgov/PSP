@@ -4,13 +4,13 @@ using Pims.Dal.Entities;
 namespace Pims.Dal.Repositories
 {
     /// <summary>
-    /// ILeaseTenantRepository interface, provides functions to interact with lease tenants within the datasource.
+    /// IPropertyImprovementRepository interface, provides functions to interact with leases within the datasource.
     /// </summary>
-    public interface ILeaseTenantRepository : IRepository<PimsLeaseTenant>
+    public interface IPropertyImprovementRepository : IRepository<PimsPropertyImprovement>
     {
 
-        IEnumerable<PimsLeaseTenant> GetByLeaseId(long leaseId);
+        IEnumerable<PimsPropertyImprovement> GetByLeaseId(long leaseId);
 
-        IEnumerable<PimsLeaseTenant> Update(long leaseId, IEnumerable<PimsLeaseTenant> pimsLeaseTenants);
+        IEnumerable<PimsPropertyImprovement> Update(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
     }
 }

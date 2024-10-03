@@ -13,6 +13,7 @@ import {
   screen,
   userEvent,
   waitFor,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { getDefaultFormLease, LeaseFormModel } from '../models';
@@ -20,6 +21,8 @@ import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import React from 'react';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { getMockApiLease } from '@/mocks/lease.mock';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -30,6 +33,12 @@ vi.mock('@/hooks/useProjectTypeahead');
 const mockUseProjectTypeahead = vi.mocked(useProjectTypeahead);
 
 const handleTypeaheadSearch = vi.fn();
+
+const retrieveProjectProductsFn = vi.fn();
+vi.mock('@/hooks/repositories/useProjectProvider');
+vi.mocked(useProjectProvider).mockReturnValue({
+  retrieveProjectProducts: retrieveProjectProductsFn,
+} as unknown as ReturnType<typeof useProjectProvider>);
 
 describe('LeaseDetailSubForm component', () => {
   const setup = async (renderOptions: RenderOptions & { initialValues?: LeaseFormModel } = {}) => {
@@ -88,10 +97,6 @@ describe('LeaseDetailSubForm component', () => {
         },
       ],
     });
-  });
-
-  afterEach(() => {
-    vi.resetAllMocks();
   });
 
   it('renders as expected', async () => {
@@ -158,7 +163,9 @@ describe('LeaseDetailSubForm component', () => {
   });
 
   it('shows matching projects based on user input', async () => {
-    const { getProjectSelector, findProjectSelectorItems } = await setup({});
+    retrieveProjectProductsFn.mockResolvedValue([]);
+
+    const { getProjectSelector, findProjectSelectorItems, container } = await setup({});
     await act(async () => userEvent.type(getProjectSelector()!, 'test'));
     await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
 
@@ -166,6 +173,82 @@ describe('LeaseDetailSubForm component', () => {
     expect(items).toHaveLength(2);
     expect(items[0]).toHaveTextContent(/MOCK TEST PROJECT/i);
     expect(items[1]).toHaveTextContent(/ANOTHER MOCK/i);
+
+    const firstOption = container.querySelector(`#typeahead-project-item-0`);
+    expect(firstOption).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(firstOption);
+    });
+    await waitForEffects();
+
+    expect(retrieveProjectProductsFn).toHaveBeenCalled();
+  });
+
+  it('Removes product when Project Removed', async () => {
+    retrieveProjectProductsFn.mockResolvedValue([]);
+
+    const { getProjectSelector, findProjectSelectorItems, container } = await setup({});
+    await act(async () => userEvent.type(getProjectSelector()!, 'test'));
+    await waitFor(() => expect(handleTypeaheadSearch).toHaveBeenCalled());
+
+    const items = await findProjectSelectorItems();
+    expect(items).toHaveLength(2);
+    expect(items[0]).toHaveTextContent(/MOCK TEST PROJECT/i);
+    expect(items[1]).toHaveTextContent(/ANOTHER MOCK/i);
+
+    const firstOption = container.querySelector(`#typeahead-project-item-0`);
+    expect(firstOption).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(firstOption);
+    });
+    await waitForEffects();
+
+    expect(retrieveProjectProductsFn).toHaveBeenCalled();
+
+    const projectTypeahead = container.querySelector(`#typeahead-project`);
+    await act(async () => {
+      userEvent.clear(projectTypeahead);
+    });
+    await waitForEffects();
+
+    const productMultiSelect = container.querySelector(`#input-productId`);
+    expect(productMultiSelect).not.toBeInTheDocument();
+  });
+
+  it('Show project and product values for the form when loaded', async () => {
+    const mockLease = getMockApiLease();
+    retrieveProjectProductsFn.mockResolvedValue([
+      {
+        id: 6,
+        projectProducts: [],
+        acquisitionFiles: [],
+        code: '00053EXP',
+        description: 'DIR C\u0026M \u0026 CLAIMS OVERHEAD',
+        startDate: null,
+        costEstimate: null,
+        costEstimateDate: null,
+        objective: null,
+        scope: null,
+        appCreateTimestamp: '2024-09-04T17:09:56.527',
+        appLastUpdateTimestamp: '2024-09-04T17:09:56.527',
+        appLastUpdateUserid: 'dbo',
+        appCreateUserid: 'dbo',
+        appLastUpdateUserGuid: null,
+        appCreateUserGuid: null,
+        rowVersion: 1,
+      },
+    ]);
+
+    const { container } = await setup({
+      initialValues: LeaseFormModel.fromApi(mockLease),
+    });
+    await waitForEffects();
+    expect(retrieveProjectProductsFn).toHaveBeenCalled();
+
+    const productMultiSelect = container.querySelector(`#input-productId`);
+    expect(productMultiSelect).toBeInTheDocument();
   });
 
   it('displays the cancellation reason textbox when status is changed to "Discarded"', async () => {

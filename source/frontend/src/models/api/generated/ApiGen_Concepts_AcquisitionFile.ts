@@ -24,7 +24,6 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   acquisitionPhysFileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   acquisitionTypeCode: ApiGen_Base_CodeType<string> | null;
   productId: number | null;
-  totalAllowableCompensation: number | null;
   product: ApiGen_Concepts_Product | null;
   fundingTypeCode: ApiGen_Base_CodeType<string> | null;
   fundingOther: string | null;

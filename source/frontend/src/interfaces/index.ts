@@ -7,7 +7,6 @@ export * from './IAutocomplete';
 export * from './IContactSearchResult';
 export * from './IOrganization';
 export * from './IPerson';
-export * from './IProperty';
 export * from './IRole';
 export * from './ITenant';
 export * from './IUser';

@@ -1,7 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
-import { FileTypes } from '@/constants/fileTypes';
 import {
   deleteFileForm,
   getFileForm,
@@ -10,6 +9,7 @@ import {
   postFileFormApi,
 } from '@/hooks/pims-api/useApiFormDocument';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FormDocumentFile } from '@/models/api/generated/ApiGen_Concepts_FormDocumentFile';
 import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
@@ -32,12 +32,12 @@ export const useFormDocumentRepository = () => {
 
   const addFormDocumentFile = useApiRequestWrapper<
     (
-      fileType: FileTypes,
+      fileType: ApiGen_CodeTypes_FileTypes,
       activity: ApiGen_Concepts_FormDocumentFile,
     ) => Promise<AxiosResponse<ApiGen_Concepts_FormDocumentFile, any>>
   >({
     requestFunction: useCallback(
-      async (fileType: FileTypes, fileForm: ApiGen_Concepts_FormDocumentFile) =>
+      async (fileType: ApiGen_CodeTypes_FileTypes, fileForm: ApiGen_Concepts_FormDocumentFile) =>
         await postFileFormApi(fileType, fileForm),
       [],
     ),
@@ -48,12 +48,13 @@ export const useFormDocumentRepository = () => {
 
   const getFileFormsApi = useApiRequestWrapper<
     (
-      fileType: FileTypes,
+      fileType: ApiGen_CodeTypes_FileTypes,
       fileId: number,
     ) => Promise<AxiosResponse<ApiGen_Concepts_FormDocumentFile[], any>>
   >({
     requestFunction: useCallback(
-      async (fileType: FileTypes, fileId: number) => await getFileForms(fileType, fileId),
+      async (fileType: ApiGen_CodeTypes_FileTypes, fileId: number) =>
+        await getFileForms(fileType, fileId),
       [],
     ),
     requestName: 'getFileForms',
@@ -62,12 +63,13 @@ export const useFormDocumentRepository = () => {
   });
   const getFileFormApi = useApiRequestWrapper<
     (
-      fileType: FileTypes,
+      fileType: ApiGen_CodeTypes_FileTypes,
       formFileId: number,
     ) => Promise<AxiosResponse<ApiGen_Concepts_FormDocumentFile, any>>
   >({
     requestFunction: useCallback(
-      async (fileType: FileTypes, fileId: number) => await getFileForm(fileType, fileId),
+      async (fileType: ApiGen_CodeTypes_FileTypes, fileId: number) =>
+        await getFileForm(fileType, fileId),
       [],
     ),
     requestName: 'getFileForm',
@@ -75,10 +77,11 @@ export const useFormDocumentRepository = () => {
     onError: useAxiosErrorHandler('Failed to load form. Refresh the page to try again.'),
   });
   const deleteFileFormApi = useApiRequestWrapper<
-    (fileType: FileTypes, fileId: number) => Promise<AxiosResponse<boolean, any>>
+    (fileType: ApiGen_CodeTypes_FileTypes, fileId: number) => Promise<AxiosResponse<boolean, any>>
   >({
     requestFunction: useCallback(
-      async (fileType: FileTypes, fileId: number) => await deleteFileForm(fileType, fileId),
+      async (fileType: ApiGen_CodeTypes_FileTypes, fileId: number) =>
+        await deleteFileForm(fileType, fileId),
       [],
     ),
     requestName: 'deleteFileForm',

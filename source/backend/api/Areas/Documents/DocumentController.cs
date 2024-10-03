@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -126,6 +127,25 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
+        /// Stream the file for the corresponding file and document id and return a stream.
+        /// </summary>
+        [HttpGet("storage/{mayanDocumentId}/files/{mayanFileId}/stream")]
+        [HasPermission(Permissions.DocumentView)]
+        [ProducesResponseType(typeof(File), 200)]
+        [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        public async Task<IActionResult> StreamFile(long mayanDocumentId, long mayanFileId)
+        {
+            var result = await _documentService.StreamFileAsync(mayanDocumentId, mayanFileId);
+
+            if (result?.Payload == null)
+            {
+                return new NotFoundResult();
+            }
+
+            return File(result.Payload.FilePayload, "application/octet-stream", $"{result.Payload.FileName}");
+        }
+
+        /// <summary>
         /// Retrieves a list of documents.
         /// </summary>
         [HttpGet("storage")]
@@ -208,7 +228,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(FileContentResult), 200)]
         [SwaggerOperation(Tags = new[] { "storage-documents" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public async Task<IActionResult> DownloadFile(long mayanDocumentId)
+        public async Task<IActionResult> DownloadFileLatest(long mayanDocumentId)
         {
             var result = await _documentService.DownloadFileLatestAsync(mayanDocumentId);
             if (result?.Payload == null)
@@ -218,6 +238,25 @@ namespace Pims.Api.Controllers
 
             byte[] fileBytes = System.Convert.FromBase64String(result.Payload.FilePayload);
             return new FileContentResult(fileBytes, result.Payload.Mimetype) { FileDownloadName = result.Payload.FileName };
+        }
+
+        /// <summary>
+        /// Streams the latest file for the corresponding document id.
+        /// </summary>
+        [HttpGet("storage/{mayanDocumentId}/stream")]
+        [HasPermission(Permissions.DocumentView)]
+        [ProducesResponseType(typeof(File), 200)]
+        [SwaggerOperation(Tags = new[] { "storage-documents" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public async Task<IActionResult> StreamFileLatest(long mayanDocumentId)
+        {
+            var result = await _documentService.StreamFileLatestAsync(mayanDocumentId);
+            if (result?.Payload == null)
+            {
+                return new NotFoundResult();
+            }
+
+            return File(result.Payload.FilePayload, "application/octet-stream", $"{result.Payload.FileName}");
         }
 
         /// <summary>

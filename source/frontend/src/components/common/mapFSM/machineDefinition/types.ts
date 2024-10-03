@@ -27,6 +27,8 @@ export type MachineContext = {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   selectedFeatureDataset: LocationFeatureDataset | null;
+  repositioningFeatureDataset: LocationFeatureDataset | null;
+  repositioningPropertyIndex: number | null;
   selectingComponentId: string | null;
 
   mapFeatureData: MapFeatureData;
@@ -35,6 +37,7 @@ export type MachineContext = {
   searchCriteria: IPropertyFilter | null;
 
   isLoading: boolean;
+  fitToResultsAfterLoading: boolean;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   filePropertyLocations: LatLngLiteral[];

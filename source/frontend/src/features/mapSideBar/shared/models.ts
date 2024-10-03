@@ -35,6 +35,7 @@ export class FileForm {
   public id?: number;
   public name: string;
   public properties: PropertyForm[];
+  public totalAllowableCompensation: number | null;
   public rowVersion?: number;
   constructor() {
     this.name = '';
@@ -48,6 +49,7 @@ export class FileForm {
       fileProperties: this.properties.map(x => x.toFilePropertyApi(this.id)),
       fileNumber: null,
       fileStatusTypeCode: null,
+      totalAllowableCompensation: null,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -57,6 +59,7 @@ export class FileForm {
     newForm.id = model.id;
     newForm.name = model.fileName || '';
     newForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+    newForm.totalAllowableCompensation = model.totalAllowableCompensation;
     newForm.rowVersion = model.rowVersion ?? undefined;
 
     return newForm;
@@ -90,7 +93,7 @@ export class PropertyForm {
   public areaUnit?: AreaUnitTypes;
   public isRetired?: boolean;
 
-  private constructor(baseModel?: Partial<PropertyForm>) {
+  public constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
   }
 
@@ -179,7 +182,6 @@ export class PropertyForm {
         properties: {
           ...EmptyPropertyLocation,
           PROPERTY_ID: this.apiId,
-          NAME: this.name,
           PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
           PID_PADDED: this?.pid?.padStart(9, '0'),
           PIN: this.pin ? +this.pin : null,
@@ -228,6 +230,12 @@ export class PropertyForm {
         geometry: null,
       },
       municipalityFeature: null,
+      highwayFeature: null,
+      crownLandLeasesFeature: null,
+      crownLandLicensesFeature: null,
+      crownLandTenuresFeature: null,
+      crownLandInventoryFeature: null,
+      crownLandInclusionsFeature: null,
     };
   }
 
@@ -242,6 +250,9 @@ export class PropertyForm {
     newForm.latitude = model.property?.latitude ?? undefined;
     newForm.longitude = model.property?.longitude ?? undefined;
     newForm.fileLocation = getLatLng(model.location) ?? undefined;
+    newForm.polygon = exists(model.property?.boundary)
+      ? (model.property?.boundary as Polygon | MultiPolygon)
+      : undefined;
     newForm.planNumber = model.property?.planNumber ?? undefined;
     newForm.region = model.property?.region?.id ?? undefined;
     newForm.district = model.property?.district?.id ?? undefined;
@@ -324,16 +335,11 @@ export class PropertyForm {
       dataSourceEffectiveDateOnly: EpochIsoDateTime,
       latitude: this.latitude ?? null,
       longitude: this.longitude ?? null,
-      name: null,
-      description: null,
-      isSensitive: false,
-      isProvincialPublicHwy: null,
       pphStatusUpdateUserid: null,
       pphStatusUpdateTimestamp: null,
       pphStatusUpdateUserGuid: null,
       isRwyBeltDomPatent: null,
       pphStatusTypeCode: null,
-      isVisibleToOtherAgencies: false,
       areaUnit: this.areaUnit
         ? { id: this.areaUnit, description: null, isDisabled: false, displayOrder: 0 }
         : null,
@@ -343,10 +349,7 @@ export class PropertyForm {
       volumetricUnit: null,
       volumetricType: null,
       municipalZoning: null,
-      zoning: null,
-      zoningPotential: null,
       generalLocation: null,
-      propertyContacts: null,
       notes: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,

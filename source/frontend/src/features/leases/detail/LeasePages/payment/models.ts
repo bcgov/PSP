@@ -4,7 +4,7 @@ import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Conce
 import { ApiGen_Concepts_Payment } from '@/models/api/generated/ApiGen_Concepts_Payment';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { isValidIsoDateTime, round } from '@/utils';
+import { isValidIsoDateTime } from '@/utils';
 import { stringToNumber, stringToNumberOrNull } from '@/utils/formUtils';
 
 import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from './../../../../../models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
@@ -37,10 +37,7 @@ export class FormLeasePeriod {
   payments: FormLeasePayment[] = [];
   rowVersion?: number;
 
-  public static toApi(
-    formLeasePeriod: FormLeasePeriod,
-    gstConstant?: number,
-  ): ApiGen_Concepts_LeasePeriod {
+  public static toApi(formLeasePeriod: FormLeasePeriod): ApiGen_Concepts_LeasePeriod {
     return {
       ...formLeasePeriod,
       isFlexible: formLeasePeriod.isFlexible === 'true',
@@ -57,19 +54,15 @@ export class FormLeasePeriod {
       ),
       variableRentPaymentAmount: stringToNumberOrNull(formLeasePeriod.variableRentPaymentAmount),
       gstAmount: stringToNumberOrNull(
-        formLeasePeriod.isGstEligible && gstConstant !== undefined
-          ? round((formLeasePeriod.paymentAmount as number) * (gstConstant / 100))
-          : null,
+        formLeasePeriod.isGstEligible ? formLeasePeriod.gstAmount : null,
       ),
       additionalRentGstAmount: stringToNumberOrNull(
-        formLeasePeriod.isAdditionalRentGstEligible && gstConstant !== undefined
-          ? round((formLeasePeriod.additionalRentPaymentAmount as number) * (gstConstant / 100))
+        formLeasePeriod.isAdditionalRentGstEligible
+          ? formLeasePeriod.additionalRentGstAmount
           : null,
       ),
       variableRentGstAmount: stringToNumberOrNull(
-        formLeasePeriod.isVariableRentGstEligible && gstConstant !== undefined
-          ? round((formLeasePeriod.variableRentPaymentAmount as number) * (gstConstant / 100))
-          : null,
+        formLeasePeriod.isVariableRentGstEligible ? formLeasePeriod.variableRentGstAmount : null,
       ),
       leasePmtFreqTypeCode: formLeasePeriod.leasePmtFreqTypeCode?.id
         ? formLeasePeriod.leasePmtFreqTypeCode
@@ -224,7 +217,7 @@ export class LeasePeriodByCategoryProjection {
     this.leasePmtFreqTypeCode = leasePeriod?.leasePmtFreqTypeCode ?? null;
     this.paymentAmount = leasePeriod?.paymentAmount ?? 0;
     this.isGstEligible = leasePeriod?.isGstEligible;
-    this.gstAmount = leasePeriod?.gstAmount ?? 0;
+    this.gstAmount = leasePeriod?.gstAmount ?? '';
     this.payments = leasePeriod?.payments ?? [];
     this.isTermExercised = leasePeriod?.isTermExercised;
     this.category = category ?? ApiGen_CodeTypes_LeasePaymentCategoryTypes.BASE;
@@ -233,12 +226,12 @@ export class LeasePeriodByCategoryProjection {
       this.isGstEligible = leasePeriod?.isAdditionalRentGstEligible;
       this.paymentAmount = leasePeriod?.additionalRentPaymentAmount ?? 0;
       this.leasePmtFreqTypeCode = leasePeriod?.additionalRentFreqTypeCode ?? null;
-      this.gstAmount = leasePeriod?.additionalRentGstAmount ?? 0;
+      this.gstAmount = leasePeriod?.additionalRentGstAmount ?? '';
     } else if (category === ApiGen_CodeTypes_LeasePaymentCategoryTypes.VBL) {
       this.isGstEligible = leasePeriod?.isVariableRentGstEligible;
       this.paymentAmount = leasePeriod?.variableRentPaymentAmount ?? 0;
       this.leasePmtFreqTypeCode = leasePeriod?.variableRentFreqTypeCode ?? null;
-      this.gstAmount = leasePeriod?.variableRentGstAmount ?? 0;
+      this.gstAmount = leasePeriod?.variableRentGstAmount ?? '';
     }
   }
 }

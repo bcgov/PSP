@@ -5,7 +5,7 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 
 interface BaseContactResult {
   id: string;
-  leaseTenantId?: number;
+  leaseStakeholderId?: number;
   isDisabled?: boolean;
   summary?: string;
   email?: string;
@@ -16,7 +16,7 @@ interface BaseContactResult {
   note?: string;
   landline?: string;
   mobile?: string;
-  tenantType?: string;
+  stakeholderType?: string;
 }
 
 interface PersonContactResult extends BaseContactResult {
@@ -52,6 +52,12 @@ export function isPersonResult(
   contactResult: IContactSearchResult,
 ): contactResult is PersonContactResult {
   return contactResult.id.startsWith('P') && contactResult.personId !== undefined;
+}
+
+export function isOrganizationResult(
+  contactResult: IContactSearchResult,
+): contactResult is OrganizationContactResult {
+  return contactResult.id.startsWith('O');
 }
 
 export type IContactSearchResult = PersonContactResult | OrganizationContactResult;

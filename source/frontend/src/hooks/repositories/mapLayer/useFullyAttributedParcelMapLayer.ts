@@ -22,7 +22,7 @@ export const useFullyAttributedParcelMapLayer = () => {
     withCredentials: true,
   });
 
-  const { findOneWhereContains } = useLayerQuery(fullyAttributedParcelsLayerUrl);
+  const { findOneWhereContains } = useLayerQuery(fullyAttributedParcelsLayerUrl, false, true);
 
   const { execute: getAllFeatures, loading: getAllFeaturesLoading } = getAllFeaturesWrapper;
 

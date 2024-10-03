@@ -11,6 +11,7 @@ export interface ApiGen_Concepts_File extends ApiGen_Base_BaseAudit {
   id: number;
   fileName: string | null;
   fileNumber: string | null;
+  totalAllowableCompensation: number | null;
   fileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   fileProperties: ApiGen_Concepts_FileProperty[] | null;
 }

@@ -4,34 +4,26 @@ import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockLtsaResponse } from '@/mocks/ltsa.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { cleanup, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, cleanup, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
+import { getMockCrownTenuresLayerResponse } from '@/mocks/crownTenuresLayerResponse.mock';
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+
+const mockAxios = new MockAdapter(axios);
+const history = createMemoryHistory();
+const storeState = {
+  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+};
 
 const onClose = vi.fn();
 
-// Need to mock this library for unit tests
-vi.mock('react-visibility-sensor', () => {
-  return {
-    default: vi.fn().mockImplementation(({ children }) => {
-      if (children instanceof Function) {
-        return children({ isVisible: true });
-      }
-      return children;
-    }),
-  };
-});
-
 describe('MotiInventoryContainer component', () => {
-  const mockAxios = new MockAdapter(axios);
-  const history = createMemoryHistory();
-  const storeState = {
-    [lookupCodesSlice.name]: { lookupCodes: mockLookups },
-  };
-
+  // render component under test
   const setup = (renderOptions: RenderOptions & IMotiInventoryContainerProps) => {
-    // render component under test
     const utils = render(
       <MotiInventoryContainer
         onClose={renderOptions.onClose}
@@ -50,24 +42,13 @@ describe('MotiInventoryContainer component', () => {
     return { ...utils };
   };
 
-  afterEach(() => {
-    mockAxios.reset();
-    vi.clearAllMocks();
-    cleanup();
-    history.replace('');
-  });
-
-  it('requests ltsa data by pid', async () => {
-    mockAxios.onGet(new RegExp('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca*')).reply(200, {
-      features: [
-        {
-          properties: { FOLIO_ID: 1, ROLL_NUMBER: 1 },
-        },
-      ],
-    });
+  beforeEach(() => {
+    // BC Assessment api
     mockAxios
       .onGet(new RegExp('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca*'))
       .reply(200, { features: [{ properties: { FOLIO_ID: 1, ROLL_NUMBER: 1 } }] });
+
+    // Parcel Map layer
     mockAxios
       .onGet(
         new RegExp(
@@ -97,32 +78,127 @@ describe('MotiInventoryContainer component', () => {
           },
         ],
       });
-    mockAxios.onPost().reply(200, {});
-    mockAxios.onGet().reply(200, { pid: 9212434 });
-  });
 
-  it('shows the property information tab for inventory properties', async () => {
-    mockAxios.onPost().reply(200, {});
-    mockAxios.onGet(new RegExp('/properties/*')).reply(200, { id: 9212434 });
+    // LTSA api
+    mockAxios.onPost(new RegExp('/tools/ltsa/all*')).reply(200, getMockLtsaResponse());
+
+    // Crown land layer
+    mockAxios
+      .onGet(
+        new RegExp('https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_TENURES_SVW/wfs*'),
+      )
+      .reply(200, getMockCrownTenuresLayerResponse());
+
+    // PIMS properties api
+    mockAxios.onGet(new RegExp('/properties/\\d+/historicalNumbers')).reply(200, []);
+    mockAxios.onGet(new RegExp('/properties/*')).reply(200, { id: 1, pid: 9212434 });
+
+    // PIMS geoserver api
     mockAxios.onGet(new RegExp('/ogs-internal/*')).reply(200, {});
 
-    const { findByText, queryByTestId } = setup({
-      id: 9212434,
+    // catch all
+    mockAxios.onPost().reply(200, {});
+  });
+
+  afterEach(() => {
+    mockAxios.reset();
+    vi.clearAllMocks();
+    cleanup();
+    history.replace('');
+  });
+
+  it('requests LTSA data by pid', async () => {
+    const { queryByTestId } = setup({
+      id: 1,
+      pid: '9212434',
       onClose,
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
-      expect(mockAxios.history.get[0].url).toBe(`/properties/9212434`);
+      expect(queryByTestId('filter-backdrop-loading')).toBeNull();
     });
+
+    expect(mockAxios.history.post.length).toBeGreaterThanOrEqual(1);
+    expect(mockAxios.history.post.some(x => x.url.includes('/tools/ltsa/all'))).toBe(true);
+  });
+
+  it('requests BC Assessment data by pid', async () => {
+    const { queryByTestId } = setup({
+      id: 1,
+      pid: '9212434',
+      onClose,
+    });
+
     await waitFor(() => {
       expect(queryByTestId('filter-backdrop-loading')).toBeNull();
     });
+
+    expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
+    expect(
+      mockAxios.history.get.some(x =>
+        x.url.includes('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca'),
+      ),
+    ).toBe(true);
+  });
+
+  it('shows the crown tab when property has a TANTALIS record', async () => {
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      isSelecting: true,
+      selectingComponentId: undefined,
+      mapLocationFeatureDataset: {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: null,
+        regionFeature: null,
+        districtFeature: null,
+        municipalityFeature: null,
+        highwayFeature: null,
+        selectingComponentId: null,
+        crownLandLeasesFeature: null,
+        crownLandLicensesFeature: null,
+        crownLandTenuresFeature: null,
+        crownLandInventoryFeature: null,
+        crownLandInclusionsFeature: null,
+      },
+    };
+
+    const { findByText, queryByTestId } = setup({
+      id: 1,
+      onClose,
+      mockMapMachine: testMockMachine,
+    });
+
+    await waitFor(() => {
+      expect(queryByTestId('filter-backdrop-loading')).toBeNull();
+    });
+
+    expect(await findByText(/Crown Details/i)).toBeInTheDocument();
+    expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
+    expect(
+      mockAxios.history.get.some(x =>
+        x.url.includes('https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_TENURES_SVW'),
+      ),
+    ).toBe(true);
+  });
+
+  it('shows the property information tab for inventory properties', async () => {
+    const { findByText, queryByTestId } = setup({
+      id: 1,
+      onClose,
+    });
+
+    await waitFor(() => {
+      expect(queryByTestId('filter-backdrop-loading')).toBeNull();
+    });
+
     expect(await findByText(/property attributes/i)).toBeInTheDocument();
+    expect(mockAxios.history.get.length).toBeGreaterThanOrEqual(1);
+    expect(mockAxios.history.get[0].url).toBe(`/properties/1`);
   });
 
   it('hides the property information tab for non-inventory properties', async () => {
-    mockAxios.onPost().reply(200, {});
     history.push('/mapview/sidebar/non-inventory-property/9212434');
     // non-inventory properties will not attempt to contact the backend.
     const error = {
@@ -130,20 +206,31 @@ describe('MotiInventoryContainer component', () => {
       response: { status: 404 },
     };
     mockAxios.onGet(new RegExp('/properties/*')).reply(404, error);
-    mockAxios.onGet(new RegExp('ogs-internal/*')).reply(200, {});
-    mockAxios
-      .onGet(new RegExp('https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca*'))
-      .reply(200, { features: [{ properties: { FOLIO_ID: 1, ROLL_NUMBER: 1 } }] });
 
     const { queryByText, getByText, queryAllByTestId } = setup({
       pid: '9212434',
       onClose,
     });
 
-    expect(queryByText(/property attributes/i)).toBeNull();
-    expect(getByText('Title')).toHaveClass('active');
     await waitFor(() => {
       expect(queryAllByTestId('filter-backdrop-loading')).toHaveLength(0);
     });
+
+    expect(queryByText(/property attributes/i)).toBeNull();
+    expect(getByText('Title')).toHaveClass('active');
+  });
+
+  it('should close the form when Close button is clicked', async () => {
+    const { getByTitle, findByText } = setup({
+      id: 1,
+      onClose,
+    });
+
+    await act(async () => {});
+    expect(await findByText('Property Information')).toBeVisible();
+    const closeButton = getByTitle('close');
+    await act(async () => userEvent.click(closeButton));
+
+    expect(onClose).toHaveBeenCalled();
   });
 });

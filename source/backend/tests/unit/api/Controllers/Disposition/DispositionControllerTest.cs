@@ -1,19 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO.Compression;
-using FluentAssertions;
 using MapsterMapper;
-using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Disposition.Controllers;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Models.Concepts.DispositionFile;
 using Pims.Api.Services;
-using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Security;
 using Xunit;
@@ -189,7 +182,7 @@ namespace Pims.Api.Test.Controllers
             // Assert
             this._service.Verify(m => m.UpdateDispositionFileSale(It.IsAny<PimsDispositionSale>()), Times.Once());
         }
-        
+
         /// <summary>
         /// Get All Offers by Disposition File's Id.
         /// </summary>

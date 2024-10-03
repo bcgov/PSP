@@ -225,7 +225,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="Last condition removal date"
               labelWidth="6"
-              tooltip="For general sales, provide the date when the last condition(s) are to be removed. For road closures enter the condition precedent date."
+              tooltip="For general sales, provide the date when the last condition(s) are to be removed. For road closures enter the condition precedent date"
               valueTestId="disposition-sale.finalConditionRemovalDate"
             >
               {prettyFormatDate(dispositionSale.finalConditionRemovalDate)}
@@ -269,7 +269,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
               <SectionField
                 label="GST collected ($)"
                 labelWidth="6"
-                tooltip="GST collected is calculated based upon Final Sales Price."
+                tooltip="GST collected is calculated based upon Final Sales Price"
                 valueTestId="disposition-sale.gstCollectedAmount"
               >
                 {formatMoney(dispositionSale.gstCollectedAmount)}
@@ -286,7 +286,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="Total cost of sales ($)"
               labelWidth="6"
-              tooltip="Sum of all costs incurred to prepare property for sale (e.g., appraisal, environmental and other consultants, legal fees, First Nations accommodation, etc.)."
+              tooltip="Sum of all costs incurred to prepare property for sale (e.g., appraisal, environmental and other consultants, legal fees, First Nations accommodation, etc.)"
               valueTestId="disposition-sale.totalCostAmount"
             >
               {formatMoney(dispositionSale.totalCostAmount)}
@@ -294,7 +294,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="Net proceeds before SPP cost ($)"
               labelWidth="6"
-              tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, GST Total Cost of Sales, and Net Book Value."
+              tooltip="Net Proceeds before Surplus Property Program (SPP) Cost = Final Sales price, less Commissions, GST Total Cost of Sales, and Net Book Value"
               valueTestId="disposition-sale.netProceedsBeforeSppAmount"
             >
               {formatMoney(calculateNetProceedsBeforeSppAmount(dispositionSale))}
@@ -302,7 +302,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="SPP Amount ($)"
               labelWidth="6"
-              tooltip="Surplus Property Program (SPP) fee to be paid to CITZ."
+              tooltip="Surplus Property Program (SPP) fee to be paid to CITZ"
               valueTestId="disposition-sale.sppAmount"
             >
               {formatMoney(dispositionSale.sppAmount)}
@@ -310,7 +310,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             <SectionField
               label="Net proceeds after SPP cost ($)"
               labelWidth="6"
-              tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount."
+              tooltip="Net Proceeds after SPP Cost = Final Sales price, less Commissions, GST, Net Book Value, Total Cost of Sales,  and SPP Amount"
               valueTestId="disposition-sale.netProceedsAfterSppAmount"
             >
               {formatMoney(calculateNetProceedsAfterSppAmount(dispositionSale))}

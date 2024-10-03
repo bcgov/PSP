@@ -543,39 +543,6 @@ namespace Pims.Api.Services
             return _interestHolderRepository.GetInterestHoldersByAcquisitionFile(acquisitionFileId);
         }
 
-        public IList<PimsCompensationRequisition> GetAcquisitionCompensations(long acquisitionFileId)
-        {
-            _logger.LogInformation("Getting compensations for acquisition file id: {acquisitionFileId}", acquisitionFileId);
-            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
-
-            return _compensationRequisitionRepository.GetAllByAcquisitionFileId(acquisitionFileId);
-        }
-
-        public PimsCompensationRequisition AddCompensationRequisition(long acquisitionFileId, PimsCompensationRequisition compensationRequisition)
-        {
-            _logger.LogInformation("Adding compensation requisition for acquisition file id: {acquisitionFileId}", acquisitionFileId);
-
-            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
-
-            compensationRequisition.ThrowIfNull(nameof(compensationRequisition));
-
-            var acquisitionFileParent = _acqFileRepository.GetById(acquisitionFileId);
-            if (acquisitionFileId != compensationRequisition.AcquisitionFileId || acquisitionFileParent is null)
-            {
-                throw new BadRequestException("Invalid acquisitionFileId.");
-            }
-
-            compensationRequisition.IsDraft = compensationRequisition.IsDraft ?? true;
-
-            var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
-
-            _compensationRequisitionRepository.CommitTransaction();
-
-            return newCompensationRequisition;
-        }
-
         public PimsExpropriationPayment AddExpropriationPayment(long acquisitionFileId, PimsExpropriationPayment expPayment)
         {
             _logger.LogInformation("Adding Expropiation Payment for acquisition file id: {acquisitionFileId}", acquisitionFileId);

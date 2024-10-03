@@ -19,6 +19,19 @@ const INDIAN_RESERVES_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP';
 const PIMS_BOUNDARY_LAYER_URL =
   '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_BOUNDARY_VW&outputformat=json&version=2.0.0';
+const PIMS_HIGHWAY_LAYER_URL =
+  '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=ISS_PROVINCIAL_PUBLIC_HIGHWAY&outputformat=json&version=2.0.0';
+
+const CROWN_LAND_LICENSES_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_LICENSES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_LICENSES_SVW';
+const CROWN_LAND_TENURES_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_TENURES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_TENURES_SVW';
+const CROWN_LAND_LEASES_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_LEASES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_LEASES_SVW';
+const CROWN_LAND_INVENTORY_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_INVENTORY_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_INVENTORY_SVW';
+const CROWN_LAND_INCLUSIONS_LAYER_URL =
+  'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW';
 
 /**
  * Default tenant configuration.
@@ -55,6 +68,12 @@ export const defaultTenant: ITenantConfig2 = {
   alrLayerUrl: ALR_LAYER_URL,
   reservesLayerUrl: INDIAN_RESERVES_LAYER_URL,
   boundaryLayerUrl: PIMS_BOUNDARY_LAYER_URL,
+  highwayLayerUrl: PIMS_HIGHWAY_LAYER_URL,
+  crownLandLicensesUrl: CROWN_LAND_LICENSES_LAYER_URL,
+  crownLandTenuresUrl: CROWN_LAND_TENURES_LAYER_URL,
+  crownLandLeasesUrl: CROWN_LAND_LEASES_LAYER_URL,
+  crownLandInventoryUrl: CROWN_LAND_INVENTORY_LAYER_URL,
+  crownLandInclusionsUrl: CROWN_LAND_INCLUSIONS_LAYER_URL,
   bcAssessment: {
     url: 'https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca',
     names: {

@@ -1,8 +1,8 @@
+import { GeoJsonProperties } from 'geojson';
 import keys from 'lodash/keys';
 import React from 'react';
-import ListGroup from 'react-bootstrap/ListGroup';
 
-import { LayerPopupInformation } from '../LayerPopupContainer';
+import { SectionField } from '@/components/common/Section/SectionField';
 
 /**
  * A configuration used to display the properties fields in the popup content
@@ -18,7 +18,8 @@ export type PopupContentConfig = {
 };
 
 export interface IPopupContentProps {
-  layerPopup: LayerPopupInformation;
+  data: GeoJsonProperties;
+  config: PopupContentConfig;
 }
 
 /**
@@ -26,21 +27,28 @@ export interface IPopupContentProps {
  * @param param0
  */
 export const LayerPopupContent: React.FC<React.PropsWithChildren<IPopupContentProps>> = ({
-  layerPopup,
+  config,
+  data,
 }) => {
-  const { config, data } = { ...layerPopup };
   const rows = React.useMemo(() => keys(config), [config]);
 
   return (
-    <ListGroup>
+    <>
       {rows === undefined || rows.length === 0 ? (
         <b>No layer information at this location</b>
       ) : null}
       {rows.map(key => (
-        <ListGroup.Item key={key}>
-          <b>{config[key].label}</b> {config[key].display(data ?? {})}
-        </ListGroup.Item>
+        <SectionField
+          key={key}
+          label={config[key].label}
+          labelWidth="5"
+          contentWidth="7"
+          noGutters
+          className="no-gutters text-break pb-2"
+        >
+          {config[key].display(data ?? {})}
+        </SectionField>
       ))}
-    </ListGroup>
+    </>
   );
 };

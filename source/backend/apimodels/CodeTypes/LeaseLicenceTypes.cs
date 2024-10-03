@@ -6,26 +6,20 @@ namespace Pims.Api.Models.CodeTypes
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum LeaseLicenceTypes
     {
-        [EnumMember(Value = "LICONSTRC")]
-        LICONSTRC,
+        [EnumMember(Value = "AMNDAGREE")]
+        AMNDAGREE,
 
-        [EnumMember(Value = "LIMOTIPRJ")]
-        LIMOTIPRJ,
+        [EnumMember(Value = "BLDGLSRCV")]
+        BLDGLSRCV,
 
-        [EnumMember(Value = "LIOCCACCS")]
-        LIOCCACCS,
-
-        [EnumMember(Value = "LIOCCTTLD")]
-        LIOCCTTLD,
-
-        [EnumMember(Value = "LIOCCUSE")]
-        LIOCCUSE,
-
-        [EnumMember(Value = "LIOCCUTIL")]
-        LIOCCUTIL,
+        [EnumMember(Value = "LIOCCHMK")]
+        LIOCCHMK,
 
         [EnumMember(Value = "LIPPUBHWY")]
         LIPPUBHWY,
+
+        [EnumMember(Value = "LOOBCTFA")]
+        LOOBCTFA,
 
         [EnumMember(Value = "LSGRND")]
         LSGRND,
@@ -35,6 +29,12 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "LSUNREG")]
         LSUNREG,
+
+        [EnumMember(Value = "LTRINDMNY")]
+        LTRINDMNY,
+
+        [EnumMember(Value = "LTRINTENT")]
+        LTRINTENT,
 
         [EnumMember(Value = "MANUFHOME")]
         MANUFHOME,

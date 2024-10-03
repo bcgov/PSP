@@ -7,26 +7,27 @@ import thunk from 'redux-thunk';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useInsurancesRepository } from '@/hooks/repositories/useInsuranceRepository';
-import { useLeaseTenantRepository } from '@/hooks/repositories/useLeaseTenantRepository';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useSecurityDepositRepository } from '@/hooks/repositories/useSecurityDepositRepository';
 import { getMockDeposits } from '@/mocks/deposits.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { ApiGen_Concepts_LeaseTenant } from '@/models/api/generated/ApiGen_Concepts_LeaseTenant';
 
 import { useGenerateLicenceOfOccupation } from './useGenerateLicenceOfOccupation';
-import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
-import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 
 const generateFn = vi
   .fn()
   .mockResolvedValue({ status: ApiGen_CodeTypes_ExternalResponseStatus.Success, payload: {} });
-const getLeaseTenantsFn = vi.fn();
+const getLeaseStakeholdersFn = vi.fn();
 const getSecurityDepositsFn = vi.fn();
 const getInsurancesFn = vi.fn();
+const getRenewalsFn = vi.fn();
 const getPropertyLeasesFn = vi.fn();
 const getApiLeaseFn = vi.fn();
 const getLeasePeriodFn = vi.fn();
@@ -47,12 +48,12 @@ vi.mocked(useSecurityDepositRepository).mockImplementation(
     } as unknown as ReturnType<typeof useSecurityDepositRepository>),
 );
 
-vi.mock('@/hooks/repositories/useLeaseTenantRepository');
-vi.mocked(useLeaseTenantRepository).mockImplementation(
+vi.mock('@/hooks/repositories/useLeaseStakeholderRepository');
+vi.mocked(useLeaseStakeholderRepository).mockImplementation(
   () =>
     ({
-      getLeaseTenants: { execute: getLeaseTenantsFn },
-    } as unknown as ReturnType<typeof useLeaseTenantRepository>),
+      getLeaseStakeholders: { execute: getLeaseStakeholdersFn },
+    } as unknown as ReturnType<typeof useLeaseStakeholderRepository>),
 );
 
 vi.mock('@/hooks/repositories/useInsuranceRepository');
@@ -87,6 +88,14 @@ vi.mocked(useApiLeases).mockImplementation(
     } as unknown as ReturnType<typeof useApiLeases>),
 );
 
+vi.mock('@/hooks/repositories/useLeaseRepository');
+vi.mocked(useLeaseRepository).mockImplementation(
+  () =>
+    ({
+      getLeaseRenewals: { execute: getRenewalsFn },
+    } as unknown as ReturnType<typeof useLeaseRepository>),
+);
+
 let currentStore: MockStoreEnhanced<any, {}>;
 const mockStore = configureMockStore([thunk]);
 const getStore = (values?: any) => {
@@ -111,7 +120,7 @@ const setup = (params?: {
 describe('useGenerateLicenceOfOccupation functions', () => {
   beforeEach(() => {
     getSecurityDepositsFn.mockResolvedValue(getMockDeposits());
-    getLeaseTenantsFn.mockResolvedValue(getMockApiLease().tenants);
+    getLeaseStakeholdersFn.mockResolvedValue(getMockApiLease().stakeholders);
     getApiLeaseFn.mockResolvedValue({ data: getMockApiLease() });
   });
 
@@ -125,8 +134,9 @@ describe('useGenerateLicenceOfOccupation functions', () => {
       generate(getMockApiLease());
     });
     expect(generateFn).toHaveBeenCalled();
-    expect(getLeaseTenantsFn).toHaveBeenCalled();
+    expect(getLeaseStakeholdersFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();
+    expect(getRenewalsFn).toHaveBeenCalled();
     expect(getSecurityDepositsFn).toHaveBeenCalled();
     expect(getLeasePeriodFn).toHaveBeenCalled();
     expect(getPropertyLeasesFn).toHaveBeenCalled();
@@ -188,10 +198,11 @@ describe('useGenerateLicenceOfOccupation functions', () => {
         templateType: ApiGen_CodeTypes_FormTypes.H1005A,
       }),
     );
-    expect(getLeaseTenantsFn).toHaveBeenCalled();
+    expect(getLeaseStakeholdersFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();
     expect(getSecurityDepositsFn).toHaveBeenCalled();
     expect(getLeasePeriodFn).toHaveBeenCalled();
+    expect(getRenewalsFn).toHaveBeenCalled();
     expect(getPropertyLeasesFn).toHaveBeenCalled();
     expect(getApiLeaseFn).toHaveBeenCalled();
   });
@@ -216,10 +227,11 @@ describe('useGenerateLicenceOfOccupation functions', () => {
         templateType: ApiGen_CodeTypes_FormTypes.H1005,
       }),
     );
-    expect(getLeaseTenantsFn).toHaveBeenCalled();
+    expect(getLeaseStakeholdersFn).toHaveBeenCalled();
     expect(getInsurancesFn).toHaveBeenCalled();
     expect(getSecurityDepositsFn).toHaveBeenCalled();
     expect(getLeasePeriodFn).toHaveBeenCalled();
+    expect(getRenewalsFn).toHaveBeenCalled();
     expect(getPropertyLeasesFn).toHaveBeenCalled();
     expect(getApiLeaseFn).toHaveBeenCalled();
   });

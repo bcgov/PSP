@@ -1,7 +1,6 @@
 import { createMemoryHistory } from 'history';
 
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import { AddressTypes } from '@/constants/index';
 import {
   IContactAddress,
   IContactMethod,
@@ -13,6 +12,7 @@ import { render, RenderOptions } from '@/utils/test-utils';
 
 import OrganizationView, { OrganizationViewProps } from './Organization';
 import { fakeAddresses } from './utils';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 
 const fakeOrganization: IContactOrganization = {
   id: '123',
@@ -219,7 +219,7 @@ describe('Contact OrganizationView component', () => {
       country: { countryId: 1, countryCode: 'CA', description: 'Canada' },
       postal: 'v0v 1v1',
       addressType: {
-        id: AddressTypes.Mailing,
+        id: ApiGen_CodeTypes_AddressUsageTypes.MAILING,
         description: 'Mailing Address',
         displayOrder: null,
         isDisabled: false,
@@ -238,7 +238,7 @@ describe('Contact OrganizationView component', () => {
       country: { countryId: 1, countryCode: 'CA', description: 'Canada' },
       postal: 'v0v 1v1',
       addressType: {
-        id: AddressTypes.Residential,
+        id: ApiGen_CodeTypes_AddressUsageTypes.RESIDNT,
         description: 'Residential Address',
         displayOrder: null,
         isDisabled: false,
@@ -280,7 +280,7 @@ describe('Contact OrganizationView component', () => {
       countryOther: 'Netherlands',
       postal: '123456',
       addressType: {
-        id: AddressTypes.Mailing,
+        id: ApiGen_CodeTypes_AddressUsageTypes.MAILING,
         description: 'Mailing Address',
         displayOrder: null,
         isDisabled: false,
@@ -309,6 +309,7 @@ describe('Contact OrganizationView component', () => {
       isDisabled: false,
       fullName: 'Sarah Dawn Abraham',
       preferredName: 'Saray',
+      useOrganizationAddress: false,
       comment: '',
     };
     const person2: IContactPerson = {
@@ -316,6 +317,7 @@ describe('Contact OrganizationView component', () => {
       isDisabled: false,
       fullName: 'Sam Johnson',
       preferredName: 'Sammi',
+      useOrganizationAddress: false,
       comment: '',
     };
 
@@ -324,6 +326,7 @@ describe('Contact OrganizationView component', () => {
       isDisabled: false,
       fullName: 'Pete Zamboni',
       preferredName: 'Peter',
+      useOrganizationAddress: false,
       comment: '',
     };
 

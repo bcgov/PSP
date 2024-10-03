@@ -11,8 +11,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementSummaryTitle = By.XPath("//div[contains(text(),'Summary')]");
         private By managementPropertyPurposeLabel = By.XPath("//label[contains(text(),'Property purpose')]");
         private By managementPropertyPurposeContent = By.XPath("//div[contains(text(),'Summary')]/parent::div/parent::h2/parent::div/div/div/div/div//div[@id='multiselectContainerReact']/div/span");
-        private By managementLeaseLabel = By.XPath("//label[contains(text(),'Lease/Licensed')]");
-        private By managementLeaseContent = By.XPath("//label[contains(text(),'Lease/Licensed')]/parent::div/following-sibling::div");
+        private By managementLeaseLabel = By.XPath("//label[contains(text(),'Active Lease/License')]");
+        private By managementLeaseContent = By.XPath("//label[contains(text(),'Active Lease/License')]/parent::div/following-sibling::div");
         private By managementUtilitiesPayableLabel = By.XPath("//label[contains(text(),'Utilities payable')]");
         private By managementUtilitiesPayableContent = By.XPath("//label[contains(text(),'Utilities payable')]/parent::div/following-sibling::div");
         private By managementTaxesPayableLabel = By.XPath("//label[contains(text(),'Taxes payable')]");
@@ -25,6 +25,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By managementPropertyPurposeInput = By.Id("multiselect-managementPurposes_input");
         private By managementPropertyPurposeOptions = By.XPath("//input[@id='multiselect-managementPurposes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private By managementPropertyPurposeDeleteBttns = By.CssSelector("div[id='multiselect-managementPurposes'] i[class='custom-close']");
+        private By managementCreateLeaseLabel = By.XPath("//label[contains(text(),'Lease/Licensed')]");
         private By managementUtilitiesPayableSelect = By.Id("input-isUtilitiesPayable");
         private By managementTaxesPayableSelect = By.Id("input-isTaxesPayable");
         private By managementAdditionalDetailsTextarea = By.Id("input-additionalDetails");
@@ -364,9 +365,10 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
 
-            Assert.Equal("Confirm changes", sharedModals.ModalHeader());
-            Assert.Equal("If you choose to cancel now, your changes will not be saved.", sharedModals.ConfirmationModalText1());
-            Assert.Equal("Do you want to proceed?", sharedModals.ConfirmationModalText2());
+            Wait();
+            Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
+            Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
+            Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
 
             sharedModals.ModalClickOKBttn();
         }
@@ -442,7 +444,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementSummaryTitle);
             AssertTrueIsDisplayed(managementPropertyPurposeLabel);
             AssertTrueIsDisplayed(managementPropertyPurposeInput);
-            AssertTrueIsDisplayed(managementLeaseLabel);
+            AssertTrueIsDisplayed(managementCreateLeaseLabel);
             AssertTrueIsDisplayed(managementUtilitiesPayableLabel);
             AssertTrueIsDisplayed(managementUtilitiesPayableSelect);
             AssertTrueIsDisplayed(managementTaxesPayableLabel);

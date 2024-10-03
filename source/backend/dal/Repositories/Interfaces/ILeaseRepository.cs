@@ -17,6 +17,8 @@ namespace Pims.Dal.Repositories
 
         PimsLease Get(long id);
 
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds);
+
         PimsLease GetNoTracking(long id);
 
         LastUpdatedByModel GetLastUpdateBy(long leaseId);
@@ -33,8 +35,6 @@ namespace Pims.Dal.Repositories
 
         PimsLease Update(PimsLease lease, bool commitTransaction = true);
 
-        PimsLease UpdateLeaseConsultations(long leaseId, long? rowVersion, ICollection<PimsLeaseConsultation> pimsLeaseConsultations);
-
         PimsLease UpdateLeaseRenewals(long leaseId, long? rowVersion, ICollection<PimsLeaseRenewal> renewals);
 
         IEnumerable<PimsLeaseChklstItemType> GetAllChecklistItemTypes();
@@ -44,5 +44,7 @@ namespace Pims.Dal.Repositories
         PimsLeaseChecklistItem AddChecklistItem(PimsLeaseChecklistItem checklistItem);
 
         PimsLeaseChecklistItem UpdateChecklistItem(PimsLeaseChecklistItem checklistItem);
+
+        IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes();
     }
 }

@@ -13,6 +13,11 @@ namespace Pims.Api.Models.Concepts.File
         public long Id { get; set; }
 
         /// <summary>
+        /// get/set - The relationship's acquisition file id.
+        /// </summary>
+        public long FileId { get; set; }
+
+        /// <summary>
         /// get/set - The descriptive name of the property for this file.
         /// </summary>
         public string PropertyName { get; set; }
@@ -36,11 +41,6 @@ namespace Pims.Api.Models.Concepts.File
         /// get/set - The relationship's property id.
         /// </summary>
         public long PropertyId { get; set; }
-
-        /// <summary>
-        /// get/set - The relationship's acquisition file id.
-        /// </summary>
-        public long FileId { get; set; }
 
         public virtual FileModel File { get; set; }
 

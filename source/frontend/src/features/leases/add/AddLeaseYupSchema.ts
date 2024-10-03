@@ -1,10 +1,11 @@
 /* eslint-disable no-template-curly-in-string */
 import * as Yup from 'yup';
 
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { exists } from '@/utils';
 
-import { isLeaseCategoryVisible } from './AdministrationSubForm';
+import { LeasePurposeModel } from '../models/LeasePurposeModel';
 
 export const AddLeaseYupSchema = Yup.object().shape({
   statusTypeCode: Yup.string().required('Required'),
@@ -31,33 +32,24 @@ export const AddLeaseYupSchema = Yup.object().shape({
     otherwise: Yup.string().nullable(),
   }),
   leaseTypeCode: Yup.string().required('Lease Type is required'),
+  purposes: Yup.array().min(1, 'Purpose Type is required'),
+  purposeOtherDescription: Yup.string()
+    .nullable()
+    .when('purposes', {
+      is: (purposesArray: LeasePurposeModel[]) =>
+        purposesArray?.some(
+          obj => obj.purposeTypeCode === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
+        ),
+      then: Yup.string()
+        .nullable()
+        .required('Other purpose description is required')
+        .max(200, 'Other purpose description must be at most ${max} characters'),
+      otherwise: Yup.string().nullable(),
+    }),
   hasPhysicalLicense: Yup.string().nullable(),
   hasDigitalLicense: Yup.string().nullable(),
   otherLeaseTypeDescription: Yup.string().when('leaseTypeCode', {
     is: (leaseTypeCode: string) => leaseTypeCode && leaseTypeCode === 'OTHER',
-    then: Yup.string()
-      .required('Other Description required')
-      .max(200, 'Other Description must be at most ${max} characters'),
-    otherwise: Yup.string().nullable(),
-  }),
-  categoryTypeCode: Yup.string()
-    .when('leaseTypeCode', {
-      is: (leaseTypeCode: string) => leaseTypeCode && isLeaseCategoryVisible(leaseTypeCode),
-      then: Yup.string().required('Category type required'),
-      otherwise: Yup.string().nullable(),
-    })
-    .nullable()
-    .default(''),
-  otherCategoryTypeDescription: Yup.string().when('categoryTypeCode', {
-    is: (categoryTypeCode: string) => categoryTypeCode && categoryTypeCode === 'OTHER',
-    then: Yup.string()
-      .required('Other Description required')
-      .max(200, 'Other Description must be at most ${max} characters'),
-    otherwise: Yup.string().nullable(),
-  }),
-  purposeTypeCode: Yup.string().required('Purpose Type is required'),
-  otherPurposeTypeDescription: Yup.string().when('purposeTypeCode', {
-    is: (purposeTypeCode: string) => purposeTypeCode && purposeTypeCode === 'OTHER',
     then: Yup.string()
       .required('Other Description required')
       .max(200, 'Other Description must be at most ${max} characters'),

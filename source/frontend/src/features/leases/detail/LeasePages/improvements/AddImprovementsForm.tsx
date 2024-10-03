@@ -61,7 +61,7 @@ export const AddImprovementsForm: React.FunctionComponent<
                                 <TooltipIcon
                                   toolTipId="contactInfoToolTip"
                                   innerClassName="ml-4 mb-1"
-                                  toolTip="This could include lighting, fencing, irrigation, parking etc."
+                                  toolTip="This could include lighting, fencing, irrigation, parking etc"
                                 />
                               </div>
                             );

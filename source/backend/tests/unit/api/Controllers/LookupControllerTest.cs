@@ -1,25 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using FluentAssertions;
-using FluentAssertions.Common;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Memory;
 using Moq;
-using Pims.Api.Constants;
 using Pims.Api.Controllers;
-using Pims.Api.Services;
-using Pims.Core.Extensions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Models.Lookup;
 
 namespace Pims.Api.Test.Controllers
 {
@@ -79,9 +71,6 @@ namespace Pims.Api.Test.Controllers
             var areaUnitTypes = EntityHelper.CreatePropertyAreaUnitType("area");
             this._repository.Setup(m => m.GetAllPropertyAreaUnitTypes()).Returns(new[] { areaUnitTypes });
 
-            var classificationTypes = EntityHelper.CreatePropertyClassificationType("classification");
-            this._repository.Setup(m => m.GetAllPropertyClassificationTypes()).Returns(new[] { classificationTypes });
-
             var countries = EntityHelper.CreateCountry(1, "CA");
             this._repository.Setup(m => m.GetAllCountries()).Returns(new[] { countries });
 
@@ -112,7 +101,6 @@ namespace Pims.Api.Test.Controllers
             // Assert
             var lookups = (IEnumerable<object>)result.Value;
             this._repository.Verify(m => m.GetAllPropertyAreaUnitTypes(), Times.Once());
-            this._repository.Verify(m => m.GetAllPropertyClassificationTypes(), Times.Once());
             this._repository.Verify(m => m.GetAllCountries(), Times.Once());
             this._repository.Verify(m => m.GetAllDistricts(), Times.Once());
             this._repository.Verify(m => m.GetAllOrganizationTypes(), Times.Once());

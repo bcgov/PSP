@@ -1,21 +1,27 @@
-import { useKeycloak } from '@react-keycloak/web';
 import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { getEmptyBaseAudit, getEmptyLease } from '@/models/defaultInitializers';
+import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import {
   act,
   createAxiosError,
   fillInput,
-  renderAsync,
+  render,
   RenderOptions,
   screen,
   selectOptions,
@@ -23,9 +29,6 @@ import {
 
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
-import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
-import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -78,20 +81,24 @@ const storeState = {
 };
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 describe('AddLeaseContainer component', () => {
-  const setup = async (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
-    // render component under test
-    const utils = await renderAsync(<AddLeaseContainer onClose={onClose} />, {
+  // render component under test
+  const setup = (renderOptions: RenderOptions & Partial<IAddLeaseContainerProps> = {}) => {
+    const utils = render(<AddLeaseContainer onClose={onClose} onSuccess={onSuccess} />, {
       ...renderOptions,
       store: storeState,
       useMockAuthentication: true,
+      mockMapMachine: renderOptions.mockMapMachine,
       history,
     });
 
     return {
       ...utils,
       getCloseButton: () => utils.getByTitle('close'),
+      getPurposeMultiSelect: () =>
+        utils.container.querySelector(`#multiselect-purposes_input`) as HTMLElement,
     };
   };
 
@@ -101,42 +108,65 @@ describe('AddLeaseContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment, findByText } = await setup({});
-    await findByText(/First nation/i);
+    await findByText(/MOTI contact/i);
     expect(asFragment()).toMatchSnapshot();
-    await act(async () => {});
   });
 
   it('cancels the form', async () => {
-    const { getByTitle, getCloseButton } = await setup({});
+    const { getCloseButton } = setup({});
 
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => userEvent.click(getCloseButton()));
-    await act(async () => userEvent.click(getByTitle('ok-modal')));
 
-    expect(onClose).toBeCalled();
+    expect(onClose).toHaveBeenCalled();
+  });
+
+  it('requires confirmation when navigating away', async () => {
+    const { getByTitle } = setup({});
+
+    await act(async () => selectOptions('regionId', '1'));
+
+    await act(async () => history.push('/'));
+
+    await act(async () => userEvent.click(getByTitle('ok-modal')));
     expect(history.location.pathname).toBe('/');
   });
 
   it('saves the form with minimal data', async () => {
-    const { getByText, container } = await setup({});
+    const { getByText, getPurposeMultiSelect, container } = setup({});
 
-    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
     await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
+
+    const multiSelectPurposes = getPurposeMultiSelect();
+    expect(multiSelectPurposes).not.toBeNull();
+
+    await act(async () => {
+      userEvent.click(multiSelectPurposes);
+    });
+
+    await act(async () => {
+      userEvent.type(multiSelectPurposes, 'BC Ferries');
+      userEvent.click(multiSelectPurposes);
+
+      const firstOption = container.querySelector(`div ul li.option`);
+      userEvent.click(firstOption);
+    });
+
     await act(async () => userEvent.click(getByText(/Save/i)));
 
-    expect(addLease).toBeCalledWith(leaseData, []);
+    expect(addLease).toHaveBeenCalledWith(leaseData, []);
   });
 
   it('triggers the confirm popup', async () => {
@@ -146,22 +176,37 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, findByText, container } = await setup({});
+    const { getByText, findByText, getPurposeMultiSelect, container } = setup({});
 
-    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
     await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
+
+    const multiSelectPurposes = getPurposeMultiSelect();
+    expect(multiSelectPurposes).not.toBeNull();
+
+    await act(async () => {
+      userEvent.click(multiSelectPurposes);
+    });
+
+    await act(async () => {
+      userEvent.type(multiSelectPurposes, 'BC Ferries');
+      userEvent.click(multiSelectPurposes);
+
+      const firstOption = container.querySelector(`div ul li.option`);
+      userEvent.click(firstOption);
+    });
+
     await act(async () => userEvent.click(getByText(/Save/i)));
 
     expect(await findByText('test message')).toBeVisible();
@@ -175,25 +220,40 @@ describe('AddLeaseContainer component', () => {
       }),
     );
 
-    const { getByText, container } = await setup({});
+    const { getByText, getPurposeMultiSelect, getByTestId, container } = setup({});
 
-    await act(async () => selectOptions('statusTypeCode', 'DRAFT'));
+    await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
       selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
     );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'BCFERRIES'));
     await act(async () => selectOptions('leaseTypeCode', 'LIOCCTTLD'));
-    await act(async () => selectOptions('purposeTypeCode', 'BCFERRIES'));
     await act(async () => {
       fillInput(container, 'startDate', '01/01/2020', 'datepicker');
     });
     await act(async () => {
       fillInput(container, 'expiryDate', '01/02/2020', 'datepicker');
     });
+
+    const multiSelectPurposes = getPurposeMultiSelect();
+    expect(multiSelectPurposes).not.toBeNull();
+
+    await act(async () => {
+      userEvent.click(multiSelectPurposes);
+    });
+
+    await act(async () => {
+      userEvent.type(multiSelectPurposes, 'BC Ferries');
+      userEvent.click(multiSelectPurposes);
+
+      const firstOption = container.querySelector(`div ul li.option`);
+      userEvent.click(firstOption);
+    });
+
     await act(async () => userEvent.click(getByText(/Save/i)));
 
-    expect(addLease).toBeCalledWith(leaseData, []);
+    expect(addLease).toHaveBeenCalledWith(leaseData, []);
 
     const popup = await screen.findByText(/test message/i);
     expect(popup).toBeVisible();
@@ -202,11 +262,42 @@ describe('AddLeaseContainer component', () => {
     addLease.mockResolvedValue({ ...leaseData, id: 1 });
 
     await act(async () => {
-      userEvent.click((await screen.findAllByText('Yes'))[2]);
+      const okButton = getByTestId('ok-modal-button');
+      userEvent.click(okButton);
     });
 
-    expect(addLease).toBeCalledWith(leaseData, []);
-    expect(history.location.pathname).toBe('/mapview/sidebar/lease/1');
+    expect(addLease).toHaveBeenCalledWith(leaseData, []);
+    expect(onSuccess).toHaveBeenCalledWith(1);
+  });
+
+  it('should pre-populate the region if a property is selected', async () => {
+    const testMockMachine: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      selectedFeatureDataset: {
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        fileLocation: null,
+        pimsFeature: null,
+        parcelFeature: null,
+        regionFeature: {
+          type: 'Feature',
+          properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
+          geometry: getMockPolygon(),
+        },
+        districtFeature: null,
+        municipalityFeature: null,
+        highwayFeature: null,
+        selectingComponentId: null,
+        crownLandLeasesFeature: null,
+        crownLandLicensesFeature: null,
+        crownLandTenuresFeature: null,
+        crownLandInventoryFeature: null,
+        crownLandInclusionsFeature: null,
+      },
+    };
+
+    const { findByDisplayValue } = setup({ mockMapMachine: testMockMachine });
+    const text = await findByDisplayValue(/South Coast Region/i);
+    expect(text).toBeVisible();
   });
 });
 
@@ -216,7 +307,6 @@ const leaseData: ApiGen_Concepts_Lease = {
   startDate: '2020-01-01',
   amount: 0,
   paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
-  purposeType: toTypeCodeNullable('BCFERRIES'),
   fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
   type: toTypeCodeNullable('LIOCCTTLD'),
   region: toTypeCodeNullable(1),
@@ -228,12 +318,9 @@ const leaseData: ApiGen_Concepts_Lease = {
   isCommercialBuilding: false,
   isOtherImprovement: false,
   responsibilityType: null,
-  categoryType: null,
   initiatorType: null,
   otherType: null,
-  otherCategoryType: null,
   otherProgramType: null,
-  otherPurposeType: null,
   tfaFileNumber: null,
   responsibilityEffectiveDate: null,
   psFileNo: null,
@@ -242,63 +329,15 @@ const leaseData: ApiGen_Concepts_Lease = {
   description: null,
   documentationReference: null,
   expiryDate: '2020-01-02',
-  tenants: [],
+  stakeholders: [],
   periods: [],
-  consultations: [
+  consultations: null,
+  leasePurposes: [
     {
       id: 0,
-      consultationType: toTypeCodeNullable('1STNATION'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('STRATRE'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('REGPLANG'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('REGPRPSVC'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('DISTRICT'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('HQ'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 0,
-      consultationType: toTypeCodeNullable('OTHER'),
-      consultationStatusType: toTypeCodeNullable('UNKNOWN'),
-      parentLeaseId: 0,
-      otherDescription: null,
+      leaseId: 0,
+      leasePurposeTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeasePurposeTypes.BCFERRIES),
+      purposeOtherDescription: null,
       ...getEmptyBaseAudit(),
     },
   ],

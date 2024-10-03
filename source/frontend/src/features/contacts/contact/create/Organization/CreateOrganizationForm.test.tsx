@@ -2,7 +2,6 @@ import userEvent from '@testing-library/user-event';
 import { createMemoryHistory } from 'history';
 
 import { ContactMethodTypes } from '@/constants/contactMethodType';
-import { AddressTypes } from '@/constants/index';
 import useAddContact from '@/features/contacts/hooks/useAddContact';
 import { getEmptyAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -13,6 +12,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import CreateOrganizationForm from './CreateOrganizationForm';
+import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -174,7 +174,7 @@ const mockAddress: ApiGen_Concepts_OrganizationAddress = {
   organizationId: 0,
   rowVersion: null,
   addressUsageType: {
-    id: AddressTypes.Mailing,
+    id: ApiGen_CodeTypes_AddressUsageTypes.MAILING,
     description: null,
     isDisabled: false,
     displayOrder: null,

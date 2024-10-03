@@ -21,9 +21,11 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 const DEFAULT_PROPS: IAddProjectContainerProps = {
   onClose,
+  onSuccess,
 };
 
 // Need to mock this library for unit tests
@@ -196,7 +198,7 @@ describe('AddProjectContainer component', () => {
       expect(mockAxios.history.post[0].url).toBe('/projects?');
       expect(axiosData).toEqual(expectedValues);
 
-      expect(history.location.pathname).toBe('/mapview/sidebar/project/1');
+      expect(onSuccess).toHaveBeenCalledWith(1);
     });
   });
 });
