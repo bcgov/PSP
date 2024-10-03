@@ -5,3 +5,7 @@ export interface IApiError {
   stackTrace: string;
   type: string;
 }
+
+export function isApiError(obj: IApiError | unknown): obj is IApiError {
+  return (obj as IApiError).error !== undefined;
+}

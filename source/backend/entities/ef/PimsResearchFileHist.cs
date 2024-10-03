@@ -51,12 +51,32 @@ public partial class PimsResearchFileHist
     [Column("REQUEST_DATE")]
     public DateOnly? RequestDate { get; set; }
 
+    [Column("ROAD_NAME")]
+    [StringLength(200)]
+    public string RoadName { get; set; }
+
+    [Column("ROAD_ALIAS")]
+    [StringLength(200)]
+    public string RoadAlias { get; set; }
+
+    [Column("REQUEST_DESCRIPTION")]
+    [StringLength(3000)]
+    public string RequestDescription { get; set; }
+
     [Column("REQUEST_SOURCE_DESCRIPTION")]
     [StringLength(2000)]
     public string RequestSourceDescription { get; set; }
 
+    [Column("RESEARCH_RESULT")]
+    [StringLength(2000)]
+    public string ResearchResult { get; set; }
+
     [Column("IS_EXPROPRIATION")]
     public bool? IsExpropriation { get; set; }
+
+    [Column("EXPROPRIATION_NOTES")]
+    [StringLength(1000)]
+    public string ExpropriationNotes { get; set; }
 
     [Column("RESEARCH_COMPLETION_DATE")]
     public DateOnly? ResearchCompletionDate { get; set; }

@@ -7,9 +7,9 @@ namespace Pims.Api.Services
 {
     public interface ILeaseService
     {
-        bool IsRowVersionEqual(long leaseId, long rowVersion);
-
         PimsLease GetById(long leaseId);
+
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds);
 
         LastUpdatedByModel GetLastUpdateInformation(long leaseId);
 
@@ -29,14 +29,26 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsPropertyImprovement> UpdateImprovementsByLeaseId(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
 
-        IEnumerable<PimsLeaseTenant> GetTenantsByLeaseId(long leaseId);
+        IEnumerable<PimsLeaseStakeholder> GetStakeholdersByLeaseId(long leaseId);
 
-        IEnumerable<PimsLeaseTenant> UpdateTenantsByLeaseId(long leaseId, IEnumerable<PimsLeaseTenant> pimsLeaseTenants);
+        IEnumerable<PimsLeaseStakeholder> UpdateStakeholdersByLeaseId(long leaseId, IEnumerable<PimsLeaseStakeholder> pimsLeaseStakeholders);
 
         IEnumerable<PimsLeaseRenewal> GetRenewalsByLeaseId(long leaseId);
 
         IEnumerable<PimsLeaseChecklistItem> GetChecklistItems(long id);
 
         PimsLease UpdateChecklistItems(long leaseId, IList<PimsLeaseChecklistItem> checklistItems);
+
+        IEnumerable<PimsLeaseStakeholderType> GetAllStakeholderTypes();
+
+        IEnumerable<PimsLeaseConsultation> GetConsultations(long leaseId);
+
+        PimsLeaseConsultation GetConsultationById(long consultationId);
+
+        PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation);
+
+        PimsLeaseConsultation UpdateConsultation(PimsLeaseConsultation consultation);
+
+        bool DeleteConsultation(long consultationId);
     }
 }

@@ -15,6 +15,7 @@ import AddConsolidationContainer, {
 const history = createMemoryHistory();
 
 const onClose = vi.fn();
+const onSuccess = vi.fn();
 
 let viewProps: IAddConsolidationViewProps | undefined;
 const TestView: React.FC<IAddConsolidationViewProps> = props => {
@@ -55,7 +56,7 @@ describe('Add Consolidation Container component', () => {
   ) => {
     const ref = createRef<FormikProps<ConsolidationFormModel>>();
     const component = await renderAsync(
-      <AddConsolidationContainer View={TestView} onClose={onClose} />,
+      <AddConsolidationContainer View={TestView} onClose={onClose} onSuccess={onSuccess} />,
       {
         history,
         useMockAuthentication: true,
@@ -114,12 +115,12 @@ describe('Add Consolidation Container component', () => {
 
     expect(screen.getByText('Are you sure?')).toBeVisible();
 
-    mockAddPropertyOperation.execute.mockResolvedValue([{}]);
+    mockAddPropertyOperation.execute.mockResolvedValue([{ destinationProperty: { id: 7 } }]);
     await act(async () => {
       userEvent.click(screen.getByText('Yes'));
     });
 
-    expect(history.location.pathname).toBe('/mapview');
+    expect(onSuccess).toHaveBeenCalledWith(7);
   });
 
   it('aborting the modal onsave does not change the url', async () => {
@@ -139,7 +140,7 @@ describe('Add Consolidation Container component', () => {
     expect(history.location.pathname).toBe('/');
   });
 
-  it('Changes the url when the submit operation completes successfully when the response does not contain a viable property to navigate', async () => {
+  it('Calls onSuccess when the submit operation completes successfully and the response does not contain a viable ', async () => {
     await setup({});
 
     mockAddPropertyOperation.execute.mockResolvedValue([{}]);
@@ -149,10 +150,10 @@ describe('Add Consolidation Container component', () => {
       viewProps?.onSubmit(model, {} as any);
     });
 
-    expect(history.location.pathname).toBe('/mapview');
+    expect(onSuccess).toHaveBeenCalledWith(undefined);
   });
 
-  it('Changes the url when the submit operation completes successfully when the response contains a viable property to navigate', async () => {
+  it('Calls on success when submit operation completes successfully and the response contains a viable property to navigate', async () => {
     await setup({});
 
     mockAddPropertyOperation.execute.mockResolvedValue([{ destinationProperty: { id: 1 } }]);
@@ -163,10 +164,10 @@ describe('Add Consolidation Container component', () => {
       viewProps?.onSubmit(model, {} as any);
     });
 
-    expect(history.location.pathname).toBe(`/mapview/sidebar/property/1`);
+    expect(onSuccess).toHaveBeenCalledWith(1);
   });
 
-  it('Calls onCancel if the onCancel is called', async () => {
+  it('Calls onClose if the onCancel is called', async () => {
     await setup({});
 
     await act(async () => {
@@ -174,52 +175,5 @@ describe('Add Consolidation Container component', () => {
     });
 
     expect(onClose).toHaveBeenCalled();
-  });
-
-  it('Displays modal if cancelled when form dirty', async () => {
-    const { container } = await setup({});
-
-    await act(async () => {
-      viewProps?.formikRef.current?.setFieldValue('test', 1);
-    });
-    await act(async () => {
-      viewProps?.onCancel();
-    });
-
-    expect(screen.getByText('Confirm Changes')).toBeVisible();
-  });
-
-  it('calls onclose if dirty model dismissed', async () => {
-    const { container } = await setup({});
-
-    await act(async () => {
-      viewProps?.formikRef.current?.setFieldValue('test', 1);
-    });
-    await act(async () => {
-      viewProps?.onCancel();
-    });
-
-    expect(screen.getByText('Confirm Changes')).toBeVisible();
-
-    await act(async () => {
-      userEvent.click(screen.getByText('Yes'));
-    });
-  });
-
-  it('does not call onclose if dirty modal cancelled', async () => {
-    const { container } = await setup({});
-
-    await act(async () => {
-      viewProps?.formikRef.current?.setFieldValue('test', 1);
-    });
-    await act(async () => {
-      viewProps?.onCancel();
-    });
-
-    expect(screen.getByText('Confirm Changes')).toBeVisible();
-
-    await act(async () => {
-      userEvent.click(screen.getByText('No'));
-    });
   });
 });

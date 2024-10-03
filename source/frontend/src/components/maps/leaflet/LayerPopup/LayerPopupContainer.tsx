@@ -6,11 +6,15 @@ import { Popup } from 'react-leaflet';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 
 import { PopupContentConfig } from './components/LayerPopupContent';
-import { municipalityLayerPopupConfig, parcelLayerPopupConfig } from './constants';
+import {
+  getDynamicFeatureConfig,
+  highwayLayerPopupConfig,
+  municipalityLayerPopupConfig,
+  parcelLayerPopupConfig,
+} from './constants';
 import { LayerPopupView } from './LayerPopupView';
 
-export type LayerPopupInformation = {
-  latlng: LatLngLiteral;
+export interface LayerData {
   title: string;
   bounds?: LatLngBounds;
   feature?: Feature;
@@ -33,13 +37,16 @@ export type LayerPopupInformation = {
    * {ADMIN_AREA_SQFT: (data: any) => `${data.ADMIN_AREA_SQFT} ft^2`}
    */
   config: PopupContentConfig;
+}
+
+export type LayerPopupInformation = {
+  latlng: LatLngLiteral;
+  layers: LayerData[];
 };
 
 const emptyLayerPopupInformation: LayerPopupInformation = {
   latlng: { lat: 0, lng: 0 },
-  title: '',
-  data: null,
-  config: {},
+  layers: [],
 };
 
 export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWithChildren<unknown>>(
@@ -52,37 +59,136 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
       if (mapMachine.mapLocationFeatureDataset) {
         const featureSet = mapMachine.mapLocationFeatureDataset;
 
-        let popupTitle = 'Location Information';
-        let popupMapBounds: LatLngBounds | undefined;
-        let popupDisplayConfig: PopupContentConfig = {};
-        let popupProperties: GeoJsonProperties = {};
-        let popupFeature;
+        const layersData: LayerData[] = [];
 
         if (featureSet.parcelFeature !== null) {
-          popupTitle = 'LTSA ParcelMap data';
-          popupMapBounds = featureSet.parcelFeature.geometry
+          const parcelData: LayerData = { title: 'LTSA ParcelMap data', data: null, config: {} };
+
+          parcelData.bounds = featureSet.parcelFeature.geometry
             ? geoJSON(featureSet.parcelFeature.geometry).getBounds()
             : undefined;
-          popupDisplayConfig = parcelLayerPopupConfig;
-          popupProperties = featureSet.parcelFeature.properties;
-          popupFeature = featureSet.parcelFeature;
-        } else if (featureSet.municipalityFeature !== null) {
-          popupTitle = 'Municipality Information';
-          popupMapBounds = featureSet.municipalityFeature.geometry
-            ? geoJSON(featureSet.municipalityFeature.geometry).getBounds()
+          parcelData.config = parcelLayerPopupConfig;
+          parcelData.data = featureSet.parcelFeature.properties;
+          parcelData.feature = featureSet.parcelFeature;
+          layersData.push(parcelData);
+        }
+
+        if (featureSet.crownLandLeasesFeature !== null) {
+          const parcelData: LayerData = {
+            title: 'Crown Land Leases',
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = featureSet.crownLandLeasesFeature.geometry
+            ? geoJSON(featureSet.crownLandLeasesFeature.geometry).getBounds()
             : undefined;
-          popupDisplayConfig = municipalityLayerPopupConfig;
-          popupProperties = featureSet.municipalityFeature.properties;
-          popupFeature = featureSet.municipalityFeature;
+          parcelData.config = getDynamicFeatureConfig(featureSet.crownLandLeasesFeature);
+          parcelData.data = featureSet.crownLandLeasesFeature.properties;
+          parcelData.feature = featureSet.crownLandLeasesFeature;
+          layersData.push(parcelData);
+        }
+        if (featureSet.crownLandLicensesFeature !== null) {
+          const parcelData: LayerData = {
+            title: 'Crown Land Licenses',
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = featureSet.crownLandLicensesFeature.geometry
+            ? geoJSON(featureSet.crownLandLicensesFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(featureSet.crownLandLicensesFeature);
+          parcelData.data = featureSet.crownLandLicensesFeature.properties;
+          parcelData.feature = featureSet.crownLandLicensesFeature;
+          layersData.push(parcelData);
+        }
+        if (featureSet.crownLandTenuresFeature !== null) {
+          const parcelData: LayerData = {
+            title: 'Crown Land Tenures',
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = featureSet.crownLandTenuresFeature.geometry
+            ? geoJSON(featureSet.crownLandTenuresFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(featureSet.crownLandTenuresFeature);
+          parcelData.data = featureSet.crownLandTenuresFeature.properties;
+          parcelData.feature = featureSet.crownLandTenuresFeature;
+          layersData.push(parcelData);
+        }
+        if (featureSet.crownLandInventoryFeature !== null) {
+          const parcelData: LayerData = {
+            title: 'Crown Land Inventory',
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = featureSet.crownLandInventoryFeature.geometry
+            ? geoJSON(featureSet.crownLandInventoryFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(featureSet.crownLandInventoryFeature);
+          parcelData.data = featureSet.crownLandInventoryFeature.properties;
+          parcelData.feature = featureSet.crownLandInventoryFeature;
+          layersData.push(parcelData);
+        }
+        if (featureSet.crownLandInclusionsFeature !== null) {
+          const parcelData: LayerData = {
+            title: 'Crown Land Inclusions',
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = featureSet.crownLandInclusionsFeature.geometry
+            ? geoJSON(featureSet.crownLandInclusionsFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = getDynamicFeatureConfig(featureSet.crownLandInclusionsFeature);
+          parcelData.data = featureSet.crownLandInclusionsFeature.properties;
+          parcelData.feature = featureSet.crownLandInclusionsFeature;
+          layersData.push(parcelData);
         }
 
         setLayerPopup({
           latlng: mapMachine.mapLocationFeatureDataset.location,
-          title: popupTitle,
-          bounds: popupMapBounds,
-          feature: popupFeature,
-          data: popupProperties,
-          config: popupDisplayConfig,
+          layers: layersData,
+        });
+
+        if (featureSet.municipalityFeature !== null) {
+          const parcelData: LayerData = {
+            title: 'Municipality Information',
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = featureSet.municipalityFeature.geometry
+            ? geoJSON(featureSet.municipalityFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = municipalityLayerPopupConfig;
+          parcelData.data = featureSet.municipalityFeature.properties;
+          parcelData.feature = featureSet.municipalityFeature;
+          layersData.push(parcelData);
+        }
+
+        if (featureSet.highwayFeature !== null) {
+          const parcelData: LayerData = {
+            title: 'Highway Research',
+            data: null,
+            config: {},
+          };
+
+          parcelData.bounds = featureSet.highwayFeature.geometry
+            ? geoJSON(featureSet.highwayFeature.geometry).getBounds()
+            : undefined;
+          parcelData.config = highwayLayerPopupConfig;
+          parcelData.data = featureSet.highwayFeature.properties;
+          parcelData.feature = featureSet.highwayFeature;
+          layersData.push(parcelData);
+        }
+
+        setLayerPopup({
+          latlng: mapMachine.mapLocationFeatureDataset.location,
+          layers: layersData,
         });
       }
     }, [mapMachine]);

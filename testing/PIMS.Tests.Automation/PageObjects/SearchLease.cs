@@ -60,7 +60,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
         private By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[7]");
 
-        private By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::strong/parent::div/following-sibling::div/span[1]");
+        private By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[1]");
 
         //Search Leases Pagination
         private By searchLeasesPaginationMenu = By.CssSelector("div[class='Menu-root']");
@@ -330,7 +330,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchLicense1stResultLink);
 
             if(lease.LeaseExpiryDate != "")
-                AssertTrueContentEquals(searchLicense1stResultExpiryDateContent, TransformDateFormat(lease.LeaseExpiryDate));
+                AssertTrueContentEquals(searchLicense1stResultExpiryDateContent, CalculateExpiryCurrentDate(lease.LeaseExpiryDate, lease.LeaseRenewals));
 
             if(lease.Program != "")
                 AssertTrueContentEquals(searchLicense1stResultProgramContent, lease.Program);
@@ -338,7 +338,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.LeaseTenants.Count > 0)
                 Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
 
-            if (lease.SearchProperties.PID != "")
+            if (lease.SearchPropertiesIndex!= 0)
                 Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
 
             //TO-DO: HISTORICAL FILE

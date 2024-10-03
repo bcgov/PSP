@@ -2,9 +2,7 @@ using System.Diagnostics.CodeAnalysis;
 using Pims.Api.Controllers;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
-using Pims.Dal.Security;
 using Xunit;
-using Model = Pims.Api.Models.Tenant;
 
 namespace Pims.Api.Test.Routes.Project
 {

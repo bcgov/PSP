@@ -5,9 +5,10 @@ import styled from 'styled-components';
 export const LayerPopupTitle = styled.h5`
   font-weight: bold;
   font-size: 1.6rem;
-  color: ${props => props.theme.bcTokens.typographyColorSecondary};
 
   line-height: 2.4rem;
+
+  padding-bottom: 2rem;
 `;
 
 export const MenuRow = styled(Row)`

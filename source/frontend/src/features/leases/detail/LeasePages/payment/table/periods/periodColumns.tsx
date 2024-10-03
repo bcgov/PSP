@@ -14,7 +14,6 @@ import {
   ColumnWithProps,
   renderBooleanAsYesNo,
   renderMoney,
-  renderStringOrDash,
   renderTypeCode,
 } from '@/components/Table';
 import { Claims } from '@/constants';
@@ -69,7 +68,6 @@ export const getLeasePeriodColumns = ({
       accessor: 'paymentDueDateStr',
       align: 'left',
       maxWidth: 60,
-      Cell: renderStringOrDash,
     },
     {
       Header: () => (
@@ -77,7 +75,7 @@ export const getLeasePeriodColumns = ({
           Expected payment ($)
           <TooltipIcon
             toolTipId="expectedPaymentTooltip"
-            toolTip="This is the amount agreed to be paid per interval, ie: the amount of a monthly payment if the lease is paid monthly."
+            toolTip="This is the amount agreed to be paid per interval, ie: the amount of a monthly payment if the lease is paid monthly"
           />
         </>
       ),
@@ -99,7 +97,7 @@ export const getLeasePeriodColumns = ({
           GST ($)
           <TooltipIcon
             toolTipId="gstAmountTooltip"
-            toolTip="GST is calculated as (expected amount) x GST rate (5%)."
+            toolTip="GST is calculated as (expected amount) x GST rate (5%)"
           />
         </>
       ),
@@ -114,7 +112,7 @@ export const getLeasePeriodColumns = ({
           Expected total ($)
           <TooltipIcon
             toolTipId="expectedTotalTooltip"
-            toolTip="This is the expected payment amount plus GST if applicable."
+            toolTip="This is the expected payment amount plus GST if applicable"
           />
         </>
       ),
@@ -129,7 +127,7 @@ export const getLeasePeriodColumns = ({
           Expected period ($)
           <TooltipIcon
             toolTipId="expectedPeriodTooltip"
-            toolTip="This is the full payment amount expected in the duration of the period."
+            toolTip="This is the full payment amount expected in the duration of the period"
           />
         </>
       ),
@@ -142,7 +140,7 @@ export const getLeasePeriodColumns = ({
       Header: () => (
         <>
           Actual total ($)
-          <TooltipIcon toolTipId="actualTotalTooltip" toolTip="Amount paid this period." />
+          <TooltipIcon toolTipId="actualTotalTooltip" toolTip="Amount paid this period" />
         </>
       ),
       id: 'actualTotal',
@@ -154,7 +152,7 @@ export const getLeasePeriodColumns = ({
       Header: () => (
         <>
           Exercised?
-          <TooltipIcon toolTipId="exercisedTooltip" toolTip="Exercised period to add payments." />
+          <TooltipIcon toolTipId="exercisedTooltip" toolTip="Exercise period to add payments" />
         </>
       ),
       align: 'left',
@@ -184,12 +182,7 @@ const paymentActions = (
         {hasClaim(Claims.LEASE_VIEW) &&
           index === 0 &&
           !!leaseTypeCode &&
-          [
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCACCS.toString(),
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCTTLD.toString(),
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUSE.toString(),
-            ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL.toString(),
-          ].includes(leaseTypeCode) && (
+          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA && (
             <Button
               title="Generate H1005(a)"
               icon={<GenerateIcon size={24} id={`generate-h1005-a`} title="Generate H1005(a)" />}
@@ -199,7 +192,7 @@ const paymentActions = (
 
         {hasClaim(Claims.LEASE_VIEW) &&
           index === 0 &&
-          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY.toString() && (
+          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY && (
             <Button
               title="Generate H1005"
               icon={<GenerateIcon size={24} id={`generate-h1005`} title="Generate H1005" />}
@@ -227,7 +220,7 @@ const paymentActions = (
             original.statusTypeCode?.id === LeasePeriodStatusTypes.EXERCISED) && (
             <TooltipIcon
               toolTipId={`no-delete-tooltip-period-${original.id}`}
-              toolTip="An exercised period cannot be deleted. To delete this period ensure that there are no payments recorded for it, and the period has not been exercised."
+              toolTip="An exercised period cannot be deleted. To delete this period ensure that there are no payments recorded for it, and the period has not been exercised"
             />
           )}
       </StyledIcons>
@@ -268,7 +261,7 @@ function startAndEndDate({ row: { original } }: CellProps<FormLeasePeriod, strin
 const renderExpectedPeriod = () =>
   function ({ row: { original } }: CellProps<FormLeasePeriod, string>) {
     if (!original.startDate || !original.expiryDate || original.paymentAmount === undefined) {
-      return stringToFragment('-');
+      return stringToFragment('$0.00');
     }
     const expectedPeriod = calculateExpectedPeriodAmount(
       original.leasePmtFreqTypeCode?.id ?? '',
@@ -277,19 +270,19 @@ const renderExpectedPeriod = () =>
       original.paymentAmount as number,
       (original.gstAmount as number) ?? 0,
     );
-    return stringToFragment(expectedPeriod !== undefined ? formatMoney(expectedPeriod) : '-');
+    return stringToFragment(expectedPeriod !== undefined ? formatMoney(expectedPeriod) : '$0.00');
   };
 
 function renderActualTotal({ row: { original } }: CellProps<FormLeasePeriod, string>) {
   const total = formatMoney(
     (original.payments ?? []).reduce((sum: number, p) => (sum += p.amountTotal as number), 0),
   );
-  return stringToFragment(original.isTermExercised ? total : '-');
+  return stringToFragment(original.isTermExercised ? total : '');
 }
 
 function renderGstAmount({ row: { original } }: CellProps<FormLeasePeriod, NumberFieldValue>) {
   return stringToFragment(
-    original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '-',
+    original.isGstEligible === true ? formatMoney(original?.gstAmount ?? 0) : '',
   );
 }
 

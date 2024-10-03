@@ -2,9 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
-import { IProperty } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getEmptyPropertyLease, getMockProperties } from '@/mocks/properties.mock';
+import { getEmptyPropertyLease, getMockApiProperties } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
@@ -40,7 +39,7 @@ describe('LeaseHeaderAddresses component', () => {
 
   it('renders 2 addresses by default', async () => {
     const { getAllByText, getByText } = setup({
-      propertyLeases: getMockProperties().map((p, index) => ({
+      propertyLeases: getMockApiProperties().map((p, index) => ({
         ...getEmptyPropertyLease(),
         id: index,
         fileId: 1,
@@ -127,7 +126,7 @@ describe('LeaseHeaderAddresses component', () => {
     await act(async () => userEvent.click(moreButton));
 
     expect(
-      getAllByText('000-000-000 - Address not available in PIMS', { exact: false }),
+      getAllByText('000-000-007 - Address not available in PIMS', { exact: false }),
     ).toHaveLength(2);
     expect(getByText('1234 fake st', { exact: false })).toBeVisible();
     expect(getByText('Victoria', { exact: false })).toBeVisible();
@@ -135,29 +134,29 @@ describe('LeaseHeaderAddresses component', () => {
   });
 });
 
-const undefinedAddress: Partial<IProperty> = {
+const undefinedAddress: Partial<ApiGen_Concepts_Property> = {
   id: 1,
-  pid: '000-000-000',
+  pid: 7,
   address: undefined as any,
 };
 
-const noStreetOrMunicipality: Partial<IProperty> = {
+const noStreetOrMunicipality: Partial<ApiGen_Concepts_Property> = {
   id: 1,
-  pid: '000-000-000',
+  pid: 7,
   address: { streetAddress1: '', municipality: '' } as any,
 };
 
-const streetNoMunicipality: Partial<IProperty> = {
+const streetNoMunicipality: Partial<ApiGen_Concepts_Property> = {
   id: 2,
   address: { streetAddress1: '1234 fake st', municipality: '' } as any,
 };
 
-const noStreetButMunicipality: Partial<IProperty> = {
+const noStreetButMunicipality: Partial<ApiGen_Concepts_Property> = {
   id: 3,
   address: { streetAddress1: '', municipality: 'Victoria' } as any,
 };
 
-const streetAndMunicipality: Partial<IProperty> = {
+const streetAndMunicipality: Partial<ApiGen_Concepts_Property> = {
   id: 4,
   address: { streetAddress1: '4321 real st', municipality: 'Vancouver' } as any,
 };

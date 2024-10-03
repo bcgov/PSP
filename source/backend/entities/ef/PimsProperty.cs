@@ -18,7 +18,6 @@ namespace Pims.Dal.Entities;
 [Index("Pid", Name = "PRPRTY_PID_IDX")]
 [Index("PphStatusTypeCode", Name = "PRPRTY_PPH_STATUS_TYPE_CODE_IDX")]
 [Index("PropertyAreaUnitTypeCode", Name = "PRPRTY_PROPERTY_AREA_UNIT_TYPE_CODE_IDX")]
-[Index("PropertyClassificationTypeCode", Name = "PRPRTY_PROPERTY_CLASSIFICATION_TYPE_CODE_IDX")]
 [Index("PropertyDataSourceTypeCode", Name = "PRPRTY_PROPERTY_DATA_SOURCE_TYPE_CODE_IDX")]
 [Index("PropertyStatusTypeCode", Name = "PRPRTY_PROPERTY_STATUS_TYPE_CODE_IDX")]
 [Index("PropertyTypeCode", Name = "PRPRTY_PROPERTY_TYPE_CODE_IDX")]
@@ -115,32 +114,10 @@ public partial class PimsProperty
     public string PphStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Foreign key to the proeprty classification type table.
-    /// </summary>
-    [Required]
-    [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropertyClassificationTypeCode { get; set; }
-
-    /// <summary>
     /// Date the property was officially registered
     /// </summary>
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
     public DateOnly PropertyDataSourceEffectiveDate { get; set; }
-
-    /// <summary>
-    /// Property name
-    /// </summary>
-    [Column("NAME")]
-    [StringLength(250)]
-    public string Name { get; set; }
-
-    /// <summary>
-    /// Property description
-    /// </summary>
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
 
     /// <summary>
     /// Property ID
@@ -177,6 +154,7 @@ public partial class PimsProperty
     /// Legal description of property
     /// </summary>
     [Column("LAND_LEGAL_DESCRIPTION")]
+    [StringLength(2000)]
     public string LandLegalDescription { get; set; }
 
     /// <summary>
@@ -206,13 +184,6 @@ public partial class PimsProperty
     public string SurveyPlanNumber { get; set; }
 
     /// <summary>
-    /// reason for property encumbreance
-    /// </summary>
-    [Column("ENCUMBRANCE_REASON")]
-    [StringLength(500)]
-    public string EncumbranceReason { get; set; }
-
-    /// <summary>
     /// Comment regarding the surplus declaration
     /// </summary>
     [Column("SURPLUS_DECLARATION_COMMENT")]
@@ -229,6 +200,7 @@ public partial class PimsProperty
     /// Notes about the property
     /// </summary>
     [Column("NOTES")]
+    [StringLength(4000)]
     public string Notes { get; set; }
 
     /// <summary>
@@ -257,28 +229,10 @@ public partial class PimsProperty
     public bool IsOwned { get; set; }
 
     /// <summary>
-    /// Is the property visible to other agencies?
-    /// </summary>
-    [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
-    public bool IsVisibleToOtherAgencies { get; set; }
-
-    /// <summary>
-    /// Is this a sensitive property?
-    /// </summary>
-    [Column("IS_SENSITIVE")]
-    public bool IsSensitive { get; set; }
-
-    /// <summary>
     /// If the property was the source of a subdivision operation or the target of a consolidation operation, the property is marked as retired.
     /// </summary>
     [Column("IS_RETIRED")]
     public bool? IsRetired { get; set; }
-
-    /// <summary>
-    /// Is this property a provincial public highway?
-    /// </summary>
-    [Column("IS_PROVINCIAL_PUBLIC_HWY")]
-    public bool? IsProvincialPublicHwy { get; set; }
 
     /// <summary>
     /// Userid that updated the Provincial Public Highway status.
@@ -304,20 +258,6 @@ public partial class PimsProperty
     /// </summary>
     [Column("IS_RWY_BELT_DOM_PATENT")]
     public bool? IsRwyBeltDomPatent { get; set; }
-
-    /// <summary>
-    /// Current property zoning
-    /// </summary>
-    [Column("ZONING")]
-    [StringLength(50)]
-    public string Zoning { get; set; }
-
-    /// <summary>
-    /// Potential property zoning
-    /// </summary>
-    [Column("ZONING_POTENTIAL")]
-    [StringLength(100)]
-    public string ZoningPotential { get; set; }
 
     /// <summary>
     /// Additional details about the property.
@@ -499,10 +439,6 @@ public partial class PimsProperty
     [ForeignKey("PropertyAreaUnitTypeCode")]
     [InverseProperty("PimsProperties")]
     public virtual PimsAreaUnitType PropertyAreaUnitTypeCodeNavigation { get; set; }
-
-    [ForeignKey("PropertyClassificationTypeCode")]
-    [InverseProperty("PimsProperties")]
-    public virtual PimsPropertyClassificationType PropertyClassificationTypeCodeNavigation { get; set; }
 
     [ForeignKey("PropertyDataSourceTypeCode")]
     [InverseProperty("PimsProperties")]

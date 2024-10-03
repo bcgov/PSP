@@ -20,12 +20,12 @@ import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concept
 import { exists, formatMoney, prettyFormatDate } from '@/utils';
 
 import { cannotEditMessage } from '../../../common/constants';
-import StatusUpdateSolver from '../../fileDetails/detail/statusUpdateSolver';
+import AcquisitionFileStatusUpdateSolver from '../../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 
 export interface IAgreementViewProps {
   loading: boolean;
   agreements: ApiGen_Concepts_Agreement[];
-  statusUpdateSolver: StatusUpdateSolver;
+  statusUpdateSolver: AcquisitionFileStatusUpdateSolver;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }
@@ -174,7 +174,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
               <SectionField
                 labelWidth="6"
                 label="Deposit due no later than"
-                tooltip="Generally, if applicable, this is number of days from the execution of the agreement."
+                tooltip="Generally, if applicable, this is number of days from the execution of the agreement"
               >
                 {agreement.noLaterThanDays ? (
                   <span>

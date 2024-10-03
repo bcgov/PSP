@@ -42,11 +42,6 @@ public partial class PimsPropertyVw
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
     public DateOnly PropertyDataSourceEffectiveDate { get; set; }
 
-    [Required]
-    [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropertyClassificationTypeCode { get; set; }
-
     [Column("PROPERTY_TENURE_TYPE_CODE")]
     [StringLength(4000)]
     public string PropertyTenureTypeCode { get; set; }
@@ -87,14 +82,6 @@ public partial class PimsPropertyVw
     [StringLength(200)]
     public string CountryName { get; set; }
 
-    [Column("NAME")]
-    [StringLength(250)]
-    public string Name { get; set; }
-
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
-
     [Column("ADDRESS_ID")]
     public long? AddressId { get; set; }
 
@@ -118,35 +105,18 @@ public partial class PimsPropertyVw
     public float? LandArea { get; set; }
 
     [Column("LAND_LEGAL_DESCRIPTION")]
+    [StringLength(2000)]
     public string LandLegalDescription { get; set; }
 
     [Column("SURVEY_PLAN_NUMBER")]
     [StringLength(250)]
     public string SurveyPlanNumber { get; set; }
 
-    [Column("ENCUMBRANCE_REASON")]
-    [StringLength(500)]
-    public string EncumbranceReason { get; set; }
-
-    [Column("IS_SENSITIVE")]
-    public bool IsSensitive { get; set; }
-
     [Column("IS_OWNED")]
     public bool IsOwned { get; set; }
 
     [Column("IS_RETIRED")]
     public bool? IsRetired { get; set; }
-
-    [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
-    public bool IsVisibleToOtherAgencies { get; set; }
-
-    [Column("ZONING")]
-    [StringLength(50)]
-    public string Zoning { get; set; }
-
-    [Column("ZONING_POTENTIAL")]
-    [StringLength(100)]
-    public string ZoningPotential { get; set; }
 
     [Column("IS_DISPOSED")]
     public bool? IsDisposed { get; set; }

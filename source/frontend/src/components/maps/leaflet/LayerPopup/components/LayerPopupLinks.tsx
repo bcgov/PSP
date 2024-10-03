@@ -6,6 +6,7 @@ import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 export interface ILayerPopupLinksProps {
   bounds: LatLngBounds | undefined;
@@ -27,9 +28,11 @@ export const LayerPopupLinks: React.FC<React.PropsWithChildren<ILayerPopupLinksP
   return (
     <StyledContainer>
       <LinkButton onClick={onZoomToBounds}>Zoom map</LinkButton>
-      <LinkButton onClick={onEllipsisClick ?? noop} data-testid="fly-out-ellipsis">
-        <FaEllipsisH />
-      </LinkButton>
+      <TooltipWrapper tooltipId="see-more" tooltip="See more...">
+        <LinkButton onClick={onEllipsisClick ?? noop} data-testid="fly-out-ellipsis">
+          <FaEllipsisH />
+        </LinkButton>
+      </TooltipWrapper>
     </StyledContainer>
   );
 };

@@ -1,4 +1,3 @@
-import { act, screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
@@ -6,14 +5,15 @@ import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { useMapProperties } from '@/hooks/repositories/useMapProperties';
 import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mock';
-import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../features/mapSideBar/shared/models';
 import MapSelectorContainer, { IMapSelectorContainerProps } from './MapSelectorContainer';
 import { IMapProperty } from './models';
-import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
-import { useMapProperties } from '@/hooks/repositories/useMapProperties';
+import { IMapStateMachineContext } from '../common/mapFSM/MapStateMachineContext';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -22,6 +22,7 @@ const mockAxios = new MockAdapter(axios);
 const store = mockStore({});
 
 const onSelectedProperties = vi.fn();
+const onRepositionSelectedProperty = vi.fn();
 
 const testProperty: IMapProperty = {
   propertyId: 123,
@@ -55,12 +56,14 @@ describe('MapSelectorContainer component', () => {
       <Formik initialValues={{ properties: [] }} onSubmit={noop}>
         <MapSelectorContainer
           addSelectedProperties={onSelectedProperties}
+          repositionSelectedProperty={onRepositionSelectedProperty}
           modifiedProperties={renderOptions.modifiedProperties ?? []}
         />
       </Formik>,
       {
         ...renderOptions,
         store: store,
+        mockMapMachine: renderOptions.mockMapMachine ?? mapMachineBaseMock,
       },
     );
 
@@ -209,9 +212,7 @@ describe('MapSelectorContainer component', () => {
             ADDRESS_ID: null,
             COUNTRY_CODE: null,
             COUNTRY_NAME: null,
-            DESCRIPTION: null,
             DISTRICT_CODE: 5,
-            ENCUMBRANCE_REASON: null,
             HAS_ACTIVE_ACQUISITION_FILE: null,
             HAS_ACTIVE_RESEARCH_FILE: null,
             HISTORICAL_FILE_NUMBER_STR: null,
@@ -223,18 +224,14 @@ describe('MapSelectorContainer component', () => {
             IS_PAYABLE_LEASE: null,
             IS_RECEIVABLE_LEASE: null,
             IS_RETIRED: undefined,
-            IS_SENSITIVE: null,
-            IS_VISIBLE_TO_OTHER_AGENCIES: null,
             LAND_AREA: undefined,
             LAND_LEGAL_DESCRIPTION: 'Test Legal Description',
             MUNICIPALITY_NAME: undefined,
-            NAME: undefined,
             PID: 123456789,
             PID_PADDED: '123-456-789',
             PIN: null,
             POSTAL_CODE: undefined,
             PROPERTY_AREA_UNIT_TYPE_CODE: undefined,
-            PROPERTY_CLASSIFICATION_TYPE_CODE: null,
             PROPERTY_DATA_SOURCE_EFFECTIVE_DATE: null,
             PROPERTY_DATA_SOURCE_TYPE_CODE: null,
             PROPERTY_ID: 123,
@@ -247,8 +244,6 @@ describe('MapSelectorContainer component', () => {
             STREET_ADDRESS_2: undefined,
             STREET_ADDRESS_3: undefined,
             SURVEY_PLAN_NUMBER: 'SPS22411',
-            ZONING: null,
-            ZONING_POTENTIAL: null,
           },
           type: 'Feature',
         },
@@ -260,6 +255,7 @@ describe('MapSelectorContainer component', () => {
         regionFeature: {},
         districtFeature: {},
         municipalityFeature: null,
+        highwayFeature: null,
         id: 'PID-009-727-493-48.76613749999999--123.46163749999998',
       },
     ]);
@@ -293,5 +289,36 @@ describe('MapSelectorContainer component', () => {
       'A property that the user is trying to select has already been added to the selected properties list',
     );
     expect(toast[0]).toBeVisible();
+  });
+
+  it(`calls "repositionSelectedProperty" callback when file marker has been repositioned`, async () => {
+    const testMapMock: IMapStateMachineContext = { ...mapMachineBaseMock };
+    const mapProperties = [
+      PropertyForm.fromMapProperty({ ...testProperty, pid: '009-727-493' }).toFeatureDataset(),
+    ];
+
+    const { rerender } = setup({
+      modifiedProperties: mapProperties,
+      mockMapMachine: testMapMock,
+    });
+
+    // simulate file marker repositioning via the map state machine
+    await act(async () => {
+      testMapMock.isRepositioning = true;
+      testMapMock.repositioningFeatureDataset = {} as any;
+      testMapMock.mapLocationFeatureDataset = {} as any;
+    });
+
+    rerender(
+      <Formik initialValues={{ properties: [] }} onSubmit={noop}>
+        <MapSelectorContainer
+          addSelectedProperties={onSelectedProperties}
+          repositionSelectedProperty={onRepositionSelectedProperty}
+          modifiedProperties={mapProperties}
+        />
+      </Formik>,
+    );
+
+    expect(onRepositionSelectedProperty).toHaveBeenCalled();
   });
 });

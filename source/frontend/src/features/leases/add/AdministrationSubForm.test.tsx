@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
@@ -6,10 +6,11 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import { getDefaultFormLease } from '../models';
-import AdministrationSubForm, { IAdministrationSubFormProps } from './AdministrationSubForm';
+import { getDefaultFormLease, LeaseFormModel } from '../models';
+import AdministrationSubForm from './AdministrationSubForm';
+import React from 'react';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -17,7 +18,6 @@ const storeState = {
 };
 
 // mock auth library
-
 vi.mock('@/hooks/repositories/useUserInfoRepository');
 vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
@@ -26,12 +26,15 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
 });
 
 describe('AdministrationSubForm component', () => {
-  const setup = async (
-    renderOptions: RenderOptions & Partial<IAdministrationSubFormProps> = {},
-  ) => {
-    // render component under test
-    const component = await renderAsync(
-      <Formik onSubmit={noop} initialValues={getDefaultFormLease()}>
+  // render component under test
+  const setup = (renderOptions: RenderOptions & { initialValues?: LeaseFormModel } = {}) => {
+    const formikRef = React.createRef<FormikProps<LeaseFormModel>>();
+    const utils = render(
+      <Formik
+        onSubmit={noop}
+        innerRef={formikRef}
+        initialValues={renderOptions.initialValues ?? getDefaultFormLease()}
+      >
         {formikProps => <AdministrationSubForm formikProps={formikProps} />}
       </Formik>,
       {
@@ -43,76 +46,26 @@ describe('AdministrationSubForm component', () => {
     );
 
     return {
-      component,
+      ...utils,
+      getPurposeMultiSelect: () =>
+        utils.container.querySelector(`#multiselect-purposes_input`) as HTMLElement,
+      getOtherPurposeTextbox: () =>
+        utils.container.querySelector(`input[name="purposeOtherDescription"]`) as HTMLElement,
     };
   };
-  it('renders as expected', async () => {
-    const { component } = await setup({});
-    expect(component.asFragment()).toMatchSnapshot();
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
-  it('does not display category type by default', async () => {
-    const {
-      component: { queryByText },
-    } = await setup({});
-    expect(queryByText('Category:')).toBeNull();
-  });
-
-  it('displays category type if correct type is selected', async () => {
-    const {
-      component: { container, findByText },
-    } = await setup({});
-    await act(async () => {
-      await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
-    });
-    expect(await findByText('Category:')).toBeVisible();
-  });
-
-  it('displays other category text if Other is selected', async () => {
-    const {
-      component: { container, findByText },
-    } = await setup({});
-
-    await act(async () => {
-      await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
-      await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
-    });
-    const otherText = await findByText('Describe other:');
-    expect(otherText).toBeVisible();
-    const otherField = await container.querySelector(`input[name="otherCategoryTypeDescription"]`);
-    expect(otherField).toHaveValue('');
-  });
-
-  it('resets other category type text if type is changed', async () => {
-    const {
-      component: { container, findByText },
-    } = await setup({});
-    await act(async () => {
-      await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
-      await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
-      await fillInput(container, 'otherCategoryTypeDescription', 'other category');
-    });
-    await findByText('Describe other:');
-    await act(async () => {
-      await fillInput(container, 'leaseTypeCode', 'OTHER', 'select');
-    });
-    await findByText('Describe other:');
-    await act(async () => {
-      await fillInput(container, 'leaseTypeCode', 'LSREG', 'select');
-      await fillInput(container, 'categoryTypeCode', 'OTHER', 'select');
-    });
-
-    const otherText = await findByText('Describe other:');
-    expect(otherText).toBeVisible();
-
-    const otherField = await container.querySelector(`input[name="otherCategoryTypeDescription"]`);
-    expect(otherField).toHaveValue('');
+  it('renders as expected', () => {
+    const { asFragment } = setup({});
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays other type text if Other is selected', async () => {
-    const {
-      component: { container, findByText },
-    } = await setup({});
+    const { container, findByText } = setup({});
+
     let otherField = await container.querySelector(`input[name="otherLeaseTypeDescription"]`);
     expect(otherField).toBeNull();
 
@@ -126,27 +79,8 @@ describe('AdministrationSubForm component', () => {
     expect(otherField).toBeVisible();
   });
 
-  it('displays other purpose text if Other is selected', async () => {
-    const {
-      component: { container, getByText },
-    } = await setup({});
-    let otherField = await container.querySelector(`input[name="otherPurposeTypeDescription"]`);
-    expect(otherField).toBeNull();
-
-    await act(async () => {
-      await fillInput(container, 'purposeTypeCode', 'OTHER', 'select');
-    });
-    const otherText = await getByText('Describe other:');
-    expect(otherText).toBeVisible();
-
-    otherField = await container.querySelector(`input[name="otherPurposeTypeDescription"]`);
-    expect(otherField).toBeVisible();
-  });
-
   it('displays other program text if Other is selected', async () => {
-    const {
-      component: { container, getByText },
-    } = await setup({});
+    const { container, getByText } = setup({});
     let otherField = await container.querySelector(`input[name="otherProgramTypeDescription"]`);
     expect(otherField).toBeNull();
 
@@ -157,5 +91,28 @@ describe('AdministrationSubForm component', () => {
     expect(otherText).toBeVisible();
     otherField = await container.querySelector(`input[name="otherProgramTypeDescription"]`);
     expect(otherField).toBeVisible();
+  });
+
+  it('displays other purpose text if Other is selected', async () => {
+    const { container, getByText, getOtherPurposeTextbox, getPurposeMultiSelect } = setup({});
+    expect(getOtherPurposeTextbox()).toBeNull();
+
+    const multiSelectPurposes = getPurposeMultiSelect();
+    await act(async () => {
+      expect(multiSelectPurposes).not.toBeNull();
+      userEvent.click(multiSelectPurposes);
+    });
+
+    await act(async () => {
+      userEvent.type(multiSelectPurposes, 'Other*');
+      userEvent.click(multiSelectPurposes);
+
+      const otherOption = container.querySelector(`div ul li.option`);
+      userEvent.click(otherOption);
+    });
+
+    const otherText = await getByText('Describe other:');
+    expect(otherText).toBeVisible();
+    expect(getOtherPurposeTextbox()).toBeInTheDocument();
   });
 });

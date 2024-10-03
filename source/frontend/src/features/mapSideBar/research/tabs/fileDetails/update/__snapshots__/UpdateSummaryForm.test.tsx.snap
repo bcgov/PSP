@@ -20,7 +20,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -34,7 +33,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c10.btn .Button__value {
@@ -54,10 +52,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c10.btn.btn-primary {
-  border: none;
 }
 
 .c10.btn.btn-secondary {
@@ -333,7 +327,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   border-radius: 4px;
   background-color: #f0f7fc;
   margin-bottom: 2rem;
-  font-size: 16px;
+  font-size: 14px;
   -webkit-text-decoration: none solid rgb(49,49,50);
   text-decoration: none solid rgb(49,49,50);
   line-height: 24px;

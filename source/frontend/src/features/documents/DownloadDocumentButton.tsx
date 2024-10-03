@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios';
+import { File } from 'buffer';
 import fileDownload from 'js-file-download';
 import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -22,18 +24,18 @@ const DownloadDocumentButton: React.FunctionComponent<
 
   async function downloadFile(mayanDocumentId: number, mayanFileId?: number) {
     if (mayanFileId !== undefined) {
-      const data = await provider.downloadWrappedDocumentFile(mayanDocumentId, mayanFileId);
+      const data = await provider.streamDocumentFile(mayanDocumentId, mayanFileId);
       if (data) {
-        createFileDownload(data);
+        showFile(data);
       } else {
         toast.error(
           'Failed to download document. If this error persists, contact a system administrator.',
         );
       }
     } else {
-      const data = await provider.downloadWrappedDocumentFileLatest(mayanDocumentId);
+      const data = await provider.streamDocumentFileLatest(mayanDocumentId);
       if (data) {
-        createFileDownload(data);
+        showFile(data);
       } else {
         toast.error(
           'Failed to download document. If this error persists, contact a system administrator.',
@@ -42,12 +44,12 @@ const DownloadDocumentButton: React.FunctionComponent<
     }
   }
 
-  if (!props.isFileAvailable && !provider.downloadWrappedDocumentFileLoading) {
+  if (!props.isFileAvailable && !provider.streamDocumentFileLoading) {
     return (
       <TooltipIcon
         toolTipId="document-not-available-tooltip"
         data-testid="document-not-available-tooltip"
-        toolTip="This document is still being processed and is not yet available to view or download. Please try again in a few minutes. If you continue to see this error, please contact the system administrator."
+        toolTip="This document is still being processed and is not yet available to view or download. Please try again in a few minutes. If you continue to see this error, please contact the system administrator"
       ></TooltipIcon>
     );
   }
@@ -55,17 +57,11 @@ const DownloadDocumentButton: React.FunctionComponent<
   return (
     <div>
       <LoadingBackdrop
-        show={
-          provider.downloadWrappedDocumentFileLoading ||
-          provider.downloadWrappedDocumentFileLatestLoading
-        }
+        show={provider.streamDocumentFileLoading || provider.streamDocumentFileLatestLoading}
       />
       <LinkButton
         data-testid="document-download-button"
-        disabled={
-          provider.downloadWrappedDocumentFileLoading ||
-          provider.downloadWrappedDocumentFileLatestLoading
-        }
+        disabled={provider.streamDocumentFileLoading || provider.streamDocumentFileLatestLoading}
         onClick={() => {
           downloadFile(props.mayanDocumentId, props.mayanFileId);
         }}
@@ -99,6 +95,15 @@ export const createFileDownload = async (
     } else {
       throw new Error('Only base64 encoding is supported');
     }
+  }
+};
+
+const showFile = async (response: AxiosResponse<File, any>, fileName?: string) => {
+  const groups = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/g.exec(
+    response.headers['content-disposition'],
+  );
+  if (groups?.length) {
+    fileDownload(response.data, fileName ?? groups[1].replace(/['"]/g, ''));
   }
 };
 

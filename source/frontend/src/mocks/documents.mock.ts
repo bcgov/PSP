@@ -1,8 +1,11 @@
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
+import { ApiGen_System_HttpStatusCode } from '@/models/api/generated/ApiGen_System_HttpStatusCode';
 
 export const mockDocumentResponse = (id = 1): ApiGen_Concepts_DocumentRelationship => ({
   id,
@@ -263,3 +266,78 @@ export const mockDocumentMetadata = (): ApiGen_Mayan_DocumentMetadata[] => [
     value: 'Tag1234',
   },
 ];
+
+export const mockDocumentBatchUploadResponse =
+  (): ApiGen_Requests_DocumentUploadRelationshipResponse[] => [
+    {
+      documentRelationship: {
+        id: 19,
+        parentId: '1',
+        document: {
+          id: 59,
+          mayanDocumentId: 162,
+          documentType: null,
+          statusTypeCode: null,
+          fileName: 'Test.PDF',
+          appCreateTimestamp: '2024-08-28T00:40:41.4520778Z',
+          appLastUpdateTimestamp: '2024-08-28T00:40:41.4520778Z',
+          appLastUpdateUserid: 'ALESANCH',
+          appCreateUserid: 'ALESANCH',
+          appLastUpdateUserGuid: '4109e6b4-585c-4678-8a24-1a99b45e3a5d',
+          appCreateUserGuid: '4109e6b4-585c-4678-8a24-1a99b45e3a5d',
+          rowVersion: 1,
+        },
+        relationshipType: ApiGen_CodeTypes_DocumentRelationType.ResearchFiles,
+        appCreateTimestamp: '2024-08-28T00:40:41.4606134Z',
+        appLastUpdateTimestamp: '2024-08-28T00:40:41.4606134Z',
+        appLastUpdateUserid: 'ALESANCH',
+        appCreateUserid: 'ALESANCH',
+        appLastUpdateUserGuid: '4109e6b4-585c-4678-8a24-1a99b45e3a5d',
+        appCreateUserGuid: '4109e6b4-585c-4678-8a24-1a99b45e3a5d',
+        rowVersion: 1,
+      },
+      uploadResponse: {
+        document: {
+          id: 59,
+          mayanDocumentId: 162,
+          documentType: null,
+          statusTypeCode: null,
+          fileName: 'Test.PDF',
+          appCreateTimestamp: '2024-08-28T00:40:41.4520778Z',
+          appLastUpdateTimestamp: '2024-08-28T00:40:41.4520778Z',
+          appLastUpdateUserid: 'ALESANCH',
+          appCreateUserid: 'ALESANCH',
+          appLastUpdateUserGuid: '4109e6b4-585c-4678-8a24-1a99b45e3a5d',
+          appCreateUserGuid: '4109e6b4-585c-4678-8a24-1a99b45e3a5d',
+          rowVersion: 1,
+        },
+        documentExternalResponse: {
+          status: ApiGen_CodeTypes_ExternalResponseStatus.Success,
+          message: null,
+          payload: {
+            id: 162,
+            label: 'Test.PDF',
+            language: 'eng',
+            datetime_created: '2024-08-28T00:40:35.174853Z',
+            description: '',
+            uuid: '172a62e5-65f9-4729-a315-cca2975f577b',
+            file_latest: null,
+            document_type: {
+              id: 155,
+              label: 'Briefing notes',
+              delete_time_period: 30,
+              delete_time_unit: 'days',
+              document_stub_expiration_interval: 86400,
+              document_stub_pruning_enabled: true,
+              trash_time_period: null,
+              trash_time_unit: null,
+              filename_generator_backend: 'uuid',
+              filename_generator_backend_arguments: '',
+            },
+          },
+          httpStatusCode: ApiGen_System_HttpStatusCode.Created,
+        },
+        metadataExternalResponse: [],
+      },
+    },
+  ];

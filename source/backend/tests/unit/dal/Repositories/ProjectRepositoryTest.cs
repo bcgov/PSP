@@ -6,7 +6,6 @@ using FluentAssertions;
 using Microsoft.CodeAnalysis;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
@@ -75,7 +74,7 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
 
             var project = new PimsProject() { Description = "test project", RegionCode = 1, Code = "551234",
-                ProjectStatusTypeCode = "ACTIVE", ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Id = "ACTIVE", Description = "Active", DbLastUpdateUserid = "test", DbCreateUserid = "test" }, 
+                ProjectStatusTypeCode = "ACTIVE", ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Id = "ACTIVE", Description = "Active", DbLastUpdateUserid = "test", DbCreateUserid = "test" },
                 RegionCodeNavigation = new PimsRegion() { Id = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", RegionName = "test region" } };
 
             var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(project);
@@ -90,7 +89,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public async void GetPageAsync_Error_Permissions()
+        public void GetPageAsync_Error_Permissions()
         {
             // Arrange
             var helper = new TestHelper();
@@ -109,7 +108,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public async void GetPageAsync_Error_Null()
+        public void GetPageAsync_Error_Null()
         {
             // Arrange
             var helper = new TestHelper();
@@ -128,7 +127,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public async void GetPageAsync_Error_Invalid()
+        public void GetPageAsync_Error_Invalid()
         {
             // Arrange
             var helper = new TestHelper();
@@ -151,7 +150,7 @@ namespace Pims.Dal.Test.Repositories
         #region TryGet
 
         [Fact]
-        public async void TryGet_Success()
+        public void TryGet_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -177,7 +176,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
         }
 
-        public async void TryGet_Permissions()
+        public void TryGet_Permissions()
         {
             // Arrange
             var helper = new TestHelper();
@@ -198,7 +197,7 @@ namespace Pims.Dal.Test.Repositories
         #region GetAllByName
 
         [Fact]
-        public async void GetAllByName_Success()
+        public void GetAllByName_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -225,7 +224,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(1);
         }
 
-        public async void GetAllByName_Permissions()
+        public void GetAllByName_Permissions()
         {
             // Arrange
             var helper = new TestHelper();
@@ -255,7 +254,7 @@ namespace Pims.Dal.Test.Repositories
         #region GetAllByDocument
 
         [Fact]
-        public async void GetAllByDocument_Success()
+        public void GetAllByDocument_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -283,7 +282,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(1);
         }
 
-        public async void GetAllByDocument_Permissions()
+        public void GetAllByDocument_Permissions()
         {
             // Arrange
             var helper = new TestHelper();
@@ -303,7 +302,7 @@ namespace Pims.Dal.Test.Repositories
         #region GetAllProjectDocuments
 
         [Fact]
-        public async void GetAllProjectDocuments_Success()
+        public void GetAllProjectDocuments_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -335,7 +334,7 @@ namespace Pims.Dal.Test.Repositories
         #region DeleteProjectDocument
 
         [Fact]
-        public async void DeleteProjectDocument_Success()
+        public void DeleteProjectDocument_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -367,7 +366,7 @@ namespace Pims.Dal.Test.Repositories
         #region Add
 
         [Fact]
-        public async void Add_Success()
+        public void Add_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -395,7 +394,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public async void Add_Project_Product_Success()
+        public void Add_Project_Product_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -425,7 +424,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public async void Add_Project_ProductUpdate_Success()
+        public void Add_Project_ProductUpdate_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -458,7 +457,7 @@ namespace Pims.Dal.Test.Repositories
         #region AddProjectDocument
 
         [Fact]
-        public async void AddProjectDocument_Success()
+        public void AddProjectDocument_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -478,7 +477,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public async void AddProjectDocument_Null()
+        public void AddProjectDocument_Null()
         {
             // Arrange
             var helper = new TestHelper();
@@ -499,7 +498,7 @@ namespace Pims.Dal.Test.Repositories
         #region Update
 
         [Fact]
-        public async void Update_Success()
+        public void Update_Success()
         {
             // Arrange
             var helper = new TestHelper();
@@ -529,7 +528,7 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public async void Update_NotFound()
+        public void Update_NotFound()
         {
             // Arrange
             var helper = new TestHelper();

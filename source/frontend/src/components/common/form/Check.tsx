@@ -43,6 +43,7 @@ type OptionalAttributes = {
   toolTip?: string;
   /** id for tooltip */
   toolTipId?: string;
+  handleChange?: (field: string, value: boolean) => void;
 };
 
 // only "field" is required for <Check>, the rest are optional
@@ -67,6 +68,7 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
   radioLabelTwo,
   toolTip,
   toolTipId,
+  handleChange,
   ...rest
 }) => {
   const { values, initialValues, setFieldValue, setFieldTouched, errors, touched, handleBlur } =
@@ -113,8 +115,10 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
             onChange={() => {
               if (type !== 'radio') {
                 setFieldValue(field, !checked);
+                handleChange && handleChange(field, !checked);
               } else {
                 setFieldValue(field, true);
+                handleChange && handleChange(field, true);
               }
             }}
             onBlur={handleBlur}
@@ -137,6 +141,7 @@ export const Check: React.FC<React.PropsWithChildren<CheckProps>> = ({
               checked={checked === false}
               onChange={() => {
                 setFieldValue(field, false);
+                handleChange && handleChange(field, false);
               }}
               onBlur={handleBlur}
             />

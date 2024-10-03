@@ -66,7 +66,6 @@ const StyledButton = styled(BootstrapButton)`
     align-items: center;
     justify-content: center;
     padding: 0.4rem 1.2rem;
-    min-height: 3rem;
     border: 0.2rem solid transparent;
     border-radius: 0.4rem;
     text-align: center;
@@ -76,7 +75,6 @@ const StyledButton = styled(BootstrapButton)`
     font-weight: 700;
     letter-spacing: 0.1rem;
     cursor: pointer;
-    height: 3.8rem;
     .Button__value {
       width: max-content;
     }
@@ -98,7 +96,6 @@ const StyledButton = styled(BootstrapButton)`
     &.btn-primary {
       color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
       background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
-      border: none;
       &:hover,
       &:active,
       &:focus {

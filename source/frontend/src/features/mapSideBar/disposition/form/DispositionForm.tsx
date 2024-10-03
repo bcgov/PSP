@@ -136,7 +136,7 @@ const DispositionForm: React.FC<IDispositionFormProps> = props => {
               </SectionField>
               <SectionField
                 label="Reference number"
-                tooltip="Provide available reference number for historic program or file number (e.g.  RAEG, Acquisition File, etc.)."
+                tooltip="Provide available reference number for historic program or file number (e.g.  RAEG, Acquisition File, etc.)"
               >
                 <Input field="referenceNumber" />
               </SectionField>
@@ -164,7 +164,7 @@ const DispositionForm: React.FC<IDispositionFormProps> = props => {
 
               <SectionField
                 label="Initiating document"
-                tooltip="Provide the type of document that has initiated the disposition process."
+                tooltip="Provide the type of document that has initiated the disposition process"
               >
                 <Select
                   field="initiatingDocumentTypeCode"
@@ -180,7 +180,7 @@ const DispositionForm: React.FC<IDispositionFormProps> = props => {
               )}
               <SectionField
                 label="Initiating document date"
-                tooltip="Provide the date initiating document was signed off."
+                tooltip="Provide the date initiating document was signed off"
               >
                 <FastDatePicker field="initiatingDocumentDate" formikProps={formikProps} />
               </SectionField>

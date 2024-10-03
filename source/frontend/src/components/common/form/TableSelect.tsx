@@ -8,6 +8,7 @@ import { getColumnsWithRemove } from '@/utils/columnUtils';
 
 export interface ISelectedTableHeaderProps {
   selectedCount?: number;
+  isPayableLease?: boolean;
 }
 
 type RequiredAttributes<T extends object> = {
@@ -20,6 +21,7 @@ type RequiredAttributes<T extends object> = {
   /** The columns that should be used for the secondary, "saved items" table */
   columns: ColumnWithProps<T>[];
   onRemove: (items: T[]) => void;
+  isPayableLease: boolean;
 };
 
 export type TableSelectProps<T extends object> = FormControlProps & RequiredAttributes<T>;
@@ -33,13 +35,18 @@ export const TableSelect = <T extends { id?: string | number }>({
   selectedTableHeader: SelectedTableHeader,
   onRemove,
   columns,
+  isPayableLease,
 }: TableSelectProps<T>) => {
-  const columnsWithRemove = getColumnsWithRemove<T>((rows: T[]) => onRemove(rows), [...columns]);
+  const columnsWithRemove = getColumnsWithRemove<T>(
+    (rows: T[]) => onRemove(rows),
+    [...columns],
+    'Action',
+  );
 
   return (
     <Container className="p-0 m-0">
       <Styled.SaveTableWrapper>
-        <SelectedTableHeader selectedCount={selectedItems.length} />
+        <SelectedTableHeader selectedCount={selectedItems.length} isPayableLease={isPayableLease} />
         <Table<T>
           name="selected-items"
           lockPageSize

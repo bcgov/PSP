@@ -10,7 +10,7 @@ const TestLoginLoading = () => {
     <TenantProvider>
       <TenantConsumer>
         {({ tenant }) => (
-          <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} }}>
+          <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} as any }}>
             <LoginLoading></LoginLoading>
           </ThemeProvider>
         )}

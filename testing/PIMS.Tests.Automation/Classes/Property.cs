@@ -29,6 +29,16 @@
         public string PropertyNotes { get; set; } = null!;
     }
 
+    public class LeaseProperty
+    {
+        public string PID { get; set; } = null!;
+        public string HistoricalFile { get; set; } = null!;
+        public string DescriptiveName { get; set; } = null!;
+        public string Area { get; set; } = null!;
+        public Address Address { get; set; } = new Address();
+        public string LegalDescription { get; set; } = null!;
+    }
+
     public class Address
     {
         public string AddressLine1 { get; set; } = null!;

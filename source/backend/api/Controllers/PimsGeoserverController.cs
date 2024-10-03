@@ -1,5 +1,4 @@
 using System;
-using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +8,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;

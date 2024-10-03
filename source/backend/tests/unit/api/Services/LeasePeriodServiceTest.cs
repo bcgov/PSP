@@ -2,15 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 using Moq;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
 
 namespace Pims.Api.Test.Services

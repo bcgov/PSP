@@ -23,7 +23,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
   const fieldName = 'renewals';
 
   return (
-    <Section header="Renewal Option">
+    <Section header="Renewal Options">
       <FieldArray
         name={fieldName}
         render={arrayHelpers => (
@@ -34,7 +34,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                   <Section header={`Renewal ${index + 1}`} noPadding>
                     <Row>
                       <Col xs="7">
-                        <SectionField label="Excercised?" labelWidth="6" required>
+                        <SectionField label="Exercised?" labelWidth="6" required>
                           <YesNoSelect field={`${fieldName}.${index}.isExercised`} notNullable />
                         </SectionField>
                       </Col>
@@ -67,7 +67,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                           tooltip={
                             <TooltipIcon
                               toolTipId="lease-renewal-expiry-tooltip"
-                              toolTip="The end date specified in the original agreement or renewal, as applicable."
+                              toolTip="The end date specified in the original agreement or renewal, as applicable"
                               placement="right"
                             />
                           }
@@ -116,7 +116,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                 arrayHelpers.push(renewal);
               }}
             >
-              + Add a Renew
+              + Add a Renewal
             </LinkButton>
           </>
         )}

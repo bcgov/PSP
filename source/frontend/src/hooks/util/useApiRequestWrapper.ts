@@ -30,6 +30,7 @@ export interface IApiRequestWrapper<
   onError?: (e: AxiosError<IApiError>) => Promise<void>;
   invoke?: boolean;
   throwError?: boolean;
+  returnApiError?: boolean;
   rawResponse?: boolean;
 }
 
@@ -52,6 +53,7 @@ export const useApiRequestWrapper = <
   onError,
   invoke,
   throwError,
+  returnApiError,
   rawResponse,
 }: IApiRequestWrapper<FunctionType>): IResponseWrapper<FunctionType> => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -87,7 +89,7 @@ export const useApiRequestWrapper = <
         setStatus(response?.status);
         setResponse(response?.data);
         onSuccess && onSuccess(response?.data);
-        return response?.data;
+        return rawResponse ? response : response?.data;
       } catch (e) {
         if (!axios.isAxiosError(e) && throwError) {
           throw e;
@@ -107,6 +109,9 @@ export const useApiRequestWrapper = <
               }),
             );
           });
+          if (returnApiError) {
+            return axiosError.response.data;
+          }
         } else if (!throwError) {
           // If no error handling is provided, fall back to the default PIMS error handler (bomb icon).
           dispatch(
@@ -116,6 +121,9 @@ export const useApiRequestWrapper = <
               error: axiosError ?? ({} as unknown as AxiosError),
             }),
           );
+          if (returnApiError) {
+            return axiosError.response.data;
+          }
         }
 
         setError(axiosError);
@@ -137,6 +145,7 @@ export const useApiRequestWrapper = <
       isMounted,
       onSuccess,
       throwError,
+      returnApiError,
       onError,
     ],
   );

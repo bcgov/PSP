@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
 import { useCallback, useEffect, useRef, useState } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
@@ -9,7 +8,7 @@ import PropertySelectorPidSearchContainer from '@/components/propertySelector/se
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
@@ -21,12 +20,14 @@ import { ConsolidationFormModel } from './AddConsolidationModel';
 import { IAddConsolidationViewProps } from './AddConsolidationView';
 
 export interface IAddConsolidationContainerProps {
-  onClose?: () => void;
+  onClose: () => void;
+  onSuccess: (propertyId: number | undefined) => void;
   View: React.FunctionComponent<React.PropsWithChildren<IAddConsolidationViewProps>>;
 }
 
 const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
   onClose,
+  onSuccess,
   View,
 }) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
@@ -36,7 +37,6 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
   const formikRef = useRef<FormikProps<ConsolidationFormModel>>(null);
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
-  const history = useHistory();
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
@@ -45,19 +45,8 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
   } = usePropertyOperationRepository();
 
   const handleCancel = useCallback(() => {
-    if (formikRef.current?.dirty) {
-      setModalContent({
-        ...getCancelModalProps(),
-        handleOk: () => {
-          onClose?.();
-          setDisplayModal(false);
-        },
-      });
-      setDisplayModal(true);
-    } else {
-      onClose?.();
-    }
-  }, [onClose, setDisplayModal, setModalContent]);
+    onClose();
+  }, [onClose]);
 
   const getAddress = useCallback(
     async (pid: string): Promise<AddressForm | undefined> => {
@@ -160,10 +149,11 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
 
   const handleSuccess = async (consolidations: ApiGen_Concepts_PropertyOperation[]) => {
     mapMachine.refreshMapProperties();
+
     if (consolidations.length === 0 || !consolidations[0].destinationProperty) {
-      history.replace(`/mapview`);
+      onSuccess(undefined);
     } else {
-      history.replace(`/mapview/sidebar/property/${consolidations[0].destinationProperty?.id}`);
+      onSuccess(consolidations[0].destinationProperty?.id ?? undefined);
     }
   };
 

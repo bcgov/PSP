@@ -66,7 +66,7 @@ export const DocumentDetailForm: React.FunctionComponent<
               <Formik<DocumentUpdateFormData>
                 innerRef={props.formikRef}
                 initialValues={initialFormState}
-                validationSchema={getDocumentMetadataYupSchema(props.mayanMetadataTypes)}
+                validationSchema={getDocumentMetadataYupSchema(10)}
                 onSubmit={async (values: DocumentUpdateFormData, { setSubmitting }) => {
                   if (
                     props.document?.pimsDocumentRelationship?.id &&
@@ -88,7 +88,8 @@ export const DocumentDetailForm: React.FunctionComponent<
                     <StyledH3>Details</StyledH3>
                     <DocumentMetadataView
                       mayanMetadata={props.mayanMetadataTypes}
-                      formikProps={formikProps}
+                      values={formikProps.values}
+                      errors={formikProps.errors}
                     />
                     <div className="pt-5">Do you want to proceed?</div>
                     <hr />

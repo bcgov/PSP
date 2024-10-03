@@ -1,13 +1,5 @@
 import { FormikProps } from 'formik/dist/types';
-import {
-  ChangeEvent,
-  forwardRef,
-  useCallback,
-  useEffect,
-  useImperativeHandle,
-  useRef,
-  useState,
-} from 'react';
+import { forwardRef, useCallback, useEffect, useImperativeHandle, useRef, useState } from 'react';
 
 import { SelectOption } from '@/components/common/form';
 import * as API from '@/constants/API';
@@ -16,13 +8,16 @@ import { DocumentTypeName } from '@/constants/documentType';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
+import { Dictionary } from '@/interfaces/Dictionary';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
-import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
+import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
+import { exists } from '@/utils';
 
-import { DocumentUploadFormData } from '../ComposedDocument';
+import { BatchUploadFormModel, BatchUploadResponseModel } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
 import DocumentUploadForm from './DocumentUploadForm';
@@ -33,9 +28,10 @@ export interface IDocumentUploadContainerProps {
   >;
   parentId: string;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
-  onUploadSuccess: () => void;
+  onUploadSuccess: (results: BatchUploadResponseModel[]) => void;
   onCancel: () => void;
   setCanUpload: (canUpload: boolean) => void;
+  maxDocumentCount: number;
 }
 
 export interface IDocumentUploadContainerRef {
@@ -57,15 +53,7 @@ const DocumentUploadContainer = forwardRef<
     },
   });
 
-  const formikRef = useRef<FormikProps<DocumentUploadFormData>>(null);
-
-  const handleCancelClick = () => {
-    if (formikRef.current?.dirty) {
-      setDisplayModal(true);
-    } else {
-      handleCancelConfirm();
-    }
-  };
+  const formikRef = useRef<FormikProps<BatchUploadFormModel>>(null);
 
   const handleCancelConfirm = () => {
     setDisplayModal(false);
@@ -74,56 +62,55 @@ const DocumentUploadContainer = forwardRef<
   };
 
   const isMounted = useIsMounted();
-  const {
-    retrieveDocumentMetadataLoading,
-    retrieveDocumentTypeMetadata,
-    getDocumentRelationshipTypes,
-    getDocumentTypes,
-  } = useDocumentProvider();
+  const { retrieveDocumentTypeMetadata, getDocumentRelationshipTypes, getDocumentTypes } =
+    useDocumentProvider();
 
-  const { uploadDocument, uploadDocumentLoading } = useDocumentRelationshipProvider();
+  const [isUploading, setIsUploading] = useState(false);
+  const { uploadDocument } = useDocumentRelationshipProvider();
 
   const [documentTypes, setDocumentTypes] = useState<ApiGen_Concepts_DocumentType[]>([]);
-  const [documentType, setDocumentType] = useState<string>('');
 
   const [documentStatusOptions, setDocumentStatusOptions] = useState<SelectOption[]>([]);
 
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
-    ApiGen_Mayan_DocumentTypeMetadataType[]
-  >([]);
+    Dictionary<ApiGen_Mayan_DocumentTypeMetadataType[]>
+  >({});
 
-  const onDocumentTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
-    const documentTypeId = Number(changeEvent.target.value);
-    await updateDocumentType(documentTypes.find(x => x.id === documentTypeId));
-  };
-
-  const updateDocumentType = useCallback(
+  const getDocumentMetadata = useCallback(
     async (documentType?: ApiGen_Concepts_DocumentType) => {
       if (documentType === undefined) {
         return;
       }
 
-      setDocumentType(documentType.id?.toString() || '');
-      if (documentType.mayanId) {
-        const results = await retrieveDocumentTypeMetadata(documentType.mayanId);
-        if (results?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success) {
-          setDocumentTypeMetadataTypes(results?.payload?.results || []);
+      if (documentTypeMetadataTypes[documentType.id.toString()] === undefined) {
+        if (documentType.mayanId) {
+          const results = await retrieveDocumentTypeMetadata(documentType.mayanId);
+
+          if (results?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success) {
+            setDocumentTypeMetadataTypes(prevState => ({
+              ...prevState,
+              [documentType.id.toString()]: results.payload.results,
+            }));
+            return results.payload.results;
+          }
+        } else {
+          console.error('Document type does not have a mayan id type');
         }
       } else {
-        setDocumentTypeMetadataTypes([]);
+        return documentTypeMetadataTypes[documentType.id.toString()];
       }
     },
-    [retrieveDocumentTypeMetadata],
+    [documentTypeMetadataTypes, retrieveDocumentTypeMetadata],
   );
 
   useEffect(() => {
     const retrievedDocumentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
     const fetch = async () => {
       if (props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates) {
-        const axiosResponse = await getDocumentTypes();
-        if (axiosResponse && isMounted()) {
-          setDocumentTypes(axiosResponse.filter(x => x.documentType === DocumentTypeName.CDOGS));
-          updateDocumentType(axiosResponse.find(x => x.documentType === DocumentTypeName.CDOGS));
+        const response = await getDocumentTypes();
+        if (exists(response) && isMounted()) {
+          setDocumentTypes(response.filter(x => x.documentType === DocumentTypeName.CDOGS));
+          //getDocumentMetadata(response.find(x => x.documentType === DocumentTypeName.CDOGS));
           setDocumentStatusOptions(
             retrievedDocumentStatusTypes.filter(x => x.value === DocumentStatusType.Final),
           );
@@ -143,14 +130,24 @@ const DocumentUploadContainer = forwardRef<
     getDocumentTypes,
     getDocumentRelationshipTypes,
     isMounted,
-    updateDocumentType,
     getOptionsByType,
+    getDocumentMetadata,
   ]);
 
-  const onUploadDocument = async (uploadRequest: ApiGen_Requests_DocumentUploadRequest) => {
-    const result = await uploadDocument(props.relationshipType, props.parentId, uploadRequest);
-    if (result !== undefined) {
-      props.onUploadSuccess();
+  const onUploadDocument = async (batchRequest: BatchUploadFormModel) => {
+    const uploadDocumentTasks = batchRequest.documents.map(d => {
+      return uploadDocument(props.relationshipType, props.parentId, d.toRequestApi(documentTypes));
+    });
+    setIsUploading(true);
+    const tasksResult: (IApiError | ApiGen_Requests_DocumentUploadRelationshipResponse)[] =
+      await Promise.all(uploadDocumentTasks);
+    setIsUploading(false);
+    if (tasksResult !== undefined) {
+      const batchResults = tasksResult.map<BatchUploadResponseModel>((r, index) => {
+        const fileName = batchRequest.documents[index].file.name;
+        return new BatchUploadResponseModel(fileName, r);
+      });
+      props.onUploadSuccess(batchResults);
     }
   };
 
@@ -160,22 +157,25 @@ const DocumentUploadContainer = forwardRef<
     },
   }));
 
-  const onDocumentSelected = () => {
-    props.setCanUpload(true);
+  const onDocumentsSelected = (documentCount: number) => {
+    if (documentCount > 0 && documentCount <= props.maxDocumentCount) {
+      props.setCanUpload(true);
+    } else {
+      props.setCanUpload(false);
+    }
   };
 
   return (
     <DocumentUploadForm
       formikRef={formikRef}
-      isLoading={retrieveDocumentMetadataLoading || uploadDocumentLoading}
-      initialDocumentType={documentType}
+      isLoading={isUploading}
+      initialDocumentType={''}
       documentTypes={documentTypes}
+      maxDocumentCount={props.maxDocumentCount}
       documentStatusOptions={documentStatusOptions}
-      mayanMetadataTypes={documentTypeMetadataTypes}
-      onDocumentTypeChange={onDocumentTypeChange}
-      onDocumentSelected={onDocumentSelected}
+      getDocumentMetadata={getDocumentMetadata}
+      onDocumentsSelected={onDocumentsSelected}
       onUploadDocument={onUploadDocument}
-      onCancel={handleCancelClick}
     />
   );
 });

@@ -46,7 +46,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: master
       - name: Login to OpenShift
@@ -67,7 +67,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: master
       - name: Login to OpenShift
@@ -87,7 +87,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: master
       - name: Fetch Tags
@@ -109,7 +109,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           ref: master
       - name: Login to OpenShift

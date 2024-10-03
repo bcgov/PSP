@@ -20,7 +20,6 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -34,7 +33,6 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c13.btn .Button__value {
@@ -54,10 +52,6 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c13.btn.btn-primary {
-  border: none;
 }
 
 .c13.btn.btn-secondary {
@@ -393,6 +387,22 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                       class="c8"
                     >
                       PID:
+                    </label>
+                  </div>
+                  <div
+                    class="c9 text-left col"
+                  />
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c8"
+                    >
+                      PIN:
                     </label>
                   </div>
                   <div

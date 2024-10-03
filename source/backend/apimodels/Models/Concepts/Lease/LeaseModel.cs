@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
 
 namespace Pims.Api.Models.Concepts.Lease
@@ -59,19 +60,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public string PsFileNo { get; set; }
 
         /// <summary>
-        /// get/set - The text description if the lease category type is set to "other".
-        /// </summary>
-        public string OtherCategoryType { get; set; }
-
-        /// <summary>
         /// get/set - The text description if the lease program type is set to "other".
         /// </summary>
         public string OtherProgramType { get; set; }
-
-        /// <summary>
-        /// get/set - The text description if the lease purpose type is set to "other".
-        /// </summary>
-        public string OtherPurposeType { get; set; }
 
         /// <summary>
         /// get/set - The text description if the lease type is set to "other".
@@ -119,14 +110,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public CodeTypeModel<string> ResponsibilityType { get; set; }
 
         /// <summary>
-        /// get/set - The entity responsible for this lease.
+        /// get/set - The list of purposes for this lease.
         /// </summary>
-        public CodeTypeModel<string> CategoryType { get; set; }
-
-        /// <summary>
-        /// get/set - The entity responsible for this lease.
-        /// </summary>
-        public CodeTypeModel<string> PurposeType { get; set; }
+        public IList<LeasePurposeModel> LeasePurposes { get; set; }
 
         /// <summary>
         /// get/set - The region of this lease within PIMS.
@@ -159,9 +145,9 @@ namespace Pims.Api.Models.Concepts.Lease
         public IEnumerable<ConsultationLeaseModel> Consultations { get; set; }
 
         /// <summary>
-        /// get/set - A collection of the tenants for this lease.
+        /// get/set - A collection of the stakeholders for this lease.
         /// </summary>
-        public IEnumerable<LeaseTenantModel> Tenants { get; set; }
+        public IEnumerable<LeaseStakeholderModel> Stakeholders { get; set; }
 
         /// <summary>
         /// get/set - A collection of the periods for this lease.
@@ -211,6 +197,16 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - The project associated with this lease.
         /// </summary>
         public ProjectModel Project { get; set; }
+
+        /// <summary>
+        /// get/set - The Lease product's id.
+        /// </summary>
+        public long? ProductId { get; set; }
+
+        /// <summary>
+        /// get/set - The Lease product.
+        /// </summary>
+        public ProductModel Product { get; set; }
 
         /// <summary>
         /// get/set - is public benefit.

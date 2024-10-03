@@ -10,8 +10,8 @@
   },
   "login": {
     "title": "MOTI Property Information Management System (PIMS)",
-    "heading": "PIMS enables you to view highways and properties owned by the Ministry of Transportation and Infrastructure",
-    "body": "WARNING: Not all data included within has been vetted for accuracy and completeness. Please use caution when proceeding and confirm data before relying on it.",
+    "heading": "PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.",
+    "body": "By signing in you acknowledge that not all data included within has been vetted for completeness and accuracy. Please exercise caution by verifying information prior to relying on it.",
     "backgroundImage": "/tenants/MOTI/background-image.jpg"
   },
   "layers": [],
@@ -29,6 +29,11 @@
   "alrLayerUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS",
   "reservesLayerUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP",
   "boundaryLayerUrl": "/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_BOUNDARY_VW&outputformat=json&version=2.0.0",
+  "crownLandLicensesUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_LICENSES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_LICENSES_SVW",
+  "crownLandTenuresUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_TENURES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_TENURES_SVW",
+  "crownLandlLeasesUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_LEASES_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_LEASES_SVW",
+  "crownLandlInventoryUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_INVENTORY_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_INVENTORY_SVW",
+  "crownLandlInclusionsUrl": "https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_TANTALIS.TA_CROWN_INCLUSIONS_SVW",
   "bcAssessment": {
     "url": "https://delivery.apps.gov.bc.ca/ext/sgw/geo.bca",
     "names": {

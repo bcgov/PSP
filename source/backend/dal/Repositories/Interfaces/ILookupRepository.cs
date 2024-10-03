@@ -22,8 +22,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsPropertyType> GetAllPropertyTypes();
 
-        IEnumerable<PimsPropertyClassificationType> GetAllPropertyClassificationTypes();
-
         IEnumerable<PimsAreaUnitType> GetAllPropertyAreaUnitTypes();
 
         IEnumerable<PimsVolumeUnitType> GetAllPropertyVolumeUnitTypes();
@@ -41,8 +39,6 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsLeaseStatusType> GetAllLeaseStatusTypes();
 
         IEnumerable<PimsLeaseLicenseType> GetAllLeaseTypes();
-
-        IEnumerable<PimsLeaseCategoryType> GetAllLeaseCategoryTypes();
 
         IEnumerable<PimsLeasePurposeType> GetAllLeasePurposeTypes();
 
@@ -94,7 +90,7 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsAcqFlTeamProfileType> GetAllAcqFileTeamProfileTypes();
 
-        IEnumerable<PimsTenantType> GetAllTenantTypes();
+        IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes();
 
         IEnumerable<PimsAcquisitionFundingType> GetAllAcquisitionFundingTypes();
 

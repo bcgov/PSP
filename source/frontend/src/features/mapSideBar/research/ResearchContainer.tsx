@@ -4,12 +4,12 @@ import { useHistory, useRouteMatch } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { FileTypes } from '@/constants/fileTypes';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -80,7 +80,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     if (exists(retrieved)) {
       const researchProperties = await getResearchFileProperties(props.researchFileId);
       retrieved.fileProperties = researchProperties ?? null;
-      setFile({ ...retrieved, fileType: FileTypes.Research });
+      setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Research });
       setStaleFile(false);
     } else {
       setFile(undefined);
@@ -239,7 +239,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   if (
     loadingResearchFile ||
     (loadingResearchFileProperties && !isShowingPropertySelector) ||
-    researchFile?.fileType !== FileTypes.Research ||
+    researchFile?.fileType !== ApiGen_CodeTypes_FileTypes.Research ||
     researchFile?.id !== researchFileId
   ) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;

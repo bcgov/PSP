@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 
-
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class SharedFileProperties : PageObjectBase
@@ -48,7 +47,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchPropResultsLegalDescriptHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Legal Description')]");
 
         private By searchPropertiesNoRowsResult = By.CssSelector("div[data-testid='map-properties'] div[class='no-rows-message']");
-        private By searchProperties1stResultPropDiv = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
+        private By searchProperties1stResultAddressOptions = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
         private By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
 
         private By searchPropertiesAddSelectionBttn = By.XPath("//button/div[contains(text(),'Add to selection')]");
@@ -85,7 +84,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToSearchTab()
         {
             WaitUntilClickable(searchByTab);
-            webDriver.FindElement(searchByTab).Click();
+            FocusAndClick(searchByTab);
         }
 
         public void SelectPropertyByPID(string PID)
@@ -130,9 +129,8 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             webDriver.FindElement(searchByAddressInput).SendKeys(address);
 
-            WaitUntilVisible(searchByAddressInputSuggestionList);
+            WaitUntilClickable(searchByAddressInputSuggestionList);
             FocusAndClick(searchByAddressSuggestion1stOption);
-
         }
 
         public void SelectPropertyByPlan(string plan)
@@ -312,8 +310,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInFileTotal).Count();
 
-            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row'][" + propertyIndex + "]/div[3]/button"));
-            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row'][" + propertyIndex + "]/div[3]/button")).Click();
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row'][" + propertyIndex + "]/div[4]/button"));
+            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center mb-3 no-gutters row'][" + propertyIndex + "]/div[4]/button")).Click();
 
             Wait();
             if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)

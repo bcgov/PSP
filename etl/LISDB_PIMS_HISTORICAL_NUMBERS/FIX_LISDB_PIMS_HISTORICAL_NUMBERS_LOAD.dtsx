@@ -1,0 +1,2301 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="5/30/2024 1:11:11 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{92D27593-698C-4BB5-8BB5-8001785E9FE5}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="FIX_LISDB_PIMS_HISTORICAL_NUMBERS_LOAD"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="51"
+  DTS:VersionGUID="{426D616B-2AFB-4521-ACD7-E382B67CD386}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[LIS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{6E138D4D-5928-4153-B7B1-8ED15468E452}"
+      DTS:ObjectName="LIS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=LIS_Tst;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{6E138D4D-5928-4153-B7B1-8ED15468E452}sqldevtst.th.gov.bc.ca.LIS_Dev;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{975C7104-883A-4E26-86EA-45A2E0D5C9C3}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_TST;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{975C7104-883A-4E26-86EA-45A2E0D5C9C3}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CLEANUP PIMS_HISTORICAL_NUMBERS TABLE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{84E37CDA-F055-4EBB-AFEE-4938407B8F7C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CLEANUP PIMS_HISTORICAL_NUMBERS TABLE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{975C7104-883A-4E26-86EA-45A2E0D5C9C3}"
+          SQLTask:SqlStatementSource="DELETE FROM dbo.PIMS_HISTORICAL_FILE_NUMBER WHERE  APP_LAST_UPDATE_USERID LIKE 'PIMS%' ;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{2276AD24-FB5D-4CE7-94DB-30F14B36CDF0}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversiom Fields"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[PROPERTY_ID]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input].Columns[HISTORICAL_FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="HISTORICAL_FILE_NUMBER"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="5"
+                      cachedName="HISTORICAL_FILE_NUMBER_TYPE_CODE"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input].Columns[DATA_SOURCE_TYPE_CODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="DATA_SOURCE_TYPE_CODE"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[DATA_SOURCE_TYPE_CODE]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of PROPERTY_ID]"
+                      name="Copy of PROPERTY_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[PROPERTY_ID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="30"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER]"
+                      name="Copy of HISTORICAL_FILE_NUMBER"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="5"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      name="Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of DATA_SOURCE_TYPE_CODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="3"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of DATA_SOURCE_TYPE_CODE]"
+                      name="Copy of DATA_SOURCE_TYPE_CODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[DATA_SOURCE_TYPE_CODE]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
+                      name="APP_CREATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      name="APP_LAST_UPDATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="ERROR FIELDS DEFINITION"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Inputs[Derived Column Input].Columns[HISTORICAL_FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="HISTORICAL_FILE_NUMBER"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_TIME]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_TIME]"
+                      name="ERROR_TIME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="27"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]"
+                      name="ERROR_OPERATION_NAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"LIS_PIMS_HISTORICAL_NUMBERS"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"LIS_PIMS_HISTORICAL_NUMBERS"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="27"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]"
+                      name="ERROR_TASK_NAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"LIS_PIMS_HISTORICAL_NUMBERS"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"LIS_PIMS_HISTORICAL_NUMBERS"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="34"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]"
+                      name="ERROR_ETL_NAME"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"LISDB_PIMS_HISTORICAL_NUMBERS.dtsx"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"LISDB_PIMS_HISTORICAL_NUMBERS.dtsx"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_ROW]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="30"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_ROW]"
+                      name="ERROR_ROW"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">HISTORICAL_FILE_NUMBER</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="INSERT INTO ETL_ERROR_LOG"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[etl].[ETL_ERROR_LOG]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM etl.ERROR_LOG</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].Columns[ERROR_TIME]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="ERROR_TIME"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TIME]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_TIME]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].Columns[ERROR_OPERATION_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="27"
+                      cachedName="ERROR_OPERATION_NAME"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_OPERATION_NAME]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_OPERATION_NAME]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].Columns[ERROR_TASK_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="27"
+                      cachedName="ERROR_TASK_NAME"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TASK_NAME]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_TASK_NAME]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].Columns[ERROR_ETL_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="34"
+                      cachedName="ERROR_ETL_NAME"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ETL_NAME]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_ETL_NAME]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].Columns[ERROR_ROW]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="ERROR_ROW"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output].Columns[ERROR_ROW]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].Columns[ErrorCode]"
+                      cachedDataType="i4"
+                      cachedName="ErrorCode"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Error Output].Columns[ErrorCode]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].Columns[ErrorColumn]"
+                      cachedDataType="i4"
+                      cachedName="ErrorColumn"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TIME]"
+                      dataType="dbTimeStamp"
+                      name="ERROR_TIME" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_OPERATION_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="ERROR_OPERATION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_TASK_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="ERROR_TASK_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ETL_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="ERROR_ETL_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_ROW]"
+                      dataType="nText"
+                      name="ERROR_ROW" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_CODE]"
+                      dataType="i4"
+                      name="ERROR_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input].ExternalColumns[ERROR_COLUMN]"
+                      dataType="i4"
+                      name="ERROR_COLUMN" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="INSERT INTO PIMS_HISTORICAL_FILE_NUMBER"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">INSERT INTO dbo.PIMS_HISTORICAL_FILE_NUMBER (PROPERTY_ID, DATA_SOURCE_TYPE_CODE,HISTORICAL_FILE_NUMBER_TYPE_CODE,HISTORICAL_FILE_NUMBER,APP_CREATE_USERID, APP_LAST_UPDATE_USERID )
+VALUES
+(?,?,?,?,?,?);</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="RedirectRow"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[PROPERTY_ID]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].Columns[Copy of DATA_SOURCE_TYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="Copy of DATA_SOURCE_TYPE_CODE"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of DATA_SOURCE_TYPE_CODE]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].Columns[Copy of HISTORICAL_FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Copy of HISTORICAL_FILE_NUMBER"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].Columns[APP_CREATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="APP_CREATE_USERID"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].Columns[APP_LAST_UPDATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="APP_LAST_UPDATE_USERID"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_5]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i8"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="wstr"
+                      length="20"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">65</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="wstr"
+                      length="20"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="wstr"
+                      length="500"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_4]"
+                      dataType="wstr"
+                      length="30"
+                      name="Param_4">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input].ExternalColumns[Param_5]"
+                      dataType="wstr"
+                      length="30"
+                      name="Param_5">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="LISDB"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT fsub.PID
+     , RIGHT('0000' + convert(NVARCHAR(4), main.TFA_File_Number), 4) + '-' + RIGHT('000' + convert(NVARCHAR(3), fsub.Subfile_Sequence_Code), 3) AS HISTORICAL_FILE_NUMBER
+     , 'LISNO' AS HISTORICAL_FILE_NUMBER_TYPE_CODE
+     , 'LIS'   AS DATA_SOURCE_TYPE_CODE
+FROM   t_fileSub             fsub                                                  JOIN
+       t_fileSubLookup       lkup ON lkup.FileSubLookup_Id = fsub.FileSubLookup_Id JOIN
+       t_fileMain            main ON main.FileMain_SKey    = lkup.FileMain_SKey
+WHERE  fsub.PID             IS NOT NULL
+   AND main.TFA_File_Number IS NOT NULL</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[LIS]"
+                  connectionManagerRefId="Package.ConnectionManagers[LIS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[PID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[PID]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[PID]"
+                      name="PID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[HISTORICAL_FILE_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[HISTORICAL_FILE_NUMBER]"
+                      length="30"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[HISTORICAL_FILE_NUMBER]"
+                      name="HISTORICAL_FILE_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      length="5"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      name="HISTORICAL_FILE_NUMBER_TYPE_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[DATA_SOURCE_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[DATA_SOURCE_TYPE_CODE]"
+                      length="3"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[DATA_SOURCE_TYPE_CODE]"
+                      name="DATA_SOURCE_TYPE_CODE"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[PID]"
+                      dataType="i4"
+                      name="PID" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[HISTORICAL_FILE_NUMBER]"
+                      dataType="wstr"
+                      length="8"
+                      name="HISTORICAL_FILE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      name="HISTORICAL_FILE_NUMBER_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].ExternalColumns[DATA_SOURCE_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      name="DATA_SOURCE_TYPE_CODE" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[PID]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[PID]"
+                      name="PID" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[HISTORICAL_FILE_NUMBER]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[HISTORICAL_FILE_NUMBER]"
+                      name="HISTORICAL_FILE_NUMBER" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      name="HISTORICAL_FILE_NUMBER_TYPE_CODE" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[DATA_SOURCE_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[DATA_SOURCE_TYPE_CODE]"
+                      name="DATA_SOURCE_TYPE_CODE" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup PIMS HISTORICAL FILE NUMBER"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from [dbo].[PIMS_HISTORICAL_FILE_NUMBER]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (select * from [dbo].[PIMS_HISTORICAL_FILE_NUMBER]) [refTable]
+where [refTable].[PROPERTY_ID] = ? and [refTable].[HISTORICAL_FILE_NUMBER] = ? and [refTable].[HISTORICAL_FILE_NUMBER_TYPE_CODE] = ? and [refTable].[DATA_SOURCE_TYPE_CODE] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="APP_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CONCURRENCY_CONTROL_NUMBER" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DATA_SOURCE_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HISTORICAL_FILE_NUMBER" dataType="DT_WSTR" length="500" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HISTORICAL_FILE_NUMBER_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="HISTORICAL_FILE_NUMBER_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_DISABLED" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="OTHER_HIST_FILE_NUMBER_TYPE_CODE" dataType="DT_WSTR" length="200" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PROPERTY_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[PROPERTY_ID]};#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER]};#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]};#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of DATA_SOURCE_TYPE_CODE]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[PROPERTY_ID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">PROPERTY_ID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input].Columns[Copy of HISTORICAL_FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="Copy of HISTORICAL_FILE_NUMBER"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">HISTORICAL_FILE_NUMBER</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="5"
+                      cachedName="Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of HISTORICAL_FILE_NUMBER_TYPE_CODE]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">HISTORICAL_FILE_NUMBER_TYPE_CODE</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input].Columns[Copy of DATA_SOURCE_TYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="3"
+                      cachedName="Copy of DATA_SOURCE_TYPE_CODE"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output].Columns[Copy of DATA_SOURCE_TYPE_CODE]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">DATA_SOURCE_TYPE_CODE</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Left Input].Columns[PID]"
+                      cachedDataType="i4"
+                      cachedName="PID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Outputs[Sort Output].Columns[PID]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Left Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Outputs[Sort Output].Columns[PROPERTY_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input].Columns[PID]"
+                      cachedDataType="i4"
+                      cachedName="PID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[PID]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input].Columns[HISTORICAL_FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="HISTORICAL_FILE_NUMBER"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[HISTORICAL_FILE_NUMBER]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="5"
+                      cachedName="HISTORICAL_FILE_NUMBER_TYPE_CODE"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]" />
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input].Columns[DATA_SOURCE_TYPE_CODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="DATA_SOURCE_TYPE_CODE"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[DATA_SOURCE_TYPE_CODE]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output]"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Left Input].Columns[PROPERTY_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER]"
+                      name="HISTORICAL_FILE_NUMBER">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input].Columns[HISTORICAL_FILE_NUMBER]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      name="HISTORICAL_FILE_NUMBER_TYPE_CODE">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[DATA_SOURCE_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output].Columns[DATA_SOURCE_TYPE_CODE]"
+                      name="DATA_SOURCE_TYPE_CODE">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input].Columns[DATA_SOURCE_TYPE_CODE]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="PIMSDB"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT PID, PROPERTY_ID FROM dbo.PIMS_PROPERTY WHERE PID IS NOT NULL
+ORDER BY PID</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].Columns[PID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].ExternalColumns[PID]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].Columns[PID]"
+                      name="PID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].ExternalColumns[PID]"
+                      dataType="i4"
+                      name="PID" />
+                    <externalMetadataColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output].Columns[PID]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output].Columns[PID]"
+                      name="PID" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort_LIS_Data"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Inputs[Sort Input].Columns[PID]"
+                      cachedDataType="i4"
+                      cachedName="PID"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[PID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Inputs[Sort Input].Columns[HISTORICAL_FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="HISTORICAL_FILE_NUMBER"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[HISTORICAL_FILE_NUMBER]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Inputs[Sort Input].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="5"
+                      cachedName="HISTORICAL_FILE_NUMBER_TYPE_CODE"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Inputs[Sort Input].Columns[DATA_SOURCE_TYPE_CODE]"
+                      cachedCodepage="1252"
+                      cachedDataType="str"
+                      cachedLength="3"
+                      cachedName="DATA_SOURCE_TYPE_CODE"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[DATA_SOURCE_TYPE_CODE]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[PID]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[PID]"
+                      name="PID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[PID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[HISTORICAL_FILE_NUMBER]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[HISTORICAL_FILE_NUMBER]"
+                      name="HISTORICAL_FILE_NUMBER">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[HISTORICAL_FILE_NUMBER]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="5"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]"
+                      name="HISTORICAL_FILE_NUMBER_TYPE_CODE">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[HISTORICAL_FILE_NUMBER_TYPE_CODE]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[DATA_SOURCE_TYPE_CODE]"
+                      codePage="1252"
+                      dataType="str"
+                      length="3"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output].Columns[DATA_SOURCE_TYPE_CODE]"
+                      name="DATA_SOURCE_TYPE_CODE">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output].Columns[DATA_SOURCE_TYPE_CODE]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort_PIMS_Data"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Inputs[Sort Input].Columns[PID]"
+                      cachedDataType="i4"
+                      cachedName="PID"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].Columns[PID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Inputs[Sort Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Outputs[Sort Output].Columns[PID]"
+                      dataType="i4"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Outputs[Sort Output].Columns[PID]"
+                      name="PID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].Columns[PID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Outputs[Sort Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Outputs[Sort Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Data Conversion Output]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Inputs[Lookup Input]"
+              name="Data Conversion Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Derived Column Output]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Derived Column Output1]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Inputs[OLE DB Command Input]"
+              name="Derived Column Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Lookup No Match Output]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column.Inputs[Derived Column Input]"
+              name="Lookup No Match Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Merge Join Output]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields.Inputs[Data Conversion Input]"
+              name="Merge Join Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[OLE DB Command Error Output]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION.Inputs[Derived Column Input]"
+              name="OLE DB Command Error Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER.Outputs[OLE DB Command Error Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[OLE DB Source Output]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[OLE DB Source Output1]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Sort Output]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data.Outputs[Sort Output]" />
+            <path
+              refId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Sort Output1]"
+              endId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{6F3433A1-B0A5-415B-896B-8F2F0AF92B4D}"
+      DTS:From="Package\CLEANUP PIMS_HISTORICAL_NUMBERS TABLE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="325.333333333334,42.6666666666667"
+          Id="Package\CLEANUP PIMS_HISTORICAL_NUMBERS TABLE"
+          TopLeft="248.124996302649,205.263161758307" />
+        <NodeLayout
+          Size="350.666666666667,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS"
+          TopLeft="659.999990165234,198.421056366363" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="573.458329635983,223.175442395668">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="86.541660529251,0"
+              Start="0,0"
+              End="79.041660529251,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="79.041660529251,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="160,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_PIMS_Data"
+          TopLeft="330.624995073304,34.8947374989121" />
+        <NodeLayout
+          Size="110.666666666667,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB"
+          TopLeft="153.125001071021,238" />
+        <NodeLayout
+          Size="242.666666666667,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG"
+          TopLeft="907.499986477196,548.59649949611" />
+        <NodeLayout
+          Size="149.333333333334,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Sort_LIS_Data"
+          TopLeft="324.374995166436,240.842109796413" />
+        <NodeLayout
+          Size="120,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB"
+          TopLeft="141.249997895211,31.4736848029404" />
+        <NodeLayout
+          Size="326,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO PIMS_HISTORICAL_FILE_NUMBER"
+          TopLeft="864.999987110496,346.210532832344" />
+        <NodeLayout
+          Size="221.333333333334,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\ERROR FIELDS DEFINITION"
+          TopLeft="911.874986412004,455.000008564246" />
+        <NodeLayout
+          Size="132,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Merge Join"
+          TopLeft="468.749993015081,101.263159800765" />
+        <NodeLayout
+          Size="285.333333333334,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER"
+          TopLeft="861.874987157062,153.263160779535" />
+        <NodeLayout
+          Size="193.333333333334,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Data Conversiom Fields"
+          TopLeft="518.749992270023,239.473688718025" />
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Sort Output1]"
+          TopLeft="399.041661833103,240.842109796413">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="115.041664515311,-96.9122833289813"
+              Start="0,0"
+              End="115.041664515311,-89.4122833289813">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-53.4509943087973" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-53.4509943087973"
+                    Point2="0,-57.4509943087973"
+                    Point3="4,-57.4509943087973" />
+                  <mssgle:LineSegment
+                    End="111.041664515311,-57.4509943087973" />
+                  <mssgle:CubicBezierSegment
+                    Point1="111.041664515311,-57.4509943087973"
+                    Point2="115.041664515311,-57.4509943087973"
+                    Point3="115.041664515311,-61.4509943087973" />
+                  <mssgle:LineSegment
+                    End="115.041664515311,-89.4122833289813" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Sort Output]"
+          TopLeft="410.624995073304,77.5614041655788">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="124.124997941777,23.7017556351862"
+              Start="0,0"
+              End="124.124997941777,16.2017556351862">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,7.85087781759311" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,7.85087781759311"
+                    Point2="0,11.8508778175931"
+                    Point3="4,11.8508778175931" />
+                  <mssgle:LineSegment
+                    End="120.124997941777,11.8508778175931" />
+                  <mssgle:CubicBezierSegment
+                    Point1="120.124997941777,11.8508778175931"
+                    Point2="124.124997941777,11.8508778175931"
+                    Point3="124.124997941777,15.8508778175931" />
+                  <mssgle:LineSegment
+                    End="124.124997941777,16.2017556351862" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[OLE DB Source Output1]"
+          TopLeft="263.791667737688,260.75438823154">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="60.5833274287486,0"
+              Start="0,0"
+              End="53.0833274287486,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="53.0833274287486,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[OLE DB Source Output]"
+          TopLeft="261.249997895211,54.5175444842596">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="69.374997178093,0"
+              Start="0,0"
+              End="61.874997178093,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="61.874997178093,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[OLE DB Command Error Output]"
+          TopLeft="1025.27082009458,388.877199499011">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,66.1228090652357"
+              Start="0,0"
+              End="0,58.6228090652357">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,58.6228090652357" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-70.70890625,23.5067170326179,141.4178125,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Merge Join Output]"
+          TopLeft="555.416659681748,143.929826467432">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="59.9999992549421,95.5438622505933"
+              Start="0,0"
+              End="59.9999992549421,88.0438622505933">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.9040876229961" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.9040876229961"
+                    Point2="0,38.9040876229961"
+                    Point3="4,38.9040876229961" />
+                  <mssgle:LineSegment
+                    End="55.9999992549421,38.9040876229961" />
+                  <mssgle:CubicBezierSegment
+                    Point1="55.9999992549421,38.9040876229961"
+                    Point2="59.9999992549421,38.9040876229961"
+                    Point3="59.9999992549421,42.9040876229961" />
+                  <mssgle:LineSegment
+                    End="59.9999992549421,88.0438622505933" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Derived Column Output]"
+          TopLeft="1025.6874864446,497.666675230913">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.9298242651965"
+              Start="0,0"
+              End="0,43.4298242651965">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.4298242651965" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Data Conversion Output]"
+          TopLeft="646.305547825579,239.473688718025">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="312.013883775928,-43.5438612718232"
+              Start="0,0"
+              End="312.013883775928,-36.0438612718232">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-17.843311753824" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-17.843311753824"
+                    Point2="0,-21.843311753824"
+                    Point3="4,-21.843311753824" />
+                  <mssgle:LineSegment
+                    End="308.013883775928,-21.843311753824" />
+                  <mssgle:CubicBezierSegment
+                    Point1="308.013883775928,-21.843311753824"
+                    Point2="312.013883775928,-21.843311753824"
+                    Point3="312.013883775928,-25.843311753824" />
+                  <mssgle:LineSegment
+                    End="312.013883775928,-36.0438612718232" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Derived Column"
+          TopLeft="1179.99998241663,239.298249992747" />
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Lookup No Match Output]"
+          TopLeft="1050.76387604595,195.929827446202">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="207.236106370679,43.3684225465457"
+              Start="0,0"
+              End="207.236106370679,35.8684225465457">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,13.4924678301123" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,13.4924678301123"
+                    Point2="0,17.4924678301123"
+                    Point3="4,17.4924678301123" />
+                  <mssgle:LineSegment
+                    End="203.236106370679,17.4924678301123" />
+                  <mssgle:CubicBezierSegment
+                    Point1="203.236106370679,17.4924678301123"
+                    Point2="207.236106370679,17.4924678301123"
+                    Point3="207.236106370679,21.4924678301123" />
+                  <mssgle:LineSegment
+                    End="207.236106370679,35.8684225465457" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="47.8116664665895,22.4924678301123,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS.Paths[Derived Column Output1]"
+          TopLeft="1257.99998241663,281.964916659414">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-229.999995306134,64.2456161729298"
+              Start="0,0"
+              End="-229.999995306134,56.7456161729298">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.1228080864649" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.1228080864649"
+                    Point2="0,32.1228080864649"
+                    Point3="-4,32.1228080864649" />
+                  <mssgle:LineSegment
+                    End="-225.999995306134,32.1228080864649" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-225.999995306134,32.1228080864649"
+                    Point2="-229.999995306134,32.1228080864649"
+                    Point3="-229.999995306134,36.1228080864649" />
+                  <mssgle:LineSegment
+                    End="-229.999995306134,56.7456161729298" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\LISDB">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\PIMSDB">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\INSERT INTO ETL_ERROR_LOG">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\STEP 1 - INSERT INTO PIMS_HISTORICAL_NUMBERS\Lookup PIMS HISTORICAL FILE NUMBER">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[PIMS_HISTORICAL_FILE_NUMBER]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

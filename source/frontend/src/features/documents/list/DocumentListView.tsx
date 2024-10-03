@@ -1,5 +1,5 @@
 import orderBy from 'lodash/orderBy';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useState } from 'react';
 
 import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
@@ -37,9 +37,9 @@ export interface IDocumentListViewProps {
 /**
  * Page that displays document information as a list.
  */
-export const DocumentListView: React.FunctionComponent<
-  React.PropsWithChildren<IDocumentListViewProps>
-> = (props: IDocumentListViewProps) => {
+export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> = (
+  props: IDocumentListViewProps,
+) => {
   const { documentResults, isLoading, defaultFilters, hideFilters, title } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
@@ -73,6 +73,10 @@ export const DocumentListView: React.FunctionComponent<
 
     fetch();
   }, [props.relationshipType, getDocumentTypes, getDocumentRelationshipTypes]);
+
+  const maxDocumentCount = useMemo(() => {
+    return props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates ? 1 : 10;
+  }, [props.relationshipType]);
 
   const mapSortField = (sortField: string) => {
     if (sortField === 'documentType') {
@@ -126,6 +130,7 @@ export const DocumentListView: React.FunctionComponent<
 
   const handleModalUploadClose = () => {
     setIsUploadVisible(false);
+    props.onSuccess();
   };
 
   const handlePreview = (documentRelationship: ApiGen_Concepts_DocumentRelationship) => {
@@ -161,11 +166,6 @@ export const DocumentListView: React.FunctionComponent<
     }
   };
 
-  const onUploadSuccess = () => {
-    handleModalUploadClose();
-    props.onSuccess();
-  };
-
   const onUpdateSuccess = () => {
     handleModalDetailsClose();
     props.onSuccess();
@@ -179,7 +179,7 @@ export const DocumentListView: React.FunctionComponent<
       <SectionListHeader
         claims={[Claims.DOCUMENT_ADD]}
         title={title ?? 'Documents'}
-        addButtonText={props.addButtonText || 'Add a Document'}
+        addButtonText={props.addButtonText || 'Add Document'}
         onAdd={() => setIsUploadVisible(true)}
       />
     );
@@ -215,9 +215,10 @@ export const DocumentListView: React.FunctionComponent<
       <DocumentUploadModal
         parentId={props.parentId}
         relationshipType={props.relationshipType}
+        maxDocumentCount={maxDocumentCount}
         display={isUploadVisible}
         setDisplay={setIsUploadVisible}
-        onUploadSuccess={onUploadSuccess}
+        onUploadSuccess={handleModalUploadClose}
         onClose={handleModalUploadClose}
       />
       <GenericModal

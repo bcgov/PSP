@@ -11,10 +11,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Moq;
-using Pims.Api.Services;
 using Pims.Dal;
 using Pims.Dal.Configuration.Generators;
-using Pims.Dal.Entities;
 
 namespace Pims.Core.Test
 {

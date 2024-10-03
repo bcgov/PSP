@@ -9,7 +9,7 @@
         <WinAuthUserName />
         <WinAuthDomain />
         <ServerName>ssistst.th.gov.bc.ca</ServerName>
-        <PathOnServer>/SSISDB/PIMS_TST/LISDB_PIMS_HISTORICAL_NUMBERS</PathOnServer>
+        <PathOnServer>/SSISDB/PIMS_DEV/LISDB_PIMS_HISTORICAL_NUMBERS</PathOnServer>
         <UserIDs />
         <UserPasswords />
         <OfflineMode>false</OfflineMode>
