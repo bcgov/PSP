@@ -35,6 +35,7 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropertyResearchFiles.AsNoTracking()
                 .Where(x => x.ResearchFileId == researchFileId)
                 .Include(rp => rp.PimsPrfPropResearchPurposeTypes)
+                    .ThenInclude(rp => rp.PropResearchPurposeTypeCodeNavigation)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.RegionCodeNavigation)
                 .Include(rp => rp.Property)

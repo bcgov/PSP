@@ -45,15 +45,37 @@ exports[`SideNavbar display and logic > renders 1`] = `
 .c4.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c4.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c4.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c4.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -63,20 +85,66 @@ exports[`SideNavbar display and logic > renders 1`] = `
 .c4.btn.btn-info:hover,
 .c4.btn.btn-info:active,
 .c4.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c4.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c4.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c4.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,6 +166,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
 .c4.btn.btn-link:hover,
 .c4.btn.btn-link:active,
 .c4.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -108,6 +177,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
 
 .c4.btn.btn-link:disabled,
 .c4.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -138,13 +208,15 @@ exports[`SideNavbar display and logic > renders 1`] = `
 
 .c5.btn.btn-light.Button {
   padding: 0;
-  border: 0.1rem solid;
+  border: 0.1rem solid #9F9D9C;
   background-color: white;
+  color: #474543;
 }
 
 .c5.btn.btn-light.Button:focus,
 .c5.btn.btn-light.Button:active {
   background-color: white;
+  color: #474543;
 }
 
 .c5.btn,
@@ -158,7 +230,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
 }
 
 .c1 {
-  height: calc( 100vh - -  );
+  height: calc( 100vh - 7.2rem - 4.4rem );
   overflow-y: auto;
   overflow-x: hidden;
   padding-top: 1.5rem;
@@ -227,6 +299,11 @@ exports[`SideNavbar display and logic > renders 1`] = `
 .c7#close-tray {
   float: right;
   cursor: pointer;
+  fill: #474543;
+}
+
+.c7#close-tray:hover {
+  fill: #428bca;
 }
 
 .c6 {
@@ -255,12 +332,21 @@ exports[`SideNavbar display and logic > renders 1`] = `
 .c2 {
   width: 100%;
   margin-bottom: 2rem;
+  fill: #f2f2f2;
 }
 
 .c2 svg {
   min-width: -webkit-max-content;
   min-width: -moz-max-content;
   min-width: max-content;
+}
+
+.c2:hover label {
+  color: #8ec6ff;
+}
+
+.c2:hover svg {
+  fill: #8ec6ff;
 }
 
 .c3 {

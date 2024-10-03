@@ -20,14 +20,16 @@ exports[`PropertyInformation component > renders a complete lease as expected 1`
 .c3 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #42814A;
   border-radius: 0.5rem;
 }
 
 .c4 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #053662;
   border-radius: 0.5rem;
 }
 
@@ -300,14 +302,16 @@ exports[`PropertyInformation component > renders minimally as expected 1`] = `
 .c3 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #42814A;
   border-radius: 0.5rem;
 }
 
 .c4 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #053662;
   border-radius: 0.5rem;
 }
 

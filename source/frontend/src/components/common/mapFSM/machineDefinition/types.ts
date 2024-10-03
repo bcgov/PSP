@@ -43,6 +43,7 @@ export type MachineContext = {
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
   activeLayers: ILayerItem[];
+  isFiltering: boolean;
   showDisposed: boolean;
   showRetired: boolean;
 };
