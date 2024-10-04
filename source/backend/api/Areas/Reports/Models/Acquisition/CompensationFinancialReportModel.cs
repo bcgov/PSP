@@ -94,9 +94,10 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
         {
             ExportBy = user.GetDisplayName();
             ExportDate = DateTime.Now.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
-            MinistryProject = GetMinistryProjectName(financial.CompensationRequisition?.AcquisitionFile?.Project);
-            Product = GetMinistryProductName(financial.CompensationRequisition?.AcquisitionFile?.Product);
-            FileNumberAndName = GetAcquisitionFileName(financial.CompensationRequisition?.AcquisitionFile);
+            MinistryProject = GetMinistryProjectName(financial.CompensationRequisition?.AcquisitionFile?.Project ?? financial.CompensationRequisition?.Lease?.Project);
+            Product = GetMinistryProductName(financial.CompensationRequisition?.AcquisitionFile?.Product ?? financial.CompensationRequisition?.Lease?.Product);
+            FileType = GetFileType(financial.CompensationRequisition);
+            FileNumberAndName = GetFileNumberAndName(financial.CompensationRequisition);
             FiscalYear = financial.CompensationRequisition?.FiscalYear ?? string.Empty;
             AlternateProject = GetMinistryProjectName(financial.CompensationRequisition?.AlternateProject);
             RequisitionNumber = financial.CompensationRequisition?.Internal_Id ?? 0;
@@ -111,14 +112,14 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             var project = GetProject(financial);
 
             // Draft requisition totals per project
-            ProjectDraftPreTaxAmount = project is not null && reportTotals.ProjectDraftPreTaxAmount.ContainsKey(project.Id) ? reportTotals.ProjectDraftPreTaxAmount[project.Id] : 0;
-            ProjectDraftTaxAmount = project is not null && reportTotals.ProjectDraftTaxAmount.ContainsKey(project.Id) ? reportTotals.ProjectDraftTaxAmount[project.Id] : 0;
-            ProjectDraftTotalAmount = project is not null && reportTotals.ProjectDraftTotalAmount.ContainsKey(project.Id) ? reportTotals.ProjectDraftTotalAmount[project.Id] : 0;
+            ProjectDraftPreTaxAmount = project is not null && reportTotals.ProjectDraftPreTaxAmount.TryGetValue(project.Id, out decimal draftPreTax) ? draftPreTax : 0;
+            ProjectDraftTaxAmount = project is not null && reportTotals.ProjectDraftTaxAmount.TryGetValue(project.Id, out decimal draftTax) ? draftTax : 0;
+            ProjectDraftTotalAmount = project is not null && reportTotals.ProjectDraftTotalAmount.TryGetValue(project.Id, out decimal draftTotal) ? draftTotal : 0;
 
             // Final requisition total per project
-            ProjectFinalPreTaxAmount = project is not null && reportTotals.ProjectFinalPreTaxAmount.ContainsKey(project.Id) ? reportTotals.ProjectFinalPreTaxAmount[project.Id] : 0;
-            ProjectFinalTaxAmount = project is not null && reportTotals.ProjectFinalTaxAmount.ContainsKey(project.Id) ? reportTotals.ProjectFinalTaxAmount[project.Id] : 0;
-            ProjectFinalTotalAmount = project is not null && reportTotals.ProjectFinalTotalAmount.ContainsKey(project.Id) ? reportTotals.ProjectFinalTotalAmount[project.Id] : 0;
+            ProjectFinalPreTaxAmount = project is not null && reportTotals.ProjectFinalPreTaxAmount.TryGetValue(project.Id, out decimal finalPreTax) ? finalPreTax : 0;
+            ProjectFinalTaxAmount = project is not null && reportTotals.ProjectFinalTaxAmount.TryGetValue(project.Id, out decimal finalTax) ? finalTax : 0;
+            ProjectFinalTotalAmount = project is not null && reportTotals.ProjectFinalTotalAmount.TryGetValue(project.Id, out decimal finalTotal) ? finalTotal : 0;
 
             // Total expenditures - draft
             AllExpendituresDraftPreTaxAmount = reportTotals.AllExpendituresDraftPreTaxAmount;
@@ -142,20 +143,19 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             {
                 return financial.CompensationRequisition.AcquisitionFile.Project;
             }
+            else if (financial?.CompensationRequisition?.Lease?.Project is not null)
+            {
+                return financial.CompensationRequisition.Lease.Project;
+            }
             else
             {
                 return null;
             }
         }
 
-        private static string GetNullableDate(DateTime? dateTime)
+        private static string GetNullableDate(DateOnly? date)
         {
-            return dateTime.HasValue ? dateTime.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : string.Empty;
-        }
-
-        private static string GetNullableDate(DateOnly? dateTime)
-        {
-            return dateTime.HasValue ? dateTime.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : string.Empty;
+            return date.HasValue ? date.Value.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture) : string.Empty;
         }
 
         private static string GetMinistryProjectName(PimsProject project)
@@ -194,15 +194,35 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             }
         }
 
-        private static string GetAcquisitionFileName(PimsAcquisitionFile file)
+        private static string GetFileNumberAndName(PimsCompensationRequisition compensationRequisition)
         {
-            if (file == null)
+            if (compensationRequisition?.AcquisitionFile is not null)
             {
-                return string.Empty;
+                return $"{compensationRequisition.AcquisitionFile.FileNumber} - {compensationRequisition.AcquisitionFile.FileName}";
+            }
+            else if (compensationRequisition?.Lease is not null)
+            {
+                return compensationRequisition.Lease.LFileNo ?? string.Empty;
             }
             else
             {
-                return $"{file.FileNumber} - {file.FileName}";
+                return string.Empty;
+            }
+        }
+
+        private static string GetFileType(PimsCompensationRequisition compensationRequisition)
+        {
+            if (compensationRequisition?.AcquisitionFile is not null)
+            {
+                return "Acquisition";
+            }
+            else if (compensationRequisition?.Lease is not null)
+            {
+                return "Lease/Licence";
+            }
+            else
+            {
+                return string.Empty;
             }
         }
     }

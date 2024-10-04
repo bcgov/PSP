@@ -118,22 +118,16 @@ namespace Pims.Dal.Repositories
                 projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.Lease != null && f.CompensationRequisition.Lease.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.Lease.ProjectId.Value));
 
                 predicate.And(projectBuilder);
-
-                // query = query.Where(f =>
-                //     (f.CompensationRequisition.AlternateProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AlternateProjectId.Value)) ||
-                //     (!f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AcquisitionFile.ProjectId.Value)));
             }
 
             if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
                 predicate.And(f => f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
-                // query = query.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
             }
 
             if (filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
             {
                 predicate.And(f => f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
-                // query = query.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
             }
 
             return query.Where(predicate).ToList();
