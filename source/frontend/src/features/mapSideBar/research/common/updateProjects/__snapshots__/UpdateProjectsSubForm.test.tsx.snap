@@ -166,6 +166,8 @@ exports[`UpdateProjectsSubForm > renders as expected with minimal form data 1`] 
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c0.btn.btn-link:hover,
@@ -391,6 +393,8 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c3.btn.btn-link:hover,
@@ -766,6 +770,8 @@ exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c0.btn.btn-link:hover,

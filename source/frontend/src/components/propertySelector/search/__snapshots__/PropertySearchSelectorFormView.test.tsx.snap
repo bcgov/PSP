@@ -166,6 +166,8 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c5.btn.btn-link:hover,
