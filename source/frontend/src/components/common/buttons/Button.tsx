@@ -197,6 +197,7 @@ const StyledButton = styled(BootstrapButton)`
       letter-spacing: unset;
       text-align: left;
       padding: 0;
+      text-decoration: underline;
       &:hover,
       &:active,
       &:focus {

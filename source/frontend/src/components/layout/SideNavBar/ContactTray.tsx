@@ -16,12 +16,12 @@ export const ContactTray = ({ onLinkClick }: ISideTrayPageProps) => {
     <>
       <Styled.TrayHeader>Contacts</Styled.TrayHeader>
       {hasClaim(Claims.CONTACT_VIEW) && (
-        <Link onClick={onLinkClick} to="/contact/list">
+        <Link onClick={onLinkClick} to="/contact/list" className="nav-item">
           Manage Contacts
         </Link>
       )}
       {hasClaim(Claims.CONTACT_ADD) && (
-        <Link onClick={onLinkClick} to="/contact/new/P">
+        <Link onClick={onLinkClick} to="/contact/new/P" className="nav-item">
           Add a Contact
         </Link>
       )}

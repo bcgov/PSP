@@ -1,1 +1,0 @@
-source "run_sql_scripts.sh" -f "C:\WorkPIMS\PSP_PIMS_S89_00" -s "\Alter Up"

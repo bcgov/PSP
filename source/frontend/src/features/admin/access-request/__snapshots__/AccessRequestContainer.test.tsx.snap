@@ -172,6 +172,8 @@ exports[`AccessRequestContainer component > makes a request based on the access 
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c5.btn.btn-link:hover,
@@ -966,6 +968,8 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c5.btn.btn-link:hover,

@@ -216,7 +216,7 @@ clean: ## Removes all local containers, images, volumes, etc
 	@docker volume rm -f psp-frontend-node-cache
 	@docker volume rm -f psp-api-db-data
 
-restart-mayan: 
+restart-mayan:
 	@docker-compose --profile mayan up --build --force-recreate -d
 
 mayan-up: ## Calls the docker compose up for the mayan images
@@ -272,6 +272,10 @@ db-deploy:
 	@echo "$(P) deployment script that facilitates releasing database changes."
 	@cd source/database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
 
+db-deploy-transaction:
+	@echo "$(P) deployment transaction."
+	@cd source/database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy-transaction.sh
+
 db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01).
 	@echo "$(P) Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01)"
 	@cd source/database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./db-upgrade.sh
@@ -279,6 +283,11 @@ db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
 	@cd source/backend/entities; eval $(grep -v '^#' .env | xargs) dotnet ef dbcontext scaffold Name=PIMS Microsoft.EntityFrameworkCore.SqlServer -o ../entities/ef --schema dbo --context PimsBaseContext --context-namespace Pims.Dal --context-dir . --no-onconfiguring --namespace Pims.Dal.Entities --data-annotations -v -f --startup-project ../api
+
+db-generate-master:
+	@echo "$(P) Generates a master script that for the given sprint."
+	@cd source/database/mssql/scripts/dbscripts; ./generate_master_sql.sh -s $(n)
+
 
 keycloak-sync: ## Syncs accounts with Keycloak and PIMS
 	@echo "$(P) Syncing keycloak with PIMS..."
