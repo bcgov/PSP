@@ -74,7 +74,7 @@
 
 a {
   color: $link-color;
-  &:link:not(.nav-item, .dropdown-toggle) {
+  &:link:not(.nav-item, .dropdown-toggle, .dropdown-item) {
     text-decoration: underline;
   }
   &:hover {
