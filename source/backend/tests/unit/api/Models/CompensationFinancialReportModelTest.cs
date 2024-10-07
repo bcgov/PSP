@@ -101,6 +101,7 @@ namespace Pims.Api.Test
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
                     AcquisitionFile = null,
+                    Lease = null,
                 },
             };
 

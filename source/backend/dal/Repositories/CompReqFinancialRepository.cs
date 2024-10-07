@@ -120,12 +120,12 @@ namespace Pims.Dal.Repositories
                 predicate.And(projectBuilder);
             }
 
-            if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
+            if (includeAcquisitions && filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
                 predicate.And(f => f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
             }
 
-            if (filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
+            if (includeAcquisitions && filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
             {
                 predicate.And(f => f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
             }
