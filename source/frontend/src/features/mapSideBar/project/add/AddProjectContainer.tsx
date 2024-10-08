@@ -107,7 +107,7 @@ const AddProjectContainer: React.FC<React.PropsWithChildren<IAddProjectContainer
     <MapSideBarLayout
       showCloseButton
       title="Create Project"
-      icon={<FaBriefcase size={26} />}
+      icon={<FaBriefcase title="Project Icon" size={28} />}
       onClose={close}
       footer={
         <SidebarFooter onSave={handleSave} onCancel={close} displayRequiredFieldError={!isValid} />

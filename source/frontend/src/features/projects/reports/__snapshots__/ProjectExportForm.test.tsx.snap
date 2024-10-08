@@ -21,7 +21,7 @@ exports[`ProjectExportForm component > renders as expected 1`] = `
     action="#"
   >
     <div
-      class="pb-2 row"
+      class="pl-9 row"
     >
       <div
         class="pr-0 text-left col-4"

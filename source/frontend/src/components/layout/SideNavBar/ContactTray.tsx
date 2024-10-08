@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom';
 
+import ContactIcon from '@/assets/images/contact-icon.svg?react';
 import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
@@ -14,14 +15,19 @@ export const ContactTray = ({ onLinkClick }: ISideTrayPageProps) => {
   const { hasClaim } = useKeycloakWrapper();
   return (
     <>
-      <Styled.TrayHeader>Contacts</Styled.TrayHeader>
+      <Styled.TrayHeader>
+        <span className="mr-2">
+          <ContactIcon title="Contact Manager Icon" fill="currentColor" />
+        </span>
+        Contacts
+      </Styled.TrayHeader>
       {hasClaim(Claims.CONTACT_VIEW) && (
-        <Link onClick={onLinkClick} to="/contact/list" className="nav-item">
+        <Link onClick={onLinkClick} to="/contact/list" className="pl-9 pb-3 nav-item">
           Manage Contacts
         </Link>
       )}
       {hasClaim(Claims.CONTACT_ADD) && (
-        <Link onClick={onLinkClick} to="/contact/new/P" className="nav-item">
+        <Link onClick={onLinkClick} to="/contact/new/P" className="pl-9 pb-3 nav-item">
           Add a Contact
         </Link>
       )}
