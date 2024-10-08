@@ -17,33 +17,38 @@ export const ProjectTray = ({ onLinkClick }: ISideTrayPageProps) => {
       <HalfHeightDiv>
         <Styled.TrayHeader>
           <span className="mr-2">
-            <FaBriefcase size={26} />
+            <FaBriefcase title="Project Icon" fill="currentColor" />
           </span>
           Projects
         </Styled.TrayHeader>
         {hasClaim(Claims.PROJECT_VIEW) && (
-          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/project/list">
+          <Link onClick={onLinkClick} to="/project/list" className="pl-9 pb-3 nav-item">
             Manage Projects
           </Link>
         )}
         {hasClaim(Claims.PROJECT_ADD) && (
-          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/mapview/sidebar/project/new">
+          <Link
+            onClick={onLinkClick}
+            to="/mapview/sidebar/project/new"
+            className="pl-9 pb-3 nav-item"
+          >
             Create Project
           </Link>
         )}
       </HalfHeightDiv>
-
-      {hasClaim(Claims.PROJECT_VIEW) && (
-        <HalfHeightDiv>
-          <ExportH3 className="mt-5">
-            <span className="mr-4">
-              <FaFileExcel />
-            </span>
-            Exports
-          </ExportH3>
-          <ProjectExportContainer View={ProjectExportForm} />
-        </HalfHeightDiv>
-      )}
+      <HalfHeightDiv>
+        {hasClaim(Claims.PROJECT_VIEW) && (
+          <>
+            <ExportH3 className="mt-5">
+              <span className="mr-2">
+                <FaFileExcel />
+              </span>
+              Exports
+            </ExportH3>
+            <ProjectExportContainer View={ProjectExportForm} />
+          </>
+        )}
+      </HalfHeightDiv>
     </>
   );
 };

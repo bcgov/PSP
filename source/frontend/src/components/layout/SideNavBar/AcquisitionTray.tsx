@@ -33,7 +33,7 @@ export const AcquisitionTray = ({ onLinkClick }: ISideTrayPageProps) => {
       )}
       {hasClaim(Claims.ACQUISITION_ADD) && (
         <Link
-          className="pl-9 pb-3 nav-item"
+          className="pl-9 pb-3 nav-item "
           onClick={onLinkClick}
           to="/mapview/sidebar/acquisition/new"
         >

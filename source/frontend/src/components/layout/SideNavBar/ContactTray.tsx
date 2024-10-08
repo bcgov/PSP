@@ -17,7 +17,7 @@ export const ContactTray = ({ onLinkClick }: ISideTrayPageProps) => {
     <>
       <Styled.TrayHeader>
         <span className="mr-2">
-          <ContactIcon fill="currentColor" />
+          <ContactIcon title="Contact Manager Icon" fill="currentColor" />
         </span>
         Contacts
       </Styled.TrayHeader>
