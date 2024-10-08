@@ -84,7 +84,7 @@ const AddConsolidationView: React.FunctionComponent<
     <MapSideBarLayout
       showCloseButton
       title="Create a Consolidation"
-      icon={<StyledSubdivideConsolidateIcon />}
+      icon={<StyledSubdivideConsolidateIcon title="Consolidation Icon" />}
       onClose={onCancel}
       footer={
         <SidebarFooter
@@ -236,8 +236,8 @@ const StyledFormWrapper = styled.div`
 `;
 
 const StyledSubdivideConsolidateIcon = styled(SubdivisionIcon)`
-  width: 3rem;
-  height: 3rem;
+  width: 2.8rem;
+  height: 2.8rem;
   margin-right: 1rem;
   fill: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;
