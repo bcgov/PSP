@@ -102,7 +102,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void ChooseSpecificSelectOption(By parentElement, string option)
         {
-            Wait(2000);
+            Wait();
 
             var js = (IJavaScriptExecutor)webDriver;
             
@@ -117,12 +117,32 @@ namespace PIMS.Tests.Automation.PageObjects
             selectedOption.Click();
         }
 
+        protected void ChooseSpecificSelectOption2(By parentElement, string option)
+        {
+            Wait();
+
+            var js = (IJavaScriptExecutor)webDriver;
+
+            SelectElement selectElement = new SelectElement(webDriver.FindElement(parentElement));
+            selectElement.SelectByText(option);
+            //wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(selectElement.FindElements(By.TagName("option"))));
+
+            //var childrenElements = selectElement.FindElements(By.TagName("option"));
+            //var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Equals(option)).Subject;
+
+            //js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
+
+            //selectedOption.Click();
+        }
+
         protected void ChooseSpecificRadioButton(By parentName, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;
 
             var childrenElements = webDriver.FindElements(parentName);
             var selectedOption = childrenElements.Should().ContainSingle(o => o.GetAttribute("value").Equals(option)).Subject;
+
+            System.Diagnostics.Debug.WriteLine(selectedOption);
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
             js.ExecuteScript("arguments[0].click();", selectedOption);
@@ -231,7 +251,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             if (amount == "")
             {
-                return "";
+                return "$0.00";
             }
             else
             {
@@ -329,10 +349,10 @@ namespace PIMS.Tests.Automation.PageObjects
             return result;
         }
 
-        protected string CalculateGSTDisplay(string GST)
-        {
-            return GST == "true" || GST == "" ? "Y" : "N";
-        }
+        //protected string CalculateGSTDisplay(string GST)
+        //{
+        //    return GST == "true" || GST == "" ? "Y" : "N";
+        //}
 
         protected string TransformBooleanFormat(string elementValue)
         {
@@ -372,11 +392,12 @@ namespace PIMS.Tests.Automation.PageObjects
         protected string CalculateExpiryCurrentDate(string originExpiryDate, List<LeaseRenewal> renewals)
         {
             var expiryDates = new List<DateTime>();
+
+            if (originExpiryDate == "" && renewals.Count == 0) return "";
             if (originExpiryDate != "")
             {
                 var originExpiryDateElement = DateTime.Parse(originExpiryDate);
                 expiryDates.Add(originExpiryDateElement);
-
             }
 
             if (renewals.Count > 0)

@@ -94,6 +94,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void IsToastyPresent()
         {
             AssertTrueIsDisplayed(generalToastBody);
+
         }
 
         public void CancelActionModal()

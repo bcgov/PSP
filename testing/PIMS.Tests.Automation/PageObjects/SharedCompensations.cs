@@ -1,11 +1,9 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
-using System;
-using System.Text.RegularExpressions;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
-    public class AcquisitionCompensations : PageObjectBase
+    public class SharedCompensations : PageObjectBase
     {
         private By compensationLinkTab = By.XPath("//a[contains(text(),'Compensation')]");
 
@@ -154,7 +152,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private SharedModals sharedModals;
 
-        public AcquisitionCompensations(IWebDriver webDriver) : base(webDriver)
+        public SharedCompensations(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
         }
@@ -263,12 +261,12 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(requisitionEditBttn);
         }
 
-        public void UpdateCompensationDetails(AcquisitionCompensation compensation)
+        public void UpdateCompensationDetails(Compensation compensation)
         {
             Wait();
 
             //Requisition Details
-            if(compensation.CompensationStatus != "")
+            if (compensation.CompensationStatus != "")
                 ChooseSpecificSelectOption(requisitionStatusSelect, compensation.CompensationStatus);
 
             if (compensation.CompensationAlternateProject != "")
@@ -322,7 +320,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Financial Coding
             if (compensation.CompensationFiscalYear != "")
-                ChooseSpecificSelectOption(requisitionFiscalYearSelect, compensation.CompensationFiscalYear);
+            {
+                By optionTest = By.XPath("//select[@id='input-fiscalYear']/option[@value='"+ compensation.CompensationFiscalYear +"']");
+                webDriver.FindElement(optionTest).Click();
+            }
 
             if (compensation.CompensationSTOB != "")
             {
@@ -337,7 +338,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilVisible(requisitionServiceLineOptions);
                 FocusAndClick(requisitionServiceLine1stOption);
             }
-                
+
 
             if (compensation.CompensationResponsibilityCentre != "")
             {
@@ -407,7 +408,7 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(compensationH120TotalCount).Count();
         }
 
-        public void VerifyCompensationDetailsInitViewForm()
+        public void VerifyCompensationDetailsInitViewForm(string fileType)
         {
             //Title
             AssertTrueIsDisplayed(compensationDetailsTitle);
@@ -429,13 +430,18 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionGenerateH120Bttn);
             AssertTrueIsDisplayed(requisitionEditBttn);
             AssertTrueIsDisplayed(requisitionStatusLabel);
-            AssertTrueIsDisplayed(requisitionAltProjectLabel);
             AssertTrueContentEquals(requisitionStatusContent, "Draft");
+            AssertTrueIsDisplayed(requisitionAltProjectLabel);
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
             AssertTrueIsDisplayed(requisitionAgreementLabel);
-            AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
-            AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
-            AssertTrueIsDisplayed(requisitionAdvancePaymentLabel);
+
+            if (fileType == "Acquisition File")
+            {
+                AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
+                AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
+                AssertTrueIsDisplayed(requisitionAdvancePaymentLabel);
+            }
+            
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
 
             //Financial Coding
@@ -533,7 +539,7 @@ namespace PIMS.Tests.Automation.PageObjects
             
         }
 
-        public void VerifyCompensationDetailsViewForm(AcquisitionCompensation compensation)
+        public void VerifyCompensationDetailsViewForm(Compensation compensation, string fileType)
         {
             Wait();
 
@@ -562,10 +568,14 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
             AssertTrueIsDisplayed(requisitionAgreementLabel);
             AssertTrueContentEquals(requisitionAgreementContent, TransformDateFormat(compensation.CompensationAgreementDate));
-            AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
-            AssertTrueContentEquals(requsitionExpropriationServedContent, TransformDateFormat(compensation.CompensationExpropriationNoticeDate));
-            AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
-            AssertTrueContentEquals(requisitionExpropriationVestingContent, TransformDateFormat(compensation.CompensationExpropriationVestingDate));
+            if (fileType == "Acquisition File")
+            {
+                AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
+                AssertTrueContentEquals(requsitionExpropriationServedContent, TransformDateFormat(compensation.CompensationExpropriationNoticeDate));
+                AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
+                AssertTrueContentEquals(requisitionExpropriationVestingContent, TransformDateFormat(compensation.CompensationExpropriationVestingDate));
+            }
+            
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueContentEquals(requisitionSpecialInstructionContent, compensation.CompensationSpecialInstructions);
 
@@ -648,7 +658,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(requisitionFooterTotalChequeAmountContent, TransformCurrencyFormat(compensation.CompensationTotalAmount));
         }
 
-        public void VerifyCompensationListView(AcquisitionCompensation compensation)
+        public void VerifyCompensationListView(Compensation compensation)
         {
             var lastCreatedCompensationReq = webDriver.FindElements(compensationH120TotalCount).Count;
             var elementIndex = lastCreatedCompensationReq -1;
@@ -689,6 +699,13 @@ namespace PIMS.Tests.Automation.PageObjects
             if (activity.ActCodeDescription != "")
             {
                 webDriver.FindElement(By.Id("typeahead-select-financials."+ index +".financialActivityCodeId")).SendKeys(activity.ActCodeDescription);
+
+                Wait();
+                webDriver.FindElement(By.Id("typeahead-select-financials."+ index +".financialActivityCodeId")).SendKeys(Keys.Space);
+
+                Wait();
+                webDriver.FindElement(By.Id("typeahead-select-financials."+ index +".financialActivityCodeId")).SendKeys(Keys.Backspace);
+
                 WaitUntilVisible(By.CssSelector("div[id='typeahead-select-financials."+ index +".financialActivityCodeId']"));
                 webDriver.FindElement(By.CssSelector("div[id='typeahead-select-financials."+ index +".financialActivityCodeId'] a:nth-child(1)")).Click();
             }

@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly AcquisitionChecklist checklist;
         private readonly AcquisitionAgreements agreements;
         private readonly AcquisitionStakeholders stakeholders;
-        private readonly AcquisitionCompensations h120;
+        private readonly SharedCompensations h120;
         private readonly AcquisitionExpropriation expropriation;
         private readonly Notes notes;
 
@@ -44,7 +44,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             checklist = new AcquisitionChecklist(driver.Current);
             agreements = new AcquisitionAgreements(driver.Current);
             stakeholders = new AcquisitionStakeholders(driver.Current);
-            h120 = new AcquisitionCompensations(driver.Current);
+            h120 = new SharedCompensations(driver.Current);
             expropriation = new AcquisitionExpropriation(driver.Current);
             notes = new Notes(driver.Current);
 
@@ -554,7 +554,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.VerifyCompensationInitTabView();
 
             //Update Allowable Compensation Amount
-            //h120.UpdateTotalAllowableCompensation(acquisitionFile.CompensationTotalAllowableAmount);
+            h120.UpdateTotalAllowableCompensation(acquisitionFile.AcquisitionCompensationTotalAllowableAmount);
 
             //Create Compensation Requisition Forms
             if (acquisitionFile.AcquisitionCompensations.Count > 0)
@@ -568,7 +568,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     h120.OpenCompensationDetails(i);
 
                     //Verify Initial View Form
-                    h120.VerifyCompensationDetailsInitViewForm();
+                    h120.VerifyCompensationDetailsInitViewForm("Acquisition File");
 
                     //Add Details to the Compensation Requisition
                     h120.EditCompensationDetails();
@@ -579,7 +579,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     h120.SaveAcquisitionFileCompensation();
 
                     //Verify added Compensation Requisition List View and Details
-                    h120.VerifyCompensationDetailsViewForm(acquisitionFile.AcquisitionCompensations[i]);
+                    h120.VerifyCompensationDetailsViewForm(acquisitionFile.AcquisitionCompensations[i], "Acquisition File");
                     h120.VerifyCompensationListView(acquisitionFile.AcquisitionCompensations[i]);
                 }
             }
@@ -1142,11 +1142,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 PopulateStakeholdersCollection(acquisitionFile.StakeholderStartRow, acquisitionFile.StakeholderCount);
 
             //Acquisition Compensation Requisition
-            acquisitionFile.CompensationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "CompensationStartRow"));
-            acquisitionFile.CompensationCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "CompensationCount"));
-            acquisitionFile.CompensationTotalAllowableAmount = ExcelDataContext.ReadData(rowNumber, "CompensationTotalAllowableAmount");
-            if (acquisitionFile.CompensationStartRow != 0 && acquisitionFile.CompensationCount != 0)
-                PopulateCompensationsCollection(acquisitionFile.CompensationStartRow, acquisitionFile.CompensationCount);
+            acquisitionFile.AcquisitionCompensationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationStartRow"));
+            acquisitionFile.AcquisitionCompensationCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationCount"));
+            acquisitionFile.AcquisitionCompensationTotalAllowableAmount = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationTotalAllowableAmount");
+            if (acquisitionFile.AcquisitionCompensationStartRow != 0 && acquisitionFile.AcquisitionCompensationCount != 0)
+                PopulateCompensationsCollection(acquisitionFile.AcquisitionCompensationStartRow, acquisitionFile.AcquisitionCompensationCount);
 
             //Acquisition Expropriation
             acquisitionFile.ExpropriationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ExpropriationStartRow"));
@@ -1298,12 +1298,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateCompensationsCollection(int startRow, int rowsCount)
         {
-            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionCompensation"]!;
+            DataTable compensationSheet = ExcelDataContext.GetInstance().Sheets["Compensation"]!;
             ExcelDataContext.PopulateInCollection(compensationSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionCompensation compensation = new AcquisitionCompensation();
+                Compensation compensation = new Compensation();
 
                 compensation.CompensationAmount = ExcelDataContext.ReadData(i, "CompensationAmount");
                 compensation.CompensationGSTAmount = ExcelDataContext.ReadData(i, "CompensationGSTAmount");
