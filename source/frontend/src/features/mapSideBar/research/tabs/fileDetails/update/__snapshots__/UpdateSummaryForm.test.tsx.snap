@@ -166,6 +166,8 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c10.btn.btn-link:hover,

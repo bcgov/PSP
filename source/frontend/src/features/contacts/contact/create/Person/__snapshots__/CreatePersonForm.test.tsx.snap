@@ -167,6 +167,8 @@ exports[`CreatePersonForm > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c9.btn.btn-link:hover,
@@ -1846,6 +1848,8 @@ exports[`CreatePersonForm > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c2.btn.btn-link:hover,

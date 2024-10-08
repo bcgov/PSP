@@ -2,7 +2,11 @@ import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/index';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { getEmptyProperty, getEmptyResearchFile } from '@/models/defaultInitializers';
+import {
+  getEmptyBaseAudit,
+  getEmptyProperty,
+  getEmptyResearchFile,
+} from '@/models/defaultInitializers';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import PropertyResearchTabView, { IPropertyResearchTabViewProps } from './PropertyResearchTabView';
@@ -18,7 +22,7 @@ describe('PropertyResearchTabView component', () => {
   const setup = (renderOptions: RenderOptions & IPropertyResearchTabViewProps) => {
     const component = render(
       <PropertyResearchTabView
-        researchFile={renderOptions.researchFile}
+        researchFileProperty={renderOptions.researchFileProperty}
         setEditMode={renderOptions.setEditMode}
       />,
       {
@@ -33,7 +37,7 @@ describe('PropertyResearchTabView component', () => {
   };
 
   it('renders as expected when provided valid data object', () => {
-    const { asFragment } = setup({ researchFile: fakePropertyResearch, setEditMode });
+    const { asFragment } = setup({ researchFileProperty: fakePropertyResearch, setEditMode });
     expect(asFragment()).toMatchSnapshot();
   });
 });
@@ -48,28 +52,28 @@ const fakePropertyResearch: ApiGen_Concepts_ResearchFileProperty = {
   isLegalOpinionObtained: true,
   documentReference: 'A document reference',
   researchSummary: 'Research summary notes',
-  purposeTypes: [
+  propertyResearchPurposeTypes: [
     {
-      propertyPurposeType: {
+      propertyResearchPurposeTypeCode: {
         id: 'TYPE_A',
         description: 'Type A',
         displayOrder: null,
         isDisabled: false,
       },
       id: 0,
-      propertyResearchFileId: 0,
       rowVersion: null,
+      ...getEmptyBaseAudit(),
     },
     {
-      propertyPurposeType: {
+      propertyResearchPurposeTypeCode: {
         id: 'TYPE_B',
         description: 'Type B',
         displayOrder: null,
         isDisabled: false,
       },
       id: 0,
-      propertyResearchFileId: 0,
       rowVersion: null,
+      ...getEmptyBaseAudit(),
     },
   ],
   fileId: 0,

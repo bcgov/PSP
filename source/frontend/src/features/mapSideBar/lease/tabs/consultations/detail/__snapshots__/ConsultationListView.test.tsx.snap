@@ -166,6 +166,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c4.btn.btn-link:hover,
@@ -327,27 +329,20 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c8 {
-  background-color: #428bca;
-  color: white;
-  font-size: 1.4rem;
-  border-radius: 50%;
-  opacity: 0.8;
-  width: 2.2rem;
-  height: 2.2rem;
-  padding: 1rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+.c8 svg.info {
+  color: #053662;
+}
+
+.c8 svg.error {
+  color: #CE3E39;
+}
+
+.c8 svg.ok {
+  color: #2e8540;
+}
+
+.c8 svg {
+  vertical-align: baseline;
 }
 
 <div
@@ -420,20 +415,17 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c8 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       First nation
                     </span>
                   </div>
-                  <div
-                    class="px-0 col"
-                  />
                 </div>
               </div>
             </div>
@@ -461,20 +453,17 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c8 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Strategic Real Estate (SRE)
                     </span>
                   </div>
-                  <div
-                    class="px-0 col"
-                  />
                 </div>
               </div>
             </div>
@@ -502,20 +491,17 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c8 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Regional planning
                     </span>
                   </div>
-                  <div
-                    class="px-0 col"
-                  />
                 </div>
               </div>
             </div>
@@ -543,20 +529,17 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c8 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Regional property services
                     </span>
                   </div>
-                  <div
-                    class="px-0 col"
-                  />
                 </div>
               </div>
             </div>
@@ -584,25 +567,31 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c8 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       District
                     </span>
-                  </div>
-                  <div
-                    class="px-0 col"
-                  >
-                    <div
-                      class="c8"
+                    <svg
+                      class="error"
+                      data-testid="error-icon"
+                      fill="currentColor"
+                      height="22"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="22"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      2
-                    </div>
+                      <path
+                        d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+                      />
+                    </svg>
                   </div>
                 </div>
               </div>
@@ -1133,20 +1122,17 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c8 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Headquarter (HQ)
                     </span>
                   </div>
-                  <div
-                    class="px-0 col"
-                  />
                 </div>
               </div>
             </div>
@@ -1174,20 +1160,17 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="row"
+                  class="c8 row"
                 >
                   <div
                     class="col-auto"
                   >
                     <span
-                      class="pl-2"
+                      class="px-2"
                     >
                       Other
                     </span>
                   </div>
-                  <div
-                    class="px-0 col"
-                  />
                 </div>
               </div>
             </div>

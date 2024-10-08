@@ -166,6 +166,8 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c13.btn.btn-link:hover,

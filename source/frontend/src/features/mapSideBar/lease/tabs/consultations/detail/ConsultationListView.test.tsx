@@ -6,9 +6,6 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
-  findByTitle,
-  getByTitle,
-  mockKeycloak,
   render,
   RenderOptions,
   userEvent,
@@ -23,6 +20,8 @@ import { user } from '@/constants/toasts';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
+import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';
+import { toTypeCodeNullable } from '@/utils/formUtils';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -167,5 +166,99 @@ describe('ConsultationListView component', () => {
     expect(
       getByText('You have selected to delete this Consultation. Do you want to proceed?'),
     ).toBeVisible();
+  });
+
+  it('displays error consultation icon when there is at lease one consultation in error status', async () => {
+    const consultations = [
+      {
+        ...getMockApiConsultation(),
+        id: 1,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.APPRDENIED,
+        ),
+      },
+      {
+        ...getMockApiConsultation(),
+        id: 2,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.CONSDISCONT,
+        ),
+      },
+      {
+        ...getMockApiConsultation(),
+        id: 3,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.APPRGRANTED,
+        ),
+      },
+      {
+        ...getMockApiConsultation(),
+        id: 4,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.CONSCOMPLTD,
+        ),
+      },
+      {
+        ...getMockApiConsultation(),
+        id: 5,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.INPROGRESS,
+        ),
+      },
+    ];
+    const { getByTestId } = setup({ props: { consultations } });
+
+    expect(getByTestId('error-icon')).toBeVisible();
+  });
+
+  it('displays info consultation icon when there is at least one in progress outcome and no error outcomes', async () => {
+    const consultations = [
+      {
+        ...getMockApiConsultation(),
+        id: 3,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.APPRGRANTED,
+        ),
+      },
+      {
+        ...getMockApiConsultation(),
+        id: 4,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.CONSCOMPLTD,
+        ),
+      },
+      {
+        ...getMockApiConsultation(),
+        id: 5,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.INPROGRESS,
+        ),
+      },
+    ];
+    const { getByTestId } = setup({ props: { consultations } });
+
+    expect(getByTestId('info-icon')).toBeVisible();
+  });
+
+  it('displays ok consultation icon when all outcomes are in a completed status', async () => {
+    const consultations = [
+      {
+        ...getMockApiConsultation(),
+        id: 3,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.APPRGRANTED,
+        ),
+      },
+      {
+        ...getMockApiConsultation(),
+        id: 4,
+        consultationOutcomeTypeCode: toTypeCodeNullable(
+          ApiGen_CodeTypes_ConsultationOutcomeTypes.CONSCOMPLTD,
+        ),
+      },
+    ];
+    const { getByTestId } = setup({ props: { consultations } });
+
+    expect(getByTestId('ok-icon')).toBeVisible();
   });
 });
