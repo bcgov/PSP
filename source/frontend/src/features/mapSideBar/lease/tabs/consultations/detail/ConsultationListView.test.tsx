@@ -4,13 +4,7 @@ import { forwardRef } from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  act,
-  render,
-  RenderOptions,
-  userEvent,
-  waitFor,
-} from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import { vi } from 'vitest';
 import ConsultationListView, { IConsultationListViewProps } from './ConsultationListView';
