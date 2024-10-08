@@ -27,12 +27,12 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
           Leases & Licences
         </Styled.TrayHeader>
         {hasClaim(Claims.LEASE_VIEW) && (
-          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/lease/list">
+          <Link onClick={onLinkClick} to="/lease/list" className="nav-item">
             Manage Lease/Licence Files
           </Link>
         )}
         {hasClaim(Claims.LEASE_ADD) && (
-          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/mapview/sidebar/lease/new">
+          <Link onClick={onLinkClick} to="/mapview/sidebar/lease/new" className="nav-item">
             Create a Lease/Licence File
           </Link>
         )}

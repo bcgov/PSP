@@ -38,7 +38,7 @@ exports[`AcquisitionTray > matches snapshot 1`] = `
     Acquisition Files
   </h1>
   <a
-    class="pl-9 pb-3"
+    class="nav-item"
     href="/acquisition/list"
   >
     Manage Acquisition Files

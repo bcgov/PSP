@@ -24,12 +24,12 @@ export const SubdivisionConsolidationTray = ({ onLinkClick }: ISideTrayPageProps
           Subdivision & Consolidation
         </Styled.TrayHeader>
         {hasClaim(Claims.PROPERTY_ADD) && (
-          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/mapview/sidebar/subdivision/new">
+          <Link onClick={onLinkClick} to="/mapview/sidebar/subdivision/new" className="nav-item">
             Create a Subdivision
           </Link>
         )}
         {hasClaim(Claims.PROPERTY_ADD) && (
-          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/mapview/sidebar/consolidation/new">
+          <Link onClick={onLinkClick} to="/mapview/sidebar/consolidation/new" className="nav-item">
             Create a Consolidation
           </Link>
         )}

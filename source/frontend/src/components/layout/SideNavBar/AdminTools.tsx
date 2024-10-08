@@ -1,7 +1,5 @@
 import { Link } from 'react-router-dom';
 
-import AdminIcon from '@/assets/images/admin-icon.svg?react';
-
 import { ISideTrayPageProps } from './SideTray';
 import * as Styled from './styles';
 
@@ -12,22 +10,17 @@ import * as Styled from './styles';
 export const AdminTools = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
-      <Styled.TrayHeader>
-        <span className="mr-2">
-          <AdminIcon fill="currentColor" />
-        </span>
-        Admin Tools
-      </Styled.TrayHeader>
-      <Link className="pl-9 pb-3" to="/admin/users" onClick={onLinkClick}>
+      <Styled.TrayHeader>Admin Tools</Styled.TrayHeader>
+      <Link to="/admin/users" onClick={onLinkClick} className="nav-item">
         Manage Users
       </Link>
-      <Link className="pl-9 pb-3" to="/admin/access/requests" onClick={onLinkClick}>
+      <Link to="/admin/access/requests" onClick={onLinkClick} className="nav-item">
         Manage Access Requests
       </Link>
-      <Link className="pl-9 pb-3" to="/admin/document_generation" onClick={onLinkClick}>
+      <Link to="/admin/document_generation" onClick={onLinkClick} className="nav-item">
         Manage Form Document Templates
       </Link>
-      <Link className="pl-9 pb-3" to="/admin/financial-code/list" onClick={onLinkClick}>
+      <Link to="/admin/financial-code/list" onClick={onLinkClick} className="nav-item">
         Manage Project and Financial Codes
       </Link>
     </>

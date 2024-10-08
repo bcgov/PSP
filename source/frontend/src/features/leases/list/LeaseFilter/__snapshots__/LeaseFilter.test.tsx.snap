@@ -166,6 +166,8 @@ exports[`Lease Filter > matches snapshot 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c8.btn.btn-link:hover,

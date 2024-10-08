@@ -24,12 +24,12 @@ export const ResearchTray = ({ onLinkClick }: ISideTrayPageProps) => {
           Research Files
         </Styled.TrayHeader>
         {hasClaim(Claims.RESEARCH_VIEW) && (
-          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/research/list">
+          <Link onClick={onLinkClick} to="/research/list" className="nav-item">
             Manage Research Files
           </Link>
         )}
         {hasClaim(Claims.RESEARCH_ADD) && (
-          <Link className="pl-9 pb-3" onClick={onLinkClick} to="/mapview/sidebar/research/new">
+          <Link onClick={onLinkClick} to="/mapview/sidebar/research/new" className="nav-item">
             Create a Research File
           </Link>
         )}

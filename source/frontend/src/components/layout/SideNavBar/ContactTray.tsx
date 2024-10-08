@@ -22,12 +22,12 @@ export const ContactTray = ({ onLinkClick }: ISideTrayPageProps) => {
         Contacts
       </Styled.TrayHeader>
       {hasClaim(Claims.CONTACT_VIEW) && (
-        <Link className="pl-9 pb-3" onClick={onLinkClick} to="/contact/list">
+        <Link onClick={onLinkClick} to="/contact/list" className="pl-9 pb-3 nav-item">
           Manage Contacts
         </Link>
       )}
       {hasClaim(Claims.CONTACT_ADD) && (
-        <Link className="pl-9 pb-3" onClick={onLinkClick} to="/contact/new/P">
+        <Link onClick={onLinkClick} to="/contact/new/P" className="pl-9 pb-3 nav-item">
           Add a Contact
         </Link>
       )}
