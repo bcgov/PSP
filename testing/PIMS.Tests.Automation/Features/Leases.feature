@@ -16,6 +16,12 @@ Scenario: 02. Leases Properties and Surplus Declaration
 	And I verify the Surplus section
 	Then A new lease is created successfully
 
+Scenario: 03. Leases Approval/Consultations
+	Given I create a new minimum Lease from row number 1
+	When I insert new consultations to the Lease
+	And I update a Lease's consultation from row number 2
+	Then A new lease is created successfully
+
 Scenario: 04. Lease Checklist Tab
 	Given I create a new minimum Lease from row number 1
 	When I insert Checklist information to a Lease

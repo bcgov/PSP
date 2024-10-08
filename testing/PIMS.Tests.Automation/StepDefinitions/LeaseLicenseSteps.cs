@@ -1,7 +1,6 @@
 ﻿
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 using System.Data;
 
 namespace PIMS.Tests.Automation.StepDefinitions
@@ -11,6 +10,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
     {
         private readonly LoginSteps loginSteps;
         private readonly LeaseDetails leaseDetails;
+        private readonly LeaseConsultations leaseConsultation;
         private readonly LeasesChecklist checklist;
         private readonly LeaseTenants tenant;
         private readonly LeasePeriodPayments periodPayments;
@@ -27,7 +27,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly Notes notes;
         private readonly GenericSteps genericSteps;
 
-
         private readonly string userName = "TRANPSP1";
 
         private Lease lease;
@@ -39,6 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps = new LoginSteps(driver);
             genericSteps = new GenericSteps(driver);
             leaseDetails = new LeaseDetails(driver.Current);
+            leaseConsultation = new LeaseConsultations(driver.Current);
             checklist = new LeasesChecklist(driver.Current);
             tenant = new LeaseTenants(driver.Current);
             periodPayments = new LeasePeriodPayments(driver.Current);
@@ -233,6 +233,64 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.SaveLicense();
         }
 
+        [StepDefinition(@"I insert new consultations to the Lease")]
+        public void CreateConsultations()
+        {
+            //Navigate to the Approvals/Consultations Tab
+            leaseConsultation.NavigateToConsultationsTab();
+
+            //Verify Initial View Form
+            leaseConsultation.VerifyInitConsultationTab();
+
+            //Verify Create Consultation Form
+            leaseConsultation.AddConsultationBttn();
+            leaseConsultation.VerifyConsultationCreateForm();
+            leaseDetails.CancelLicense();
+
+            for (var i = 0; i < lease.LeaseConsultations.Count; i++)
+            {
+                //Click on Add new consultation Button
+                leaseConsultation.AddConsultationBttn();
+
+                //Create a new consultation
+                leaseConsultation.AddUpdateConsultation(lease.LeaseConsultations[i]);
+
+                //Save changes
+                leaseDetails.SaveLicense();
+
+                //Verify Inserted consultation
+                leaseConsultation.VerifyLastInsertedConsultationView(lease.LeaseConsultations[i]);
+            }
+        }
+
+        [StepDefinition(@"I update a Lease's consultation from row number (.*)")]
+        public void UpdateConsultations(int rowNumber)
+        {
+            //Navigate to Search Leases
+            PopulateLeaseLicense(rowNumber);
+            searchLeases.NavigateToSearchLicense();
+
+            //Look for the previously created lease
+            searchLeases.SearchLicenseByLFile(leaseCode);
+            searchLeases.SelectFirstOption();
+
+            //Navigate to the consultations tab
+            leaseConsultation.NavigateToConsultationsTab();
+
+            //Edit specific consultation
+            leaseConsultation.EditLastConsultationByType(lease.LeaseConsultations[0].leaseConsultationType);
+            leaseConsultation.AddUpdateConsultation(lease.LeaseConsultations[0]);
+
+            //Save changes
+            leaseDetails.SaveLicense();
+
+            //Verify changes
+            leaseConsultation.VerifyLastInsertedConsultationView(lease.LeaseConsultations[0]);
+
+            //Delete last "Other" consultation
+            leaseConsultation.DeleteLastConsultationByType("Other");
+        }
+
         [StepDefinition(@"I insert Checklist information to a Lease")]
         public void CreateChecklist()
         {
@@ -406,7 +464,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Look for the previously created lease
             searchLeases.SearchLicenseByLFile(leaseCode);
             searchLeases.SelectFirstOption();
-
            
             //Navigate to the improvements section
             improvements.NavigateToImprovementSection();
@@ -1038,6 +1095,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.LeasePropertyDetailsStartRow != 0 && lease.LeasePropertyDetailsQuantity != 0)
                 PopulatePropertiesCollection(lease.LeasePropertyDetailsStartRow, lease.LeasePropertyDetailsQuantity);
 
+            //Leases Approval/Consultations
+            lease.LeaseConsultationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseConsultationStartRow"));
+            lease.LeaseConsultationQuantity = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseConsultationQuantity"));
+            if (lease.LeaseConsultationStartRow != 0 && lease.LeaseConsultationQuantity != 0)
+                PopulateConsultationsCollection(lease.LeaseConsultationStartRow, lease.LeaseConsultationQuantity);
+
             //Leases File Checklist
             lease.LeaseChecklistIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseChecklistIndex"));
             if (lease.LeaseChecklistIndex > 0)
@@ -1217,6 +1280,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 property.LegalDescription = ExcelDataContext.ReadData(i, "LeasePropLegalDescription");
 
                 lease.LeasePropertiesDetails.Add(property);
+            }
+        }
+
+        private void PopulateConsultationsCollection(int startRow, int rowsCount)
+        {
+            DataTable leasesConsultationsSheet = ExcelDataContext.GetInstance().Sheets["LeasesConsultations"]!;
+            ExcelDataContext.PopulateInCollection(leasesConsultationsSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                LeaseConsultation consultation = new()
+                {
+                    leaseConsultationType = ExcelDataContext.ReadData(i, "leaseConsultationType"),
+                    leaseConsultationOtherDescription = ExcelDataContext.ReadData(i, " leaseConsultationOtherDescription"),
+                    leaseConsultationRequestedOn = ExcelDataContext.ReadData(i, "leaseConsultationRequestedOn"),
+                    leaseConsultationContactType = ExcelDataContext.ReadData(i, "leaseConsultationContactType"),
+                    leaseConsultationContact = ExcelDataContext.ReadData(i, "leaseConsultationContact"),
+                    leaseConsultationContactPrimaryContact = ExcelDataContext.ReadData(i, "leaseConsultationContactPrimaryContact"),
+                    leaseConsultationReceived = ExcelDataContext.ReadData(i, "leaseConsultationReceived"),
+                    leaseConsultationReceivedOn = ExcelDataContext.ReadData(i, "leaseConsultationReceivedOn"),
+                    leaseConsultationOutcome = ExcelDataContext.ReadData(i, "leaseConsultationOutcome"),
+                    leaseConsultationComment = ExcelDataContext.ReadData(i, "leaseConsultationComment"), 
+                };
+
+                lease.LeaseConsultations.Add(consultation);
             }
         }
 

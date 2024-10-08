@@ -349,11 +349,6 @@ namespace PIMS.Tests.Automation.PageObjects
             return result;
         }
 
-        //protected string CalculateGSTDisplay(string GST)
-        //{
-        //    return GST == "true" || GST == "" ? "Y" : "N";
-        //}
-
         protected string TransformBooleanFormat(string elementValue)
         {
             bool boolElementValue = bool.Parse(elementValue);

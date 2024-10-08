@@ -175,7 +175,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
 
-
             Wait();
             if (webDriver.FindElements(duplicatePropToast).Count() == 1)
             {

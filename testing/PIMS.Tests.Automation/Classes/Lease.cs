@@ -53,7 +53,7 @@
 
         public int LeaseConsultationStartRow { get; set; } = 0;
         public int LeaseConsultationQuantity { get; set; } = 0;
-        public List<LeaseConsultations> LeaseConsultations { get; set; } = new List<LeaseConsultations>() { };
+        public List<LeaseConsultation> LeaseConsultations { get; set; } = new List<LeaseConsultation>() { };
 
         public int LeaseChecklistIndex { get; set; } = 0;
         public LeaseChecklist LeaseChecklist { get; set; } = new LeaseChecklist() { };
@@ -138,9 +138,19 @@
         public string RenewalNotes { get; set; } = null!;
     }
 
-    public class LeaseConsultations
+    public class LeaseConsultation
     {
         public string leaseConsultationType { get; set; } = null!;
+        public string leaseConsultationOtherDescription { get; set; } = null!;
+        public string leaseConsultationRequestedOn { get; set; } = null!;
+        public string leaseConsultationContactType { get; set; } = null!;
+        public string leaseConsultationContact { get; set; } = null!;
+        public string leaseConsultationContactPrimaryContact { get; set; } = null!;
+        public string leaseConsultationReceived { get; set; } = null!;
+        public string leaseConsultationReceivedOn { get; set; } = null!;
+        public string leaseConsultationOutcome { get; set; } = null!;
+        public string leaseConsultationComment { get; set; } = null!;
+
     }
     public class LeaseChecklist
     {
