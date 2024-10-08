@@ -1,8 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
@@ -62,48 +64,73 @@ namespace Pims.Dal.Repositories
             return query.AsNoTracking().ToList();
         }
 
-        public IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter)
+        public IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter, bool includeAcquisitions = true, bool includeLeases = true)
         {
             using var scope = Logger.QueryScope();
 
-            var query = Context.PimsCompReqFinancials
+            if (!includeAcquisitions && !includeLeases)
+            {
+                throw new BusinessRuleViolationException("Compensation Requisition Export requires access to either acquisition files or leases");
+            }
+
+            IQueryable<PimsCompReqFinancial> query = Context.PimsCompReqFinancials.AsNoTracking()
                 .Include(f => f.FinancialActivityCode)
                 .Include(f => f.CompensationRequisition)
-                    .ThenInclude(cr => cr.AlternateProject)
-                .Include(f => f.CompensationRequisition)
-                    .ThenInclude(cr => cr.AcquisitionFile)
-                        .ThenInclude(a => a.PimsAcquisitionFileTeams)
-                        .ThenInclude(afp => afp.Person)
-                .Include(f => f.CompensationRequisition)
-                    .ThenInclude(cr => cr.AcquisitionFile)
-                        .ThenInclude(a => a.PimsAcquisitionFileTeams)
-                        .ThenInclude(o => o.Organization)
-                .Include(f => f.CompensationRequisition)
-                    .ThenInclude(cr => cr.AcquisitionFile)
-                        .ThenInclude(a => a.Project)
-                .Include(f => f.CompensationRequisition)
-                    .ThenInclude(cr => cr.AcquisitionFile)
-                        .ThenInclude(a => a.Product)
-                .AsNoTracking();
+                    .ThenInclude(cr => cr.AlternateProject);
+
+            if (includeAcquisitions)
+            {
+                query = query
+                    .Include(f => f.CompensationRequisition)
+                        .ThenInclude(cr => cr.AcquisitionFile)
+                            .ThenInclude(a => a.PimsAcquisitionFileTeams)
+                                .ThenInclude(afp => afp.Person)
+                    .Include(f => f.CompensationRequisition)
+                        .ThenInclude(cr => cr.AcquisitionFile)
+                            .ThenInclude(a => a.PimsAcquisitionFileTeams)
+                                .ThenInclude(o => o.Organization)
+                    .Include(f => f.CompensationRequisition)
+                        .ThenInclude(cr => cr.AcquisitionFile)
+                            .ThenInclude(a => a.Project)
+                    .Include(f => f.CompensationRequisition)
+                        .ThenInclude(cr => cr.AcquisitionFile)
+                            .ThenInclude(a => a.Product);
+            }
+
+            if (includeLeases)
+            {
+                query = query
+                    .Include(f => f.CompensationRequisition)
+                        .ThenInclude(cr => cr.Lease)
+                            .ThenInclude(l => l.Project)
+                    .Include(f => f.CompensationRequisition)
+                        .ThenInclude(cr => cr.Lease)
+                            .ThenInclude(l => l.Product);
+            }
+
+            var predicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
 
             if (filter.Projects != null && filter.Projects.Any())
             {
-                query = query.Where(f =>
-                    (f.CompensationRequisition.AlternateProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AlternateProjectId.Value)) ||
-                    (!f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AcquisitionFile.ProjectId.Value)));
+                var projectBuilder = PredicateBuilder.New<PimsCompReqFinancial>(p => false);
+                projectBuilder.Or(f => f.CompensationRequisition.AlternateProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AlternateProjectId.Value));
+                projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AcquisitionFile.ProjectId.Value));
+                projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.Lease != null && f.CompensationRequisition.Lease.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.Lease.ProjectId.Value));
+
+                predicate.And(projectBuilder);
             }
 
-            if (filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
+            if (includeAcquisitions && filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
             {
-                query = query.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
+                predicate.And(f => f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
             }
 
-            if (filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
+            if (includeAcquisitions && filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
             {
-                query = query.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
+                predicate.And(f => f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
             }
 
-            return query.ToList();
+            return query.Where(predicate).ToList();
         }
     }
 }

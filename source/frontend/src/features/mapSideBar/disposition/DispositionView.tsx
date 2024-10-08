@@ -125,7 +125,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
           showCloseButton
           onClose={onClose}
           title={formTitle}
-          icon={<TbArrowBounce title="Disposition file Icon" size={26} />}
+          icon={<TbArrowBounce title="Disposition file Icon" size={28} />}
           header={
             <DispositionHeader dispositionFile={dispositionFile} lastUpdatedBy={lastUpdatedBy} />
           }

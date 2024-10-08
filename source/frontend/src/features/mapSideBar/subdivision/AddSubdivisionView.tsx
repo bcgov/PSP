@@ -89,7 +89,7 @@ const AddSubdivisionView: React.FunctionComponent<
     <MapSideBarLayout
       showCloseButton
       title="Create a Subdivision"
-      icon={<StyledSubdivideConsolidateIcon />}
+      icon={<StyledSubdivideConsolidateIcon title="Subdivision Icon" />}
       onClose={onCancel}
       footer={
         <SidebarFooter
@@ -243,8 +243,8 @@ const StyledFormWrapper = styled.div`
 `;
 
 const StyledSubdivideConsolidateIcon = styled(SubdivisionIcon)`
-  width: 3rem;
-  height: 3rem;
+  width: 2.8rem;
+  height: 2.8rem;
   margin-right: 1rem;
   fill: ${props => props.theme.bcTokens.typographyColorSecondary};
 `;

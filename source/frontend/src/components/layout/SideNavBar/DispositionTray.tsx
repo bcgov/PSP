@@ -1,11 +1,12 @@
+import { MdAirlineStops } from 'react-icons/md';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
 import * as Styled from './styles';
+import { HalfHeightDiv } from './styles';
 
 /**
  * Disposition Tray page.
@@ -16,14 +17,23 @@ export const DispositionTray = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Disposition Files</Styled.TrayHeader>
+        <Styled.TrayHeader>
+          <span className="mr-2">
+            <MdAirlineStops title="Disposition file Icon" fill="currentColor" />
+          </span>
+          Disposition Files
+        </Styled.TrayHeader>
         {hasClaim(Claims.DISPOSITION_VIEW) && (
-          <Link onClick={onLinkClick} to="/disposition/list" className="nav-item">
+          <Link onClick={onLinkClick} to="/disposition/list" className="nav-item pl-9 pb-3">
             Manage Disposition Files
           </Link>
         )}
         {hasClaim(Claims.DISPOSITION_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/sidebar/disposition/new" className="nav-item">
+          <Link
+            onClick={onLinkClick}
+            to="/mapview/sidebar/disposition/new"
+            className="nav-item pl-9 pb-3"
+          >
             Create a Disposition File
           </Link>
         )}
@@ -31,9 +41,3 @@ export const DispositionTray = ({ onLinkClick }: ISideTrayPageProps) => {
     </>
   );
 };
-
-const HalfHeightDiv = styled.div`
-  flex-direction: column;
-  display: flex;
-  height: 50%;
-`;

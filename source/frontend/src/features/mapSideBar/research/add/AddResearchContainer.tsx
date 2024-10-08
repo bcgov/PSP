@@ -169,7 +169,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       {formikProps => (
         <MapSideBarLayout
           title="Create Research File"
-          icon={<MdTopic title="User Profile" size="2.5rem" />}
+          icon={<MdTopic title="Research file Icon" size={28} />}
           footer={
             <SidebarFooter
               isOkDisabled={formikProps?.isSubmitting || bcaLoading}

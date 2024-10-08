@@ -67,7 +67,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
         <Styled.CloseButton
           id="close-tray"
           title="close"
-          size={32}
+          size={24}
           onClick={() => setShow(false)}
         />
         <Styled.SideTrayPage>

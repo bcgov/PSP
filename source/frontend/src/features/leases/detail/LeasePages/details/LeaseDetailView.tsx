@@ -46,7 +46,7 @@ export const LeaseDetailView: React.FunctionComponent<
             leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA && (
               <StyledAddButton onClick={() => onGenerate(lease)}>
                 <FaFileContract
-                  size={24}
+                  size={28}
                   id={`generate-h1005-a`}
                   title="Generate H1005(a)"
                   className="mr-2"

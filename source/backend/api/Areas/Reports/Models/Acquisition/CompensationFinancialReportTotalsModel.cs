@@ -105,6 +105,10 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
             {
                 return financial.CompensationRequisition.AcquisitionFile.Project;
             }
+            else if (financial?.CompensationRequisition?.Lease?.Project is not null)
+            {
+                return financial.CompensationRequisition.Lease.Project;
+            }
             else
             {
                 return null;
@@ -113,13 +117,9 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
 
         private static void AddToProjectTotal(Dictionary<long, decimal> dict, long projectId, decimal financialValue)
         {
-            if (dict.ContainsKey(projectId))
+            if (!dict.TryAdd(projectId, financialValue))
             {
                 dict[projectId] += financialValue;
-            }
-            else
-            {
-                dict.Add(projectId, financialValue);
             }
         }
     }
