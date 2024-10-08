@@ -75,16 +75,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Deposit Table Results Elements
         private By licenseDepositTableTotal = By.XPath("//div[@data-testid='securityDepositsTable']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-        private By licenseDepositTable1stRowDepositTypeContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1)");
-        private By licenseDepositTable1stRowDescriptionContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(2)");
-        private By licenseDepositTable1stRowAmountPaidContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(3)");
-        private By licenseDepositTable1stRowPaidDateContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(4)");
-        private By licenseDepositTable1stRowDepositHolderContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(5)");
-        private By licenseDepositTable1stRowEditBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(6) button[title='edit deposit']");
-        private By licenseDepositTable1stRowReturnBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(6) button[title='return deposit']");
-        private By licenseDepositTable1stRowDeleteBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(6) button[title='delete deposit']");
-        private By licenseDepositTable1stRowTooltipBttn = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(6) span[class='tooltip-icon']");
-
         //Return Table Results Elements
         private By licenseDepositReturnTableTotal = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']");
         private By licenseDepositReturn1stRowDeleteBttn = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(9) button[title='delete deposit return']");
@@ -103,7 +93,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToDepositSection()
         {
-            WaitUntilClickable(licenseDepositsLink);
+            Wait();
             webDriver.FindElement(licenseDepositsLink).Click();
         }
 
@@ -116,7 +106,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CancelDeposit()
         {
             sharedModals.ModalClickCancelBttn();
-
         }
 
         public void AddDeposit(Deposit deposit)
@@ -190,7 +179,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditLastDeposit(Deposit deposit)
         {
-            Wait(2000);
+            Wait();
             var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
 
             Wait();
@@ -309,7 +298,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueContentEquals(licenseDepositTableLastRowDescriptionContent, deposit.DepositDescription);
             AssertTrueContentEquals(licenseDepositTableLastRowAmountPaidContent, TransformCurrencyFormat(deposit.DepositAmount));
-            //Assert.True(webDriver.FindElement(licenseDepositTableLastRowPaidDateContent).Text == TransformDateFormat(deposit.DepositPaidDate));
+            AssertTrueContentEquals(licenseDepositTableLastRowPaidDateContent, TransformDateFormat(deposit.DepositPaidDate));
             AssertTrueContentEquals(licenseDepositTableLastRowDepositHolderContent, deposit.DepositHolder);
             AssertTrueIsDisplayed(licenseDepositTableLastRowEditBttn);
 

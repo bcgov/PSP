@@ -72,6 +72,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentsSendDateColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Rent category')]");
         private readonly By licensePaymentsPaymentMethodColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment method')]");
         private readonly By licensePaymentsReceivedPaymentColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Received payment ($)')]");
+        private readonly By licensePaymentsSentPaymentColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Sent payment ($)')]");
         private readonly By licensePaymentsReceivedPaymentTooltip = By.Id("actualReceivedPaymentTooltip");
         private readonly By licensePaymentsGSTColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'GST ($)')]");
         private readonly By licensePaymentsGSTTooltip = By.Id("actualGstTooltip");
@@ -117,7 +118,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentPeriodAgreedPaymentLabel = By.XPath("//label[contains(text(),'Payment (before tax)')]");
         private readonly By licensePaymentPeriodAgreedPaymentInput = By.Id("input-paymentAmount");
         private readonly By licensePaymentPeriodGSTLabel = By.XPath("//label[contains(text(),'Subject to GST?')]");
-        private readonly By licensePaymentPeriodGSTRadioBttns = By.Name("isGstEligible");
+        private readonly By licensePaymentPeriodGSTRadioBttnY = By.Id("input-isGstEligible");
+        private readonly By licensePaymentPeriodGSTRadioBttnN = By.Id("input-isGstEligible-2");
         private readonly By licensePaymentPeriodGSTAmountLabel = By.XPath("//label[contains(text(),'GST Amount')]");
         private readonly By licensePaymentPeriodGSTAmountInput = By.Id("input-gstAmount");
         private readonly By licensePaymentPeriodTotalAmountLabel = By.XPath("//label[contains(text(),'Total Payment')]");
@@ -140,7 +142,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentPeriodAdditionalAgreedPaymentLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'Payment (before tax)')]");
         private readonly By licensePaymentPeriodAdditionalAgreedPaymentInput = By.Id("input-additionalRentPaymentAmount");
         private readonly By licensePaymentPeriodAdditionalGSTLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
-        private readonly By licensePaymentPeriodAdditionalGSTRadioBttns = By.Name("isAdditionalRentGstEligible");
+        private readonly By licensePaymentPeriodAdditionalGSTRadioBttnY = By.Id("input-isAdditionalRentGstEligible");
+        private readonly By licensePaymentPeriodAdditionalGSTRadioBttnN = By.Id("input-isAdditionalRentGstEligible-2");
         private readonly By licensePaymentPeriodAdditionalGSTAmountLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'GST Amount')]");
         private readonly By licensePaymentPeriodAdditionalGSTAmountInput = By.Id("input-additionalGstAmount");
         private readonly By licensePaymentPeriodAdditionalTotalAmountLabel = By.XPath("//div[contains(text(),'Add Additional Rent')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total Payment')]");
@@ -153,7 +156,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentPeriodVariableAgreedPaymentLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'Payment (before tax)')]");
         private readonly By licensePaymentPeriodVariableAgreedPaymentInput = By.Id("input-variableRentPaymentAmount");
         private readonly By licensePaymentPeriodVariableGSTLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/label[contains(text(),'Subject to GST')]");
-        private readonly By licensePaymentPeriodVariableGSTRadioBttns = By.Name("isVariableRentGstEligible");
+        private readonly By licensePaymentPeriodVariableGSTRadioBttnY = By.Id("input-isVariableRentGstEligible");
+        private readonly By licensePaymentPeriodVariableGSTRadioBttnN = By.Id("input-isVariableRentGstEligible-2");
         private readonly By licensePaymentPeriodVariableGSTAmountLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/div/label[contains(text(),'GST Amount')]");
         private readonly By licensePaymentPeriodVariableGSTAmountInput = By.Id("input-variableRentGstAmount");
         private readonly By licensePaymentPeriodVariableTotalAmountLabel = By.XPath("//div[contains(text(),'Add Variable Rent')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total Payment')]");
@@ -169,7 +173,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentCategorySelect = By.Id("input-leasePaymentCategoryTypeCode.id");
         private readonly By licensePaymentAmountReceivedLabel = By.XPath("//label[contains(text(),'Total received ($)')]");
         private readonly By licensePaymentAmountReceivedInput = By.Id("input-amountTotal");
-        private readonly By licensePaymentExpPaymentLabel = By.XPath("//label[contains(text(),'Expected payment ($)')]");
+        private readonly By licensePaymentExpPaymentLabel = By.XPath("//label[contains(text(),'Amount (before tax)')]");
         private readonly By licensePaymentExpPaymentInput = By.Id("input-amountPreTax");
         private readonly By licensePaymentGSTLabel = By.XPath("//label[contains(text(),'GST ($)')]");
         private readonly By licensePaymentExpPaymentTooltip = By.Id("actual-calculation-tooltip");
@@ -263,10 +267,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 //Is GST Eligible
                 AssertTrueIsDisplayed(licensePaymentPeriodGSTLabel);
-                ChooseSpecificRadioButton(licensePaymentPeriodGSTRadioBttns, period.PeriodBaseIsGSTEligible);
+                if (period.PeriodBaseIsGSTEligible == "Y")
+                    webDriver.FindElement(licensePaymentPeriodGSTRadioBttnY).Click();
+                else
+                    webDriver.FindElement(licensePaymentPeriodGSTRadioBttnN).Click();
 
                 //GST Amount
-                if (period.PeriodBaseIsGSTEligible == "true")
+                if (period.PeriodBaseIsGSTEligible == "Y")
                 {
                     AssertTrueIsDisplayed(licensePaymentPeriodGSTAmountLabel);
                     webDriver.FindElement(licensePaymentPeriodGSTAmountInput).SendKeys(period.PeriodBaseGSTAmount);
@@ -292,10 +299,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 //Is GST Eligible
                 AssertTrueIsDisplayed(licensePaymentPeriodBaseGSTLabel);
-                ChooseSpecificRadioButton(licensePaymentPeriodGSTRadioBttns, period.PeriodBaseIsGSTEligible);
+                if (period.PeriodBaseIsGSTEligible == "Y")
+                    webDriver.FindElement(licensePaymentPeriodGSTRadioBttnY).Click();
+                else
+                    webDriver.FindElement(licensePaymentPeriodGSTRadioBttnN).Click();
+
 
                 //GST Amount
-                if (period.PeriodBaseIsGSTEligible == "true")
+                if (period.PeriodBaseIsGSTEligible == "Y")
                 {
                     AssertTrueIsDisplayed(licensePaymentPeriodBaseGSTAmountLabel);
                     webDriver.FindElement(licensePaymentPeriodGSTAmountInput).SendKeys(period.PeriodBaseGSTAmount);
@@ -324,10 +335,15 @@ namespace PIMS.Tests.Automation.PageObjects
                 //Additional GST Eligible
                 AssertTrueIsDisplayed(licensePaymentPeriodAdditionalGSTLabel);
                 if (period.PeriodAdditionalIsGSTEligible != "")
-                    ChooseSpecificRadioButton(licensePaymentPeriodAdditionalGSTRadioBttns, period.PeriodAdditionalIsGSTEligible);
+                {
+                    if (period.PeriodAdditionalIsGSTEligible == "Y")
+                        webDriver.FindElement(licensePaymentPeriodAdditionalGSTRadioBttnY).Click();
+                    else
+                        webDriver.FindElement(licensePaymentPeriodAdditionalGSTRadioBttnN).Click();
+                }
 
                 //GST Amount
-                if (period.PeriodAdditionalIsGSTEligible == "true")
+                if (period.PeriodAdditionalIsGSTEligible == "Y")
                 {
                     AssertTrueIsDisplayed(licensePaymentPeriodAdditionalGSTAmountLabel);
                     webDriver.FindElement(licensePaymentPeriodAdditionalGSTAmountInput).SendKeys(period.PeriodAdditionalGSTAmount);
@@ -356,10 +372,15 @@ namespace PIMS.Tests.Automation.PageObjects
                 //Additional GST Eligible
                 AssertTrueIsDisplayed(licensePaymentPeriodVariableGSTLabel);
                 if (period.PeriodVariableIsGSTEligible != "")
-                    ChooseSpecificRadioButton(licensePaymentPeriodVariableGSTRadioBttns, period.PeriodVariableIsGSTEligible);
+                {
+                    if (period.PeriodVariableIsGSTEligible == "Y")
+                        webDriver.FindElement(licensePaymentPeriodVariableGSTRadioBttnY).Click();
+                    else
+                        webDriver.FindElement(licensePaymentPeriodVariableGSTRadioBttnN).Click();
+                }
 
                 //GST Amount
-                if (period.PeriodVariableIsGSTEligible == "true")
+                if (period.PeriodVariableIsGSTEligible == "Y")
                 {
                     AssertTrueIsDisplayed(licensePaymentPeriodVariableGSTAmountLabel);
                     ClearInput(licensePaymentPeriodVariableGSTAmountInput);
@@ -440,12 +461,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 //Expected Payment
                 AssertTrueIsDisplayed(licensePaymentExpPaymentLabel);
                 AssertTrueIsDisplayed(licensePaymentExpPaymentTooltip);
-                ClearInput(licensePaymentExpPaymentInput);
-                webDriver.FindElement(licensePaymentExpPaymentInput).SendKeys(payment.PaymentExpectedPayment);
+                AssertTrueElementValueEquals(licensePaymentExpPaymentInput, TransformCurrencyFormat(payment.PaymentExpectedPayment));
+                //ClearInput(licensePaymentExpPaymentInput);
+                //webDriver.FindElement(licensePaymentExpPaymentInput).SendKeys(payment.PaymentExpectedPayment);
 
                 //GST
                 AssertTrueIsDisplayed(licensePaymentGSTLabel);
-                ClearInput(licensePaymentGSTInput);
+                //ClearInput(licensePaymentGSTInput);
             }
            
 
@@ -469,6 +491,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastPayment(int periodIdx)
         {
+            Wait(5000);
             WaitUntilVisible(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div"));
 
             var totalPayments = webDriver.FindElements(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div")).Count;
@@ -517,12 +540,12 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPeriodsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[3]"), period.PeriodBasePaymentFrequency);
             AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPeriodsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[4]"), period.PeriodPaymentsDue);
             AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPeriodsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[5]"), TransformCurrencyFormat(period.PeriodBaseAgreedPayment));
-            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPeriodsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[6]"), CalculateGSTDisplay(period.PeriodBaseIsGSTEligible));
+            AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPeriodsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[6]"), period.PeriodBaseIsGSTEligible);
 
-            if (period.PeriodBaseIsGSTEligible == "true")
+            if (period.PeriodBaseIsGSTEligible == "Y")
                 AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalPeriodsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]"), CalculateGST(period.PeriodBaseAgreedPayment, period.PeriodBaseIsGSTEligible));
             else
-                AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalPeriodsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]"), "-");
+                AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalPeriodsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[7]"), "");
 
             AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper'][" + totalPeriodsInLease + "]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[8]"), TransformCurrencyFormat(period.PeriodBaseTotalPaymentAmount));
             
@@ -552,14 +575,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 else
                     AssertTrueContentEquals(licenseCategoryBaseExpectedPaymentTableContent, TransformCurrencyFormat(period.PeriodBaseAgreedPayment));
 
-                AssertTrueContentEquals(licenseCategoryBaseIsGSTTableContent, CalculateGSTDisplay(period.PeriodBaseIsGSTEligible));
-                //if(period.PeriodBaseIsGSTEligible == "true")
-                //    AssertTrueContentEquals(licenseCategoryBaseGSTTotalTableContent, TransformCurrencyFormat(period.PeriodBaseGSTAmount));
-                //else
-                //    AssertTrueContentEquals(licenseCategoryBaseGSTTotalTableContent, "$0.00");
+                AssertTrueContentEquals(licenseCategoryBaseIsGSTTableContent, period.PeriodBaseIsGSTEligible);
+                if (period.PeriodBaseIsGSTEligible == "Y")
+                    AssertTrueContentEquals(licenseCategoryBaseGSTTotalTableContent, TransformCurrencyFormat(period.PeriodBaseGSTAmount));
+                else
+                    AssertTrueContentEquals(licenseCategoryBaseGSTTotalTableContent, "$0.00");
 
                 AssertTrueContentEquals(licenseCategoryBaseExpectedTotalTableContent, TransformCurrencyFormat(period.PeriodBaseTotalPaymentAmount));
-                //AssertTrueContentEquals(licenseCategoryBaseActualTotalTableContent, "$0.00");
+                AssertTrueContentEquals(licenseCategoryBaseActualTotalTableContent, "$0.00");
 
                 //Additional Rent Row
                 AssertTrueIsDisplayed(licenseCategoryAdditionalRentRow);
@@ -572,14 +595,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 else
                     AssertTrueContentEquals(licenseCategoryAdditionalExpectedPaymentTableContent, TransformCurrencyFormat(period.PeriodAdditionalAgreedPayment));
 
-                AssertTrueContentEquals(licenseCategoryAdditionalIsGSTTableContent, CalculateGSTDisplay(period.PeriodAdditionalIsGSTEligible));
-                //if (period.PeriodAdditionalIsGSTEligible == "true")
-                //    AssertTrueContentEquals(licenseCategoryAdditionalGSTTotalTableContent, TransformCurrencyFormat(period.PeriodAdditionalGSTAmount));
-                //else
-                //    AssertTrueContentEquals(licenseCategoryAdditionalGSTTotalTableContent, "$0.00");
-                
-                //AssertTrueContentEquals(licenseCategoryAdditionalExpectedTotalTableContent, TransformCurrencyFormat(period.PeriodAdditionalTotalPaymentAmount));
-                //AssertTrueContentEquals(licenseCategoryAdditionalActualTotalTableContent, "$0.00");
+                AssertTrueContentEquals(licenseCategoryAdditionalIsGSTTableContent, period.PeriodAdditionalIsGSTEligible);
+                if (period.PeriodAdditionalIsGSTEligible == "Y")
+                    AssertTrueContentEquals(licenseCategoryAdditionalGSTTotalTableContent, TransformCurrencyFormat(period.PeriodAdditionalGSTAmount));
+                else
+                    AssertTrueContentEquals(licenseCategoryAdditionalGSTTotalTableContent, "$0.00");
+
+                AssertTrueContentEquals(licenseCategoryAdditionalExpectedTotalTableContent, TransformCurrencyFormat(period.PeriodAdditionalTotalPaymentAmount));
+                AssertTrueContentEquals(licenseCategoryAdditionalActualTotalTableContent, "$0.00");
 
                 //Variable Rent Row
                 AssertTrueIsDisplayed(licenseCategoryVariableRentRow);
@@ -591,24 +614,29 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(licenseCategoryVariableExpectedPaymentTableContent, "$0.00");
                 else
                     AssertTrueContentEquals(licenseCategoryVariableExpectedPaymentTableContent, TransformCurrencyFormat(period.PeriodVariableAgreedPayment));
-                AssertTrueContentEquals(licenseCategoryVariableIsGSTTableContent, CalculateGSTDisplay(period.PeriodVariableIsGSTEligible));
+                AssertTrueContentEquals(licenseCategoryVariableIsGSTTableContent, period.PeriodVariableIsGSTEligible);
 
-                //if (period.PeriodAdditionalIsGSTEligible == "true")
-                //    AssertTrueContentEquals(licenseCategoryVariableGSTTotalTableContent, TransformCurrencyFormat(period.PeriodVariableGSTAmount));
-                //else
-                //    AssertTrueContentEquals(licenseCategoryVariableGSTTotalTableContent, "$0.00");
+                if (period.PeriodVariableIsGSTEligible == "Y")
+                    AssertTrueContentEquals(licenseCategoryVariableGSTTotalTableContent, TransformCurrencyFormat(period.PeriodVariableGSTAmount));
+                else
+                    AssertTrueContentEquals(licenseCategoryVariableGSTTotalTableContent, "$0.00");
 
-                //AssertTrueContentEquals(licenseCategoryVariableExpectedTotalTableContent, TransformCurrencyFormat(period.PeriodVariableTotalPaymentAmount));
-                //AssertTrueContentEquals(licenseCategoryVariableActualTotalTableContent, "$0.00");
+                AssertTrueContentEquals(licenseCategoryVariableExpectedTotalTableContent, TransformCurrencyFormat(period.PeriodVariableTotalPaymentAmount));
+                AssertTrueContentEquals(licenseCategoryVariableActualTotalTableContent, "$0.00");
             }
         }
 
-        public void VerifyInsertedPaymentTable(Payment payment, int periodIdx)
+        public void VerifyInsertedPaymentTable(Payment payment, int periodIdx, string leaseAccountType)
         {
             AssertTrueIsDisplayed(licensePaymentsReceivedDateColumn);
             AssertTrueIsDisplayed(licensePaymentsSendDateColumn);
             AssertTrueIsDisplayed(licensePaymentsPaymentMethodColumn);
-            AssertTrueIsDisplayed(licensePaymentsReceivedPaymentColumn);
+
+            if (leaseAccountType != "Receivable")
+                AssertTrueIsDisplayed(licensePaymentsSentPaymentColumn);
+            else
+                AssertTrueIsDisplayed(licensePaymentsReceivedPaymentColumn);
+
             AssertTrueIsDisplayed(licensePaymentsReceivedPaymentTooltip);
             AssertTrueIsDisplayed(licensePaymentsGSTColumn);
             AssertTrueIsDisplayed(licensePaymentsGSTTooltip);
@@ -625,10 +653,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[2]"), payment.PaymentCategory);
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[3]"), payment.PaymentMethod);
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[4]"), TransformCurrencyFormat(payment.PaymentExpectedPayment));
-            //if(payment.PaymentIsGSTApplicable == "true")
-            //    AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[5]"), TransformCurrencyFormat(payment.PaymentGST));
+
+            if (payment.PaymentIsGSTApplicable == "true")
+                AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[5]"), TransformCurrencyFormat(payment.PaymentGST));
             //else
-            //    AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[5]"), "-");
+                //AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[5]"), "-");
 
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[6]"),TransformCurrencyFormat(payment.PaymentTotalReceived));
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[7]"), payment.PaymentStatus);
@@ -647,7 +676,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private static string CalculateGST(string amount, string gst)
         {
-            if (gst == "true")
+            if (gst == "Y")
             {
                 decimal value = decimal.Parse(amount) * 0.05m;
                 return "$" + value.ToString("#,##0.00");
@@ -690,7 +719,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     break;
             }
 
-            if (gst == "true")
+            if (gst == "Y")
                 unitAmount += decimal.Parse(amount) * 0.05m;
 
             var finalAmount = frequencyNumber * unitAmount;
@@ -706,7 +735,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (isExercised == "Exercised")
                 return "$0.00";
             else
-                return "-";
+                return "";
         }
     }
 }

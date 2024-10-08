@@ -201,7 +201,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Edit Insurance section
         public void EditInsuranceButton()
         {
-            WaitUntilClickable(insuranceEditIcon);
+            Wait();
             webDriver.FindElement(insuranceEditIcon).Click();
         }
 

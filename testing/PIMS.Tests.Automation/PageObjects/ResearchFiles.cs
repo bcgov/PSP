@@ -530,9 +530,9 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
-                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
-                sharedModals.ModalClickOKBttn();
+                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
+                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                sharedModals.SecondaryModalClickOKBttn();
             }
         }
 

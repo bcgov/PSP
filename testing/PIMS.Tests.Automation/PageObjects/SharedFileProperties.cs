@@ -44,7 +44,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropResultsPINHeader = By.XPath("//div[@class='th']/div[contains(text(), 'PIN')]");
         private readonly By searchPropResultsPlanHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Plan #')]");
         private readonly By searchPropResultsAddressHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Address')]");
-        private readonly By searchPropResultsLegalDescriptHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Legal Description')]");
 
         private readonly By searchPropertiesNoRowsResult = By.CssSelector("div[data-testid='map-properties'] div[class='no-rows-message']");
         private readonly By searchProperties1stResultAddressOptions = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
@@ -176,7 +175,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
 
-
             Wait();
             if (webDriver.FindElements(duplicatePropToast).Count() == 1)
             {
@@ -281,12 +279,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchPropResultsPINHeader);
             AssertTrueIsDisplayed(searchPropResultsPlanHeader);
             AssertTrueIsDisplayed(searchPropResultsAddressHeader);
-            //AssertTrueIsDisplayed(searchPropResultsLegalDescriptHeader);
         }
 
         public void NavigateToAddPropertiesToFile()
         {
-            WaitUntilVisible(fileEditPropertiesBttn);
+            Wait();
             webDriver.FindElement(fileEditPropertiesBttn).Click();
         }
 
