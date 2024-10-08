@@ -166,6 +166,8 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c7.btn.btn-link:hover,
@@ -717,6 +719,8 @@ exports[`ReceivedDepositForm component > renders with data as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c7.btn.btn-link:hover,

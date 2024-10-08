@@ -166,6 +166,8 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c3.btn.btn-link:hover,
@@ -669,6 +671,8 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c1.btn.btn-link:hover,

@@ -166,6 +166,8 @@ exports[`LayerPopupView component > renders as expected with layer popup content
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c1.btn.btn-link:hover,

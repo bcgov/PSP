@@ -792,7 +792,6 @@ exports[`PeriodForm component > renders as expected 1`] = `
       </div>
     </div>
   </div>
-  <div />
 </DocumentFragment>
 `;
 
@@ -1588,6 +1587,5 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
       </div>
     </div>
   </div>
-  <div />
 </DocumentFragment>
 `;

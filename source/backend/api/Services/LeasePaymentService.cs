@@ -107,10 +107,6 @@ namespace Pims.Api.Services
             {
                 throw new InvalidOperationException("Payment must be made against a parent period.");
             }
-            if (payment.PaymentReceivedDate < leasePeriod.PeriodStartDate || (leasePeriod.PeriodExpiryDate != null && payment.PaymentReceivedDate > leasePeriod.PeriodExpiryDate))
-            {
-                throw new InvalidOperationException("Payment received date must be within the start and expiry date of the period.");
-            }
 
             payment.LeasePaymentStatusTypeCode = GetPaymentStatus(payment, leasePeriod);
         }
