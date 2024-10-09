@@ -1288,6 +1288,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             DataTable leasesConsultationsSheet = ExcelDataContext.GetInstance().Sheets["LeasesConsultations"]!;
             ExcelDataContext.PopulateInCollection(leasesConsultationsSheet);
 
+            lease.LeaseConsultations = new List<LeaseConsultation>();
+
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 LeaseConsultation consultation = new()
