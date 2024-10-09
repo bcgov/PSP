@@ -102,6 +102,8 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsCompensationRequisitionHist> PimsCompensationRequisitionHists { get; set; }
 
+    public virtual DbSet<PimsConsultationOutcomeType> PimsConsultationOutcomeTypes { get; set; }
+
     public virtual DbSet<PimsConsultationStatusType> PimsConsultationStatusTypes { get; set; }
 
     public virtual DbSet<PimsConsultationType> PimsConsultationTypes { get; set; }
@@ -462,6 +464,8 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsPropertyAnomalyType> PimsPropertyAnomalyTypes { get; set; }
 
+    public virtual DbSet<PimsPropertyBoundaryLiteVw> PimsPropertyBoundaryLiteVws { get; set; }
+
     public virtual DbSet<PimsPropertyBoundaryVw> PimsPropertyBoundaryVws { get; set; }
 
     public virtual DbSet<PimsPropertyContact> PimsPropertyContacts { get; set; }
@@ -479,6 +483,8 @@ public partial class PimsBaseContext : DbContext
     public virtual DbSet<PimsPropertyLease> PimsPropertyLeases { get; set; }
 
     public virtual DbSet<PimsPropertyLeaseHist> PimsPropertyLeaseHists { get; set; }
+
+    public virtual DbSet<PimsPropertyLocationLiteVw> PimsPropertyLocationLiteVws { get; set; }
 
     public virtual DbSet<PimsPropertyLocationVw> PimsPropertyLocationVws { get; set; }
 
@@ -1696,6 +1702,38 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.CompensationRequisitionHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMPENSATION_REQUISITION_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsConsultationOutcomeType>(entity =>
+        {
+            entity.HasKey(e => e.ConsultationOutcomeTypeCode).HasName("OUTCMT_PK");
+
+            entity.ToTable("PIMS_CONSULTATION_OUTCOME_TYPE", tb =>
+                {
+                    tb.HasComment("Description of the consultation outcome type for a lease or license.");
+                    tb.HasTrigger("PIMS_OUTCMT_I_S_I_TR");
+                    tb.HasTrigger("PIMS_OUTCMT_I_S_U_TR");
+                });
+
+            entity.Property(e => e.ConsultationOutcomeTypeCode).HasComment("Code value of the consultation outcome type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the consultation outcome type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Onscreen display order of the code types.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code type is active.");
         });
 
         modelBuilder.Entity<PimsConsultationStatusType>(entity =>
@@ -4345,6 +4383,9 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.ConsultationOutcomeTypeCode)
+                .HasDefaultValue("INPROGRESS")
+                .HasComment("Foreign key to the PIMS_CONSULTATION_OUTCOME_TYPE table.");
             entity.Property(e => e.ConsultationStatusTypeCode)
                 .HasDefaultValue("UNKNOWN")
                 .HasComment("Foreign key to the PIMS_CONSULTATION_STATUS_TYPE table.");
@@ -4372,6 +4413,10 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.PrimaryContactId).HasComment("Consultation contact person within the organization.");
             entity.Property(e => e.RequestedOn).HasComment("Date that the approval / consultation request was sent.");
             entity.Property(e => e.ResponseReceivedDate).HasComment("Date that the consultation request response was received.");
+
+            entity.HasOne(d => d.ConsultationOutcomeTypeCodeNavigation).WithMany(p => p.PimsLeaseConsultations)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_OUTCMT_PIM_LESCON_FK");
 
             entity.HasOne(d => d.ConsultationStatusTypeCodeNavigation).WithMany(p => p.PimsLeaseConsultations)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -6845,6 +6890,11 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
         });
 
+        modelBuilder.Entity<PimsPropertyBoundaryLiteVw>(entity =>
+        {
+            entity.ToView("PIMS_PROPERTY_BOUNDARY_LITE_VW");
+        });
+
         modelBuilder.Entity<PimsPropertyBoundaryVw>(entity =>
         {
             entity.ToView("PIMS_PROPERTY_BOUNDARY_VW");
@@ -7017,6 +7067,11 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropertyLeaseHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_LEASE_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsPropertyLocationLiteVw>(entity =>
+        {
+            entity.ToView("PIMS_PROPERTY_LOCATION_LITE_VW");
         });
 
         modelBuilder.Entity<PimsPropertyLocationVw>(entity =>
@@ -7538,7 +7593,7 @@ public partial class PimsBaseContext : DbContext
 
         modelBuilder.Entity<PimsResearchFileNote>(entity =>
         {
-            entity.HasKey(e => new { e.ResearchFileNoteId, e.ResearchFileId }).HasName("RFLNOT_PK");
+            entity.HasKey(e => e.ResearchFileNoteId).HasName("RFLNOT_PK");
 
             entity.ToTable("PIMS_RESEARCH_FILE_NOTE", tb =>
                 {

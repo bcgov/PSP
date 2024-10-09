@@ -1,11 +1,10 @@
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, renderAsync, RenderOptions, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import ExportLeasePaymentsContainer, {
   IExportLeasePaymentsContainer,
@@ -17,15 +16,15 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('PaymentsContainer component', () => {
-  const setup = async (
+describe('ExportLeasePaymentsContainer component', () => {
+  const setup = (
     renderOptions: RenderOptions &
       Partial<IExportLeasePaymentsContainer> & {
         initialValues?: any;
       } = {},
   ) => {
     // render component under test
-    const component = await renderAsync(<ExportLeasePaymentsContainer />, {
+    const component = render(<ExportLeasePaymentsContainer />, {
       ...renderOptions,
       history,
       store: storeState,
@@ -43,7 +42,7 @@ describe('PaymentsContainer component', () => {
     vi.restoreAllMocks();
   });
   it('renders as expected', async () => {
-    const { component } = await setup();
+    const { component } = setup();
 
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -51,7 +50,7 @@ describe('PaymentsContainer component', () => {
   it('renders with the current fiscal year selected by default', async () => {
     const {
       component: { getByDisplayValue },
-    } = await setup();
+    } = setup();
 
     //this is based on the mocked value
     expect(getByDisplayValue('2020-21')).toBeVisible();
@@ -60,23 +59,21 @@ describe('PaymentsContainer component', () => {
   it('makes a get request for a report', async () => {
     const {
       component: { getByTitle },
-    } = await setup();
+    } = setup();
     mockAxios.onGet().reply(200, {});
 
-    await act(async () => userEvent.click(getByTitle('Export Aggregated Report')));
+    await act(async () => userEvent.click(getByTitle('Export Lease Payments Report')));
 
-    await waitFor(() => {
-      expect(mockAxios.history.get[0].url).toEqual(`/reports/leases/payments?fiscalYearStart=2020`);
-    });
+    expect(mockAxios.history.get[0].url).toEqual(`/reports/leases/payments?fiscalYearStart=2020`);
   });
 
   it('displays an error when request fails', async () => {
     const {
       component: { getByTitle, findByText },
-    } = await setup();
+    } = setup();
     mockAxios.onGet().reply(400, {});
 
-    await act(async () => userEvent.click(getByTitle('Export Aggregated Report')));
+    await act(async () => userEvent.click(getByTitle('Export Lease Payments Report')));
     const errorText = await findByText(
       'Failed to export report. If this error persists, please contact your System Administrator.',
     );

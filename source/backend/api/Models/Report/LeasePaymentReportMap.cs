@@ -35,6 +35,7 @@ namespace Pims.Api.Models.Report.Lease
                 .Map(dest => dest.PaymentAmount, src => src.PaymentAmountPreTax)
                 .Map(dest => dest.PaymentGst, src => src.PaymentAmountGst)
                 .Map(dest => dest.PaymentReceivedDate, src => src.PaymentReceivedDate.ToString("MMMM dd, yyyy"))
+                .Map(dest => dest.PaymentNote, src => src.Note)
                 .Map(dest => dest.LatestPaymentDate, src => src.LeasePeriod.Lease.PimsLeasePeriods.SelectMany(lp => lp.PimsLeasePayments).OrderByDescending(lp => lp.PaymentReceivedDate).FirstOrDefault() != null ?
                     src.LeasePeriod.Lease.PimsLeasePeriods.SelectMany(lp => lp.PimsLeasePayments).OrderByDescending(lp => lp.PaymentReceivedDate).FirstOrDefault().PaymentReceivedDate.ToString("MMMM dd, yyyy") : string.Empty);
         }

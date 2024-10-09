@@ -93,6 +93,8 @@ exports[`login > login renders correctly 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c1.btn.btn-link:hover,

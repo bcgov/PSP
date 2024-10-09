@@ -165,7 +165,7 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 20
- testRunner.When("I create a Subdivision from row number 25", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+ testRunner.When("I create a Subdivision without finishing from row number 25", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 21
  testRunner.Then("Subdivision has the same Child twice error", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");

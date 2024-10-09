@@ -1,10 +1,9 @@
 import { Formik } from 'formik';
-import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
 import { InlineSelect } from '@/components/common/form/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ClickableDownload } from '@/components/layout/SideNavBar/styles';
 import {
   FlexRowDiv,
   UnOrderedListNoStyle,
@@ -18,9 +17,7 @@ export interface IExportAggregatedLeasesContainer {
   fiscalYear: number;
 }
 
-export const ExportAggregatedLeasesContainer: React.FunctionComponent<
-  React.PropsWithChildren<unknown>
-> = () => {
+export const ExportAggregatedLeasesContainer: React.FunctionComponent<unknown> = () => {
   const { exportAggregatedLeases } = useLeaseExport();
   const fiscalYearOptions = generateFiscalYearOptions(1990, getCurrentFiscalYear());
   return (
@@ -57,13 +54,5 @@ export const ExportAggregatedLeasesContainer: React.FunctionComponent<
     </Formik>
   );
 };
-
-const ClickableDownload = styled(FaDownload)`
-  &:hover {
-    cursor: pointer;
-  }
-  align-self: center;
-  color: ${({ theme }) => theme.css.activeActionColor};
-`;
 
 export default ExportAggregatedLeasesContainer;

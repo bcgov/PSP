@@ -81,6 +81,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const mapMachinePendingRefresh = mapMachine.pendingFitBounds;
   const mapMachineProcessFitBounds = mapMachine.processFitBounds;
   const mapMachineRequestedFitBounds = mapMachine.requestedFitBounds;
+
+  const hasPendingFlyTo = mapMachine.pendingFlyTo;
+  const requestedFlyTo = mapMachine.requestedFlyTo;
+  const mapMachineProcessFlyTo = mapMachine.processFlyTo;
+
   useEffect(() => {
     if (
       isMapReady &&
@@ -137,9 +142,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     }
   }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeatureDataset]);
 
-  const hasPendingFlyTo = mapMachine.pendingFlyTo;
-  const requestedFlyTo = mapMachine.requestedFlyTo;
-  const mapMachineProcessFlyTo = mapMachine.processFlyTo;
   useEffect(() => {
     if (hasPendingFlyTo && isMapReady) {
       if (requestedFlyTo.bounds !== null) {
@@ -172,6 +174,32 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       setActiveBasemap(result.data?.basemaps?.[0]);
     });
   }, []);
+
+  useEffect(() => {
+    activeFeatureLayer?.clearLayers();
+
+    if (
+      mapMachine.mapFeatureData.fullyAttributedFeatures.features.length === 1 &&
+      mapMachine.mapFeatureData.pimsLocationFeatures.features.length === 0 &&
+      mapMachine.mapFeatureData.pimsBoundaryFeatures.features.length === 0
+    ) {
+      const searchFeature = mapMachine.mapFeatureData.fullyAttributedFeatures.features[0];
+      if (searchFeature?.geometry?.type === 'Polygon') {
+        activeFeatureLayer?.addData(searchFeature);
+        const bounds = activeFeatureLayer.getBounds();
+        mapRef?.current?.flyToBounds(bounds, { animate: false });
+        mapMachineProcessFlyTo();
+      }
+    }
+  }, [
+    activeFeatureLayer,
+    mapLocationFeatureDataset?.parcelFeature,
+    mapMachine.mapFeatureData.fullyAttributedFeatures.features,
+    mapMachine.mapFeatureData.fullyAttributedFeatures.features.length,
+    mapMachine.mapFeatureData.pimsBoundaryFeatures.features.length,
+    mapMachine.mapFeatureData.pimsLocationFeatures.features.length,
+    mapMachineProcessFlyTo,
+  ]);
 
   const handleMapReady = () => {
     mapMachine.setDefaultMapLayers(layers);
@@ -231,7 +259,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
         <LegendControl />
         <ZoomOutButton />
-        <AdvancedFilterButton onToggle={mapMachine.toggleMapFilter} />
+        <AdvancedFilterButton
+          onToggle={mapMachine.toggleMapFilterDisplay}
+          active={mapMachine.isFiltering}
+        />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <InventoryLayer zoom={zoom} bounds={bounds} maxZoom={MAP_MAX_ZOOM}></InventoryLayer>
         <LeafletLayerListener />

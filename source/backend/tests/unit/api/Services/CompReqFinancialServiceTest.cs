@@ -76,13 +76,19 @@ namespace Pims.Api.Test.Services
         public void SearchCompensationRequisitionFinancials_Success()
         {
             // Arrange
-            var service = this.CreateWithPermissions(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView, Permissions.ProjectView);
-            var repo = this._helper.GetService<Mock<ICompReqFinancialRepository>>();
-            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsCompReqFinancial>());
+            var service = this.CreateWithPermissions(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView, Permissions.ProjectView, Permissions.LeaseView);
 
-            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            // Compensation requisitions can be associated to Acquisition Files or Leases
+            var acquisitionFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { AcquisitionFile = new PimsAcquisitionFile { RegionCode = 1 } } };
+            var leaseFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { Lease = new PimsLease { RegionCode = 2 } } };
+
+            var repo = this._helper.GetService<Mock<ICompReqFinancialRepository>>();
+            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial>() { acquisitionFinancial, leaseFinancial });
+
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
+            user.PimsRegionUsers = new List<PimsRegionUser> { new PimsRegionUser { RegionCode = 1 }, new PimsRegionUser { RegionCode = 2 } };
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             var filter = new AcquisitionReportFilterModel();
 
@@ -90,7 +96,7 @@ namespace Pims.Api.Test.Services
             var financials = service.SearchCompensationRequisitionFinancials(filter);
 
             // Assert
-            financials.Should().BeEmpty();
+            financials.Should().HaveCount(2);
         }
 
         [Fact]
@@ -102,7 +108,7 @@ namespace Pims.Api.Test.Services
             var matchingFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { AcquisitionFile = new PimsAcquisitionFile { RegionCode = 1 } } };
             var nonMatchingFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { AcquisitionFile = new PimsAcquisitionFile { RegionCode = 2 } } };
             var repo = this._helper.GetService<Mock<ICompReqFinancialRepository>>();
-            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsCompReqFinancial> { matchingFinancial, nonMatchingFinancial });
+            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial> { matchingFinancial, nonMatchingFinancial });
 
             var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
             user.PimsRegionUsers = new List<PimsRegionUser> { new PimsRegionUser { RegionCode = 1 } };
@@ -117,6 +123,34 @@ namespace Pims.Api.Test.Services
             // Assert
             financials.Should().HaveCount(1);
             financials.FirstOrDefault().CompensationRequisition.AcquisitionFile.RegionCode.Should().Be(1);
+        }
+
+        [Fact]
+        public void SearchCompensationRequisitionFinancials_Region_Leases_Success()
+        {
+            // Arrange
+            var service = this.CreateWithPermissions(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView, Permissions.ProjectView);
+
+            var matchingFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { Lease = new PimsLease { RegionCode = 1 } } };
+            var nonMatchingFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { Lease = new PimsLease { RegionCode = 2 } } };
+            var noRegionLeaseFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { Lease = new PimsLease { RegionCode = null } } }; // Region is OPTIONAL for leases and can be NULL
+
+            var repo = this._helper.GetService<Mock<ICompReqFinancialRepository>>();
+            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial> { noRegionLeaseFinancial, matchingFinancial, nonMatchingFinancial });
+
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
+            user.PimsRegionUsers = new List<PimsRegionUser> { new PimsRegionUser { RegionCode = 1 } };
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            var filter = new AcquisitionReportFilterModel();
+
+            // Act
+            var financials = service.SearchCompensationRequisitionFinancials(filter);
+
+            // Assert - for Leases without region, export them regardless of the users' region. Otherwise filter lease data by the user’s region.
+            financials.Should().HaveCount(2);
+            financials.FirstOrDefault().CompensationRequisition.Lease.RegionCode.Should().BeNull();
         }
 
         [Fact]
@@ -139,7 +173,7 @@ namespace Pims.Api.Test.Services
             };
             var nonMatchingFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { AcquisitionFile = new PimsAcquisitionFile { } } };
             var repo = this._helper.GetService<Mock<ICompReqFinancialRepository>>();
-            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>())).Returns(new List<PimsCompReqFinancial> { matchingFinancial, nonMatchingFinancial });
+            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>(), It.IsAny<bool>(), It.IsAny<bool>())).Returns(new List<PimsCompReqFinancial> { matchingFinancial, nonMatchingFinancial });
 
             contractorUser.PimsRegionUsers = new List<PimsRegionUser> { new PimsRegionUser { RegionCode = 1 } };
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
@@ -155,6 +189,38 @@ namespace Pims.Api.Test.Services
             financials.FirstOrDefault().CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.FirstOrDefault().PersonId.Should().Be(contractorUser.PersonId);
         }
 
+        [Theory]
+        [InlineData(new Permissions[] { Permissions.AcquisitionFileView }, 1)]
+        [InlineData(new Permissions[] { Permissions.LeaseView }, 1)]
+        [InlineData(new Permissions[] { Permissions.AcquisitionFileView, Permissions.LeaseView }, 2)]
+        public void SearchCompensationRequisitionFinancials_Returns_FileTypes_Based_On_UserPermissions(Permissions[] permissions, int expected)
+        {
+            // Arrange
+            Permissions[] basePermissions = { Permissions.CompensationRequisitionView, Permissions.ProjectView };
+            var service = this.CreateWithPermissions(basePermissions.Concat(permissions).ToArray());
+
+            // Compensation requisitions can be associated to Acquisition Files or Leases
+            var acquisitionFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { AcquisitionFile = new PimsAcquisitionFile { RegionCode = 1 } } };
+            var leaseFinancial = new PimsCompReqFinancial { CompensationRequisition = new PimsCompensationRequisition { Lease = new PimsLease { RegionCode = 2 } } };
+
+            var repo = this._helper.GetService<Mock<ICompReqFinancialRepository>>();
+            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>(), true, false)).Returns(new List<PimsCompReqFinancial>() { acquisitionFinancial });
+            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>(), false, true)).Returns(new List<PimsCompReqFinancial>() { leaseFinancial });
+            repo.Setup(x => x.SearchCompensationRequisitionFinancials(It.IsAny<AcquisitionReportFilterModel>(), true, true)).Returns(new List<PimsCompReqFinancial>() { acquisitionFinancial, leaseFinancial });
+
+            var user = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
+            user.PimsRegionUsers = new List<PimsRegionUser> { new PimsRegionUser { RegionCode = 1 }, new PimsRegionUser { RegionCode = 2 } };
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            var filter = new AcquisitionReportFilterModel();
+
+            // Act
+            var financials = service.SearchCompensationRequisitionFinancials(filter);
+
+            // Assert
+            financials.Should().HaveCount(expected);
+        }
         private CompReqFinancialService CreateWithPermissions(params Permissions[] permissions)
         {
             var user = PrincipalHelper.CreateForPermission(permissions);

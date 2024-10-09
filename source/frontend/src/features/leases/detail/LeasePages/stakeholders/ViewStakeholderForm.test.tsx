@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
 
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
-import { mockApiOrganization, mockApiPerson, mockOrganization } from '@/mocks/filterData.mock';
+import { mockApiOrganization, mockApiPerson } from '@/mocks/filterData.mock';
 import { getEmptyLeaseStakeholder, getMockApiLease } from '@/mocks/lease.mock';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { defaultApiLease } from '@/models/defaultInitializers';
@@ -77,7 +77,7 @@ describe('Tenant component', () => {
         { leaseId: 1, personId: mockApiPerson.id, note: 'person note', stakeholderType: 'TEN' },
         {
           leaseId: 1,
-          organizationId: mockOrganization.id,
+          organizationId: mockApiOrganization.id,
           note: 'organization id',
         },
       ],
@@ -101,7 +101,7 @@ describe('Tenant component', () => {
       },
       stakeholders: [
         { leaseId: 1, personId: mockApiPerson.id, note: 'person note' },
-        { leaseId: 1, organizationId: mockOrganization.id, note: 'organization id' },
+        { leaseId: 1, organizationId: mockApiOrganization.id, note: 'organization id' },
       ],
       isPayableLease: false,
     });

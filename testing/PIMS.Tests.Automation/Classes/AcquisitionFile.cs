@@ -38,10 +38,10 @@
         public int StakeholderStartRow { get; set; } = 0;
         public int StakeholderCount { get; set; } = 0;
         public List<AcquisitionStakeholder> AcquisitionStakeholders { get; set; } = new List<AcquisitionStakeholder>();
-        public int CompensationStartRow { get; set; } = 0;
-        public int CompensationCount { get; set; } = 0;
-        public string CompensationTotalAllowableAmount { get; set; } = null!;
-        public List<AcquisitionCompensation> AcquisitionCompensations { get; set; } = new List<AcquisitionCompensation>() { };
+        public int AcquisitionCompensationStartRow { get; set; } = 0;
+        public int AcquisitionCompensationCount { get; set; } = 0;
+        public string AcquisitionCompensationTotalAllowableAmount { get; set; } = null!;
+        public List<Compensation> AcquisitionCompensations { get; set; } = new List<Compensation>() { };
         public int ExpropriationStartRow { get; set; } = 0;
         public int ExpropriationCount { get; set; } = 0;
         public List<AcquisitionExpropriationForm8> AcquisitionExpropriationForm8s { get; set; } = new List<AcquisitionExpropriationForm8>() { };
@@ -153,7 +153,7 @@
         public int StakeholderIndex { get; set; } = 0;
     }
 
-    public class AcquisitionCompensation
+    public class Compensation
     {
         public string CompensationAmount { get; set; } = null!;
         public string CompensationGSTAmount { get; set; } = null!;

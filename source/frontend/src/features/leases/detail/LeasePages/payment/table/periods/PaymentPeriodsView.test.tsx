@@ -31,7 +31,6 @@ const defaultTestFormLeasePeriod = {
   expiryDate: '2020-12-15T18:00',
   paymentAmount: 1000,
 };
-const onGenerate = vi.fn();
 
 describe('PeriodsForm component', () => {
   const setup = async (
@@ -51,7 +50,6 @@ describe('PeriodsForm component', () => {
         onEditPayment={noop}
         onDeletePayment={noop}
         onSavePayment={noop}
-        onGenerate={onGenerate}
         formikRef={createRef()}
         lease={renderOptions.initialValues ?? ({} as any)}
       />,
@@ -562,116 +560,5 @@ describe('PeriodsForm component', () => {
     const tooltip = getByTitle('Flexible Period');
     expect(tooltip).not.toBeNull();
     expect(getByText('(anticipated)', { exact: false })).toBeVisible();
-  });
-
-  it('does not render generation button if missing permissions', async () => {
-    const {
-      component: { queryByTitle },
-    } = await setup({
-      initialValues: {
-        ...new LeaseFormModel(),
-        periods: [
-          {
-            ...defaultTestFormLeasePeriod,
-            isTermExercised: false,
-            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
-          },
-        ],
-      },
-      claims: [],
-    });
-
-    expect(queryByTitle('Generate H1005(a)')).toBeNull();
-  });
-
-  it('does not render generation button if lease is not of expected type', async () => {
-    const {
-      component: { queryByTitle },
-    } = await setup({
-      initialValues: {
-        ...new LeaseFormModel(),
-        leaseTypeCode: 'OTHER',
-        periods: [
-          {
-            ...defaultTestFormLeasePeriod,
-            isTermExercised: false,
-            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
-          },
-        ],
-      },
-    });
-
-    expect(queryByTitle('Generate H1005(a)')).toBeNull();
-  });
-
-  it('only renders generation button on first period', async () => {
-    const { findFirstRow, findCell } = await setup({
-      initialValues: {
-        ...new LeaseFormModel(),
-        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA,
-        periods: [
-          {
-            ...defaultTestFormLeasePeriod,
-            isTermExercised: false,
-          },
-          {
-            ...defaultTestFormLeasePeriod,
-            isTermExercised: false,
-          },
-        ],
-      },
-    });
-
-    const row = findFirstRow() as HTMLElement;
-    expect(row).not.toBeNull();
-    expect(findCell(row, 11)?.textContent).toContain('Generate H1005(a)');
-  });
-
-  it('calls onGenerate H1005A when generation button is clicked', async () => {
-    const {
-      component: { queryAllByTitle },
-    } = await setup({
-      initialValues: {
-        ...new LeaseFormModel(),
-        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA,
-        periods: [
-          {
-            ...defaultTestFormLeasePeriod,
-            isTermExercised: false,
-            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
-          },
-        ],
-      },
-    });
-
-    const generateButton = queryAllByTitle('Generate H1005(a)')[0];
-    expect(generateButton).toBeVisible();
-
-    await act(async () => userEvent.click(generateButton));
-    expect(onGenerate).toHaveBeenCalled();
-  });
-
-  it('calls onGenerate H1005 when generation button is clicked', async () => {
-    const {
-      component: { queryAllByTitle },
-    } = await setup({
-      initialValues: {
-        ...new LeaseFormModel(),
-        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY,
-        periods: [
-          {
-            ...defaultTestFormLeasePeriod,
-            isTermExercised: false,
-            payments: [{ amountTotal: 1, receivedDate: '2020-01-01T18:00' }] as FormLeasePayment[],
-          },
-        ],
-      },
-    });
-
-    const generateButton = queryAllByTitle('Generate H1005')[0];
-    expect(generateButton).toBeVisible();
-
-    await act(async () => userEvent.click(generateButton));
-    expect(onGenerate).toHaveBeenCalled();
   });
 });
