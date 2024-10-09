@@ -245,7 +245,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteFirstActivity()
         {
-            webDriver.FindElement(By.XPath("//div[@data-testid='finacialActivity[0]']/div/button[@title='Delete financial activity']")).Click();
+            Wait();
+            FocusAndClick(By.XPath("//div[@data-testid='finacialActivity[0]']/div/button[@title='Delete financial activity']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
