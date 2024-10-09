@@ -1,12 +1,14 @@
 import { FaDownload, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
-export const TrayHeader = styled.h3`
-  font-size: 3rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 0.4rem solid ${props => props.theme.css.headerBorderColor};
-  margin-bottom: 3.2rem;
-  max-width: 28rem;
+export const TrayHeader = styled.h1`
+  color: ${props => props.theme.bcTokens.typographyColorSecondary};
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem ${props => props.theme.css.headerBorderColor};
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
 `;
 
 export const SideNavBar = styled.div`
@@ -63,6 +65,7 @@ export const CloseButton = styled(FaWindowClose)`
   &#close-tray {
     float: right;
     cursor: pointer;
+    margin-top: 0.5rem;
     fill: ${props => props.theme.bcTokens.typographyColorSecondary};
     &:hover {
       fill: ${props => props.theme.css.activeActionColor};

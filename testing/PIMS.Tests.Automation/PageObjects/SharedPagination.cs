@@ -33,23 +33,23 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 case 5:
                     WaitUntilVisible(searchTablePagination5);
-                    webDriver.FindElement(searchTablePagination5).Click();
+                    FocusAndClick(searchTablePagination5);
                     break;
                 case 10:
                     WaitUntilVisible(searchTablePagination10);
-                    webDriver.FindElement(searchTablePagination10).Click();
+                    FocusAndClick(searchTablePagination10);
                     break;
                 case 20:
                     WaitUntilClickable(searchTablePagination20);
-                    webDriver.FindElement(searchTablePagination20).Click();
+                    FocusAndClick(searchTablePagination20);
                     break;
                 case 50:
                     WaitUntilClickable(searchTablePagination50);
-                    webDriver.FindElement(searchTablePagination50).Click();
+                    FocusAndClick(searchTablePagination50);
                     break;
                 case 100:
                     WaitUntilClickable(searchTablePagination100);
-                    webDriver.FindElement(searchTablePagination100).Click();
+                    FocusAndClick(searchTablePagination100);
                     break;
             }
         }

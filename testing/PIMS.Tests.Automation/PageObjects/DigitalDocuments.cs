@@ -252,9 +252,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentCancelEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'No')]/parent::button");
         private readonly By documentSaveEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'Yes')]/parent::button");
 
-        //Toast Element
-        private readonly By documentGeneralToastBody = By.CssSelector("div[class='Toastify__toast-body']");
-
         //Document Confirmation Modal Elements
         private readonly By documentConfirmationModal = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div");
         private readonly By documentConfirmationContent = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/following-sibling::div[@class='modal-body']");

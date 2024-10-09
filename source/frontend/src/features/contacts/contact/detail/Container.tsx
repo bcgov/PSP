@@ -38,7 +38,7 @@ const ContactViewContainer: React.FunctionComponent<
                 <Col md={1} className="d-flex justify-content-end">
                   <div className="btn">
                     <FaWindowClose
-                      size={24}
+                      size={28}
                       onClick={() => {
                         history.push('/contact/list');
                       }}
