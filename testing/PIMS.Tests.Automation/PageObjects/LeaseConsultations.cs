@@ -33,13 +33,16 @@ namespace PIMS.Tests.Automation.PageObjects
         //Consultations Create Form Elements
         private readonly By consultationsAddTitle = By.XPath("//div[contains(text(),'Add Approval / Consultation')]");
         private readonly By consultationTypeLabel = By.XPath("//label[contains(text(),'Approval / Consultation type')]");
-        private readonly By consultationTypeTooltip = By.CssSelector("span[date-testid='tooltip-icon-lease-consultation-type-tooltip']");
+        private readonly By consultationTypeTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-consultation-type-tooltip']");
         private readonly By consultationTypeSelect = By.Id("input-consultationTypeCode");
+        private readonly By consultationOtherDescriptionLabel = By.XPath("//label[contains(text(),'Description')]");
+        private readonly By consultationOtherDescriptionTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-consultation-otherdescription-tooltip']");
+        private readonly By consultationOtherDescriptionInput = By.Id("input-otherDescription");
         private readonly By consultationRequestedOnLabel = By.XPath("//label[contains(text(),'Requested on')]");
-        private readonly By consultationRequestedOnTooltip = By.CssSelector("span[date-testid='tooltip-icon-lease-consultation-requestedon-tooltip']");
+        private readonly By consultationRequestedOnTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-consultation-requestedon-tooltip']");
         private readonly By consultationRequestedOnDate = By.Id("datepicker-requestedOn");
         private readonly By consultationContactLabel = By.XPath("//label[contains(text(),'Contact')]");
-        private readonly By consultationContactTooltip = By.CssSelector("span[date-testid='tooltip-icon-lease-consultation-contact-tooltip']");
+        private readonly By consultationContactTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-consultation-contact-tooltip']");
         private readonly By consultationContactPrimaryLabel = By.XPath("//label[contains(text(),'Primary contact')]");
         private readonly By consultationContactPrimarySelect = By.Id("input-primaryContactId");
         private readonly By consultationContactTypeBttn = By.CssSelector("button[title='Select Contact']");
@@ -48,21 +51,21 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By consultationReceivedOnLabel = By.XPath("//label[contains(text(),'Response received on')]");
         private readonly By consultationReceivedOnDate = By.Id("datepicker-responseReceivedDate");
         private readonly By consultationOutcomeLabel = By.XPath("//label[contains(text(),'Outcome')]");
-        private readonly By consultationOutcomeTooltip = By.CssSelector("span[date-testid='tooltip-icon-lease-consultation-outcome-type-tooltip']");
+        private readonly By consultationOutcomeTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-consultation-outcome-type-tooltip']");
         private readonly By consultationOutcomeSelect = By.Id("input-consultationOutcomeTypeCode");
         private readonly By consultationCommentsLabel = By.XPath("//label[contains(text(),'Comments')]");
-        private readonly By consultationCommentsTooltip = By.CssSelector("span[date-testid='tooltip-icon-lease-consultation-comments-tooltip']");
+        private readonly By consultationCommentsTooltip = By.CssSelector("span[data-testid='tooltip-icon-lease-consultation-comments-tooltip']");
         private readonly By consultationCommentsTextarea = By.Id("input-comment");
 
         //Consultation Types Counting Elements
         private readonly By consultationDistrictCount = By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationEngineeringCount = By.Id("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By consultationEngineeringCount = By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
         private readonly By consultationFirstNationCount = By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationHeadquarterCount = By.CssSelector("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationRegionalPlanningCount = By.Id("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By consultationHeadquarterCount = By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By consultationRegionalPlanningCount = By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
         private readonly By consultationRegionalPropServicesCount = By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationSRECount = By.CssSelector("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationOtherCount = By.Id("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By consultationSRECount = By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By consultationOtherCount = By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
 
         //Leases Modal Element
         private readonly By licenseConsultationConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -94,6 +97,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
             ChooseSpecificSelectOption(consultationTypeSelect, consultation.leaseConsultationType);
 
+            if (consultation.leaseConsultationType == "Other")
+            {
+                System.Diagnostics.Debug.WriteLine("OTHER: " + consultation.leaseConsultationOtherDescription);
+                AssertTrueIsDisplayed(consultationOtherDescriptionLabel);
+                AssertTrueIsDisplayed(consultationOtherDescriptionTooltip);
+                ClearInput(consultationOtherDescriptionInput);
+                webDriver.FindElement(consultationOtherDescriptionInput).SendKeys(consultation.leaseConsultationOtherDescription);
+                webDriver.FindElement(consultationOtherDescriptionInput).SendKeys(Keys.Enter);
+            }
             if (consultation.leaseConsultationRequestedOn != "")
             {
                 ClearInput(consultationRequestedOnDate);
@@ -103,7 +115,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (consultation.leaseConsultationContact != "")
             {
                 webDriver.FindElement(consultationContactTypeBttn).Click();
-                sharedSelectContact.SelectContact(consultation.leaseConsultationContactType, consultation.leaseConsultationContact);
+                sharedSelectContact.SelectContact(consultation.leaseConsultationContact, consultation.leaseConsultationContactType);
             }
             if (consultation.leaseConsultationContactPrimaryContact != "")
             {
@@ -233,24 +245,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInitConsultationTab()
         {
+            Wait();
             AssertTrueIsDisplayed(consultationTitle);
             AssertTrueIsDisplayed(consultationAddButton);
             AssertTrueIsDisplayed(consultationDistrictSubtitle);
-            AssertTrueIsDisplayed(consultationDistrictExpandBttn);
             AssertTrueIsDisplayed(consultationEngineeringSubtitle);
-            AssertTrueIsDisplayed(consultationEngineeringExpandBttn);
             AssertTrueIsDisplayed(consultationFirstNationSubtitle);
-            AssertTrueIsDisplayed(consultationFirstNationExpandBttn);
             AssertTrueIsDisplayed(consultationHeadquarterSubtitle);
-            AssertTrueIsDisplayed(consultationHeadquarterExpandBttn);
             AssertTrueIsDisplayed(consultationRegionalPlanningSubtitle);
-            AssertTrueIsDisplayed(consultationRegionalPlanningExpandBttn);
             AssertTrueIsDisplayed(consultationRegionalPropServicesSubtitle);
-            AssertTrueIsDisplayed(consultationRegionalPropServicesExpandBttn);
             AssertTrueIsDisplayed(consultationSRESubtitle);
-            AssertTrueIsDisplayed(consultationSREExpandBttn);
             AssertTrueIsDisplayed(consultationOtherSubtitle);
-            AssertTrueIsDisplayed(consultationOtherExpandBttn);
             Assert.Equal(8, webDriver.FindElements(consultationInitialState).Count); 
         }
 
@@ -300,7 +305,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
@@ -323,7 +328,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
@@ -346,7 +351,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
@@ -369,7 +374,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
@@ -392,7 +397,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
@@ -415,7 +420,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
@@ -438,7 +443,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
@@ -461,7 +466,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
