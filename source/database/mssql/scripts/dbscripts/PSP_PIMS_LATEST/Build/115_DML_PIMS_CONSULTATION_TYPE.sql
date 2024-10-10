@@ -15,8 +15,8 @@ VALUES
   (N'ENGINEERG', N'Engineering',                 ''),
   (N'1STNATION', N'First Nation',                ''),
   (N'STRATRE',   N'Strategic Real Estate (SRE)', ''),
-  (N'REGPLANG',  N'Regional planning',           ''),
-  (N'REGPRPSVC', N'Regional property services',  ''),
+  (N'REGPLANG',  N'Regional Planning',           ''),
+  (N'REGPRPSVC', N'Regional Property Services',  ''),
   (N'DISTRICT',  N'District',                    ''),
   (N'HQ',        N'Headquarter (HQ)',            ''),
   (N'OTHER',     N'Other',                       'Describe other*');

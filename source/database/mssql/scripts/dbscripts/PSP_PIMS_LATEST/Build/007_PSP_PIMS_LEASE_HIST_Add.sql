@@ -1,5 +1,6 @@
 -- *****************************************************************************
--- Add the LEASE_CATEGORY_TYPE_CODE and LEASE_PURPOSE_TYPE_CODE back into the
+-- Add the LEASE_PURPOSE_TYPE_CODE, LEASE_PURPOSE_OTHER_DESC, 
+-- LEASE_CATEGORY_TYPE_CODE, and LEASE_CATEGORY_OTHER_DESC columns back into the
 -- PIMS_LEASE_HIST table.
 -- *****************************************************************************
 
