@@ -100,8 +100,8 @@ export const AddLeaseContainer: React.FunctionComponent<
       icon={
         <LeaseIcon
           title="Lease and Licence Icon"
-          width="2.6rem"
-          height="2.6rem"
+          width="2.8rem"
+          height="2.8rem"
           fill="currentColor"
           className="mr-2"
         />

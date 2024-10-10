@@ -26,7 +26,6 @@ import { mapLookupCode } from '@/utils/mapLookupCode';
 
 import { ContactListForm } from './ContactListForm';
 import { InvoiceListForm } from './InvoiceListForm';
-import { InvoiceTotalsForm } from './InvoiceTotalsForm';
 import { PropertyActivityFormModel } from './models';
 import { PropertyActivityEditFormYupSchema } from './validation';
 
@@ -188,7 +187,6 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                         gstConstant={props.gstConstant}
                         pstConstant={props.pstConstant}
                       />
-                      <InvoiceTotalsForm formikProps={formikProps} />
                       <SaveCancelButtons
                         onCancel={() => {
                           if (formikProps.dirty === true) {

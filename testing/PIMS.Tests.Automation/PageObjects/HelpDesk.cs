@@ -33,7 +33,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToHelpDesk()
         {
-            WaitUntilVisible(mainMenuHelpDeskBttn);
+            Wait();
             webDriver.FindElement(mainMenuHelpDeskBttn).Click();
         }
 

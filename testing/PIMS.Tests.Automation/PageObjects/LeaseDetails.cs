@@ -583,6 +583,15 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        public void SaveLicenseWithExpectedErrors()
+        {
+            Wait();
+            ButtonElement("Save");
+
+            sharedModals.IsToastyPresent();
+            Assert.Contains("An error occurred while saving the entity changes", sharedModals.ToastifyText());
+        }
+
         public void CancelLicense()
         {
             ButtonElement("Cancel");
@@ -591,7 +600,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetLeaseCode()
         {
-            WaitUntilVisible(licenseHeaderNbrContent);
+            Wait();
             return webDriver.FindElement(licenseHeaderNbrContent).Text;
         }
 

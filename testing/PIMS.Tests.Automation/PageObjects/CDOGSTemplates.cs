@@ -6,7 +6,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Admin Tools - CDOGS Menu Elements
         private By adminToolsTemplatesLink = By.XPath("//a[contains(text(),'Manage Form Document Templates')]");
-        private By adminToolsTemplateTypeSelect = By.CssSelector("select[class='form-control']");
+        private By adminToolsTemplateTypeSelect = By.CssSelector("select[class='form-select form-control']");
 
         //Admin Tools - CDOGS List View Elements
         private By CDOGSDocumentsTitle = By.XPath("//div[contains(text(),'Documents')]");

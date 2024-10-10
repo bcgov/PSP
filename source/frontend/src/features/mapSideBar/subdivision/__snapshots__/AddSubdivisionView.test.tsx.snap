@@ -428,8 +428,8 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
 }
 
 .c2 {
-  width: 3rem;
-  height: 3rem;
+  width: 2.8rem;
+  height: 2.8rem;
   margin-right: 1rem;
   fill: #474543;
 }
@@ -453,6 +453,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
               class="c2"
               fill="none"
               height="24"
+              title="Subdivision Icon"
               viewBox="0 0 24 24"
               width="24"
               xmlns="http://www.w3.org/2000/svg"
