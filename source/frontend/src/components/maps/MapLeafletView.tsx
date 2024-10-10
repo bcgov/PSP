@@ -177,14 +177,13 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   useEffect(() => {
     activeFeatureLayer?.clearLayers();
-
     if (
       mapMachine.mapFeatureData.fullyAttributedFeatures.features.length === 1 &&
       mapMachine.mapFeatureData.pimsLocationFeatures.features.length === 0 &&
       mapMachine.mapFeatureData.pimsBoundaryFeatures.features.length === 0
     ) {
       const searchFeature = mapMachine.mapFeatureData.fullyAttributedFeatures.features[0];
-      if (searchFeature?.geometry?.type === 'Polygon') {
+      if (activeFeatureLayer && searchFeature?.geometry?.type === 'Polygon') {
         activeFeatureLayer?.addData(searchFeature);
         const bounds = activeFeatureLayer.getBounds();
         mapRef?.current?.flyToBounds(bounds, { animate: false });
