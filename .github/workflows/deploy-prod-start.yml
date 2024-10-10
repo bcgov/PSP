@@ -73,7 +73,7 @@ jobs:
           [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master
           RELEASE_TAG=$RELEASE_VERSION ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           RELEASE_TAG=$RELEASE_VERSION ./openshift/4.0/player.sh deploy app $DESTINATION -apply
-          oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
+          oc tag mayan-bcgov:$RELEASE_VERSION mayan-bcgov:master
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
