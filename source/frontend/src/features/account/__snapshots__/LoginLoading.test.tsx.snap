@@ -93,6 +93,8 @@ exports[`Empty Header > CITZ Login Loading 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c2.btn.btn-link:hover,
@@ -549,6 +551,8 @@ exports[`Empty Header > MOTI Login Loading 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c2.btn.btn-link:hover,

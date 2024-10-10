@@ -166,6 +166,8 @@ exports[`PaymentsView component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c4.btn.btn-link:hover,
@@ -511,6 +513,8 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c4.btn.btn-link:hover,
@@ -856,6 +860,8 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c3.btn.btn-link:hover,
@@ -1686,6 +1692,8 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c3.btn.btn-link:hover,

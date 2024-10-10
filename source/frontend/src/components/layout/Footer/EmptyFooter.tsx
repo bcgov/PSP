@@ -13,6 +13,7 @@ const EmptyFooter = () => {
           target="_blank"
           rel="noopener noreferrer"
           href="http://www.gov.bc.ca/gov/content/home/disclaimer"
+          className="nav-item"
         >
           Disclaimer
         </a>
@@ -20,6 +21,7 @@ const EmptyFooter = () => {
           target="_blank"
           rel="noopener noreferrer"
           href="http://www.gov.bc.ca/gov/content/home/privacy"
+          className="nav-item"
         >
           Privacy
         </a>
@@ -27,6 +29,7 @@ const EmptyFooter = () => {
           target="_blank"
           rel="noopener noreferrer"
           href="http://www.gov.bc.ca/gov/content/home/accessible-government"
+          className="nav-item"
         >
           Accessibility
         </a>
@@ -34,6 +37,7 @@ const EmptyFooter = () => {
           target="_blank"
           rel="noopener noreferrer"
           href="http://www.gov.bc.ca/gov/content/home/copyright"
+          className="nav-item"
         >
           Copyright
         </a>

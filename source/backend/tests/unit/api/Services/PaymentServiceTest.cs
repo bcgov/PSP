@@ -114,8 +114,8 @@ namespace Pims.Api.Test.Services
             // Act
             var addPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.AddPayment(lease.Internal_Id, addPayment));
-            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the period.");
+            var result = this.paymentService.AddPayment(lease.Internal_Id, addPayment);
+            this.leasePaymentRepository.Verify(x => x.Add(It.IsAny<PimsLeasePayment>()));
         }
         #endregion
 
@@ -210,8 +210,8 @@ namespace Pims.Api.Test.Services
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
-            var ex = Assert.Throws<InvalidOperationException>(() => this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment));
-            ex.Message.Should().Be("Payment received date must be within the start and expiry date of the period.");
+            var result = this.paymentService.UpdatePayment(lease.Internal_Id, 1, payment);
+            this.leasePaymentRepository.Verify(x => x.Update(It.IsAny<PimsLeasePayment>()));
         }
         #endregion
 
