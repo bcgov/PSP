@@ -77,10 +77,14 @@ export const useApiDocuments = () => {
         ),
 
       streamDocumentFileApiCall: (mayanDocumentId: number, mayanFileId: number) =>
-        api.get<File>(`/documents/storage/${mayanDocumentId}/stream/${mayanFileId}`),
+        api.get<File>(`/documents/storage/${mayanDocumentId}/files/${mayanFileId}/stream`, {
+          responseType: 'blob',
+        }),
 
       streamDocumentFileLatestApiCall: (mayanDocumentId: number) =>
-        api.get<File>(`/documents/storage/${mayanDocumentId}/stream`),
+        api.get<File>(`/documents/storage/${mayanDocumentId}/stream`, {
+          responseType: 'blob',
+        }),
 
       uploadDocumentRelationshipApiCall: (
         relationshipType: ApiGen_CodeTypes_DocumentRelationType,

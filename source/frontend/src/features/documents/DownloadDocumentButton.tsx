@@ -98,7 +98,7 @@ export const createFileDownload = async (
   }
 };
 
-const showFile = async (response: AxiosResponse<File, any>, fileName?: string) => {
+export const showFile = async (response: AxiosResponse<File, any>, fileName?: string) => {
   const groups = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/g.exec(
     response.headers['content-disposition'],
   );
