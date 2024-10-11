@@ -1,3 +1,4 @@
+import { Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 import { EditButton } from '@/components/common/EditButton';
@@ -26,19 +27,28 @@ export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailVie
   const query = useQuery();
   const history = useHistory();
   return (
-    <Section header="Summary" isCollapsable initiallyExpanded>
-      <StyledEditWrapper className="mr-3 my-1">
-        {hasClaim(Claims.MANAGEMENT_EDIT) && (
-          <EditButton
-            title="Edit property management information"
-            onClick={() => {
-              query.set('edit', 'true');
-              history.push({ search: query.toString() });
-            }}
-          />
-        )}
-      </StyledEditWrapper>
-
+    <Section
+      header={
+        <Row>
+          <Col md="10">Summary</Col>
+          <Col md="2" className="d-flex align-items-center justify-content-end pr-0">
+            <StyledEditWrapper>
+              {hasClaim(Claims.MANAGEMENT_EDIT) && (
+                <EditButton
+                  title="Edit property management information"
+                  onClick={() => {
+                    query.set('edit', 'true');
+                    history.push({ search: query.toString() });
+                  }}
+                />
+              )}
+            </StyledEditWrapper>
+          </Col>
+        </Row>
+      }
+      isCollapsable
+      initiallyExpanded
+    >
       <LoadingBackdrop show={isLoading} />
 
       <SectionField label="Property purpose">
