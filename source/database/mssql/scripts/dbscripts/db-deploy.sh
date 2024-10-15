@@ -27,19 +27,19 @@ done
 
 if [ $valid == 0 ]
 then
-  exit 0
+  exit 1
 fi
 
-#load db schema to local
-#Run every scripts in the build folder
+#Run every script in the build folder
 echo "======= SCRIPT SCHEMA START. ========="
 for i in "${TARGET_SPRINT}/${TARGET_OPERATION}"/*.sql; do
    sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$i" -b -I
    count=$?
-   if [ $count -ne 0 ];
-      then echo "======= SCRIPT ${i} RETURNS AN ERROR. ========="
+   if [ $count -ne 0 ]; then
+      echo "======= SCRIPT ${i} RETURNS AN ERROR. ========="
       exit 1;
-   else echo "======= SCRIPT ${i} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
+   else
+      echo "======= SCRIPT ${i} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
    fi
 done
 echo "======= DB SCHEMA LOADED ========"

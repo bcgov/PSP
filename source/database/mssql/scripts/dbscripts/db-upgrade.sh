@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Script to upgrade an existing database to the latest version (default) or TARGET_VERSION (if passed as parameter "TARGET_VERSION=16.01")
-# 1. Find current DB version 
+# 1. Find current DB version
 #    select STATIC_VARIABLE_VALUE from PIMS_STATIC_VARIABLE where STATIC_VARIABLE_NAME = 'dbversion'
 # 2. Search for all SQL scripts under the 'Alter Up' folder and order them by folder name and then file name
 #    find ./PSP*/'Alter Up' -type f -iname "*.sql" | sort -n
@@ -11,7 +11,8 @@ eval $(grep -v '^#' ../../.env | xargs)
 
 echo "===== Begin DB Schema Upgrade ====="
 
-# get current db version
+get_current_db_version()
+{
 currentdbversion=$(sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -h -1 -Q "SET NOCOUNT ON; select STATIC_VARIABLE_VALUE from PIMS_STATIC_VARIABLE where STATIC_VARIABLE_NAME = 'dbversion'");
 
 if [ -z "$currentdbversion" ];
@@ -21,6 +22,7 @@ then
 fi
 
 currentdbversion=${currentdbversion:0:5};
+}
 echo "current db version installed: ${currentdbversion}";
 export currentdbversion;
 
@@ -39,7 +41,7 @@ find ./PSP*/'Alter Up' -type f -iname "*.sql" | sort -n | while read file; do
   #echo "full path = $file";
   #echo "file name = $filename";
   #echo "file version = $scriptversion";
-	
+
   if awk "BEGIN {exit !($scriptversion > $currentdbversion)}";
 	then
     if [ -z "$TARGET_VERSION" ];
@@ -47,7 +49,7 @@ find ./PSP*/'Alter Up' -type f -iname "*.sql" | sort -n | while read file; do
       echo "** run sql script: $file";
       sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$file" -b -I
       count=$?
-      if [ $count -ne 0 ]; 
+      if [ $count -ne 0 ];
         then echo "======= SCRIPT ${file} RETURNS AN ERROR. ========="
         exit 1;
       else echo "======= SCRIPT ${file} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
@@ -56,9 +58,9 @@ find ./PSP*/'Alter Up' -type f -iname "*.sql" | sort -n | while read file; do
       if awk "BEGIN {exit !($scriptversion <= $TARGET_VERSION)}";
       then
         echo "** run sql script: $file";
-        sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$file" -b -I 
+        sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$file" -b -I
         count=$?
-        if [ $count -ne 0 ]; 
+        if [ $count -ne 0 ];
           then echo "======= SCRIPT ${file} RETURNS AN ERROR. ========="
           exit 1;
         else echo "======= SCRIPT ${file} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
@@ -66,7 +68,7 @@ find ./PSP*/'Alter Up' -type f -iname "*.sql" | sort -n | while read file; do
       fi
     fi
   fi
-  
+
 done
 
 echo "======= Completed DB Schema Upgrade ========"

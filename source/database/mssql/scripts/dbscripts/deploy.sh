@@ -8,7 +8,18 @@ then
    echo
    echo -e "* Enter the name of the target folder to run all db scripts against the database.\nValid values are: Alter Up, Alter Down, Build, Drop, Test Data"
    read TARGET_FOLDER
-   ./db-deploy.sh -t $TARGET_SPRINT -o $TARGET_FOLDER
-fi
 
-echo "======= END ========"
+   MASTER_FILE="master.sql";
+
+   directory="${TARGET_SPRINT}/${TARGET_FOLDER}";
+
+   if [ -f "$directory/$MASTER_FILE" ]; then
+     echo "$MASTER_FILE exists."
+     #' call transaction deploy'
+     #./db-deploy-transaction.sh -t $TARGET_SPRINT -o 'Alter Up'
+   else
+     echo "$MASTER_FILE DOES NOT."
+     #' call regular deploy'
+     #./db-deploy.sh -t $TARGET_SPRINT -o 'Alter Up'
+   fi
+fi
