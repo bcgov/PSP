@@ -29,8 +29,8 @@ then
    if [ $count -ne 0 ];
      then
        echo "======= SCRIPT ${i} RETURNS AN ERROR. ========="
-    else
-      echo "======= SCRIPT ${i} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
+     else
+       echo "======= SCRIPT ${i} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
    fi
    # Print the final version of the database after the script execution
    echo " * Final Database version and concurrency value"

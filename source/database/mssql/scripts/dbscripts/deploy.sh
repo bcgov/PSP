@@ -8,19 +8,7 @@ then
    echo
    echo -e "* Enter the name of the target folder to run all db scripts against the database.\nValid values are: Alter Up, Alter Down, Build, Drop, Test Data"
    read TARGET_FOLDER
-   #load db schema to local
-   #Run every scripts in the build folder
-   echo "======= SCRIPT SCHEMA START. ========="
-   for i in "${TARGET_SPRINT}/${TARGET_FOLDER}"/*.sql; do
-      sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$i" -b -I
-      count=$?
-      if [ $count -ne 0 ];
-         then echo "======= SCRIPT ${i} RETURNS AN ERROR. ========="
-         exit 1;
-      else echo "======= SCRIPT ${i} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
-      fi
-   done
-   echo "======= DB SCHEMA LOADED ========"
+   ./db-deploy.sh -t $TARGET_SPRINT -o $TARGET_FOLDER
 fi
 
 echo "======= END ========"
