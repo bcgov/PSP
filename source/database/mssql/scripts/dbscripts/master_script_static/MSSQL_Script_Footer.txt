@@ -1,6 +1,6 @@
    --End script section
 
-PRINT '======= DB TRANSACTION FINISH ========'
+PRINT '     == DB TRANSACTION FINISH ========'
 GO
 
 If XACT_STATE()=1

@@ -147,6 +147,15 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
       >
         Stakeholders
       </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="subFiles"
+        href="#"
+        role="tab"
+      >
+        Sub-Files
+      </a>
     </nav>
     <div
       class="tab-content"
