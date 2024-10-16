@@ -190,7 +190,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(menuContactsButton);
             FocusAndClick(menuContactsButton);
 
-            WaitUntilClickable(createContactButton);
+            Wait();
             FocusAndClick(createContactButton);
         }
 

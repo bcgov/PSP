@@ -20,18 +20,18 @@
     <PackageReference Include="ExcelDataReader.DataSet" Version="3.7.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="8.0.2" />
     <PackageReference Include="Microsoft.Extensions.Configuration.EnvironmentVariables" Version="8.0.0" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
-    <PackageReference Include="Selenium.Support" Version="4.24.0" />
-    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="128.0.6613.13700" />
+    <PackageReference Include="Selenium.Support" Version="4.25.0" />
+    <PackageReference Include="Selenium.WebDriver.ChromeDriver" Version="129.0.6668.10000" />
     <PackageReference Include="Selenium.WebDriver.GeckoDriver" Version="0.35.0" />
-    <PackageReference Include="Selenium.WebDriver.MSEdgeDriver" Version="128.0.2739.56" />
+    <PackageReference Include="Selenium.WebDriver.MSEdgeDriver" Version="129.0.2792.89" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.57" />
     <PackageReference Include="FluentAssertions" Version="6.12.1" />
     <PackageReference Include="SpecFlow.xUnit" Version="3.9.74" />
     <PackageReference Include="System.Text.Encoding.CodePages" Version="8.0.0" />
-    <PackageReference Include="System.Text.Json" Version="8.0.4" />
-    <PackageReference Include="xunit" Version="2.9.0" />
+    <PackageReference Include="System.Text.Json" Version="8.0.5" />
+    <PackageReference Include="xunit" Version="2.9.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
