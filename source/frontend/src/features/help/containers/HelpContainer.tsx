@@ -80,7 +80,7 @@ export function HelpContainer() {
                     application. You can also watch the video demos.
                   </p>
                   <LinkStyled target="_blank" href={pimsTrainingResourceUrl}>
-                    PIMS Resources <FaExternalLinkAlt />
+                    PIMS Training Materials <FaExternalLinkAlt />
                   </LinkStyled>
                   <hr />
                   <HelpModalContentContainer setMailto={setMailto} />
