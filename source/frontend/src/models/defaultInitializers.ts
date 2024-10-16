@@ -215,6 +215,7 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     compensationRequisitions: null,
     fileChecklistItems: null,
     id: 0,
+    parentAcquisitionFileId: null,
     fileName: null,
     fileNumber: null,
     fileStatusTypeCode: null,
