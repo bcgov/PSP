@@ -7,19 +7,17 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
    echo
    echo -e "* Enter the name of the target folder to run all db scripts against the database.\nValid values are: Alter Up, Alter Down, Build, Drop, Test Data"
-   read TARGET_FOLDER
+   read TARGET_OPERATION
 
    MASTER_FILE="master.sql";
 
-   directory="${TARGET_SPRINT}/${TARGET_FOLDER}";
+   directory="${TARGET_SPRINT}/${TARGET_OPERATION}";
 
    if [ -f "$directory/$MASTER_FILE" ]; then
-     echo "$MASTER_FILE exists."
-     #' call transaction deploy'
-     #./db-deploy-transaction.sh -t $TARGET_SPRINT -o 'Alter Up'
+     echo " * Info: master.sql found. Running transaction..."
+     ./db-deploy-transaction.sh -s $TARGET_SPRINT -o "$TARGET_OPERATION"
    else
-     echo "$MASTER_FILE DOES NOT."
-     #' call regular deploy'
-     #./db-deploy.sh -t $TARGET_SPRINT -o 'Alter Up'
+     echo " * Info: master.sql found. Running transaction..."
+     ./db-deploy.sh -s $TARGET_SPRINT -o "$TARGET_OPERATION"
    fi
 fi

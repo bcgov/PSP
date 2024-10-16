@@ -9,6 +9,38 @@
 
 eval $(grep -v '^#' ../../.env | xargs)
 
+# Process options
+valid=1
+dry_run=0
+
+# Retrieve the parameters passed
+while getopts n: option
+do
+  case "${option}" in
+    (n)
+      dry_run=$OPTARG
+      ;;
+
+    # Option error handling.
+    \?) valid=0
+      echo "An invalid option has been entered: $OPTARG"
+      ;;
+
+    :)  valid=0
+      echo "The additional argument for option $OPTARG was omitted."
+      ;;
+  esac
+done
+
+if [ $valid == 0 ]
+then
+  exit 1
+fi
+
+if [ $dry_run == 1 ]
+then
+  echo "** Running DRY RUN **"
+fi
 
 echo "===== Begin DB Schema Upgrade ====="
 get_current_db_version()
@@ -27,8 +59,6 @@ get_current_db_version()
     exit 1;
   fi
 
-  echo $currentdbversion;
-
   currentdbversion=${currentdbversion:0:5};
 }
 
@@ -41,55 +71,63 @@ then
   exit 1;
 fi
 
-echo "current db version installed: ${currentdbversion}";
+echo "Current db version installed: ${currentdbversion}";
 
 NEWEST_PSP_DIR=$(find ./*PSP* -type d -prune | tail -n 1 | cut -c 3-)
 if [ -z "$TARGET_SPRINT" ];
 then
-  echo "TARGET_VERSION: latest";
-  TARGET_VERSION="${NEWEST_PSP_DIR}"
+  echo "Targeting Latest";
+  TARGET_SPRINT="${NEWEST_PSP_DIR}"
 else
-  echo "TARGET_VERSION: ${TARGET_VERSION}";
-  TARGET_VERSION="${TARGET_SPRINT}"
+  echo "Targeting ${TARGET_SPRINT}";
 fi
+
+TARGET_VERSION=${TARGET_SPRINT:10:5};
+TARGET_VERSION=${TARGET_VERSION/_/.};
+echo "TARGET_VERSION: ${TARGET_VERSION}";
 
 MASTER_FILE="master.sql";
 
 find ./PSP*/'Alter Up' -type d | sort -n | while read directory; do
-  TARGET_OPERATION=${directory##*/};
-  TARGET_SPRINT=${directory#*/};
-  TARGET_SPRINT=${TARGET_SPRINT%'/Alter Up'};
-  echo "directory path = $directory";
+  MIGRATION_OPERATION=${directory##*/};
+  MIGRATION_FOLDER=${directory#*/};
+  MIGRATION_FOLDER=${MIGRATION_FOLDER%'/Alter Up'};
+  #echo "directory path = $directory";
+  #echo "migration folder = $MIGRATION_FOLDER";
 
   # only process directories that are a migration
-  if [[ $TARGET_SPRINT == "PSP_PIMS_S"* ]]; then
-    echo "target_operation = $TARGET_OPERATION";
-    echo "target_sprint = $TARGET_SPRINT";
+  if [[ $MIGRATION_FOLDER == "PSP_PIMS_S"* ]]; then
+    #echo "target_operation = $MIGRATION_OPERATION";
+    #echo "migration folder = $MIGRATION_FOLDER";
 
     directoryVersion=${directory:12:5};
     scriptversion=${directoryVersion/_/.};
-    echo "directory version = $scriptversion";
+    #echo "directory version = $scriptversion";
 
-    #get_current_db_version
     if awk "BEGIN {exit !($scriptversion > $initialdbversion)}"; then
       if awk "BEGIN {exit !($scriptversion <= $TARGET_VERSION)}"; then
         if [ -f "$directory/$MASTER_FILE" ]; then
-          echo "$MASTER_FILE exists."
+          echo " * Info: master.sql found. Running transaction..."
           #' call transaction deploy'
-          #./db-deploy-transaction.sh -t $TARGET_SPRINT -o 'Alter Up'
+          if [ $dry_run == 0 ]; then
+            ./db-deploy-transaction.sh -s $MIGRATION_FOLDER -o 'Alter Up'
+          else
+            ./db-deploy-transaction.sh -s $MIGRATION_FOLDER -o 'Alter Up' -n
+          fi
         else
-          echo "$MASTER_FILE DOES NOT."
+          echo " * Info: master.sql NOT found. Running incremental..."
           #' call regular deploy'
-          #./db-deploy.sh -t $TARGET_SPRINT -o 'Alter Up'
+          if [ $dry_run == 0 ]; then
+            ./db-deploy.sh -s $MIGRATION_FOLDER -o 'Alter Up'
+          else
+            ./db-deploy.sh -s $MIGRATION_FOLDER -o 'Alter Up' -n
+          fi
         fi
-      else
-        echo "Too OLD"
+      #else echo "Version ABOVE target, skipping"
       fi
-    else
-      echo "Too YOUNG"
+    #else echo "Version BELOW current, skipping"
     fi
-  else
-    echo "Not Deployable"
+  #else echo "Folder not a migration"
   fi
 done
 

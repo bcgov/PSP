@@ -272,9 +272,10 @@ db-deploy:
 	@echo "$(P) deployment script that facilitates releasing database changes."
 	@cd source/database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./deploy.sh
 
+DRY_RUN=0
 db-upgrade: ## Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01).
 	@echo "$(P) Upgrade an existing database to the TARGET_VERSION (if passed) or latest version (default), n=TARGET_VERSION (16.01)"
-	@cd source/database/mssql/scripts/dbscripts; TARGET_VERSION=$(n) ./upgrade.sh
+	@cd source/database/mssql/scripts/dbscripts; TARGET_SPRINT=$(n) ./upgrade.sh -n $(DRY_RUN)
 
 db-scaffold: ## Requires local install of sqlcmd
 	@echo "$(P) regenerate ef core entities from database"
