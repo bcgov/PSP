@@ -95,9 +95,8 @@ export const DocumentDetailContainer: React.FunctionComponent<
           const mayanMetadataResult = metadataResponse.payload?.results;
 
           let mayanFileId: number | undefined = undefined;
-          if (exists(mayanMetadataResult) && mayanMetadataResult.length > 0) {
-            const document = mayanMetadataResult[0].document;
-            mayanFileId = document?.file_latest?.id;
+          if (exists(detailResponse)) {
+            mayanFileId = detailResponse?.payload?.file_latest?.id;
           }
 
           setDocument(document => ({
