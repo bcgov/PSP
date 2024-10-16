@@ -18,6 +18,7 @@ export const mockAcquisitionFileResponse = (
   rowVersion = 1,
 ): ApiGen_Concepts_AcquisitionFile => ({
   id,
+  parentAcquisitionFileId: null,
   rowVersion,
   fileNumber: '1-12345-01',
   fileName: name,

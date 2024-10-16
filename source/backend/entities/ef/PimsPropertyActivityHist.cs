@@ -50,10 +50,6 @@ public partial class PimsPropertyActivityHist
     [Column("COMPLETION_DT")]
     public DateOnly? CompletionDt { get; set; }
 
-    [Column("DESCRIPTION")]
-    [StringLength(500)]
-    public string Description { get; set; }
-
     [Column("REQUEST_SOURCE")]
     [StringLength(2000)]
     public string RequestSource { get; set; }
@@ -111,4 +107,8 @@ public partial class PimsPropertyActivityHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("DESCRIPTION")]
+    [StringLength(4000)]
+    public string Description { get; set; }
 }
