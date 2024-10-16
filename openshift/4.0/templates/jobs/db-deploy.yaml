@@ -33,8 +33,8 @@ objects:
                   git fetch origin ${GIT_BRANCH};
                   git reset --h origin/${GIT_BRANCH};
                   cd /usr/config/psp/source/database/mssql/scripts/dbscripts;
-                  chmod 777 db-upgrade.sh;
-                  ./db-upgrade.sh;
+                  chmod 777 upgrade.sh;
+                  ./upgrade.sh;
               env:
                 - name: SERVER_NAME
                   value: ${SERVER_NAME}
