@@ -887,21 +887,51 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ACQNFL_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcquisitionFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AcquisitionFileId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_ID_SEQ])")
+                .HasComment("Generated surrogate primary key.");
+            entity.Property(e => e.AcqPhysFileStatusTypeCode).HasComment("Foreign key to the PIMS_ACQ_PHYS_FILE_STATUS_TYPE table.");
+            entity.Property(e => e.AcquisitionFileStatusTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_FILE_STATUS_TYPE table.");
+            entity.Property(e => e.AcquisitionFundingTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_FUNDING_TYPE table.");
+            entity.Property(e => e.AcquisitionTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_TYPE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user updated the record.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that updated the record.");
             entity.Property(e => e.AssignedDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date of file assignment.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DeliveryDate).HasComment("Date of file delivery.");
             entity.Property(e => e.FileName).HasComment("Descriptive name given to the acquisition file.");
             entity.Property(e => e.FileNo)
@@ -914,6 +944,9 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
             entity.Property(e => e.LegacyStakeholder).HasComment("Legacy stakeholders imported from PAIMS.");
             entity.Property(e => e.PaimsAcquisitionFileId).HasComment("Legacy Acquisition File ID from the PAIMS system.");
+            entity.Property(e => e.PrntAcquisitionFileId).HasComment("Link to the parent acquisition file.");
+            entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
+            entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
             entity.Property(e => e.RegionCode)
                 .HasDefaultValue((short)-1)
                 .HasComment("Region responsible for oversight of the acquisition.");
@@ -930,6 +963,8 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.AcquisitionTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_ACQTYP_PIM_ACQNFL_FK");
+
+            entity.HasOne(d => d.PrntAcquisitionFile).WithMany(p => p.InversePrntAcquisitionFile).HasConstraintName("PIM_ACQNFL_PIM_ACQNFL_FK");
 
             entity.HasOne(d => d.Product).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_PRODCT_PIM_ACQNFL_FK");
 
@@ -3099,6 +3134,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DocumentType)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Code value of the available document types.");
+            entity.Property(e => e.DocumentTypeDefinition).HasComment("Describes the purpose of the document.");
             entity.Property(e => e.DocumentTypeDescription)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Description of the available document types.");
