@@ -35,7 +35,7 @@ generate_file()
   for sql_file in "$SQLFOLDER"/*.sql; do
     [[ "$sql_file" = *"master.sql" ]] && continue
 
-    echo "  Processing '${sql_file}'..."
+    echo "   Processing '${sql_file}'..."
     echo "   PRINT '- Executing" $sql_file "'" >> "${FILE}"
     echo '   :r' $sql_file >> "${FILE}"
   done

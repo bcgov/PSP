@@ -7,20 +7,17 @@ if [[ $REPLY =~ ^[Yy]$ ]]
 then
    echo
    echo -e "* Enter the name of the target folder to run all db scripts against the database.\nValid values are: Alter Up, Alter Down, Build, Drop, Test Data"
-   read TARGET_FOLDER
-   #load db schema to local
-   #Run every scripts in the build folder
-   echo "======= SCRIPT SCHEMA START. ========="
-   for i in "${TARGET_SPRINT}/${TARGET_FOLDER}"/*.sql; do
-      sqlcmd -S $SERVER_NAME -U $DB_USER -P $DB_PASSWORD -d $DB_NAME -i "$i" -b -I
-      count=$?
-      if [ $count -ne 0 ];
-         then echo "======= SCRIPT ${i} RETURNS AN ERROR. ========="
-         exit 1;
-      else echo "======= SCRIPT ${i} COMPLETED SUCCESSFULLY. =========" && echo $count > /tmp/log.txt
-      fi
-   done
-   echo "======= DB SCHEMA LOADED ========"
-fi
+   read TARGET_OPERATION
 
-echo "======= END ========"
+   MASTER_FILE="master.sql";
+
+   directory="${TARGET_SPRINT}/${TARGET_OPERATION}";
+
+   if [ -f "$directory/$MASTER_FILE" ]; then
+     echo " * Info: master.sql found. Running transaction..."
+     ./db-deploy-transaction.sh -s $TARGET_SPRINT -o "$TARGET_OPERATION"
+   else
+     echo " * Info: master.sql found. Running transaction..."
+     ./db-deploy.sh -s $TARGET_SPRINT -o "$TARGET_OPERATION"
+   fi
+fi
