@@ -16,6 +16,7 @@ import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
+import { truncateSync } from 'fs';
 
 // mock auth library
 
@@ -177,6 +178,7 @@ describe('DocumentDetailForm component', () => {
           renderOptions.props?.relationshipType ??
           ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles
         }
+        documentTypeUpdated={renderOptions.props?.documentTypeUpdated ?? false}
         onUpdate={onUpdate}
         onCancel={onCancel}
         onDocumentTypeChange={onDocumentTypeChange}
@@ -241,5 +243,14 @@ describe('DocumentDetailForm component', () => {
 
     const select = getDocumentTypeSelect();
     expect(select).toBeDisabled();
+  });
+
+  it('displays a warning leyend when the document type has changed.', async () => {
+    const { getByText } = await setup({
+      props: { documentTypeUpdated: true }
+    });
+
+    const warningLeyend = getByText('Some associated metadata may be lost if the document type is changed.');
+    expect(warningLeyend).toBeInTheDocument();
   });
 });

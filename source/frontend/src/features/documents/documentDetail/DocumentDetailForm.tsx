@@ -20,9 +20,9 @@ import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/Ap
 import { StyledH3, StyledScrollable } from '../commonStyles';
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
-import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
 import { StyledContainer } from '../list/styles';
 import DocumentDetailHeader from './DocumentDetailHeader';
+import { DocumentUpdateFormDataYupSchema } from './DocumentUpdateFormDataYupSchema';
 
 export interface IDocumentDetailFormProps {
   formikRef: React.RefObject<FormikProps<DocumentUpdateFormData>>;
@@ -80,7 +80,7 @@ export const DocumentDetailForm: React.FunctionComponent<
               <Formik<DocumentUpdateFormData>
                 innerRef={props.formikRef}
                 initialValues={initialFormState}
-                validationSchema={getDocumentMetadataYupSchema(10)}
+                validationSchema={DocumentUpdateFormDataYupSchema}
                 onSubmit={async (values: DocumentUpdateFormData, { setSubmitting }) => {
                   if (
                     props.document?.pimsDocumentRelationship?.id &&

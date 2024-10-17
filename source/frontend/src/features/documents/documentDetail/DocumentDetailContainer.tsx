@@ -88,7 +88,9 @@ export const DocumentDetailContainer: React.FunctionComponent<
   const onUpdateDocument = async (updateRequest: ApiGen_Requests_DocumentUpdateRequest) => {
     if (props.pimsDocument.id) {
       const result = await updateDocument(props.pimsDocument.id, updateRequest);
-      result && props.onUpdateSuccess();
+      if (exists(result)) {
+        props.onUpdateSuccess && props.onUpdateSuccess();
+      }
     }
   };
 
@@ -153,11 +155,16 @@ export const DocumentDetailContainer: React.FunctionComponent<
 
   const onDocumentTypeChange = useCallback(
     async (changeEvent: ChangeEvent<HTMLInputElement>) => {
-      const documentTypeId = Number(changeEvent.target.value);
-      if (documentTypeId !== props.pimsDocument.documentType.id) {
-        await updateDocumentType(documentTypes.find(x => x.id === documentTypeId));
-        setDocumentTypeUpdated(true);
+      if (changeEvent.target.value) {
+        const documentTypeId = Number(changeEvent.target.value);
+        if (documentTypeId !== props.pimsDocument.documentType.id) {
+          await updateDocumentType(documentTypes.find(x => x.id === documentTypeId));
+          setDocumentTypeUpdated(true);
+        } else {
+          setDocumentTypeUpdated(false);
+        }
       } else {
+        formikRef.current?.setFieldValue('documentTypeId', null);
         setDocumentTypeUpdated(false);
       }
     },
