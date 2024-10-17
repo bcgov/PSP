@@ -1,5 +1,5 @@
-import { IContactSearchResult } from '@/interfaces';
-import { getEmptyPerson } from '@/mocks/contacts.mock';
+import { IContactSearchResult, fromContactSummary } from '@/interfaces';
+import { getEmptyContactSummary, getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_PropertyContact } from '@/models/api/generated/ApiGen_Concepts_PropertyContact';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -9,7 +9,8 @@ import { PropertyContactFormModel } from './models';
 describe('Property Contact model tests', () => {
   it('PropertyContactFormModel toApi sets person properly if form is person that is associated to an org.', () => {
     const stakeholderModel = new PropertyContactFormModel();
-    const contactResult: IContactSearchResult = {
+    const contactResult: IContactSearchResult = fromContactSummary({
+      ...getEmptyContactSummary(),
       id: '1',
       personId: 1,
       person: {
@@ -59,7 +60,7 @@ describe('Property Contact model tests', () => {
         propertyActivityId: null,
         useOrganizationAddress: null,
       },
-    };
+    });
     stakeholderModel.contact = contactResult;
     const apiModel = stakeholderModel.toApi();
     expect(apiModel.organizationId).toBeNull();
