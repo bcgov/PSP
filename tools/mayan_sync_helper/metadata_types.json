@@ -1,0 +1,196 @@
+{
+  "metadata_types": [
+    {
+      "label": "Project name",
+      "name": "PROJECT_NAME"
+    },
+    {
+      "label": "Project #",
+      "name": "PROJECT_NUMBER"
+    },
+    {
+      "label": "Plan #",
+      "name": "PLAN_NUMBER"
+    },
+    {
+      "label": "Plan revision",
+      "name": "PLAN_REVISION"
+    },
+    {
+      "label": "Road name",
+      "name": "ROAD_NAME"
+    },
+    {
+      "label": "Gazette published date",
+      "name": "GAZETTE_PUBLISHED_DATE"
+    },
+    {
+      "label": "Gazette date",
+      "name": "GAZETTE_DATE"
+    },
+    {
+      "label": "Gazette page #",
+      "name": "GAZETTE_PAGE_NUMBER"
+    },
+    {
+      "label": "Gazette type",
+      "name": "GAZETTE_TYPE"
+    },
+    {
+      "label": "MoTI plan #",
+      "name": "MOTI_PLAN_NUMBER"
+    },
+    {
+      "label": "Legal survey plan #",
+      "name": "LEGAL_SURVEY_PLAN_NUMBER"
+    },
+    {
+      "label": "LTSA schedule filing #",
+      "name": "LTSA_SCHEDULE_FILING_NUMBER"
+    },
+    {
+      "label": "Related gazette",
+      "name": "RELATED_GAZETTE"
+    },
+    {
+      "label": "Published date",
+      "name": "PUBLISHED_DATE"
+    },
+    {
+      "label": "MoTI file #",
+      "name": "MOTI_FILE_NUMBER"
+    },
+    {
+      "label": "Plan type",
+      "name": "PLAN_TYPE"
+    },
+    {
+      "label": "OIC #",
+      "name": "OIC_NUMBER"
+    },
+    {
+      "label": "Year",
+      "name": "YEAR"
+    },
+    {
+      "label": "OIC type",
+      "name": "OIC_TYPE"
+    },
+    {
+      "label": "OIC route #",
+      "name": "OIC_ROUTE_NUMBER"
+    },
+    {
+      "label": "Year - privy council #",
+      "name": "YEAR_PRIVY_COUNCIL_NUMBER"
+    },
+    {
+      "label": "Crown grant #",
+      "name": "CROWN_GRANT_NUMBER"
+    },
+    {
+      "label": "File #",
+      "name": "FILE_NUMBER"
+    },
+    {
+      "label": "Section #",
+      "name": "SECTION_NUMBER"
+    },
+    {
+      "label": "Start date",
+      "name": "START_DATE"
+    },
+    {
+      "label": "End date",
+      "name": "END_DATE"
+    },
+    {
+      "label": "Physical location",
+      "name": "PHYSICAL_LOCATION"
+    },
+    {
+      "label": "Property identifier (PID or PIN or road name)",
+      "name": "PROPERTY_IDENTIFIER"
+    },
+    {
+      "label": "Civic address",
+      "name": "CIVIC_ADDRESS"
+    },
+    {
+      "label": "Owner",
+      "name": "OWNER"
+    },
+    {
+      "label": "Short descriptor",
+      "name": "SHORT_DESCRIPTOR"
+    },
+    {
+      "label": "Date",
+      "name": "DATE"
+    },
+    {
+      "label": "PID",
+      "name": "PID"
+    },
+    {
+      "label": "Title #",
+      "name": "TITLE_NUMBER"
+    },
+    {
+      "label": "Canada land survey #",
+      "name": "CANADA_LAND_SURVEY_NUMBER"
+    },
+    {
+      "label": "Indian reserve or national park",
+      "name": "INDIAN_RESERVE_OR_NATIONAL_PARK"
+    },
+    {
+      "label": "MO #",
+      "name": "MO_NUMBER"
+    },
+    {
+      "label": "Road name",
+      "name": "ROAD_NAME"
+    },
+    {
+      "label": "Date signed",
+      "name": "DATE_SIGNED"
+    },
+    {
+      "label": "Transfer #",
+      "name": "TRANSFER_NUMBER"
+    },
+    {
+      "label": "Jurisdiction",
+      "name": "JURISDICTION"
+    },
+    {
+      "label": "Roll #",
+      "name": "ROLL_NUMBER"
+    },
+    {
+      "label": "Electoral district",
+      "name": "ELECTORAL_DISTRICT"
+    },
+    {
+      "label": "Highway district",
+      "name": "HIGHWAY_DISTRICT"
+    },
+    {
+      "label": "Field book #/Year",
+      "name": "FIELD_BOOK_NUMBER_YEAR"
+    },
+    {
+      "label": "District lot #",
+      "name": "DISTRICT_LOT_NUMBER"
+    },
+    {
+      "label": "Land district",
+      "name": "LAND_DISTRICT"
+    },
+    {
+      "label": "PIN",
+      "name": "PIN"
+    }
+  ]
+}

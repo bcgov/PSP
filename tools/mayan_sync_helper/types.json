@@ -1,0 +1,783 @@
+{
+    "document_types":
+    [
+        {
+            "label": "PA plans / Design drawings",
+            "metadata_types":
+            [
+                {
+                    "label": "Project name",
+                    "required": false
+                },
+                {
+                    "label": "Project #",
+                    "required": false
+                },
+                {
+                    "label": "Plan #",
+                    "required": false
+                },
+                {
+                    "label": "",
+                    "required": false
+                },
+                {
+                    "label": "",
+                    "required": false
+                },
+                {
+                    "label": "Plan revision",
+                    "required": false
+                },
+                {
+                    "label": "",
+                    "required": false
+                },
+                {
+                    "label": "",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Gazette",
+            "metadata_types":
+            [
+                {
+                    "label": "Road name",
+                    "required": false
+                },
+                {
+                    "label": "Gazette published date",
+                    "required": false
+                },
+                {
+                    "label": "Gazette date",
+                    "required": false
+                },
+                {
+                    "label": "Gazette page #",
+                    "required": false
+                },
+                {
+                    "label": "Gazette type",
+                    "required": false
+                },
+                {
+                    "label": "MoTI plan #",
+                    "required": false
+                },
+                {
+                    "label": "Legal survey plan #",
+                    "required": false
+                },
+                {
+                    "label": "LTSA schedule filing #",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "MoTI plan",
+            "metadata_types":
+            [
+                {
+                    "label": "MoTI plan #",
+                    "required": false
+                },
+                {
+                    "label": "Related gazette",
+                    "required": false
+                },
+                {
+                    "label": "Published date",
+                    "required": false
+                },
+                {
+                    "label": "Legal survey plan #",
+                    "required": false
+                },
+                {
+                    "label": "MoTI file #",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Legal survey plan",
+            "metadata_types":
+            [
+                {
+                    "label": "Legal survey plan #",
+                    "required": false
+                },
+                {
+                    "label": "MoTI plan #",
+                    "required": false
+                },
+                {
+                    "label": "Plan type",
+                    "required": false
+                },
+                {
+                    "label": "",
+                    "required": false
+                },
+                {
+                    "label": "",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "OIC",
+            "metadata_types":
+            [
+                {
+                    "label": "OIC #",
+                    "required": false
+                },
+                {
+                    "label": "Year",
+                    "required": false
+                },
+                {
+                    "label": "OIC type",
+                    "required": false
+                },
+                {
+                    "label": "OIC route #",
+                    "required": false
+                },
+                {
+                    "label": "Road name",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Privy council",
+            "metadata_types":
+            [
+                {
+                    "label": "Year - privy council #",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Crown grant",
+            "metadata_types":
+            [
+                {
+                    "label": "Crown grant #",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Historical file",
+            "metadata_types":
+            [
+                {
+                    "label": "File #",
+                    "required": false
+                },
+                {
+                    "label": "Section #",
+                    "required": false
+                },
+                {
+                    "label": "Start date",
+                    "required": false
+                },
+                {
+                    "label": "End date",
+                    "required": false
+                },
+                {
+                    "label": "Physical location",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Correspondence",
+            "metadata_types":
+            [
+                {
+                    "label": "Property identifier (PID or PIN or road name)",
+                    "required": false
+                },
+                {
+                    "label": "Civic address",
+                    "required": false
+                },
+                {
+                    "label": "Owner",
+                    "required": false
+                },
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                },
+                {
+                    "label": "Date",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Title Search / Historical Title",
+            "metadata_types":
+            [
+                {
+                    "label": "PID",
+                    "required": false
+                },
+                {
+                    "label": "Title #",
+                    "required": false
+                },
+                {
+                    "label": "Owner",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Miscellaneous Notes (LTSA)",
+            "metadata_types":
+            [
+                {
+                    "label": "PID",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Photo / Video",
+            "metadata_types":
+            [
+                {
+                    "label": "Property identifier (PID or PIN or road name)",
+                    "required": false
+                },
+                {
+                    "label": "Civic address",
+                    "required": false
+                },
+                {
+                    "label": "Owner",
+                    "required": false
+                },
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                },
+                {
+                    "label": "Date",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Canada lands survey",
+            "metadata_types":
+            [
+                {
+                    "label": "Canada land survey #",
+                    "required": false
+                },
+                {
+                    "label": "Indian reserve or national park",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Ministerial order",
+            "metadata_types":
+            [
+                {
+                    "label": "MO #",
+                    "required": false
+                },
+                {
+                    "label": "Property identifier (PID or PIN)",
+                    "required": false
+                },
+                {
+                    "label": "MoTI file #",
+                    "required": false
+                },
+                {
+                    "label": "Road name",
+                    "required": false
+                },
+                {
+                    "label": "Date signed",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Transfer of administration",
+            "metadata_types":
+            [
+                {
+                    "label": "Transfer #",
+                    "required": false
+                },
+                {
+                    "label": "Property identifier (PID or PIN)",
+                    "required": false
+                },
+                {
+                    "label": "MoTI file #",
+                    "required": false
+                },
+                {
+                    "label": "Road name",
+                    "required": false
+                },
+                {
+                    "label": "Date signed",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "BC assessment search ",
+            "metadata_types":
+            [
+                {
+                    "label": "Jurisdiction",
+                    "required": false
+                },
+                {
+                    "label": "Roll #",
+                    "required": false
+                },
+                {
+                    "label": "Civic address",
+                    "required": false
+                },
+                {
+                    "label": "Year",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "District road register ",
+            "metadata_types":
+            [
+                {
+                    "label": "Road name",
+                    "required": false
+                },
+                {
+                    "label": "Electoral district",
+                    "required": false
+                },
+                {
+                    "label": "Highway district",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Field notes ",
+            "metadata_types":
+            [
+                {
+                    "label": "Field book #/Year",
+                    "required": false
+                },
+                {
+                    "label": "District lot #",
+                    "required": false
+                },
+                {
+                    "label": "Land district",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Other ",
+            "metadata_types":
+            [
+                {
+                    "label": "Property identifier (PID or PIN or road name)",
+                    "required": false
+                },
+                {
+                    "label": "PIN",
+                    "required": false
+                },
+                {
+                    "label": "Road name",
+                    "required": false
+                },
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Lease/License (H1005/H1005A)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Company search",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "LTSA documents and plans (except title search)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Appraisals/Reviews",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Professional reports (ex: engineering/environmental etc.)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Spending Authority Approval (SAA)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Owner agreement/offer",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Compensation requisition (H0120)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Compensation cheque",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Condition of entry (H0443)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Notice of advanced payment (Form 8)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Release of claims",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Notice of expropriation (Form 1)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Approval of expropriation (Form 5)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Vesting notice (Form 9)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Affidavit of service",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Notice of possible entry (H0224)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "First nations consultation",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Tax notices and assessments",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Notice of claims/Litigation documents",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Certificate of Insurance (H0111)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Licensing approval/sign-off",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Briefing notes",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Surplus property declaration",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Temporary license for construction access (H0074)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Conveyance closing documents (ex: PTT forms, Form A transfer etc.)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Legal correspondence (ex: to AG/external lawyers)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Record of negotiation",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Other Land Agreement (Indemnity Letter, Letter of Intended Use, Assumption Agreement, etc)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        },
+        {
+            "label": "Financial records (invoices, journal vouchers etc.)",
+            "metadata_types":
+            [
+                {
+                    "label": "Short descriptor",
+                    "required": false
+                }
+            ]
+        }
+    ],
+    "metadata_types":
+    [
+        "Project name",
+        "Project #",
+        "Plan #",
+        "",
+        "Plan revision",
+        "Road name",
+        "Gazette published date",
+        "Gazette date",
+        "Gazette page #",
+        "Gazette type",
+        "MoTI plan #",
+        "Legal survey plan #",
+        "LTSA schedule filing #",
+        "Related gazette",
+        "Published date",
+        "MoTI file #",
+        "Plan type",
+        "OIC #",
+        "Year",
+        "OIC type",
+        "OIC route #",
+        "Year - privy council #",
+        "Crown grant #",
+        "File #",
+        "Section #",
+        "Start date",
+        "End date",
+        "Physical location",
+        "Property identifier (PID or PIN or road name)",
+        "Civic address",
+        "Owner",
+        "Short descriptor",
+        "Date",
+        "PID",
+        "Title #",
+        "Canada land survey #",
+        "Indian reserve or national park",
+        "MO #",
+        "Property identifier (PID or PIN)",
+        "Date signed",
+        "Transfer #",
+        "Jurisdiction",
+        "Roll #",
+        "Electoral district",
+        "Highway district",
+        "Field book #/Year",
+        "District lot #",
+        "Land district",
+        "PIN"
+    ]
+}
