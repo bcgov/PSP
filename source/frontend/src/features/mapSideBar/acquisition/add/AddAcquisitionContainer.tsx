@@ -9,7 +9,9 @@ import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
+import { useQuery } from '@/hooks/use-query';
 import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, isValidId } from '@/utils';
@@ -37,6 +39,10 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
+  const {
+    getAcquisitionFile: { execute: getAcquisitionFile, response: parentAcquisitionFile },
+  } = useAcquisitionProvider();
+
   const { execute: getPropertyAssociations } = usePropertyAssociations();
   const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
@@ -57,7 +63,10 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   );
 
   const initialForm = useMemo(() => {
-    const acquisitionForm = new AcquisitionForm();
+    const acquisitionForm = exists(parentAcquisitionFile)
+      ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
+      : new AcquisitionForm();
+
     if (selectedFeatureDataset !== null) {
       const property = PropertyForm.fromMapProperty(
         featuresetToMapProperty(selectedFeatureDataset),
@@ -67,7 +76,21 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         property.regionName !== 'Cannot determine' ? property.region?.toString() : undefined;
     }
     return acquisitionForm;
-  }, [selectedFeatureDataset]);
+  }, [parentAcquisitionFile, selectedFeatureDataset]);
+
+  // Check for parent acquisition file id for sub-files
+  const params = useQuery();
+  const parentId = params.get('parentId');
+
+  useEffect(() => {
+    const fetchParentFile = async () => {
+      if (exists(parentId) && isValidId(Number(parentId))) {
+        await getAcquisitionFile(Number(parentId));
+      }
+    };
+
+    fetchParentFile();
+  }, [getAcquisitionFile, parentId]);
 
   const handleSave = async () => {
     // Sets the formik field `isValid` to false at start
@@ -107,6 +130,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   };
 
   const { initialValues } = helper;
+
   // Require user confirmation before adding a property to file
   // This is the flow for Map Marker -> right-click -> create Acquisition File
   useEffect(() => {

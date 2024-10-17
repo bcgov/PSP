@@ -98,6 +98,42 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     };
   }
 
+  // TODO:
+  static fromParentFileApi(parentFile: ApiGen_Concepts_AcquisitionFile): AcquisitionForm {
+    const newForm = new AcquisitionForm();
+    newForm.parentAcquisitionFileId = parentFile.id;
+    newForm.fileName = parentFile.fileName || '';
+    newForm.rowVersion = undefined;
+    newForm.assignedDate = parentFile.assignedDate ?? undefined;
+    newForm.deliveryDate = parentFile.deliveryDate ?? undefined;
+    newForm.totalAllowableCompensation = '';
+    newForm.legacyFileNumber = parentFile.legacyFileNumber ?? undefined;
+    newForm.acquisitionFileStatusType = fromTypeCode(parentFile.fileStatusTypeCode) ?? undefined;
+    newForm.acquisitionPhysFileStatusType =
+      fromTypeCode(parentFile.acquisitionPhysFileStatusTypeCode) ?? undefined;
+    newForm.acquisitionType = fromTypeCode(parentFile.acquisitionTypeCode) ?? undefined;
+    newForm.region = fromTypeCode(parentFile.regionCode)?.toString();
+
+    newForm.product = parentFile.product?.id?.toString() ?? '';
+    newForm.fundingTypeCode = parentFile.fundingTypeCode?.id ?? undefined;
+    newForm.fundingTypeOtherDescription = parentFile.fundingOther || '';
+    newForm.project = exists(parentFile.project)
+      ? { id: parentFile.project.id || 0, text: parentFile.project.description || '' }
+      : undefined;
+
+    const interestHolders = parentFile.acquisitionFileInterestHolders?.map(x =>
+      InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),
+    );
+    newForm.ownerSolicitor =
+      interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_SOLICITOR) ??
+      new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR, parentFile.id);
+    newForm.ownerRepresentative =
+      interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE) ??
+      new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, parentFile.id);
+
+    return newForm;
+  }
+
   static fromApi(model: ApiGen_Concepts_AcquisitionFile): AcquisitionForm {
     const newForm = new AcquisitionForm();
     newForm.id = model.id;

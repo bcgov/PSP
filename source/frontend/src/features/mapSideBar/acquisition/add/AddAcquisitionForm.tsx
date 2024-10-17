@@ -81,6 +81,7 @@ export const AddAcquisitionForm = React.forwardRef<
       initialValues={initialValues}
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {formikProps => {
         return (
