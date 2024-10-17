@@ -56,28 +56,28 @@ namespace Pims.Api.Test.Controllers
         }
 
         [Fact]
-        public void UpdateDocumentMetadata_Success()
+        public void UpdateDocument_Success()
         {
             // Arrange
             var updateRequest = new DocumentUpdateRequest() { DocumentId = 1 };
             this._service.Setup(m => m.UpdateDocumentAsync(updateRequest)).ReturnsAsync(new DocumentUpdateResponse());
 
             // Act
-            var result = this._controller.UpdateDocumentMetadata(1, updateRequest);
+            var result = this._controller.UpdateDocument(1, updateRequest);
 
             // Assert
             this._service.Verify(m => m.UpdateDocumentAsync(updateRequest), Times.Once());
         }
 
         [Fact]
-        public void UpdateDocumentMetadata_InvalidDocumentId()
+        public void UpdateDocument_InvalidDocumentId()
         {
             // Arrange
             var updateRequest = new DocumentUpdateRequest() { DocumentId = 2 };
             this._service.Setup(m => m.UpdateDocumentAsync(updateRequest)).ReturnsAsync(new DocumentUpdateResponse());
 
             // Act
-            Func<Task> act = async () => await this._controller.UpdateDocumentMetadata(1, updateRequest);
+            Func<Task> act = async () => await this._controller.UpdateDocument(1, updateRequest);
 
             // Assert
             act.Should().ThrowAsync<BadRequestException>();
