@@ -1,6 +1,7 @@
 import { Formik, FormikProps } from 'formik';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
 import { Select, SelectOption } from '@/components/common/form';
@@ -115,7 +116,11 @@ export const DocumentDetailForm: React.FunctionComponent<
                       <Select field="documentStatusCode" options={documentStatusTypes} />
                     </SectionField>
                     {props.documentTypeUpdated && (
-                      <em>Some associated metadata may be lost if the document type is changed.</em>
+                      <StyledDiv>
+                        <em>
+                          Some associated metadata may be lost if the document type is changed.
+                        </em>
+                      </StyledDiv>
                     )}
                     <StyledH3>Details</StyledH3>
                     <DocumentMetadataView
@@ -152,3 +157,7 @@ export const DocumentDetailForm: React.FunctionComponent<
     </StyledContainer>
   );
 };
+
+export const StyledDiv = styled.div`
+  margin-bottom: 1rem;
+`;
