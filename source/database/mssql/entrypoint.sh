@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# TODO: This file might not be used right now.
 # Start SQL Server
 echo "Start MS SQL Server and run scripts"
 

@@ -11,4 +11,4 @@ if ! whoami &> /dev/null; then
 fi
 # exec "$@"
 
-/usr/config/setup.sh & /opt/mssql/bin/sqlservr
+./setup.sh & /opt/mssql/bin/sqlservr
