@@ -50,15 +50,37 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 .c3.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c3.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c3.btn.btn-primary:hover,
+.c3.btn.btn-primary:active,
+.c3.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c3.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c3.btn.btn-secondary:hover,
+.c3.btn.btn-secondary:active,
+.c3.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c3.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 .c3.btn.btn-info:hover,
 .c3.btn.btn-info:active,
 .c3.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c3.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c3.btn.btn-light:hover,
+.c3.btn.btn-light:active,
+.c3.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c3.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c3.btn.btn-dark:hover,
+.c3.btn.btn-dark:active,
+.c3.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c3.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-danger:hover,
+.c3.btn.btn-danger:active,
+.c3.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c3.btn.btn-warning:hover,
+.c3.btn.btn-warning:active,
+.c3.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c3.btn.btn-link:hover,
 .c3.btn.btn-link:active,
 .c3.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,6 +184,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c3.btn.btn-link:disabled,
 .c3.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -151,6 +223,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
@@ -208,18 +281,21 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c28 {
   font-size: 1.4rem;
+  color: #42814A;
 }
 
 .c1 {
+  color: #474543;
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
-  border-bottom: solid 0.5rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;
 }
 
 .c21 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
   border-bottom: solid 0.2rem;
@@ -229,7 +305,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 }
 
 .c5 {
-  border-left: 0.1rem solid;
+  border-left: 0.1rem solid #ECEAE8;
   width: 0.1rem;
   height: 80%;
   margin: auto;
@@ -237,13 +313,15 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c4.btn.btn-light.Button {
   padding: 0;
-  border: 0.1rem solid;
+  border: 0.1rem solid #9F9D9C;
   background-color: white;
+  color: #474543;
 }
 
 .c4.btn.btn-light.Button:focus,
 .c4.btn.btn-light.Button:active {
   background-color: white;
+  color: #474543;
 }
 
 .c4.btn,
@@ -258,6 +336,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c0 {
   padding: 1.6rem;
+  color: #474543;
 }
 
 .c0.expanded {
@@ -299,7 +378,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c7 {
   width: 100%;
-  border-bottom: solid 0.5rem;
+  border-bottom: solid 0.5rem #3470B1;
 }
 
 .c6 {
@@ -318,7 +397,8 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c12 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -359,9 +439,11 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c22.c22.c22 .form-label {
   font-weight: bold;
+  color: #474543;
 }
 
 .c24 {
+  color: var(--theme-blue-100);
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
@@ -373,6 +455,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 .c18 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
+  background-color: #f2f2f2;
 }
 
 .c18 .tab-content .tab-pane {
@@ -381,6 +464,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c20 {
   background-color: white;
+  color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
@@ -390,18 +474,22 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 }
 
 .c20 .nav-item {
+  color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.2rem;
 }
 
 .c20 .nav-item:hover {
+  color: var(--surface-color-primary-button-hover);
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c20 .nav-item.active {
+  background-color: #f2f2f2;
   font-family: 'BCSans-Bold';
+  color: var(--surface-color-primary-button-hover);
   border-color: transparent;
 }
 
@@ -414,6 +502,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 }
 
 .c25 {
+  background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
 
@@ -428,7 +517,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 
 .c29 {
   font-size: 1.6rem;
-  border-bottom: 0.2rem solid;
+  border-bottom: 0.2rem solid #606060;
   margin-bottom: 0.9rem;
   padding-bottom: 0.25rem;
   font-family: 'BcSans-Bold';
@@ -451,6 +540,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   background-color: #f0f7fc;
   margin-bottom: 2rem;
   font-size: 14px;
+  color: #053662;
   -webkit-text-decoration: none solid rgb(49,49,50);
   text-decoration: none solid rgb(49,49,50);
   line-height: 24px;
@@ -479,6 +569,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 }
 
 .c10 {
+  background-color: #f2f2f2;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
 }
@@ -501,10 +592,10 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
             <svg
               class="mr-2"
               fill="currentColor"
-              height="2.6rem"
+              height="2.8rem"
               title="Lease and Licence Icon"
               viewBox="0 0 24 24"
-              width="2.6rem"
+              width="2.8rem"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path

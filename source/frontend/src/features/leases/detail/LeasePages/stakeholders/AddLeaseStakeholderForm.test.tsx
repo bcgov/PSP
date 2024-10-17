@@ -18,6 +18,7 @@ import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/tes
 import AddLeaseStakeholderForm, { IAddLeaseStakeholderFormProps } from './AddLeaseStakeholderForm';
 import { FormStakeholder } from './models';
 import { createRef } from 'react';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 
 const history = createMemoryHistory();

@@ -3,7 +3,8 @@
     public class Lease
     {
         public string MinistryProjectCode { get; set; } = null!;
-        public string MinistryProject { get; set; } = null!;    
+        public string MinistryProject { get; set; } = null!;
+        public string MinistryProduct { get; set; } = null!;
         public string LeaseStatus { get; set; } = null!;
         public string LeaseTerminationDate { get; set; } = null!;
         public string LeaseTerminationReason { get; set; } = null!;
@@ -44,27 +45,29 @@
         public string FeeDeterminationSuggestedFee { get; set; } = null!;
         public string FeeDeterminationNotes { get; set; } = null!;
 
-        public string PhysicalLeaseExist { get; set; } = null!;
-        public string DigitalLeaseExist { get; set; } = null!;
-        public string DocumentLocation { get; set; } = null!;
-        public string LeaseNotes { get; set; } = null!;
-
         public int SearchPropertiesIndex { get; set; } = 0;
         public SearchProperty SearchProperties { get; set; } = new SearchProperty() { };
         public int LeasePropertyDetailsStartRow { get; set; } = 0;
         public int LeasePropertyDetailsQuantity { get; set; } = 0;
         public List<LeaseProperty> LeasePropertiesDetails { get; set; } = new List<LeaseProperty>() { };
 
+        public int LeaseConsultationStartRow { get; set; } = 0;
+        public int LeaseConsultationQuantity { get; set; } = 0;
+        public List<LeaseConsultation> LeaseConsultations { get; set; } = new List<LeaseConsultation>() { };
+
         public int LeaseChecklistIndex { get; set; } = 0;
         public LeaseChecklist LeaseChecklist { get; set; } = new LeaseChecklist() { };
 
         public int TenantsStartRow { get; set; } = 0;
         public int TenantsQuantity { get; set; } = 0;
+        public int AssigneeNumber { get; set; } = 0;
         public int TenantsNumber { get; set; } = 0;
         public int RepresentativeNumber { get; set; } = 0;
         public int PropertyManagerNumber { get; set; } = 0;
         public int UnknownTenantNumber { get; set; } = 0;
-        public List<Tenant> LeaseTenants { get; set; } = new List<Tenant>();
+        public int OwnerPayeeNumber { get; set; } = 0;
+        public int OwnerRepresentativeNumber { get; set; } = 0;
+        public List<Stakeholder> LeaseTenants { get; set; } = new List<Stakeholder>();
 
         public string CommercialImprovementUnit { get; set; } = null!;
         public string CommercialImprovementBuildingSize { get; set; } = null!;
@@ -120,6 +123,11 @@
         public int PeriodPaymentsStartRow { get; set; } = 0;
         public int PeriodPaymentsCount { get; set; } = 0;
         public List<Payment> PeriodPayments { get; set; } = new List<Payment>();
+
+        public int LeaseCompensationStartRow { get; set; } = 0;
+        public int LeaseCompensationCount { get; set; } = 0;
+        public string LeaseCompensationTotalAllowableAmount { get; set; } = null!;
+        public List<Compensation> LeaseCompensations { get; set; } = new List<Compensation>() { };
     }
 
     public class LeaseRenewal
@@ -130,6 +138,20 @@
         public string RenewalNotes { get; set; } = null!;
     }
 
+    public class LeaseConsultation
+    {
+        public string leaseConsultationType { get; set; } = null!;
+        public string leaseConsultationOtherDescription { get; set; } = null!;
+        public string leaseConsultationRequestedOn { get; set; } = null!;
+        public string leaseConsultationContactType { get; set; } = null!;
+        public string leaseConsultationContact { get; set; } = null!;
+        public string leaseConsultationContactPrimaryContact { get; set; } = null!;
+        public string leaseConsultationReceived { get; set; } = null!;
+        public string leaseConsultationReceivedOn { get; set; } = null!;
+        public string leaseConsultationOutcome { get; set; } = null!;
+        public string leaseConsultationComment { get; set; } = null!;
+
+    }
     public class LeaseChecklist
     {
         public string FileInitiationSelect1 { get; set; } = null!;
@@ -166,12 +188,12 @@
         public string LeaseLicenceCompletionSelect2 { get; set; } = null!;        
     }
 
-    public class Tenant
+    public class Stakeholder
     {
         public string ContactType { get; set; } = null!;
         public string Summary { get; set;} = null!;
         public string PrimaryContact { get; set; } = null!;
-        public string TenantType { get; set; } = null!;
+        public string StakeholderType { get; set; } = null!;
     }
 
     public class Deposit

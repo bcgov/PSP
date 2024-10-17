@@ -1,6 +1,7 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { useHistory, useLocation, useParams } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
@@ -11,6 +12,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { exists } from '@/utils';
 
 import CompensationListContainer from '../../compensation/list/CompensationListContainer';
 import CompensationListView from '../../compensation/list/CompensationListView';
@@ -24,6 +26,8 @@ import ExpropriationTabContainerView from './expropriation/ExpropriationTabConta
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
 import StakeHolderContainer from './stakeholders/detail/StakeHolderContainer';
 import StakeHolderView from './stakeholders/detail/StakeHolderView';
+import SubFileListContainer from './subFiles/SubFileListContainer';
+import SubFileListView from './subFiles/SubFileListView';
 
 export interface IAcquisitionFileTabsProps {
   acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
@@ -38,6 +42,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+  const { setFullWidthSideBar } = useMapStateMachine();
 
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
 
@@ -160,6 +165,14 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     });
   }
 
+  if (exists(acquisitionFile?.id)) {
+    tabViews.push({
+      content: <SubFileListContainer acquisitionFile={acquisitionFile} View={SubFileListView} />,
+      key: FileTabType.SUB_FILES,
+      name: 'Sub-Files',
+    });
+  }
+
   const onSetActiveTab = (tab: FileTabType) => {
     const previousTab = activeTab;
     if (previousTab === FileTabType.COMPENSATIONS) {
@@ -168,6 +181,15 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     }
     setActiveTab(tab);
   };
+
+  useEffect(() => {
+    if (activeTab === FileTabType.NOTES || activeTab === FileTabType.DOCUMENTS) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
 
   return (
     <FileTabs

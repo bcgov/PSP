@@ -23,6 +23,9 @@ public partial class PimsAcquisitionFileHist
     [Column("ACQUISITION_FILE_ID")]
     public long AcquisitionFileId { get; set; }
 
+    [Column("PRNT_ACQUISITION_FILE_ID")]
+    public long? PrntAcquisitionFileId { get; set; }
+
     [Column("PROJECT_ID")]
     public long? ProjectId { get; set; }
 

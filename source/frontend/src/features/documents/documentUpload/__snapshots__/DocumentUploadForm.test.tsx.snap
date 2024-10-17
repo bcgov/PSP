@@ -2,7 +2,7 @@
 
 exports[`DocumentUploadView component > renders as expected 1`] = `
 .c2 {
-  border: 1px solid;
+  border: 1px solid #606060;
   border-style: dashed;
   height: 10rem;
   line-height: 10rem;
@@ -18,10 +18,12 @@ exports[`DocumentUploadView component > renders as expected 1`] = `
 
 .c4 {
   display: inline-block;
+  color: var(--surface-color-primary-button-default);
   cursor: pointer;
 }
 
 .c4:hover {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }

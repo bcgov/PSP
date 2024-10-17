@@ -191,7 +191,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByAddressList(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 3);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 1);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
@@ -212,7 +212,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
         }
 
         [StepDefinition(@"I search for a non MOTI property from row number (.*)")]
@@ -659,8 +659,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.ManagementPropertyActivityTotalPST = ExcelDataContext.ReadData(i, "ManagementPropertyActivityTotalPST");
                 propertyActivity.ManagementPropertyActivityGrandTotal = ExcelDataContext.ReadData(i, "ManagementPropertyActivityGrandTotal");
 
-                //if (propertyManagement.ManagementPropertyActivitiesStartRow != 0 && propertyManagement.ManagementPropertyActivitiesCount != 0)
-                //    PopulateManagementActivitiesInvoiceCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount, propertyActivity.ManagementPropertyActivityInvoices);
+                if (propertyActivity.ManagementPropertyActivityInvoicesStartRow != 0 && propertyActivity.ManagementPropertyActivityInvoicesCount != 0)
+                    PopulateManagementActivitiesInvoiceCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount, propertyActivity.ManagementPropertyActivityInvoices);
+                else
+                    propertyActivity.ManagementPropertyActivityInvoices = new List<ManagementPropertyActivityInvoice>();
 
                 propertyManagement.ManagementPropertyActivities.Add(propertyActivity);
             }
@@ -670,6 +672,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             DataTable invoicesSheet = ExcelDataContext.GetInstance().Sheets["ManagementPropActivityInvoice"]!;
             ExcelDataContext.PopulateInCollection(invoicesSheet);
+
+            invoices = new List<ManagementPropertyActivityInvoice>();
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {

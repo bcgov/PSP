@@ -73,7 +73,6 @@ public partial class PimsPropertyActivity
     /// Description of the property management activity.
     /// </summary>
     [Column("DESCRIPTION")]
-    [StringLength(500)]
     public string Description { get; set; }
 
     /// <summary>

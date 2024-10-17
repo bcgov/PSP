@@ -1,6 +1,7 @@
 import { FaFileExcel } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import { Claims } from '@/constants/claims';
 import ExportAggregatedLeasesContainer from '@/features/leases/reports/aggregated/ExportAggregatedLeasesContainer';
 import ExportLeasePaymentsContainer from '@/features/leases/reports/payments/ExportLeasePaymentsContainer';
@@ -19,26 +20,38 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Leases & Licences</Styled.TrayHeader>
+        <Styled.TrayHeader>
+          <span className="mr-2">
+            <LeaseIcon title="Lease and Licence Icon" fill="currentColor" />
+          </span>
+          Leases & Licences
+        </Styled.TrayHeader>
         {hasClaim(Claims.LEASE_VIEW) && (
-          <Link onClick={onLinkClick} to="/lease/list">
+          <Link onClick={onLinkClick} to="/lease/list" className="nav-item pl-9 pb-3">
             Manage Lease/Licence Files
           </Link>
         )}
         {hasClaim(Claims.LEASE_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/sidebar/lease/new">
+          <Link
+            onClick={onLinkClick}
+            to="/mapview/sidebar/lease/new"
+            className="nav-item pl-9 pb-3"
+          >
             Create a Lease/Licence File
           </Link>
         )}
       </HalfHeightDiv>
       {hasClaim(Claims.LEASE_VIEW) && (
         <HalfHeightDiv>
-          <ExportH3>
-            <FaFileExcel /> Exports
+          <ExportH3 className="mt-5">
+            <span className="mr-4">
+              <FaFileExcel />
+            </span>
+            Exports
           </ExportH3>
-          <p>Aggregated Lease & Licence Payments</p>
+          <p className="ml-9 font-weight-bold">Aggregated Lease & Licence Payments</p>
           <ExportAggregatedLeasesContainer />
-          <p>Lease & Licence Payments by Fiscal Year</p>
+          <p className="ml-9 font-weight-bold">Lease & Licence Payments by Fiscal Year</p>
           <ExportLeasePaymentsContainer />
         </HalfHeightDiv>
       )}

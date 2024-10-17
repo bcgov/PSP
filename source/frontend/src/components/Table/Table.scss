@@ -45,6 +45,9 @@
         &.selected {
           background-color: $highlight-background-color;
         }
+        &.active {
+          outline: solid 2px $header-border-color;
+        }
       }
       .collapse {
         padding-left: 5rem;

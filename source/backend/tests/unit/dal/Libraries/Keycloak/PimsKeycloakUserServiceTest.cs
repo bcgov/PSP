@@ -520,7 +520,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
         }
 
         [Fact]
-        public async Task UpdateAccessRequestAsync_Recieved()
+        public async Task UpdateAccessRequestAsync_Received()
         {
             // Arrange
             var helper = new TestHelper();
@@ -598,6 +598,7 @@ namespace Pims.Dal.Test.Libraries.Keycloak
                 Role = eRole,
                 RoleId = eRole.Id,
                 RegionCode = eAccessRequest.RegionCode,
+                Note = "I need access please",
             };
 
             var accessRequestRepository = helper.GetMock<IAccessRequestRepository>();
@@ -605,10 +606,11 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             var roleRepository = helper.GetMock<IRoleRepository>();
 
             var values = new List<Entity.PimsAccessRequest>();
+            var userValues = new List<Entity.PimsUser>();
             accessRequestRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(eAccessRequest);
             userRepository.Setup(m => m.GetTrackingById(It.IsAny<long>())).Returns(updatedAccessRequest.User);
             userRepository.Setup(m => m.GetById(It.IsAny<long>())).Returns(updatedAccessRequest.User);
-            userRepository.Setup(m => m.UpdateOnly(It.IsAny<Entity.PimsUser>())).Returns(updatedAccessRequest.User);
+            userRepository.Setup(m => m.UpdateOnly(Capture.In(userValues))).Returns(updatedAccessRequest.User);
             roleRepository.Setup(m => m.Find(It.IsAny<long>())).Returns(updatedAccessRequest.Role);
             accessRequestRepository.Setup(m => m.Update(Capture.In(values))).Returns(updatedAccessRequest);
 
@@ -620,6 +622,10 @@ namespace Pims.Dal.Test.Libraries.Keycloak
             updated.RegionCode.Should().Be(eAccessRequest.RegionCode);
             updated.AccessRequestStatusTypeCode.Should().Be(AccessRequestStatusTypes.APPROVED);
             updated.User.IsDisabled.Should().BeFalse();
+
+            // Note from access request should be copied over to user account note
+            var updatedUser = userValues.First();
+            updatedUser.Note.Should().Be("I need access please");
         }
 
         [Fact]

@@ -60,10 +60,12 @@ export const InlineMessage = styled.div`
 export const ArrowDropDownIcon = styled(MdArrowDropDown)`
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 `;
 export const ArrowDropUpIcon = styled(MdArrowDropUp)`
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 `;
 
 export const StyledSummarySection = styled.div`

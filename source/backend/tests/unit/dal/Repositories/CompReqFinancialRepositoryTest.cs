@@ -127,6 +127,35 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
+        public void SearchCompensationRequisitionFinancials_Project_Lease()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.Project = EntityHelper.CreateProject(1, "test", "description");
+            lease.ProjectId = 1;
+            var financial = new PimsCompReqFinancial
+            {
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
+                CompensationRequisitionId = 1,
+                CompensationRequisition = new PimsCompensationRequisition
+                {
+                    LeaseId = lease.Internal_Id,
+                    Lease = lease,
+                },
+            };
+
+            var repository = this.CreateWithPermissions(Permissions.LeaseAdd, Permissions.LeaseView, Permissions.CompensationRequisitionView);
+            this._helper.AddAndSaveChanges(financial);
+
+            // Act
+            var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
+            var result = repository.SearchCompensationRequisitionFinancials(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
         public void SearchCompensationRequisitionFinancials_AlternateProject()
         {
             // Arrange
@@ -145,6 +174,35 @@ namespace Pims.Dal.Test.Repositories
             };
 
             var repository = this.CreateWithPermissions(Permissions.AcquisitionFileAdd);
+            this._helper.AddAndSaveChanges(financial);
+
+            // Act
+            var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
+            var result = repository.SearchCompensationRequisitionFinancials(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void SearchCompensationRequisitionFinancials_AlternateProject_Leases()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            var financial = new PimsCompReqFinancial
+            {
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
+                CompensationRequisitionId = 1,
+                CompensationRequisition = new PimsCompensationRequisition
+                {
+                    LeaseId = lease.Internal_Id,
+                    Lease = lease,
+                    AlternateProject = EntityHelper.CreateProject(1, "test", "description"),
+                    AlternateProjectId = 1,
+                },
+            };
+
+            var repository = this.CreateWithPermissions(Permissions.LeaseAdd, Permissions.LeaseView, Permissions.CompensationRequisitionView);
             this._helper.AddAndSaveChanges(financial);
 
             // Act
@@ -210,5 +268,69 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().HaveCount(1);
         }
+
+
+        [Theory]
+        [InlineData(true, false, 1)]
+        [InlineData(false, true, 1)]
+        [InlineData(true, true, 2)]
+        public void SearchCompensationRequisitionFinancials_Returns_FileTypes_Based_On_Paramenters(bool includeAcquisitions, bool includeLeases, int expected)
+        {
+            // Arrange
+            var project = EntityHelper.CreateProject(1, "test", "description");
+            var region = new PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test" };
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(region: region);
+            acqFile.Project = project;
+            acqFile.ProjectId = project.Internal_Id;
+            var acquisitionFinancial = new PimsCompReqFinancial
+            {
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
+                CompensationRequisitionId = 1,
+                CompensationRequisition = new PimsCompensationRequisition
+                {
+                    Internal_Id = 1,
+                    AcquisitionFileId = acqFile.Internal_Id,
+                    AcquisitionFile = acqFile,
+                },
+            };
+
+            var lease = EntityHelper.CreateLease(1, region: region, addProperty: false);
+            lease.Project = project;
+            lease.ProjectId = project.Internal_Id;
+            var leaseFinancial = new PimsCompReqFinancial
+            {
+                FinancialActivityCode = new PimsFinancialActivityCode { Code = "test", Description = "" },
+                CompensationRequisitionId = 2,
+                CompensationRequisition = new PimsCompensationRequisition
+                {
+                    Internal_Id = 2,
+                    LeaseId = lease.Internal_Id,
+                    Lease = lease,
+                },
+            };
+
+            var repository = this.CreateWithPermissions(Permissions.LeaseAdd, Permissions.LeaseView, Permissions.CompensationRequisitionView, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
+
+            this._helper.AddAndSaveChanges(region);
+            if (includeAcquisitions)
+            {
+                this._helper.AddAndSaveChanges(acquisitionFinancial);
+            }
+
+            if (includeLeases)
+            {
+                this._helper.AddAndSaveChanges(leaseFinancial);
+            }
+
+
+            // Act
+            var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
+            var result = repository.SearchCompensationRequisitionFinancials(filter, includeAcquisitions, includeLeases);
+
+            // Assert
+            result.Should().HaveCount(expected);
+        }
+
     }
 }
