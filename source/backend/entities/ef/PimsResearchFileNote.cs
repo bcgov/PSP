@@ -9,7 +9,6 @@ namespace Pims.Dal.Entities;
 /// <summary>
 /// Defines the relationship betwwen a research file and a note.
 /// </summary>
-[PrimaryKey("ResearchFileNoteId", "ResearchFileId")]
 [Table("PIMS_RESEARCH_FILE_NOTE")]
 [Index("NoteId", Name = "RFLNOT_NOTE_ID_IDX")]
 [Index("ResearchFileId", Name = "RFLNOT_RESEARCH_FILE_ID_IDX")]
@@ -20,7 +19,6 @@ public partial class PimsResearchFileNote
     [Column("RESEARCH_FILE_NOTE_ID")]
     public long ResearchFileNoteId { get; set; }
 
-    [Key]
     [Column("RESEARCH_FILE_ID")]
     public long ResearchFileId { get; set; }
 

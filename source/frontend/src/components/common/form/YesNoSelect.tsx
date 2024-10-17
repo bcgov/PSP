@@ -1,4 +1,7 @@
+import './Select.scss';
+
 import cx from 'classnames';
+import classNames from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import React from 'react';
 import Form from 'react-bootstrap/Form';
@@ -22,6 +25,8 @@ export interface IYesNoSelectProps {
   displayErrorTooltips?: boolean;
   /** (Optional) Class name of the outer form group wrapper */
   className?: string;
+  /** A custom class to add to the input element of the <Select> component */
+  innerClassName?: string;
   /** (Optional) Change event handler */
   onChange?: React.FormEventHandler;
   /** (Optional) Whether this field is disabled */
@@ -31,8 +36,17 @@ export interface IYesNoSelectProps {
 }
 
 export const YesNoSelect: React.FC<React.PropsWithChildren<IYesNoSelectProps>> = props => {
-  const { field, label, className, required, tooltip, displayErrorTooltips, onChange, disabled } =
-    props;
+  const {
+    field,
+    label,
+    className,
+    required,
+    tooltip,
+    displayErrorTooltips,
+    onChange,
+    disabled,
+    innerClassName,
+  } = props;
 
   const { values, errors, touched, handleBlur, setFieldValue } = useFormikContext();
   const value = getIn(values, field) as boolean | null;
@@ -61,6 +75,7 @@ export const YesNoSelect: React.FC<React.PropsWithChildren<IYesNoSelectProps>> =
         <Form.Control
           as="select"
           name={field}
+          className={classNames(innerClassName, 'form-select')}
           value={nullableBooleanToString(value)}
           onBlur={handleBlur}
           onChange={handleChange}

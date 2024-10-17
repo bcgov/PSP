@@ -13,7 +13,7 @@ export interface ISideProjectContainerProps {
   View: React.FunctionComponent<React.PropsWithChildren<IProjectExportFormProps>>;
 }
 
-export const SideProjectContainer: React.FunctionComponent<ISideProjectContainerProps> = ({
+export const ProjectExportContainer: React.FunctionComponent<ISideProjectContainerProps> = ({
   View,
 }) => {
   const {
@@ -101,4 +101,4 @@ export const SideProjectContainer: React.FunctionComponent<ISideProjectContainer
   );
 };
 
-export default SideProjectContainer;
+export default ProjectExportContainer;

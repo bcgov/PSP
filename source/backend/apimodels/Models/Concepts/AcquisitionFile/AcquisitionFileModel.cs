@@ -14,6 +14,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         #region Properties
 
         /// <summary>
+        ///  get/set - Link to the parent acquisition file. Only used for sub-files.
+        /// </summary>
+        public long? ParentAcquisitionFileId { get; set; }
+
+        /// <summary>
         /// get/set - The auto-generated portion of the acquisition file number.
         /// </summary>
         public long FileNo { get; set; }

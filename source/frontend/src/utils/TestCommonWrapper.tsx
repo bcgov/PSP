@@ -1,3 +1,4 @@
+import * as bcTokens from '@bcgov/design-tokens/js/variables.js';
 import { useKeycloak } from '@react-keycloak/web';
 import { MemoryHistory } from 'history';
 import Keycloak from 'keycloak-js';
@@ -6,9 +7,10 @@ import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
 import { vi } from 'vitest';
 
+import css from '@/assets/scss/_variables.module.scss';
 import ModalContainer from '@/components/common/ModalContainer';
 import { ModalContextProvider } from '@/contexts/modalContext';
-import { IOrganization } from '@/interfaces';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { TenantConsumer, TenantProvider } from '@/tenants';
 
 import TestProviderWrapper from './TestProviderWrapper';
@@ -16,7 +18,7 @@ import TestRouterWrapper from './TestRouterWrapper';
 
 interface TestProviderWrapperParams {
   store?: any;
-  organizations?: IOrganization[];
+  organizations?: ApiGen_Concepts_Organization[];
   claims?: string[];
   roles?: string[];
   history?: MemoryHistory;
@@ -51,7 +53,7 @@ const TestCommonWrapper: React.FunctionComponent<
         {({ tenant }) => (
           <TestProviderWrapper store={store}>
             <TestRouterWrapper history={history}>
-              <ThemeProvider theme={{ tenant, css: {}, bcTokens: {} as any }}>
+              <ThemeProvider theme={{ tenant, css, bcTokens }}>
                 <ModalContextProvider>
                   <ToastContainer
                     autoClose={5000}

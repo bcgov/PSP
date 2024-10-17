@@ -1,16 +1,19 @@
 <layer>
   <name>PIMS_PROPERTY_BOUNDARY_VW</name>
-  <id>LayerInfoImpl--679c7b53:182fb30d43f:-7214</id>
+  <id>LayerInfoImpl--607ea35:19206c4bad3:-7ffb</id>
   <type>VECTOR</type>
   <defaultStyle>
-    <id>StyleInfoImpl-dccd8c1:17c8054825a:-7ffc</id>
+    <id>StyleInfoImpl-5cc8da79:191fca9326d:-2c57</id>
   </defaultStyle>
   <resource class="featureType">
     <id>FeatureTypeInfoImpl--679c7b53:182fb30d43f:-7215</id>
   </resource>
+  <queryable>false</queryable>
+  <opaque>true</opaque>
   <attribution>
     <logoWidth>0</logoWidth>
     <logoHeight>0</logoHeight>
   </attribution>
-  <dateCreated>2022-09-06 18:20:34.823 UTC</dateCreated>
+  <dateCreated>2024-09-18 20:15:36.542 UTC</dateCreated>
+  <dateModified>2024-09-18 20:18:12.33 UTC</dateModified>
 </layer>

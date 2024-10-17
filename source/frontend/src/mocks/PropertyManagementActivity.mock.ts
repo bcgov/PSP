@@ -37,7 +37,8 @@ const emptyActivity: ApiGen_Concepts_PropertyActivity = {
   invoices: [],
   ...getEmptyBaseAudit(0),
 };
-export const mockGetPropertyManagementActivity = (
+
+export const getMockPropertyManagementActivity = (
   id = 1,
   propertyId = 1,
 ): ApiGen_Concepts_PropertyActivity => ({

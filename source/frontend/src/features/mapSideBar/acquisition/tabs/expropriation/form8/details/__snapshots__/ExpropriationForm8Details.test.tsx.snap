@@ -50,15 +50,37 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 .c3.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c3.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c3.btn.btn-primary:hover,
+.c3.btn.btn-primary:active,
+.c3.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c3.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c3.btn.btn-secondary:hover,
+.c3.btn.btn-secondary:active,
+.c3.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c3.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 .c3.btn.btn-info:hover,
 .c3.btn.btn-info:active,
 .c3.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c3.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c3.btn.btn-light:hover,
+.c3.btn.btn-light:active,
+.c3.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c3.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c3.btn.btn-dark:hover,
+.c3.btn.btn-dark:active,
+.c3.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c3.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-danger:hover,
+.c3.btn.btn-danger:active,
+.c3.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c3.btn.btn-warning:hover,
+.c3.btn.btn-warning:active,
+.c3.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c3.btn.btn-link:hover,
 .c3.btn.btn-link:active,
 .c3.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,6 +184,7 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 
 .c3.btn.btn-link:disabled,
 .c3.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -141,7 +213,8 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c9 {
+.c10 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
   border-bottom: solid 0.2rem;
@@ -150,7 +223,18 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c4.c4 {
+.c4.btn.btn-primary,
+.c4.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
+}
+
+.c5.c5 {
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
@@ -164,28 +248,28 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c6.required::before {
+.c7.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c5 {
+.c6 {
   font-weight: bold;
 }
 
-.c8 {
+.c9 {
   padding: 0 0.4rem;
   display: block;
 }
 
 .c0 {
-  border: solid 0.2rem;
+  border: solid 0.2rem var(--theme-blue-90);
   margin-bottom: 0.5rem;
 }
 
-.c7 {
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -219,11 +303,12 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border-bottom: solid 0.2rem;
+  border-bottom: solid 0.2rem #013366;
   margin-bottom: 2rem;
 }
 
 .c2 label {
+  color: #013366;
   font-family: 'BCSans-Bold';
   font-size: 1.75rem;
   width: 100%;
@@ -234,7 +319,7 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   margin-bottom: 1rem;
 }
 
-.c10 {
+.c11 {
   font-size: 16px;
   font-weight: 600;
 }
@@ -252,7 +337,7 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
           class="c2"
         >
           <button
-            class="c3 Button c4 btn btn-primary"
+            class="c3 Button c4 c5 btn btn-primary"
             data-testid="form8[0].generate-form8"
             type="button"
           >
@@ -284,17 +369,17 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Payee:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
             data-testid="form8[0].payee-name"
           >
             <div
-              class="c7"
+              class="c8"
             >
               <label>
                 John Doe
@@ -309,17 +394,17 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Expropriation Authority:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
             data-testid="form8[0].exp-authority"
           >
             <a
-              class="c8"
+              class="c9"
               href="/contact/O100"
               rel="noopener noreferrer"
               target="_blank"
@@ -351,20 +436,20 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c5"
+              class="c6"
             >
               Description:
             </label>
           </div>
           <div
-            class="c6 text-left col"
+            class="c7 text-left col"
             data-testid="form8[0].description"
           >
             MY DESCRIPTION
           </div>
         </div>
         <h3
-          class="c9"
+          class="c10"
         >
           Payment Details
         </h3>
@@ -522,7 +607,7 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c10"
+          class="c11"
         >
           <div
             class="row"

@@ -16,6 +16,7 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
@@ -37,7 +38,8 @@ exports[`LeaseDetailSubForm component > renders as expected 1`] = `
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 

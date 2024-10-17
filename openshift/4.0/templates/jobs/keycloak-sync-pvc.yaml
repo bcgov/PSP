@@ -1,0 +1,16 @@
+#This PVC is used to allow persistence between tasks in the keycloak sync pipeline.
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: keycloak-sync
+  namespace: 3cd915-dev
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 512Mi
+  storageClassName: netapp-file-standard
+  volumeMode: Filesystem

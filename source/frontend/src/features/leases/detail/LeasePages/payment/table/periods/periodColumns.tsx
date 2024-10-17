@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { FaFileContract, FaTrash } from 'react-icons/fa';
+import { FaTrash } from 'react-icons/fa';
 import { IoMdRefreshCircle } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
 import { TbArrowWaveRightUp } from 'react-icons/tb';
@@ -19,7 +19,6 @@ import {
 import { Claims } from '@/constants';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
 import { ISystemConstant } from '@/store/slices/systemConstants';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { prettyFormatDate } from '@/utils';
@@ -31,7 +30,6 @@ import { FormLeasePeriod, LeasePeriodByCategoryProjection } from '../../models';
 export interface IPeriodColumnProps {
   onEdit: (values: FormLeasePeriod) => void;
   onDelete: (values: FormLeasePeriod) => void;
-  onGenerate: () => void;
   leaseTypeCode?: string;
   gstConstant?: ISystemConstant;
 }
@@ -39,8 +37,6 @@ export interface IPeriodColumnProps {
 export const getLeasePeriodColumns = ({
   onEdit,
   onDelete,
-  onGenerate,
-  leaseTypeCode,
 }: IPeriodColumnProps): ColumnWithProps<FormLeasePeriod>[] => {
   return [
     {
@@ -164,7 +160,7 @@ export const getLeasePeriodColumns = ({
       Header: 'Actions',
       align: 'right',
       maxWidth: 30,
-      Cell: paymentActions(onEdit, onDelete, onGenerate, leaseTypeCode),
+      Cell: paymentActions(onEdit, onDelete),
     },
   ];
 };
@@ -172,33 +168,11 @@ export const getLeasePeriodColumns = ({
 const paymentActions = (
   onEdit: (values: FormLeasePeriod) => void,
   onDelete: (values: FormLeasePeriod) => void,
-  onGenerate: () => void,
-  leaseTypeCode?: string,
 ) => {
   return function ({ row: { original, index } }: CellProps<FormLeasePeriod, string>) {
     const { hasClaim } = useKeycloakWrapper();
     return (
       <StyledIcons>
-        {hasClaim(Claims.LEASE_VIEW) &&
-          index === 0 &&
-          !!leaseTypeCode &&
-          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA && (
-            <Button
-              title="Generate H1005(a)"
-              icon={<GenerateIcon size={24} id={`generate-h1005-a`} title="Generate H1005(a)" />}
-              onClick={() => onGenerate()}
-            ></Button>
-          )}
-
-        {hasClaim(Claims.LEASE_VIEW) &&
-          index === 0 &&
-          leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY && (
-            <Button
-              title="Generate H1005"
-              icon={<GenerateIcon size={24} id={`generate-h1005`} title="Generate H1005" />}
-              onClick={() => onGenerate()}
-            ></Button>
-          )}
         {hasClaim(Claims.LEASE_EDIT) && (
           <Button
             title="edit period"
@@ -351,10 +325,6 @@ const StyledIcons = styled(InlineFlexDiv)`
     background-color: transparent;
     padding: 0;
   }
-`;
-
-const GenerateIcon = styled(FaFileContract)`
-  color: ${props => props.theme.css.activeActionColor};
 `;
 
 const StyledFlexibleIcon = styled(TbArrowWaveRightUp)`
