@@ -16,7 +16,6 @@ import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
-import { truncateSync } from 'fs';
 
 // mock auth library
 

@@ -764,6 +764,38 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault();
         }
 
+        public List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, HashSet<short> regions, long? contractorPersonId = null)
+        {
+            var currentAcquisitionFile = Context.PimsAcquisitionFiles
+                .AsNoTracking()
+                .Where(x => x.AcquisitionFileId == acquisitionFileId)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+
+            var predicate = PredicateBuilder.New<PimsAcquisitionFile>(acq => true);
+
+            if (currentAcquisitionFile.PrntAcquisitionFileId is not null)
+            {
+                predicate.And(acq => acq.PrntAcquisitionFileId == currentAcquisitionFile.PrntAcquisitionFileId);
+                predicate.Or(acq => acq.AcquisitionFileId == currentAcquisitionFile.PrntAcquisitionFileId);
+            }
+            else
+            {
+                predicate.And(acq => acq.AcquisitionFileId == currentAcquisitionFile.AcquisitionFileId);
+                predicate.Or(acq => acq.PrntAcquisitionFileId == currentAcquisitionFile.AcquisitionFileId);
+            }
+
+            predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
+
+            if (contractorPersonId is not null)
+            {
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId));
+            }
+
+            return Context.PimsAcquisitionFiles.AsNoTracking()
+                .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
+                .Where(predicate).OrderBy(x => x.FileNumber).ToList();
+        }
+
         /// <summary>
         /// Generates a new Acquisition Number in the following format.
         /// </summary>

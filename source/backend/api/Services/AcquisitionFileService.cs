@@ -574,6 +574,19 @@ namespace Pims.Api.Services
             return _expropriationPaymentRepository.GetAllByAcquisitionFileId(acquisitionFileId);
         }
 
+        public List<PimsAcquisitionFile> GetAcquisitionSubFiles(long id)
+        {
+            _logger.LogInformation("Fetch acquistion sub-files for fileId: {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+
+            // Limit search results to user's assigned region(s)
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            return _acqFileRepository.GetAcquisitionSubFiles(id, userRegions, contractorPersonId);
+        }
+
         private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
         {
             bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);

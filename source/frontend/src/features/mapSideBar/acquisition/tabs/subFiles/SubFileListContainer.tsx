@@ -1,4 +1,8 @@
+import { useCallback, useEffect, useState } from 'react';
+
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { exists } from '@/utils';
 
 import { ISubFileListViewProps } from './SubFileListView';
 
@@ -11,6 +15,21 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
   View,
   acquisitionFile,
 }) => {
+  const [acquisitionSubFiles, setAcquisitionSubFiles] = useState<
+    ApiGen_Concepts_AcquisitionFile[] | null
+  >(null);
+
+  const {
+    getAcquisitionSubFiles: { execute: fetchSubFiles, loading: loadingSubFiles },
+  } = useAcquisitionProvider();
+
+  const fetchSubFilesData = useCallback(async () => {
+    const response = await fetchSubFiles(acquisitionFile.id);
+    if (exists(response)) {
+      setAcquisitionSubFiles(response);
+    }
+  }, [acquisitionFile.id, fetchSubFiles]);
+
   // TODO: Add an "useEffect" to fetch the list of linked files from the backend API
   // Use this loading flag to render a spinner in the view while loading
   const loading = false;
@@ -21,7 +40,20 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
     throw new Error('Function not implemented yet.');
   };
 
-  return <View loading={loading} acquisitionFile={acquisitionFile} onAdd={onAddSubFile} />;
+  useEffect(() => {
+    if (acquisitionSubFiles === null) {
+      fetchSubFilesData();
+    }
+  }, [acquisitionSubFiles, fetchSubFilesData]);
+
+  return (
+    <View
+      loading={loading || loadingSubFiles}
+      acquisitionFile={acquisitionFile}
+      subFiles={acquisitionSubFiles}
+      onAdd={onAddSubFile}
+    />
+  );
 };
 
 export default SubFileListContainer;
