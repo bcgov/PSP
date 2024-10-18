@@ -110,7 +110,6 @@ const DocumentUploadContainer = forwardRef<
         const response = await getDocumentTypes();
         if (exists(response) && isMounted()) {
           setDocumentTypes(response.filter(x => x.documentType === DocumentTypeName.CDOGS));
-          //getDocumentMetadata(response.find(x => x.documentType === DocumentTypeName.CDOGS));
           setDocumentStatusOptions(
             retrievedDocumentStatusTypes.filter(x => x.value === DocumentStatusType.Final),
           );
@@ -131,7 +130,6 @@ const DocumentUploadContainer = forwardRef<
     getDocumentRelationshipTypes,
     isMounted,
     getOptionsByType,
-    getDocumentMetadata,
   ]);
 
   const onUploadDocument = async (batchRequest: BatchUploadFormModel) => {
