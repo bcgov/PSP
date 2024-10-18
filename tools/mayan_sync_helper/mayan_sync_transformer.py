@@ -65,7 +65,7 @@ class MayanRequest:
 
 def load_document_definitions():
     # Give the location of the file
-    doctype_location = ("doctype_definitions.xlsx")
+    doctype_location = ("xml_definitions/doctype_definitions.xlsx")
 
     # To open Workbook
     wb = xlrd.open_workbook(doctype_location)
@@ -122,7 +122,7 @@ def load_document_definitions():
 
 def load_metadata_definitions():
     # Give the location of the file
-    metadata_file_location = ("metadata_definitions.xlsx")
+    metadata_file_location = ("xml_definitions/metadata_definitions.xlsx")
 
     # To open Workbook
     wb = xlrd.open_workbook(metadata_file_location)
@@ -144,7 +144,7 @@ def load_metadata_definitions():
 
 def match_doc_metadata(document_types, metadata_types):
     # Give the location of the file
-    loc_match = ("doc_metadata.xlsx")
+    loc_match = ("xml_definitions/doc_metadata.xlsx")
 
     # To open Workbook
     wb = xlrd.open_workbook(loc_match)
@@ -209,7 +209,7 @@ mayan_request = match_doc_metadata(doc_types, meta_types)
 
 jsonStr = json.dumps(mayan_request.toJson(), indent=3)
 
-with open('all_the_dile.json', 'w', encoding='utf-8') as f:
+with open('json_output/all_the_dile.json', 'w', encoding='utf-8') as f:
     f.write(jsonStr)
 #    json.dump(jsonStr, f, ensure_ascii=False, indent=4)
 #    json.dumps([value.dump()
