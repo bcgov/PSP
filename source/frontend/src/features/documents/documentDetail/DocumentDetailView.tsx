@@ -28,13 +28,15 @@ export const DocumentDetailView: React.FunctionComponent<
 > = props => {
   const { hasClaim } = useKeycloakWrapper();
 
+  const documentTypeLabel =
+    props.document.pimsDocumentRelationship?.document?.documentType?.documentTypeDescription;
+
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
       {hasClaim(Claims.DOCUMENT_VIEW) && (
         <>
           <DocumentDetailHeader document={props.document} />
-
           <Section
             noPadding
             header={
@@ -60,6 +62,14 @@ export const DocumentDetailView: React.FunctionComponent<
                 </LinkButton>
               </RightFlexDiv>
             )}
+            <SectionField
+              data-testid="document-type"
+              label="Document type"
+              labelWidth="4"
+              className="pb-2"
+            >
+              {documentTypeLabel}
+            </SectionField>
             <SectionField label="Status" labelWidth="4">
               {props.document.pimsDocumentRelationship?.document?.statusTypeCode?.description}
             </SectionField>

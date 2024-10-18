@@ -39,6 +39,13 @@ public partial class PimsDocumentTyp
     public string DocumentTypeDescription { get; set; }
 
     /// <summary>
+    /// Describes the purpose of the document.
+    /// </summary>
+    [Column("DOCUMENT_TYPE_DEFINITION")]
+    [StringLength(500)]
+    public string DocumentTypeDefinition { get; set; }
+
+    /// <summary>
     /// Indicates if the code is still in use.
     /// </summary>
     [Column("IS_DISABLED")]
