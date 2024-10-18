@@ -39,28 +39,27 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const mapMachine = useMapStateMachine();
   const selectedFeatureDataset = mapMachine.selectedFeatureDataset;
 
+  const { execute: getPropertyAssociations } = usePropertyAssociations();
+  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
+
   const {
     getAcquisitionFile: { execute: getAcquisitionFile, response: parentAcquisitionFile },
   } = useAcquisitionProvider();
 
-  const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
+  // Check for parent acquisition file id for sub-files
+  const params = useQuery();
+  const parentId = params.get('parentId');
+  const isSubFile = exists(parentId) && isValidId(Number(parentId));
 
-  // Warn user that property is part of an existing acquisition file
-  const confirmBeforeAdd = useCallback(
-    async (propertyForm: PropertyForm) => {
-      if (isValidId(propertyForm.apiId)) {
-        const response = await getPropertyAssociations(propertyForm.apiId);
-        const acquisitionAssociations = response?.acquisitionAssociations ?? [];
-        const otherAcqFiles = acquisitionAssociations.filter(a => exists(a.id));
-        return otherAcqFiles.length > 0;
-      } else {
-        // the property is not in PIMS db -> no need to confirm
-        return false;
+  useEffect(() => {
+    const fetchParentFile = async () => {
+      if (exists(parentId) && isValidId(Number(parentId)) && !exists(parentAcquisitionFile)) {
+        await getAcquisitionFile(Number(parentId));
       }
-    },
-    [getPropertyAssociations],
-  );
+    };
+
+    fetchParentFile();
+  }, [getAcquisitionFile, parentAcquisitionFile, parentId]);
 
   const initialForm = useMemo(() => {
     const acquisitionForm = exists(parentAcquisitionFile)
@@ -77,20 +76,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     }
     return acquisitionForm;
   }, [parentAcquisitionFile, selectedFeatureDataset]);
-
-  // Check for parent acquisition file id for sub-files
-  const params = useQuery();
-  const parentId = params.get('parentId');
-
-  useEffect(() => {
-    const fetchParentFile = async () => {
-      if (exists(parentId) && isValidId(Number(parentId))) {
-        await getAcquisitionFile(Number(parentId));
-      }
-    };
-
-    fetchParentFile();
-  }, [getAcquisitionFile, parentId]);
 
   const handleSave = async () => {
     // Sets the formik field `isValid` to false at start
@@ -130,6 +115,22 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   };
 
   const { initialValues } = helper;
+
+  // Warn user that property is part of an existing acquisition file
+  const confirmBeforeAdd = useCallback(
+    async (propertyForm: PropertyForm) => {
+      if (isValidId(propertyForm.apiId)) {
+        const response = await getPropertyAssociations(propertyForm.apiId);
+        const acquisitionAssociations = response?.acquisitionAssociations ?? [];
+        const otherAcqFiles = acquisitionAssociations.filter(a => exists(a.id));
+        return otherAcqFiles.length > 0;
+      } else {
+        // the property is not in PIMS db -> no need to confirm
+        return false;
+      }
+    },
+    [getPropertyAssociations],
+  );
 
   // Require user confirmation before adding a property to file
   // This is the flow for Map Marker -> right-click -> create Acquisition File
@@ -198,7 +199,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   return (
     <MapSideBarLayout
       showCloseButton
-      title="Create Acquisition File"
+      title={isSubFile ? 'Create Acquisition Sub-Interest File' : 'Create Acquisition File'}
       icon={
         <AcquisitionFileIcon
           title="Acquisition file Icon"
@@ -221,7 +222,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         <LoadingBackdrop show={helper.loading} parentScreen={true} />
         <AddAcquisitionForm
           ref={formikRef}
-          initialValues={helper.initialValues}
+          initialValues={initialValues}
           onSubmit={helper.handleSubmit}
           validationSchema={helper.validationSchema}
           confirmBeforeAdd={confirmBeforeAdd}

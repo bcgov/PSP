@@ -38,6 +38,10 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
 
   project?: IAutocompletePrediction;
   product = '';
+  // read-only project and product descriptions (for sub-files)
+  formattedProject = '';
+  formatterProduct = '';
+
   fundingTypeCode?: string = '';
   fundingTypeOtherDescription = '';
   ownerSolicitor: InterestHolderForm = new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR);
@@ -98,38 +102,39 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     };
   }
 
-  // TODO:
+  // Creates a form model that follows the rules for creating sub-files from a parent (main) file
+  // Copy the following from Parent File:
+  // - Project and Product
+  // - Schedule
+  // - Acquisition details (except file name)
+  // - Acquisition team
+  // - Owner information is NOT copied over
   static fromParentFileApi(parentFile: ApiGen_Concepts_AcquisitionFile): AcquisitionForm {
     const newForm = new AcquisitionForm();
+    newForm.id = undefined;
     newForm.parentAcquisitionFileId = parentFile.id;
-    newForm.fileName = parentFile.fileName || '';
     newForm.rowVersion = undefined;
+    // project + product (read-only in sub-files)
+    newForm.formattedProject = exists(parentFile.project)
+      ? parentFile.project.code + ' - ' + parentFile.project.description
+      : '';
+    newForm.formatterProduct = exists(parentFile.product)
+      ? parentFile.product.code + ' ' + parentFile.product.description
+      : '';
+    newForm.fundingTypeCode = fromTypeCode(parentFile.fundingTypeCode) ?? undefined;
+    newForm.fundingTypeOtherDescription = parentFile.fundingOther || '';
+    // schedule
     newForm.assignedDate = parentFile.assignedDate ?? undefined;
     newForm.deliveryDate = parentFile.deliveryDate ?? undefined;
-    newForm.totalAllowableCompensation = '';
+    // acquisition details
+    newForm.fileName = '';
     newForm.legacyFileNumber = parentFile.legacyFileNumber ?? undefined;
-    newForm.acquisitionFileStatusType = fromTypeCode(parentFile.fileStatusTypeCode) ?? undefined;
     newForm.acquisitionPhysFileStatusType =
       fromTypeCode(parentFile.acquisitionPhysFileStatusTypeCode) ?? undefined;
     newForm.acquisitionType = fromTypeCode(parentFile.acquisitionTypeCode) ?? undefined;
-    newForm.region = fromTypeCode(parentFile.regionCode)?.toString();
-
-    newForm.product = parentFile.product?.id?.toString() ?? '';
-    newForm.fundingTypeCode = parentFile.fundingTypeCode?.id ?? undefined;
-    newForm.fundingTypeOtherDescription = parentFile.fundingOther || '';
-    newForm.project = exists(parentFile.project)
-      ? { id: parentFile.project.id || 0, text: parentFile.project.description || '' }
-      : undefined;
-
-    const interestHolders = parentFile.acquisitionFileInterestHolders?.map(x =>
-      InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),
-    );
-    newForm.ownerSolicitor =
-      interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_SOLICITOR) ??
-      new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR, parentFile.id);
-    newForm.ownerRepresentative =
-      interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE) ??
-      new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, parentFile.id);
+    newForm.region = fromTypeCode(parentFile.regionCode)?.toString() ?? undefined;
+    // acquisition team
+    newForm.team = parentFile.acquisitionTeam?.map(x => AcquisitionTeamFormModel.fromApi(x)) || [];
 
     return newForm;
   }
