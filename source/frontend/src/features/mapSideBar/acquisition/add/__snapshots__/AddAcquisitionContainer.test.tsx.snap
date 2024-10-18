@@ -1959,7 +1959,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                               id="input-ownerSolicitor.contact.id"
                               name="ownerSolicitor.contact.id"
                               placeholder="Select from Contacts"
-                              title=""
                               value=""
                             />
                           </div>
@@ -2033,7 +2032,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                               id="input-ownerRepresentative.contact.id"
                               name="ownerRepresentative.contact.id"
                               placeholder="Select from Contacts"
-                              title=""
                               value=""
                             />
                           </div>

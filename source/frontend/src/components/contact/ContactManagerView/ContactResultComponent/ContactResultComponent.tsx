@@ -27,7 +27,6 @@ export interface IContactResultComponentProps {
 
 /**
  * Display a react table with the results filtered by the {@link ContactFilter}
- * @param {IContactSearchResult} props
  */
 export function ContactResultComponent(props: IContactResultComponentProps) {
   const { results, sort = {}, setSort, setPageSize, setPageIndex, ...rest } = props;

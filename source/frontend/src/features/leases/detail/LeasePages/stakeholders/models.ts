@@ -66,27 +66,35 @@ export class FormStakeholder {
     if (model.original) {
       return model.original;
     }
-    const contact: IContactSearchResult = {
+    const contact = {
       id: model.id,
       summary: model.summary,
-      stakeholderType: model.stakeholderType,
 
       mailingAddress: model.mailingAddress?.streetAddress1,
       municipalityName: model.municipalityName,
-      note: model.note,
 
-      mobile: model.mobile,
-      landline: model.landline,
       provinceState: model.provinceState,
+      isDisabled: false,
+      organizationName: null,
+      email: null,
     };
 
     if (model.personId) {
-      contact.personId = model.personId;
+      return {
+        ...contact,
+        personId: model.personId,
+        person: null,
+        surname: null,
+        firstName: null,
+        middleNames: null,
+      };
     } else if (model.organizationId) {
-      contact.organizationId = model.organizationId;
+      return {
+        ...contact,
+        organizationId: model.organizationId,
+        organization: null,
+      };
     }
-
-    return contact;
   };
 
   public static toApi(model: FormStakeholder): ApiGen_Concepts_LeaseStakeholder {
@@ -112,7 +120,7 @@ export class FormStakeholder {
 
   constructor(
     apiModel?: ApiGen_Concepts_LeaseStakeholder,
-    selectedContactModel?: IContactSearchResult,
+    contactModel?: { contact: IContactSearchResult; stakeholderType: string },
   ) {
     if (exists(apiModel)) {
       // convert an api tenant to a form tenant.
@@ -148,20 +156,21 @@ export class FormStakeholder {
       this.stakeholderType = fromTypeCode(apiModel.stakeholderTypeCode) ?? undefined;
       this.primaryContactId = apiModel.primaryContactId?.toString() ?? undefined;
       this.initialPrimaryContact = apiModel.primaryContact ?? undefined;
-    } else if (exists(selectedContactModel)) {
+    } else if (exists(contactModel)) {
       // In this case, construct a tenant using a contact.
+      const selectedContactModel = contactModel.contact;
 
-      this.id = selectedContactModel?.id;
+      this.id = contactModel.contact?.id;
 
       this.summary = selectedContactModel.summary;
       this.email = selectedContactModel.email;
       this.mailingAddress = { streetAddress1: selectedContactModel.mailingAddress } as FormAddress;
       this.municipalityName = selectedContactModel?.municipalityName;
-      this.note = selectedContactModel.note;
+      this.note = undefined;
 
-      this.landline = selectedContactModel.landline;
-      this.mobile = selectedContactModel.mobile;
-      this.stakeholderType = selectedContactModel.stakeholderType;
+      this.landline = undefined;
+      this.mobile = undefined;
+      this.stakeholderType = contactModel.stakeholderType;
 
       if (selectedContactModel.personId) {
         this.lessorTypeCode = toTypeCode('PER');

@@ -52,7 +52,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
   const [handleSubmit, setHandleSubmit] = useState<(() => void) | undefined>(undefined);
 
   const { getPersonConcept } = useApiContacts();
-  const { execute } = useApiRequestWrapper({
+  const { execute: executeGetPerson } = useApiRequestWrapper({
     requestFunction: getPersonConcept,
     requestName: 'get person by id',
   });
@@ -114,7 +114,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
     );
 
     // fetch any person ids that we do not have person information for.
-    const personQueries = unprocessedPersons.map(person => execute(person.personId));
+    const personQueries = unprocessedPersons.map(person => executeGetPerson(person.personId));
     const personResponses = await Promise.all(personQueries);
     const allPersons = personResponses.concat(processedPersons);
 
@@ -127,14 +127,13 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
             op.person = matchingPerson;
           }
         });
-        stakeholder.stakeholderType = stakeholder?.stakeholderType
-          ? stakeholder.stakeholderType
-          : isPayableLease
-          ? 'OWNER'
-          : 'TEN';
         return stakeholder;
       }) ?? [];
-    const formTenants = tenantsWithPersons?.map(t => new FormStakeholder(undefined, t)) ?? [];
+    const stakeholderType = isPayableLease ? 'OWNER' : 'TEN';
+    const formTenants =
+      tenantsWithPersons?.map(
+        t => new FormStakeholder(undefined, { contact: t, stakeholderType }),
+      ) ?? [];
     setStakeholders([...formTenants, ...matchingExistingTenants]);
   };
 

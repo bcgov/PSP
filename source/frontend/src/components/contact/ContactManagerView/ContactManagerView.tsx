@@ -10,7 +10,8 @@ import { Claims } from '@/constants/claims';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
-import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
+import { fromContactSummary, IContactSearchResult } from '@/interfaces';
+import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 
 import {
   ContactFilterComponent,
@@ -70,7 +71,7 @@ const ContactManagerView = ({
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<IContactSearchResult, IContactFilter>(
+  } = useSearch<ApiGen_Concepts_ContactSummary, IContactFilter>(
     initialFilter,
     getContacts,
     'Search returned no results',
@@ -110,7 +111,7 @@ const ContactManagerView = ({
       <div>
         <ContactResultComponent
           loading={loading}
-          results={results}
+          results={results.map(fromContactSummary)}
           sort={sort}
           pageSize={pageSize}
           pageIndex={currentPage}

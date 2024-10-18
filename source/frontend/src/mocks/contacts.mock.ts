@@ -1,10 +1,11 @@
-import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
+import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
 import { getEmptyOrganization } from './organization.mock';
 
-export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult => ({
+export const getMockContactOrganizationWithOnePerson = (): ApiGen_Concepts_ContactSummary => ({
+  ...getEmptyContactSummary(),
   id: 'O3',
   organizationId: 3,
   organization: {
@@ -78,7 +79,8 @@ export const getMockContactOrganizationWithOnePerson = (): IContactSearchResult 
   isDisabled: false,
 });
 
-export const getMockContactOrganizationWithMultiplePeople = (): IContactSearchResult => ({
+export const getMockContactOrganizationWithMultiplePeople = (): ApiGen_Concepts_ContactSummary => ({
+  ...getEmptyContactSummary(),
   id: 'O2',
   organizationId: 2,
   organization: {
@@ -116,7 +118,8 @@ export const getMockContactOrganizationWithMultiplePeople = (): IContactSearchRe
   isDisabled: false,
 });
 
-export const getMockContactPerson = (): IContactSearchResult => ({
+export const getMockContactPerson = (): ApiGen_Concepts_ContactSummary => ({
+  ...getEmptyContactSummary(),
   id: 'P1',
   personId: 1,
   person: { ...getEmptyPerson(), firstName: 'test', surname: 'person' },
@@ -273,6 +276,26 @@ export const getMockPerson = ({
   ],
   rowVersion: 1,
 });
+
+export const getEmptyContactSummary = (): ApiGen_Concepts_ContactSummary => {
+  return {
+    id: null,
+    personId: null,
+    person: null,
+    organizationId: null,
+    organization: null,
+    summary: null,
+    surname: null,
+    firstName: null,
+    middleNames: null,
+    organizationName: null,
+    email: null,
+    mailingAddress: null,
+    municipalityName: null,
+    provinceState: null,
+    isDisabled: false,
+  };
+};
 
 export const getEmptyPerson = (): ApiGen_Concepts_Person => {
   return {
