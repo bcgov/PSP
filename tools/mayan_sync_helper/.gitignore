@@ -4,3 +4,6 @@ performance_test/
 # Virtual env
 virtual/
 
+#excel temporary
+~$*.xlsx
+

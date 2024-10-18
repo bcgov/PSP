@@ -28,9 +28,10 @@ class DocumentType:
     # label = fields.Str()
     # metadata_types = fields.List(fields.Nested(MetadataType))
 
-    def __init__(self, name, label, display_order, categories):
+    def __init__(self, name, label, purpose, display_order, categories):
         self.name = name
         self.label = label
+        self.purpose = purpose
         self.display_order = display_order
         self.categories = categories
         self.metadata_references = []
@@ -43,6 +44,7 @@ class DocumentType:
             "categories": [value for value in self.categories],
             "display_order": self.display_order,
             "label": self.label,
+            "purpose": self.purpose,
             "metadata_types": [value.toJson() for value in self.metadata_references],
             "name": self.name
         }
@@ -77,17 +79,19 @@ def load_document_definitions():
     for i in range(2, doctype_sheet.nrows):
         doc_type_code = doctype_sheet.cell_value(i, 1)
         doc_type_name = doctype_sheet.cell_value(i, 2)
+        doc_type_purpose = doctype_sheet.cell_value(i, 3)
         # display_order = int(doctype_sheet.cell_value(i, 3))
         display_order = 8
-        project = doctype_sheet.cell_value(i, 3)
-        research = doctype_sheet.cell_value(i, 4)
-        acquisition = doctype_sheet.cell_value(i, 5)
+        project = doctype_sheet.cell_value(i, 4)
+        research = doctype_sheet.cell_value(i, 5)
+        acquisition = doctype_sheet.cell_value(i, 6)
         lease = doctype_sheet.cell_value(i, 6)
-        disposition = doctype_sheet.cell_value(i, 7)
-        management = doctype_sheet.cell_value(i, 8)
+        disposition = doctype_sheet.cell_value(i, 8)
+        management = doctype_sheet.cell_value(i, 9)
 
         print(doc_type_code,
               doc_type_name,
+              doc_type_purpose,
               # display_order,
               project,
               research,
@@ -110,7 +114,7 @@ def load_document_definitions():
             categories.append('MANAGEMENT')
 
         document_types.append(DocumentType(
-            doc_type_code, doc_type_name, display_order, categories))
+            doc_type_code, doc_type_name, doc_type_purpose, display_order, categories))
 
     # Order by label
     document_types.sort(key=lambda x: x.label, reverse=False)
@@ -209,7 +213,7 @@ mayan_request = match_doc_metadata(doc_types, meta_types)
 
 jsonStr = json.dumps(mayan_request.toJson(), indent=3)
 
-with open('json_output/all_the_dile.json', 'w', encoding='utf-8') as f:
+with open('json_output/mayan_sync.json', 'w', encoding='utf-8') as f:
     f.write(jsonStr)
 #    json.dump(jsonStr, f, ensure_ascii=False, indent=4)
 #    json.dumps([value.dump()
