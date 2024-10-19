@@ -134,7 +134,12 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.acquisitionType = fromTypeCode(parentFile.acquisitionTypeCode) ?? undefined;
     newForm.region = fromTypeCode(parentFile.regionCode)?.toString() ?? undefined;
     // acquisition team
-    newForm.team = parentFile.acquisitionTeam?.map(x => AcquisitionTeamFormModel.fromApi(x)) || [];
+    newForm.team =
+      parentFile.acquisitionTeam?.map(x => {
+        const teamForm = AcquisitionTeamFormModel.fromApi(x);
+        teamForm.id = null;
+        return teamForm;
+      }) || [];
 
     return newForm;
   }
