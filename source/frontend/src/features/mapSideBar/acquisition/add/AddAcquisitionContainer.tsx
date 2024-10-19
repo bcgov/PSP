@@ -190,7 +190,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   ]);
 
   const checkState = useCallback(() => {
-    return isSubFile || (formikRef?.current?.dirty && !formikRef?.current?.isSubmitting);
+    return (isSubFile || formikRef?.current?.dirty) && !formikRef?.current?.isSubmitting;
   }, [formikRef, isSubFile]);
 
   return (

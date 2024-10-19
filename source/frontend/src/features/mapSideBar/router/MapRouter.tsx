@@ -212,7 +212,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
           <AddAcquisitionContainer
             onClose={onClose}
             onSuccess={(newAcquisitionId: number) => {
-              history.replace(`/mapview/sidebar/acquisition/${newAcquisitionId}`);
+              history.push(`/mapview/sidebar/acquisition/${newAcquisitionId}`);
             }}
           />
         )}
