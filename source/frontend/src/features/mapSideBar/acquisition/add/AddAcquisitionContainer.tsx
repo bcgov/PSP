@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik/dist/types';
-import { Location } from 'history';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -25,7 +24,7 @@ import { AddAcquisitionForm } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionContainerProps {
-  onClose: () => void;
+  onClose: (nextLocation?: string) => void;
   onSuccess: (newAcquisitionId: number) => void;
 }
 
@@ -110,9 +109,14 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     formikRef,
   });
 
-  const handleCancel = () => {
-    onClose();
-  };
+  const handleCancel = useCallback(() => {
+    if (isSubFile) {
+      // Go back to the main file (sub-files tab) if they cancel the action without saving
+      onClose(`/mapview/sidebar/acquisition/${parentId}/subFiles`);
+    } else {
+      onClose();
+    }
+  }, [isSubFile, onClose, parentId]);
 
   const { initialValues } = helper;
 
@@ -185,16 +189,9 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     setModalContent,
   ]);
 
-  const checkState = useCallback(
-    (location: Location) => {
-      return (
-        !location.pathname.startsWith('/mapview/sidebar/acquisition/') &&
-        formikRef?.current?.dirty &&
-        !formikRef?.current?.isSubmitting
-      );
-    },
-    [formikRef],
-  );
+  const checkState = useCallback(() => {
+    return isSubFile || (formikRef?.current?.dirty && !formikRef?.current?.isSubmitting);
+  }, [formikRef, isSubFile]);
 
   return (
     <MapSideBarLayout
@@ -222,6 +219,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         <LoadingBackdrop show={helper.loading} parentScreen={true} />
         <AddAcquisitionForm
           ref={formikRef}
+          parentId={isSubFile ? Number(parentId) : undefined}
           initialValues={initialValues}
           onSubmit={helper.handleSubmit}
           validationSchema={helper.validationSchema}

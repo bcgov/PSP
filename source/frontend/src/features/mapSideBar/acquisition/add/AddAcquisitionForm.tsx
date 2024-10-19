@@ -125,7 +125,6 @@ const AddAcquisitionDetailSubForm: React.FC<{
   >(undefined);
 
   const { values, setFieldValue } = formikProps;
-  const isSubFile = exists(parentId) && isValidId(parentId);
 
   const ownerSolicitorContact = values?.ownerSolicitor.contact;
 
@@ -134,6 +133,8 @@ const AddAcquisitionDetailSubForm: React.FC<{
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
+
+  const isSubFile = exists(parentId) && isValidId(parentId);
 
   const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
     if (param.length > 0) {
@@ -308,12 +309,12 @@ const AddAcquisitionDetailSubForm: React.FC<{
         <Section header={isSubFile ? 'Sub-Interest' : 'Owners'}>
           {isSubFile ? (
             <StyledSectionParagraph>
-              Each property in this file should be owned by the owner(s) in this section
+              Each property in this sub-file should be impacted by the sub-interest(s) in this
+              section
             </StyledSectionParagraph>
           ) : (
             <StyledSectionParagraph>
-              Each property in this sub-file should be impacted by the sub-interest(s) in this
-              section
+              Each property in this file should be owned by the owner(s) in this section
             </StyledSectionParagraph>
           )}
           <UpdateAcquisitionOwnersSubForm isSubFile={isSubFile} />
