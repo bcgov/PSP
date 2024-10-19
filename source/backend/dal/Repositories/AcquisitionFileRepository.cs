@@ -671,9 +671,23 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            int nextFileNo = GetNextAcquisitionFileNumberSequenceValue();
-            acquisitionFile.FileNo = nextFileNo;
-            acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, nextFileNo);
+            if (acquisitionFile.PrntAcquisitionFileId is null)
+            {
+                // generate file number for "main" files
+                int nextFileNo = GetNextAcquisitionFileNumberSequenceValue();
+                acquisitionFile.FileNo = nextFileNo;
+                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, nextFileNo, 1);
+            }
+            else
+            {
+                // generate file number for "sub-files"
+                var parentFile = Context.PimsAcquisitionFiles
+                    .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.PrntAcquisitionFileId) ?? throw new KeyNotFoundException();
+
+                int nextSuffix = GetNextSubFileSuffixValue(parentFile.Internal_Id);
+                acquisitionFile.FileNo = parentFile.FileNo;
+                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, parentFile.FileNo, nextSuffix);
+            }
 
             Context.PimsAcquisitionFiles.Add(acquisitionFile);
             return acquisitionFile;
@@ -695,8 +709,13 @@ namespace Pims.Dal.Repositories
             // PSP-4413 Changing the MOTI region triggers an update to the ACQ File Number
             if (existingAcqFile.RegionCode != acquisitionFile.RegionCode)
             {
+                int suffix = GetAcquisitionNumberSuffix(existingAcqFile.FileNumber);
+                if (suffix < 0)
+                {
+                    throw new BusinessRuleViolationException("Cannot parse Acquisition File Number suffix.");
+                }
                 acquisitionFile.FileNo = existingAcqFile.FileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, acquisitionFile.FileNo);
+                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, acquisitionFile.FileNo, suffix);
             }
             else
             {
@@ -798,14 +817,33 @@ namespace Pims.Dal.Repositories
         /// The digit base number is unique to the file. Do not pad the number with zeros.
         /// </item>
         /// <item>
-        /// Suffix - (ZZ above) The suffix numbers for an Acquisition file defaults to 01.
+        /// Suffix - (ZZ above) The suffix numbers for an Acquisition file defaults to 01 for "Main Files".
         /// </item>
         /// </list>
         /// </remarks>
         /// <returns>The formatted Acquisition File Number.</returns>
-        private static string GenerateAcquisitionNumber(short prefix, long fileNumber, short suffix = 1)
+        private static string GenerateAcquisitionNumber(short prefix, long fileNumber, int suffix = 1)
         {
             return $"{prefix:00}-{fileNumber}-{suffix:00}";
+        }
+
+        /// <summary>
+        /// Returns the suffix portion of the supplied Acquisition File Number.
+        /// </summary>
+        /// <param name="acquisitionFileNumber">The Acquisition File Number.</param>
+        /// <returns>The file number suffix (e.g. "1", "2", "3", etc) if it is found, or -1 if it is not.</returns>
+        private static int GetAcquisitionNumberSuffix(string acquisitionFileNumber)
+        {
+            int lastIndex = acquisitionFileNumber.LastIndexOf('-');
+            if (lastIndex >= 0 && lastIndex < acquisitionFileNumber.Length - 1)
+            {
+                string suffix = acquisitionFileNumber.Substring(lastIndex + 1);
+                return int.TryParse(suffix, out int number) ? number : -1;
+            }
+            else
+            {
+                return -1;
+            }
         }
 
         /// <summary>
@@ -815,6 +853,21 @@ namespace Pims.Dal.Repositories
         private int GetNextAcquisitionFileNumberSequenceValue()
         {
             return (int)_sequenceRepository.GetNextSequenceValue("dbo.PIMS_ACQUISITION_FILE_NO_SEQ");
+        }
+
+        private int GetNextSubFileSuffixValue(long parentAcquisitionFileId)
+        {
+            // The suffix numbers for sub-interest files start from "02", and will increment by 1 for sub-sequent file in the order of creation.
+            var existingSubFiles = GetSubFilesByParentId(parentAcquisitionFileId);
+            if (existingSubFiles.Count == 0)
+            {
+                return 2;
+            }
+            else
+            {
+                int latestSuffix = existingSubFiles.Select(x => GetAcquisitionNumberSuffix(x.FileNumber)).Max();
+                return latestSuffix + 1;
+            }
         }
 
         /// <summary>
