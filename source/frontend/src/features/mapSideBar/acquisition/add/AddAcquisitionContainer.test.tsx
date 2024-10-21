@@ -63,9 +63,16 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
 
 vi.mock('@/hooks/repositories/useAcquisitionProvider');
 const addAcquisitionFile = vi.fn();
+const getAcquisitionFile = vi.fn();
 vi.mocked(useAcquisitionProvider).mockReturnValue({
   addAcquisitionFile: {
     execute: addAcquisitionFile as any,
+    error: undefined,
+    loading: false,
+    response: undefined,
+  },
+  getAcquisitionFile: {
+    execute: getAcquisitionFile as any,
     error: undefined,
     loading: false,
     response: undefined,
@@ -92,7 +99,7 @@ describe('AddAcquisitionContainer component', () => {
   ) => {
     const defaultUserInfo = {
       organizations: [1],
-      client_roles: [...(renderOptions?.claims ?? []), ...(renderOptions?.roles ?? [])] ?? [],
+      client_roles: [...(renderOptions?.claims ?? []), ...(renderOptions?.roles ?? [])],
       email: 'test@test.com',
       name: 'Chester Tester',
       idir_user_guid: '00000000000000000000000000000000',
