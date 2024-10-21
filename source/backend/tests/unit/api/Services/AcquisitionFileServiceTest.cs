@@ -2917,7 +2917,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.GetAcquisitionSubFiles(1);
 
             // Assert
-            act.Should().Throw<BadRequestException>().WithMessage("Acquistion file should not be a sub-file.");
+            act.Should().Throw<BadRequestException>().WithMessage("Acquisition file should not be a sub-file.");
         }
 
         #endregion

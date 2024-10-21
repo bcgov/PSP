@@ -727,7 +727,8 @@ namespace Pims.Dal.Repositories
             // PSP-9268 Changes to Project/Product on the main file need to be propagated to all sub-files
             if (existingAcqFile.ProjectId != acquisitionFile.ProjectId || existingAcqFile.ProductId != acquisitionFile.ProductId)
             {
-                var subFiles = GetSubFilesByParentId(existingAcqFile.Internal_Id);
+                var allRegions = Context.PimsRegions.AsNoTracking().Select(r => r.RegionCode).ToHashSet();
+                var subFiles = GetAcquisitionSubFiles(existingAcqFile.Internal_Id, allRegions);
                 foreach (var subFile in subFiles)
                 {
                     subFile.ProjectId = acquisitionFile.ProjectId;
@@ -869,8 +870,11 @@ namespace Pims.Dal.Repositories
 
         private int GetNextSubFileSuffixValue(long parentAcquisitionFileId)
         {
+            // To determine the next suffix number we need to grab all sub-files (regardless of any region restriction)
+            var allRegions = Context.PimsRegions.AsNoTracking().Select(r => r.RegionCode).ToHashSet();
+
             // The suffix numbers for sub-interest files start from "02", and will increment by 1 for sub-sequent file in the order of creation.
-            var existingSubFiles = GetSubFilesByParentId(parentAcquisitionFileId);
+            var existingSubFiles = GetAcquisitionSubFiles(parentAcquisitionFileId, allRegions);
             if (existingSubFiles.Count == 0)
             {
                 return 2;

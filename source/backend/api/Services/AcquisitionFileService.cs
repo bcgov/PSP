@@ -572,7 +572,7 @@ namespace Pims.Api.Services
         public IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId)
         {
 
-            _logger.LogInformation("Getting Expropiation Payments for acquisition file id: {acquisitionFileId}", acquisitionFileId);
+            _logger.LogInformation("Getting Expropriation Payments for acquisition file id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
@@ -581,14 +581,14 @@ namespace Pims.Api.Services
 
         public List<PimsAcquisitionFile> GetAcquisitionSubFiles(long id)
         {
-            _logger.LogInformation("Fetch acquistion sub-files for fileId: {id}", id);
+            _logger.LogInformation("Fetch acquisition sub-files for file id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             var currentAcquisitionFile = GetById(id);
-            if(currentAcquisitionFile.PrntAcquisitionFileId is not null)
+            if (currentAcquisitionFile.PrntAcquisitionFileId is not null)
             {
-                throw new BadRequestException("Acquistion file should not be a sub-file.");
+                throw new BadRequestException("Acquisition file should not be a sub-file.");
             }
 
             // Limit search results to user's assigned region(s)
