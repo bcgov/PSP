@@ -263,6 +263,11 @@ namespace Pims.Api.Services
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
 
+            if (!userOverrides.Contains(UserOverrideCode.UpdateSubFilesProjectProduct))
+            {
+                ValidateSubFileDependency(acquisitionFile);
+            }
+
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
@@ -696,6 +701,15 @@ namespace Pims.Api.Services
             if (currentRegion != updatedRegion)
             {
                 throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The selected Ministry region is different from that associated to one or more selected properties\n\nDo you want to proceed?");
+            }
+        }
+
+        private void ValidateSubFileDependency(PimsAcquisitionFile incomingFile)
+        {
+            var currentAcquisitionFile = _acqFileRepository.GetById(incomingFile.Internal_Id);
+            if (currentAcquisitionFile.ProjectId != incomingFile.ProjectId || currentAcquisitionFile.ProductId != incomingFile.ProductId)
+            {
+                throw new UserOverrideException(UserOverrideCode.UpdateSubFilesProjectProduct, "This change will be reflected on other related entities - generated documents, sub-files, etc.\n\nDo you want to proceed?");
             }
         }
 

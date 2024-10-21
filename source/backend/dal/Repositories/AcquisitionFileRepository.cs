@@ -724,6 +724,18 @@ namespace Pims.Dal.Repositories
                 acquisitionFile.FileNumber = existingAcqFile.FileNumber;
             }
 
+            // PSP-9268 Changes to Project/Product on the main file need to be propagated to all sub-files
+            if (existingAcqFile.ProjectId != acquisitionFile.ProjectId || existingAcqFile.ProductId != acquisitionFile.ProductId)
+            {
+                var subFiles = GetSubFilesByParentId(existingAcqFile.Internal_Id);
+                foreach (var subFile in subFiles)
+                {
+                    subFile.ProjectId = acquisitionFile.ProjectId;
+                    subFile.ProductId = acquisitionFile.ProductId;
+                    Context.Update(subFile);
+                }
+            }
+
             Context.Entry(existingAcqFile).CurrentValues.SetValues(acquisitionFile);
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFileTeam, long>(p => p.PimsAcquisitionFileTeams, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFileTeams.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFile.Internal_Id, acquisitionFile.PimsInterestHolders.ToArray());
