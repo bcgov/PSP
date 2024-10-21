@@ -120,7 +120,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
           </div>
           <div
             class="table"
-            data-testid="AcquisitionCompensationTable"
+            data-testid="AcquisitionSubFilesTable"
             role="table"
           >
             <div

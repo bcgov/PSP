@@ -15,7 +15,7 @@ export function SubFilesResultsTable(props: ISubFilesResultsTableProps) {
 
   return (
     <Table<ApiGen_Concepts_AcquisitionFile>
-      name="AcquisitionCompensationTable"
+      name="AcquisitionSubFilesTable"
       manualSortBy={false}
       lockPageSize={true}
       showSelectedRowCount={false}
