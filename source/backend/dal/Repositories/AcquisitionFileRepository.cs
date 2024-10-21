@@ -766,23 +766,9 @@ namespace Pims.Dal.Repositories
 
         public List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, HashSet<short> regions, long? contractorPersonId = null)
         {
-            var currentAcquisitionFile = Context.PimsAcquisitionFiles
-                .AsNoTracking()
-                .Where(x => x.AcquisitionFileId == acquisitionFileId)
-                .FirstOrDefault() ?? throw new KeyNotFoundException();
-
             var predicate = PredicateBuilder.New<PimsAcquisitionFile>(acq => true);
 
-            if (currentAcquisitionFile.PrntAcquisitionFileId is not null)
-            {
-                predicate.And(acq => acq.PrntAcquisitionFileId == currentAcquisitionFile.PrntAcquisitionFileId);
-                predicate.Or(acq => acq.AcquisitionFileId == currentAcquisitionFile.PrntAcquisitionFileId);
-            }
-            else
-            {
-                predicate.And(acq => acq.AcquisitionFileId == currentAcquisitionFile.AcquisitionFileId);
-                predicate.Or(acq => acq.PrntAcquisitionFileId == currentAcquisitionFile.AcquisitionFileId);
-            }
+            predicate.And(acq => acq.PrntAcquisitionFileId == acquisitionFileId);
 
             predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
 

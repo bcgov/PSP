@@ -578,6 +578,13 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Fetch acquistion sub-files for fileId: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+
+            var currentAcquisitionFile = GetById(id);
+            if(currentAcquisitionFile.PrntAcquisitionFileId is not null)
+            {
+                throw new BadRequestException("Acquistion file should not be a sub-file.");
+            }
 
             // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());

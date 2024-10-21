@@ -1413,7 +1413,7 @@ export const mockFileChecklistResponse = (fileId = 1): ApiGen_Concepts_FileCheck
 
 export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_AcquisitionFile[] => [
   {
-    parentAcquisitionFileId: null,
+    parentAcquisitionFileId: 64,
     fileNo: 51,
     fileNumberSuffix: '01',
     legacyFileNumber: '',

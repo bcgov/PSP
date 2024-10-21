@@ -3,6 +3,7 @@ import SubFileListContainer, { ISubFileListContainerProps } from './SubFileListC
 import { ISubFileListViewProps } from './SubFileListView';
 import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
 import { mockAcquisitionFileResponse, mockAcquisitionFileSubFilesResponse } from '@/mocks/acquisitionFiles.mock';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 
 const mockGetAcquisitionSubFilesApi = {
@@ -11,9 +12,16 @@ const mockGetAcquisitionSubFilesApi = {
   execute: vi.fn(),
   loading: false,
 };
+const mockGetAcquisitionFileApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
 vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
+      getAcquisitionFile: mockGetAcquisitionFileApi,
       getAcquisitionSubFiles: mockGetAcquisitionSubFilesApi,
     };
   },
@@ -32,7 +40,7 @@ describe('SubFileListContainer component', () => {
   ) => {
     const component = render(
       <SubFileListContainer
-        acquisitionFile={renderOptions?.props?.acquisitionFile ?? mockAcquisitionFileResponse(64)}
+        acquisitionFile={renderOptions?.props?.acquisitionFile ?? mockAcquisitionFileResponse(1)}
         View={TestView}
       />,
       {
@@ -65,6 +73,22 @@ describe('SubFileListContainer component', () => {
     });
     await waitForEffects();
 
-    expect(mockGetAcquisitionSubFilesApi.execute).toHaveBeenCalled();
+    expect(mockGetAcquisitionSubFilesApi.execute).toHaveBeenCalledWith(1);
+  });
+
+  it('makes the request to get the Parent and siblings when current is sub-file', async () => {
+    const mockCurrentAcquisitionFile: ApiGen_Concepts_AcquisitionFile  = { ...mockAcquisitionFileResponse(64), parentAcquisitionFileId: 1 };
+    mockGetAcquisitionFileApi.execute.mockResolvedValue(mockCurrentAcquisitionFile);
+    mockGetAcquisitionSubFilesApi.execute.mockResolvedValue(mockAcquisitionFileSubFilesResponse());
+
+    await act(async () => {
+      setup({props: {
+        acquisitionFile: mockCurrentAcquisitionFile
+      }});
+    });
+    await waitForEffects();
+
+    expect(mockGetAcquisitionFileApi.execute).toHaveBeenCalledWith(1);
+    expect(mockGetAcquisitionSubFilesApi.execute).toHaveBeenCalledWith(1);
   });
 });

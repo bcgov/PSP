@@ -21,14 +21,36 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
 
   const {
     getAcquisitionSubFiles: { execute: fetchSubFiles, loading: loadingSubFiles },
+    getAcquisitionFile: {
+      execute: getParentAcquisitionFile,
+      loading: loadingParentAcquisitionFile,
+    },
   } = useAcquisitionProvider();
 
-  const fetchSubFilesData = useCallback(async () => {
-    const response = await fetchSubFiles(acquisitionFile.id);
-    if (exists(response)) {
-      setAcquisitionSubFiles(response);
+  const fetchSubFilesTableData = useCallback(async () => {
+    if (acquisitionFile.parentAcquisitionFileId === null) {
+      const response = await fetchSubFiles(acquisitionFile.id);
+      if (exists(response)) {
+        const subFilesList = [acquisitionFile, ...response];
+        setAcquisitionSubFiles(subFilesList);
+      }
+    } else {
+      const parentAcquisitionPromise = getParentAcquisitionFile(
+        acquisitionFile.parentAcquisitionFileId,
+      );
+      const subFilesPromise = fetchSubFiles(acquisitionFile.parentAcquisitionFileId);
+
+      const [parentFileResponse, subFilesResponse] = await Promise.all([
+        parentAcquisitionPromise,
+        subFilesPromise,
+      ]);
+
+      if (exists(parentFileResponse) && exists(subFilesResponse)) {
+        const subFilesList = [parentFileResponse, ...subFilesResponse];
+        setAcquisitionSubFiles(subFilesList);
+      }
     }
-  }, [acquisitionFile.id, fetchSubFiles]);
+  }, [acquisitionFile, fetchSubFiles, getParentAcquisitionFile]);
 
   // TODO: Add an "useEffect" to fetch the list of linked files from the backend API
   // Use this loading flag to render a spinner in the view while loading
@@ -42,13 +64,13 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
 
   useEffect(() => {
     if (acquisitionSubFiles === null) {
-      fetchSubFilesData();
+      fetchSubFilesTableData();
     }
-  }, [acquisitionSubFiles, fetchSubFilesData]);
+  }, [acquisitionSubFiles, fetchSubFilesTableData]);
 
   return (
     <View
-      loading={loading || loadingSubFiles}
+      loading={loading || loadingParentAcquisitionFile || loadingSubFiles}
       acquisitionFile={acquisitionFile}
       subFiles={acquisitionSubFiles}
       onAdd={onAddSubFile}
