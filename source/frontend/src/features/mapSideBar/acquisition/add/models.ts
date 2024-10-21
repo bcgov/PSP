@@ -121,6 +121,11 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.formatterProduct = exists(parentFile.product)
       ? parentFile.product.code + ' ' + parentFile.product.description
       : '';
+    newForm.project = exists(parentFile.project)
+      ? { id: parentFile.project?.id || 0, text: parentFile.project?.description || '' }
+      : undefined;
+    newForm.product = parentFile.product?.id?.toString() ?? '';
+
     newForm.fundingTypeCode = fromTypeCode(parentFile.fundingTypeCode) ?? undefined;
     newForm.fundingTypeOtherDescription = parentFile.fundingOther || '';
     // schedule
