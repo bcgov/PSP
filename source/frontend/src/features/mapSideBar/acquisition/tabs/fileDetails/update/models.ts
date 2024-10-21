@@ -58,6 +58,7 @@ export class UpdateAcquisitionSummaryFormModel
         : null,
       fileNo: this.fileNo ?? 0,
       fileNumber: this.fileNumber ?? null,
+      fileNumberSuffix: null,
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileName: this.fileName ?? null,
       assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
