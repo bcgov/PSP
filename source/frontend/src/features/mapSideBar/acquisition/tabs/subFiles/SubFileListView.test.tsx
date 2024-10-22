@@ -1,8 +1,4 @@
-import {
-  mockKeycloak,
-  render,
-  RenderOptions,
-} from '@/utils/test-utils';
+import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 import SubFileListView, { ISubFileListViewProps } from './SubFileListView';
 import {
   mockAcquisitionFileResponse,
