@@ -58,17 +58,20 @@ export const AddLeaseContainer: React.FunctionComponent<
   ) => {
     const leaseApi = LeaseFormModel.toApi(leaseFormModel);
     const response = await addLease.execute(leaseApi, userOverrideCodes);
-    formikHelpers.setSubmitting(false);
-
-    if (exists(response) && isValidId(response?.id)) {
-      if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
-        toast.warn(
-          'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
-          { autoClose: 15000 },
-        );
+    formikHelpers.setSubmitting(true);
+    try {
+      if (exists(response) && isValidId(response?.id)) {
+        if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
+          toast.warn(
+            'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+            { autoClose: 15000 },
+          );
+        }
+        mapMachine.refreshMapProperties();
+        props.onSuccess(response.id);
       }
-      mapMachine.refreshMapProperties();
-      props.onSuccess(response.id);
+    } finally {
+      formikHelpers.setSubmitting(false);
     }
   };
 
@@ -118,11 +121,13 @@ export const AddLeaseContainer: React.FunctionComponent<
       onClose={handleCancel}
     >
       <AddLeaseForm
-        onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) =>
-          withUserOverride((useOverrideCodes: UserOverrideCode[]) =>
-            saveLeaseFile(values, formikHelpers, useOverrideCodes),
-          )
-        }
+        onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) => {
+          const overrideSubmit = async () =>
+            withUserOverride((useOverrideCodes: UserOverrideCode[]) =>
+              saveLeaseFile(values, formikHelpers, useOverrideCodes),
+            );
+          overrideSubmit();
+        }}
         formikRef={formikRef}
         propertyInfo={initialProperty}
       />
