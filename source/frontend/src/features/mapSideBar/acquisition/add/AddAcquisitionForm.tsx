@@ -194,7 +194,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
                 label="Product"
                 tooltip="Sub-file has the same product as the main file and it can only be updated from the main file"
               >
-                {values?.formatterProduct ?? ''}
+                {values?.formattedProduct ?? ''}
               </SectionField>
             </>
           ) : (

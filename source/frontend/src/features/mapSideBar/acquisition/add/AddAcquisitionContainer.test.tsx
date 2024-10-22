@@ -6,6 +6,7 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -61,23 +62,23 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
 
 // Mock API service calls
 
+const addAcquisitionFileApi = {
+  execute: vi.fn(),
+  error: undefined,
+  loading: false,
+  response: undefined,
+};
+const getAcquisitionFileApi = {
+  execute: vi.fn(),
+  error: undefined,
+  loading: false,
+  response: undefined,
+};
 vi.mock('@/hooks/repositories/useAcquisitionProvider');
-const addAcquisitionFile = vi.fn();
-const getAcquisitionFile = vi.fn();
 vi.mocked(useAcquisitionProvider).mockReturnValue({
-  addAcquisitionFile: {
-    execute: addAcquisitionFile as any,
-    error: undefined,
-    loading: false,
-    response: undefined,
-  },
-  getAcquisitionFile: {
-    execute: getAcquisitionFile as any,
-    error: undefined,
-    loading: false,
-    response: undefined,
-  },
-} as ReturnType<typeof useAcquisitionProvider>);
+  addAcquisitionFile: addAcquisitionFileApi,
+  getAcquisitionFile: getAcquisitionFileApi,
+} as unknown as ReturnType<typeof useAcquisitionProvider>);
 
 const mocks = vi.hoisted(() => {
   return {
@@ -127,6 +128,9 @@ describe('AddAcquisitionContainer component', () => {
 
     return {
       ...utils,
+      rerender: () => {
+        utils.rerender(<AddAcquisitionContainer {...props} />);
+      },
       getSaveButton: () => utils.getByText(/Save/i),
       getCancelButton: () => utils.getByText(/Cancel/i),
       getNameTextbox: () =>
@@ -184,7 +188,9 @@ describe('AddAcquisitionContainer component', () => {
     formValues.project = { id: 0, text: 'Test Project' };
     formValues.fundingTypeCode = 'OTHER';
     formValues.fundingTypeOtherDescription = 'A different type of funding';
-    addAcquisitionFile.mockResolvedValue(mockAcquisitionFileResponse(1, formValues.fileName));
+    addAcquisitionFileApi.execute.mockResolvedValue(
+      mockAcquisitionFileResponse(1, formValues.fileName),
+    );
   });
 
   afterEach(() => {
@@ -216,11 +222,11 @@ describe('AddAcquisitionContainer component', () => {
     expect(getByText(/Create Acquisition File/i)).toBeVisible();
     await act(async () => userEvent.click(getCancelButton()));
 
-    expect(onClose).toBeCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 
   it('requires confirmation when navigating away', async () => {
-    const { getCancelButton, getByText, getNameTextbox, getByTitle } = await setup();
+    const { getByText, getNameTextbox, getByTitle } = await setup();
 
     expect(getByText(/Create Acquisition File/i)).toBeVisible();
 
@@ -329,7 +335,7 @@ describe('AddAcquisitionContainer component', () => {
     });
 
     const expectedValues = formValues.toApi();
-    expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);
+    expect(addAcquisitionFileApi.execute).toHaveBeenCalledWith(expectedValues, []);
     expect(onSuccess).toHaveBeenCalledWith(1);
   });
 
@@ -396,7 +402,93 @@ describe('AddAcquisitionContainer component', () => {
     await act(async () => userEvent.click(getSaveButton()));
 
     const expectedValues = formValues.toApi();
-    expect(addAcquisitionFile).toBeCalledWith(expectedValues, []);
+    expect(addAcquisitionFileApi.execute).toHaveBeenCalledWith(expectedValues, []);
     expect(onSuccess).toHaveBeenCalledWith(1);
+  });
+
+  describe('Sub-interest file', () => {
+    beforeEach(() => {
+      // populate URL parameters required for sub-file creation
+      const params = new URLSearchParams();
+      params.set('parentId', '99');
+      history.replace({
+        pathname: `/mapview/sidebar/acquisition/new`,
+        search: params.toString(),
+      });
+
+      // simulate API call to fetch parent acquisition file
+      getAcquisitionFileApi.execute.mockImplementation(async () => {
+        const apiResponse = mockAcquisitionFileResponse(99, 'TEST Main File');
+        const parentFile: ApiGen_Concepts_AcquisitionFile = {
+          ...apiResponse,
+          project: {
+            ...apiResponse.project,
+            code: '999',
+            description: 'Hwy 14 Expansion',
+          },
+          product: {
+            ...apiResponse.product,
+            code: '00048',
+            description: 'MISCELLANEOUS CLAIMS',
+          },
+        };
+        getAcquisitionFileApi.response = parentFile;
+        return parentFile;
+      });
+    });
+
+    afterEach(() => {
+      getAcquisitionFileApi.response = undefined;
+    });
+
+    it('renders as expected', async () => {
+      const { asFragment } = await setup();
+      expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('renders the underlying form', async () => {
+      const { getByText, getNameTextbox, getRegionDropdown } = await setup();
+
+      const formTitle = getByText(/Create Acquisition Sub-Interest File/i);
+      const input = getNameTextbox();
+      const select = getRegionDropdown();
+
+      expect(formTitle).toBeVisible();
+      expect(input).toBeVisible();
+      expect(input.tagName).toBe('INPUT');
+      expect(select).toBeVisible();
+      expect(select.tagName).toBe('SELECT');
+    });
+
+    it('should populate the form with information from the parent/main file', async () => {
+      expect(getAcquisitionFileApi.response).not.toBeDefined();
+
+      const { rerender } = await setup();
+      await act(async () => rerender());
+
+      expect(screen.getByText(/Create Acquisition Sub-Interest File/i)).toBeVisible();
+      expect(
+        screen.getByText(
+          'Each property in this sub-file should be impacted by the sub-interest(s) in this section',
+        ),
+      ).toBeVisible();
+      expect(getAcquisitionFileApi.execute).toHaveBeenCalled();
+      expect(getAcquisitionFileApi.response).toBeDefined();
+      // project and product are copied from main file
+      expect(await screen.findByText('999 - Hwy 14 Expansion')).toBeVisible();
+      expect(await screen.findByText('00048 MISCELLANEOUS CLAIMS')).toBeVisible();
+      // acquisition team is copied as well
+      expect(await screen.findByText('Bob Billy Smith')).toBeVisible();
+      expect(await screen.findByText('Stinky Cheese')).toBeVisible();
+    });
+
+    it('should go back to main file "Sub-Files" tab the when Cancel button is clicked for Sub-files', async () => {
+      const { getCancelButton, getByText } = await setup();
+
+      expect(getByText(/Create Acquisition Sub-Interest File/i)).toBeVisible();
+      await act(async () => userEvent.click(getCancelButton()));
+
+      expect(onClose).toHaveBeenCalledWith('/mapview/sidebar/acquisition/99/subFiles');
+    });
   });
 });

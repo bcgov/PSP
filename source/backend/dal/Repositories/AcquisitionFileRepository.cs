@@ -733,7 +733,9 @@ namespace Pims.Dal.Repositories
                 {
                     subFile.ProjectId = acquisitionFile.ProjectId;
                     subFile.ProductId = acquisitionFile.ProductId;
-                    Context.Update(subFile);
+                    Context.Entry(subFile).State = EntityState.Modified;
+                    Context.Entry(subFile).Property(x => x.ProjectId).IsModified = true;
+                    Context.Entry(subFile).Property(x => x.ProductId).IsModified = true;
                 }
             }
 

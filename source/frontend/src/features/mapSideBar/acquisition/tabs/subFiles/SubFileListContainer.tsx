@@ -1,5 +1,5 @@
-import { useHistory } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -55,10 +55,6 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
     }
   }, [acquisitionFile, fetchSubFiles, getParentAcquisitionFile]);
 
-  // TODO: Add an "useEffect" to fetch the list of linked files from the backend API
-  // Use this loading flag to render a spinner in the view while loading
-  const loading = false;
-
   // Redirect to "Create Acquisition File" route for sub-file
   const onAddSubFile = (): void => {
     const params = new URLSearchParams();
@@ -77,7 +73,7 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
 
   return (
     <View
-      loading={loading || loadingParentAcquisitionFile || loadingSubFiles}
+      loading={loadingParentAcquisitionFile || loadingSubFiles}
       acquisitionFile={acquisitionFile}
       subFiles={acquisitionSubFiles}
       onAdd={onAddSubFile}

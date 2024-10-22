@@ -40,7 +40,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   product = '';
   // read-only project and product descriptions (for sub-files)
   formattedProject = '';
-  formatterProduct = '';
+  formattedProduct = '';
 
   fundingTypeCode?: string = '';
   fundingTypeOtherDescription = '';
@@ -118,7 +118,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.formattedProject = exists(parentFile.project)
       ? parentFile.project.code + ' - ' + parentFile.project.description
       : '';
-    newForm.formatterProduct = exists(parentFile.product)
+    newForm.formattedProduct = exists(parentFile.product)
       ? parentFile.product.code + ' ' + parentFile.product.description
       : '';
     newForm.project = exists(parentFile.project)
