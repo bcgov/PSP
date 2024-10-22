@@ -2,9 +2,11 @@ import Claims from '@/constants/claims';
 import SubFileListContainer, { ISubFileListContainerProps } from './SubFileListContainer';
 import { ISubFileListViewProps } from './SubFileListView';
 import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
-import { mockAcquisitionFileResponse, mockAcquisitionFileSubFilesResponse } from '@/mocks/acquisitionFiles.mock';
+import {
+  mockAcquisitionFileResponse,
+  mockAcquisitionFileSubFilesResponse,
+} from '@/mocks/acquisitionFiles.mock';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-
 
 const mockGetAcquisitionSubFilesApi = {
   error: undefined,
@@ -77,14 +79,19 @@ describe('SubFileListContainer component', () => {
   });
 
   it('makes the request to get the Parent and siblings when current is sub-file', async () => {
-    const mockCurrentAcquisitionFile: ApiGen_Concepts_AcquisitionFile  = { ...mockAcquisitionFileResponse(64), parentAcquisitionFileId: 1 };
+    const mockCurrentAcquisitionFile: ApiGen_Concepts_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(64),
+      parentAcquisitionFileId: 1,
+    };
     mockGetAcquisitionFileApi.execute.mockResolvedValue(mockCurrentAcquisitionFile);
     mockGetAcquisitionSubFilesApi.execute.mockResolvedValue(mockAcquisitionFileSubFilesResponse());
 
     await act(async () => {
-      setup({props: {
-        acquisitionFile: mockCurrentAcquisitionFile
-      }});
+      setup({
+        props: {
+          acquisitionFile: mockCurrentAcquisitionFile,
+        },
+      });
     });
     await waitForEffects();
 
