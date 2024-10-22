@@ -56,10 +56,11 @@ export const AddLeaseContainer: React.FunctionComponent<
     formikHelpers: FormikHelpers<LeaseFormModel>,
     userOverrideCodes: UserOverrideCode[],
   ) => {
-    const leaseApi = LeaseFormModel.toApi(leaseFormModel);
-    const response = await addLease.execute(leaseApi, userOverrideCodes);
     formikHelpers.setSubmitting(true);
     try {
+      const leaseApi = LeaseFormModel.toApi(leaseFormModel);
+      const response = await addLease.execute(leaseApi, userOverrideCodes);
+
       if (exists(response) && isValidId(response?.id)) {
         if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
           toast.warn(
@@ -84,7 +85,6 @@ export const AddLeaseContainer: React.FunctionComponent<
     }
 
     if (formikRef !== undefined) {
-      formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
     }
   };
@@ -121,13 +121,11 @@ export const AddLeaseContainer: React.FunctionComponent<
       onClose={handleCancel}
     >
       <AddLeaseForm
-        onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) => {
-          const overrideSubmit = async () =>
-            withUserOverride((useOverrideCodes: UserOverrideCode[]) =>
-              saveLeaseFile(values, formikHelpers, useOverrideCodes),
-            );
-          overrideSubmit();
-        }}
+        onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) =>
+          withUserOverride((useOverrideCodes: UserOverrideCode[]) =>
+            saveLeaseFile(values, formikHelpers, useOverrideCodes),
+          )
+        }
         formikRef={formikRef}
         propertyInfo={initialProperty}
       />
