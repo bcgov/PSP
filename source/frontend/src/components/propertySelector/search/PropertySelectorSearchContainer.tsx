@@ -15,7 +15,7 @@ import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDist
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { getFeatureBoundedCenter } from '@/utils';
+import { exists, getFeatureBoundedCenter } from '@/utils';
 
 import { ILayerSearchCriteria, IMapProperty } from '../models';
 import PropertySearchSelectorFormView from './PropertySearchSelectorFormView';
@@ -106,13 +106,15 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
           const foundProperty = featureToLocationFeatureDataset(p);
           foundProperty.regionFeature = regionDistrictResults[i]?.regionFeature;
           foundProperty.districtFeature = regionDistrictResults[i]?.districtFeature;
-          foundProperty.pimsFeature = pimsResults[i]?.features?.length
-            ? pimsResults[i]?.features[0]
-            : ({
-                properties: {
-                  STREET_ADDRESS_1: addressResults[i]?.fullAddress,
-                },
-              } as Feature<Geometry, PIMS_Property_Location_View>);
+          if (exists(foundProperty?.pimsFeature)) {
+            foundProperty.pimsFeature = pimsResults[i]?.features?.length
+              ? pimsResults[i]?.features[0]
+              : ({
+                  properties: {
+                    STREET_ADDRESS_1: addressResults[i]?.fullAddress,
+                  },
+                } as Feature<Geometry, PIMS_Property_Location_View>);
+          }
           return foundProperty;
         }) as LocationFeatureDataset[];
         setSearchResults(locations);

@@ -19,13 +19,13 @@ import { PropertySelectorTabsView, SelectorTabNames } from './PropertySelectorTa
 import PropertySelectorSearchContainer from './search/PropertySelectorSearchContainer';
 
 export interface IMapSelectorContainerProps {
-  addSelectedProperties: (properties: LocationFeatureDataset[]) => void; // TODO: This component should be providing the featureDataset instead of the IMapProperty.
+  addSelectedProperties: (properties: LocationFeatureDataset[]) => void;
   repositionSelectedProperty: (
     property: LocationFeatureDataset,
     latLng: LatLngLiteral,
     propertyIndex: number | null,
   ) => void;
-  modifiedProperties: LocationFeatureDataset[]; // TODO: Figure out if this component really needs the entire propertyForm. It could be that only the lat long are needed.
+  modifiedProperties: LocationFeatureDataset[]; // TODO: Figure out if this component really needs the entire LocationFeatureDataset. It could be that only the lat long are needed.
   selectedComponentId?: string;
 }
 
@@ -83,7 +83,6 @@ export const MapSelectorContainer: FunctionComponent<IMapSelectorContainerProps>
     },
     [addSelectedProperties, loadProperties],
   );
-
   return (
     <>
       <PropertySelectorTabsView
