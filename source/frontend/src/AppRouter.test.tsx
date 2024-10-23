@@ -155,6 +155,7 @@ vi.mocked(useApiAcquisitionFile).mockReturnValue({
   getAcquisitionFileChecklist: vi.fn(),
   putAcquisitionFileChecklist: vi.fn(),
   getAcquisitionFileForm8s: vi.fn(),
+  getAcquisitionSubFiles: vi.fn(),
   postFileForm8: vi.fn(),
 });
 
@@ -211,14 +212,13 @@ describe('PSP routing', () => {
 
     const defaultUserInfo = {
       organizations: [1],
-      client_roles:
-        [
-          ...(renderOptions?.claims ?? []),
-          Claims.LEASE_VIEW,
-          Claims.RESEARCH_VIEW,
-          Claims.PROJECT_VIEW,
-          ...(renderOptions?.roles ?? [Roles.ACQUISITION_FUNCTIONAL]),
-        ] ?? [],
+      client_roles: [
+        ...(renderOptions?.claims ?? []),
+        Claims.LEASE_VIEW,
+        Claims.RESEARCH_VIEW,
+        Claims.PROJECT_VIEW,
+        ...(renderOptions?.roles ?? [Roles.ACQUISITION_FUNCTIONAL]),
+      ],
       email: 'test@test.com',
       name: 'Chester Tester',
       idir_user_guid: '00000000000000000000000000000000',

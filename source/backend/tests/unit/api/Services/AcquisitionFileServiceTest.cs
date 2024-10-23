@@ -2862,6 +2862,66 @@ namespace Pims.Api.Test.Services
 
         #endregion
 
+        #region SubFiles
+
+        [Fact]
+        public void GetSubFiles_NoPermissions()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetAcquisitionSubFiles(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetSubFiles_NotAuthorized_Contractor()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateAcquisitionFile());
+
+            // Act
+            Action act = () => service.GetAcquisitionSubFiles(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetSubFiles_Fail_FileIsSubFile()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: false);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var mockCurrentAcquisitionFile = EntityHelper.CreateAcquisitionFile();
+            mockCurrentAcquisitionFile.PrntAcquisitionFileId = 200;
+
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(mockCurrentAcquisitionFile);
+
+            // Act
+            Action act = () => service.GetAcquisitionSubFiles(1);
+
+            // Assert
+            act.Should().Throw<BadRequestException>().WithMessage("Acquistion file should not be a sub-file.");
+        }
+
+        #endregion
+
         #endregion
     }
 }

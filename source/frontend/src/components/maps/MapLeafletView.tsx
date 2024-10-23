@@ -14,6 +14,7 @@ import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-le
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
+import { exists } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
@@ -87,15 +88,13 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const mapMachineProcessFlyTo = mapMachine.processFlyTo;
 
   useEffect(() => {
-    if (
-      isMapReady &&
-      mapMachinePendingRefresh &&
-      mapRef.current !== null &&
-      mapMachineRequestedFitBounds
-    ) {
-      mapRef.current.fitBounds(mapMachineRequestedFitBounds, {
-        maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM,
-      });
+    if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
+      // PSP-9347 it is possible that a fit bounds request will be made with an empty array of selected properties. In that case, we do not want to change the screen bounds, so cancel the request with no changes to the map.
+      if (exists(mapMachineRequestedFitBounds)) {
+        mapRef.current.fitBounds(mapMachineRequestedFitBounds, {
+          maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM,
+        });
+      }
       mapMachineProcessFitBounds();
     }
   }, [
