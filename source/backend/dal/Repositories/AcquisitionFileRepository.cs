@@ -681,7 +681,7 @@ namespace Pims.Dal.Repositories
             else
             {
                 // generate file number for "sub-files"
-                var parentFile = Context.PimsAcquisitionFiles
+                var parentFile = Context.PimsAcquisitionFiles.AsNoTracking()
                     .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.PrntAcquisitionFileId) ?? throw new KeyNotFoundException();
 
                 int nextSuffix = GetNextSubFileSuffixValue(parentFile.Internal_Id);
@@ -709,7 +709,7 @@ namespace Pims.Dal.Repositories
             // PSP-4413 Changing the MOTI region triggers an update to the ACQ File Number
             if (existingAcqFile.RegionCode != acquisitionFile.RegionCode)
             {
-                int suffix = GetAcquisitionNumberSuffix(existingAcqFile.FileNumber);
+                int suffix = existingAcqFile.GetAcquisitionNumberSuffix();
                 if (suffix < 0)
                 {
                     throw new BusinessRuleViolationException("Cannot parse Acquisition File Number suffix.");
@@ -843,25 +843,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Returns the suffix portion of the supplied Acquisition File Number.
-        /// </summary>
-        /// <param name="acquisitionFileNumber">The Acquisition File Number.</param>
-        /// <returns>The file number suffix (e.g. "1", "2", "3", etc) if it is found, or -1 if it is not.</returns>
-        private static int GetAcquisitionNumberSuffix(string acquisitionFileNumber)
-        {
-            int lastIndex = acquisitionFileNumber.LastIndexOf('-');
-            if (lastIndex >= 0 && lastIndex < acquisitionFileNumber.Length - 1)
-            {
-                string suffix = acquisitionFileNumber.Substring(lastIndex + 1);
-                return int.TryParse(suffix, out int number) ? number : -1;
-            }
-            else
-            {
-                return -1;
-            }
-        }
-
-        /// <summary>
         /// Get the next available value from PIMS_ACQUISITION_FILE_NO_SEQ.
         /// </summary>
         /// <returns>The next value for the sequence.</returns>
@@ -883,7 +864,7 @@ namespace Pims.Dal.Repositories
             }
             else
             {
-                int latestSuffix = existingSubFiles.Select(x => GetAcquisitionNumberSuffix(x.FileNumber)).Max();
+                int latestSuffix = existingSubFiles.Select(x => x.GetAcquisitionNumberSuffix()).Max();
                 return latestSuffix + 1;
             }
         }
