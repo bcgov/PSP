@@ -764,6 +764,24 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault();
         }
 
+        public List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, HashSet<short> regions, long? contractorPersonId = null)
+        {
+            var predicate = PredicateBuilder.New<PimsAcquisitionFile>(acq => true);
+
+            predicate.And(acq => acq.PrntAcquisitionFileId == acquisitionFileId);
+
+            predicate = predicate.And(acq => regions.Contains(acq.RegionCode));
+
+            if (contractorPersonId is not null)
+            {
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId));
+            }
+
+            return Context.PimsAcquisitionFiles.AsNoTracking()
+                .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
+                .Where(predicate).OrderBy(x => x.FileNumber).ToList();
+        }
+
         /// <summary>
         /// Generates a new Acquisition Number in the following format.
         /// </summary>

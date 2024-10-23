@@ -55,6 +55,14 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
     [documentTypes],
   );
 
+  const selectedDocumentType = useMemo(() => {
+    const documentType = documentTypes.find(d => Number(document.documentTypeId) === d.id);
+    if (exists(documentType)) {
+      return documentType.documentTypePurpose;
+    }
+    return null;
+  }, [documentTypes, document]);
+
   // Ensure the drop-down fields are selected when the supplied options have only one item.
   // We do this for CDOGS templates which have a single document type (TEMPLATE)
   useEffect(() => {
@@ -128,6 +136,11 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
           </StyledRemoveIconButton>
         </Col>
       </StyledRow>
+      {exists(selectedDocumentType) && (
+        <Row className={'ml-5 my-3'}>
+          <StyledPurposeText>{selectedDocumentType}</StyledPurposeText>
+        </Row>
+      )}
     </>
   );
 };
@@ -136,4 +149,9 @@ const StyledRow = styled(Row)`
   justify-content: space-between;
   align-items: end;
   min-height: 4.5rem;
+`;
+
+const StyledPurposeText = styled.div`
+  color: black;
+  font-style: italic;
 `;

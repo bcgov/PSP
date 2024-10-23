@@ -1,0 +1,350 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DocumentDetailForm component > renders as expected 1`] = `
+.c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+.c3 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c3 .btn {
+  margin: 0;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<body>
+  <div>
+    <div
+      class="Toastify"
+    />
+    <div />
+    <div
+      class="c0"
+    >
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              <div
+                class="c3 no-gutters row"
+              >
+                <div
+                  class="d-flex justify-content-start px-2 my-1 col-auto"
+                >
+                  Linked Files
+                </div>
+                <div
+                  class="d-flex justify-content-end my-1 col-auto"
+                />
+              </div>
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-3"
+            >
+              <label
+                class="c4"
+              >
+                Linked files
+                :
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+              data-testid="linked-files-header"
+            >
+              1
+            </div>
+          </div>
+          <div
+            class="table"
+            data-testid="AcquisitionSubFilesTable"
+            role="table"
+          >
+            <div
+              class="thead thead-light"
+            >
+              <div
+                class="tr"
+                role="row"
+                style="display: flex; flex: 1 0 auto; min-width: 65px;"
+              >
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 15 0 auto; min-width: 15px; width: 15px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    #
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Name
+                  </div>
+                </div>
+                <div
+                  class="th"
+                  colspan="1"
+                  role="columnheader"
+                  style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                >
+                  <div
+                    class="sortable-column"
+                  >
+                    Status
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="tbody"
+              role="rowgroup"
+            >
+              <div
+                class="tr-wrapper"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 65px;"
+                >
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 15 0 auto; min-width: 15px; width: 15px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    01
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    ACQ-200-01
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    Active
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tr-wrapper"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 65px;"
+                >
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 15 0 auto; min-width: 15px; width: 15px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <a
+                      class="c6"
+                      data-testid="sub-file-link-64"
+                      href="//64"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <span>
+                        01
+                      </span>
+                      <svg
+                        class="ml-2"
+                        fill="currentColor"
+                        height="1rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    ACQ-200-01
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    Active
+                  </div>
+                </div>
+              </div>
+              <div
+                class="tr-wrapper"
+              >
+                <div
+                  class="tr"
+                  role="row"
+                  style="display: flex; flex: 1 0 auto; min-width: 65px;"
+                >
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 15 0 auto; min-width: 15px; width: 15px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    <a
+                      class="c6"
+                      data-testid="sub-file-link-65"
+                      href="//65"
+                      rel="noopener noreferrer"
+                      target="_blank"
+                    >
+                      <span>
+                        02
+                      </span>
+                      <svg
+                        class="ml-2"
+                        fill="currentColor"
+                        height="1rem"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1rem"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                        />
+                      </svg>
+                    </a>
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    ACQ-200-02
+                  </div>
+                  <div
+                    class="td"
+                    role="cell"
+                    style="box-sizing: border-box; flex: 20 0 auto; min-width: 20px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                    title=""
+                  >
+                    Active
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="row"
+          >
+            <div
+              class="align-self-center col-auto"
+            >
+              <span>
+                1 - 3 of 3
+              </span>
+            </div>
+            <div
+              class="ml-auto align-self-center col-auto"
+            />
+            <div
+              class="align-self-center col-auto"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;
