@@ -71,7 +71,7 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
 
   return (
     <>
-      <Formik<IEditableOrganizationComponent>
+      <Formik<IEditableOrganizationForm>
         component={CreateOrganizationComponent}
         initialValues={new IEditableOrganizationForm()}
         validate={(values: IEditableOrganizationForm) =>
