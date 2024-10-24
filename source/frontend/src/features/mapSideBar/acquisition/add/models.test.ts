@@ -115,10 +115,32 @@ describe('Create acquisition model tests', () => {
 
   describe('toApi', () => {
     it('converts form values to the api format', () => {
-      const teamPerson = new AcquisitionTeamFormModel('testType', 0, { id: 'P1', personId: 1 });
+      const teamPerson = new AcquisitionTeamFormModel('testType', 0, {
+        id: 'P1',
+        personId: 1,
+        person: null,
+        summary: null,
+        surname: null,
+        firstName: null,
+        middleNames: null,
+        organizationName: null,
+        email: null,
+        mailingAddress: null,
+        municipalityName: null,
+        provinceState: null,
+        isDisabled: false,
+      });
       const teamOrg = new AcquisitionTeamFormModel('testType', 0, {
         id: 'O99',
         organizationId: 99,
+        organization: null,
+        summary: null,
+        organizationName: null,
+        email: null,
+        mailingAddress: null,
+        municipalityName: null,
+        provinceState: null,
+        isDisabled: false,
       });
       teamOrg.primaryContactId = '1';
 
