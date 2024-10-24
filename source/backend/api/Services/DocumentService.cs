@@ -213,12 +213,26 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Updating document {documentId}", updateRequest.DocumentId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
 
-            // update the pims document status
             PimsDocument existingDocument = documentRepository.TryGet(updateRequest.DocumentId);
             if (existingDocument == null)
             {
                 throw new BadRequestException($"Document Id {updateRequest.DocumentId} not found.");
             }
+
+            if (existingDocument.DocumentTypeId != updateRequest.DocumentTypeId)
+            {
+                var pimsDocumentType = documentTypeRepository.GetById(updateRequest.DocumentTypeId);
+                ExternalResponse<string> result = await documentStorageRepository.TryUpdateDocumentTypeAsync(updateRequest.MayanDocumentId, pimsDocumentType.MayanId);
+                if (result.Status != ExternalResponseStatus.Success)
+                {
+                    throw GetMayanResponseError(result.Message);
+                }
+
+                existingDocument.DocumentTypeId = updateRequest.DocumentTypeId;
+                documentRepository.Update(existingDocument);
+                documentRepository.CommitTransaction();
+            }
+
             existingDocument.DocumentStatusTypeCode = updateRequest.DocumentStatusCode;
             documentRepository.Update(existingDocument);
 

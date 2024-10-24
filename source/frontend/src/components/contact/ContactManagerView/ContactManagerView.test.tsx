@@ -18,6 +18,8 @@ import { defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView';
 import { MockedFunction } from 'vitest';
 import { MaybeMocked } from '@vitest/spy';
+import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
+import { getEmptyContactSummary } from '@/mocks/contacts.mock';
 
 // mock auth library
 
@@ -44,7 +46,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
   return { searchButton, ...utils };
 };
 
-const setupMockSearch = (searchResults?: IContactSearchResult[]) => {
+const setupMockSearch = (searchResults?: ApiGen_Concepts_ContactSummary[]) => {
   const results = searchResults ?? [];
   const len = results.length;
   getContacts.mockResolvedValue({
@@ -58,7 +60,8 @@ const setupMockSearch = (searchResults?: IContactSearchResult[]) => {
   });
 };
 
-const defaultPersonSearchResult: IContactSearchResult = {
+const defaultPersonSearchResult: ApiGen_Concepts_ContactSummary = {
+  ...getEmptyContactSummary(),
   id: '1',
   summary: 'summary',
   mailingAddress: '123 mock st',
@@ -68,7 +71,6 @@ const defaultPersonSearchResult: IContactSearchResult = {
   municipalityName: 'city',
   provinceState: 'province',
   isDisabled: false,
-  provinceStateId: 0,
 };
 
 const defaultPagedFilter = {

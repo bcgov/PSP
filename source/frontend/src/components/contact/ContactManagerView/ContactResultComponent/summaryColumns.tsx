@@ -2,7 +2,7 @@ import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps } from '@/components/Table';
-import { IContactSearchResult, isPersonResult } from '@/interfaces';
+import { IContactSearchResult, isPersonSummary } from '@/interfaces';
 import { isValidId } from '@/utils';
 
 const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
@@ -28,7 +28,7 @@ const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
     width: 80,
     maxWidth: 120,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      isPersonResult(props.row.original) ? (
+      isPersonSummary(props.row.original) ? (
         <strong>{props.row.original.firstName + ' ' + props.row.original.surname}</strong>
       ) : (
         <span></span>

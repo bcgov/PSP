@@ -82,6 +82,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       compensationRequisitions: null,
       fileNo: 0,
       fileNumber: null,
+      fileNumberSuffix: null,
       legacyStakeholders: null,
       product: null,
       project: null,

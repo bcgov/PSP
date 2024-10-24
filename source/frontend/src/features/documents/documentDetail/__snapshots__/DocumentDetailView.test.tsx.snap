@@ -305,25 +305,6 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
         class="pb-4"
       >
         <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c1"
-            >
-              Document type
-              :
-            </label>
-          </div>
-          <div
-            class="c2 text-left col"
-          >
-            Survey
-          </div>
-        </div>
-        <div
           class="pb-3 row"
         >
           <div
@@ -438,6 +419,25 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
                 </svg>
               </div>
             </button>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c1"
+              >
+                Document type
+                :
+              </label>
+            </div>
+            <div
+              class="c2 text-left col"
+            >
+              Survey
+            </div>
           </div>
           <div
             class="pb-2 row"

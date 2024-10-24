@@ -122,7 +122,7 @@ export class InterestHolderForm {
   interestHolderId: number | null = null;
   personId = '';
   organizationId = '';
-  contact: IContactSearchResult | null = { id: '' };
+  contact: IContactSearchResult | null = null;
   primaryContactId?: number | null = null;
   impactedProperties: InterestHolderPropertyForm[] = [];
   interestTypeCode = '';
@@ -159,6 +159,14 @@ export class InterestHolderForm {
         firstName: apiModel.person?.firstName ?? '',
         surname: apiModel.person?.surname ?? '',
         middleNames: apiModel.person?.middleNames ?? '',
+        person: null,
+        summary: null,
+        organizationName: null,
+        email: null,
+        mailingAddress: null,
+        municipalityName: null,
+        provinceState: null,
+        isDisabled: false,
       };
     } else {
       interestHolderForm.organizationId = apiModel.organizationId?.toString() || '';
@@ -166,6 +174,13 @@ export class InterestHolderForm {
         id: `O${apiModel.organizationId}`,
         organizationId: apiModel.organizationId ?? undefined,
         organizationName: apiModel.organization?.name ?? '',
+        organization: null,
+        summary: null,
+        email: null,
+        mailingAddress: null,
+        municipalityName: null,
+        provinceState: null,
+        isDisabled: false,
       };
       interestHolderForm.primaryContactId = apiModel.primaryContactId;
     }

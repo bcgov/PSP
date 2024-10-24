@@ -13,6 +13,7 @@ import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { exists } from '@/utils';
+import { stringToNumber } from '@/utils/formUtils';
 
 export interface ComposedDocument {
   mayanMetadata?: ApiGen_Mayan_DocumentMetadata[];
@@ -216,6 +217,7 @@ export class DocumentUpdateFormData {
     const documentTypeLabel = composedDocument.pimsDocumentRelationship?.document?.documentType?.id;
 
     model.documentTypeId = documentTypeLabel?.toString() || '';
+
     return model;
   }
 
@@ -235,6 +237,7 @@ export class DocumentUpdateFormData {
     return {
       documentId: this.documentId,
       mayanDocumentId: this.mayanDocumentId,
+      documentTypeId: stringToNumber(this.documentTypeId),
       documentStatusCode: this.documentStatusCode,
       documentMetadata: metadata,
     };
@@ -243,6 +246,7 @@ export class DocumentUpdateFormData {
   private constructor() {
     this.documentId = -1;
     this.mayanDocumentId = -1;
+    this.documentTypeId = '';
     this.documentStatusCode = '';
     this.documentMetadata = {};
   }

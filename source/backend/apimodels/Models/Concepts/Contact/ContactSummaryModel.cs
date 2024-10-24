@@ -1,4 +1,7 @@
-namespace Pims.Api.Areas.Contact.Models.Search
+using Pims.Api.Models.Concepts.Organization;
+using Pims.Api.Models.Concepts.Person;
+
+namespace Pims.Api.Models.Concepts.Contact
 {
     public class ContactSummaryModel
     {
@@ -14,19 +17,14 @@ namespace Pims.Api.Areas.Contact.Models.Search
         /// </summary>
         public long? PersonId { get; set; }
 
-        public Pims.Api.Models.Concepts.Person.PersonModel Person { get; set; }
+        public PersonModel Person { get; set; }
 
         /// <summary>
         /// get/set - The primary key to identify the organization.
         /// </summary>
         public long? OrganizationId { get; set; }
 
-        public Pims.Api.Models.Concepts.Organization.OrganizationModel Organization { get; set; }
-
-        /// <summary>
-        /// get/set - The concurrency row version.
-        /// </summary>
-        public long RowVersion { get; set; }
+        public OrganizationModel Organization { get; set; }
 
         /// <summary>
         /// get/set - Either the person name or the organization name.

@@ -50,5 +50,7 @@ namespace Pims.Api.Services
         IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId);
 
         List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter);
+
+        List<PimsAcquisitionFile> GetAcquisitionSubFiles(long id);
     }
 }
