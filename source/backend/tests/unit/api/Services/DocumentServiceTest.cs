@@ -413,7 +413,6 @@ namespace Pims.Api.Test.Services
             documentStorageRepository.Setup(x => x.TryDeleteDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>()))
                 .ReturnsAsync(new ExternalResponse<string>()
                 {
-
                     HttpStatusCode = System.Net.HttpStatusCode.OK,
                     Status = ExternalResponseStatus.Success,
                     Message = "Ok",
@@ -440,6 +439,85 @@ namespace Pims.Api.Test.Services
             // Assert
             documentRepository.Verify(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)), Times.Once);
             documentStorageRepository.Verify(x => x.TryDeleteDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public async void UpdateDocumentAsync_DocumentTypeUpdate_Sucess()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentEdit);
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var documentTypeRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+
+            documentRepository.Setup(x => x.TryGet(It.IsAny<long>()))
+                .Returns(new PimsDocument() { DocumentTypeId = 1 });
+
+            documentTypeRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(new PimsDocumentTyp() {
+                DocumentTypeId = 100,
+                MayanId = 200
+            });
+
+            documentRepository.Setup(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)))
+                .Returns(new PimsDocument());
+
+            documentStorageRepository.Setup(x => x.TryUpdateDocumentTypeAsync(It.IsAny<long>(), It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<string>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Status = ExternalResponseStatus.Success,
+                    Payload = "",
+                });
+
+            documentStorageRepository.Setup(x => x.TryGetDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<string>(), It.IsAny<int?>(), It.IsAny<int?>()))
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentMetadataModel>>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentMetadataModel>()
+                    {
+                        Count = 1,
+                        Results = new List<DocumentMetadataModel>()
+                            {
+                                new() {
+                                    Id = 1,
+                                    MetadataType= new MetadataTypeModel()
+                                    {
+                                        Id= 100,
+                                    },
+                                    Value = "test_value",
+                                },
+                            },
+                    },
+                });
+
+            documentStorageRepository.Setup(x => x.TryUpdateDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>()))
+                .ReturnsAsync(new ExternalResponse<DocumentMetadataModel>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new DocumentMetadataModel(),
+                });
+
+            DocumentUpdateRequest updateRequest = new()
+            {
+                DocumentId = 1,
+                MayanDocumentId = 2,
+                DocumentTypeId = 100,
+                DocumentStatusCode = "new_status",
+                DocumentMetadata = new List<DocumentMetadataUpdateModel>()
+                {
+                    new DocumentMetadataUpdateModel() { Id = 1, MetadataTypeId = 100, Value = "new_test_value"},
+                },
+            };
+
+            // Assert
+            await service.UpdateDocumentAsync(updateRequest);
+
+            // Assert
+            documentRepository.Verify(x => x.Update(It.IsAny<PimsDocument>(), It.Is<bool>(x => true)), Times.Exactly(2));
+            documentStorageRepository.Verify(x => x.TryUpdateDocumentTypeAsync(It.IsAny<long>(), 200), Times.Once);
+            documentStorageRepository.Verify(x => x.TryUpdateDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>()), Times.Once);
         }
 
         [Fact]

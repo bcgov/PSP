@@ -20,6 +20,7 @@ export class UpdateAcquisitionSummaryFormModel
   implements WithAcquisitionTeam, WithAcquisitionOwners
 {
   id?: number;
+  parentAcquisitionFileId?: number;
   fileNo?: number;
   fileNumber?: string;
   fileName?: string = '';
@@ -52,8 +53,12 @@ export class UpdateAcquisitionSummaryFormModel
   toApi(): ApiGen_Concepts_AcquisitionFile {
     return {
       id: this.id || 0,
+      parentAcquisitionFileId: isValidId(this.parentAcquisitionFileId)
+        ? this.parentAcquisitionFileId
+        : null,
       fileNo: this.fileNo ?? 0,
       fileNumber: this.fileNumber ?? null,
+      fileNumberSuffix: null,
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileName: this.fileName ?? null,
       assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
@@ -92,6 +97,7 @@ export class UpdateAcquisitionSummaryFormModel
   static fromApi(model: ApiGen_Concepts_AcquisitionFile): UpdateAcquisitionSummaryFormModel {
     const newForm = new UpdateAcquisitionSummaryFormModel();
     newForm.id = model.id;
+    newForm.parentAcquisitionFileId = model.parentAcquisitionFileId;
     newForm.fileNo = model.fileNo;
     newForm.fileNumber = model.fileNumber ?? undefined;
     newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;

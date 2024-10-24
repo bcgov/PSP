@@ -17,7 +17,9 @@ import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
 // LINK: @backend/apimodels/Models/Concepts/AcquisitionFile/AcquisitionFileModel.cs
 export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWithChecklist {
+  parentAcquisitionFileId: number | null;
   fileNo: number;
+  fileNumberSuffix: string | null;
   legacyFileNumber: string | null;
   assignedDate: UtcIsoDateTime | null;
   deliveryDate: UtcIsoDate | null;

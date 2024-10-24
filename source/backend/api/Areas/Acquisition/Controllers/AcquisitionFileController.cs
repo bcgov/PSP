@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts.AcquisitionFile;
-using Pims.Api.Models.Concepts.CompensationRequisition;
 using Pims.Api.Models.Concepts.ExpropriationPayment;
 using Pims.Api.Policies;
 using Pims.Api.Services;
@@ -33,7 +32,6 @@ namespace Pims.Api.Areas.Acquisition.Controllers
     {
         #region Variables
         private readonly IAcquisitionFileService _acquisitionService;
-        private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
         #endregion
@@ -44,14 +42,12 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Creates a new instance of a AcquisitionFileController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="acquisitionService"></param>
-        /// <param name="compReqFinancialService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public AcquisitionFileController(IAcquisitionFileService acquisitionService, ICompReqFinancialService compReqFinancialService, IMapper mapper, ILogger<AcquisitionFileController> logger)
+        public AcquisitionFileController(IAcquisitionFileService acquisitionService, IMapper mapper, ILogger<AcquisitionFileController> logger)
         {
             _acquisitionService = acquisitionService;
-            _compReqFinancialService = compReqFinancialService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -277,6 +273,23 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             var newExpPaymentEntity = _acquisitionService.AddExpropriationPayment(id, expPaymentEntity);
 
             return new JsonResult(_mapper.Map<ExpropriationPaymentModel>(newExpPaymentEntity));
+        }
+
+        /// <summary>
+        /// Get the acquisition file sub-files.
+        /// </summary>
+        /// <returns>All sub-files related to the acquisition.</returns>
+        [HttpGet("{id:long}/sub-files")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<AcquisitionFileModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetAcquisitionFileSubFiles(long id)
+        {
+            var subFiles = _acquisitionService.GetAcquisitionSubFiles(id);
+
+            return new JsonResult(_mapper.Map<List<AcquisitionFileModel>>(subFiles));
         }
 
         #endregion

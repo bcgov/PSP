@@ -19,6 +19,7 @@ import { InterestHolderForm } from '../tabs/stakeholders/update/models';
 
 export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwners {
   id?: number;
+  parentAcquisitionFileId?: number;
   fileName?: string = '';
   legacyFileNumber?: string = '';
   assignedDate?: string = '';
@@ -48,6 +49,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   toApi(): ApiGen_Concepts_AcquisitionFile {
     return {
       id: this.id ?? 0,
+      parentAcquisitionFileId: isValidId(this.parentAcquisitionFileId)
+        ? this.parentAcquisitionFileId
+        : null,
       fileName: this.fileName ?? null,
       assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
       deliveryDate: isValidIsoDateTime(this.deliveryDate) ? this.deliveryDate : null,
@@ -78,6 +82,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       compensationRequisitions: null,
       fileNo: 0,
       fileNumber: null,
+      fileNumberSuffix: null,
       legacyStakeholders: null,
       product: null,
       project: null,
@@ -96,6 +101,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   static fromApi(model: ApiGen_Concepts_AcquisitionFile): AcquisitionForm {
     const newForm = new AcquisitionForm();
     newForm.id = model.id;
+    newForm.parentAcquisitionFileId = model.parentAcquisitionFileId;
     newForm.fileName = model.fileName || '';
     newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.assignedDate = model.assignedDate ?? undefined;

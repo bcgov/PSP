@@ -29,6 +29,8 @@ namespace Pims.Api.Repositories.Mayan
 
         Task<ExternalResponse<DocumentDetailModel>> TryGetDocumentAsync(long documentId);
 
+        Task<ExternalResponse<string>> TryUpdateDocumentTypeAsync(long documentId, long documentTypeId);
+
         Task<ExternalResponse<FileDownloadResponse>> TryDownloadFileAsync(long documentId, long fileId);
 
         Task<ExternalResponse<FileStreamResponse>> TryStreamFileAsync(long documentId, long fileId);
