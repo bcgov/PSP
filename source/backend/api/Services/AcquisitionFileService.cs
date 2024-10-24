@@ -263,6 +263,11 @@ namespace Pims.Api.Services
                 ValidateMinistryRegion(acquisitionFile.Internal_Id, acquisitionFile.RegionCode);
             }
 
+            if (!userOverrides.Contains(UserOverrideCode.UpdateSubFilesProjectProduct))
+            {
+                ValidateSubFileDependency(acquisitionFile);
+            }
+
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
@@ -567,7 +572,7 @@ namespace Pims.Api.Services
         public IList<PimsExpropriationPayment> GetAcquisitionExpropriationPayments(long acquisitionFileId)
         {
 
-            _logger.LogInformation("Getting Expropiation Payments for acquisition file id: {acquisitionFileId}", acquisitionFileId);
+            _logger.LogInformation("Getting Expropriation Payments for acquisition file id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
 
@@ -576,14 +581,14 @@ namespace Pims.Api.Services
 
         public List<PimsAcquisitionFile> GetAcquisitionSubFiles(long id)
         {
-            _logger.LogInformation("Fetch acquistion sub-files for fileId: {id}", id);
+            _logger.LogInformation("Fetch acquisition sub-files for file id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
 
             var currentAcquisitionFile = GetById(id);
-            if(currentAcquisitionFile.PrntAcquisitionFileId is not null)
+            if (currentAcquisitionFile.PrntAcquisitionFileId is not null)
             {
-                throw new BadRequestException("Acquistion file should not be a sub-file.");
+                throw new BadRequestException("Acquisition file should not be a sub-file.");
             }
 
             // Limit search results to user's assigned region(s)
@@ -696,6 +701,15 @@ namespace Pims.Api.Services
             if (currentRegion != updatedRegion)
             {
                 throw new UserOverrideException(UserOverrideCode.UpdateRegion, "The selected Ministry region is different from that associated to one or more selected properties\n\nDo you want to proceed?");
+            }
+        }
+
+        private void ValidateSubFileDependency(PimsAcquisitionFile incomingFile)
+        {
+            var currentAcquisitionFile = _acqFileRepository.GetById(incomingFile.Internal_Id);
+            if (currentAcquisitionFile.ProjectId != incomingFile.ProjectId || currentAcquisitionFile.ProductId != incomingFile.ProductId)
+            {
+                throw new UserOverrideException(UserOverrideCode.UpdateSubFilesProjectProduct, "This change will be reflected on other related entities - generated documents, sub-files, etc.\n\nDo you want to proceed?");
             }
         }
 
