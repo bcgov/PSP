@@ -7,7 +7,7 @@ import { Claims } from '@/constants';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { IContactSearchResult } from '@/interfaces';
+import { IContactSearchResult, fromContactSummary } from '@/interfaces';
 import {
   getEmptyPerson,
   getMockContactOrganizationWithMultiplePeople,
@@ -127,7 +127,9 @@ describe('AddLeaseTenantContainer component', () => {
     await setup({});
 
     await act(async () => {
-      viewProps.setSelectedStakeholders([getMockContactOrganizationWithOnePerson()]);
+      viewProps.setSelectedStakeholders([
+        fromContactSummary(getMockContactOrganizationWithOnePerson()),
+      ]);
     });
     expect(getPersonConcept).toHaveBeenCalledTimes(1);
     expect(viewProps.selectedStakeholders[0].organizationPersons).toHaveLength(1);
@@ -138,8 +140,8 @@ describe('AddLeaseTenantContainer component', () => {
 
     await waitFor(() => {
       viewProps.setSelectedStakeholders([
-        getMockContactOrganizationWithOnePerson(),
-        getMockContactOrganizationWithOnePerson(),
+        fromContactSummary(getMockContactOrganizationWithOnePerson()),
+        fromContactSummary(getMockContactOrganizationWithOnePerson()),
       ]);
       expect(getPersonConcept).toHaveBeenCalledTimes(1);
       expect(viewProps.selectedStakeholders[0].organizationPersons).toHaveLength(1);
@@ -182,14 +184,18 @@ describe('AddLeaseTenantContainer component', () => {
 
     //setup
     await waitFor(() => {
-      viewProps.setSelectedStakeholders([getMockContactOrganizationWithOnePerson()]);
+      viewProps.setSelectedStakeholders([
+        fromContactSummary(getMockContactOrganizationWithOnePerson()),
+      ]);
       expect(getPersonConcept).toHaveBeenCalledTimes(1);
       expect(viewProps.selectedStakeholders).toHaveLength(1);
     });
 
     await act(async () => {
       //act
-      viewProps.setSelectedStakeholders([getMockContactOrganizationWithOnePerson()]);
+      viewProps.setSelectedStakeholders([
+        fromContactSummary(getMockContactOrganizationWithOnePerson()),
+      ]);
     });
     //assert
     expect(getPersonConcept).toHaveBeenCalledTimes(1);
@@ -199,7 +205,9 @@ describe('AddLeaseTenantContainer component', () => {
     await setup({});
 
     await waitFor(() => {
-      viewProps.setSelectedStakeholders([getMockContactOrganizationWithMultiplePeople()]);
+      viewProps.setSelectedStakeholders([
+        fromContactSummary(getMockContactOrganizationWithMultiplePeople()),
+      ]);
       expect(viewProps.selectedStakeholders).toHaveLength(1);
     });
     await act(async () => {
@@ -215,7 +223,9 @@ describe('AddLeaseTenantContainer component', () => {
     await setup({});
 
     await act(async () => {
-      viewProps.setSelectedStakeholders([getMockContactOrganizationWithMultiplePeople()]);
+      viewProps.setSelectedStakeholders([
+        fromContactSummary(getMockContactOrganizationWithMultiplePeople()),
+      ]);
     });
     expect(viewProps.selectedStakeholders).toHaveLength(1);
     await act(async () => {
@@ -278,7 +288,9 @@ describe('AddLeaseTenantContainer component', () => {
 
     //setup
     await waitFor(() => {
-      viewProps.setSelectedStakeholders([getMockContactOrganizationWithMultiplePeople()]);
+      viewProps.setSelectedStakeholders([
+        fromContactSummary(getMockContactOrganizationWithMultiplePeople()),
+      ]);
       expect(viewProps.selectedStakeholders).toHaveLength(1);
       expect(viewProps.saveCallback).not.toBeNull();
     });
