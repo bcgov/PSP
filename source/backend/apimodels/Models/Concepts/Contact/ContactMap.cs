@@ -1,14 +1,13 @@
 using Mapster;
 using Entity = Pims.Dal.Entities;
-using Model = Pims.Api.Areas.Contact.Models.Search;
 
-namespace Pims.Api.Areas.Contact.Mapping.Search
+namespace Pims.Api.Models.Concepts.Contact
 {
-    public class ContactMap : IRegister
+    public class ContactSummaryMap : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsContactMgrVw, Model.ContactSummaryModel>()
+            config.NewConfig<Entity.PimsContactMgrVw, ContactSummaryModel>()
                 .Map(dest => dest.Id, src => src.Id)
                 .Map(dest => dest.PersonId, src => src.PersonId)
                 .Map(dest => dest.Person, src => src.Person)
