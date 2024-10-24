@@ -7,7 +7,6 @@ import CreatePersonForm from './Person/CreatePersonForm';
 
 export const ContactRouter: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { path, url } = useRouteMatch();
-  console.log(path);
   return (
     <Switch>
       <Redirect exact from={path} to={`${url}/${ContactTypes.INDIVIDUAL}`} />
