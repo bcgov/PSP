@@ -1751,7 +1751,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                       id="input-ownerSolicitor.contact.id"
                       name="ownerSolicitor.contact.id"
                       placeholder="Select from Contacts"
-                      title=""
                       value=""
                     />
                   </div>
@@ -1825,7 +1824,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                       id="input-ownerRepresentative.contact.id"
                       name="ownerRepresentative.contact.id"
                       placeholder="Select from Contacts"
-                      title=""
                       value=""
                     />
                   </div>
