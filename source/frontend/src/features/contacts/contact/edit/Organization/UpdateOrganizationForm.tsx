@@ -1,19 +1,15 @@
 import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import React, { useMemo, useState } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { Link, useHistory } from 'react-router-dom';
 
 import { Button } from '@/components/common/buttons/Button';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { Select, TextArea } from '@/components/common/form';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { FlexBox } from '@/components/common/styles';
-import {
-  Address,
-  CancelConfirmationModal,
-  useAddressHelpers,
-} from '@/features/contacts/contact/create/components';
+import { Address, useAddressHelpers } from '@/features/contacts/contact/create/components';
 import * as Styled from '@/features/contacts/contact/edit/styles';
 import { IEditableOrganizationForm } from '@/features/contacts/formModels';
 import { useOrganizationDetail } from '@/features/contacts/hooks/useOrganizationDetail';
@@ -60,7 +56,7 @@ export const UpdateOrganizationForm: React.FC<{ id: number }> = ({ id }) => {
   const initialValues = formOrganization ? formOrganization : new IEditableOrganizationForm();
 
   return (
-    <Formik
+    <Formik<IEditableOrganizationForm>
       component={UpdateOrganization}
       initialValues={initialValues}
       validate={(values: IEditableOrganizationForm) =>
@@ -80,22 +76,16 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
   errors,
   touched,
   dirty,
-  resetForm,
   submitForm,
-  initialValues,
+  isSubmitting,
 }) => {
   const history = useHistory();
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const organizationId = getIn(values, 'id');
   const persons = getIn(values, 'persons') as Partial<ApiGen_Concepts_Person>[];
 
   const onCancel = () => {
-    if (dirty) {
-      setShowConfirmation(true);
-    } else {
-      history.push(`/contact/O${organizationId}`);
-    }
+    history.push(`/contact/O${organizationId}`);
   };
 
   const isContactMethodInvalid = useMemo(() => {
@@ -109,23 +99,12 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
     );
   }, [touched, errors]);
 
+  const checkState = useCallback(() => {
+    return dirty && !isSubmitting;
+  }, [dirty, isSubmitting]);
+
   return (
     <>
-      <UnsavedChangesPrompt />
-
-      {/* Confirmation popup when Cancel button is clicked */}
-      <CancelConfirmationModal
-        variant="info"
-        display={showConfirmation}
-        setDisplay={setShowConfirmation}
-        handleOk={() => {
-          resetForm({ values: initialValues });
-          // need a timeout here to give the form time to reset before navigating away
-          // or else the router guard prompt will also be shown
-          setTimeout(() => history.push(`/contact/O${organizationId}`), 100);
-        }}
-      />
-
       <Styled.ScrollingFormLayout>
         <Styled.Form id="updateForm">
           <FlexBox column>
@@ -202,6 +181,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
         </Button>
         <Button onClick={submitForm}>Save</Button>
       </Styled.ButtonGroup>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </>
   );
 };
