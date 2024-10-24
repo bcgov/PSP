@@ -49,7 +49,9 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
         innerRef={formikRef}
         initialValues={LeaseFormModel.fromApi(apiFormLease)}
         validationSchema={AddLeaseYupSchema}
-        onSubmit={handleSubmit}
+        onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) => {
+          handleSubmit(values, formikHelpers);
+        }}
       >
         {formikProps => (
           <>

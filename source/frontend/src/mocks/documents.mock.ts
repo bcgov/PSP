@@ -26,6 +26,7 @@ export const mockDocumentResponse = (id = 1): ApiGen_Concepts_DocumentRelationsh
       appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
       rowVersion: 1,
       isDisabled: false,
+      documentTypePurpose: '',
     },
     statusTypeCode: {
       id: 'AMENDD',
@@ -75,6 +76,7 @@ export const mockDocumentsResponse = (): ApiGen_Concepts_DocumentRelationship[] 
         appCreateUserid: 'service',
         appLastUpdateUserGuid: '00000000-0000-0000-0000-000000000000',
         appCreateUserGuid: '00000000-0000-0000-0000-000000000000',
+        documentTypePurpose: '',
       },
       statusTypeCode: {
         id: 'SIGND',
@@ -121,6 +123,7 @@ export const mockDocumentsResponse = (): ApiGen_Concepts_DocumentRelationship[] 
         appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
         rowVersion: 1,
         isDisabled: false,
+        documentTypePurpose: '',
       },
       statusTypeCode: {
         id: 'AMENDD',
@@ -165,6 +168,7 @@ export const mockDocumentTypesResponse = (): ApiGen_Concepts_DocumentType[] => [
     appCreateUserid: 'James Bond',
     appLastUpdateUserGuid: null,
     appCreateUserGuid: null,
+    documentTypePurpose: '',
   },
   {
     id: 2,
@@ -181,6 +185,7 @@ export const mockDocumentTypesResponse = (): ApiGen_Concepts_DocumentType[] => [
     appCreateUserid: 'James Bond',
     appLastUpdateUserGuid: null,
     appCreateUserGuid: null,
+    documentTypePurpose: '',
   },
 ];
 
@@ -198,6 +203,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 34,
@@ -212,6 +218,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 24,
@@ -226,6 +233,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 17,
@@ -240,6 +248,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 43,
@@ -254,6 +263,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 14,
@@ -268,6 +278,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 41,
@@ -282,6 +293,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 29,
@@ -296,6 +308,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 10,
@@ -310,6 +323,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 28,
@@ -324,6 +338,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 22,
@@ -338,6 +353,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 30,
@@ -352,6 +368,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 8,
@@ -366,6 +383,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 18,
@@ -380,6 +398,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 19,
@@ -394,6 +413,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 38,
@@ -408,6 +428,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 3,
@@ -422,6 +443,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 9,
@@ -436,6 +458,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 21,
@@ -450,6 +473,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 47,
@@ -464,6 +488,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 5,
@@ -478,6 +503,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 23,
@@ -492,6 +518,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 15,
@@ -506,6 +533,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 12,
@@ -520,6 +548,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 4,
@@ -534,6 +563,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 31,
@@ -548,6 +578,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 40,
@@ -562,6 +593,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 33,
@@ -576,6 +608,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 37,
@@ -590,6 +623,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 6,
@@ -604,6 +638,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 20,
@@ -618,6 +653,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 27,
@@ -632,6 +668,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 2,
@@ -646,6 +683,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 13,
@@ -660,6 +698,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 7,
@@ -674,6 +713,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 25,
@@ -688,6 +728,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 48,
@@ -702,6 +743,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 32,
@@ -716,6 +758,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 26,
@@ -730,6 +773,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 44,
@@ -744,6 +788,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 39,
@@ -758,6 +803,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 45,
@@ -772,6 +818,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 11,
@@ -786,6 +833,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 16,
@@ -800,6 +848,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 35,
@@ -814,6 +863,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 50,
@@ -828,6 +878,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
   {
     id: 49,
@@ -843,6 +894,7 @@ export const mockDocumentTypesAcquisition = (): ApiGen_Concepts_DocumentType[] =
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 2,
+    documentTypePurpose: '',
   },
 ];
 
