@@ -8,7 +8,7 @@ import { ApiGen_System_HttpStatusCode } from '@/models/api/generated/ApiGen_Syst
 
 import { DocumentViewerContext } from './context/DocumentViewerContext';
 import { IDocumentPreviewViewProps } from './DocumentPreviewView';
-import { createFileDownload } from './DownloadDocumentButton';
+import { showFile } from './DownloadDocumentButton';
 import { useDocumentProvider } from './hooks/useDocumentProvider';
 
 export interface LoadedPage {
@@ -32,7 +32,7 @@ export const DocumentPreviewContainer: FC<
     retrieveDocumentDetail,
     downloadDocumentFilePageImage,
     getDocumentFilePageList,
-    downloadWrappedDocumentFileLatest,
+    streamDocumentFileLatest,
     retrieveDocumentDetailLoading,
     getDocumentFilePageListLoading,
   } = useDocumentProvider();
@@ -166,9 +166,7 @@ export const DocumentPreviewContainer: FC<
         pages={documentPages}
         resetDocumentPreview={resetDocumentPreview}
         handleDownload={() => {
-          downloadWrappedDocumentFileLatest(previewDocumentId).then(file =>
-            createFileDownload(file),
-          );
+          streamDocumentFileLatest(previewDocumentId).then(response => showFile(response));
         }}
       />
     </>
