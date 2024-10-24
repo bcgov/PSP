@@ -40,6 +40,10 @@ export class UpdateAcquisitionSummaryFormModel
 
   project?: IAutocompletePrediction;
   product = '';
+  // read-only project and product descriptions (for sub-files)
+  formattedProject = '';
+  formatterProduct = '';
+
   fundingTypeCode?: string;
   fundingTypeOtherDescription = '';
 
@@ -119,6 +123,13 @@ export class UpdateAcquisitionSummaryFormModel
       ? { id: model.project?.id || 0, text: model.project?.description || '' }
       : undefined;
     newForm.product = model.product?.id?.toString() ?? '';
+    // project and product read-only values for display on sub-files
+    newForm.formattedProject = exists(model.project)
+      ? model.project.code + ' - ' + model.project.description
+      : '';
+    newForm.formatterProduct = exists(model.product)
+      ? model.product.code + ' ' + model.product.description
+      : '';
 
     const interestHolders = model.acquisitionFileInterestHolders?.map(x =>
       InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),
