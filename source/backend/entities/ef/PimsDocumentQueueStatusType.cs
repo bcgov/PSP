@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Describes the source system of the data (PAIMS, LIS, etc.)
+/// Table describing the status of the document in the queue for MAYAN EDMS assimilation.
 /// </summary>
-[Table("PIMS_DATA_SOURCE_TYPE")]
-public partial class PimsDataSourceType
+[Table("PIMS_DOCUMENT_QUEUE_STATUS_TYPE")]
+public partial class PimsDocumentQueueStatusType
 {
     /// <summary>
-    /// Code value of the source system of the data (PAIMS, LIS, etc.)
+    /// Code value of the document queue status.
     /// </summary>
     [Key]
-    [Column("DATA_SOURCE_TYPE_CODE")]
+    [Column("DOCUMENT_QUEUE_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string DataSourceTypeCode { get; set; }
+    public string DocumentQueueStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the source system of the data (PAIMS, LIS, etc.)
+    /// Description of the document queue status.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,13 +29,13 @@ public partial class PimsDataSourceType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates if the code is still in use
+    /// Indicates if the code value is still active or is now disabled.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Defines the default display order of the descriptions
+    /// Order in which to display the code values, if required.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
@@ -59,12 +59,6 @@ public partial class PimsDataSourceType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("DataSourceTypeCodeNavigation")]
+    [InverseProperty("DocumentQueueStatusTypeCodeNavigation")]
     public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
-
-    [InverseProperty("DataSourceTypeCodeNavigation")]
-    public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
-
-    [InverseProperty("PropertyDataSourceTypeCodeNavigation")]
-    public virtual ICollection<PimsProperty> PimsProperties { get; set; } = new List<PimsProperty>();
 }
