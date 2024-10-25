@@ -16,7 +16,9 @@ import {
   WithAcquisitionOwners,
 } from '../../models';
 
-const UpdateAcquisitionOwnersSubForm: React.FC = () => {
+const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
+  isSubFile = false,
+}) => {
   const { values, setFieldValue, handleChange } = useFormikContext<WithAcquisitionOwners>();
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);
@@ -62,7 +64,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC = () => {
                 <Container>
                   <ButtonDiv>
                     <RemoveButton
-                      label="Remove Owner"
+                      label={isSubFile ? 'Remove Sub-interest' : 'Remove Owner'}
                       dataTestId={`owners[${index}]-remove-button`}
                       onRemove={() => {
                         setRemoveIndex(index);
@@ -72,7 +74,13 @@ const UpdateAcquisitionOwnersSubForm: React.FC = () => {
                       Remove Owner
                     </RemoveButton>
                   </ButtonDiv>
-                  <SectionField label="Is this owner an individual / corporation ?">
+                  <SectionField
+                    label={
+                      isSubFile
+                        ? 'Is this sub-interest an individual / corporation ?'
+                        : 'Is this owner an individual / corporation ?'
+                    }
+                  >
                     <RadioGroup
                       field={`owners[${index}].isOrganization`}
                       flexDirection="row"
@@ -190,12 +198,16 @@ const UpdateAcquisitionOwnersSubForm: React.FC = () => {
                 arrayHelpers.push(owner);
               }}
             >
-              + Add owner
+              {isSubFile ? '+ Add Sub-interest' : '+ Add owner'}
             </LinkButton>
 
             <AcquisitionFormModal
-              message="Are you sure you want to remove this Owner?"
-              title="Remove Owner"
+              message={
+                isSubFile
+                  ? 'Are you sure you want to remove this Sub-interest?'
+                  : 'Are you sure you want to remove this Owner?'
+              }
+              title={isSubFile ? 'Remove Sub-interest' : 'Remove Owner'}
               display={showRemoveModal}
               handleOk={() => {
                 onRemovedPrimaryContact(removeIndex);

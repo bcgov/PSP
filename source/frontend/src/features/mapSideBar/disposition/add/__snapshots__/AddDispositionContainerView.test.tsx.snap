@@ -293,6 +293,16 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   margin: auto;
 }
 
+.c7 {
+  width: 100%;
+  border-bottom: solid 0.5rem #3470B1;
+}
+
+.c6 {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
 .c4.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
@@ -356,16 +366,6 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   width: 100%;
   height: 100%;
   display: contents;
-}
-
-.c7 {
-  width: 100%;
-  border-bottom: solid 0.5rem #3470B1;
-}
-
-.c6 {
-  font-size: 2.4rem;
-  cursor: pointer;
 }
 
 .c31 {
