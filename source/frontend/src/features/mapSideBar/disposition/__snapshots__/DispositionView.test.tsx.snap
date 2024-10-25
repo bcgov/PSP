@@ -256,6 +256,16 @@ exports[`DispositionView component > renders as expected 1`] = `
   margin: auto;
 }
 
+.c7 {
+  width: 100%;
+  border-bottom: solid 0.5rem #3470B1;
+}
+
+.c6 {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
 .c4.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
@@ -323,16 +333,6 @@ exports[`DispositionView component > renders as expected 1`] = `
 
 .c9 {
   position: relative;
-}
-
-.c7 {
-  width: 100%;
-  border-bottom: solid 0.5rem #3470B1;
-}
-
-.c6 {
-  font-size: 2.4rem;
-  cursor: pointer;
 }
 
 .c27 {
