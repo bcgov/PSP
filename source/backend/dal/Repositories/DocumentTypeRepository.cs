@@ -97,6 +97,7 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsDocumentTyps.FirstOrDefault(dt => documentType.DocumentTypeId == dt.DocumentTypeId) ?? throw new KeyNotFoundException($"Failed to find documentType for mayan ID: {documentType.MayanId}");
 
             existingDocumentType.DocumentTypeDescription = documentType.DocumentTypeDescription;
+            existingDocumentType.DocumentTypeDefinition = documentType.DocumentTypeDefinition;
             existingDocumentType.MayanId = documentType.MayanId;
             existingDocumentType.DisplayOrder = documentType.DisplayOrder;
             existingDocumentType.IsDisabled = documentType.IsDisabled;
