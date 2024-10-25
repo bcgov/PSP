@@ -41,7 +41,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
         latitude: 49.27720127104871,
         longitude: -123.128633565,
         isRwyBeltDomPatent: false,
-        pin: 0,
+        pin: undefined,
         pid: 123456789,
         planNumber: 'EPP92028',
         landArea: 0,

@@ -324,6 +324,13 @@ describe('mapPropertyUtils', () => {
       },
       null,
     ],
+    [
+      {
+        pimsFeature: { properties: { pin: '4321' } } as any,
+        parcelFeature: { properties: { pid: 1234 } } as any,
+      },
+      null,
+    ],
   ])(
     'pinFromFeatureSet test with feature set %o - expected %s',
     (featureSet: LocationFeatureDataset, expectedValue: string | null) => {
