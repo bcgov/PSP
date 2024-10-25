@@ -46,7 +46,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
             config.NewConfig<AcquisitionFileModel, PimsAcquisitionFile>()
                 .PreserveReference(true)
                 .Map(dest => dest.AcquisitionFileId, src => src.Id)
-                .Map(dest => dest.PrntAcquisitionFile, src => src.ParentAcquisitionFileId)
+                .Map(dest => dest.PrntAcquisitionFileId, src => src.ParentAcquisitionFileId)
                 .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNumber, src => src.FileNumber)
                 .Map(dest => dest.FileName, src => src.FileName)

@@ -1,14 +1,12 @@
 import { FaFileExcel } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
-import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import { Claims } from '@/constants/claims';
 import ExportAggregatedLeasesContainer from '@/features/leases/reports/aggregated/ExportAggregatedLeasesContainer';
 import ExportLeasePaymentsContainer from '@/features/leases/reports/payments/ExportLeasePaymentsContainer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
-import * as Styled from './styles';
 import { ExportH3, HalfHeightDiv } from './styles';
 
 /**
@@ -20,12 +18,6 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>
-          <span className="mr-2">
-            <LeaseIcon title="Lease and Licence Icon" fill="currentColor" />
-          </span>
-          Leases & Licences
-        </Styled.TrayHeader>
         {hasClaim(Claims.LEASE_VIEW) && (
           <Link onClick={onLinkClick} to="/lease/list" className="nav-item pl-9 pb-3">
             Manage Lease/Licence Files

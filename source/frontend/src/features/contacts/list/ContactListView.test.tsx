@@ -59,9 +59,9 @@ const defaultPersonSearchResult: IContactSearchResult = {
   municipalityName: 'city',
   provinceState: 'province',
   isDisabled: false,
-  person:  null,
-  middleNames:  null,
-  organizationName:  null,
+  person: null,
+  middleNames: null,
+  organizationName: null,
 };
 
 const defaultPagedFilter = {

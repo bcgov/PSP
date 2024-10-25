@@ -1,14 +1,22 @@
 /* eslint-disable react/jsx-key */
 import clsx from 'classnames';
 import { ReactElement, useEffect, useState } from 'react';
+import { FaBriefcase } from 'react-icons/fa';
+import { MdAirlineStops, MdTopic } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
+import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
+import AdminIcon from '@/assets/images/admin-icon.svg?react';
+import ContactIcon from '@/assets/images/contact-icon.svg?react';
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
 import { AdminTools, LeaseAndLicenses, ResearchTray } from '@/components/layout';
 
 import { AcquisitionTray } from './AcquisitionTray';
 import { ContactTray } from './ContactTray';
 import { DispositionTray } from './DispositionTray';
 import { ProjectTray } from './ProjectTray';
+import { SideTrayLayout } from './SideTrayLayout';
 import * as Styled from './styles';
 import { SubdivisionConsolidationTray } from './SubdCons';
 
@@ -35,7 +43,7 @@ export interface ISideTrayPageProps {
 export const SideTray = ({ context, setContext }: ISideTrayProps) => {
   const [show, setShow] = useState(false);
 
-  const handleFileSet = () => {
+  const onClose = () => {
     setShow(false);
   };
 
@@ -43,19 +51,115 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     SidebarContextType,
     ReactElement
   >([
-    [SidebarContextType.ADMIN, <AdminTools onLinkClick={handleFileSet} />],
-    [SidebarContextType.LEASE, <LeaseAndLicenses onLinkClick={handleFileSet} />],
-    [SidebarContextType.RESEARCH, <ResearchTray onLinkClick={handleFileSet} />],
-    [SidebarContextType.CONTACT, <ContactTray onLinkClick={handleFileSet} />],
-    [SidebarContextType.ACQUISITION, <AcquisitionTray onLinkClick={handleFileSet} />],
-    [SidebarContextType.PROJECT, <ProjectTray onLinkClick={() => setShow(false)} />],
-    [SidebarContextType.DISPOSITION, <DispositionTray onLinkClick={handleFileSet} />],
-    [SidebarContextType.SUBDCONS, <SubdivisionConsolidationTray onLinkClick={handleFileSet} />],
+    [
+      SidebarContextType.ADMIN,
+      <SideTrayLayout
+        icon={
+          <AdminIcon title="Admin Tools icon" width="2.6rem" height="2.6rem" fill="currentColor" />
+        }
+        title="Admin Tools"
+        onClose={onClose}
+      >
+        <AdminTools onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
+    [
+      SidebarContextType.LEASE,
+      <SideTrayLayout
+        icon={<LeaseIcon title="Lease and Licence icon" fill="currentColor" />}
+        title="Leases & Licences"
+        onClose={onClose}
+      >
+        <LeaseAndLicenses onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
+    [
+      SidebarContextType.RESEARCH,
+      <SideTrayLayout
+        icon={<MdTopic size={26} title="Research file icon" />}
+        title="Research Files"
+        onClose={onClose}
+      >
+        <ResearchTray onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
+    [
+      SidebarContextType.CONTACT,
+      <SideTrayLayout
+        icon={
+          <ContactIcon
+            title="Contact manager icon"
+            width="2.6rem"
+            height="2.6rem"
+            fill="currentColor"
+          />
+        }
+        title="Contacts"
+        onClose={onClose}
+      >
+        <ContactTray onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
+    [
+      SidebarContextType.ACQUISITION,
+      <SideTrayLayout
+        icon={
+          <AcquisitionFileIcon
+            title="Acquisition file icon"
+            width="2.6rem"
+            height="2.6rem"
+            fill="currentColor"
+          />
+        }
+        title="Acquisition Files"
+        onClose={onClose}
+      >
+        <AcquisitionTray onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
+    [
+      SidebarContextType.PROJECT,
+      <SideTrayLayout
+        icon={<FaBriefcase size={26} title="Project icon" fill="currentColor" />}
+        title="Projects"
+        onClose={onClose}
+      >
+        <ProjectTray onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
+    [
+      SidebarContextType.DISPOSITION,
+      <SideTrayLayout
+        icon={<MdAirlineStops title="Disposition file Icon" fill="currentColor" />}
+        title="Disposition Files"
+        onClose={onClose}
+      >
+        <DispositionTray onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
+    [
+      SidebarContextType.SUBDCONS,
+      <SideTrayLayout
+        icon={
+          <SubdivisionIcon
+            width="2.6rem"
+            height="2.6rem"
+            title="Subdivision Cons Icon"
+            fill="currentColor"
+          />
+        }
+        title="Subdivision & Consolidation"
+        onClose={onClose}
+      >
+        <SubdivisionConsolidationTray onLinkClick={onClose} />
+      </SideTrayLayout>,
+    ],
   ]);
 
   useEffect(() => {
     setShow(!!context);
   }, [context, setShow]);
+
   const TrayPage = () => (context ? sideTrayPages.get(context) ?? <></> : <></>);
   return (
     <ReactVisibilitySensor
@@ -64,12 +168,6 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
       }}
     >
       <Styled.SideTray className={clsx({ show: show })} data-testid="side-tray">
-        <Styled.CloseButton
-          id="close-tray"
-          title="close"
-          size={24}
-          onClick={() => setShow(false)}
-        />
         <Styled.SideTrayPage>
           <TrayPage />
         </Styled.SideTrayPage>

@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -15,6 +16,8 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
   View,
   acquisitionFile,
 }) => {
+  const history = useHistory();
+
   const [acquisitionSubFiles, setAcquisitionSubFiles] = useState<
     ApiGen_Concepts_AcquisitionFile[] | null
   >(null);
@@ -52,14 +55,14 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
     }
   }, [acquisitionFile, fetchSubFiles, getParentAcquisitionFile]);
 
-  // TODO: Add an "useEffect" to fetch the list of linked files from the backend API
-  // Use this loading flag to render a spinner in the view while loading
-  const loading = false;
-
+  // Redirect to "Create Acquisition File" route for sub-file
   const onAddSubFile = (): void => {
-    // TODO: Here we will copy some data from main file into sub-file and redirect to "Create Acquisition File" for sub-file
-    // This will be done in another pull-request.
-    throw new Error('Function not implemented yet.');
+    const params = new URLSearchParams();
+    params.set('parentId', acquisitionFile.id.toString());
+    history.replace({
+      pathname: `/mapview/sidebar/acquisition/new`,
+      search: params.toString(),
+    });
   };
 
   useEffect(() => {
@@ -70,7 +73,7 @@ export const SubFileListContainer: React.FunctionComponent<ISubFileListContainer
 
   return (
     <View
-      loading={loading || loadingParentAcquisitionFile || loadingSubFiles}
+      loading={loadingParentAcquisitionFile || loadingSubFiles}
       acquisitionFile={acquisitionFile}
       subFiles={acquisitionSubFiles}
       onAdd={onAddSubFile}

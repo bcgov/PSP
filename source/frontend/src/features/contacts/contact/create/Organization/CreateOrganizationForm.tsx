@@ -1,16 +1,15 @@
 import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import { useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef, useState } from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 
 import { Button } from '@/components/common/buttons/Button';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { TextArea } from '@/components/common/form';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { Section } from '@/components/common/Section/Section';
 import { FlexBox } from '@/components/common/styles';
 import {
   Address,
-  CancelConfirmationModal,
   DuplicateContactModal,
   useAddressHelpers,
 } from '@/features/contacts/contact/create/components';
@@ -66,15 +65,18 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
     }
   };
 
+  const checkState = useCallback(() => {
+    return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
+  }, [formikRef]);
+
   return (
     <>
-      <Formik
+      <Formik<IEditableOrganizationForm>
         component={CreateOrganizationComponent}
         initialValues={new IEditableOrganizationForm()}
         validate={(values: IEditableOrganizationForm) =>
           onValidateOrganization(values, otherCountryId)
         }
-        enableReinitialize
         onSubmit={onSubmit}
         innerRef={formikRef}
       />
@@ -86,7 +88,8 @@ export const CreateOrganizationForm: React.FunctionComponent<unknown> = () => {
           setAllowDuplicate(false);
           setShowDuplicateModal(false);
         }}
-      ></DuplicateContactModal>
+      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </>
   );
 };
@@ -99,20 +102,12 @@ export default CreateOrganizationForm;
 const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationForm>> = ({
   errors,
   touched,
-  dirty,
-  resetForm,
   submitForm,
-  initialValues,
 }) => {
   const history = useHistory();
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const onCancel = () => {
-    if (dirty) {
-      setShowConfirmation(true);
-    } else {
-      history.push('/contact/list');
-    }
+    history.push('/contact/list');
   };
 
   const isContactMethodInvalid = useMemo(() => {
@@ -128,21 +123,6 @@ const CreateOrganizationComponent: React.FC<FormikProps<IEditableOrganizationFor
 
   return (
     <>
-      <UnsavedChangesPrompt />
-
-      {/* Confirmation popup when Cancel button is clicked */}
-      <CancelConfirmationModal
-        variant="info"
-        display={showConfirmation}
-        setDisplay={setShowConfirmation}
-        handleOk={() => {
-          resetForm({ values: initialValues });
-          // need a timeout here to give the form time to reset before navigating away
-          // or else the router guard prompt will also be shown
-          setTimeout(() => history.push('/contact/list'), 100);
-        }}
-      />
-
       <Styled.CreateFormLayout>
         <Styled.Form id="createForm">
           <FlexBox column>

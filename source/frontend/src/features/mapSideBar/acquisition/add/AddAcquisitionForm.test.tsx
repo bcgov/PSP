@@ -1,25 +1,35 @@
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
+import { vi } from 'vitest';
 
+import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockProjects } from '@/mocks/projects.mock';
+import { getMockPagedUsers, getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { cleanup, fakeText, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  cleanup,
+  fakeText,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+  within,
+} from '@/utils/test-utils';
 
 import { AddAcquisitionFileYupSchema } from './AddAcquisitionFileYupSchema';
 import { AddAcquisitionForm, IAddAcquisitionFormProps } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
-import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
-import { getUserMock, getMockPagedUsers } from '@/mocks/user.mock';
-import { vi } from 'vitest';
 
 const history = createMemoryHistory();
 
 const validationSchema = vi.fn().mockReturnValue(AddAcquisitionFileYupSchema);
 const onSubmit = vi.fn();
 
-type TestProps = Pick<IAddAcquisitionFormProps, 'initialValues' | 'confirmBeforeAdd'>;
+type TestProps = Pick<IAddAcquisitionFormProps, 'initialValues' | 'confirmBeforeAdd' | 'parentId'>;
 
 vi.mock('@/hooks/pims-api/useApiUsers');
 vi.mocked(useApiUsers).mockReturnValue({
@@ -40,6 +50,7 @@ describe('AddAcquisitionForm component', () => {
         ref={formikRef}
         initialValues={props.initialValues ?? new AcquisitionForm()}
         confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
+        parentId={props.parentId ?? undefined}
         validationSchema={validationSchema}
         onSubmit={onSubmit}
       />,
@@ -140,5 +151,47 @@ describe('AddAcquisitionForm component', () => {
   it('should display owner representative input', async () => {
     const { getByText } = setup({ initialValues, confirmBeforeAdd: vi.fn() });
     expect(getByText(/Owner representative/i)).toBeVisible();
+  });
+
+  describe('Sub-interest files', () => {
+    let parentId: number;
+    beforeEach(() => {
+      parentId = 99;
+      initialValues.parentAcquisitionFileId = parentId;
+      initialValues.formattedProject = '1111 - Test Project';
+      initialValues.formattedProduct = '9999 Test Product';
+    });
+
+    it('renders as expected', () => {
+      const { asFragment } = setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+      expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('should display interest solicitor input', async () => {
+      const { getByText } = setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+      expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
+    });
+
+    it('should display interest representative input', async () => {
+      const { getByText } = setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+      expect(getByText(/Sub-interest representative/i)).toBeVisible();
+    });
+
+    it('should display project and product as read-only (with tooltip explaining why)', async () => {
+      setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+
+      expect(screen.getByText('1111 - Test Project')).toBeVisible();
+      expect(screen.getByText('9999 Test Product')).toBeVisible();
+
+      const project = screen.getByText('Ministry project:');
+      const tooltipIcon = within(project).getByTestId('tooltip-icon-section-field-tooltip');
+      await act(async () => userEvent.hover(tooltipIcon));
+
+      expect(
+        screen.getByText(
+          /Sub-file has the same project as the main file and it can only be updated from the main file/i,
+        ),
+      ).toBeInTheDocument();
+    });
   });
 });

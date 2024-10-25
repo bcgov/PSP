@@ -494,7 +494,6 @@ exports[`UpdateContactContainer > renders as expected 1`] = `
     <div
       class="c5"
     >
-      <div />
       <div
         class="c6"
       >

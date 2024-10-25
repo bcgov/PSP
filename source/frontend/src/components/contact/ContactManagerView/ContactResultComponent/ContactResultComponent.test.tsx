@@ -51,9 +51,9 @@ const defaultPersonSearchResult: IContactSearchResult = {
   provinceState: 'province',
   isDisabled: false,
   personId: 1,
-  person:  null,
-  middleNames:  null,
-  organizationName:  null,
+  person: null,
+  middleNames: null,
+  organizationName: null,
 };
 
 const mockResults: IContactSearchResult[] = [

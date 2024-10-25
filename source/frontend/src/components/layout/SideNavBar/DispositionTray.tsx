@@ -1,11 +1,9 @@
-import { MdAirlineStops } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
-import * as Styled from './styles';
 import { HalfHeightDiv } from './styles';
 
 /**
@@ -17,12 +15,6 @@ export const DispositionTray = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>
-          <span className="mr-2">
-            <MdAirlineStops title="Disposition file Icon" fill="currentColor" />
-          </span>
-          Disposition Files
-        </Styled.TrayHeader>
         {hasClaim(Claims.DISPOSITION_VIEW) && (
           <Link onClick={onLinkClick} to="/disposition/list" className="nav-item pl-9 pb-3">
             Manage Disposition Files

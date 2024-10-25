@@ -1,14 +1,12 @@
+import { Col } from 'react-bootstrap';
 import { FaDownload, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
-export const TrayHeader = styled.h1`
-  color: ${props => props.theme.bcTokens.typographyColorSecondary};
-  font-family: 'BCSans-Bold';
-  font-size: 3.2rem;
-  border-bottom: solid 0.5rem ${props => props.theme.css.headerBorderColor};
-  width: 100%;
-  text-align: left;
-  margin-bottom: 2.4rem;
+import { H1 } from '@/components/common/styles';
+
+export const TrayHeader = styled(H1)`
+  border-bottom: 0;
+  margin-bottom: 0.2rem;
 `;
 
 export const SideNavBar = styled.div`
@@ -121,4 +119,17 @@ export const ClickableDownload = styled(FaDownload)`
   }
   align-self: center;
   color: ${({ theme }) => theme.css.activeActionColor};
+`;
+
+export const Content = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.4rem;
+`;
+
+export const ButtonBar = styled(Col)`
+  gap: 1.5rem;
+  align-items: center;
 `;

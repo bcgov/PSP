@@ -1,14 +1,13 @@
 import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons/Button';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { FlexBox } from '@/components/common/styles';
 import {
-  CancelConfirmationModal,
   DuplicateContactModal,
   useAddressHelpers,
 } from '@/features/contacts/contact/create/components';
@@ -62,12 +61,15 @@ export const CreatePersonForm: React.FunctionComponent<React.PropsWithChildren<u
     }
   };
 
+  const checkState = useCallback(() => {
+    return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
+  }, [formikRef]);
+
   return (
     <>
-      <Formik
+      <Formik<IEditablePersonForm>
         component={CreatePersonComponent}
         initialValues={new IEditablePersonForm()}
-        enableReinitialize
         validate={(values: IEditablePersonForm) => onValidatePerson(values, otherCountryId)}
         onSubmit={onSubmit}
         innerRef={formikRef}
@@ -80,7 +82,8 @@ export const CreatePersonForm: React.FunctionComponent<React.PropsWithChildren<u
           setAllowDuplicate(false);
           setShowDuplicateModal(false);
         }}
-      ></DuplicateContactModal>
+      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </>
   );
 };
@@ -94,15 +97,11 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   values,
   errors,
   touched,
-  dirty,
-  resetForm,
   submitForm,
   setFieldValue,
-  initialValues,
 }) => {
   const history = useHistory();
   const { getOrganization } = useApiContacts();
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const personId = getIn(values, 'id');
   const organizationId = getIn(values, 'organization.id');
@@ -110,11 +109,7 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
   const previousUseOrganizationAddress = usePrevious(useOrganizationAddress);
 
   const onCancel = () => {
-    if (dirty) {
-      setShowConfirmation(true);
-    } else {
-      history.push('/contact/list');
-    }
+    history.push('/contact/list');
   };
 
   const isContactMethodInvalid = useMemo(() => {
@@ -177,21 +172,6 @@ const CreatePersonComponent: React.FC<FormikProps<IEditablePersonForm>> = ({
 
   return (
     <>
-      <UnsavedChangesPrompt />
-
-      {/* Confirmation popup when Cancel button is clicked */}
-      <CancelConfirmationModal
-        variant="info"
-        display={showConfirmation}
-        setDisplay={setShowConfirmation}
-        handleOk={() => {
-          resetForm({ values: initialValues });
-          // need a timeout here to give the form time to reset before navigating away
-          // or else the router guard prompt will also be shown
-          setTimeout(() => history.push('/contact/list'), 100);
-        }}
-      />
-
       <Styled.CreateFormLayout>
         <Styled.Form id="createForm">
           <FlexBox column>

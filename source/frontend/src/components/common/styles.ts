@@ -1,5 +1,6 @@
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb } from 'react-bootstrap';
+import { FaWindowClose } from 'react-icons/fa';
 import styled, { css } from 'styled-components';
 
 import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
@@ -174,6 +175,11 @@ export const VerticalLine = styled.div`
   margin: auto;
 `;
 
+export const Underline = styled.div`
+  width: 100%;
+  border-bottom: solid 0.5rem ${props => props.theme.bcTokens.themeBlue80};
+`;
+
 export const Backdrop = styled.div<LoadingBackdropProps>`
   width: 100%;
   height: 100%;
@@ -187,4 +193,10 @@ export const Backdrop = styled.div<LoadingBackdropProps>`
   align-content: center;
   justify-items: center;
   justify-content: center;
+`;
+
+export const CloseIcon = styled(FaWindowClose)`
+  color: ${props => props.theme.css.textColor};
+  font-size: 2.4rem;
+  cursor: pointer;
 `;

@@ -1,4 +1,4 @@
-import { FaBriefcase, FaFileExcel } from 'react-icons/fa';
+import { FaFileExcel } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
@@ -7,7 +7,6 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import ProjectExportForm from '../../../features/projects/reports/ProjectExportForm';
 import { ISideTrayPageProps } from './SideTray';
-import * as Styled from './styles';
 import { ExportH3, HalfHeightDiv } from './styles';
 
 export const ProjectTray = ({ onLinkClick }: ISideTrayPageProps) => {
@@ -15,12 +14,6 @@ export const ProjectTray = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>
-          <span className="mr-2">
-            <FaBriefcase title="Project Icon" fill="currentColor" />
-          </span>
-          Projects
-        </Styled.TrayHeader>
         {hasClaim(Claims.PROJECT_VIEW) && (
           <Link onClick={onLinkClick} to="/project/list" className="pl-9 pb-3 nav-item">
             Manage Projects

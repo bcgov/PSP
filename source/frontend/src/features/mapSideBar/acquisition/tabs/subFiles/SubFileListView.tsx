@@ -40,12 +40,14 @@ export const SubFileListView: React.FunctionComponent<ISubFileListViewProps> = (
       <Section
         header={
           <SimpleSectionHeader title="Linked Files">
-            {hasClaim(Claims.ACQUISITION_ADD) && exists(onAdd) && (
-              <StyledSectionAddButton onClick={onAdd}>
-                <FaPlus size="2rem" className="mr-2" />
-                Add Sub-interest File
-              </StyledSectionAddButton>
-            )}
+            {!exists(acquisitionFile.parentAcquisitionFileId) &&
+              hasClaim(Claims.ACQUISITION_ADD) &&
+              exists(onAdd) && (
+                <StyledSectionAddButton onClick={onAdd}>
+                  <FaPlus size="2rem" className="mr-2" />
+                  Add Sub-interest File
+                </StyledSectionAddButton>
+              )}
           </SimpleSectionHeader>
         }
       >

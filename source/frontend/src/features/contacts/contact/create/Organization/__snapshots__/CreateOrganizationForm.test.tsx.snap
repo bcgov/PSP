@@ -6,7 +6,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  <div />
   .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;

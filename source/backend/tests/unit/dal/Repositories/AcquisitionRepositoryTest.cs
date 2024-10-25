@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.EntityFrameworkCore;
 using Moq;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
@@ -206,6 +207,54 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
+        public void Add_SubFile_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+
+            var acqMainFile = EntityHelper.CreateAcquisitionFile(1);
+            acqMainFile.FileNo = 888999;
+
+            var acqSubFile = EntityHelper.CreateAcquisitionFile(
+                acqFileId: 2,
+                statusType: acqMainFile.AcquisitionFileStatusTypeCodeNavigation,
+                acquisitionType: acqMainFile.AcquisitionTypeCodeNavigation,
+                region: acqMainFile.RegionCodeNavigation);
+            acqSubFile.FileNo = 888999;
+            acqSubFile.FileNumber = "01-888999-02";
+            acqSubFile.PrntAcquisitionFileId = 1;
+            acqSubFile.PrntAcquisitionFile = acqMainFile;
+
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(acqMainFile, acqSubFile);
+
+            var mockSequenceRepo = new Mock<ISequenceRepository>();
+            mockSequenceRepo.Setup(x => x.GetNextSequenceValue(It.IsAny<string>())).Returns(888999);
+            helper.AddSingleton(mockSequenceRepo.Object);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var newSubFile = EntityHelper.CreateAcquisitionFile(
+                acqFileId: 99,
+                name: "Test sub-file",
+                statusType: acqMainFile.AcquisitionFileStatusTypeCodeNavigation,
+                acquisitionType: acqMainFile.AcquisitionTypeCodeNavigation,
+                region: acqMainFile.RegionCodeNavigation);
+            newSubFile.PrntAcquisitionFileId = 1;
+            var result = repository.Add(newSubFile);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsAcquisitionFile>();
+            result.FileName.Should().Be("Test sub-file");
+            result.AcquisitionFileId.Should().Be(99);
+            result.FileNo.Should().Be(888999);
+            result.FileNumber.Should().Be("01-888999-03");
+        }
+
+        [Fact]
         public void Add_ThrowIfNull()
         {
             var helper = new TestHelper();
@@ -315,6 +364,67 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().NotBeNull();
             result.FileName.Should().Be("updated");
+        }
+
+        [Fact]
+        public void Update_Project_Propagate_Changes_To_SubFiles_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileEdit);
+
+            var acqMainFile = EntityHelper.CreateAcquisitionFile(1);
+            acqMainFile.ProjectId = 1;
+
+            var subFileOne = EntityHelper.CreateAcquisitionFile(
+                acqFileId: 2,
+                name: "Sub-file 1",
+                statusType: acqMainFile.AcquisitionFileStatusTypeCodeNavigation,
+                acquisitionType: acqMainFile.AcquisitionTypeCodeNavigation,
+                region: acqMainFile.RegionCodeNavigation);
+            subFileOne.PrntAcquisitionFileId = 1;
+            subFileOne.PrntAcquisitionFile = acqMainFile;
+            subFileOne.ProjectId = 1;
+
+            var subFileTwo = EntityHelper.CreateAcquisitionFile(
+                acqFileId: 3,
+                name: "Sub-file 2",
+                statusType: acqMainFile.AcquisitionFileStatusTypeCodeNavigation,
+                acquisitionType: acqMainFile.AcquisitionTypeCodeNavigation,
+                region: acqMainFile.RegionCodeNavigation);
+            subFileTwo.PrntAcquisitionFileId = 1;
+            subFileTwo.PrntAcquisitionFile = acqMainFile;
+            subFileTwo.ProjectId = 1;
+
+            var project1 = EntityHelper.CreateProject(1, "0001", "One");
+            var project2 = EntityHelper.CreateProject(2, "0002", "Two");
+            project2.ProjectStatusTypeCodeNavigation = project1.ProjectStatusTypeCodeNavigation;
+
+            var context = helper.CreatePimsContext(user, true);
+            context.AddRange(project1, project2);
+            context.AddAndSaveChanges(acqMainFile, subFileOne, subFileTwo);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var acquisitionUpdated = EntityHelper.CreateAcquisitionFile(acqFileId: 1, name: "updated");
+            acquisitionUpdated.ProjectId = 2;
+            context.ChangeTracker.Clear();
+            var result = repository.Update(acquisitionUpdated);
+            context.SaveChanges();
+
+            // Assert
+            var subFiles = context.PimsAcquisitionFiles.AsNoTracking().Where(acq => acq.PrntAcquisitionFileId == 1);
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsAcquisitionFile>();
+            result.FileName.Should().Be("updated");
+
+            subFiles.Should().HaveCount(2);
+            subFiles.Should().AllSatisfy(acq =>
+                {
+                    acq.ProjectId.Should().Be(2);
+                });
+
         }
 
         [Fact]

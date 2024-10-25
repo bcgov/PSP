@@ -114,6 +114,44 @@ describe('LeaseHeader component', () => {
     expect(getByText('Receivable')).toBeVisible();
   });
 
+  it('renders whether the lease stakeholders label as "Tenant"', async () => {
+    const testLease = getMockApiLease();
+    const { getByText } = setup({
+      lease: {
+        ...testLease,
+        paymentReceivableType: {
+          id: ApiGen_CodeTypes_LeaseAccountTypes.RCVBL,
+          description: 'Receivable',
+          displayOrder: null,
+          isDisabled: false,
+        },
+      },
+      lastUpdatedBy: null,
+    });
+    await act(async () => {});
+
+    expect(getByText('Tenant:')).toBeInTheDocument();
+  });
+
+  it('renders whether the lease stakeholders label as "Payee"', async () => {
+    const testLease = getMockApiLease();
+    const { getByText } = setup({
+      lease: {
+        ...testLease,
+        paymentReceivableType: {
+          id: ApiGen_CodeTypes_LeaseAccountTypes.PYBLBCTFA,
+          description: 'Payable (BCTFA as tenant)',
+          displayOrder: null,
+          isDisabled: false,
+        },
+      },
+      lastUpdatedBy: null,
+    });
+    await act(async () => {});
+
+    expect(getByText('Payee:')).toBeInTheDocument();
+  });
+
   it('renders indicator for EXPIRED leases', async () => {
     const testLease = getMockApiLease();
     const { getByText } = setup({

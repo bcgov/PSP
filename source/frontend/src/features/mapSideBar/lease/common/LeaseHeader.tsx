@@ -16,6 +16,7 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { LeaseHeaderAddresses } from '@/features/leases/detail/LeaseHeaderAddresses';
 import { getCalculatedExpiry } from '@/features/leases/leaseUtils';
 import { Api_LastUpdatedBy } from '@/models/api/File';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
@@ -31,10 +32,12 @@ export interface ILeaseHeaderProps {
 
 export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy }) => {
   const propertyIds = lease?.fileProperties?.map(fp => fp.propertyId) ?? [];
-
   const calculatedExpiry = exists(lease) ? getCalculatedExpiry(lease, lease.renewals || []) : '';
-
   const isExpired = moment().isAfter(moment(calculatedExpiry, 'YYYY-MM-DD'), 'day');
+  const stakeholdersLabel =
+    lease?.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
+      ? 'Tenant:'
+      : 'Payee:';
 
   return (
     <Container>
@@ -51,7 +54,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
               delimiter={<br />}
             />
           </HeaderField>
-          <HeaderField label="Tenant:" labelWidth="4" contentWidth="8">
+          <HeaderField label={stakeholdersLabel} labelWidth="4" contentWidth="8">
             <LeaseHeaderStakeholders
               stakeholders={lease?.stakeholders ?? []}
               maxCollapsedLength={1}
