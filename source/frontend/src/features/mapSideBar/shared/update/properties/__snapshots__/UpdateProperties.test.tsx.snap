@@ -358,6 +358,11 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   margin: auto;
 }
 
+.c6 {
+  width: 100%;
+  border-bottom: solid 0.5rem #3470B1;
+}
+
 .c23 {
   font-weight: bold;
   color: var(--theme-blue-100);
@@ -565,11 +570,6 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   width: 100%;
   height: 100%;
   display: contents;
-}
-
-.c6 {
-  width: 100%;
-  border-bottom: solid 0.5rem #3470B1;
 }
 
 .c31 {
