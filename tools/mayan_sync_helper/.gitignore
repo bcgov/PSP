@@ -1,0 +1,6 @@
+# Virtual env
+virtual/
+
+#excel temporary
+~$*.xlsx
+

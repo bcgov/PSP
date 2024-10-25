@@ -1237,17 +1237,13 @@ exports[`Contact List View > matches snapshot 1`] = `
                     role="cell"
                     style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                     title=""
-                  >
-                    first
-                  </div>
+                  />
                   <div
                     class="td"
                     role="cell"
                     style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                     title=""
-                  >
-                    last
-                  </div>
+                  />
                   <div
                     class="td"
                     role="cell"

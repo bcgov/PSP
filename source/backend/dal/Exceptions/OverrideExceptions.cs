@@ -65,6 +65,11 @@ namespace Pims.Dal.Exceptions
             get { return new UserOverrideCode("DELETE_TAKE_ACTIVE_DISPOSITION"); }
         }
 
+        public static UserOverrideCode UpdateSubFilesProjectProduct
+        {
+            get { return new UserOverrideCode("UPDATE_SUBFILES_PROJECT_PRODUCT"); }
+        }
+
         public string Code { get; private set; }
 
         private static List<UserOverrideCode> UserOverrideCodes => new List<UserOverrideCode>()
@@ -81,6 +86,7 @@ namespace Pims.Dal.Exceptions
             UserOverrideCode.DeleteCompletedTake,
             UserOverrideCode.DeleteLastTake,
             UserOverrideCode.DeleteTakeActiveDisposition,
+            UserOverrideCode.UpdateSubFilesProjectProduct,
         };
 
         private UserOverrideCode(string code)

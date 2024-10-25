@@ -550,7 +550,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
           </label>
         </div>
       </div>
-      <div />
       <div
         class="c8 c9"
       >

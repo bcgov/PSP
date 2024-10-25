@@ -275,6 +275,23 @@ namespace Pims.Api.Areas.Acquisition.Controllers
             return new JsonResult(_mapper.Map<ExpropriationPaymentModel>(newExpPaymentEntity));
         }
 
+        /// <summary>
+        /// Get the acquisition file sub-files.
+        /// </summary>
+        /// <returns>All sub-files related to the acquisition.</returns>
+        [HttpGet("{id:long}/sub-files")]
+        [HasPermission(Permissions.AcquisitionFileView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<AcquisitionFileModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetAcquisitionFileSubFiles(long id)
+        {
+            var subFiles = _acquisitionService.GetAcquisitionSubFiles(id);
+
+            return new JsonResult(_mapper.Map<List<AcquisitionFileModel>>(subFiles));
+        }
+
         #endregion
     }
 }

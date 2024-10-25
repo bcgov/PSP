@@ -16,7 +16,6 @@ import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
-import { truncateSync } from 'fs';
 
 // mock auth library
 
@@ -125,6 +124,7 @@ const mockDocument: ComposedDocument = {
         appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
         appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
         rowVersion: 2,
+        documentTypePurpose: 'Test document purpouse',
       },
       statusTypeCode: {
         id: 'AMEND',
@@ -238,7 +238,7 @@ describe('DocumentDetailForm component', () => {
 
   it('disables document type select for templates', async () => {
     const { getDocumentTypeSelect } = await setup({
-      props: { relationshipType: ApiGen_CodeTypes_DocumentRelationType.Templates }
+      props: { relationshipType: ApiGen_CodeTypes_DocumentRelationType.Templates },
     });
 
     const select = getDocumentTypeSelect();
@@ -247,10 +247,12 @@ describe('DocumentDetailForm component', () => {
 
   it('displays a warning leyend when the document type has changed.', async () => {
     const { getByText } = await setup({
-      props: { documentTypeUpdated: true }
+      props: { documentTypeUpdated: true },
     });
 
-    const warningLeyend = getByText('Some associated metadata may be lost if the document type is changed.');
+    const warningLeyend = getByText(
+      'Some associated metadata may be lost if the document type is changed.',
+    );
     expect(warningLeyend).toBeInTheDocument();
   });
 });
