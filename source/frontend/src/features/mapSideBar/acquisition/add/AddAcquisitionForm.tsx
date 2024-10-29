@@ -22,6 +22,7 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import { ApiGen_CodeTypes_SubfileInterestTypes } from '@/models/api/generated/ApiGen_CodeTypes_SubfileInterestTypes';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -82,6 +83,8 @@ export const AddAcquisitionForm = React.forwardRef<
       innerRef={ref}
       initialValues={initialValues}
       validationSchema={validationSchema}
+      validateOnChange={false}
+      validateOnBlur={true}
       onSubmit={handleSubmit}
       enableReinitialize
     >
@@ -133,8 +136,22 @@ const AddAcquisitionDetailSubForm: React.FC<{
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
+  const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTERETST_TYPES);
 
   const isSubFile = exists(parentId) && isValidId(parentId);
+
+  const {
+    getOrganizationDetail: { execute: fetchOrganization, response: organization },
+  } = useOrganizationRepository();
+
+  const orgPersons = organization?.organizationPersons;
+  const primaryContacts: SelectOption[] =
+    orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
+      return {
+        label: `${formatApiPersonNames(orgPerson.person)}`,
+        value: orgPerson.personId ?? ' ',
+      };
+    }) ?? [];
 
   const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
     if (param.length > 0) {
@@ -149,18 +166,6 @@ const AddAcquisitionDetailSubForm: React.FC<{
     }
   };
 
-  const {
-    getOrganizationDetail: { execute: fetchOrganization, response: organization },
-  } = useOrganizationRepository();
-
-  React.useEffect(() => {
-    if (ownerSolicitorContact?.organizationId) {
-      fetchOrganization(ownerSolicitorContact?.organizationId);
-    }
-  }, [ownerSolicitorContact?.organizationId, fetchOrganization]);
-
-  const orgPersons = organization?.organizationPersons;
-
   React.useEffect(() => {
     if (orgPersons?.length === 0) {
       setFieldValue('ownerSolicitor.primaryContactId', null);
@@ -170,13 +175,11 @@ const AddAcquisitionDetailSubForm: React.FC<{
     }
   }, [orgPersons, setFieldValue]);
 
-  const primaryContacts: SelectOption[] =
-    orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
-      return {
-        label: `${formatApiPersonNames(orgPerson.person)}`,
-        value: orgPerson.personId ?? ' ',
-      };
-    }) ?? [];
+  React.useEffect(() => {
+    if (ownerSolicitorContact?.organizationId) {
+      fetchOrganization(ownerSolicitorContact?.organizationId);
+    }
+  }, [ownerSolicitorContact?.organizationId, fetchOrganization]);
 
   return (
     <>
@@ -292,6 +295,38 @@ const AddAcquisitionDetailSubForm: React.FC<{
               required
             />
           </SectionField>
+
+          {isSubFile && (
+            <SectionField label="Sub-file interest" required>
+              <Select
+                field="subfileInterestTypeCode"
+                options={subfileInterestTypes}
+                placeholder="Select..."
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  const selectedValue = [].slice
+                    .call(e.target.selectedOptions)
+                    .map((option: HTMLOptionElement & number) => option.value)[0];
+                  if (
+                    !!selectedValue &&
+                    selectedValue !== ApiGen_CodeTypes_SubfileInterestTypes.OTHER
+                  ) {
+                    formikProps.setFieldValue('otherSubfileInterestType', null);
+                  } else {
+                    formikProps.setFieldValue('otherSubfileInterestType', '');
+                  }
+                }}
+                required
+                data-testid="subfileInterestTypeCode"
+              />
+            </SectionField>
+          )}
+          {isSubFile &&
+            values?.subfileInterestTypeCode === ApiGen_CodeTypes_SubfileInterestTypes.OTHER && (
+              <SectionField label="" required>
+                <LargeInput field="otherSubfileInterestType" required />
+              </SectionField>
+            )}
+
           <SectionField label="Ministry region" required>
             <UserRegionSelectContainer field="region" placeholder="Select region..." required />
           </SectionField>

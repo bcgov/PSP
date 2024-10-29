@@ -199,6 +199,8 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     deliveryDate: null,
     acquisitionPhysFileStatusTypeCode: null,
     acquisitionTypeCode: null,
+    subfileInterestTypeCode: null,
+    otherSubfileInterestType: null,
     productId: null,
     totalAllowableCompensation: null,
     product: null,

@@ -9,10 +9,11 @@ import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
+import { act, cleanup, findAllByTestId, findByTestId, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
 import { vi } from 'vitest';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 // mock auth library
 
@@ -119,6 +120,43 @@ describe('AcquisitionSummaryView component', () => {
     expect(editButton).toBeNull();
     const editWarningText = getByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(editWarningText).toBeVisible();
+  });
+
+  it('renders sub file interest type', async () => {
+    const mockResponse: ApiGen_Concepts_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      parentAcquisitionFileId: 100,
+      subfileInterestTypeCode: {
+        id: 'SUBTENANT',
+        description: 'Sub-Tenant / Lease',
+        isDisabled: false,
+        displayOrder: 8,
+      },
+      otherSubfileInterestType: null,
+    };
+    const { getByTestId } = setup({ acquisitionFile: mockResponse }, { claims: [] });
+    await waitForEffects();
+
+    expect(getByTestId('subFile-interest-type')).toHaveTextContent('Sub-Tenant / Lease');
+  });
+
+  it('renders OTHER sub file interest type', async () => {
+    const mockResponse: ApiGen_Concepts_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      parentAcquisitionFileId: 100,
+      subfileInterestTypeCode: {
+        id: 'OTHER',
+        description: 'Other',
+        isDisabled: false,
+        displayOrder: 8,
+      },
+      otherSubfileInterestType: 'SOME OTHER VALUE',
+    };
+    const { getByTestId } = setup({ acquisitionFile: mockResponse }, { claims: [] });
+    await waitForEffects();
+
+    expect(getByTestId('subFile-interest-type')).toHaveTextContent('Other');
+    expect(getByTestId('other-subFile-interest-type')).toHaveTextContent('SOME OTHER VALUE');
   });
 
   it('renders historical file number', async () => {

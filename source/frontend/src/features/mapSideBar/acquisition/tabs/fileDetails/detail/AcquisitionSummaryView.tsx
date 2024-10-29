@@ -32,7 +32,6 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
   onEdit,
 }) => {
   const detail: DetailAcquisitionFile = DetailAcquisitionFile.fromApi(acquisitionFile);
-
   const { hasRole, hasClaim } = useKeycloakWrapper();
 
   const projectName = exists(acquisitionFile?.project)
@@ -113,6 +112,16 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           {detail.acquisitionPhysFileStatusTypeDescription}
         </SectionField>
         <SectionField label="Acquisition type">{detail.acquisitionTypeDescription}</SectionField>
+        {detail.isSubFile && (
+          <SectionField label="Sub-file interest" valueTestId="subFile-interest-type">
+            {detail.subfileInteresttypeDescription}
+          </SectionField>
+        )}
+        {detail.isSubFile && detail.otherSubfileInterestTypeDescription && (
+          <SectionField label="" valueTestId="other-subFile-interest-type">
+            {detail.otherSubfileInterestTypeDescription}
+          </SectionField>
+        )}
         <SectionField label="Ministry region">{detail.regionDescription}</SectionField>
       </Section>
       <Section header="Acquisition Team">

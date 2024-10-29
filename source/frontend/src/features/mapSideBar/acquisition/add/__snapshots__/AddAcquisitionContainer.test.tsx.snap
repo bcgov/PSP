@@ -1813,6 +1813,39 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     <label
                       class="c14"
                     >
+                      Sub-file interest:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 required text-left col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-subfileInterestTypeCode"
+                        name="subfileInterestTypeCode"
+                        required=""
+                      >
+                        <option
+                          value=""
+                        >
+                          Select...
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
                       Ministry region:
                     </label>
                   </div>

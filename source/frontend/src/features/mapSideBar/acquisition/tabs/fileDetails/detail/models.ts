@@ -1,19 +1,26 @@
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { formatApiPersonNames } from '@/utils/personUtils';
+import { exists, isValidId } from '@/utils/utils';
 
 export class DetailAcquisitionFile {
+  isSubFile: boolean;
   fileName?: string;
   legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
+  subfileInteresttypeDescription: string | null = null;
+  otherSubfileInterestTypeDescription: string | null = null;
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFileTeam[] = [];
 
   static fromApi(model?: ApiGen_Concepts_AcquisitionFile): DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
+
+    detail.isSubFile =
+      exists(model.parentAcquisitionFileId) && isValidId(model.parentAcquisitionFileId);
     detail.fileName = model?.fileName ?? undefined;
     detail.legacyFileNumber = model?.legacyFileNumber ?? undefined;
     detail.assignedDate = model?.assignedDate ?? undefined;
@@ -21,6 +28,11 @@ export class DetailAcquisitionFile {
     detail.acquisitionPhysFileStatusTypeDescription =
       model?.acquisitionPhysFileStatusTypeCode?.description ?? undefined;
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;
+
+    if (detail.isSubFile) {
+      detail.subfileInteresttypeDescription = model.subfileInterestTypeCode.description;
+      detail.otherSubfileInterestTypeDescription = model.otherSubfileInterestType;
+    }
     detail.regionDescription = model?.regionCode?.description ?? undefined;
     detail.acquisitionTeam =
       model?.acquisitionTeam?.map(x => DetailAcquisitionFileTeam.fromApi(x)) || [];

@@ -19,7 +19,7 @@ import { InterestHolderForm } from '../tabs/stakeholders/update/models';
 
 export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwners {
   id?: number;
-  parentAcquisitionFileId?: number;
+  parentAcquisitionFileId: number | null = null;
   fileName?: string = '';
   legacyFileNumber?: string = '';
   assignedDate?: string = '';
@@ -35,6 +35,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   team: AcquisitionTeamFormModel[] = [];
   owners: AcquisitionOwnerFormModel[] = [];
   fileCheckList: ChecklistItemFormModel[] = [];
+
+  subfileInterestTypeCode: string | null = null;
+  otherSubfileInterestType: string | null = null;
 
   project?: IAutocompletePrediction;
   product = '';
@@ -69,6 +72,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       productId: this.product !== '' ? Number(this.product) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
+      subfileInterestTypeCode: toTypeCodeNullable(this.subfileInterestTypeCode),
+      otherSubfileInterestType: this.otherSubfileInterestType,
       // ACQ file properties
       fileProperties: this.properties.map(x => this.toPropertyApi(x)),
       acquisitionFileOwners: this.owners
@@ -172,6 +177,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.project = exists(model.project)
       ? { id: model.project.id || 0, text: model.project.description || '' }
       : undefined;
+    newForm.subfileInterestTypeCode = fromTypeCode(model.subfileInterestTypeCode);
+    newForm.otherSubfileInterestType = model.otherSubfileInterestType;
 
     const interestHolders = model.acquisitionFileInterestHolders?.map(x =>
       InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),
