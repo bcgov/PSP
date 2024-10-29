@@ -6,7 +6,6 @@ import * as API from '@/constants/API';
 import { DocumentStatusType } from '@/constants/documentStatusType';
 import { DocumentTypeName } from '@/constants/documentType';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { Dictionary } from '@/interfaces/Dictionary';
 import { IApiError } from '@/interfaces/IApiError';
@@ -23,9 +22,6 @@ import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshi
 import { IDocumentUploadFormProps } from './DocumentUploadForm';
 
 export interface IDocumentUploadContainerProps {
-  ref: React.RefObject<
-    React.FunctionComponent<React.PropsWithChildren<IDocumentUploadContainerProps>>
-  >;
   parentId: string;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   onUploadSuccess: (results: BatchUploadResponseModel[]) => void;
@@ -46,26 +42,10 @@ const DocumentUploadContainer = forwardRef<
 >((props, ref) => {
   const { View } = props;
 
-  const deleteModalProps = getCancelModalProps();
-
   const { getOptionsByType } = useLookupCodeHelpers();
-
-  const { setDisplayModal } = useModalContext({
-    ...deleteModalProps,
-    handleOk: () => {
-      handleCancelConfirm();
-    },
-  });
-
   const formikRef = useRef<FormikProps<BatchUploadFormModel>>(null);
-
-  const handleCancelConfirm = () => {
-    setDisplayModal(false);
-    formikRef.current?.resetForm();
-    props.onCancel();
-  };
-
   const isMounted = useIsMounted();
+
   const { retrieveDocumentTypeMetadata, getDocumentRelationshipTypes, getDocumentTypes } =
     useDocumentProvider();
 
