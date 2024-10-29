@@ -8,6 +8,7 @@ import { exists } from '@/utils';
 
 import { BatchUploadResponseModel } from '../ComposedDocument';
 import DocumentUploadContainer, { IDocumentUploadContainerRef } from './DocumentUploadContainer';
+import { DocumentUploadForm } from './DocumentUploadForm';
 
 export interface IDocumentUploadModalProps {
   parentId: string;
@@ -68,6 +69,7 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
             onCancel={props.onClose}
             setCanUpload={setCanUpload}
             maxDocumentCount={props.maxDocumentCount}
+            View={DocumentUploadForm}
           />
         )
       }

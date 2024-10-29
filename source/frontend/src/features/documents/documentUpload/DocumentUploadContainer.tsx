@@ -20,7 +20,7 @@ import { exists } from '@/utils';
 import { BatchUploadFormModel, BatchUploadResponseModel } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
-import DocumentUploadForm from './DocumentUploadForm';
+import { IDocumentUploadFormProps } from './DocumentUploadForm';
 
 export interface IDocumentUploadContainerProps {
   ref: React.RefObject<
@@ -32,6 +32,7 @@ export interface IDocumentUploadContainerProps {
   onCancel: () => void;
   setCanUpload: (canUpload: boolean) => void;
   maxDocumentCount: number;
+  View: React.FunctionComponent<IDocumentUploadFormProps>;
 }
 
 export interface IDocumentUploadContainerRef {
@@ -43,6 +44,8 @@ const DocumentUploadContainer = forwardRef<
   IDocumentUploadContainerRef,
   IDocumentUploadContainerProps
 >((props, ref) => {
+  const { View } = props;
+
   const deleteModalProps = getCancelModalProps();
 
   const { getOptionsByType } = useLookupCodeHelpers();
@@ -168,7 +171,7 @@ const DocumentUploadContainer = forwardRef<
   };
 
   return (
-    <DocumentUploadForm
+    <View
       formikRef={formikRef}
       isLoading={isUploading}
       initialDocumentType={''}
