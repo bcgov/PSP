@@ -35,6 +35,7 @@ export interface IDocumentUploadContainerProps {
 }
 
 export interface IDocumentUploadContainerRef {
+  isDirty: () => boolean;
   uploadDocument: () => void;
 }
 
@@ -150,6 +151,9 @@ const DocumentUploadContainer = forwardRef<
   };
 
   useImperativeHandle(ref, () => ({
+    isDirty() {
+      return formikRef.current?.dirty ?? false;
+    },
     uploadDocument() {
       formikRef.current?.submitForm();
     },

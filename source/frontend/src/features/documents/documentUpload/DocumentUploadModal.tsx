@@ -23,6 +23,7 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
   const [uploadResult, setUploadResult] = useState<BatchUploadResponseModel[]>(null);
 
   const [canUpload, setCanUpload] = useState(false);
+  const [displayConfirmation, setDisplayConfirmation] = useState(false);
 
   const uploadContainerRef = createRef<IDocumentUploadContainerRef>();
 
@@ -30,14 +31,22 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
     uploadContainerRef.current?.uploadDocument();
   };
   const onSuccess = (results: BatchUploadResponseModel[]) => {
+    setDisplayConfirmation(false);
     setCanUpload(false);
     setUploadResult(results);
   };
 
   const onClose = () => {
-    setCanUpload(false);
-    setUploadResult(null);
-    props.onClose();
+    // Warn user if they are about to lose data when cancelling "Add Document"
+    const dirty = uploadContainerRef.current?.isDirty() ?? false;
+    if (dirty && !displayConfirmation) {
+      setDisplayConfirmation(true);
+    } else {
+      setDisplayConfirmation(false);
+      setCanUpload(false);
+      setUploadResult(null);
+      props.onClose();
+    }
   };
 
   return (
@@ -61,6 +70,14 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
             maxDocumentCount={props.maxDocumentCount}
           />
         )
+      }
+      errorMessage={
+        displayConfirmation ? (
+          <StyledUnsavedChanges>
+            Unsaved updates will be lost. Click &quot;<strong>No</strong>&quot; again to proceed
+            without saving, or &quot;<strong>Yes</strong>&quot; to save the changes.
+          </StyledUnsavedChanges>
+        ) : undefined
       }
       modalSize={ModalSize.LARGE}
       okButtonText={exists(uploadResult) ? 'Close' : 'Yes'}
@@ -132,4 +149,10 @@ const StyledSuccessDiv = styled.div`
 const StyledFailDiv = styled.div`
   color: ${props => props.theme.bcTokens.iconsColorDanger};
   padding-left: 2.6rem;
+`;
+
+const StyledUnsavedChanges = styled.p`
+  color: ${props => props.theme.bcTokens.iconsColorDanger};
+  margin: 0;
+  padding-right: 5rem;
 `;
