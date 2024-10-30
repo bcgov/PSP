@@ -331,6 +331,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             sharedModals.IsToastyPresent();
+            Assert.Contains("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ToastifyText());
         }
 
         public void CancelAcquisitionFile()
@@ -343,7 +344,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetAcquisitionFileCode()
         {
-            Wait();
+            Wait(4000);
 
             var totalFileName = webDriver.FindElement(acquisitionFileHeaderCodeContent).Text;
             return Regex.Match(totalFileName, "^[^ ]+").Value;

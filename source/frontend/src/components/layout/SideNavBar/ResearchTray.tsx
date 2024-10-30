@@ -5,7 +5,6 @@ import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
-import * as Styled from './styles';
 
 /**
  * Research Tray page.
@@ -16,14 +15,17 @@ export const ResearchTray = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Research Files</Styled.TrayHeader>
         {hasClaim(Claims.RESEARCH_VIEW) && (
-          <Link onClick={onLinkClick} to="/research/list">
+          <Link onClick={onLinkClick} to="/research/list" className="nav-item pl-9 pb-3">
             Manage Research Files
           </Link>
         )}
         {hasClaim(Claims.RESEARCH_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/sidebar/research/new">
+          <Link
+            onClick={onLinkClick}
+            to="/mapview/sidebar/research/new"
+            className="nav-item pl-9 pb-3"
+          >
             Create a Research File
           </Link>
         )}

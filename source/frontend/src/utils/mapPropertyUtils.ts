@@ -23,7 +23,7 @@ import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_Cod
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { enumFromValue, exists, formatApiAddress, isValidId, pidFormatter } from '@/utils';
+import { enumFromValue, exists, formatApiAddress, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -214,25 +214,13 @@ export function featuresetToMapProperty(
   if (featureSet === undefined) {
     return undefined;
   }
-  return {
+  const commonFeature = {
     propertyId: propertyId ? Number.parseInt(propertyId?.toString()) : undefined,
     pid: pid ?? undefined,
     pin: pin ?? undefined,
     latitude: featureSet?.location?.lat,
     longitude: featureSet?.location?.lng,
     fileLocation: featureSet?.fileLocation ?? featureSet?.location ?? undefined,
-    polygon:
-      parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
-        ? (parcelFeature.geometry as Polygon)
-        : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
-        ? (parcelFeature.geometry as MultiPolygon)
-        : undefined,
-    planNumber:
-      pimsFeature?.properties?.SURVEY_PLAN_NUMBER ??
-      parcelFeature?.properties?.PLAN_NUMBER ??
-      undefined,
-    address: address ?? formattedAddress ?? undefined,
-    legalDescription: parcelFeature?.properties?.LEGAL_DESCRIPTION ?? undefined,
     region: isNumber(regionFeature?.properties?.REGION_NUMBER)
       ? regionFeature?.properties?.REGION_NUMBER
       : RegionCodes.Unknown,
@@ -241,27 +229,64 @@ export function featuresetToMapProperty(
       ? districtFeature?.properties?.DISTRICT_NUMBER
       : DistrictCodes.Unknown,
     districtName: districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
-    areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
-      ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
-      : AreaUnitTypes.SquareMeters,
-    landArea: pimsFeature?.properties?.LAND_AREA
-      ? +pimsFeature?.properties?.LAND_AREA
-      : parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
   };
+  if (exists(pimsFeature?.properties)) {
+    return {
+      ...commonFeature,
+      polygon:
+        pimsFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (pimsFeature.geometry as Polygon)
+          : pimsFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (pimsFeature.geometry as MultiPolygon)
+          : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (parcelFeature.geometry as Polygon)
+          : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (parcelFeature.geometry as MultiPolygon)
+          : undefined,
+      planNumber: pimsFeature?.properties?.SURVEY_PLAN_NUMBER ?? undefined,
+      address: address ?? formattedAddress ?? undefined,
+      legalDescription: pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ?? undefined,
+      areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
+        ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
+        : AreaUnitTypes.SquareMeters,
+      landArea: pimsFeature?.properties?.LAND_AREA ? +pimsFeature?.properties?.LAND_AREA : 0,
+    };
+  } else {
+    return {
+      ...commonFeature,
+      polygon:
+        parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (parcelFeature.geometry as Polygon)
+          : parcelFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (parcelFeature.geometry as MultiPolygon)
+          : undefined,
+      planNumber: parcelFeature?.properties?.PLAN_NUMBER ?? undefined,
+      address: address ?? formattedAddress ?? undefined,
+      legalDescription: parcelFeature?.properties?.LEGAL_DESCRIPTION ?? undefined,
+      areaUnit: AreaUnitTypes.SquareMeters,
+      landArea: parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
+    };
+  }
 }
 
 export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  return (
-    featureset?.pimsFeature?.properties?.PID?.toString() ??
-    featureset?.parcelFeature?.properties?.PID ??
-    null
-  );
+  if (exists(featureset?.pimsFeature?.properties)) {
+    return exists(featureset?.pimsFeature?.properties?.PID)
+      ? featureset?.pimsFeature?.properties?.PID?.toString()
+      : null;
+  }
+  return exists(featureset?.parcelFeature?.properties)
+    ? featureset?.parcelFeature?.properties?.PID
+    : null;
 }
 
 export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
-  return isValidId(featureset?.pimsFeature?.properties?.PIN)
-    ? featureset?.pimsFeature?.properties?.PIN?.toString()
-    : isValidId(featureset?.parcelFeature?.properties?.PIN)
+  if (exists(featureset?.pimsFeature?.properties)) {
+    return exists(featureset?.pimsFeature?.properties?.PIN)
+      ? featureset?.pimsFeature?.properties?.PIN?.toString()
+      : null;
+  }
+  return exists(featureset?.parcelFeature?.properties?.PIN)
     ? featureset?.parcelFeature?.properties?.PIN?.toString()
     : null;
 }

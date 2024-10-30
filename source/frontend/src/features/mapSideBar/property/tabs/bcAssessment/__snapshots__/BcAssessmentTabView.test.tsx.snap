@@ -10,6 +10,7 @@ exports[`BcAssessmentTabView component > renders as expected when provided valid
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
+  background-color: #f2f2f2;
 }
 
 <div

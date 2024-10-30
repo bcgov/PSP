@@ -6,140 +6,140 @@ namespace PIMS.Tests.Automation.PageObjects
     public class ResearchFiles : PageObjectBase
     {
         //Research File Menu options
-        private By menuResearchButton = By.CssSelector("div[data-testid='nav-tooltip-research'] a");
-        private By createResearchFileButton = By.XPath("//a[contains(text(),'Create a Research File')]");
+        private readonly By menuResearchButton = By.CssSelector("div[data-testid='nav-tooltip-research'] a");
+        private readonly By createResearchFileButton = By.XPath("//a[contains(text(),'Create a Research File')]");
 
         //File Details Tab Element
-        private By fileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
+        private readonly By fileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
 
         //Research File Edit Form Button
-        private By researchFileEditButton = By.CssSelector("button[title='Edit research file']");
+        private readonly By researchFileEditButton = By.CssSelector("button[title='Edit research file']");
 
         //Research Create Init Elements
-        private By researchFileCreateHeader = By.XPath("//h1[contains(text(),'Create Research File')]");
-        private By researchFileNameLabel = By.XPath("//strong[contains(text(),'Name this research file')]");
-        private By researchFileHelpNameTooltip = By.XPath("//div[contains(text(),'Help with choosing a name')]");
+        private readonly By researchFileCreateHeader = By.XPath("//h1[contains(text(),'Create Research File')]");
+        private readonly By researchFileNameLabel = By.XPath("//strong[contains(text(),'Name this research file')]");
+        private readonly By researchFileHelpNameTooltip = By.XPath("//div[contains(text(),'Help with choosing a name')]");
 
         //Research File Tabs and File Summary Elements
-        private By researchFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
-        private By researchFileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
-        private By researchFileDocumentsTab = By.CssSelector("a[data-rb-event-key='documents']");
-        private By researchFileNotesTab = By.CssSelector("a[data-rb-event-key='notes']");
+        private readonly By researchFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
+        private readonly By researchFileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
+        private readonly By researchFileDocumentsTab = By.CssSelector("a[data-rb-event-key='documents']");
+        private readonly By researchFileNotesTab = By.CssSelector("a[data-rb-event-key='notes']");
 
         //Research File Main Form Elements
-        private By researchFileDetailsProjectAddBttn = By.CssSelector("button[data-testid='add-project']");
-        private By researchFileStatusSelect = By.Id("input-statusTypeCode");
-        private By researchFileNameInput = By.Id("input-name");
-        private By researchRoadNameInput = By.Id("input-roadName");
-        private By researchRoadAliasInput = By.Id("input-roadAlias");
-        private By researchPurposeMultiselect = By.Id("purpose-selector_input");
-        private By researchRequestPurposeOptions = By.CssSelector("ul[class='optionContainer']");
-        private By researchRequestDateInput = By.Id("datepicker-requestDate");
-        private By researchRequestSourceSelect = By.Id("input-requestSourceTypeCode");
+        private readonly By researchFileDetailsProjectAddBttn = By.CssSelector("button[data-testid='add-project']");
+        private readonly By researchFileStatusSelect = By.Id("input-statusTypeCode");
+        private readonly By researchFileNameInput = By.Id("input-name");
+        private readonly By researchRoadNameInput = By.Id("input-roadName");
+        private readonly By researchRoadAliasInput = By.Id("input-roadAlias");
+        private readonly By researchPurposeMultiselect = By.Id("purpose-selector_input");
+        private readonly By researchRequestPurposeOptions = By.CssSelector("ul[class='optionContainer']");
+        private readonly By researchRequestDateInput = By.Id("datepicker-requestDate");
+        private readonly By researchRequestSourceSelect = By.Id("input-requestSourceTypeCode");
        
-        private By researchDescriptionRequestTextarea = By.Id("input-requestDescription");
-        private By researchCompleteDateInput = By.Id("datepicker-researchCompletionDate");
-        private By researchResultTextarea = By.Id("input-researchResult");
-        private By researchResultExpropiationNoRadioBttn = By.Id("input-false");
-        private By researchResultExpropiationYesRadioBttn = By.Id("input-true");
-        private By researchExpropiationNotes = By.Id("input-expropriationNotes");
+        private readonly By researchDescriptionRequestTextarea = By.Id("input-requestDescription");
+        private readonly By researchCompleteDateInput = By.Id("datepicker-researchCompletionDate");
+        private readonly By researchResultTextarea = By.Id("input-researchResult");
+        private readonly By researchResultExpropiationNoRadioBttn = By.Id("input-false");
+        private readonly By researchResultExpropiationYesRadioBttn = By.Id("input-true");
+        private readonly By researchExpropiationNotes = By.Id("input-expropriationNotes");
 
-        private By researchFilePropertiesLeftSection = By.XPath("//span[contains(text(),'Properties')]");
-        private By researchEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
+        private readonly By researchFilePropertiesLeftSection = By.XPath("//span[contains(text(),'Properties')]");
+        private readonly By researchEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
         //Research File Confirmation Modal
-        private By researchFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By researchFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         //Research File View Form Elements
         //Header
-        private By researchFileViewTitle = By.XPath("//h1[contains(text(),'Research File')]");
-        private By researchFileHeaderNbrLabel = By.XPath("(//label[contains(text(),'File #')])[1]");
-        private By researchFileHeaderNbrContent = By.XPath("(//label[contains(text(),'File #')]/parent::div/following-sibling::div)[1]");
-        private By researchFileHeaderNameLabel = By.XPath("//label[contains(text(),'File name')]");
-        private By researchFileHeaderNameContent = By.XPath("//label[contains(text(),'File name')]/parent::div/following-sibling::div");
-        private By researchFileHeaderMOTIRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
-        private By researchFileHeaderMOTIRegionContent = By.XPath("//label[contains(text(),'MOTI region')]/parent::div/following-sibling::div");
-        private By researchFileHeaderDistrictLabel = By.XPath("//label[contains(text(),'Ministry district')]");
-        private By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::div/following-sibling::div");
-        private By researchFileHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
-        private By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file')]/parent::div/following-sibling::div/div/span");
-        private By researchFileHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
-        private By researchFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
-        private By researchFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By researchFileHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
-        private By researchFileHeaderLastUpdatedDateContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
-        private By researchFileHeaderLastUpdatedByContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
-        private By researchFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
+        private readonly By researchFileViewTitle = By.XPath("//h1[contains(text(),'Research File')]");
+        private readonly By researchFileHeaderNbrLabel = By.XPath("(//label[contains(text(),'File #')])[1]");
+        private readonly By researchFileHeaderNbrContent = By.XPath("(//label[contains(text(),'File #')]/parent::div/following-sibling::div)[1]");
+        private readonly By researchFileHeaderNameLabel = By.XPath("//label[contains(text(),'File name')]");
+        private readonly By researchFileHeaderNameContent = By.XPath("//label[contains(text(),'File name')]/parent::div/following-sibling::div");
+        private readonly By researchFileHeaderMOTIRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
+        private readonly By researchFileHeaderMOTIRegionContent = By.XPath("//label[contains(text(),'MOTI region')]/parent::div/following-sibling::div");
+        private readonly By researchFileHeaderDistrictLabel = By.XPath("//label[contains(text(),'Ministry district')]");
+        private readonly By researchFileHeaderDistrictContent = By.XPath("//label[contains(text(),'Ministry district')]/parent::div/following-sibling::div");
+        private readonly By researchFileHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
+        private readonly By researchFileHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file')]/parent::div/following-sibling::div/div/span");
+        private readonly By researchFileHeaderCreatedLabel = By.XPath("//strong[contains(text(),'Created')]");
+        private readonly By researchFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
+        private readonly By researchFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private readonly By researchFileHeaderLastUpdatedLabel = By.XPath("//strong[contains(text(),'Updated')]");
+        private readonly By researchFileHeaderLastUpdatedDateContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span");
+        private readonly By researchFileHeaderLastUpdatedByContent = By.XPath("//strong[contains(text(),'Updated')]/parent::span/span[@data-testid='tooltip-icon-userNameTooltip']");
+        private readonly By researchFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         //Research File Details Tab View Elements
-        private By researchFileDetailsProjectSubtitle = By.XPath("//h2/div/div[contains(text(),'Project')]");
-        private By reserachFileDetailsProjectLabel = By.XPath("//label[contains(text(),'Ministry project')]");
-        private By researchFileDetailsProjectsCount = By.XPath("//div[contains(text(),'Project')]/parent::div/parent::h2/following-sibling::div/div/div/div");
-        private By researchFileDetailsProjectsRemoveBttn = By.CssSelector("svg[data-testid='remove-button']");
+        private readonly By researchFileDetailsProjectSubtitle = By.XPath("//h2/div/div[contains(text(),'Project')]");
+        private readonly By reserachFileDetailsProjectLabel = By.XPath("//label[contains(text(),'Ministry project')]");
+        private readonly By researchFileDetailsProjectsCount = By.XPath("//div[contains(text(),'Project')]/parent::div/parent::h2/following-sibling::div/div/div/div");
+        private readonly By researchFileDetailsProjectsRemoveBttn = By.CssSelector("svg[data-testid='remove-button']");
 
-        private By researchFileDetailsRoadSubtitle = By.XPath("//div[contains(text(),'Roads')]");
-        private By researchFileDetailsRoadNameLabel = By.XPath("//label[contains(text(),'Road name')]");
-        private By researchFileDetailsRoadNameInput = By.XPath("//label[contains(text(),'Road name')]/parent::div/following-sibling::div");
-        private By researchFileDetailsRoadAliasLabel = By.XPath("//label[contains(text(),'Road alias')]");
-        private By researchFileDetailsRoadAliasInput = By.XPath("//label[contains(text(),'Road alias')]/parent::div/following-sibling::div");
+        private readonly By researchFileDetailsRoadSubtitle = By.XPath("//div[contains(text(),'Roads')]");
+        private readonly By researchFileDetailsRoadNameLabel = By.XPath("//label[contains(text(),'Road name')]");
+        private readonly By researchFileDetailsRoadNameInput = By.XPath("//label[contains(text(),'Road name')]/parent::div/following-sibling::div");
+        private readonly By researchFileDetailsRoadAliasLabel = By.XPath("//label[contains(text(),'Road alias')]");
+        private readonly By researchFileDetailsRoadAliasInput = By.XPath("//label[contains(text(),'Road alias')]/parent::div/following-sibling::div");
 
-        private By researchFileDetailsResearchRequestSubtitle = By.XPath("//div[contains(text(),'Research Request')]");
-        private By researchFileDetailsRequestPurposeLabel = By.XPath("//label[contains(text(),'Research purpose')]");
-        private By researchFileDetailsRequestPurposeInput = By.XPath("//label[contains(text(),'Research purpose')]/parent::div/following-sibling::div");
-        private By researchFileDetailsRequestPurposeRemoveBttn = By.CssSelector("i[class='custom-close']");
-        private By researchFileDetailsRequestDateLabel = By.XPath("//label[contains(text(),'Request date')]");
-        private By researchFileDetailsRequestDateInput = By.XPath("//label[contains(text(),'Request date')]/parent::div/following-sibling::div");
-        private By researchFileDetailsRequestSourceLabel = By.XPath("//label[contains(text(),'Source of request')]");
-        private By researchFileDetailsRequestSourceInput = By.XPath("//label[contains(text(),'Source of request')]/parent::div/following-sibling::div");
-        private By researchFileDetailsRquesterLabel = By.XPath("//label[contains(text(),'Requester')]");
-        private By researchFileDetailsRequesterInput = By.XPath("//label[contains(text(),'Requester')]/parent::div/following-sibling::div");
-        private By researchFileDetailsRequestDescripLabel = By.XPath("//label[contains(text(),'Description of request')]");
+        private readonly By researchFileDetailsResearchRequestSubtitle = By.XPath("//div[contains(text(),'Research Request')]");
+        private readonly By researchFileDetailsRequestPurposeLabel = By.XPath("//label[contains(text(),'Research purpose')]");
+        private readonly By researchFileDetailsRequestPurposeInput = By.XPath("//label[contains(text(),'Research purpose')]/parent::div/following-sibling::div");
+        private readonly By researchFileDetailsRequestPurposeRemoveBttn = By.CssSelector("i[class='custom-close']");
+        private readonly By researchFileDetailsRequestDateLabel = By.XPath("//label[contains(text(),'Request date')]");
+        private readonly By researchFileDetailsRequestDateInput = By.XPath("//label[contains(text(),'Request date')]/parent::div/following-sibling::div");
+        private readonly By researchFileDetailsRequestSourceLabel = By.XPath("//label[contains(text(),'Source of request')]");
+        private readonly By researchFileDetailsRequestSourceInput = By.XPath("//label[contains(text(),'Source of request')]/parent::div/following-sibling::div");
+        private readonly By researchFileDetailsRquesterLabel = By.XPath("//label[contains(text(),'Requester')]");
+        private readonly By researchFileDetailsRequesterInput = By.XPath("//label[contains(text(),'Requester')]/parent::div/following-sibling::div");
+        private readonly By researchFileDetailsRequestDescripLabel = By.XPath("//label[contains(text(),'Description of request')]");
 
-        private By researchFileDetailsResultSubtitle = By.XPath("//div[@class='no-gutters row']/div[contains(text(),'Result')]");
-        private By researchFileDetailsResultCompleteLabel = By.XPath("//label[contains(text(),'Research completed on')]");
-        private By researchFileDetailsResultCompleteInput = By.XPath("//label[contains(text(),'Research completed on')]/parent::div/following-sibling::div");
-        private By researchFileDetailsResultRequestLabel = By.XPath("//label[contains(text(),'Result of request')]");
-        private By researchFileDetailsExpropriationSubtitle = By.XPath("//div[@class='no-gutters row']/div[contains(text(),'Expropriation')]");
-        private By researchFileDetailsExpropriationLabel = By.XPath("//label[contains(text(),'Expropriation?')]");
-        private By researchFileDetailsExpropriationInput = By.XPath("//label[contains(text(),'Expropriation?')]/parent::div/following-sibling::div");
-        private By researchFileDetailsExpropriationNotesLabel = By.XPath("//label[contains(text(),'Expropriation notes')]");
+        private readonly By researchFileDetailsResultSubtitle = By.XPath("//div[@class='no-gutters row']/div[contains(text(),'Result')]");
+        private readonly By researchFileDetailsResultCompleteLabel = By.XPath("//label[contains(text(),'Research completed on')]");
+        private readonly By researchFileDetailsResultCompleteInput = By.XPath("//label[contains(text(),'Research completed on')]/parent::div/following-sibling::div");
+        private readonly By researchFileDetailsResultRequestLabel = By.XPath("//label[contains(text(),'Result of request')]");
+        private readonly By researchFileDetailsExpropriationSubtitle = By.XPath("//div[@class='no-gutters row']/div[contains(text(),'Expropriation')]");
+        private readonly By researchFileDetailsExpropriationLabel = By.XPath("//label[contains(text(),'Expropriation?')]");
+        private readonly By researchFileDetailsExpropriationInput = By.XPath("//label[contains(text(),'Expropriation?')]/parent::div/following-sibling::div");
+        private readonly By researchFileDetailsExpropriationNotesLabel = By.XPath("//label[contains(text(),'Expropriation notes')]");
 
-        private By selectContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
+        private readonly By selectContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
 
         //Research File - Properties Elements
-        private By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
-        private By researchPropertyResearchEditBttn = By.XPath("(//button[@class='btn btn-link'])[2]");
-        private By researchPropertyNameInput = By.Id("input-propertyName");
-        private By researchPropertyPurposeSelect = By.Id("purpose-selector_input");
-        private By researchPropertyPurposeInput = By.XPath("//input[@id='purpose-selector_input']/parent::div");
-        private By researchPropertyPurposeDiv = By.XPath("//input[@id='purpose-selector_input']/parent::div");
-        private By researchPropertyPurposeOptions = By.CssSelector("ul[class='optionContainer']");
-        private By researchPropertyLegalOpinionReqSelect = By.Id("input-isLegalOpinionRequired");
-        private By researchPropertyLegalOpinionObtSelect = By.Id("input-isLegalOpinionObtained");
-        private By researchPropertyDocReferenceInput = By.Id("input-documentReference");
-        private By researchPropertyNotesTextArea = By.Id("input-researchSummary");
+        private readonly By researchProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
+        private readonly By researchPropertyResearchEditBttn = By.XPath("(//button[@class='btn btn-link'])[2]");
+        private readonly By researchPropertyNameInput = By.Id("input-propertyName");
+        private readonly By researchPropertyPurposeSelect = By.Id("purpose-selector_input");
+        private readonly By researchPropertyPurposeInput = By.XPath("//input[@id='purpose-selector_input']/parent::div");
+        private readonly By researchPropertyPurposeDiv = By.XPath("//input[@id='purpose-selector_input']/parent::div");
+        private readonly By researchPropertyPurposeOptions = By.CssSelector("ul[class='optionContainer']");
+        private readonly By researchPropertyLegalOpinionReqSelect = By.Id("input-isLegalOpinionRequired");
+        private readonly By researchPropertyLegalOpinionObtSelect = By.Id("input-isLegalOpinionObtained");
+        private readonly By researchPropertyDocReferenceInput = By.Id("input-documentReference");
+        private readonly By researchPropertyNotesTextArea = By.Id("input-researchSummary");
 
         // Research File - Property UI/UX Elements
-        private By researchFilePropertyCountProps = By.XPath("//div[@data-testid='menu-item-row-0']/parent::div");
+        private readonly By researchFilePropertyCountProps = By.XPath("//div[@data-testid='menu-item-row-0']/parent::div");
 
         // Research File - Property Research Elements
-        private By researchPropertyInterestLabel = By.XPath("//div[contains(text(),'Property of Interest')]");
-        private By researchPropertyNameLabel = By.XPath("//label[contains(text(),'Descriptive name')]");
-        private By researchPropertyNameViewInput = By.XPath("//label[contains(text(),'Descriptive name')]/parent::div/following-sibling::div");
-        private By researchPropertyPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
-        private By researchPropertyPurposeViewInput = By.XPath("//label[contains(text(),'Purpose')]/parent::div/following-sibling::div");
-        private By researchProperty1stPurposeDeleteLink = By.CssSelector("div[id='purpose-selector'] div span:nth-child(1) i");
-        private By researchPropertyPurposeDeleteLinks = By.CssSelector("div[id='purpose-selector'] div span i");
-        private By researchPropertyLegalReqLabel = By.XPath("//label[contains(text(),'Legal opinion req')]");
-        private By researchPropertyLegalReqViewInput = By.XPath("//label[contains(text(),'Legal opinion req')]/parent::div/following-sibling::div");
-        private By researchPropertyLegalObtLabel = By.XPath("//label[contains(text(),'Legal opinion obtained')]");
-        private By researchPropertyLegalObtViewInput = By.XPath("//label[contains(text(),'Legal opinion obtained')]/parent::div/following-sibling::div");
-        private By researchPropertyDocRefLabel = By.XPath("//label[contains(text(),'Document reference')]");
-        private By researchPropertyDocRefInput = By.XPath("//label[contains(text(),'Document reference')]/parent::div/following-sibling::div");
+        private readonly By researchPropertyInterestLabel = By.XPath("//div[contains(text(),'Property of Interest')]");
+        private readonly By researchPropertyNameLabel = By.XPath("//label[contains(text(),'Descriptive name')]");
+        private readonly By researchPropertyNameViewInput = By.XPath("//label[contains(text(),'Descriptive name')]/parent::div/following-sibling::div");
+        private readonly By researchPropertyPurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
+        private readonly By researchPropertyPurposeViewInput = By.XPath("//label[contains(text(),'Purpose')]/parent::div/following-sibling::div");
+        private readonly By researchProperty1stPurposeDeleteLink = By.CssSelector("div[id='purpose-selector'] div span:nth-child(1) i");
+        private readonly By researchPropertyPurposeDeleteLinks = By.CssSelector("div[id='purpose-selector'] div span i");
+        private readonly By researchPropertyLegalReqLabel = By.XPath("//label[contains(text(),'Legal opinion req')]");
+        private readonly By researchPropertyLegalReqViewInput = By.XPath("//label[contains(text(),'Legal opinion req')]/parent::div/following-sibling::div");
+        private readonly By researchPropertyLegalObtLabel = By.XPath("//label[contains(text(),'Legal opinion obtained')]");
+        private readonly By researchPropertyLegalObtViewInput = By.XPath("//label[contains(text(),'Legal opinion obtained')]/parent::div/following-sibling::div");
+        private readonly By researchPropertyDocRefLabel = By.XPath("//label[contains(text(),'Document reference')]");
+        private readonly By researchPropertyDocRefInput = By.XPath("//label[contains(text(),'Document reference')]/parent::div/following-sibling::div");
 
-        private By researchPropertySummaryLabel = By.XPath("//div[contains(text(),'Research Summary')]");
-        private By researchPropertyNotesLabel = By.XPath("//label[contains(text(),'Summary notes')]");
-        private By researchPropertyNotesViewInput = By.XPath("//label[contains(text(),'Summary notes')]/parent::div/following-sibling::div");
+        private readonly By researchPropertySummaryLabel = By.XPath("//div[contains(text(),'Research Summary')]");
+        private readonly By researchPropertyNotesLabel = By.XPath("//label[contains(text(),'Summary notes')]");
+        private readonly By researchPropertyNotesViewInput = By.XPath("//label[contains(text(),'Summary notes')]/parent::div/following-sibling::div");
 
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
@@ -310,6 +310,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     WaitUntilVisible(researchPropertyPurposeOptions);
                     ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, propertyResearch.PropertyResearchPurpose[i]);
                 }
+                webDriver.FindElement(researchPropertyPurposeLabel).Click();
             }
             if (propertyResearch.LegalOpinionRequest != "")
             {
@@ -487,6 +488,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     WaitUntilClickable(researchPropertyPurposeOptions);
                     ChooseMultiSelectSpecificOption(researchPropertyPurposeOptions, purpose);
                 }
+                webDriver.FindElement(researchPropertyPurposeLabel).Click();
             }
             if (propertyResearch.LegalOpinionRequest != "")
             {
@@ -528,9 +530,9 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(researchFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
-                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
-                sharedModals.ModalClickOKBttn();
+                Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
+                Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                sharedModals.SecondaryModalClickOKBttn();
             }
         }
 
@@ -543,14 +545,14 @@ namespace PIMS.Tests.Automation.PageObjects
         //Get the research file number
         public string GetResearchFileCode()
         {
-            Wait(2000);
+            Wait();
             return webDriver.FindElement(researchFileHeaderNbrContent).Text;
         }
 
         //Verify Create Research Init Form
         public void VerifyResearchFileCreateInitForm()
         {
-            Wait(2000);
+            Wait();
 
             //Title and Name
             AssertTrueIsDisplayed(researchFileCreateHeader);
@@ -681,7 +683,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify UI/UX Elements - Research Properties - Property Research - View Form
         public void VerifyPropResearchTabFormView(PropertyResearch propertyResearch)
         {
-            Wait(2000);
+            Wait();
 
             AssertTrueIsDisplayed(researchPropertyInterestLabel);
             AssertTrueIsDisplayed(researchPropertyNameLabel);

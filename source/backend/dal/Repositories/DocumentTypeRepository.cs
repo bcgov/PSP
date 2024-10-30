@@ -31,6 +31,18 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
+        /// Get the PimsDocumetType by Id.
+        /// </summary>
+        /// <param name="id">The Document Type Id.</param>
+        /// <returns></returns>
+        public PimsDocumentTyp GetById(long id)
+        {
+            return this.Context.PimsDocumentTyps.AsNoTracking()
+                .Where(x => x.DocumentTypeId == id)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
         /// Get a list of all the document types.
         /// </summary>
         /// <returns></returns>
@@ -85,6 +97,7 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsDocumentTyps.FirstOrDefault(dt => documentType.DocumentTypeId == dt.DocumentTypeId) ?? throw new KeyNotFoundException($"Failed to find documentType for mayan ID: {documentType.MayanId}");
 
             existingDocumentType.DocumentTypeDescription = documentType.DocumentTypeDescription;
+            existingDocumentType.DocumentTypeDefinition = documentType.DocumentTypeDefinition;
             existingDocumentType.MayanId = documentType.MayanId;
             existingDocumentType.DisplayOrder = documentType.DisplayOrder;
             existingDocumentType.IsDisabled = documentType.IsDisabled;

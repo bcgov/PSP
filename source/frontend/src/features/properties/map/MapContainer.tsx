@@ -27,10 +27,10 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
   const [showActionBar, setShowActionBar] = useState(false);
   const {
     isSelecting,
-    isFiltering,
+    isShowingMapFilter,
     isShowingMapLayers,
     isRepositioning,
-    toggleMapFilter,
+    toggleMapFilterDisplay,
     toggleMapLayerControl,
   } = useMapStateMachine();
 
@@ -53,8 +53,8 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
         </FilterProvider>
       )}
       <RightSideLayout
-        isOpen={isFiltering}
-        toggle={toggleMapFilter}
+        isOpen={isShowingMapFilter}
+        toggle={toggleMapFilterDisplay}
         title="Filter By:"
         closeTooltipText="Close Advanced Map Filters"
         data-testId="advanced-filter-sidebar"

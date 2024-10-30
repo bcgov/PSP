@@ -16,9 +16,9 @@ export const getMockOrganization = ({
   id: id,
   name: name,
   isDisabled: false,
-  alias: null,
+  alias: 'Fake Inc',
   comment: null,
-  incorporationNumber: null,
+  incorporationNumber: '987',
   contactMethods: [
     {
       id: 1,

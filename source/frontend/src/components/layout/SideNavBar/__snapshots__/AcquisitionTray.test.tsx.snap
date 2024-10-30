@@ -6,20 +6,8 @@ exports[`AcquisitionTray > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
-  font-size: 3rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 0.4rem solid;
-  margin-bottom: 3.2rem;
-  max-width: 28rem;
-}
-
-<h3
-    class="c0"
-  >
-    Acquisition Files
-  </h3>
   <a
+    class="pl-9 pb-3 nav-item"
     href="/acquisition/list"
   >
     Manage Acquisition Files

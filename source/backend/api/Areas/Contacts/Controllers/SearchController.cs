@@ -8,6 +8,7 @@ using Pims.Api.Areas.Contact.Models.Search;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Contact;
 using Pims.Api.Policies;
 using Pims.Api.Services.Interfaces;
 using Pims.Dal.Entities.Models;

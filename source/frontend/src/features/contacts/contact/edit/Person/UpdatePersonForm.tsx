@@ -1,20 +1,17 @@
 import { Formik, FormikHelpers, FormikProps, getIn } from 'formik';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { Col } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { Button } from '@/components/common/buttons/Button';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { Select } from '@/components/common/form';
-import { UnsavedChangesPrompt } from '@/components/common/form/UnsavedChangesPrompt';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { FlexBox } from '@/components/common/styles';
-import {
-  CancelConfirmationModal,
-  useAddressHelpers,
-} from '@/features/contacts/contact/create/components';
+import { useAddressHelpers } from '@/features/contacts/contact/create/components';
 import * as Styled from '@/features/contacts/contact/edit/styles';
 import {
   IEditableOrganizationAddressForm,
@@ -61,12 +58,14 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
     }
   };
 
+  const initialValues = formPerson ? formPerson : new IEditablePersonForm();
+
   return (
-    <Formik
+    <Formik<IEditablePersonForm>
       component={UpdatePersonComponent}
-      initialValues={formPerson ? formPerson : new IEditablePersonForm()}
-      enableReinitialize
+      initialValues={initialValues}
       validate={(values: IEditablePersonForm) => onValidatePerson(values, otherCountryId)}
+      enableReinitialize
       onSubmit={onSubmit}
     />
   );
@@ -77,10 +76,9 @@ export const UpdatePersonForm: React.FC<{ id: number }> = ({ id }) => {
  */
 const UpdatePersonComponent: React.FC<
   React.PropsWithChildren<FormikProps<IEditablePersonForm>>
-> = ({ values, errors, touched, dirty, resetForm, submitForm, setFieldValue, initialValues }) => {
+> = ({ values, errors, touched, dirty, submitForm, setFieldValue, isSubmitting }) => {
   const history = useHistory();
   const { getOrganization } = useApiContacts();
-  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const personId = getIn(values, 'id');
   const organizationId = getIn(values, 'organization.id');
@@ -88,11 +86,7 @@ const UpdatePersonComponent: React.FC<
   const previousUseOrganizationAddress = usePrevious(useOrganizationAddress);
 
   const onCancel = () => {
-    if (dirty) {
-      setShowConfirmation(true);
-    } else {
-      history.push(`/contact/P${personId}`);
-    }
+    history.push(`/contact/P${personId}`);
   };
 
   const isContactMethodInvalid = useMemo(() => {
@@ -147,23 +141,12 @@ const UpdatePersonComponent: React.FC<
     }
   }, [organizationId, setFieldValue]);
 
+  const checkState = useCallback(() => {
+    return dirty && !isSubmitting;
+  }, [dirty, isSubmitting]);
+
   return (
     <>
-      <UnsavedChangesPrompt />
-
-      {/* Confirmation popup when Cancel button is clicked */}
-      <CancelConfirmationModal
-        variant="info"
-        display={showConfirmation}
-        setDisplay={setShowConfirmation}
-        handleOk={() => {
-          resetForm({ values: initialValues });
-          // need a timeout here to give the form time to reset before navigating away
-          // or else the router guard prompt will also be shown
-          setTimeout(() => history.push(`/contact/P${personId}`), 100);
-        }}
-      />
-
       <Styled.ScrollingFormLayout>
         <Styled.Form id="updateForm">
           <FlexBox column>
@@ -209,6 +192,7 @@ const UpdatePersonComponent: React.FC<
         </Button>
         <Button onClick={submitForm}>Save</Button>
       </Styled.ButtonGroup>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </>
   );
 };

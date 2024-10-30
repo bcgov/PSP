@@ -6,7 +6,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c11.btn {
+  .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,53 +35,121 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c11.btn .Button__value {
+.c12.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c11.btn:hover {
+.c12.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c11.btn:focus {
+.c12.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c11.btn.btn-secondary {
-  background: none;
+.c12.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c11.btn.btn-info {
+.c12.btn.btn-primary:hover,
+.c12.btn.btn-primary:active,
+.c12.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c12.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c12.btn.btn-secondary:hover,
+.c12.btn.btn-secondary:active,
+.c12.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c12.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c11.btn.btn-info:hover,
-.c11.btn.btn-info:active,
-.c11.btn.btn-info:focus {
+.c12.btn.btn-info:hover,
+.c12.btn.btn-info:active,
+.c12.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c11.btn.btn-light {
+.c12.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c11.btn.btn-dark {
+.c12.btn.btn-light:hover,
+.c12.btn.btn-light:active,
+.c12.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c12.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c11.btn.btn-link {
+.c12.btn.btn-dark:hover,
+.c12.btn.btn-dark:active,
+.c12.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c12.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c12.btn.btn-danger:hover,
+.c12.btn.btn-danger:active,
+.c12.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c12.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c12.btn.btn-warning:hover,
+.c12.btn.btn-warning:active,
+.c12.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c12.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
-.c11.btn.btn-link:hover,
-.c11.btn.btn-link:active,
-.c11.btn.btn-link:focus {
+.c12.btn.btn-link:hover,
+.c12.btn.btn-link:active,
+.c12.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +182,15 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
   outline: none;
 }
 
-.c11.btn.btn-link:disabled,
-.c11.btn.btn-link.disabled {
+.c12.btn.btn-link:disabled,
+.c12.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c11.btn:disabled,
-.c11.btn:disabled:hover {
+.c12.btn:disabled,
+.c12.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,44 +201,45 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c11.Button .Button__icon {
+.c12.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c11.Button--icon-only:focus {
+.c12.Button--icon-only:focus {
   outline: none;
 }
 
-.c11.Button--icon-only .Button__icon {
+.c12.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5 .react-datepicker__calendar-icon {
+.c6 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
-.c5 .react-datepicker__view-calendar-icon input {
+.c6 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c5 .react-datepicker-wrapper {
+.c6 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c6.c6.form-control.is-valid {
+.c7.c7.form-control.is-valid {
   background-image: none;
 }
 
-.c6.c6.form-control.is-invalid {
+.c7.c7.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c10 {
+.c11 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -192,13 +265,14 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -206,24 +280,25 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
-}
-
-.c7 {
-  font-weight: bold;
-  border-bottom: 0.2rem solid;
-  margin-bottom: 2rem;
 }
 
 .c8 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2rem;
+}
+
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -241,11 +316,15 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
   justify-content: flex-start;
 }
 
-.c8 label {
+.c9 label {
   margin-left: 0.5rem;
 }
 
-.c9 {
+.c1 {
+  background-color: #f2f2f2;
+}
+
+.c10 {
   margin-right: 1rem;
   padding-bottom: 1rem;
   z-index: 0;
@@ -255,13 +334,13 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
     class="c0"
   >
     <div
-      class=""
+      class="c1"
     >
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -283,13 +362,13 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Agreement status:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="form-group"
@@ -331,13 +410,13 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Legal survey plan:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="input form-group"
@@ -358,13 +437,13 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Agreement type:
               </label>
             </div>
             <div
-              class="c4 required text-left col"
+              class="c5 required text-left col"
             >
               <div
                 class="form-group"
@@ -418,16 +497,16 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Agreement date:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
-                class="c5 form-group"
+                class="c6 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -446,7 +525,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c6 form-control date-picker"
+                      class="c7 form-control date-picker"
                       id="datepicker-agreementDate"
                       name="agreementDate"
                       placeholder="MMM DD, YYYY"
@@ -465,16 +544,16 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Completion date:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
-                class="c5 form-group"
+                class="c6 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -493,7 +572,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c6 form-control date-picker"
+                      class="c7 form-control date-picker"
                       id="datepicker-completionDate"
                       name="completionDate"
                       placeholder="MMM DD, YYYY"
@@ -512,16 +591,16 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Termination date:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
-                class="c5 form-group"
+                class="c6 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -540,7 +619,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c6 form-control date-picker"
+                      class="c7 form-control date-picker"
                       id="datepicker-terminationDate"
                       name="terminationDate"
                       placeholder="MMM DD, YYYY"
@@ -559,16 +638,16 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Possession date:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
-                class="c5 form-group"
+                class="c6 form-group"
               >
                 <div
                   class="react-datepicker-wrapper d-block"
@@ -587,7 +666,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                     </svg>
                     <input
                       autocomplete="off"
-                      class="c6 form-control date-picker"
+                      class="c7 form-control date-picker"
                       id="datepicker-possessionDate"
                       name="possessionDate"
                       placeholder="MMM DD, YYYY"
@@ -600,7 +679,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c7"
+            class="c8"
           >
             Financial
           </div>
@@ -611,13 +690,13 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Purchase price:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="form-group"
@@ -645,7 +724,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Deposit due no later than:
                 <span>
@@ -673,10 +752,10 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
-                class="c8"
+                class="c9"
               >
                 <div
                   class="input form-group"
@@ -689,7 +768,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                   />
                 </div>
                 <label
-                  class="c3"
+                  class="c4"
                 >
                   days.
                 </label>
@@ -703,13 +782,13 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
               class="pr-0 text-left col-5"
             >
               <label
-                class="c3"
+                class="c4"
               >
                 Deposit amount:
               </label>
             </div>
             <div
-              class="c4 text-left col"
+              class="c5 text-left col"
             >
               <div
                 class="form-group"
@@ -734,10 +813,10 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c9"
+      class="c10"
     >
       <div
-        class="c10 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+        class="c11 justify-content-end mb-12 mt-12 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"
@@ -746,7 +825,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
           class="pr-6 col-auto"
         >
           <button
-            class="c11 Button btn btn-secondary"
+            class="c12 Button btn btn-secondary"
             type="button"
           >
             <div
@@ -760,7 +839,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
           class="col-auto"
         >
           <button
-            class="c11 Button Button--disabled mr-9 btn btn-primary"
+            class="c12 Button Button--disabled mr-9 btn btn-primary"
             disabled=""
             type="button"
           >

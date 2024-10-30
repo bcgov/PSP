@@ -1,5 +1,4 @@
 import { EmailContactMethods, PhoneContactMethods } from '@/constants/contactMethodType';
-import { IContactPerson } from '@/interfaces/IContact';
 import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
 import { ApiGen_Concepts_ContactMethod } from '@/models/api/generated/ApiGen_Concepts_ContactMethod';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
@@ -185,7 +184,7 @@ export class IEditableOrganizationForm {
   incorporationNumber?: string;
   comment?: string;
   isDisabled: boolean;
-  persons: Partial<IContactPerson>[];
+  persons: Partial<ApiGen_Concepts_Person>[];
   emailContactMethods: IEditableContactMethodForm[];
   phoneContactMethods: IEditableContactMethodForm[];
   mailingAddress: IEditableOrganizationAddressForm;
@@ -234,7 +233,7 @@ export class IEditableOrganizationForm {
     const phoneContactMethods = formContactMethods.filter(isPhone);
 
     // Format person API values - need full names here
-    const formPersonList: Partial<IContactPerson>[] =
+    const formPersonList: Partial<ApiGen_Concepts_Person>[] =
       organizationPersons
         ?.map(op => op.person)
         .filter(exists)

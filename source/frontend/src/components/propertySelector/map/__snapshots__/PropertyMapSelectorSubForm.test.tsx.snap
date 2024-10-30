@@ -35,9 +35,11 @@ exports[`PropertySelectorSubForm component > renders as expected when provided n
 
 .c0.c0.c0 .form-label {
   font-weight: bold;
+  color: #474543;
 }
 
 .c2 {
+  color: var(--theme-blue-100);
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }

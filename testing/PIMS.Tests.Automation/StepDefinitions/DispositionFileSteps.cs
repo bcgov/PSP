@@ -373,11 +373,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
 
             //Close Property Information Modal
-            propertyInformation.ClosePropertyInfoModal();
+            propertyInformation.HideLeftSideForms();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Disposition File");
+
+            //Open Left Side Forms
+            propertyInformation.ShowLeftSideForms();
 
             //Validate Acquisition File Details Create Form
             dispositionFileDetails.VerifyDispositionFileInitCreate();
@@ -395,11 +398,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
 
             //Close Property Information Modal
-            propertyInformation.ClosePropertyInfoModal();
+            propertyInformation.HideLeftSideForms();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Disposition File");
+
+            //Open Left Side Forms
+            propertyInformation.ShowLeftSideForms();
 
             //Fill basic Acquisition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
@@ -414,11 +420,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SelectFoundPin();
 
             //Close Property Information Modal
-            propertyInformation.ClosePropertyInfoModal();
+            propertyInformation.HideLeftSideForms();
 
             //Open elipsis option
             propertyInformation.OpenMoreOptionsPopUp();
             propertyInformation.ChooseCreationOptionFromPin("Disposition File");
+
+            //Open Left Side Forms
+            propertyInformation.ShowLeftSideForms();
 
             //Fill basic Acquisition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);

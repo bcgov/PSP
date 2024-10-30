@@ -19,6 +19,7 @@ import { InterestHolderForm } from '../tabs/stakeholders/update/models';
 
 export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwners {
   id?: number;
+  parentAcquisitionFileId?: number;
   fileName?: string = '';
   legacyFileNumber?: string = '';
   assignedDate?: string = '';
@@ -37,6 +38,10 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
 
   project?: IAutocompletePrediction;
   product = '';
+  // read-only project and product descriptions (for sub-files)
+  formattedProject = '';
+  formattedProduct = '';
+
   fundingTypeCode?: string = '';
   fundingTypeOtherDescription = '';
   ownerSolicitor: InterestHolderForm = new InterestHolderForm(InterestHolderType.OWNER_SOLICITOR);
@@ -48,6 +53,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   toApi(): ApiGen_Concepts_AcquisitionFile {
     return {
       id: this.id ?? 0,
+      parentAcquisitionFileId: isValidId(this.parentAcquisitionFileId)
+        ? this.parentAcquisitionFileId
+        : null,
       fileName: this.fileName ?? null,
       assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
       deliveryDate: isValidIsoDateTime(this.deliveryDate) ? this.deliveryDate : null,
@@ -78,6 +86,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       compensationRequisitions: null,
       fileNo: 0,
       fileNumber: null,
+      fileNumberSuffix: null,
       legacyStakeholders: null,
       product: null,
       project: null,
@@ -93,9 +102,57 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     };
   }
 
+  // Creates a form model that follows the rules for creating sub-files from a parent (main) file
+  // Copy the following from Parent File:
+  // - Project and Product
+  // - Schedule
+  // - Acquisition details (except file name)
+  // - Acquisition team
+  // - Owner information is NOT copied over
+  static fromParentFileApi(parentFile: ApiGen_Concepts_AcquisitionFile): AcquisitionForm {
+    const newForm = new AcquisitionForm();
+    newForm.id = undefined;
+    newForm.parentAcquisitionFileId = parentFile.id;
+    newForm.rowVersion = undefined;
+    // project + product (read-only in sub-files)
+    newForm.formattedProject = exists(parentFile.project)
+      ? parentFile.project.code + ' - ' + parentFile.project.description
+      : '';
+    newForm.formattedProduct = exists(parentFile.product)
+      ? parentFile.product.code + ' ' + parentFile.product.description
+      : '';
+    newForm.project = exists(parentFile.project)
+      ? { id: parentFile.project?.id || 0, text: parentFile.project?.description || '' }
+      : undefined;
+    newForm.product = parentFile.product?.id?.toString() ?? '';
+
+    newForm.fundingTypeCode = fromTypeCode(parentFile.fundingTypeCode) ?? undefined;
+    newForm.fundingTypeOtherDescription = parentFile.fundingOther || '';
+    // schedule
+    newForm.assignedDate = parentFile.assignedDate ?? undefined;
+    newForm.deliveryDate = parentFile.deliveryDate ?? undefined;
+    // acquisition details
+    newForm.fileName = '';
+    newForm.legacyFileNumber = parentFile.legacyFileNumber ?? undefined;
+    newForm.acquisitionPhysFileStatusType =
+      fromTypeCode(parentFile.acquisitionPhysFileStatusTypeCode) ?? undefined;
+    newForm.acquisitionType = fromTypeCode(parentFile.acquisitionTypeCode) ?? undefined;
+    newForm.region = fromTypeCode(parentFile.regionCode)?.toString() ?? undefined;
+    // acquisition team
+    newForm.team =
+      parentFile.acquisitionTeam?.map(x => {
+        const teamForm = AcquisitionTeamFormModel.fromApi(x);
+        teamForm.id = null;
+        return teamForm;
+      }) || [];
+
+    return newForm;
+  }
+
   static fromApi(model: ApiGen_Concepts_AcquisitionFile): AcquisitionForm {
     const newForm = new AcquisitionForm();
     newForm.id = model.id;
+    newForm.parentAcquisitionFileId = model.parentAcquisitionFileId;
     newForm.fileName = model.fileName || '';
     newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.assignedDate = model.assignedDate ?? undefined;

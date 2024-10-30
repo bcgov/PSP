@@ -194,14 +194,14 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigate to Insurance section
         public void NavigateToInsuranceSection()
         {
-            WaitUntilClickable(licenseInsuranceLink);
+            Wait();
             webDriver.FindElement(licenseInsuranceLink).Click();
         }
 
         //Edit Insurance section
         public void EditInsuranceButton()
         {
-            WaitUntilClickable(insuranceEditIcon);
+            Wait();
             webDriver.FindElement(insuranceEditIcon).Click();
         }
 

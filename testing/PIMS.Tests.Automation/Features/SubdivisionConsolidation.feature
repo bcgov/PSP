@@ -17,7 +17,7 @@ Scenario: 02. Subdivision Error Messages - Children in Inventory
 	Then Subdivision has a Parent that is not in the MOTI Inventory error
 
 Scenario: 03. Subdivision Error Messages - Repeated Child
-	When I create a Subdivision from row number 25
+	When I create a Subdivision without finishing from row number 25
 	Then Subdivision has the same Child twice error
 
 Scenario: 04. Subdivision Error Messages - Missing Child
