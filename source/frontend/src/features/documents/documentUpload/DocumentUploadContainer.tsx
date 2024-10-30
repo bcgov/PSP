@@ -36,7 +36,7 @@ export interface IDocumentUploadContainerRef {
   uploadDocument: () => void;
 }
 
-const DocumentUploadContainer = forwardRef<
+export const DocumentUploadContainer = forwardRef<
   IDocumentUploadContainerRef,
   IDocumentUploadContainerProps
 >((props, ref) => {
