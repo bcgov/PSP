@@ -604,6 +604,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select first created compensation requisition
             h120.OpenCompensationDetails(0);
 
+            //Update Allowable Compensation Amount
+            h120.UpdateTotalAllowableCompensation(acquisitionFile.AcquisitionCompensationTotalAllowableAmount);
+
             //Edit Compensation button
             h120.EditCompensationDetails();
 
