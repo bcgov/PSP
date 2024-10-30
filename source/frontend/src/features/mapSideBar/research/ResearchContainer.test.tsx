@@ -2,12 +2,9 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { FileTypes } from '@/constants';
 import { Claims } from '@/constants/claims';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -16,6 +13,7 @@ import { act, render, RenderOptions, waitForElementToBeRemoved } from '@/utils/t
 import { SideBarContextProvider, TypedFile } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
 import ResearchView from './ResearchView';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -114,7 +112,10 @@ describe('ResearchContainer component', () => {
   });
 
   it('renders research details when file is in context', async () => {
-    const typedFile: TypedFile = { ...getMockResearchFile(), fileType: FileTypes.Research };
+    const typedFile: TypedFile = {
+      ...getMockResearchFile(),
+      fileType: ApiGen_CodeTypes_FileTypes.Research,
+    };
     const { findByText } = setup({ context: { file: typedFile } });
     await act(async () => {});
     expect(await findByText('File Summary')).toBeVisible();
@@ -123,7 +124,7 @@ describe('ResearchContainer component', () => {
   it(`doesn't render research details when wrong file type is in context`, async () => {
     const typedFile: TypedFile = {
       ...mockAcquisitionFileResponse(),
-      fileType: FileTypes.Acquisition,
+      fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
     };
     const { getByTestId } = setup({ context: { file: typedFile } });
     await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));

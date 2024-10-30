@@ -3,16 +3,16 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 export enum ApiGen_CodeTypes_LeaseLicenceTypes {
-  LICONSTRC = 'LICONSTRC',
-  LIMOTIPRJ = 'LIMOTIPRJ',
-  LIOCCACCS = 'LIOCCACCS',
-  LIOCCTTLD = 'LIOCCTTLD',
-  LIOCCUSE = 'LIOCCUSE',
-  LIOCCUTIL = 'LIOCCUTIL',
+  AMNDAGREE = 'AMNDAGREE',
+  BLDGLSRCV = 'BLDGLSRCV',
+  LIOCCHMK = 'LIOCCHMK',
   LIPPUBHWY = 'LIPPUBHWY',
+  LOOBCTFA = 'LOOBCTFA',
   LSGRND = 'LSGRND',
   LSREG = 'LSREG',
   LSUNREG = 'LSUNREG',
+  LTRINDMNY = 'LTRINDMNY',
+  LTRINTENT = 'LTRINTENT',
   MANUFHOME = 'MANUFHOME',
   OTHER = 'OTHER',
   RESLNDTEN = 'RESLNDTEN',

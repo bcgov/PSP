@@ -1,25 +1,31 @@
 import { getIn, useFormikContext } from 'formik';
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { RiDragMove2Line } from 'react-icons/ri';
 
-import { RemoveButton } from '@/components/common/buttons';
+import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
 import { InlineInput } from '@/components/common/form/styles';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
-import { IMapProperty } from '@/components/propertySelector/models';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { withNameSpace } from '@/utils/formUtils';
-import { getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
+import { featuresetToMapProperty, getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
 
 export interface ISelectedPropertyRowProps {
   index: number;
   nameSpace?: string;
   onRemove: () => void;
-  property: IMapProperty;
+  property: LocationFeatureDataset;
 }
 
-export const SelectedPropertyRow: React.FunctionComponent<
-  React.PropsWithChildren<ISelectedPropertyRowProps>
-> = ({ nameSpace, onRemove, index, property }) => {
+export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
+  nameSpace,
+  onRemove,
+  index,
+  property,
+}) => {
+  const mapMachine = useMapStateMachine();
   const { setFieldTouched, touched } = useFormikContext();
   useEffect(() => {
     if (getIn(touched, `${nameSpace}.name`) !== true) {
@@ -27,7 +33,7 @@ export const SelectedPropertyRow: React.FunctionComponent<
     }
   }, [nameSpace, setFieldTouched, touched]);
 
-  const propertyName = getPropertyName(property);
+  const propertyName = getPropertyName(featuresetToMapProperty(property));
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -51,7 +57,7 @@ export const SelectedPropertyRow: React.FunctionComponent<
           <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
         </div>
       </Col>
-      <Col md={7}>
+      <Col md={5}>
         <InlineInput
           className="mb-0 w-100"
           label=""
@@ -61,8 +67,18 @@ export const SelectedPropertyRow: React.FunctionComponent<
           errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
         />
       </Col>
+      <Col md={1} className="pl-3">
+        <StyledIconButton
+          title="move-pin-location"
+          onClick={() => {
+            mapMachine.startReposition(property, index);
+          }}
+        >
+          <RiDragMove2Line size={22} />
+        </StyledIconButton>
+      </Col>
       <Col md={2}>
-        <RemoveButton onRemove={onRemove} />
+        <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
       </Col>
     </Row>
   );

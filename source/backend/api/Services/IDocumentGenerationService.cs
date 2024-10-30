@@ -13,7 +13,7 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentGenerationService
     {
-        Task<ExternalResponse<FileTypes>> GetSupportedFileTypes();
+        Task<ExternalResponse<CdogsFileTypes>> GetSupportedFileTypes();
 
         Task<ExternalResponse<string>> UploadFileTemplate(IFormFile fileRaw);
 

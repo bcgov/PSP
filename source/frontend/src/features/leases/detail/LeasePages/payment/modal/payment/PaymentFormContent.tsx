@@ -6,22 +6,26 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
+import { ApiGen_Concepts_LeasePeriod } from '@/models/api/generated/ApiGen_Concepts_LeasePeriod';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { round } from '@/utils';
 import { getCurrencyCleanValue } from '@/utils/formUtils';
 
-import { FormLeasePayment } from '../../models';
+import { FormLeasePayment, FormLeasePeriod } from '../../models';
+import { isActualGstEligible } from '../../PeriodPaymentsContainer';
 import * as Styled from '../../styles';
 
 interface IPaymentFormContentProps {
   isReceived: boolean;
   isGstEligible: boolean;
   isVariable: boolean;
+  periods: ApiGen_Concepts_LeasePeriod[];
 }
 
 const PaymentFormContent: React.FunctionComponent<
   React.PropsWithChildren<IPaymentFormContentProps>
-> = ({ isReceived, isGstEligible, isVariable }) => {
+> = ({ isReceived, isGstEligible, isVariable, periods }) => {
   const formikProps = useFormikContext<FormLeasePayment>();
   const lookups = useLookupCodeHelpers();
   const paymentMethodOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_METHOD_TYPES);
@@ -31,6 +35,16 @@ const PaymentFormContent: React.FunctionComponent<
   const { getSystemConstant } = useSystemConstants();
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
+
+  if (formikProps?.initialValues?.leasePeriodId) {
+    isGstEligible = isActualGstEligible(
+      formikProps.initialValues?.leasePeriodId,
+      periods?.map(t => FormLeasePeriod.fromApi(t)) ?? [],
+      ApiGen_CodeTypes_LeasePaymentCategoryTypes[
+        formikProps.values.leasePaymentCategoryTypeCode?.id
+      ],
+    );
+  }
 
   return (
     <Styled.StyledFormBody>
@@ -92,13 +106,13 @@ const PaymentFormContent: React.FunctionComponent<
             <Styled.FlexRight>
               <TooltipIcon
                 toolTipId="actual-calculation-tooltip"
-                toolTip="If left blank, these values are calculated based on the total received. Enter values here only to override the system calculation."
+                toolTip="If left blank, these values are calculated based on the total received. Enter values here only to override the system calculation"
               />
             </Styled.FlexRight>
             <InlineFlexDiv>
               <FastCurrencyInput
                 formikProps={formikProps}
-                label="Expected payment ($)"
+                label="Amount (before tax)"
                 field="amountPreTax"
                 innerClassName="small"
               />

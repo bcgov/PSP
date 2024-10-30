@@ -27,6 +27,8 @@ export interface IMapStateMachineContext {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   selectedFeatureDataset: LocationFeatureDataset | null;
+  repositioningFeatureDataset: LocationFeatureDataset | null;
+  repositioningPropertyIndex: number | null;
   showPopup: boolean;
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
@@ -35,6 +37,7 @@ export interface IMapStateMachineContext {
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
+  isRepositioning: boolean;
   selectingComponentId: string | null;
   isFiltering: boolean;
   isShowingMapLayers: boolean;
@@ -60,8 +63,14 @@ export interface IMapStateMachineContext {
   prepareForCreation: () => void;
   startSelection: (selectingComponentId?: string) => void;
   finishSelection: () => void;
+  startReposition: (
+    repositioningFeatureDataset: LocationFeatureDataset,
+    index: number,
+    selectingComponentId?: string,
+  ) => void;
+  finishReposition: () => void;
   toggleMapFilter: () => void;
-  toggleMapLayer: () => void;
+  toggleMapLayerControl: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
   setDefaultMapLayers: (layers: ILayerItem[]) => void;
@@ -127,7 +136,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 
         return result;
       },
-      loadFeatures: (context: MachineContext, event: any) => {
+      loadFeatures: (context: MachineContext, event: any): Promise<MapFeatureData> => {
         // If there is data in the event, use that criteria.
         // Otherwise, use the stored one in the context.
         let searchCriteria = context.searchCriteria || defaultPropertyFilter;
@@ -255,6 +264,26 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'FINISH_SELECTION' });
   }, [serviceSend]);
 
+  const startReposition = useCallback(
+    (
+      repositioningFeatureDataset: LocationFeatureDataset,
+      index: number,
+      selectingComponentId?: string,
+    ) => {
+      serviceSend({
+        type: 'START_REPOSITION',
+        repositioningFeatureDataset,
+        repositioningPropertyIndex: index,
+        selectingComponentId,
+      });
+    },
+    [serviceSend],
+  );
+
+  const finishReposition = useCallback(() => {
+    serviceSend({ type: 'FINISH_REPOSITION' });
+  }, [serviceSend]);
+
   const setFilePropertyLocations = useCallback(
     (locations: LatLngLiteral[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
@@ -312,20 +341,25 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_FILTER' });
   }, [serviceSend]);
 
-  const toggleMapLayer = useCallback(() => {
+  const toggleMapLayerControl = useCallback(() => {
     serviceSend({ type: 'TOGGLE_LAYERS' });
   }, [serviceSend]);
 
+  const isRepositioning = useMemo(() => {
+    return state.matches({ mapVisible: { featureView: 'repositioning' } });
+  }, [state]);
+
+  // disable map popup when repositioning file markers
   const showPopup = useMemo(() => {
-    return state.context.mapLocationFeatureDataset !== null;
-  }, [state.context.mapLocationFeatureDataset]);
+    return state.context.mapLocationFeatureDataset !== null && !isRepositioning;
+  }, [isRepositioning, state.context.mapLocationFeatureDataset]);
 
   const isFiltering = useMemo(() => {
-    return state.matches({ mapVisible: { featureView: 'filtering' } });
+    return state.matches({ mapVisible: { advancedFilterSideBar: 'filtering' } });
   }, [state]);
 
   const isShowingMapLayers = useMemo(() => {
-    return state.matches({ mapVisible: { featureView: 'layerControl' } });
+    return state.matches({ mapVisible: { advancedFilterSideBar: 'layerControl' } });
   }, [state]);
 
   return (
@@ -339,6 +373,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapLocationSelected: state.context.mapLocationSelected,
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
         selectedFeatureDataset: state.context.selectedFeatureDataset,
+        repositioningFeatureDataset: state.context.repositioningFeatureDataset,
+        repositioningPropertyIndex: state.context.repositioningPropertyIndex,
         showPopup: showPopup,
         isLoading: state.context.isLoading,
         mapSearchCriteria: state.context.searchCriteria,
@@ -347,6 +383,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
         requestedFitBounds: state.context.requestedFitBounds,
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
+        isRepositioning: isRepositioning,
         selectingComponentId: state.context.selectingComponentId,
         isFiltering: isFiltering,
         isShowingMapLayers: isShowingMapLayers,
@@ -369,8 +406,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         prepareForCreation,
         startSelection,
         finishSelection,
+        startReposition,
+        finishReposition,
         toggleMapFilter,
-        toggleMapLayer,
+        toggleMapLayerControl,
         toggleSidebarDisplay,
         setFilePropertyLocations,
         setVisiblePimsProperties,

@@ -20,7 +20,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -34,7 +33,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c4.btn .Button__value {
@@ -54,10 +52,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c4.btn.btn-primary {
-  border: none;
 }
 
 .c4.btn.btn-secondary {
@@ -204,7 +198,7 @@ exports[`PaymentsView component > renders as expected 1`] = `
 }
 
 <div
-    class="c0 form-section ml-20 p-0"
+    class="c0 form-section"
   >
     <h2
       class="c1"
@@ -289,7 +283,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   -ms-flex-pack: center;
   justify-content: center;
   padding: 0.4rem 1.2rem;
-  min-height: 3rem;
   border: 0.2rem solid transparent;
   border-radius: 0.4rem;
   text-align: center;
@@ -303,7 +296,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   -ms-letter-spacing: 0.1rem;
   letter-spacing: 0.1rem;
   cursor: pointer;
-  height: 3.8rem;
 }
 
 .c4.btn .Button__value {
@@ -323,10 +315,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   outline-style: solid;
   outline-offset: 1px;
   box-shadow: none;
-}
-
-.c4.btn.btn-primary {
-  border: none;
 }
 
 .c4.btn.btn-secondary {
@@ -473,7 +461,7 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
 }
 
 <div
-    class="c0 form-section ml-20 p-0"
+    class="c0 form-section"
   >
     <h2
       class="c1"

@@ -6,7 +6,6 @@ import { FeatureCollection } from 'geojson';
 import { Claims } from '@/constants/claims';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { IProperty } from '@/interfaces';
 import { mockApiProperty } from '@/mocks/filterData.mock';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -21,7 +20,7 @@ const mockAxios = new MockAdapter(axios);
 const mockParcels = [
   { id: 1, latitude: 53.917065, longitude: -122.749672 },
   { id: 2, latitude: 53.917065, longitude: -122.749672 },
-] as IProperty[];
+] as ApiGen_Concepts_Property[];
 
 vi.mock('@/hooks/pims-api/useApiGeocoder');
 vi.mock('@/hooks/pims-api/useApiProperties');
@@ -39,7 +38,7 @@ const mockDetails = {
  * Creates map points (in GeoJSON format) for further clustering by `supercluster`
  * @param properties
  */
-export const createPoints = (properties: IProperty[], type: string = 'Point') =>
+export const createPoints = (properties: ApiGen_Concepts_Property[], type: string = 'Point') =>
   properties.map(x => {
     return {
       type: 'Feature',
@@ -60,7 +59,7 @@ const storeState = {
 };
 
 // To check for alert message
-const noParcels = [] as IProperty[];
+const noParcels = [] as ApiGen_Concepts_Property[];
 
 const baseMapLayers = {
   basemaps: [
@@ -81,7 +80,7 @@ const baseMapLayers = {
 };
 
 interface TestProps {
-  properties: IProperty[];
+  properties: ApiGen_Concepts_Property[];
   selectedProperty: ApiGen_Concepts_Property | null;
   disableMapFilterBar: boolean;
   zoom?: number;
@@ -158,7 +157,7 @@ describe.skip('MapProperties View', () => {
           bbox: undefined,
         } as FeatureCollection),
     );
-    mockGetParcel = vi.fn(async () => ({} as IProperty));
+    mockGetParcel = vi.fn(async () => ({} as ApiGen_Concepts_Property));
 
     vi.mocked(useApiGeocoder).mockReturnValue({
       loadProperties: mockLoadProperties,

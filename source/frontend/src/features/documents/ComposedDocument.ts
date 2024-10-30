@@ -1,3 +1,4 @@
+import { IApiError, isApiError } from '@/interfaces/IApiError';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
@@ -8,8 +9,10 @@ import { ApiGen_Mayan_DocumentDetail } from '@/models/api/generated/ApiGen_Mayan
 import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
+import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
+import { exists } from '@/utils';
 
 export interface ComposedDocument {
   mayanMetadata?: ApiGen_Mayan_DocumentMetadata[];
@@ -98,12 +101,48 @@ export class DocumentRow {
   }
 }
 
+export class BatchUploadFormModel {
+  public documents: DocumentUploadFormData[] = [];
+}
+
+export class BatchUploadResponseModel {
+  public readonly fileName: string;
+  public readonly isSuccess: boolean;
+  public readonly response: ApiGen_Requests_DocumentUploadRelationshipResponse | null;
+  public readonly errorMessage: string;
+
+  constructor(
+    fileName: string,
+    apiResponse: ApiGen_Requests_DocumentUploadRelationshipResponse | IApiError | undefined,
+  ) {
+    this.fileName = fileName;
+    if (exists(apiResponse)) {
+      if (isApiError(apiResponse)) {
+        this.isSuccess = false;
+        this.response = null;
+        this.errorMessage = (apiResponse as IApiError).details;
+      } else {
+        this.isSuccess =
+          apiResponse.uploadResponse?.documentExternalResponse?.status === 'Success' ? true : false;
+        this.response = apiResponse;
+        this.errorMessage =
+          apiResponse.uploadResponse?.documentExternalResponse.message ?? 'Mayan error';
+      }
+    } else {
+      this.isSuccess = false;
+      this.response = null;
+      this.errorMessage = 'Network error, please try again or contact your system administrator';
+    }
+  }
+}
+
 export class DocumentUploadFormData {
   public documentTypeId: string;
   public documentStatusCode: string;
   public documentMetadata: Record<string, string>;
   public isDocumentTypeChanged = false;
-  public isSelectedFile = false;
+  public mayanMetadata: ApiGen_Mayan_DocumentTypeMetadataType[];
+  public file: File | null;
 
   public constructor(
     initialStatus: string,
@@ -112,6 +151,12 @@ export class DocumentUploadFormData {
   ) {
     this.documentStatusCode = initialStatus;
     this.documentTypeId = documentType;
+    this.file = null;
+    this.setMayanMetadata(metadata);
+  }
+
+  public setMayanMetadata(metadata: ApiGen_Mayan_DocumentTypeMetadataType[]) {
+    this.mayanMetadata = metadata;
     this.documentMetadata = {};
 
     metadata.forEach(metaType => {
@@ -120,9 +165,9 @@ export class DocumentUploadFormData {
   }
 
   public toRequestApi(
-    file: File,
-    documentType: ApiGen_Concepts_DocumentType,
+    documentTypes: ApiGen_Concepts_DocumentType[],
   ): ApiGen_Requests_DocumentUploadRequest {
+    const documentType = documentTypes.find(x => x.id === Number(this.documentTypeId));
     const metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
     for (const key in this.documentMetadata) {
       const value = this.documentMetadata[key];
@@ -136,7 +181,7 @@ export class DocumentUploadFormData {
     return {
       documentTypeId: documentType?.id,
       documentStatusCode: this.documentStatusCode,
-      file: file,
+      file: this.file,
       documentMetadata: metadata,
       documentTypeMayanId: documentType?.mayanId,
     };

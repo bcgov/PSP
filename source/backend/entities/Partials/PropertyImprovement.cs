@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PropertyImprovement class, provides the many-to-many relationship between leases and tenants.
+    /// PropertyImprovement class, extens the Property improvement EF class.
     /// </summary>
     public partial class PimsPropertyImprovement : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {

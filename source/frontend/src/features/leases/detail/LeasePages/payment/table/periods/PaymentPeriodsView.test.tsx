@@ -161,7 +161,7 @@ describe('PeriodsForm component', () => {
 
     const row = findFirstRow() as HTMLElement;
     expect(row).not.toBeNull();
-    expect(findCell(row, 8)?.textContent).toBe('-');
+    expect(findCell(row, 8)?.textContent).toBe('$0.00');
   });
 
   it('Does not display certain fields if the gst constant is not supplied', async () => {
@@ -185,7 +185,7 @@ describe('PeriodsForm component', () => {
 
     const row = findFirstRow() as HTMLElement;
     expect(row).not.toBeNull();
-    expect(findCell(row, 6)?.textContent).toBe('-');
+    expect(findCell(row, 6)?.textContent).toBe('');
     expect(findCell(row, 7)?.textContent).toBe('$1,000.00');
     expect(findCell(row, 8)?.textContent).toBe('$12,000.00');
   });
@@ -214,7 +214,7 @@ describe('PeriodsForm component', () => {
     expect(row).not.toBeNull();
     expect(findCell(row, 4)?.textContent).toBe('$0.00');
     expect(findCell(row, 7)?.textContent).toBe('-');
-    expect(findCell(row, 8)?.textContent).toBe('-');
+    expect(findCell(row, 8)?.textContent).toBe('$0.00');
   });
 
   it('Does not calculate gst if gst flag is off', async () => {
@@ -240,7 +240,7 @@ describe('PeriodsForm component', () => {
     const row = findFirstRow() as HTMLElement;
     expect(row).not.toBeNull();
     expect(findCell(row, 5)?.textContent).toBe('N');
-    expect(findCell(row, 6)?.textContent).toBe('-');
+    expect(findCell(row, 6)?.textContent).toBe('');
     expect(findCell(row, 7)?.textContent).toBe('$1,000.00');
     expect(findCell(row, 8)?.textContent).toBe('$12,000.00');
   });
@@ -267,7 +267,7 @@ describe('PeriodsForm component', () => {
 
     const row = findFirstRow() as HTMLElement;
     expect(row).not.toBeNull();
-    expect(findCell(row, 9)?.textContent).toBe('-');
+    expect(findCell(row, 9)?.textContent).toBe('');
   });
 
   it('sums payment fields if exercised', async () => {
@@ -608,7 +608,7 @@ describe('PeriodsForm component', () => {
     const { findFirstRow, findCell } = await setup({
       initialValues: {
         ...new LeaseFormModel(),
-        leaseTypeCode: 'LIOCCUTIL',
+        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA,
         periods: [
           {
             ...defaultTestFormLeasePeriod,
@@ -633,7 +633,7 @@ describe('PeriodsForm component', () => {
     } = await setup({
       initialValues: {
         ...new LeaseFormModel(),
-        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LIOCCUTIL,
+        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA,
         periods: [
           {
             ...defaultTestFormLeasePeriod,

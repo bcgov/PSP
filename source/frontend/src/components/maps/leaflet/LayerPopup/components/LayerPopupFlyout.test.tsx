@@ -55,14 +55,14 @@ describe('LayerPopupFlyout component', () => {
   it('renders property view link by default', async () => {
     const { getByText, getAllByRole } = setup();
 
-    expect(getByText('View Property info')).toBeVisible();
+    expect(getByText('View Property Info')).toBeVisible();
     expect(getAllByRole('button')).toHaveLength(1);
   });
 
   it('calls onViewPropertyInfo when link clicked', async () => {
     const { getByText } = setup();
 
-    const link = getByText('View Property info');
+    const link = getByText('View Property Info');
     await act(async () => userEvent.click(link));
     expect(onViewPropertyInfo).toHaveBeenCalled();
   });

@@ -22,7 +22,7 @@ import { exists, prettyFormatDate } from '@/utils';
 
 import HistoricalNumbersContainer from '../../shared/header/HistoricalNumberContainer';
 import { HistoricalNumberSectionView } from '../../shared/header/HistoricalNumberSectionView';
-import { LeaseHeaderTenants } from './LeaseHeaderTenants';
+import { LeaseHeaderStakeholders } from './LeaseHeaderTenants';
 
 export interface ILeaseHeaderProps {
   lease?: ApiGen_Concepts_Lease;
@@ -52,8 +52,8 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
             />
           </HeaderField>
           <HeaderField label="Tenant:" labelWidth="4" contentWidth="8">
-            <LeaseHeaderTenants
-              tenants={lease?.tenants ?? []}
+            <LeaseHeaderStakeholders
+              stakeholders={lease?.stakeholders ?? []}
               maxCollapsedLength={1}
               delimiter={<br />}
             />
@@ -62,12 +62,12 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
             <HeaderLabelCol
               label="Commencement:"
               labelWidth="4"
-              tooltip="The start date defined in the agreement."
+              tooltip="The start date defined in the agreement"
             />
             <HeaderContentCol contentWidth="3">
               {prettyFormatDate(lease?.startDate)}
             </HeaderContentCol>
-            <HeaderLabelCol label="Expiry:" tooltip="The end date specified in the agreement." />
+            <HeaderLabelCol label="Expiry:" tooltip="The end date specified in the agreement" />
             <HeaderContentCol>
               <span className="pl-2">{prettyFormatDate(calculatedExpiry)}</span>
             </HeaderContentCol>

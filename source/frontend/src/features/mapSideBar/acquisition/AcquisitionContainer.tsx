@@ -13,7 +13,6 @@ import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { FileTypes } from '@/constants/index';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
@@ -21,6 +20,7 @@ import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -131,20 +131,20 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   // Retrieve acquisition file from API and save it to local state and side-bar context
   const fetchAcquisitionFile = useCallback(async () => {
     const retrieved = await retrieveAcquisitionFile(acquisitionFileId);
-    if (!exists(retrieved)) {
-      return;
+    if (exists(retrieved)) {
+      // retrieve related entities (ie properties, checklist items) in parallel
+      const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
+      const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
+      const acquisitionProperties = await acquisitionPropertiesTask;
+      const acquisitionChecklist = await acquisitionChecklistTask;
+
+      retrieved.fileProperties = acquisitionProperties ?? null;
+      retrieved.fileChecklistItems = acquisitionChecklist ?? [];
+      setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Acquisition });
+      setStaleFile(false);
+    } else {
+      setFile(undefined);
     }
-
-    // retrieve related entities (ie properties, checklist items) in parallel
-    const acquisitionPropertiesTask = retrieveAcquisitionFileProperties(acquisitionFileId);
-    const acquisitionChecklistTask = retrieveAcquisitionFileChecklist(acquisitionFileId);
-    const acquisitionProperties = await acquisitionPropertiesTask;
-    const acquisitionChecklist = await acquisitionChecklistTask;
-
-    retrieved.fileProperties = acquisitionProperties ?? null;
-    retrieved.fileChecklistItems = acquisitionChecklist ?? [];
-    setFile({ ...retrieved, fileType: FileTypes.Acquisition });
-    setStaleFile(false);
   }, [
     acquisitionFileId,
     retrieveAcquisitionFileProperties,
@@ -163,7 +163,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     }
   }, [acquisitionFileId, getLastUpdatedBy, setLastUpdatedBy]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !exists(lastUpdatedBy) ||
       acquisitionFileId !== lastUpdatedBy?.parentId ||
@@ -322,7 +322,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   if (
     loadingAcquisitionFile ||
     (loadingAcquisitionFileProperties && !isPropertySelector) ||
-    file?.fileType !== FileTypes.Acquisition ||
+    file?.fileType !== ApiGen_CodeTypes_FileTypes.Acquisition ||
     file?.id !== acquisitionFileId
   ) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;

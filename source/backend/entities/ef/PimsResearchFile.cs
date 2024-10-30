@@ -67,18 +67,21 @@ public partial class PimsResearchFile
     /// Name(s) of roads associated with this research request.
     /// </summary>
     [Column("ROAD_NAME")]
+    [StringLength(200)]
     public string RoadName { get; set; }
 
     /// <summary>
     /// Alias(es) of roads associated with this research request.
     /// </summary>
     [Column("ROAD_ALIAS")]
+    [StringLength(200)]
     public string RoadAlias { get; set; }
 
     /// <summary>
     /// Description of the research request.
     /// </summary>
     [Column("REQUEST_DESCRIPTION")]
+    [StringLength(3000)]
     public string RequestDescription { get; set; }
 
     [Column("REQUEST_SOURCE_DESCRIPTION")]
@@ -89,6 +92,7 @@ public partial class PimsResearchFile
     /// Result of the research request.
     /// </summary>
     [Column("RESEARCH_RESULT")]
+    [StringLength(2000)]
     public string ResearchResult { get; set; }
 
     /// <summary>
@@ -101,6 +105,7 @@ public partial class PimsResearchFile
     /// Notes associated with an expropriation.
     /// </summary>
     [Column("EXPROPRIATION_NOTES")]
+    [StringLength(1000)]
     public string ExpropriationNotes { get; set; }
 
     /// <summary>

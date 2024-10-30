@@ -25,8 +25,6 @@ namespace Pims.Api.Models.Concepts.Property
 
         public DateOnly PropertyDataSourceEffectiveDate { get; set; }
 
-        public string PropertyClassificationTypeCode { get; set; }
-
         public string PropertyTenureTypeCode { get; set; }
 
         public string StreetAddress1 { get; set; }
@@ -47,10 +45,6 @@ namespace Pims.Api.Models.Concepts.Property
 
         public string CountryName { get; set; }
 
-        public string Name { get; set; }
-
-        public string Description { get; set; }
-
         public long? AddressId { get; set; }
 
         public short RegionCode { get; set; }
@@ -65,19 +59,9 @@ namespace Pims.Api.Models.Concepts.Property
 
         public string SurveyPlanNumber { get; set; }
 
-        public string EncumbranceReason { get; set; }
-
-        public bool IsSensitive { get; set; }
-
         public bool IsOwned { get; set; }
 
         public bool? IsRetired { get; set; }
-
-        public bool IsVisibleToOtherAgencies { get; set; }
-
-        public string Zoning { get; set; }
-
-        public string ZoningPotential { get; set; }
 
         public bool? IsDisposed { get; set; }
 

@@ -39,6 +39,7 @@ namespace Pims.Api.Areas.HistoricalNumber.Controllers
         /// </summary>
         /// <param name="propertyService"></param>
         /// <param name="mapper"></param>
+        /// <param name="logger"></param>
         ///
         public HistoricalNumberController(IPropertyService propertyService, IMapper mapper, ILogger<HistoricalNumberController> logger)
         {

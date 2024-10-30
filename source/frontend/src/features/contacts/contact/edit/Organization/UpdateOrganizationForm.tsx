@@ -150,7 +150,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
               <SectionField
                 label="Connected to this organization"
                 labelWidth="auto"
-                tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page."
+                tooltip="To unlink a contact from this organization, or edit a contact's information, click on the name and unlink from the individual contact page"
               >
                 {persons &&
                   persons.map((person, index: number) => (

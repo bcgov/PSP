@@ -68,21 +68,8 @@ public partial class PimsPropertyHist
     [StringLength(20)]
     public string PphStatusTypeCode { get; set; }
 
-    [Required]
-    [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropertyClassificationTypeCode { get; set; }
-
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
     public DateOnly PropertyDataSourceEffectiveDate { get; set; }
-
-    [Column("NAME")]
-    [StringLength(250)]
-    public string Name { get; set; }
-
-    [Column("DESCRIPTION")]
-    [StringLength(2000)]
-    public string Description { get; set; }
 
     [Column("PID")]
     public int? Pid { get; set; }
@@ -100,6 +87,10 @@ public partial class PimsPropertyHist
     [Column("LAND_AREA")]
     public float? LandArea { get; set; }
 
+    [Column("LAND_LEGAL_DESCRIPTION")]
+    [StringLength(2000)]
+    public string LandLegalDescription { get; set; }
+
     [Column("GENERAL_LOCATION")]
     [StringLength(2000)]
     public string GeneralLocation { get; set; }
@@ -108,16 +99,16 @@ public partial class PimsPropertyHist
     [StringLength(250)]
     public string SurveyPlanNumber { get; set; }
 
-    [Column("ENCUMBRANCE_REASON")]
-    [StringLength(500)]
-    public string EncumbranceReason { get; set; }
-
     [Column("SURPLUS_DECLARATION_COMMENT")]
     [StringLength(2000)]
     public string SurplusDeclarationComment { get; set; }
 
     [Column("SURPLUS_DECLARATION_DATE", TypeName = "datetime")]
     public DateTime? SurplusDeclarationDate { get; set; }
+
+    [Column("NOTES")]
+    [StringLength(4000)]
+    public string Notes { get; set; }
 
     [Column("MUNICIPAL_ZONING")]
     [StringLength(100)]
@@ -132,17 +123,8 @@ public partial class PimsPropertyHist
     [Column("IS_OWNED")]
     public bool IsOwned { get; set; }
 
-    [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
-    public bool IsVisibleToOtherAgencies { get; set; }
-
-    [Column("IS_SENSITIVE")]
-    public bool IsSensitive { get; set; }
-
     [Column("IS_RETIRED")]
     public bool? IsRetired { get; set; }
-
-    [Column("IS_PROVINCIAL_PUBLIC_HWY")]
-    public bool? IsProvincialPublicHwy { get; set; }
 
     [Column("PPH_STATUS_UPDATE_USERID")]
     [StringLength(30)]
@@ -156,14 +138,6 @@ public partial class PimsPropertyHist
 
     [Column("IS_RWY_BELT_DOM_PATENT")]
     public bool? IsRwyBeltDomPatent { get; set; }
-
-    [Column("ZONING")]
-    [StringLength(50)]
-    public string Zoning { get; set; }
-
-    [Column("ZONING_POTENTIAL")]
-    [StringLength(100)]
-    public string ZoningPotential { get; set; }
 
     [Column("ADDITIONAL_DETAILS")]
     [StringLength(4000)]
@@ -240,12 +214,45 @@ public partial class PimsPropertyHist
     [Column("PROP_MGMT_ORG_ID")]
     public long? PropMgmtOrgId { get; set; }
 
+    [Column("PROPERTY_CLASSIFICATION_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropertyClassificationTypeCode { get; set; }
+
+    [Column("NAME")]
+    [StringLength(250)]
+    public string Name { get; set; }
+
+    [Column("DESCRIPTION")]
+    [StringLength(2000)]
+    public string Description { get; set; }
+
+    [Column("IS_OTHER_INTEREST")]
+    public bool? IsOtherInterest { get; set; }
+
+    [Column("IS_SENSITIVE")]
+    public bool? IsSensitive { get; set; }
+
+    [Column("IS_PROVINCIAL_PUBLIC_HWY")]
+    public bool? IsProvincialPublicHwy { get; set; }
+
+    [Column("IS_VISIBLE_TO_OTHER_AGENCIES")]
+    public bool? IsVisibleToOtherAgencies { get; set; }
+
     [Column("IS_DISPOSED")]
     public bool? IsDisposed { get; set; }
 
     [Column("IS_PROPERTY_OF_INTEREST")]
     public bool? IsPropertyOfInterest { get; set; }
 
-    [Column("IS_OTHER_INTEREST")]
-    public bool? IsOtherInterest { get; set; }
+    [Column("ENCUMBRANCE_REASON")]
+    [StringLength(500)]
+    public string EncumbranceReason { get; set; }
+
+    [Column("ZONING")]
+    [StringLength(50)]
+    public string Zoning { get; set; }
+
+    [Column("ZONING_POTENTIAL")]
+    [StringLength(100)]
+    public string ZoningPotential { get; set; }
 }

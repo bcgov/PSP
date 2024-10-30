@@ -12,16 +12,17 @@ export const stringToFragment = (value: string | number | undefined | null) => <
 export const getColumnsWithRemove = <T extends object>(
   setRows: (rows: T[]) => void,
   cols: ColumnWithProps<T>[],
+  headerName?: string,
 ) => {
   const idIndex = cols.findIndex(col => col.accessor === 'id');
   if (idIndex >= 0) {
     cols.splice(idIndex, 1);
   }
   cols.push({
-    Header: '',
+    Header: headerName ?? '',
     align: 'center',
     accessor: 'id' as any,
-    maxWidth: 20,
+    maxWidth: 35,
     Cell: (props: any) => (
       <StyledRemoveLinkButton
         title="Click to remove"

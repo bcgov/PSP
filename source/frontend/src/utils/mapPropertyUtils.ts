@@ -1,3 +1,4 @@
+import { booleanPointInPolygon, point } from '@turf/turf';
 import {
   Feature,
   FeatureCollection,
@@ -190,7 +191,6 @@ function toMapProperty(
     regionName: feature?.properties?.REGION_NAME,
     district: feature?.properties?.DISTRICT_NUMBER,
     districtName: feature?.properties?.DISTRICT_NAME,
-    name: feature?.properties?.NAME,
     landArea: feature?.properties?.FEATURE_AREA_SQM,
     areaUnit: AreaUnitTypes.SquareMeters,
   };
@@ -241,7 +241,6 @@ export function featuresetToMapProperty(
       ? districtFeature?.properties?.DISTRICT_NUMBER
       : DistrictCodes.Unknown,
     districtName: districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
-    name: pimsFeature?.properties?.NAME ?? undefined,
     areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
       ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
       : AreaUnitTypes.SquareMeters,
@@ -261,6 +260,8 @@ export function pidFromFeatureSet(featureset: LocationFeatureDataset): string | 
 
 export function pinFromFeatureSet(featureset: LocationFeatureDataset): string | null {
   return isValidId(featureset?.pimsFeature?.properties?.PIN)
+    ? featureset?.pimsFeature?.properties?.PIN?.toString()
+    : isValidId(featureset?.parcelFeature?.properties?.PIN)
     ? featureset?.parcelFeature?.properties?.PIN?.toString()
     : null;
 }
@@ -278,4 +279,24 @@ export function latLngFromMapProperty(
     lat: Number(mapProperty?.fileLocation?.lat ?? mapProperty?.latitude ?? 0),
     lng: Number(mapProperty?.fileLocation?.lng ?? mapProperty?.longitude ?? 0),
   };
+}
+
+/**
+ * Takes a (Lat, Long) value and a FeatureSet and determines if the point resides inside the polygon.
+ * The polygon can be convex or concave. The function accounts for holes.
+ *
+ * @param latLng The input lat/long
+ * @param featureset The input featureset
+ * @returns true if the Point is inside the FeatureSet boundary; false if the Point is not inside the boundary
+ */
+export function isLatLngInFeatureSetBoundary(
+  latLng: LatLngLiteral,
+  featureset: LocationFeatureDataset,
+): boolean {
+  const location = point([latLng.lng, latLng.lat]);
+  const boundary = (featureset?.pimsFeature?.geometry ?? featureset?.parcelFeature?.geometry) as
+    | Polygon
+    | MultiPolygon;
+
+  return exists(boundary) && booleanPointInPolygon(location, boundary);
 }

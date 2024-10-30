@@ -14,10 +14,10 @@ export class Api_GenerateH120Property {
   location_of_land: string;
   district: string;
   interest_holders_string: string;
-  electoral_dist: string;
+  electoral_dist = '';
 
   constructor(
-    property: ApiGen_Concepts_Property | null | undefined,
+    property: ApiGen_Concepts_Property | null,
     interestHolders: Api_GenerateH120InterestHolder[],
   ) {
     this.location = exists(property?.location) ? property!.location : null;
@@ -29,6 +29,5 @@ export class Api_GenerateH120Property {
     this.district = property?.district?.description ?? '';
     this.interest_holders_string =
       interestHolders?.map(ih => ih.interestHolderString).join(', ') ?? '';
-    this.electoral_dist = '';
   }
 }

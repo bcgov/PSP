@@ -48,5 +48,5 @@ public partial class PimsLeasePurposeType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("LeasePurposeTypeCodeNavigation")]
-    public virtual ICollection<PimsLease> PimsLeases { get; set; } = new List<PimsLease>();
+    public virtual ICollection<PimsLeaseLeasePurpose> PimsLeaseLeasePurposes { get; set; } = new List<PimsLeaseLeasePurpose>();
 }

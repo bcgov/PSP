@@ -33,15 +33,6 @@ public partial class PimsLeaseHist
     [StringLength(20)]
     public string LeaseLicenseTypeCode { get; set; }
 
-    [Column("LEASE_CATEGORY_TYPE_CODE")]
-    [StringLength(20)]
-    public string LeaseCategoryTypeCode { get; set; }
-
-    [Required]
-    [Column("LEASE_PURPOSE_TYPE_CODE")]
-    [StringLength(20)]
-    public string LeasePurposeTypeCode { get; set; }
-
     [Required]
     [Column("LEASE_PROGRAM_TYPE_CODE")]
     [StringLength(20)]
@@ -66,6 +57,9 @@ public partial class PimsLeaseHist
     [Column("PROJECT_ID")]
     public long? ProjectId { get; set; }
 
+    [Column("PRODUCT_ID")]
+    public long? ProductId { get; set; }
+
     [Column("L_FILE_NO")]
     [StringLength(50)]
     public string LFileNo { get; set; }
@@ -81,13 +75,13 @@ public partial class PimsLeaseHist
     [StringLength(50)]
     public string PsFileNo { get; set; }
 
-    [Column("LEASE_CATEGORY_OTHER_DESC")]
-    [StringLength(200)]
-    public string LeaseCategoryOtherDesc { get; set; }
+    [Column("LEASE_DESCRIPTION")]
+    [StringLength(2000)]
+    public string LeaseDescription { get; set; }
 
-    [Column("LEASE_PURPOSE_OTHER_DESC")]
-    [StringLength(200)]
-    public string LeasePurposeOtherDesc { get; set; }
+    [Column("LEASE_NOTES")]
+    [StringLength(4000)]
+    public string LeaseNotes { get; set; }
 
     [Column("MOTI_CONTACT")]
     [StringLength(200)]
@@ -97,6 +91,10 @@ public partial class PimsLeaseHist
     [StringLength(500)]
     public string DocumentationReference { get; set; }
 
+    [Column("RETURN_NOTES")]
+    [StringLength(1000)]
+    public string ReturnNotes { get; set; }
+
     [Column("OTHER_LEASE_PROGRAM_TYPE")]
     [StringLength(200)]
     public string OtherLeaseProgramType { get; set; }
@@ -105,15 +103,14 @@ public partial class PimsLeaseHist
     [StringLength(200)]
     public string OtherLeaseLicenseType { get; set; }
 
-    [Column("OTHER_LEASE_PURPOSE_TYPE")]
-    [StringLength(200)]
-    public string OtherLeasePurposeType { get; set; }
-
     [Column("ORIG_START_DATE", TypeName = "datetime")]
     public DateTime? OrigStartDate { get; set; }
 
     [Column("ORIG_EXPIRY_DATE", TypeName = "datetime")]
     public DateTime? OrigExpiryDate { get; set; }
+
+    [Column("TERMINATION_DATE", TypeName = "datetime")]
+    public DateTime? TerminationDate { get; set; }
 
     [Column("LEASE_AMOUNT", TypeName = "money")]
     public decimal? LeaseAmount { get; set; }
@@ -123,6 +120,10 @@ public partial class PimsLeaseHist
 
     [Column("INSPECTION_DATE", TypeName = "datetime")]
     public DateTime? InspectionDate { get; set; }
+
+    [Column("INSPECTION_NOTES")]
+    [StringLength(1000)]
+    public string InspectionNotes { get; set; }
 
     [Column("IS_SUBJECT_TO_RTA")]
     public bool? IsSubjectToRta { get; set; }
@@ -155,6 +156,23 @@ public partial class PimsLeaseHist
     [Column("TERMINATION_REASON")]
     [StringLength(500)]
     public string TerminationReason { get; set; }
+
+    [Column("IS_PUBLIC_BENEFIT")]
+    public bool? IsPublicBenefit { get; set; }
+
+    [Column("IS_FINANCIAL_GAIN")]
+    public bool? IsFinancialGain { get; set; }
+
+    [Column("FEE_DETERMINATION_NOTE")]
+    [StringLength(1000)]
+    public string FeeDeterminationNote { get; set; }
+
+    [Column("PRIMARY_ARBITRATION_CITY")]
+    [StringLength(200)]
+    public string PrimaryArbitrationCity { get; set; }
+
+    [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
+    public decimal? TotalAllowableCompensation { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -207,20 +225,19 @@ public partial class PimsLeaseHist
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [Column("TERMINATION_DATE", TypeName = "datetime")]
-    public DateTime? TerminationDate { get; set; }
+    [Column("LEASE_PURPOSE_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeasePurposeTypeCode { get; set; }
 
-    [Column("IS_PUBLIC_BENEFIT")]
-    public bool? IsPublicBenefit { get; set; }
-
-    [Column("IS_FINANCIAL_GAIN")]
-    public bool? IsFinancialGain { get; set; }
-
-    [Column("FEE_DETERMINATION_NOTE")]
-    [StringLength(1000)]
-    public string FeeDeterminationNote { get; set; }
-
-    [Column("PRIMARY_ARBITRATION_CITY")]
+    [Column("LEASE_PURPOSE_OTHER_DESC")]
     [StringLength(200)]
-    public string PrimaryArbitrationCity { get; set; }
+    public string LeasePurposeOtherDesc { get; set; }
+
+    [Column("LEASE_CATEGORY_TYPE_CODE")]
+    [StringLength(20)]
+    public string LeaseCategoryTypeCode { get; set; }
+
+    [Column("LEASE_CATEGORY_OTHER_DESC")]
+    [StringLength(200)]
+    public string LeaseCategoryOtherDesc { get; set; }
 }

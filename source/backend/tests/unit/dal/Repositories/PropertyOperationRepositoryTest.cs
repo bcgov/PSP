@@ -1,15 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.IO.Compression;
 using System.Linq;
 using FluentAssertions;
-using k8s.Models;
 using Moq;
-using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
@@ -40,7 +36,7 @@ namespace Pims.Dal.Test.Repositories
 
         #region Tests
 
-        #region 
+        #region
         [Fact]
         public void Add_Success()
         {

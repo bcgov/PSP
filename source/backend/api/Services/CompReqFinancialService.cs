@@ -39,6 +39,15 @@ namespace Pims.Api.Services
             return _compReqFinancialRepository.GetAllByAcquisitionFileId(acquisitionFileId, finalOnly);
         }
 
+        public IEnumerable<PimsCompReqFinancial> GetAllByLeaseFileId(long leaseFileId, bool? finalOnly)
+        {
+            _logger.LogInformation("Getting pims comp req financials by {leaseFileId}", leaseFileId);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            return _compReqFinancialRepository.GetAllByLeaseFileId(leaseFileId, finalOnly);
+        }
+
         public IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter)
         {
             _logger.LogInformation("Searching all comp req financials matching the filter: {filter}", filter);
@@ -52,11 +61,11 @@ namespace Pims.Api.Services
             // When a contractor exports data, they should only see data for files they have been assigned to.
             if (pimsUser.IsContractor)
             {
-                return allMatchingFinancials.Where(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId == pimsUser.PersonId));
+                return allMatchingFinancials.Where(f => f.CompensationRequisition?.AcquisitionFile?.PimsAcquisitionFileTeams.Any(afp => afp.PersonId == pimsUser.PersonId) == true);
             }
 
             // The system will only provide data that adheres to the user's "region limited data".
-            return allMatchingFinancials.Where(f => pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == f.CompensationRequisition.AcquisitionFile.RegionCode));
+            return allMatchingFinancials.Where(f => pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == f.CompensationRequisition?.AcquisitionFile?.RegionCode || ur.RegionCode == f.CompensationRequisition?.Lease?.RegionCode));
         }
     }
 }

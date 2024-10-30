@@ -125,6 +125,24 @@ exports[`PropertySelectorSubForm component > renders as expected when provided n
           <label
             class="c3"
           >
+            PIN:
+          </label>
+        </div>
+        <div
+          class="c4 text-left col"
+        >
+          1234
+        </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c3"
+          >
             Plan #:
           </label>
         </div>

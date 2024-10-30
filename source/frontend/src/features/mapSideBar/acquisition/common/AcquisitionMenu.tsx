@@ -10,7 +10,7 @@ import { Claims, Roles } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
-import StatusUpdateSolver from '../tabs/fileDetails/detail/statusUpdateSolver';
+import AcquisitionFileStatusUpdateSolver from '../tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import { cannotEditMessage } from './constants';
 import GenerateFormContainer from './GenerateForm/GenerateFormContainer';
 import GenerateFormView from './GenerateForm/GenerateFormView';
@@ -30,7 +30,9 @@ const AcquisitionMenu: React.FunctionComponent<
   const handleClick = (index: number) => {
     props.onChange(index);
   };
-  const statusSolver = new StatusUpdateSolver(props.acquisitionFile);
+  const statusSolver = new AcquisitionFileStatusUpdateSolver(
+    props.acquisitionFile.fileStatusTypeCode,
+  );
   const canEditDetails = () => {
     if (hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditProperties()) {
       return true;

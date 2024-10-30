@@ -1,7 +1,9 @@
+import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { formatMoney } from '@/utils';
-import { formatNames } from '@/utils/personUtils';
+import { formatApiPersonNames, formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateCompensationPayee {
   name: string;
@@ -15,46 +17,54 @@ export class Api_GenerateCompensationPayee {
     compensation: ApiGen_Concepts_CompensationRequisition | null,
     financialActivities: ApiGen_Concepts_CompensationFinancial[] | [],
   ) {
-    this.gst_number = compensation?.gstNumber ? compensation.gstNumber ?? '' : '';
+    this.gst_number = compensation?.gstNumber ?? '';
 
     if (compensation?.acquisitionOwner) {
       this.name = formatNames([
-        compensation.acquisitionOwner.givenName,
-        compensation.acquisitionOwner.lastNameAndCorpName,
+        compensation?.acquisitionOwner.givenName,
+        compensation?.acquisitionOwner.lastNameAndCorpName,
       ]);
     } else if (compensation?.interestHolder) {
-      if (compensation.interestHolder.person) {
+      if (compensation?.interestHolder.person) {
         this.name = formatNames([
-          compensation.interestHolder.person.firstName,
-          compensation.interestHolder.person.surname,
+          compensation?.interestHolder.person.firstName,
+          compensation?.interestHolder.person.surname,
         ]);
       } else {
-        this.name = compensation.interestHolder.organization?.name ?? '';
+        this.name = compensation?.interestHolder.organization?.name ?? '';
       }
     } else if (compensation?.acquisitionFileTeam) {
-      if (compensation.acquisitionFileTeam.person) {
+      if (compensation?.acquisitionFileTeam.person) {
         this.name = formatNames([
-          compensation.acquisitionFileTeam.person.firstName,
-          compensation.acquisitionFileTeam.person.surname,
+          compensation?.acquisitionFileTeam.person.firstName,
+          compensation?.acquisitionFileTeam.person.surname,
         ]);
       } else {
-        this.name = compensation.acquisitionFileTeam.organization?.name ?? '';
+        this.name = compensation?.acquisitionFileTeam.organization?.name ?? '';
       }
     } else if (compensation?.legacyPayee) {
-      this.name = compensation.legacyPayee ?? '';
+      this.name = compensation?.legacyPayee ?? '';
+    } else if (compensation?.compReqLeaseStakeholder?.length > 0) {
+      const stakeHolder: ApiGen_Concepts_LeaseStakeholder =
+        compensation?.compReqLeaseStakeholder[0].leaseStakeholder;
+      if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.ORG) {
+        this.name = stakeHolder.organization?.name ?? '';
+      } else if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.PER) {
+        this.name = formatApiPersonNames(stakeHolder.person);
+      }
     } else {
       this.name = '';
     }
 
-    const preTaxAmount = financialActivities
+    const preTaxAmount: number = financialActivities
       .map(f => f.pretaxAmount ?? 0)
       .reduce((prev, next) => prev + next, 0);
 
-    const taxAmount = financialActivities
+    const taxAmount: number = financialActivities
       .map(f => f.taxAmount ?? 0)
       .reduce((prev, next) => prev + next, 0);
 
-    const totalAmount = financialActivities
+    const totalAmount: number = financialActivities
       .map(f => f.totalAmount ?? 0)
       .reduce((prev, next) => prev + next, 0);
 

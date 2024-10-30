@@ -1,39 +1,22 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using System.Threading.Tasks;
-using ClosedXML.Report.Utils;
-using DocumentFormat.OpenXml.Drawing.Charts;
 using FluentAssertions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.VisualStudio.TestPlatform.CommunicationUtilities;
 using Moq;
 using Pims.Api.Helpers.Exceptions;
-using Pims.Api.Models;
-using Pims.Api.Models.Concepts;
-using Pims.Api.Models.Mayan;
-using Pims.Api.Models.Mayan.Document;
-using Pims.Api.Repositories.Mayan;
-using Pims.Api.Repositories.Rest;
 using Pims.Api.Services;
-using Pims.Av;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
-using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
-using Pims.Dal.Services;
 using Xunit;
 
 using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Constants;
 
 namespace Pims.Api.Test.Services
 {

@@ -3,22 +3,17 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
-using Pims.Api.Constants;
 using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Concepts;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
-using Pims.Dal;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Models;
 using Pims.Dal.Repositories;
 using Pims.Dal.Security;
 using Xunit;
@@ -1338,7 +1333,6 @@ namespace Pims.Api.Test.Services
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(
                 new PimsProperty()
                 {
-                    PropertyClassificationTypeCode = "UNKNOWN",
                     PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(System.DateTime.Now),
                     PropertyDataSourceTypeCode = "PMBC",
                     PropertyTypeCode = "UNKNOWN",
@@ -1361,7 +1355,6 @@ namespace Pims.Api.Test.Services
             // Assert
             // since this is a new property, the following default fields should be set.
             var updatedProperty = updatedAcquisitionFileProperty.Property;
-            updatedProperty.PropertyClassificationTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyTypeCode.Should().Be("UNKNOWN");
             updatedProperty.PropertyStatusTypeCode.Should().Be("UNKNOWN");
             updatedProperty.SurplusDeclarationTypeCode.Should().Be("UNKNOWN");
@@ -2089,157 +2082,6 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<BusinessRuleViolationException>();
-        }
-        #endregion
-
-        #region CompensationRequisition
-
-        [Fact]
-        public void GetCompensationsRequisitions_NoPermissions()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions();
-
-            // Act
-            Action act = () => service.GetAcquisitionCompensations(1);
-
-            // Assert
-            act.Should().Throw<NotAuthorizedException>();
-        }
-
-        [Fact]
-        public void GetCompensationsRequisitions_NotAuthorized_Contractor()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
-
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
-
-            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(EntityHelper.CreateAcquisitionFile());
-
-            // Act
-            Action act = () => service.GetAcquisitionCompensations(1);
-
-            // Assert
-            act.Should().Throw<NotAuthorizedException>();
-        }
-
-        [Fact]
-        public void GetCompensationsRequisitions_Success()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
-
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            repository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsCompensationRequisition>()
-                {
-                    new PimsCompensationRequisition(),
-                });
-
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
-
-            // Act
-            var result = service.GetAcquisitionCompensations(1);
-
-            // Assert
-            repository.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()), Times.Once);
-        }
-
-        [Fact]
-        public void AddCompensationsRequisitions_NoPermissions()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions();
-
-            // Act
-            Action act = () => service.AddCompensationRequisition(1, new PimsCompensationRequisition());
-
-            // Assert
-            act.Should().Throw<NotAuthorizedException>();
-        }
-
-        [Fact]
-        public void AddCompensationsRequisitions_NullException()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
-
-            // Act
-            Action act = () => service.AddCompensationRequisition(1, null);
-
-            // Assert
-            act.Should().Throw<ArgumentNullException>();
-        }
-
-        [Fact]
-        public void AddCompensationsRequisitions_BadRequest_IdMissmatch()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
-
-            // Act
-            Action act = () => service.AddCompensationRequisition(1, new PimsCompensationRequisition() { Internal_Id = 2 });
-
-            // Assert
-            act.Should().Throw<BadRequestException>();
-        }
-
-        [Fact]
-        public void AddCompensationsRequisitions_NotAuthorized_Contractor()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            var newCompensationReq = EntityHelper.CreateCompensationRequisition(1, 1);
-            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-
-            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
-            repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
-
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
-
-            // Act
-            Action act = () => service.AddCompensationRequisition(1, newCompensationReq);
-
-            // Assert
-            act.Should().Throw<NotAuthorizedException>();
-        }
-
-        [Fact]
-        public void AddCompensationsRequisitions_Success()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.CompensationRequisitionAdd);
-            var repository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            var acqFilerepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            var newCompensationReq = EntityHelper.CreateCompensationRequisition(1, 1);
-            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-
-            acqFilerepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
-            repository.Setup(x => x.Add(It.IsAny<PimsCompensationRequisition>())).Returns(newCompensationReq);
-
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
-
-            // Act
-            var result = service.AddCompensationRequisition(1, newCompensationReq);
-
-            // Assert
-            repository.Verify(x => x.Add(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
         #endregion
 

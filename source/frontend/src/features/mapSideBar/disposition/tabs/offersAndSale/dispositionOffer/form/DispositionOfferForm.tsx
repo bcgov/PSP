@@ -133,7 +133,7 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
                     <SectionField
                       label="Notes"
                       contentWidth="12"
-                      tooltip="Provide any additional details such as offer terms or conditions, and any commentary on why the offer was accepted/countered/rejected."
+                      tooltip="Provide any additional details such as offer terms or conditions, and any commentary on why the offer was accepted/countered/rejected"
                     >
                       <TextArea field="offerNote" />
                     </SectionField>
