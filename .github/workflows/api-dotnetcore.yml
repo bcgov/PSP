@@ -24,10 +24,13 @@ jobs:
 
   build-backend:
     needs: check-changes
-    if: ${{ needs.check-changes.outputs.backend == 'true' }}
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        services: [{directory: ./source/backend/api, solution: 'Pims.sln'}, {directory: ./source/backend/proxy, solution: 'Proxy.sln'}]
     env:
-      working-directory: ./source/backend
+      working-directory: ${{ matrix.services.directory }}
+      solution-name: ${{ matrix.services.solution }}
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GIT_BRANCH: "${{github.ref}}"
 
@@ -45,19 +48,20 @@ jobs:
           dotnet-version: "8.0.x"
 
       - name: Install dependencies
-        run: dotnet restore
+        run: dotnet restore ${{env.solution-name}}
+        working-directory: ${{env.working-directory}}
+
+      - name: Build
+        run: dotnet build ${{env.solution-name}} --configuration Release --no-restore
         working-directory: ${{env.working-directory}}
 
       - name: Install coverlet for code coverage
         run: dotnet tool install -g coverlet.console --version 1.7.2
         working-directory: ${{env.working-directory}}
 
-      - name: Build
-        run: dotnet build --configuration Release --no-restore
-        working-directory: ${{env.working-directory}}
-
       - name: Test
-        run: dotnet test --no-restore --verbosity normal
+        if: ${{ env.solution-name == 'Pims.sln' }}
+        run: dotnet test Pims.sln --no-restore --verbosity normal
         working-directory: ${{env.working-directory}}
 
         # For future reference, if we have N test projects the flow of events would be:
@@ -84,33 +88,41 @@ jobs:
         #
         # The final `coverage.opencover.xml` is the one we want
       - name: Generate code coverage
-        working-directory: ${{env.working-directory}}/tests/unit
+        if: ${{ env.solution-name == 'Pims.sln' }}
+        working-directory: ${{env.working-directory}}/../tests/unit
         run: |
+          pwd
           mkdir -p TestResults
           rm -rf api/TestResults
           rm -rf dal/TestResults
           rm -rf mockdal/TestResults
           cd api
-          dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore
+          dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore > out.txt
+          ls
+          cat out.txt
           mv TestResults/*/* ../TestResults/
           cd ..
           cd dal
           dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore
+          ls
           mv TestResults/*/* ../TestResults/
           cd ..
           cd mockdal
           dotnet test --collect:"XPlat Code Coverage" --settings coverlet.runsettings --no-restore
+          ls
           mv TestResults/*/* ../TestResults/
           cd ..
           head TestResults/coverage.opencover.xml
 
       - name: Save PR number and scan results
+        if: ${{ env.solution-name == 'Pims.sln' }}
         run: |
           mkdir -p ./pr
           echo ${{ github.event.pull_request.number }} > ./pr/NR
-          cp ${{env.working-directory}}/tests/unit/TestResults/coverage.opencover.xml ./pr
+          cp ${{env.working-directory}}/../tests/unit/TestResults/coverage.opencover.xml ./pr
 
       - uses: actions/upload-artifact@v4
+        if: ${{ env.solution-name == 'Pims.sln' }}
         with:
           name: pr-codecov
           path: pr/
@@ -118,12 +130,12 @@ jobs:
       - name: SonarScanner for .NET 8 with pull request decoration support
         id: scan
         uses: highbyte/sonarscan-dotnet@v2.3.2
-        if: ${{ github.event_name == 'push' }}
+        if: ${{ github.event_name == 'push' && env.solution-name == 'Pims.sln' }}
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
-          dotnetBuildArguments: ${{env.working-directory}}
-          dotnetTestArguments: ${{env.working-directory}} --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
+          dotnetBuildArguments: ${{env.working-directory}}/${{ env.solution-name }}
+          dotnetTestArguments: ${{env.working-directory}}/${{ env.solution-name }} --logger trx --collect:"XPlat Code Coverage" -- DataCollectionRunSettings.DataCollectors.DataCollector.Configuration.Format=opencover
           # Optional extra command arguments the the SonarScanner 'begin' command
           sonarBeginArguments: /d:sonar.cs.opencover.reportsPaths="**/TestResults/**/coverage.opencover.xml" -d:sonar.cs.vstest.reportsPaths="**/TestResults/*.trx" -d:sonar.qualitygate.wait=true
           # The key of the SonarQube project
@@ -132,7 +144,14 @@ jobs:
           sonarProjectName: PIMS-API
           # The SonarQube server URL. For SonarCloud, skip this setting.
           sonarHostname: ${{secrets.SONAR_URL}}
-
+  post-build:
+    needs: build-backend
+    runs-on: ubuntu-latest
+    env:
+      working-directory: ./source/backend
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      GIT_BRANCH: "${{github.ref}}"
+    steps:
       # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set
       - name: Failure notification to Teams Channel
         env:

@@ -5,8 +5,10 @@ using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using Pims.Core.Extensions;
 using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
@@ -34,7 +36,7 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsCompReqFinancial> GetAllByAcquisitionFileId(long acquisitionFileId, bool? finalOnly)
         {
-            this._user.ThrowIfNotAllAuthorized(Security.Permissions.CompensationRequisitionView);
+            this._user.ThrowIfNotAllAuthorized(Permissions.CompensationRequisitionView);
 
             var query = Context.PimsCompReqFinancials
                 .Include(c => c.CompensationRequisition)
@@ -50,7 +52,7 @@ namespace Pims.Dal.Repositories
 
         public IEnumerable<PimsCompReqFinancial> GetAllByLeaseFileId(long leaseFileId, bool? finalOnly)
         {
-            this._user.ThrowIfNotAuthorized(Security.Permissions.CompensationRequisitionView);
+            this._user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
             var query = Context.PimsCompReqFinancials
                 .Include(c => c.CompensationRequisition)

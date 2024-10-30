@@ -5,7 +5,7 @@ using System.Text.Json.Serialization;
 using FluentAssertions;
 using NetTopologySuite.Geometries;
 using Pims.Core.Converters;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Core.Converters

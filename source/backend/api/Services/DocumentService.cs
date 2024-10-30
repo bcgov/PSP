@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
@@ -24,11 +24,11 @@ using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Mayan;
 using Pims.Av;
 using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 using Polly;
 
 namespace Pims.Api.Services

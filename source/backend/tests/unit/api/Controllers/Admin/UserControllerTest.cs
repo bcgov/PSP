@@ -10,7 +10,7 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.User;
 using Pims.Core.Test;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 

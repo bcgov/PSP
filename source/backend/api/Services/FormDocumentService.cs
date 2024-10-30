@@ -8,10 +8,10 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
+using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {

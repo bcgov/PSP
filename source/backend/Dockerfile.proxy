@@ -1,0 +1,32 @@
+ARG BUILD_CONFIGURATION=Release
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 5001 5000
+
+# Copy csproj and restore as distinct layers
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+COPY proxy proxy/
+COPY proxy/Directory.Build.props proxy/
+COPY backend/api backend/api/
+COPY backend/core backend/core/
+COPY backend/core.api backend/core.api/
+COPY backend/keycloak backend/keycloak/
+COPY proxy/proxy-api/*.csproj proxy/proxy-api/
+
+RUN dotnet restore proxy/Proxy.sln
+ENV PATH="$PATH:/root/.dotnet/tools"
+# Copy everything else and build
+WORKDIR /src/proxy/proxy-api
+RUN dotnet build "Pims.Proxy.csproj" -c "$BUILD_CONFIGURATION" -o /app/build
+
+FROM build AS publish
+RUN dotnet publish "Pims.Proxy.csproj" -c "$BUILD_CONFIGURATION" -o /app/publish
+
+# Runtime image
+FROM base AS final
+WORKDIR /app
+COPY --from=publish /app/publish .
+COPY entrypoint.sh .
+RUN chmod +x /app/entrypoint.proxy.sh
+ENTRYPOINT ["/app/entrypoint.proxy.sh"]

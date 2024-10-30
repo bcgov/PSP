@@ -4,17 +4,16 @@ using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Api.Helpers.Exceptions;
-
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Models.Requests.Http;
-using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Exceptions;
 using Pims.Core.Json;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers

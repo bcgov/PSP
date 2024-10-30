@@ -8,7 +8,7 @@ using Pims.Api.Areas.Keycloak.Controllers;
 using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Core.Test;
 using Pims.Dal.Keycloak;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 

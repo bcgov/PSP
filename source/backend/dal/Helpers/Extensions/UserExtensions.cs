@@ -1,5 +1,5 @@
 using System.Linq;
-using Pims.Dal.Exceptions;
+using Pims.Core.Exceptions;
 
 namespace Pims.Dal.Entities
 {

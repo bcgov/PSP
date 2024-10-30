@@ -94,7 +94,7 @@ export default defineConfig({
         cookieDomainRewrite: '',
       },
       '/ogs-internal': {
-        target: 'http://localhost:5000/api/geoserver',
+        target: 'http://localhost:5002/proxy/geoserver',
         changeOrigin: true,
         rewrite: (path: string) => path.replace(/^\/ogs-internal/, '/'),
         xfwd: true,

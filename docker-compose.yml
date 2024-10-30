@@ -58,11 +58,36 @@ services:
       args:
         BUILD_CONFIGURATION: Debug
     env_file: source/backend/api/.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
     ports:
       - ${API_HTTPS_PORT:-5001}:443
       - ${API_HTTP_PORT:-5000}:8080
     depends_on:
       - database
+      - geoserver
+    networks:
+      - psp
+
+  ####################### Proxy #######################
+  proxy:
+    profiles:
+      - all
+      - psp
+    restart: on-failure:1
+    container_name: psp-proxy
+    build:
+      context: source/backend
+      dockerfile: Dockerfile.proxy
+      args:
+        BUILD_CONFIGURATION: Debug
+    env_file: source/backend/proxy/.env
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    ports:
+      - ${API_HTTPS_PORT:-5003}:443
+      - ${API_HTTP_PORT:-5002}:8080
+    depends_on:
       - geoserver
     networks:
       - psp
