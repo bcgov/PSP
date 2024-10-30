@@ -2,8 +2,8 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
-import { IContactSearchResult } from '@/interfaces';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
@@ -20,7 +20,7 @@ export const useApiContacts = () => {
   return React.useMemo(
     () => ({
       getContacts: (params: IPaginateContacts | null) =>
-        api.get<ApiGen_Base_Page<IContactSearchResult>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_ContactSummary>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
       getPersonConcept: (id: number) => api.get<ApiGen_Concepts_Person>(`/persons/concept/${id}`),

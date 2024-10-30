@@ -91,6 +91,13 @@ public partial class PimsDocument
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    /// <summary>
+    /// Fluid key used to uniquely identify document in external system.
+    /// </summary>
+    [Column("DOCUMENT_EXTERNAL_ID")]
+    [StringLength(1000)]
+    public string DocumentExternalId { get; set; }
+
     [ForeignKey("DocumentStatusTypeCode")]
     [InverseProperty("PimsDocuments")]
     public virtual PimsDocumentStatusType DocumentStatusTypeCodeNavigation { get; set; }
@@ -104,6 +111,9 @@ public partial class PimsDocument
 
     [InverseProperty("Document")]
     public virtual ICollection<PimsDispositionFileDocument> PimsDispositionFileDocuments { get; set; } = new List<PimsDispositionFileDocument>();
+
+    [InverseProperty("DocumentNavigation")]
+    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
 
     [InverseProperty("Document")]
     public virtual ICollection<PimsFormType> PimsFormTypes { get; set; } = new List<PimsFormType>();

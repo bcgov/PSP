@@ -1,5 +1,5 @@
 import queryString from 'query-string';
-import { memo, useContext, useEffect, useMemo } from 'react';
+import { memo, useCallback, useContext, useEffect, useMemo } from 'react';
 import { matchPath, Switch, useHistory, useLocation } from 'react-router-dom';
 
 import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
@@ -167,10 +167,13 @@ export const MapRouter: React.FunctionComponent = memo(() => {
     isConsolidation,
   ]);
 
-  const onClose = () => {
-    history.push('/mapview');
-    setFile(undefined); // clean up file context when sidebar is closed
-  };
+  const onClose = useCallback(
+    (nextLocation = '/mapview') => {
+      history.push(nextLocation);
+      setFile(undefined); // clean up file context when sidebar is closed
+    },
+    [history, setFile],
+  );
 
   const pidQueryString = queryString.parse(location.search).pid?.toString() ?? '';
   return (
@@ -209,7 +212,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
           <AddAcquisitionContainer
             onClose={onClose}
             onSuccess={(newAcquisitionId: number) => {
-              history.replace(`/mapview/sidebar/acquisition/${newAcquisitionId}`);
+              history.push(`/mapview/sidebar/acquisition/${newAcquisitionId}`);
             }}
           />
         )}

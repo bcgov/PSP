@@ -605,6 +605,36 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void UpdateProperties_RemoveProperty_Fails_PropertyAssignedToCompReq()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            var deletedProperty = lease.PimsPropertyLeases.FirstOrDefault().Property;
+            var updatedLease = EntityHelper.CreateLease(2, addProperty: false);
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
+            propertyLeaseRepository.Setup(x => x.LeaseFilePropertyInCompensationReq(It.IsAny<long>())).Returns(true);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(deletedProperty);
+            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // Act
+            Action act = () => service.Update(updatedLease, new List<UserOverrideCode>());
+
+            // Assert
+            var ex = act.Should().Throw<BusinessRuleViolationException>().WithMessage("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
+        }
+
+        [Fact]
         public void UpdateProperties_RemoveProperty_Success()
         {
             // Arrange
@@ -619,6 +649,7 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
+            propertyLeaseRepository.Setup(x => x.LeaseFilePropertyInCompensationReq(It.IsAny<long>())).Returns(false);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(deletedProperty);
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);

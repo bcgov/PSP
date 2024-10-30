@@ -86,6 +86,16 @@ namespace Pims.Dal.Repositories
             return GetAllByLeaseId(leaseId);
         }
 
+        /// <summary>
+        /// Check the existence of a LeaseProperty assigned to a Lease Compensation Requisition.
+        /// </summary>
+        /// <param name="propertyLeaseFileId"></param>
+        /// <returns>True if exists.</returns>
+        public bool LeaseFilePropertyInCompensationReq(long propertyLeaseFileId)
+        {
+            return Context.PimsPropLeaseCompReqs.Where(x => x.PropertyLeaseId == propertyLeaseFileId).AsNoTracking().Any();
+        }
+
         #endregion
     }
 }

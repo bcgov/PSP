@@ -110,7 +110,7 @@ const TakeSubForm: React.FunctionComponent<ITakeSubFormProps> = ({ take }) => {
       <SectionField
         label="Completion date"
         required={take.takeStatusTypeCode === ApiGen_CodeTypes_AcquisitionTakeStatusTypes.COMPLETE}
-        tooltip={`This will be enabled when the file status is set to "Completed"`}
+        tooltip={`This will be enabled when the take status is set to "Completed"`}
         labelWidth="4"
         contentWidth="5"
       >

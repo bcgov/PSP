@@ -16,7 +16,7 @@ import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { isOrganizationResult } from '@/interfaces';
+import { isOrganizationSummary } from '@/interfaces';
 import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';
 import { exists, isValidId } from '@/utils';
 
@@ -146,7 +146,7 @@ export const ConsultationEditForm: React.FunctionComponent<IConsultationEditForm
                       />
                     </SectionField>
                     {exists(formikProps.values.contact) &&
-                      isOrganizationResult(formikProps.values.contact) && (
+                      isOrganizationSummary(formikProps.values.contact) && (
                         <SectionField label="Primary contact" labelWidth="4" contentWidth="6">
                           <PrimaryContactSelector
                             field={`primaryContactId`}

@@ -116,6 +116,8 @@ export const useApiAcquisitionFile = () => {
           `/acquisitionfiles/${acqFileId}/expropriation-payments`,
           form8,
         ),
+      getAcquisitionSubFiles: (acqFileId: number) =>
+        api.get<ApiGen_Concepts_AcquisitionFile[]>(`/acquisitionfiles/${acqFileId}/sub-files`),
     }),
     [api],
   );

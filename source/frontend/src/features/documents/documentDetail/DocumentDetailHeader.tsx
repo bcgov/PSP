@@ -12,21 +12,11 @@ interface IDocumentDetailHeaderProps {
 const DocumentDetailHeader: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailHeaderProps>
 > = props => {
-  const documentTypeLabel =
-    props.document.pimsDocumentRelationship?.document?.documentType?.documentTypeDescription;
   const documentFileName = props.document.pimsDocumentRelationship?.document?.fileName;
   const mayanDocumentId = props.document.pimsDocumentRelationship?.document?.mayanDocumentId || -1;
 
   return (
     <div className="pb-4">
-      <SectionField
-        data-testid="document-type"
-        label="Document type"
-        labelWidth="4"
-        className="pb-2"
-      >
-        {documentTypeLabel}
-      </SectionField>
       <SectionField label={'File name'} labelWidth="4" className="pb-3">
         <StyledFileNameRow>
           <div>
