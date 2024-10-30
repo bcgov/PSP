@@ -231,7 +231,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         )}
       </Section>
 
-      <Section header="Notes">
+      <Section header="Comments">
         <p>{property?.notes}</p>
       </Section>
 
