@@ -124,6 +124,7 @@ const mockDocument: ComposedDocument = {
         appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
         appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
         rowVersion: 2,
+        documentTypePurpose: 'Test document purpouse',
       },
       statusTypeCode: {
         id: 'AMEND',

@@ -56,19 +56,23 @@ export const AddLeaseContainer: React.FunctionComponent<
     formikHelpers: FormikHelpers<LeaseFormModel>,
     userOverrideCodes: UserOverrideCode[],
   ) => {
-    const leaseApi = LeaseFormModel.toApi(leaseFormModel);
-    const response = await addLease.execute(leaseApi, userOverrideCodes);
-    formikHelpers.setSubmitting(false);
+    formikHelpers.setSubmitting(true);
+    try {
+      const leaseApi = LeaseFormModel.toApi(leaseFormModel);
+      const response = await addLease.execute(leaseApi, userOverrideCodes);
 
-    if (exists(response) && isValidId(response?.id)) {
-      if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
-        toast.warn(
-          'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
-          { autoClose: 15000 },
-        );
+      if (exists(response) && isValidId(response?.id)) {
+        if (leaseApi.fileProperties?.find(p => !p.property?.address && !p.property?.id)) {
+          toast.warn(
+            'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+            { autoClose: 15000 },
+          );
+        }
+        mapMachine.refreshMapProperties();
+        props.onSuccess(response.id);
       }
-      mapMachine.refreshMapProperties();
-      props.onSuccess(response.id);
+    } finally {
+      formikHelpers.setSubmitting(false);
     }
   };
 
@@ -81,7 +85,6 @@ export const AddLeaseContainer: React.FunctionComponent<
     }
 
     if (formikRef !== undefined) {
-      formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
     }
   };

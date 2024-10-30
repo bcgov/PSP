@@ -26,6 +26,11 @@ namespace Pims.Api.Models.Concepts.Document
         public string DocumentTypeDescription { get; set; }
 
         /// <summary>
+        /// get/set - The document type purpose.
+        /// </summary>
+        public string DocumentTypePurpose { get; set; }
+
+        /// <summary>
         /// get/set - The document type id in mayan.
         /// </summary>
         public long MayanId { get; set; }

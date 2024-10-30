@@ -25,7 +25,7 @@ import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
-import { isValidId, isValidString } from '@/utils';
+import { exists, isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import UpdateAcquisitionOwnersSubForm from '../../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
@@ -69,7 +69,7 @@ export default UpdateAcquisitionForm;
 const AcquisitionDetailSubForm: React.FC<{
   formikProps: FormikProps<UpdateAcquisitionSummaryFormModel>;
 }> = ({ formikProps }) => {
-  const { setFieldValue, initialValues } = formikProps;
+  const { setFieldValue, initialValues, values } = formikProps;
 
   const [projectProducts, setProjectProducts] = React.useState<
     ApiGen_Concepts_Product[] | undefined
@@ -81,7 +81,7 @@ const AcquisitionDetailSubForm: React.FC<{
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
-  const ownerSolicitorContact = formikProps.values.ownerSolicitor.contact;
+  const ownerSolicitorContact = values.ownerSolicitor.contact;
 
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
@@ -134,6 +134,10 @@ const AcquisitionDetailSubForm: React.FC<{
       };
     }) ?? [];
 
+  const isSubFile =
+    exists(initialValues.parentAcquisitionFileId) &&
+    isValidId(initialValues.parentAcquisitionFileId);
+
   return (
     <Container>
       <Section>
@@ -158,30 +162,49 @@ const AcquisitionDetailSubForm: React.FC<{
       </Section>
 
       <Section header="Project">
-        <SectionField
-          label="Ministry project"
-          tooltip="Be sure to select a File project that is not the same as the Alternate Project on a Compensation Requisition"
-        >
-          <ProjectSelector
-            field="project"
-            onChange={(vals: IAutocompletePrediction[]) => {
-              onMinistryProjectSelected(vals);
-              if (vals.length === 0) {
-                formikProps.setFieldValue('product', '');
-              }
-            }}
-          />
-        </SectionField>
-        {projectProducts !== undefined && (
-          <SectionField label="Product">
-            <Select
-              field="product"
-              options={projectProducts.map<SelectOption>(x => {
-                return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
-              })}
-              placeholder="Select..."
-            />
-          </SectionField>
+        {isSubFile ? (
+          <>
+            <SectionField
+              label="Ministry project"
+              tooltip="Sub-file has the same project as the main file and it can only be updated from the main file"
+            >
+              {values?.formattedProject ?? ''}
+            </SectionField>
+            <SectionField
+              label="Product"
+              tooltip="Sub-file has the same product as the main file and it can only be updated from the main file"
+            >
+              {values?.formatterProduct ?? ''}
+            </SectionField>
+          </>
+        ) : (
+          <>
+            <SectionField
+              label="Ministry project"
+              tooltip="Be sure to select a File project that is not the same as the Alternate Project on a Compensation Requisition"
+            >
+              <ProjectSelector
+                field="project"
+                onChange={(vals: IAutocompletePrediction[]) => {
+                  onMinistryProjectSelected(vals);
+                  if (vals.length === 0) {
+                    setFieldValue('product', '');
+                  }
+                }}
+              />
+            </SectionField>
+            {projectProducts !== undefined && (
+              <SectionField label="Product">
+                <Select
+                  field="product"
+                  options={projectProducts.map<SelectOption>(x => {
+                    return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
+                  })}
+                  placeholder="Select..."
+                />
+              </SectionField>
+            )}
+          </>
         )}
         <SectionField label="Funding">
           <Select
@@ -193,12 +216,12 @@ const AcquisitionDetailSubForm: React.FC<{
                 .call(e.target.selectedOptions)
                 .map((option: HTMLOptionElement & number) => option.value)[0];
               if (isValidString(selectedValue) && selectedValue !== 'OTHER') {
-                formikProps.setFieldValue('fundingTypeOtherDescription', '');
+                setFieldValue('fundingTypeOtherDescription', '');
               }
             }}
           />
         </SectionField>
-        {formikProps.values?.fundingTypeCode === 'OTHER' && (
+        {values?.fundingTypeCode === 'OTHER' && (
           <SectionField label="Other funding">
             <Input field="fundingTypeOtherDescription" />
           </SectionField>

@@ -99,7 +99,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     content: (
       <LeaseTab
         leasePage={
-          lease?.paymentReceivableType.id === 'RCVBL'
+          lease?.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
             ? leasePages.get(LeasePageNames.PAYEE)
             : leasePages.get(LeasePageNames.TENANT)
         }
