@@ -9,9 +9,11 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
   .c4 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c0 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
@@ -21,7 +23,8 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
 
 .c3 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 

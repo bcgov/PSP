@@ -9,7 +9,8 @@ exports[`VolumeForm component > renders as expected 1`] = `
   .c0 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #d9eaf7;
+  border: 1px solid #053662;
   border-radius: 0.5rem;
 }
 

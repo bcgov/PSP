@@ -25,6 +25,27 @@ services:
     networks:
       - psp
 
+  ## Emulates the Openshift database job image for testing purposes
+  rhel8-database:
+    profiles:
+      - debug
+    environment:
+      - TARGET_SPRINT
+      - SEED
+    restart: on-failure:1
+    container_name: psp-rhel-db
+    build:
+      context: source/database/mssql
+      dockerfile: ./scripts/dbscripts/rhel8.dockerfile
+    env_file:
+      - source/database/mssql/.env
+    ports:
+      - 6433:1433
+    volumes:
+      - api-db-rhel-data:/var/opt/data
+    networks:
+      - psp
+
   ####################### Backend #######################
   backend:
     profiles:
@@ -149,5 +170,7 @@ networks:
 volumes:
   api-db-data:
     name: psp-api-db-data
+  api-db-rhel-data:
+    name: psp-api-db-rhel-data
   frontend-node-cache:
     name: psp-frontend-node-cache

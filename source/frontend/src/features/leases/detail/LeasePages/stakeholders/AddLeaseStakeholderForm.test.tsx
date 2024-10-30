@@ -2,7 +2,7 @@ import { act, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/claims';
-import { IContactSearchResult } from '@/interfaces';
+import { IContactSearchResult, fromContactSummary } from '@/interfaces';
 import {
   getEmptyPerson,
   getMockContactOrganizationWithOnePerson,
@@ -18,6 +18,7 @@ import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/tes
 import AddLeaseStakeholderForm, { IAddLeaseStakeholderFormProps } from './AddLeaseStakeholderForm';
 import { FormStakeholder } from './models';
 import { createRef } from 'react';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 
 const history = createMemoryHistory();
@@ -181,7 +182,12 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('cancelling the modal resets the tenants', async () => {
-    const tenants = [new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson())];
+    const tenants = [
+      new FormStakeholder(undefined, {
+        contact: fromContactSummary(getMockContactOrganizationWithOnePerson()),
+        stakeholderType: 'OWN',
+      }),
+    ];
     await act(async () => {
       await setup({ showContactManager: true, selectedStakeholders: tenants });
     });
@@ -209,7 +215,10 @@ describe('AddLeaseTenantForm component', () => {
   it('displays the number of previously selected tenants', async () => {
     await setup({
       selectedStakeholders: [
-        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+        new FormStakeholder(undefined, {
+          contact: fromContactSummary(getMockContactOrganizationWithOnePerson()),
+          stakeholderType: 'OWN',
+        }),
       ],
     });
 
@@ -221,7 +230,10 @@ describe('AddLeaseTenantForm component', () => {
   it('displays the number of previously selected payee', async () => {
     await setup({
       selectedStakeholders: [
-        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+        new FormStakeholder(undefined, {
+          contact: fromContactSummary(getMockContactOrganizationWithOnePerson()),
+          stakeholderType: 'OWN',
+        }),
       ],
       isPayableLease: true,
     });
@@ -234,7 +246,10 @@ describe('AddLeaseTenantForm component', () => {
   it('displays previously selected tenants', async () => {
     await setup({
       selectedStakeholders: [
-        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+        new FormStakeholder(undefined, {
+          contact: fromContactSummary(getMockContactOrganizationWithOnePerson()),
+          stakeholderType: 'OWN',
+        }),
       ],
     });
 
@@ -245,7 +260,12 @@ describe('AddLeaseTenantForm component', () => {
 
   it('displays Not applicable for contact when contact is a person', async () => {
     await setup({
-      selectedStakeholders: [new FormStakeholder(undefined, getMockContactPerson())],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, {
+          contact: fromContactSummary(getMockContactPerson()),
+          stakeholderType: 'OWN',
+        }),
+      ],
     });
 
     const contactMsg = screen.getByText('Not applicable');
@@ -265,7 +285,12 @@ describe('AddLeaseTenantForm component', () => {
     } as unknown as IContactSearchResult;
 
     await setup({
-      selectedStakeholders: [new FormStakeholder(undefined, organization)],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, {
+          contact: organization,
+          stakeholderType: 'OWN',
+        }),
+      ],
     });
 
     const contactMsg = screen.getByText('No contacts available');
@@ -285,7 +310,12 @@ describe('AddLeaseTenantForm component', () => {
     } as unknown as IContactSearchResult;
 
     await setup({
-      selectedStakeholders: [new FormStakeholder(undefined, organization)],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, {
+          contact: organization,
+          stakeholderType: 'OWN',
+        }),
+      ],
     });
 
     const contactMsg = screen.getByText('No contacts available');
@@ -305,7 +335,12 @@ describe('AddLeaseTenantForm component', () => {
     } as unknown as IContactSearchResult;
 
     await setup({
-      selectedStakeholders: [new FormStakeholder(undefined, organization)],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, {
+          contact: organization,
+          stakeholderType: 'OWN',
+        }),
+      ],
     });
 
     const contactMsg = screen.getByText('No contacts available');
@@ -337,7 +372,12 @@ describe('AddLeaseTenantForm component', () => {
     } as unknown as IContactSearchResult;
 
     await setup({
-      selectedStakeholders: [new FormStakeholder(undefined, organization)],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, {
+          contact: organization,
+          stakeholderType: 'OWN',
+        }),
+      ],
     });
 
     const contactPerson = screen.getByText('test testerson');
@@ -377,7 +417,9 @@ describe('AddLeaseTenantForm component', () => {
     } as unknown as IContactSearchResult;
 
     await setup({
-      selectedStakeholders: [new FormStakeholder(undefined, organization)],
+      selectedStakeholders: [
+        new FormStakeholder(undefined, { contact: organization, stakeholderType: 'OWN' }),
+      ],
     });
 
     const contactMsg = screen.getByDisplayValue('Select a contact');
@@ -388,7 +430,10 @@ describe('AddLeaseTenantForm component', () => {
   it('displays expected options for tenants', async () => {
     await setup({
       selectedStakeholders: [
-        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+        new FormStakeholder(undefined, {
+          contact: fromContactSummary(getMockContactOrganizationWithOnePerson()),
+          stakeholderType: 'OWN',
+        }),
       ],
       stakeholderTypesOptions: leaseStakeholderTypesList,
     });
@@ -409,7 +454,10 @@ describe('AddLeaseTenantForm component', () => {
   it('displays expected options for payees', async () => {
     await setup({
       selectedStakeholders: [
-        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+        new FormStakeholder(undefined, {
+          contact: fromContactSummary(getMockContactOrganizationWithOnePerson()),
+          stakeholderType: 'OWN',
+        }),
       ],
       isPayableLease: true,
       stakeholderTypesOptions: leaseStakeholderTypesList,
@@ -427,7 +475,10 @@ describe('AddLeaseTenantForm component', () => {
       component: { getByTitle },
     } = await setup({
       selectedStakeholders: [
-        new FormStakeholder(undefined, getMockContactOrganizationWithOnePerson()),
+        new FormStakeholder(undefined, {
+          contact: fromContactSummary(getMockContactOrganizationWithOnePerson()),
+          stakeholderType: 'OWN',
+        }),
       ],
     });
 

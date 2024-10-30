@@ -6,18 +6,20 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
     class="Toastify"
   />
   <div />
-  .c2 {
+  .c3 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
-.c3 {
+.c2 {
   text-align: right;
 }
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -52,13 +54,28 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
         <div
           class="col"
         >
-          Summary
+          <div
+            class="row"
+          >
+            <div
+              class="col-md-10"
+            >
+              Summary
+            </div>
+            <div
+              class="d-flex align-items-center justify-content-end pr-0 col-md-2"
+            >
+              <div
+                class="c2"
+              />
+            </div>
+          </div>
         </div>
         <div
           class="pl-8 d-flex align-items-end col-auto"
         >
           <svg
-            class="c2"
+            class="c3"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -84,9 +101,6 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
     <div
       class="collapse show"
     >
-      <div
-        class="c3 mr-3 my-1"
-      />
       <div
         class="pb-2 row"
       >

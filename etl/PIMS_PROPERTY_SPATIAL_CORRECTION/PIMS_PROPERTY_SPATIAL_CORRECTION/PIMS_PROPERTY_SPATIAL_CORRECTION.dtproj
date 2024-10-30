@@ -29,13 +29,13 @@
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
-          <SSIS:Package SSIS:Name="Package.dtsx" SSIS:EntryPoint="1" />
+          <SSIS:Package SSIS:Name="SPATIAL_CORRECTION.dtsx" SSIS:EntryPoint="1" />
         </SSIS:Packages>
         <SSIS:ConnectionManagers />
         <SSIS:DeploymentInfo>
           <SSIS:ProjectConnectionParameters />
           <SSIS:PackageInfo>
-            <SSIS:PackageMetaData SSIS:Name="Package.dtsx">
+            <SSIS:PackageMetaData SSIS:Name="SPATIAL_CORRECTION.dtsx">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">{74037122-414C-4317-B096-F0B5505A0733}</SSIS:Property>
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>

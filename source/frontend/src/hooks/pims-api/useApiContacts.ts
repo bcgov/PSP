@@ -2,9 +2,8 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
-import { IContactSearchResult } from '@/interfaces';
-import { IContact } from '@/interfaces/IContact';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 
@@ -21,11 +20,9 @@ export const useApiContacts = () => {
   return React.useMemo(
     () => ({
       getContacts: (params: IPaginateContacts | null) =>
-        api.get<ApiGen_Base_Page<IContactSearchResult>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_ContactSummary>>(
           `/contacts/search?${params ? queryString.stringify(params) : ''}`,
         ),
-      // This endpoint returns contact data in read-only form, including formatting some fields; e.g. full name = first + middle + last
-      getContact: (id: string) => api.get<IContact>(`/contacts/${id}`),
       getPersonConcept: (id: number) => api.get<ApiGen_Concepts_Person>(`/persons/concept/${id}`),
       postPerson: (person: ApiGen_Concepts_Person, userOverride: boolean) =>
         api.post<ApiGen_Concepts_Person>(`/persons?userOverride=${userOverride}`, person),

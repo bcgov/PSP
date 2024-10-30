@@ -19,7 +19,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By contactIndPrefNameInput = By.CssSelector("input[id='input-preferredName']");
         private By contactIndOrgInput = By.Id("typeahead-organization");
         private By contactIndOrgListOptions = By.CssSelector("div[id='typeahead-organization']");
-        private By contactOrgNameSelect = By.Id("typeahead-organization-item-0");
+        private By contactOrgName1stOption = By.CssSelector("div[id='typeahead-organization'] a:first-child");
 
         private By contactOrgNameInput = By.Id("input-name");
         private By contactOrgAliasInput = By.Id("input-alias");
@@ -217,9 +217,11 @@ namespace PIMS.Tests.Automation.PageObjects
             if (contact.Organization != "")
             {
                 webDriver.FindElement(contactIndOrgInput).SendKeys(contact.Organization);
+                webDriver.FindElement(contactIndOrgInput).SendKeys(Keys.Space);
+                webDriver.FindElement(contactIndOrgInput).SendKeys(Keys.Backspace);
 
-                WaitUntilClickable(contactOrgNameSelect);
-                webDriver.FindElement(contactOrgNameSelect).Click();
+                Wait(); 
+                webDriver.FindElement(contactOrgName1stOption).Click();
             }
             //Inserting contact info
             if (contact.IndEmail1 != "" && contact.IndEmailType1 != "")
@@ -674,8 +676,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(contactIndOrgInput);
                 webDriver.FindElement(contactIndOrgInput).SendKeys(contact.Organization);
 
-                WaitUntilClickable(contactOrgNameSelect);
-                webDriver.FindElement(contactOrgNameSelect).Click();
+                WaitUntilVisible(contactIndOrgListOptions);
+                webDriver.FindElement(contactOrgName1stOption).Click();
             }
 
             //Updating contact info

@@ -25,23 +25,23 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistFileInitiation6Label = By.XPath("//label[contains(text(),'Update property data in the system')]");
         private By checklistFileInitiation6Content = By.XPath("//label[contains(text(),'Update property data in the system')]/parent::div/following-sibling::div/div/div[2]/span");
 
-        private By checklistReferralApprovalsTitle = By.XPath("//h2/div/div[contains(text(),'Referrals and Approvals')]");
-        private By checklistReferralApprovals1Label = By.XPath("//label[contains(text(),'First Nations')]");
-        private By checklistReferralApprovals1Content = By.XPath("//label[contains(text(),'First Nations')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistReferralApprovals2Label = By.XPath("//label[contains(text(),'Strategic Real Estate (SRE)')]");
-        private By checklistReferralApprovals2Content = By.XPath("//label[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistReferralApprovals3Label = By.XPath("//label[contains(text(),'Regional planning')]");
-        private By checklistReferralApprovals3Content = By.XPath("//label[contains(text(),'Regional planning')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistReferralApprovals4Label = By.XPath("//label[contains(text(),'Regional Property Services')]");
-        private By checklistReferralApprovals4Content = By.XPath("//label[contains(text(),'Regional Property Services')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistReferralApprovals5Label = By.XPath("//label[contains(text(),'District')]");
-        private By checklistReferralApprovals5Content = By.XPath("//label[contains(text(),'District')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistReferralApprovals6Label = By.XPath("//label[contains(text(),'Headquarters (HQ)')]");
-        private By checklistReferralApprovals6Content = By.XPath("//label[contains(text(),'Headquarters (HQ)')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistReferralApprovals7Label = By.XPath("//label[contains(text(),'Legal review')]");
-        private By checklistReferralApprovals7Content = By.XPath("//label[contains(text(),'Legal review')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistReferralApprovals8Label = By.XPath("//label[contains(text(),'Additional reviews or approvals, if applicable')]");
-        private By checklistReferralApprovals8Content = By.XPath("//label[contains(text(),'Additional reviews or approvals, if applicable')]/parent::div/following-sibling::div/div/div[2]/span");
+        private By checklistReferralApprovalsTitle = By.XPath("//h2/div/div[contains(text(),'Approvals / Consultations')]");
+        private By checklistReferralApprovals1Label = By.XPath("//label[contains(text(),'Relevant consultations conducted and approvals obtained')]");
+        private By checklistReferralApprovals1Content = By.XPath("//label[contains(text(),'Relevant consultations conducted and approvals obtained')]/parent::div/following-sibling::div/div/div[2]/span");
+        private By checklistReferralApprovals2Label = By.XPath("//label[contains(text(),'Approval / consultation details and documents have been recorded for each instance')]");
+        private By checklistReferralApprovals2Content = By.XPath("//label[contains(text(),'Approval / consultation details and documents have been recorded for each instance')]/parent::div/following-sibling::div/div/div[2]/span");
+        //private By checklistReferralApprovals3Label = By.XPath("//label[contains(text(),'Regional planning')]");
+        //private By checklistReferralApprovals3Content = By.XPath("//label[contains(text(),'Regional planning')]/parent::div/following-sibling::div/div/div[2]/span");
+        //private By checklistReferralApprovals4Label = By.XPath("//label[contains(text(),'Regional Property Services')]");
+        //private By checklistReferralApprovals4Content = By.XPath("//label[contains(text(),'Regional Property Services')]/parent::div/following-sibling::div/div/div[2]/span");
+        //private By checklistReferralApprovals5Label = By.XPath("//label[contains(text(),'District')]");
+        //private By checklistReferralApprovals5Content = By.XPath("//label[contains(text(),'District')]/parent::div/following-sibling::div/div/div[2]/span");
+        //private By checklistReferralApprovals6Label = By.XPath("//label[contains(text(),'Headquarters (HQ)')]");
+        //private By checklistReferralApprovals6Content = By.XPath("//label[contains(text(),'Headquarters (HQ)')]/parent::div/following-sibling::div/div/div[2]/span");
+        //private By checklistReferralApprovals7Label = By.XPath("//label[contains(text(),'Legal review')]");
+        //private By checklistReferralApprovals7Content = By.XPath("//label[contains(text(),'Legal review')]/parent::div/following-sibling::div/div/div[2]/span");
+        //private By checklistReferralApprovals8Label = By.XPath("//label[contains(text(),'Additional reviews or approvals, if applicable')]");
+        //private By checklistReferralApprovals8Content = By.XPath("//label[contains(text(),'Additional reviews or approvals, if applicable')]/parent::div/following-sibling::div/div/div[2]/span");
 
         private By checklistSectionAgreementPreparationTitle = By.XPath("//h2/div/div[contains(text(),'Agreement Preparation')]");
         private By checklistAgreementPreparation1Label = By.XPath("//label[contains(text(),'Fee determination')]");
@@ -87,12 +87,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By checklistReferralsApprovals1Select = By.Id("input-checklistSections[1].items[0].statusType");
         private By checklistReferralsApprovals2Select = By.Id("input-checklistSections[1].items[1].statusType");
-        private By checklistReferralsApprovals3Select = By.Id("input-checklistSections[1].items[2].statusType");
-        private By checklistReferralsApprovals4Select = By.Id("input-checklistSections[1].items[3].statusType");
-        private By checklistReferralsApprovals5Select = By.Id("input-checklistSections[1].items[4].statusType");
-        private By checklistReferralsApprovals6Select = By.Id("input-checklistSections[1].items[5].statusType");
-        private By checklistReferralsApprovals7Select = By.Id("input-checklistSections[1].items[6].statusType");
-        private By checklistReferralsApprovals8Select = By.Id("input-checklistSections[1].items[7].statusType");
+        //private By checklistReferralsApprovals3Select = By.Id("input-checklistSections[1].items[2].statusType");
+        //private By checklistReferralsApprovals4Select = By.Id("input-checklistSections[1].items[3].statusType");
+        //private By checklistReferralsApprovals5Select = By.Id("input-checklistSections[1].items[4].statusType");
+        //private By checklistReferralsApprovals6Select = By.Id("input-checklistSections[1].items[5].statusType");
+        //private By checklistReferralsApprovals7Select = By.Id("input-checklistSections[1].items[6].statusType");
+        //private By checklistReferralsApprovals8Select = By.Id("input-checklistSections[1].items[7].statusType");
 
         private By checklistAgreementPreparation1Select = By.Id("input-checklistSections[2].items[0].statusType");
         private By checklistAgreementPreparation2Select = By.Id("input-checklistSections[2].items[1].statusType");
@@ -149,18 +149,18 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistReferralApprovals1Content);
             AssertTrueIsDisplayed(checklistReferralApprovals2Label);
             AssertTrueIsDisplayed(checklistReferralApprovals2Content);
-            AssertTrueIsDisplayed(checklistReferralApprovals3Label);
-            AssertTrueIsDisplayed(checklistReferralApprovals3Content);
-            AssertTrueIsDisplayed(checklistReferralApprovals4Label);
-            AssertTrueIsDisplayed(checklistReferralApprovals4Content);
-            AssertTrueIsDisplayed(checklistReferralApprovals5Label);
-            AssertTrueIsDisplayed(checklistReferralApprovals5Content);
-            AssertTrueIsDisplayed(checklistReferralApprovals6Label);
-            AssertTrueIsDisplayed(checklistReferralApprovals6Content);
-            AssertTrueIsDisplayed(checklistReferralApprovals7Label);
-            AssertTrueIsDisplayed(checklistReferralApprovals7Content);
-            AssertTrueIsDisplayed(checklistReferralApprovals8Label);
-            AssertTrueIsDisplayed(checklistReferralApprovals8Content);
+            //AssertTrueIsDisplayed(checklistReferralApprovals3Label);
+            //AssertTrueIsDisplayed(checklistReferralApprovals3Content);
+            //AssertTrueIsDisplayed(checklistReferralApprovals4Label);
+            //AssertTrueIsDisplayed(checklistReferralApprovals4Content);
+            //AssertTrueIsDisplayed(checklistReferralApprovals5Label);
+            //AssertTrueIsDisplayed(checklistReferralApprovals5Content);
+            //AssertTrueIsDisplayed(checklistReferralApprovals6Label);
+            //AssertTrueIsDisplayed(checklistReferralApprovals6Content);
+            //AssertTrueIsDisplayed(checklistReferralApprovals7Label);
+            //AssertTrueIsDisplayed(checklistReferralApprovals7Content);
+            //AssertTrueIsDisplayed(checklistReferralApprovals8Label);
+            //AssertTrueIsDisplayed(checklistReferralApprovals8Content);
 
             AssertTrueIsDisplayed(checklistSectionAgreementPreparationTitle);
             AssertTrueIsDisplayed(checklistAgreementPreparation1Label);
@@ -210,18 +210,18 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistReferralsApprovals1Select);
             AssertTrueIsDisplayed(checklistReferralApprovals2Label);
             AssertTrueIsDisplayed(checklistReferralsApprovals2Select);
-            AssertTrueIsDisplayed(checklistReferralApprovals3Label);
-            AssertTrueIsDisplayed(checklistReferralsApprovals3Select);
-            AssertTrueIsDisplayed(checklistReferralApprovals4Label);
-            AssertTrueIsDisplayed(checklistReferralsApprovals4Select);
-            AssertTrueIsDisplayed(checklistReferralApprovals5Label);
-            AssertTrueIsDisplayed(checklistReferralsApprovals5Select);
-            AssertTrueIsDisplayed(checklistReferralApprovals6Label);
-            AssertTrueIsDisplayed(checklistReferralsApprovals6Select);
-            AssertTrueIsDisplayed(checklistReferralApprovals7Label);
-            AssertTrueIsDisplayed(checklistReferralsApprovals7Select);
-            AssertTrueIsDisplayed(checklistReferralApprovals8Label);
-            AssertTrueIsDisplayed(checklistReferralsApprovals8Select);
+            //AssertTrueIsDisplayed(checklistReferralApprovals3Label);
+            //AssertTrueIsDisplayed(checklistReferralsApprovals3Select);
+            //AssertTrueIsDisplayed(checklistReferralApprovals4Label);
+            //AssertTrueIsDisplayed(checklistReferralsApprovals4Select);
+            //AssertTrueIsDisplayed(checklistReferralApprovals5Label);
+            //AssertTrueIsDisplayed(checklistReferralsApprovals5Select);
+            //AssertTrueIsDisplayed(checklistReferralApprovals6Label);
+            //AssertTrueIsDisplayed(checklistReferralsApprovals6Select);
+            //AssertTrueIsDisplayed(checklistReferralApprovals7Label);
+            //AssertTrueIsDisplayed(checklistReferralsApprovals7Select);
+            //AssertTrueIsDisplayed(checklistReferralApprovals8Label);
+            //AssertTrueIsDisplayed(checklistReferralsApprovals8Select);
 
             AssertTrueIsDisplayed(checklistSectionAgreementPreparationTitle);
             AssertTrueIsDisplayed(checklistAgreementPreparation1Label);
@@ -279,18 +279,18 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(checklistReferralApprovals1Content, checklist.ReferralsApprovalsSelect1);
             AssertTrueIsDisplayed(checklistReferralApprovals2Label);
             AssertTrueContentEquals(checklistReferralApprovals2Content, checklist.ReferralsApprovalsSelect2);
-            AssertTrueIsDisplayed(checklistReferralApprovals3Label);
-            AssertTrueContentEquals(checklistReferralApprovals3Content, checklist.ReferralsApprovalsSelect3);
-            AssertTrueIsDisplayed(checklistReferralApprovals4Label);
-            AssertTrueContentEquals(checklistReferralApprovals4Content, checklist.ReferralsApprovalsSelect4);
-            AssertTrueIsDisplayed(checklistReferralApprovals5Label);
-            AssertTrueContentEquals(checklistReferralApprovals5Content, checklist.ReferralsApprovalsSelect5);
-            AssertTrueIsDisplayed(checklistReferralApprovals6Label);
-            AssertTrueContentEquals(checklistReferralApprovals6Content, checklist.ReferralsApprovalsSelect6);
-            AssertTrueIsDisplayed(checklistReferralApprovals7Label);
-            AssertTrueContentEquals(checklistReferralApprovals7Content, checklist.ReferralsApprovalsSelect7);
-            AssertTrueIsDisplayed(checklistReferralApprovals8Label);
-            AssertTrueContentEquals(checklistReferralApprovals8Content, checklist.ReferralsApprovalsSelect8);
+            //AssertTrueIsDisplayed(checklistReferralApprovals3Label);
+            //AssertTrueContentEquals(checklistReferralApprovals3Content, checklist.ReferralsApprovalsSelect3);
+            //AssertTrueIsDisplayed(checklistReferralApprovals4Label);
+            //AssertTrueContentEquals(checklistReferralApprovals4Content, checklist.ReferralsApprovalsSelect4);
+            //AssertTrueIsDisplayed(checklistReferralApprovals5Label);
+            //AssertTrueContentEquals(checklistReferralApprovals5Content, checklist.ReferralsApprovalsSelect5);
+            //AssertTrueIsDisplayed(checklistReferralApprovals6Label);
+            //AssertTrueContentEquals(checklistReferralApprovals6Content, checklist.ReferralsApprovalsSelect6);
+            //AssertTrueIsDisplayed(checklistReferralApprovals7Label);
+            //AssertTrueContentEquals(checklistReferralApprovals7Content, checklist.ReferralsApprovalsSelect7);
+            //AssertTrueIsDisplayed(checklistReferralApprovals8Label);
+            //AssertTrueContentEquals(checklistReferralApprovals8Content, checklist.ReferralsApprovalsSelect8);
 
             AssertTrueIsDisplayed(checklistSectionAgreementPreparationTitle);
             AssertTrueIsDisplayed(checklistAgreementPreparation1Label);
@@ -348,18 +348,18 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(checklistReferralsApprovals1Select, checklist.ReferralsApprovalsSelect1);
             if (checklist.ReferralsApprovalsSelect2 != "")
                 ChooseSpecificSelectOption(checklistReferralsApprovals2Select, checklist.ReferralsApprovalsSelect2);
-            if (checklist.ReferralsApprovalsSelect3 != "")
-                ChooseSpecificSelectOption(checklistReferralsApprovals3Select, checklist.ReferralsApprovalsSelect3);
-            if (checklist.ReferralsApprovalsSelect4 != "")
-                ChooseSpecificSelectOption(checklistReferralsApprovals4Select, checklist.ReferralsApprovalsSelect4);
-            if (checklist.ReferralsApprovalsSelect5 != "")
-                ChooseSpecificSelectOption(checklistReferralsApprovals5Select, checklist.ReferralsApprovalsSelect5);
-            if (checklist.ReferralsApprovalsSelect6 != "")
-                ChooseSpecificSelectOption(checklistReferralsApprovals6Select, checklist.ReferralsApprovalsSelect6);
-            if (checklist.ReferralsApprovalsSelect7 != "")
-                ChooseSpecificSelectOption(checklistReferralsApprovals7Select, checklist.ReferralsApprovalsSelect7);
-            if (checklist.ReferralsApprovalsSelect8 != "")
-                ChooseSpecificSelectOption(checklistReferralsApprovals8Select, checklist.ReferralsApprovalsSelect8);
+            //if (checklist.ReferralsApprovalsSelect3 != "")
+            //    ChooseSpecificSelectOption(checklistReferralsApprovals3Select, checklist.ReferralsApprovalsSelect3);
+            //if (checklist.ReferralsApprovalsSelect4 != "")
+            //    ChooseSpecificSelectOption(checklistReferralsApprovals4Select, checklist.ReferralsApprovalsSelect4);
+            //if (checklist.ReferralsApprovalsSelect5 != "")
+            //    ChooseSpecificSelectOption(checklistReferralsApprovals5Select, checklist.ReferralsApprovalsSelect5);
+            //if (checklist.ReferralsApprovalsSelect6 != "")
+            //    ChooseSpecificSelectOption(checklistReferralsApprovals6Select, checklist.ReferralsApprovalsSelect6);
+            //if (checklist.ReferralsApprovalsSelect7 != "")
+            //    ChooseSpecificSelectOption(checklistReferralsApprovals7Select, checklist.ReferralsApprovalsSelect7);
+            //if (checklist.ReferralsApprovalsSelect8 != "")
+            //    ChooseSpecificSelectOption(checklistReferralsApprovals8Select, checklist.ReferralsApprovalsSelect8);
 
             if (checklist.AgreementPreparationSelect1 != "")
                 ChooseSpecificSelectOption(checklistAgreementPreparation1Select, checklist.AgreementPreparationSelect1);

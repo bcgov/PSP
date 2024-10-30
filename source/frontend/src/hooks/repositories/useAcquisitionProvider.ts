@@ -42,6 +42,7 @@ export const useAcquisitionProvider = () => {
     getAgreementReport,
     getCompensationReport,
     getLastUpdatedByApi,
+    getAcquisitionSubFiles,
   } = useApiAcquisitionFile();
 
   const addAcquisitionFileApi = useApiRequestWrapper<
@@ -248,6 +249,19 @@ export const useAcquisitionProvider = () => {
     ),
   });
 
+  const getAcquisitionSubFilesApi = useApiRequestWrapper<
+    (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_AcquisitionFile[], any>>
+  >({
+    requestFunction: useCallback(
+      async (acqFileId: number) => await getAcquisitionSubFiles(acqFileId),
+      [getAcquisitionSubFiles],
+    ),
+    requestName: 'getAcquisitionSubFiles',
+    onError: useAxiosErrorHandler(
+      'Failed to load acquisition file subfiles. Refresh the page to try again.',
+    ),
+  });
+
   return useMemo(
     () => ({
       addAcquisitionFile: addAcquisitionFileApi,
@@ -266,11 +280,12 @@ export const useAcquisitionProvider = () => {
       getAcquisitionFileForm8s: getAcquisitionForm8sApi,
       getAgreementsReport: getAgreementsReportApi,
       getCompensationReport: getCompensationReportApi,
+      getAcquisitionSubFiles: getAcquisitionSubFilesApi,
     }),
     [
       addAcquisitionFileApi,
-      getLastUpdatedBy,
       getAcquisitionFileApi,
+      getLastUpdatedBy,
       updateAcquisitionFileApi,
       updateAcquisitionPropertiesApi,
       getAcquisitionPropertiesApi,
@@ -284,6 +299,7 @@ export const useAcquisitionProvider = () => {
       getAcquisitionForm8sApi,
       getAgreementsReportApi,
       getCompensationReportApi,
+      getAcquisitionSubFilesApi,
     ],
   );
 };

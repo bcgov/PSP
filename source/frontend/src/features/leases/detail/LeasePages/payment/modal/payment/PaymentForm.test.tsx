@@ -167,4 +167,26 @@ describe('PaymentForm component', () => {
     const amountPreTax = await findByLabelText('Amount (before tax)');
     expect(amountPreTax).toHaveValue('$1,000.00');
   });
+
+  it('Entering a date outside of the period date range displays a warning', async () => {
+    isActualGstEligible.mockReturnValue(false);
+    const {
+      component: { container, getByText },
+    } = await setup({
+      initialValues: { ...defaultFormLeasePayment, leasePeriodId: 1, receivedDate: '2021-01-01' },
+      periods: [
+        {
+          ...FormLeasePeriod.toApi(defaultFormLeasePeriod),
+          isVariable: false,
+          id: 1,
+          startDate: '2022-01-01',
+          expiryDate: '2022-01-31',
+        },
+      ],
+    });
+
+    expect(
+      getByText('Warning - payment date is not within the duration of the selected pay period.'),
+    ).toBeVisible();
+  });
 });

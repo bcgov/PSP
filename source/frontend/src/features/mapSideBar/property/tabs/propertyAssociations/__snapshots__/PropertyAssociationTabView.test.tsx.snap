@@ -9,15 +9,18 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
   .c4 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c0 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
 .c2 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -31,6 +34,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
 
 .c3 {
   color: white;
+  background-color: #428bca;
   font-size: 1.5rem;
   border-radius: 50%;
   width: 2.5rem;

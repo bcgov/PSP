@@ -79,7 +79,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = props => {
     return (
       <MapSideBarLayout
         title={props.isEditing ? 'Update Research File' : 'Research File'}
-        icon={<MdTopic title="User Profile" size="2.5rem" />}
+        icon={<MdTopic title="Research file Icon" size={28} />}
         header={<ResearchHeader researchFile={props.researchFile} lastUpdatedBy={lastUpdatedBy} />}
         footer={
           props.isEditing && (

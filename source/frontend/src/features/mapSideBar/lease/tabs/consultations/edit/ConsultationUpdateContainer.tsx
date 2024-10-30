@@ -36,7 +36,7 @@ const ConsultationUpdateContainer: React.FunctionComponent<
 
   const {
     getLeaseConsultationById: { execute: getConsultation, loading: getConsultationLoading },
-    updateLeaseConsultation: { execute: updateConultation, loading: updateConsultationLoading },
+    updateLeaseConsultation: { execute: updateConsultation, loading: updateConsultationLoading },
   } = useConsultationProvider();
 
   const {
@@ -86,7 +86,7 @@ const ConsultationUpdateContainer: React.FunctionComponent<
     formikHelpers: FormikHelpers<ConsultationFormModel>,
   ) => {
     try {
-      const consultationSaved = await updateConultation(leaseId, values.id, values.toApi());
+      const consultationSaved = await updateConsultation(leaseId, values.id, values.toApi());
       if (consultationSaved) {
         onSuccess();
         history.push(backUrl);
