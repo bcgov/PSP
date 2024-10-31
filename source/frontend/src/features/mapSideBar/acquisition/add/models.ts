@@ -24,6 +24,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   legacyFileNumber?: string = '';
   assignedDate?: string = '';
   deliveryDate?: string = '';
+  estimatedCompletionDate?: string = '';
+  possessionDate?: string = '';
   rowVersion?: number;
   // Code Tables
   acquisitionFileStatusType?: string = '';
@@ -62,6 +64,10 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       fileName: this.fileName ?? null,
       assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
       deliveryDate: isValidIsoDateTime(this.deliveryDate) ? this.deliveryDate : null,
+      estimatedCompletionDate: isValidIsoDateTime(this.estimatedCompletionDate)
+        ? this.estimatedCompletionDate
+        : null,
+      possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
       totalAllowableCompensation: stringToNumberOrNull(this.totalAllowableCompensation),
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileStatusTypeCode: toTypeCodeNullable(this.acquisitionFileStatusType),
@@ -136,6 +142,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     // schedule
     newForm.assignedDate = parentFile.assignedDate ?? undefined;
     newForm.deliveryDate = parentFile.deliveryDate ?? undefined;
+    newForm.estimatedCompletionDate = parentFile.estimatedCompletionDate ?? undefined;
+    newForm.possessionDate = parentFile.possessionDate ?? undefined;
     // acquisition details
     newForm.fileName = '';
     newForm.legacyFileNumber = parentFile.legacyFileNumber ?? undefined;
@@ -162,6 +170,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.assignedDate = model.assignedDate ?? undefined;
     newForm.deliveryDate = model.deliveryDate ?? undefined;
+    newForm.estimatedCompletionDate = model.estimatedCompletionDate ?? undefined;
+    newForm.possessionDate = model.possessionDate ?? undefined;
     newForm.totalAllowableCompensation = model.totalAllowableCompensation || '';
     newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;
     newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode) ?? undefined;

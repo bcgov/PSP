@@ -9,6 +9,8 @@ export class DetailAcquisitionFile {
   legacyFileNumber?: string;
   assignedDate?: string;
   deliveryDate?: string;
+  estimatedCompletionDate?: string;
+  possessionDate?: string;
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
   subfileInterestTypeDescription: string | null = null;
@@ -25,6 +27,8 @@ export class DetailAcquisitionFile {
     detail.legacyFileNumber = model?.legacyFileNumber ?? undefined;
     detail.assignedDate = model?.assignedDate ?? undefined;
     detail.deliveryDate = model?.deliveryDate ?? undefined;
+    detail.estimatedCompletionDate = model?.estimatedCompletionDate ?? undefined;
+    detail.possessionDate = model?.possessionDate ?? undefined;
     detail.acquisitionPhysFileStatusTypeDescription =
       model?.acquisitionPhysFileStatusTypeCode?.description ?? undefined;
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;

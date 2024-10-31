@@ -99,6 +99,15 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         >
           {prettyFormatDate(detail.deliveryDate)}
         </SectionField>
+        <SectionField
+          label="Estimated date"
+          tooltip="Estimated date by which the acquisition would be completed"
+        >
+          {prettyFormatDate(detail.estimatedCompletionDate)}
+        </SectionField>
+        <SectionField label="Possession date">
+          {prettyFormatDate(detail.possessionDate)}
+        </SectionField>
       </Section>
       <Section header="Acquisition Details">
         <SectionField label="Acquisition file name">{detail.fileName}</SectionField>

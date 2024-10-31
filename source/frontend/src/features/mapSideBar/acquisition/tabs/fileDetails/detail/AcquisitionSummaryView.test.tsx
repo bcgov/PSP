@@ -166,6 +166,22 @@ describe('AcquisitionSummaryView component', () => {
     expect(getByText('legacy file number')).toBeVisible();
   });
 
+  it('renders acquisition-related dates', async () => {
+    const { getByText } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          estimatedCompletionDate: '2030-01-10T00:00:00',
+          possessionDate: '2035-03-10T00:00:00',
+        },
+      },
+      { claims: [] },
+    );
+    await waitForEffects();
+    expect(getByText('Jan 10, 2030')).toBeVisible();
+    expect(getByText('Mar 10, 2035')).toBeVisible();
+  });
+
   it('renders owner solicitor information with primary contact', async () => {
     const { findByText } = setup(
       { acquisitionFile: mockAcquisitionFileResponse() },
