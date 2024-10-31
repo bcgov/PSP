@@ -12,6 +12,7 @@ import { withNameSpace } from '@/utils/formUtils';
 export interface INotesModalProps<T> {
   notesLabel: ReactNode;
   title: string;
+  description: string;
   nameSpace?: string;
   onSave?: (values: T) => void;
   field?: string;
@@ -23,6 +24,7 @@ export const NotesModal = <T,>({
   onSave,
   notesLabel,
   title,
+  description,
   field,
   initialValues,
 }: INotesModalProps<T>) => {
@@ -39,7 +41,7 @@ export const NotesModal = <T,>({
 
   return (
     <StyledIconButton
-      title="notes"
+      title={description}
       onClick={() => {
         setModalContent({
           variant: 'info',
@@ -54,7 +56,7 @@ export const NotesModal = <T,>({
               <>
                 {notesLabel}
                 <TextArea field={fieldWithNameSpace} data-testid="note-field"></TextArea>
-                Would you like to save these notes?
+                Would you like to save these {description}?
               </>
             </Formik>
           ),

@@ -708,7 +708,7 @@ exports[`AccessRequestForm component > renders as expected 1`] = `
         <label
           class="c0"
         >
-          Notes:
+          Comments:
         </label>
       </div>
       <div

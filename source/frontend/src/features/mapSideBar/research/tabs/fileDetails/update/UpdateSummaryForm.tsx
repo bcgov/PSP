@@ -199,7 +199,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
             ]}
           />
         </SectionField>
-        <SectionField label="Expropriation notes" />
+        <SectionField label="Expropriation comments" />
         <TextArea field="expropriationNotes" required />
       </Section>
       <ContactManagerModal

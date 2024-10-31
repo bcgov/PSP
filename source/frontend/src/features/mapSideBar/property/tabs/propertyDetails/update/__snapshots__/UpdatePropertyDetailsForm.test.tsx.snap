@@ -2083,7 +2083,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
           <div
             class="col"
           >
-            Notes
+            Comments
           </div>
         </div>
       </h2>
