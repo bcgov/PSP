@@ -83,7 +83,7 @@ const AcquisitionDetailSubForm: React.FC<{
   const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
   const ownerSolicitorContact = values.ownerSolicitor.contact;
-  const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTERETST_TYPES);
+  const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTEREST_TYPES);
 
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {

@@ -136,7 +136,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
-  const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTERETST_TYPES);
+  const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTEREST_TYPES);
 
   const isSubFile = exists(parentId) && isValidId(parentId);
 
