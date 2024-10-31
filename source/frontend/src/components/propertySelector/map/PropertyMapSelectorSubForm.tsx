@@ -18,9 +18,7 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
   const pid = selectedMapProperty?.pid;
   const pin = selectedMapProperty?.pin;
   const planNumber = selectedMapProperty?.planNumber;
-  const legalDescription =
-    selectedProperty?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
-    selectedProperty?.parcelFeature?.properties?.LEGAL_DESCRIPTION;
+  const legalDescription = selectedMapProperty?.legalDescription;
   const address = selectedMapProperty?.address;
   const region = selectedMapProperty?.region;
   const regionName = selectedMapProperty?.regionName;

@@ -31,7 +31,7 @@ export const useDocumentProvider = () => {
     downloadWrappedDocumentFileLatestApiCall,
     streamDocumentFileLatestApiCall,
     streamDocumentFileApiCall,
-    updateDocumentMetadataApiCall,
+    updateDocumentApiCall,
     getDocumentTypesApiCall,
     downloadDocumentFilePageImageApiCall,
     getDocumentFilePageListApiCall,
@@ -141,7 +141,7 @@ export const useDocumentProvider = () => {
       }, []),
     });
 
-  // Provides functionality for uploading a document metadata
+  // Provides functionality for updating a document's type, stauts and metadata.
   const { execute: updateDocument, loading: updateDocumentLoading } = useApiRequestWrapper<
     (
       documentId: number,
@@ -150,10 +150,10 @@ export const useDocumentProvider = () => {
   >({
     requestFunction: useCallback(
       async (documentId: number, updateRequest: ApiGen_Requests_DocumentUpdateRequest) =>
-        await updateDocumentMetadataApiCall(documentId, updateRequest),
-      [updateDocumentMetadataApiCall],
+        await updateDocumentApiCall(documentId, updateRequest),
+      [updateDocumentApiCall],
     ),
-    requestName: 'updateDocumentMetadataApiCall',
+    requestName: 'updateDocumentApiCall',
     onError: useCallback((axiosError: AxiosError<IApiError>) => {
       if (axiosError?.response?.status === 400) {
         toast.error(axiosError?.response.data.error);

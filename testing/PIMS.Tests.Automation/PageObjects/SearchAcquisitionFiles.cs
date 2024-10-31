@@ -1,60 +1,58 @@
-﻿
-
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class SearchAcquisitionFiles : PageObjectBase
     {
-        private By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
-        private By searchAcquisitionButton = By.XPath("//a[contains(text(),'Manage Acquisition Files')]");
+        private readonly By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
+        private readonly By searchAcquisitionButton = By.XPath("//a[contains(text(),'Manage Acquisition Files')]");
 
         //Acquisition File Search Filters Elements
-        private By searchAcquisitionFileTitle = By.XPath("//h3[contains(text(),'Acquisition Files')]");
+        private readonly By searchAcquisitionFileTitle = By.XPath("//h3[contains(text(),'Acquisition Files')]");
 
-        private By searchAcquisitionFileSearchBySelect = By.Id("input-searchBy");
-        private By searchAcquisitionFileSearchByAddressInput = By.Id("input-address");
-        private By searchAcquisitionFileSearchByPIDInput = By.Id("input-pid");
-        private By searchAcquisitionFileSearchByPINInput = By.Id("input-pin");
-        private By searchAcquisitionFileNameInput = By.Id("input-acquisitionFileNameOrNumber");
-        private By searchAcquisitionFileTeamMemberSelect = By.Id("multiselect-acquisitionTeamMembers");
-        private By searchAcquisitionFileTeamMemberOptions = By.CssSelector("div[id='multiselect-acquisitionTeamMembers'] ul[class='optionContainer']");
-        private By searchAcquisitionFileTeamMember1stOption = By.CssSelector("div[id='multiselect-acquisitionTeamMembers'] ul[class='optionContainer'] li:nth-child(1)");
-        private By searchAcquisitionFileStatusSelect = By.Id("input-acquisitionFileStatusTypeCode");
-        private By searchAcquisitionFileProjectInput = By.Id("input-projectNameOrNumber");
-        private By searchAcquisitionFileSearchButton = By.Id("search-button");
-        private By searchAcquisitionFileResetButton = By.Id("reset-button");
-        private By searchAcquisitionFileCreateNewButton = By.XPath("//button[@type='button']/div[contains(text(),'Create an acquisition file')]/parent::button");
+        private readonly By searchAcquisitionFileSearchBySelect = By.Id("input-searchBy");
+        private readonly By searchAcquisitionFileSearchByAddressInput = By.Id("input-address");
+        private readonly By searchAcquisitionFileSearchByPIDInput = By.Id("input-pid");
+        private readonly By searchAcquisitionFileSearchByPINInput = By.Id("input-pin");
+        private readonly By searchAcquisitionFileNameInput = By.Id("input-acquisitionFileNameOrNumber");
+        private readonly By searchAcquisitionFileTeamMemberSelect = By.Id("multiselect-acquisitionTeamMembers");
+        private readonly By searchAcquisitionFileTeamMemberOptions = By.CssSelector("div[id='multiselect-acquisitionTeamMembers'] ul[class='optionContainer']");
+        private readonly By searchAcquisitionFileTeamMember1stOption = By.CssSelector("div[id='multiselect-acquisitionTeamMembers'] ul[class='optionContainer'] li:nth-child(1)");
+        private readonly By searchAcquisitionFileStatusSelect = By.Id("input-acquisitionFileStatusTypeCode");
+        private readonly By searchAcquisitionFileProjectInput = By.Id("input-projectNameOrNumber");
+        private readonly By searchAcquisitionFileSearchButton = By.Id("search-button");
+        private readonly By searchAcquisitionFileResetButton = By.Id("reset-button");
+        private readonly By searchAcquisitionFileCreateNewButton = By.XPath("//button[@type='button']/div[contains(text(),'Create an acquisition file')]/parent::button");
 
         //Acquisition Files List Elements
-        private By searchAcquisitionFileNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Acquisition file #')]");
-        private By searchAcquisitionOrderFileNumberBttn = By.CssSelector("div[data-testid='sort-column-fileNumber']");
-        private By searchAcquisitionLegacyNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical file #')]");
-        private By searchAcquisitionOrderLegacyNumberBttn = By.CssSelector("div[data-testid='sort-column-legacyFileNumber']");
-        private By searchAcquisitionFileNameHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Acquisition file name')]");
-        private By searchAcquisitionOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
-        private By searchAcquisitionFileMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTI Region')]");
-        private By searchAcquisitionFileProjectHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project')]");
-        private By searchAcquisitionFileAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address')]");
-        private By searchAcquisitionFileStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
-        private By searchAcquisitionFileTableContent = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By searchAcquisitionFileNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Acquisition file #')]");
+        private readonly By searchAcquisitionOrderFileNumberBttn = By.CssSelector("div[data-testid='sort-column-fileNumber']");
+        private readonly By searchAcquisitionLegacyNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical file #')]");
+        private readonly By searchAcquisitionOrderLegacyNumberBttn = By.CssSelector("div[data-testid='sort-column-legacyFileNumber']");
+        private readonly By searchAcquisitionFileNameHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Acquisition file name')]");
+        private readonly By searchAcquisitionOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
+        private readonly By searchAcquisitionFileMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTI Region')]");
+        private readonly By searchAcquisitionFileProjectHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project')]");
+        private readonly By searchAcquisitionFileAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address')]");
+        private readonly By searchAcquisitionFileStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
+        private readonly By searchAcquisitionFileTableContent = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Search Acquisition File Pagination
-        private By searchAcquisitionFilePaginationMenu = By.CssSelector("div[class='Menu-root']");
-        private By searchAcquisitionPaginationList = By.CssSelector("ul[class='pagination']");
+        private readonly By searchAcquisitionFilePaginationMenu = By.CssSelector("div[class='Menu-root']");
+        private readonly By searchAcquisitionPaginationList = By.CssSelector("ul[class='pagination']");
 
         //Acquisition File Sort and 1st Result Elements
-        private By searchAcquisitionFile1stResult = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
-        private By searchAcquisitionFile1stResultLink = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
-        private By searchAcquisitionFile1stResultHistoricalFile = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
-        private By searchAcquisitionFile1stResultName = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
-        private By searchAcquisitionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
-        private By searchAcquisitionFile1stResultProject = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(5)");
-        private By searchAcquisitionFile1stResultAddress = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td'] div[class='w-100'] div");
-        private By searchAcquisitionFile1stResultStatus = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
+        private readonly By searchAcquisitionFile1stResult = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
+        private readonly By searchAcquisitionFile1stResultLink = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
+        private readonly By searchAcquisitionFile1stResultHistoricalFile = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
+        private readonly By searchAcquisitionFile1stResultName = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
+        private readonly By searchAcquisitionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
+        private readonly By searchAcquisitionFile1stResultProject = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(5)");
+        private readonly By searchAcquisitionFile1stResultAddress = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td'] div[class='w-100'] div");
+        private readonly By searchAcquisitionFile1stResultStatus = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
 
-        private By searchAcquisitionFileHeaderCode = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
+        private readonly By searchAcquisitionFileHeaderCode = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
        
 
         public SearchAcquisitionFiles(IWebDriver webDriver) : base(webDriver)

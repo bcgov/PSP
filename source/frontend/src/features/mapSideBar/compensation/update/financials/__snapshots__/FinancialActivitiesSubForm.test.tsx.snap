@@ -50,15 +50,37 @@ exports[`FinancialActivitiesSubForm  component > renders as expected 1`] = `
 .c0.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c0.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c0.btn.btn-primary:hover,
+.c0.btn.btn-primary:active,
+.c0.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c0.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c0.btn.btn-secondary:hover,
+.c0.btn.btn-secondary:active,
+.c0.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c0.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`FinancialActivitiesSubForm  component > renders as expected 1`] = `
 .c0.btn.btn-info:hover,
 .c0.btn.btn-info:active,
 .c0.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c0.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c0.btn.btn-light:hover,
+.c0.btn.btn-light:active,
+.c0.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c0.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c0.btn.btn-dark:hover,
+.c0.btn.btn-dark:active,
+.c0.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c0.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c0.btn.btn-danger:hover,
+.c0.btn.btn-danger:active,
+.c0.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c0.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c0.btn.btn-warning:hover,
+.c0.btn.btn-warning:active,
+.c0.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c0.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`FinancialActivitiesSubForm  component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c0.btn.btn-link:hover,
 .c0.btn.btn-link:active,
 .c0.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,6 +184,7 @@ exports[`FinancialActivitiesSubForm  component > renders as expected 1`] = `
 
 .c0.btn.btn-link:disabled,
 .c0.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }

@@ -5,74 +5,73 @@ namespace PIMS.Tests.Automation.PageObjects
     public class SharedFileProperties : PageObjectBase
     {
         //Search Properties Section Elements
-        private By searchSectionTitle = By.XPath("//div[contains(text(),'Properties to include in this file')]");
-        private By searchSectionInstructions = By.XPath("//div[contains(text(),'Properties to include in this file')]/parent::div/parent::h2/following-sibling::div/div[1]");
+        private readonly By searchSectionTitle = By.XPath("//div[contains(text(),'Properties to include in this file')]");
+        private readonly By searchSectionInstructions = By.XPath("//div[contains(text(),'Properties to include in this file')]/parent::div/parent::h2/following-sibling::div/div[1]");
 
         //Locate on Map Elements
-        private By locateOnMapTab = By.XPath("//a[contains(text(),'Locate on Map')]");
-        private By locateOnMapSubtitle = By.XPath("//h3[contains(text(), 'Select a property')]");
-        private By locateOnMapBlueIcon = By.Id("Layer_2");
-        private By locateOnMapInstuction1 = By.XPath("//li[contains(text(),'Single-click blue marker above')]");
-        private By locateOnMapInstuction2 = By.XPath("//li[contains(text(),'Mouse to a parcel on the map')]");
-        private By locateOnMapInstuction3 = By.XPath("//li[contains(text(),'Single-click on parcel to select it')]");
-        private By locateOnMapSelectedLabel = By.XPath("//div[contains(text(),'Selected property attributes')]");
-        private By locateOnMapPIDLabel = By.XPath("//label[contains(text(),'PID')]");
-        private By locateOnMapPlanLabel = By.XPath("//label[contains(text(),'Plan #')]");
-        private By locateOnMapAddressLabel = By.XPath("//label[contains(text(),'Address')]");
-        private By locateOnMapRegionLabel = By.XPath("//label[contains(text(),'Region')]");
-        private By locateOnMapDistrictLabel = By.XPath("//label[contains(text(),'District')]");
-        private By locateOnMapLegalDescriptionLabel = By.XPath("//label[contains(text(),'Legal Description')]");
+        private readonly By locateOnMapTab = By.XPath("//a[contains(text(),'Locate on Map')]");
+        private readonly By locateOnMapSubtitle = By.XPath("//h3[contains(text(), 'Select a property')]");
+        private readonly By locateOnMapBlueIcon = By.Id("Layer_2");
+        private readonly By locateOnMapInstuction1 = By.XPath("//li[contains(text(),'Single-click blue marker above')]");
+        private readonly By locateOnMapInstuction2 = By.XPath("//li[contains(text(),'Mouse to a parcel on the map')]");
+        private readonly By locateOnMapInstuction3 = By.XPath("//li[contains(text(),'Single-click on parcel to select it')]");
+        private readonly By locateOnMapSelectedLabel = By.XPath("//div[contains(text(),'Selected property attributes')]");
+        private readonly By locateOnMapPIDLabel = By.XPath("//label[contains(text(),'PID')]");
+        private readonly By locateOnMapPlanLabel = By.XPath("//label[contains(text(),'Plan #')]");
+        private readonly By locateOnMapAddressLabel = By.XPath("//label[contains(text(),'Address')]");
+        private readonly By locateOnMapRegionLabel = By.XPath("//label[contains(text(),'Region')]");
+        private readonly By locateOnMapDistrictLabel = By.XPath("//label[contains(text(),'District')]");
+        private readonly By locateOnMapLegalDescriptionLabel = By.XPath("//label[contains(text(),'Legal Description')]");
 
         //Search Tab Elements
-        private By searchByTab = By.XPath("//a[contains(text(),'Search')]");
-        private By searchBySubtitle = By.XPath("//h3[contains(text(), 'Search for a property')]");
-        private By searchBySelect = By.Id("input-searchBy");
-        private By searchByPIDInput = By.Id("input-pid");
-        private By searchByPINInput = By.Id("input-pin");
-        private By searchByAddressInput = By.Id("input-address");
-        private By searchByAddressInputSuggestionList = By.CssSelector("div[class='suggestionList']");
-        private By searchByAddressSuggestion1stOption = By.CssSelector("div[class='suggestionList'] option:nth-child(1)");
-        private By searchByPlanInput = By.Id("input-planNumber");
-        private By searchByLegalDescriptionInput = By.Id("input-legalDescription");
-        private By searchByButton = By.Id("search-button");
-        private By searchResetButton = By.Id("reset-button");
+        private readonly By searchByTab = By.XPath("//a[contains(text(),'Search')]");
+        private readonly By searchBySubtitle = By.XPath("//h3[contains(text(), 'Search for a property')]");
+        private readonly By searchBySelect = By.Id("input-searchBy");
+        private readonly By searchByPIDInput = By.Id("input-pid");
+        private readonly By searchByPINInput = By.Id("input-pin");
+        private readonly By searchByAddressInput = By.Id("input-address");
+        private readonly By searchByAddressInputSuggestionList = By.CssSelector("div[class='suggestionList']");
+        private readonly By searchByAddressSuggestion1stOption = By.CssSelector("div[class='suggestionList'] option:nth-child(1)");
+        private readonly By searchByPlanInput = By.Id("input-planNumber");
+        private readonly By searchByLegalDescriptionInput = By.Id("input-legalDescription");
+        private readonly By searchByButton = By.Id("search-button");
+        private readonly By searchResetButton = By.Id("reset-button");
 
         //Search Results Elements
-        private By searchPropertiesResultTableHeader = By.CssSelector("div[class='thead thead-light']");
-        private By searchPropsResultSelectAllInput = By.CssSelector("input[data-testid='selectrow-parent']");
-        private By searchPropResultsPIDHeader = By.XPath("//div[@class='th']/div[contains(text(), 'PID')]");
-        private By searchPropResultsPINHeader = By.XPath("//div[@class='th']/div[contains(text(), 'PIN')]");
-        private By searchPropResultsPlanHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Plan #')]");
-        private By searchPropResultsAddressHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Address')]");
-        private By searchPropResultsLegalDescriptHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Legal Description')]");
+        private readonly By searchPropertiesResultTableHeader = By.CssSelector("div[class='thead thead-light']");
+        private readonly By searchPropsResultSelectAllInput = By.CssSelector("input[data-testid='selectrow-parent']");
+        private readonly By searchPropResultsPIDHeader = By.XPath("//div[@class='th']/div[contains(text(), 'PID')]");
+        private readonly By searchPropResultsPINHeader = By.XPath("//div[@class='th']/div[contains(text(), 'PIN')]");
+        private readonly By searchPropResultsPlanHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Plan #')]");
+        private readonly By searchPropResultsAddressHeader = By.XPath("//div[@class='th']/div[contains(text(), 'Address')]");
 
-        private By searchPropertiesNoRowsResult = By.CssSelector("div[data-testid='map-properties'] div[class='no-rows-message']");
-        private By searchProperties1stResultAddressOptions = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
-        private By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
+        private readonly By searchPropertiesNoRowsResult = By.CssSelector("div[data-testid='map-properties'] div[class='no-rows-message']");
+        private readonly By searchProperties1stResultAddressOptions = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
+        private readonly By searchProperties1stResultPropCheckbox = By.CssSelector("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td']:nth-child(1) input");
 
-        private By searchPropertiesAddSelectionBttn = By.XPath("//button/div[contains(text(),'Add to selection')]");
+        private readonly By searchPropertiesAddSelectionBttn = By.XPath("//button/div[contains(text(),'Add to selection')]");
 
         //Selected Properties Elements
-        private By searchPropertiesSelectedPropertiesSubtitle = By.XPath("//div[contains(text(),'Selected properties')]");
-        private By searchPropertiesSelectedIdentifierHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Identifier')]");
-        private By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
-        private By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
-        private By searchPropertiesSelectedDefault = By.XPath("//span[contains(text(),'No Properties selected')]");
-        private By searchPropertiesPropertiesInFileTotal = By.CssSelector("div[class='align-items-center mb-3 no-gutters row']");
-        private By searchPropertiesPropertiesInLeaseTotal = By.CssSelector("div[class='align-items-center my-3 no-gutters row']");
+        private readonly By searchPropertiesSelectedPropertiesSubtitle = By.XPath("//div[contains(text(),'Selected properties')]");
+        private readonly By searchPropertiesSelectedIdentifierHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Identifier')]");
+        private readonly By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
+        private readonly By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
+        private readonly By searchPropertiesSelectedDefault = By.XPath("//span[contains(text(),'No Properties selected')]");
+        private readonly By searchPropertiesPropertiesInFileTotal = By.CssSelector("div[class='align-items-center mb-3 no-gutters row']");
+        private readonly By searchPropertiesPropertiesInLeaseTotal = By.CssSelector("div[class='align-items-center my-3 no-gutters row']");
 
         //File - Edit Properties button
-        private By fileEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
+        private readonly By fileEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
         //File - Properties Elements
-        private By acquisitionProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
+        private readonly By acquisitionProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-row-1'] div:nth-child(3)");
 
         //File Confirmation Modal Elements
-        private By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
         //private By propertiesFileMOTIInventoryModal = By.XPath("//div[@role='dialog'][2]/div/div/div[contains(text(),'You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?')]");
 
         //Toast Element
-        private By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
+        private readonly By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
 
         private SharedModals sharedModals;
 
@@ -175,7 +174,6 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(searchProperties1stResultPropCheckbox);
 
             webDriver.FindElement(searchPropertiesAddSelectionBttn).Click();
-
 
             Wait();
             if (webDriver.FindElements(duplicatePropToast).Count() == 1)
@@ -281,12 +279,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchPropResultsPINHeader);
             AssertTrueIsDisplayed(searchPropResultsPlanHeader);
             AssertTrueIsDisplayed(searchPropResultsAddressHeader);
-            //AssertTrueIsDisplayed(searchPropResultsLegalDescriptHeader);
         }
 
         public void NavigateToAddPropertiesToFile()
         {
-            WaitUntilVisible(fileEditPropertiesBttn);
+            Wait();
             webDriver.FindElement(fileEditPropertiesBttn).Click();
         }
 
@@ -303,6 +300,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilClickable(chosenProperty);
             webDriver.FindElement(chosenProperty).Click();
+        }
+
+        public void ResetSearch()
+        {
+            Wait();
+            webDriver.FindElement(searchResetButton).Click();
         }
 
         public void DeleteLastPropertyFromFile()
@@ -333,13 +336,13 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             var propertyIndex = webDriver.FindElements(searchPropertiesPropertiesInLeaseTotal).Count();
 
-            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row'][" + propertyIndex + "]/div[3]/button"));
-            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row'][" + propertyIndex + "]/div[3]/button")).Click();
+            WaitUntilClickable(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row'][" + propertyIndex + "]/div[4]/button"));
+            webDriver.FindElement(By.XPath("//h2/div/div[contains(text(),'Selected properties')]/parent::div/parent::h2/following-sibling::div/div[@class='align-items-center my-3 no-gutters row'][" + propertyIndex + "]/div[4]/button")).Click();
 
-            Wait(2000);
+            Wait();
             if (webDriver.FindElements(propertiesFileConfirmationModal).Count > 0)
             {
-                Assert.True(sharedModals.ModalHeader() == "Removing Property from form");
+                Assert.True(sharedModals.ModalHeader() == "Removing Property from Lease/Licence");
                 Assert.True(sharedModals.ModalContent() == "Are you sure you want to remove this property from this lease/licence?");
 
                 sharedModals.ModalClickOKBttn();

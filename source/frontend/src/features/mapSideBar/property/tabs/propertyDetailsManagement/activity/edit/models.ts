@@ -193,6 +193,7 @@ export class PropertyActivityFormModel {
 
     return apiActivity;
   }
+
   static fromApi(model: ApiGen_Concepts_PropertyActivity | undefined): PropertyActivityFormModel {
     const formModel = new PropertyActivityFormModel();
     if (exists(model)) {

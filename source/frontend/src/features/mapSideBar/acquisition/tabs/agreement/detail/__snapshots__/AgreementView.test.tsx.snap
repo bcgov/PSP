@@ -50,15 +50,37 @@ exports[`AgreementView component > renders as expected 1`] = `
 .c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c7.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c7.btn.btn-primary:hover,
+.c7.btn.btn-primary:active,
+.c7.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c7.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c7.btn.btn-secondary:hover,
+.c7.btn.btn-secondary:active,
+.c7.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c7.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`AgreementView component > renders as expected 1`] = `
 .c7.btn.btn-info:hover,
 .c7.btn.btn-info:active,
 .c7.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c7.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c7.btn.btn-light:hover,
+.c7.btn.btn-light:active,
+.c7.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c7.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c7.btn.btn-dark:hover,
+.c7.btn.btn-dark:active,
+.c7.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c7.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-danger:hover,
+.c7.btn.btn-danger:active,
+.c7.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c7.btn.btn-warning:hover,
+.c7.btn.btn-warning:active,
+.c7.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`AgreementView component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c7.btn.btn-link:hover,
 .c7.btn.btn-link:active,
 .c7.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,6 +184,7 @@ exports[`AgreementView component > renders as expected 1`] = `
 
 .c7.btn.btn-link:disabled,
 .c7.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -141,18 +213,32 @@ exports[`AgreementView component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c8 {
+.c8.btn.btn-primary,
+.c8.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
+}
+
+.c9 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c0 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
 .c2 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -164,14 +250,14 @@ exports[`AgreementView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c10.required::before {
+.c11.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c9 {
+.c10 {
   font-weight: bold;
 }
 
@@ -233,14 +319,14 @@ exports[`AgreementView component > renders as expected 1`] = `
 }
 
 .c4 {
-  border: solid 0.2rem;
+  border: solid 0.2rem var(--theme-blue-90);
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
 }
 
-.c11 {
+.c12 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
@@ -304,7 +390,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                         class="c6"
                       >
                         <button
-                          class="c7 Button btn btn-primary"
+                          class="c7 Button c8 btn btn-primary"
                           type="button"
                         >
                           <div
@@ -355,7 +441,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pl-8 d-flex align-items-end col-auto"
                 >
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -388,13 +474,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Agreement status:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   Draft
                 </div>
@@ -406,13 +492,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Legal survey plan:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
@@ -422,13 +508,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Agreement type:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   License Of Occupation (H0074)
                 </div>
@@ -440,13 +526,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Agreement date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
@@ -456,13 +542,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Commencement date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
@@ -472,13 +558,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Completion date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
@@ -488,13 +574,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Termination date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
@@ -504,17 +590,17 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Possession date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
-                class="c11"
+                class="c12"
               >
                 Financial
               </div>
@@ -525,13 +611,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Purchase price:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
@@ -541,7 +627,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Deposit due no later than:
                     <span>
@@ -569,7 +655,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
@@ -579,13 +665,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Deposit amount:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
             </div>
@@ -617,7 +703,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                         class="c6"
                       >
                         <button
-                          class="c7 Button btn btn-primary"
+                          class="c7 Button c8 btn btn-primary"
                           type="button"
                         >
                           <div
@@ -668,7 +754,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pl-8 d-flex align-items-end col-auto"
                 >
                   <svg
-                    class="c8"
+                    class="c9"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -701,13 +787,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Agreement status:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   Draft
                 </div>
@@ -719,13 +805,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Legal survey plan:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 />
               </div>
               <div
@@ -735,13 +821,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Agreement type:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   Test type 2 (ABCD)
                 </div>
@@ -753,13 +839,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Agreement date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   Apr 5, 2023
                 </div>
@@ -771,13 +857,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Completion date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   Apr 5, 2023
                 </div>
@@ -789,13 +875,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Termination date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   Apr 5, 2023
                 </div>
@@ -807,19 +893,19 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Possession date:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   Apr 5, 2023
                 </div>
               </div>
               <div
-                class="c11"
+                class="c12"
               >
                 Financial
               </div>
@@ -830,13 +916,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Purchase price:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   $2,000.00
                 </div>
@@ -848,7 +934,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Deposit due no later than:
                     <span>
@@ -876,7 +962,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   <span>
                     20 
@@ -893,13 +979,13 @@ exports[`AgreementView component > renders as expected 1`] = `
                   class="pr-0 text-left col-6"
                 >
                   <label
-                    class="c9"
+                    class="c10"
                   >
                     Deposit amount:
                   </label>
                 </div>
                 <div
-                  class="c10 text-left col"
+                  class="c11 text-left col"
                 >
                   $1,000.00
                 </div>

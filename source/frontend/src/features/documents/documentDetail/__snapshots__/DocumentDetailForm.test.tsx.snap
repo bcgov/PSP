@@ -45,15 +45,37 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
 .c9.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
+.c9.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c9.btn.btn-primary:hover,
+.c9.btn.btn-primary:active,
+.c9.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c9.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c9.btn.btn-secondary:hover,
+.c9.btn.btn-secondary:active,
+.c9.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c9.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -63,20 +85,66 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
 .c9.btn.btn-info:hover,
 .c9.btn.btn-info:active,
 .c9.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c9.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c9.btn.btn-light:hover,
+.c9.btn.btn-light:active,
+.c9.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c9.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c9.btn.btn-dark:hover,
+.c9.btn.btn-dark:active,
+.c9.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c9.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c9.btn.btn-danger:hover,
+.c9.btn.btn-danger:active,
+.c9.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c9.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c9.btn.btn-warning:hover,
+.c9.btn.btn-warning:active,
+.c9.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -93,11 +161,14 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c9.btn.btn-link:hover,
 .c9.btn.btn-link:active,
 .c9.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -108,6 +179,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
 
 .c9.btn.btn-link:disabled,
 .c9.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
@@ -138,7 +210,8 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
 
 .c5 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -174,7 +247,8 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   margin-bottom: 1rem;
   text-align: left;
   padding-top: 1rem;
-  border-bottom: solid 0.1rem;
+  color: var(--theme-blue-100);
+  border-bottom: solid 0.1rem var(--theme-blue-90);
 }
 
 .c7 {
@@ -220,25 +294,6 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
       <div
         class="pb-4"
       >
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c1"
-            >
-              Document type
-              :
-            </label>
-          </div>
-          <div
-            class="c2 text-left col"
-          >
-            Survey
-          </div>
-        </div>
         <div
           class="pb-3 row"
         >
@@ -332,6 +387,368 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
           <div
             class="c6 c7"
           >
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c1"
+                >
+                  Document type
+                  :
+                </label>
+              </div>
+              <div
+                class="c2 required text-left col"
+              >
+                <div
+                  class="mb-0 form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-documentTypeId"
+                    name="documentTypeId"
+                  >
+                    <option
+                      value=""
+                    >
+                      Select Document type
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-36"
+                      value="36"
+                    >
+                      Affidavit of service
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-34"
+                      value="34"
+                    >
+                      Approval of expropriation (Form 5)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-24"
+                      value="24"
+                    >
+                      Appraisals/Reviews
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-17"
+                      value="17"
+                    >
+                      BC assessment search
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-43"
+                      value="43"
+                    >
+                      Briefing notes
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-14"
+                      value="14"
+                    >
+                      Canada lands survey
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-41"
+                      value="41"
+                    >
+                      Certificate of Insurance (H0111)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-29"
+                      value="29"
+                    >
+                      Compensation cheque
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-10"
+                      value="10"
+                    >
+                      Correspondence
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-28"
+                      value="28"
+                    >
+                      Compensation requisition (H-120)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-22"
+                      value="22"
+                    >
+                      Company search
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-30"
+                      value="30"
+                    >
+                      Condition of entry (H0443)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-8"
+                      value="8"
+                    >
+                      Crown grant
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-18"
+                      value="18"
+                    >
+                      District road register
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-19"
+                      value="19"
+                    >
+                      Field notes
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-38"
+                      value="38"
+                    >
+                      First nations consultation
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-3"
+                      value="3"
+                    >
+                      Gazette
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-9"
+                      value="9"
+                    >
+                      Historical file
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-21"
+                      value="21"
+                    >
+                      Lease / License (H1005/H1005A)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-47"
+                      value="47"
+                    >
+                      Legal correspondence (ex: to AG/external lawyers)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-5"
+                      value="5"
+                    >
+                      Legal survey plan
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-23"
+                      value="23"
+                    >
+                      LTSA documents and plans (except title search)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-15"
+                      value="15"
+                    >
+                      Ministerial order
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-12"
+                      value="12"
+                    >
+                      Miscellaneous notes (LTSA)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-4"
+                      value="4"
+                    >
+                      MoTI plan
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-31"
+                      value="31"
+                    >
+                      Notice of advanced payment (Form 8)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-40"
+                      value="40"
+                    >
+                      Notice of claims/Litigation documents
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-33"
+                      value="33"
+                    >
+                      Notice of expropriation (Form 1)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-37"
+                      value="37"
+                    >
+                      Notice of possible entry (H0224)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-6"
+                      value="6"
+                    >
+                      Order in Council (OIC)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-20"
+                      value="20"
+                    >
+                      Other
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-27"
+                      value="27"
+                    >
+                      Owner agreement/offer
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-2"
+                      value="2"
+                    >
+                      PA plans / Design drawings
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-13"
+                      value="13"
+                    >
+                      Photos / Images / Video
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-7"
+                      value="7"
+                    >
+                      Privy council
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-25"
+                      value="25"
+                    >
+                      Professional reports (ex: engineering/environmental etc.)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-48"
+                      value="48"
+                    >
+                      Record of negotiation
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-32"
+                      value="32"
+                    >
+                      Release of claims
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-26"
+                      value="26"
+                    >
+                      Spending authority approval (SAA)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-44"
+                      value="44"
+                    >
+                      Surplus property declaration
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-39"
+                      value="39"
+                    >
+                      Tax notices and assessments
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-45"
+                      value="45"
+                    >
+                      Temporary license for construction access (H0074)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-11"
+                      value="11"
+                    >
+                      Title search / Historical title
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-16"
+                      value="16"
+                    >
+                      Transfer of administration
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-35"
+                      value="35"
+                    >
+                      Vesting notice (Form 9)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-50"
+                      value="50"
+                    >
+                      Financial records (invoices, journal vouchers etc.)
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-49"
+                      value="49"
+                    >
+                      Other Land Agreement (Indemnity Letter, Letter of Intended Use, Assumption Agreement, etc)
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
             <div
               class="pb-2 row"
             >

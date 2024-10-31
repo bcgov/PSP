@@ -8,7 +8,8 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
   <div />
   .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -39,6 +40,7 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
 }
 
 .c2 label {
+  color: #013366;
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   width: 100%;
@@ -83,11 +85,13 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
   .c3 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -177,7 +181,8 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
   </div>
   .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -216,7 +221,7 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
 }
 
 .c6 {
-  border-bottom: 0.1rem solid;
+  border-bottom: 0.1rem solid #606060;
 }
 
 .c2 {
@@ -238,6 +243,7 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
 }
 
 .c2 label {
+  color: #013366;
   font-family: 'BCSans-Bold';
   font-size: 2rem;
   width: 100%;

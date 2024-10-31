@@ -36,6 +36,10 @@ public partial class PimsDocumentTypHist
     [StringLength(200)]
     public string DocumentTypeDescription { get; set; }
 
+    [Column("DOCUMENT_TYPE_DEFINITION")]
+    [StringLength(500)]
+    public string DocumentTypeDefinition { get; set; }
+
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 

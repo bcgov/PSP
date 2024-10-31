@@ -17,9 +17,7 @@ export interface IExportLeasePaymentsContainer {
   fiscalYear: number;
 }
 
-export const ExportLeasePaymentsContainer: React.FunctionComponent<
-  React.PropsWithChildren<unknown>
-> = () => {
+export const ExportLeasePaymentsContainer: React.FunctionComponent<unknown> = () => {
   const { exportLeasePayments } = useLeaseExport();
   const fiscalYearOptions = generateFiscalYearOptions(1990, getCurrentFiscalYear());
   return (
@@ -47,7 +45,10 @@ export const ExportLeasePaymentsContainer: React.FunctionComponent<
                 options={fiscalYearOptions}
               ></InlineSelect>
               <TooltipWrapper tooltipId="download-lease-payments-report" tooltip="Download">
-                <ClickableDownload title="Export Aggregated Report" onClick={() => submitForm()} />
+                <ClickableDownload
+                  title="Export Lease Payments Report"
+                  onClick={() => submitForm()}
+                />
               </TooltipWrapper>
             </FlexRowDiv>
           </li>

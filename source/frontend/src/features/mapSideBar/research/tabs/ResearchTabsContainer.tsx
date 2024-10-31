@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
 import { NoteTypes } from '@/constants/noteTypes';
 import NoteListView from '@/features/notes/list/NoteListView';
@@ -26,6 +27,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
 > = ({ researchFile, setIsEditing }) => {
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
+  const { setFullWidthSideBar } = useMapStateMachine();
 
   const { setStaleLastUpdatedBy } = React.useContext(SideBarContext);
 
@@ -43,6 +45,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
   const onChildEntityUpdate = () => {
     setStaleLastUpdatedBy(true);
   };
+
   tabViews.push({
     content: <ResearchSummaryView researchFile={researchFile} setEditMode={setIsEditing} />,
     key: FileTabType.FILE_DETAILS,
@@ -76,6 +79,15 @@ export const ResearchTabsContainer: React.FunctionComponent<
       name: 'Notes',
     });
   }
+
+  useEffect(() => {
+    if (activeTab === FileTabType.NOTES || activeTab === FileTabType.DOCUMENTS) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [activeTab, setFullWidthSideBar]);
 
   return (
     <FileTabs

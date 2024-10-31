@@ -9,11 +9,13 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
   .c2 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -104,7 +106,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
             class="form-group"
           >
             <select
-              class="form-control"
+              class="form-select form-control"
               id="input-isPublicBenefit"
               name="isPublicBenefit"
             >
@@ -146,7 +148,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
             class="form-group"
           >
             <select
-              class="form-control"
+              class="form-select form-control"
               id="input-isFinancialGain"
               name="isFinancialGain"
             >
@@ -279,11 +281,13 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
   .c2 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -374,7 +378,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
             class="form-group"
           >
             <select
-              class="form-control"
+              class="form-select form-control"
               id="input-isPublicBenefit"
               name="isPublicBenefit"
             >
@@ -416,7 +420,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
             class="form-group"
           >
             <select
-              class="form-control"
+              class="form-select form-control"
               id="input-isFinancialGain"
               name="isFinancialGain"
             >

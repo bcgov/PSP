@@ -71,11 +71,6 @@ exports[`Empty Header > renders 1`] = `
   padding: 0;
 }
 
-.c0 .other:hover {
-  color: red;
-  cursor: pointer;
-}
-
 .c0 .modal-content .label {
   font-weight: 700;
 }

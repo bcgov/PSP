@@ -4,14 +4,15 @@ import { Col } from 'react-bootstrap';
 import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { ContactInfoField } from '@/features/contacts/interfaces';
 import { Dictionary } from '@/interfaces/Dictionary';
-import { IContactEntity } from '@/interfaces/IContact';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { phoneFormatter } from '@/utils/formUtils';
 
 import * as Styled from '../../styles';
 import { getContactInfo } from './utils';
 
 interface IContactInfoSubFormProps {
-  contactEntity: IContactEntity;
+  contactEntity: ApiGen_Concepts_Person | ApiGen_Concepts_Organization;
 }
 
 const phoneTypes: Dictionary<string> = {};

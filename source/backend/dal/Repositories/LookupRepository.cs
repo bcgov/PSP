@@ -435,6 +435,11 @@ namespace Pims.Dal.Repositories
             return Context.PimsLeasePaymentCategoryTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
+        public IEnumerable<PimsConsultationOutcomeType> GetAllConsultationOutcomeTypes()
+        {
+            return Context.PimsConsultationOutcomeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
         #endregion
     }
 }

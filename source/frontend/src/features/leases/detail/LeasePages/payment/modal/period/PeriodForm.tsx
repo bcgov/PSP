@@ -1,5 +1,5 @@
 import { Formik, FormikProps, useFormikContext } from 'formik';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -12,7 +12,6 @@ import {
   SelectOption,
 } from '@/components/common/form';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
-import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
@@ -50,7 +49,6 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
   lease,
   gstConstant,
 }) => {
-  const [displayWarningModal, setDisplayWarningModal] = useState(false);
   const lookups = useLookupCodeHelpers();
   const paymentFrequencyOptions = lookups.getOptionsByType(API.LEASE_PAYMENT_FREQUENCY_TYPES);
   const leasePeriodStatusOptions = lookups.getOptionsByType(API.LEASE_PERIOD_STATUS_TYPES);
@@ -333,14 +331,6 @@ export const PeriodForm: React.FunctionComponent<React.PropsWithChildren<IPeriod
           );
         }}
       </Formik>
-      <GenericModal
-        title="Warning"
-        message="You are changing the period duration from flexible to fixed. Your end date will no longer be anticipated."
-        okButtonText="Ok"
-        variant="info"
-        display={displayWarningModal}
-        setDisplay={setDisplayWarningModal}
-      />
     </>
   );
 };

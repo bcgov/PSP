@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 import { useCallback, useContext, useEffect, useReducer, useState } from 'react';
 import * as Yup from 'yup';
 
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 
@@ -70,6 +71,7 @@ const initialState: ProjectContainerState = {
 const ProjectContainer: React.FunctionComponent<
   React.PropsWithChildren<IProjectContainerProps>
 > = ({ projectId, View, onClose }) => {
+  const { setFullWidthSideBar } = useMapStateMachine();
   const { setProject, setProjectLoading } = useContext(SideBarContext);
 
   const {
@@ -108,6 +110,19 @@ const ProjectContainer: React.FunctionComponent<
   };
 
   const title = containerState.isEditing ? 'Update Project' : 'Project';
+
+  useEffect(() => {
+    if (
+      containerState.activeTab === ProjectTabNames.notes ||
+      containerState.activeTab === ProjectTabNames.documents
+    ) {
+      setFullWidthSideBar(true);
+    } else {
+      setFullWidthSideBar(false);
+    }
+    return () => setFullWidthSideBar(false);
+  }, [containerState.activeTab, setFullWidthSideBar]);
+
   return (
     <View
       project={project}

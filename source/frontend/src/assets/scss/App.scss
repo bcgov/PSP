@@ -74,6 +74,9 @@
 
 a {
   color: $link-color;
+  &:link:not(.nav-item, .dropdown-toggle, .dropdown-item) {
+    text-decoration: underline;
+  }
   &:hover {
     color: $link-hover-color;
     text-decoration: underline;
@@ -142,6 +145,14 @@ a {
   //React table global styling
   .table .tr .td {
     word-break: break-word;
+    a {
+      text-decoration: none;
+
+      &:hover {
+        color: $link-hover-color;
+        text-decoration: underline;
+      }
+    }
   }
 
   .table .th.reset-filter.svg-btn {

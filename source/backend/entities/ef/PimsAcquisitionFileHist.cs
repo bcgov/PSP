@@ -23,6 +23,9 @@ public partial class PimsAcquisitionFileHist
     [Column("ACQUISITION_FILE_ID")]
     public long AcquisitionFileId { get; set; }
 
+    [Column("PRNT_ACQUISITION_FILE_ID")]
+    public long? PrntAcquisitionFileId { get; set; }
+
     [Column("PROJECT_ID")]
     public long? ProjectId { get; set; }
 
@@ -49,6 +52,10 @@ public partial class PimsAcquisitionFileHist
 
     [Column("REGION_CODE")]
     public short RegionCode { get; set; }
+
+    [Column("SUBFILE_INTEREST_TYPE_CODE")]
+    [StringLength(20)]
+    public string SubfileInterestTypeCode { get; set; }
 
     [Required]
     [Column("FILE_NAME")]
@@ -86,6 +93,16 @@ public partial class PimsAcquisitionFileHist
 
     [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
     public decimal? TotalAllowableCompensation { get; set; }
+
+    [Column("OTHER_SUBFILE_INTEREST_TYPE")]
+    [StringLength(200)]
+    public string OtherSubfileInterestType { get; set; }
+
+    [Column("EST_COMPLETION_DT", TypeName = "datetime")]
+    public DateTime? EstCompletionDt { get; set; }
+
+    [Column("POSSESSION_DT", TypeName = "datetime")]
+    public DateTime? PossessionDt { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

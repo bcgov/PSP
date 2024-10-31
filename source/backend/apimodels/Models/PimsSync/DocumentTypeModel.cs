@@ -12,6 +12,9 @@ namespace Pims.Api.Models.PimsSync
         [JsonPropertyName("label")]
         public string Label { get; set; }
 
+        [JsonPropertyName("purpose")]
+        public string Purpose { get; set; }
+
         [JsonPropertyName("metadata_types")]
         public IList<DocumentMetadataTypeModel> MetadataTypes { get; set; }
 

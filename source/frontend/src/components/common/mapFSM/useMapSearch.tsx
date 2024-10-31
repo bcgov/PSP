@@ -26,6 +26,7 @@ export const useMapSearch = () => {
   const keycloak = useKeycloakWrapper();
   const logout = keycloak.obj.logout;
 
+  const loadPimsPropertiesMinimal = pimsPropertyLayerService.loadPropertyLayerMinimal.execute;
   const loadPimsProperties = pimsPropertyLayerService.loadPropertyLayer.execute;
   const pmbcServiceFindByPin = fullyAttributedService.findByPin;
   const pmbcServiceFindByPid = fullyAttributedService.findByPid;
@@ -252,7 +253,6 @@ export const useMapSearch = () => {
   const searchMany = useCallback(
     async (filter?: IGeoSearchParams) => {
       let result: MapFeatureData = emptyFeatureData;
-      //TODO: PSP-4390 currently this loads all matching properties, this should be rewritten to use the bbox and make one request per tile.
       try {
         let findByPinTask:
           | Promise<
@@ -361,10 +361,72 @@ export const useMapSearch = () => {
     ],
   );
 
+  const loadMapProperties = useCallback(async () => {
+    let result: MapFeatureData = emptyFeatureData;
+    try {
+      const loadPropertiesTask = loadPimsPropertiesMinimal();
+
+      let pidPinInventoryData: FeatureCollection<Geometry, PIMS_Property_Location_View> | undefined;
+      try {
+        pidPinInventoryData = await loadPropertiesTask;
+      } catch (err) {
+        setModalContent({
+          variant: 'error',
+          title: 'Unable to connect to PIMS Inventory',
+          message:
+            'PIMS is unable to connect to connect to the PIMS Inventory map service. You may need to log out and log into the application in order to restore this functionality. If this error persists, contact a site administrator.',
+          okButtonText: 'Log out',
+          cancelButtonText: 'Continue working',
+          handleOk: () => {
+            logout();
+          },
+          handleCancel: () => {
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      }
+
+      // If the property was found on the pims inventory, use that.
+      if (pidPinInventoryData?.features && pidPinInventoryData?.features?.length > 0) {
+        const validFeatures = pidPinInventoryData.features.filter(feature => !!feature?.geometry);
+
+        result = {
+          pimsLocationFeatures: {
+            type: pidPinInventoryData.type,
+            bbox: pidPinInventoryData.bbox,
+            features: validFeatures,
+          },
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        };
+
+        if (validFeatures.length === 0) {
+          toast.info('No search results found');
+        } else {
+          toast.info(`${validFeatures.length} properties found`);
+        }
+      } else {
+        result = {
+          pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
+        };
+
+        toast.info('No search results found');
+      }
+    } catch (error) {
+      toast.error((error as Error).message, { autoClose: 7000 });
+    }
+
+    return result;
+  }, [logout, setDisplayModal, setModalContent, loadPimsPropertiesMinimal]);
+
   return {
     searchOneLocation,
     searchByPlanNumber,
     searchMany,
+    loadMapProperties,
     searchByHistorical,
     loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
     loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,

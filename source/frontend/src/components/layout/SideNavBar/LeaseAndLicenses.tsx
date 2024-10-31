@@ -7,7 +7,6 @@ import ExportLeasePaymentsContainer from '@/features/leases/reports/payments/Exp
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
-import * as Styled from './styles';
 import { ExportH3, HalfHeightDiv } from './styles';
 
 /**
@@ -19,26 +18,32 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Leases & Licences</Styled.TrayHeader>
         {hasClaim(Claims.LEASE_VIEW) && (
-          <Link onClick={onLinkClick} to="/lease/list">
+          <Link onClick={onLinkClick} to="/lease/list" className="nav-item pl-9 pb-3">
             Manage Lease/Licence Files
           </Link>
         )}
         {hasClaim(Claims.LEASE_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/sidebar/lease/new">
+          <Link
+            onClick={onLinkClick}
+            to="/mapview/sidebar/lease/new"
+            className="nav-item pl-9 pb-3"
+          >
             Create a Lease/Licence File
           </Link>
         )}
       </HalfHeightDiv>
       {hasClaim(Claims.LEASE_VIEW) && (
         <HalfHeightDiv>
-          <ExportH3>
-            <FaFileExcel /> Exports
+          <ExportH3 className="mt-5">
+            <span className="mr-4">
+              <FaFileExcel />
+            </span>
+            Exports
           </ExportH3>
-          <p>Aggregated Lease & Licence Payments</p>
+          <p className="ml-9 font-weight-bold">Aggregated Lease & Licence Payments</p>
           <ExportAggregatedLeasesContainer />
-          <p>Lease & Licence Payments by Fiscal Year</p>
+          <p className="ml-9 font-weight-bold">Lease & Licence Payments by Fiscal Year</p>
           <ExportLeasePaymentsContainer />
         </HalfHeightDiv>
       )}

@@ -1,8 +1,10 @@
 import { Formik, FormikProps } from 'formik';
+import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
-import { Select } from '@/components/common/form';
+import { Select, SelectOption } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -11,21 +13,27 @@ import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
 
 import { StyledH3, StyledScrollable } from '../commonStyles';
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
-import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
 import { StyledContainer } from '../list/styles';
 import DocumentDetailHeader from './DocumentDetailHeader';
+import { DocumentUpdateFormDataYupSchema } from './DocumentUpdateFormDataYupSchema';
 
 export interface IDocumentDetailFormProps {
   formikRef: React.RefObject<FormikProps<DocumentUpdateFormData>>;
   document: ComposedDocument;
   isLoading: boolean;
+  documentTypes: ApiGen_Concepts_DocumentType[];
   mayanMetadataTypes: ApiGen_Mayan_DocumentTypeMetadataType[];
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType;
+  documentTypeUpdated: boolean;
+  onDocumentTypeChange: (changeEvent: React.ChangeEvent<HTMLInputElement>) => void;
   onUpdate: (updateRequest: ApiGen_Requests_DocumentUpdateRequest) => void;
   onCancel: () => void;
 }
@@ -42,13 +50,20 @@ export const DocumentDetailForm: React.FunctionComponent<
   const documentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
   const initialFormState = DocumentUpdateFormData.fromApi(props.document, props.mayanMetadataTypes);
 
+  const documentTypeOptions = useMemo(
+    () =>
+      props.documentTypes.map<SelectOption>(x => {
+        return { label: x.documentTypeDescription || '', value: x.id?.toString() || '' };
+      }),
+    [props.documentTypes],
+  );
+
   return (
     <StyledContainer>
       <LoadingBackdrop show={props.isLoading} />
       {hasClaim(Claims.DOCUMENT_VIEW) && (
         <>
           <DocumentDetailHeader document={props.document} />
-
           <Section
             noPadding
             header={
@@ -66,7 +81,7 @@ export const DocumentDetailForm: React.FunctionComponent<
               <Formik<DocumentUpdateFormData>
                 innerRef={props.formikRef}
                 initialValues={initialFormState}
-                validationSchema={getDocumentMetadataYupSchema(10)}
+                validationSchema={DocumentUpdateFormDataYupSchema}
                 onSubmit={async (values: DocumentUpdateFormData, { setSubmitting }) => {
                   if (
                     props.document?.pimsDocumentRelationship?.id &&
@@ -82,9 +97,31 @@ export const DocumentDetailForm: React.FunctionComponent<
               >
                 {formikProps => (
                   <>
+                    <SectionField label="Document type" labelWidth="4" required>
+                      <Select
+                        className="mb-0"
+                        placeholder={
+                          documentTypeOptions.length > 1 ? 'Select Document type' : undefined
+                        }
+                        field={'documentTypeId'}
+                        options={documentTypeOptions}
+                        onChange={props.onDocumentTypeChange}
+                        disabled={
+                          documentTypeOptions.length === 1 ||
+                          props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates
+                        }
+                      />
+                    </SectionField>
                     <SectionField label="Status" labelWidth="4">
                       <Select field="documentStatusCode" options={documentStatusTypes} />
                     </SectionField>
+                    {props.documentTypeUpdated && (
+                      <StyledDiv>
+                        <em>
+                          Some associated metadata may be lost if the document type is changed.
+                        </em>
+                      </StyledDiv>
+                    )}
                     <StyledH3>Details</StyledH3>
                     <DocumentMetadataView
                       mayanMetadata={props.mayanMetadataTypes}
@@ -120,3 +157,7 @@ export const DocumentDetailForm: React.FunctionComponent<
     </StyledContainer>
   );
 };
+
+export const StyledDiv = styled.div`
+  margin-bottom: 1rem;
+`;
