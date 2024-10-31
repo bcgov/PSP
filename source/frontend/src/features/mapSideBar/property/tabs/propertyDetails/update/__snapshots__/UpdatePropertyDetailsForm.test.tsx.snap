@@ -673,7 +673,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
-              Historical File #:
+              Historical file #:
             </label>
           </div>
           <div
@@ -701,7 +701,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
-              Legal Description:
+              Legal description:
             </label>
           </div>
           <div
@@ -923,7 +923,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
-              Agricultural Land Reserve:
+              Agricultural land reserve:
             </label>
           </div>
           <div
@@ -1471,7 +1471,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
-              Provincial Public Hwy:
+              Provincial public hwy:
             </label>
           </div>
           <div
