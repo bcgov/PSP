@@ -11,7 +11,7 @@ export class DetailAcquisitionFile {
   deliveryDate?: string;
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
-  subfileInteresttypeDescription: string | null = null;
+  subfileInterestTypeDescription: string | null = null;
   otherSubfileInterestTypeDescription: string | null = null;
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFileTeam[] = [];
@@ -30,8 +30,8 @@ export class DetailAcquisitionFile {
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;
 
     if (detail.isSubFile) {
-      detail.subfileInteresttypeDescription = model.subfileInterestTypeCode.description;
-      detail.otherSubfileInterestTypeDescription = model.otherSubfileInterestType;
+      detail.subfileInterestTypeDescription = model.subfileInterestTypeCode?.description ?? '';
+      detail.otherSubfileInterestTypeDescription = model.otherSubfileInterestType ?? '';
     }
     detail.regionDescription = model?.regionCode?.description ?? undefined;
     detail.acquisitionTeam =
