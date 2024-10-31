@@ -36,16 +36,20 @@ const StyledTabs = styled(BsTabs)`
     color: ${props => props.theme.css.linkColor};
     min-width: 5rem;
     padding: 0.1rem 1.2rem;
+    margin-bottom: 0.1rem;
 
     &:hover {
-      color: ${props => props.theme.css.linkHoverColor};
+      color: ${props => props.theme.css.highlightBackgroundColor};
+      background-color: ${props => props.theme.css.linkHoverColor};
       border-color: transparent;
       text-decoration: underline;
+      border-radius: 0.4rem;
     }
     &.active {
-      background-color: ${props => props.theme.css.highlightBackgroundColor};
+      border-radius: 0.4rem;
+      color: ${props => props.theme.css.highlightBackgroundColor};
       font-family: 'BCSans-Bold';
-      color: ${props => props.theme.css.linkHoverColor};
+      background-color: ${props => props.theme.css.linkHoverColor};
       border-color: transparent;
     }
   }
