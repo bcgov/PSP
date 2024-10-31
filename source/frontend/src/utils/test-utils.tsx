@@ -62,7 +62,7 @@ export const mockKeycloak = (
   // mock what would be returned by keycloak userinfo endpoint
   const defaultUserInfo = {
     organizations: organizations ?? [1],
-    client_roles: [...(claims ?? []), ...(roles ?? [])] ?? [],
+    client_roles: [...(claims ?? []), ...(roles ?? [])],
     email: 'test@test.com',
     name: 'Chester Tester',
     idir_user_guid: '00000000000000000000000000000000',
