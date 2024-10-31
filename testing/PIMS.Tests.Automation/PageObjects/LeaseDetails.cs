@@ -20,6 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseHeaderProperty = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]");
         private readonly By licenseHeaderPropertyContent = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]/parent::div/following-sibling::div/div/span");
         private readonly By licenseHeaderTenantLabel = By.XPath("//label[contains(text(),'Tenant')]");
+        private readonly By licenseHeaderPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
         private readonly By licenseHeaderStartDateLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div[2]/div/div/div/div/div[4]/div/label[contains(text(),'Commencement')]");
         private readonly By licenseHeaderStartDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[1]");
         private readonly By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[2]/label[contains(text(),'Expiry')]");
@@ -225,6 +226,12 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 webDriver.FindElement(licenseDetailsCommencementDateInput).SendKeys(lease.LeaseStartDate);
                 webDriver.FindElement(licenseDetailsCommencementDateInput).SendKeys(Keys.Enter);
+            }
+
+            if (lease.LeaseExpiryDate != "")
+            {
+                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(lease.LeaseExpiryDate);
+                webDriver.FindElement(licenseDetailsExpiryDateInput).SendKeys(Keys.Enter);
             }
 
             //Administration Details
@@ -696,14 +703,16 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentNotEquals(licenseHeaderNbrContent, "");
             AssertTrueContentNotEquals(licenseHeaderAccountType, "");
             AssertTrueIsDisplayed(licenseHeaderProperty);
-            //AssertTrueIsDisplayed(licenseHeaderPropertyContent);
-            AssertTrueIsDisplayed(licenseHeaderTenantLabel);
+            
+            if(lease.AccountType == "Receivable")
+                AssertTrueIsDisplayed(licenseHeaderTenantLabel);
+            else
+                AssertTrueIsDisplayed(licenseHeaderPayeeLabel);
             AssertTrueIsDisplayed(licenseHeaderStartDateLabel);
             AssertTrueContentEquals(licenseHeaderStartDateContent, TransformDateFormat(lease.LeaseStartDate));
             AssertTrueIsDisplayed(licenseHeaderExpiryDateLabel);
             AssertTrueContentEquals(licenseHeaderExpiryDateContent, CalculateExpiryCurrentDate(lease.LeaseExpiryDate, lease.LeaseRenewals));
             AssertTrueIsDisplayed(licenseHeaderHistoricalFileLabel);
-            //Assert.True(webDriver.FindElements(licenseHeaderHistoricalFileContent).Count > 0);
             AssertTrueIsDisplayed(licenseHeaderCreatedLabel);
             AssertTrueContentNotEquals(licenseHeaderCreatedContent, "");
             AssertTrueContentEquals(licenseHeaderCreatedByContent, "TRANPSP1");
@@ -725,14 +734,17 @@ namespace PIMS.Tests.Automation.PageObjects
             }  
         }
 
-        public void VerifyLicensePropertiesHeader()
+        public void VerifyLicensePropertiesHeader(string leaseType)
         {
             AssertTrueIsDisplayed(licenseHeaderNbrLabel);
             AssertTrueContentNotEquals(licenseHeaderNbrContent, "");
             AssertTrueContentNotEquals(licenseHeaderAccountType, "");
             AssertTrueIsDisplayed(licenseHeaderProperty);
             AssertTrueIsDisplayed(licenseHeaderPropertyContent);
-            AssertTrueIsDisplayed(licenseHeaderTenantLabel);
+            if (leaseType == "Receivable")
+                AssertTrueIsDisplayed(licenseHeaderTenantLabel);
+            else
+                AssertTrueIsDisplayed(licenseHeaderPayeeLabel);
             AssertTrueIsDisplayed(licenseHeaderStartDateLabel);
             AssertTrueIsDisplayed(licenseHeaderExpiryDateLabel);
             AssertTrueIsDisplayed(licenseHeaderHistoricalFileLabel);
@@ -922,9 +934,9 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(licenseDetailsFeeDeterminationNotesContent, lease.FeeDeterminationNotes);
         }
 
-        public void VerifyLicensePropertyViewForm(List<LeaseProperty> properties)
+        public void VerifyLicensePropertyViewForm(List<LeaseProperty> properties, string leaseType)
         {
-            VerifyLicensePropertiesHeader();
+            VerifyLicensePropertiesHeader(leaseType);
             AssertTrueIsDisplayed(leasePropertiesSubtitle);
 
             for (var i = 0; i < properties.Count; i++)

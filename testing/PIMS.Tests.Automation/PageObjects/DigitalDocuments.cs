@@ -22,15 +22,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentUploadConfirmationMessage = By.XPath("//span[contains(text(),'files successfully uploaded')]");
 
         //Update Documents General Elements
-        private readonly By documentUpdateDocStatusLabel = By.XPath("//label[contains(text(),'Status')]");
+        private readonly By documentsGeneralUpdateDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Document type')]");
+        private readonly By documentGeneralUpdateDocumentSelect = By.Id("input-documentTypeId");
+        private readonly By documentGeneralUpdateStatusLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Status')]");
         private readonly By documentUploadStatusSelect = By.Id("input-documentStatusCode");
         private readonly By documentUpdateDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
         
 
         //Upload Documents Other Type Fields
-        private readonly By documentOtherTypePINLabel = By.XPath("//div[@class='pb-2 row'][2]/div/label[contains(text(),'PIN')]");
+        private readonly By documentOtherTypePINLabel = By.XPath("//div[@class='pb-2 row'][3]/div/label[contains(text(),'PIN')]");
         private readonly By documentOtherTypePINInput = By.Id("input-documentMetadata.71");
-        private readonly By documentOtherTypePropIdLabel = By.XPath("//div[@class='pb-2 row'][3]/div/label[contains(text(),'Property identifier')]");
+        private readonly By documentOtherTypePropIdLabel = By.XPath("//div[@class='pb-2 row'][4]/div/label[contains(text(),'Property identifier')]");
         private readonly By documentRoadNameInput = By.Id("input-documentMetadata.75");
         private readonly By documentShortDescriptorLabel = By.XPath("//label[contains(text(),'Short descriptor')]");
 
@@ -183,8 +185,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentPAPlanProjectNameMandatory = By.XPath("//div[contains(text(),'Project name is required')]");
 
         //View Document Details Elements
-        private readonly By documentViewDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'Document type')]");
-        private readonly By documentViewDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
+        private readonly By documentViewDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]");
+        private readonly By documentViewDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
         private readonly By documenyViewDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]");
         private readonly By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
         private readonly By documentViewDownloadButton = By.CssSelector("button[data-testid='document-download-button']");
@@ -455,7 +457,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByDocumentFileType()
         {
-            WaitUntilClickable(documentDocumentTypeSortBttn);
+            Wait();
             webDriver.FindElement(documentDocumentTypeSortBttn).Click();
         }
 
@@ -540,6 +542,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveDigitalDocumentUpdate()
         {
+            Wait();
             webDriver.FindElement(documentSaveEditButton).Click();
             WaitUntilSpinnerDisappear();
         }
@@ -787,6 +790,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateNewDocumentType(DigitalDocument document)
         {
+            ChooseSpecificSelectOption(documentGeneralUpdateDocumentSelect, document.DocumentType);
             ChooseSpecificSelectOption(documentUploadStatusSelect, document.DocumentStatus);
 
             if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyInput).Count > 0)
@@ -1193,170 +1197,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(documentViewYearPrivyCouncilContent, document.YearPrivyCouncil);
         }
 
-        //public void VerifyDocumentDetailsUpdateViewForm(DigitalDocument document)
-        //{
-        //    WaitUntilClickable(documentEditBttn);
-
-        //    //Header
-        //    AssertTrueIsDisplayed(documentViewDocumentTypeLabel);
-
-        //    AssertTrueContentNotEquals(documentViewDocumentTypeContent, "");
-        //    AssertTrueIsDisplayed(documenyViewDocumentNameLabel);
-        //    AssertTrueContentNotEquals(documentViewFileNameContent, "");
-        //    AssertTrueIsDisplayed(documentViewDownloadButton);
-
-        //    //Document Information
-        //    //AssertTrueIsDisplayed(documentUploadDocInfoSubtitle);
-        //    AssertTrueIsDisplayed(documentViewDocumentInfoTooltip);
-        //    AssertTrueIsDisplayed(documentEditBttn);
-        //    //AssertTrueIsDisplayed(documentUploadStatusLabel);
-        //    AssertTrueContentEquals(documentViewStatusContent, document.DocumentStatus);
-
-        //    //Document Details
-        //    Assert.True(webDriver.FindElement(documentViewDetailsSubtitle).Displayed);
-
-        //    if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewCanadaLandSurveyContent, document.CanadaLandSurvey);
-            
-        //    if (document.CivicAddress != "" && webDriver.FindElements(documentCivicAddressLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewCivicAddressContent, document.CivicAddress);
-            
-        //    if (document.CrownGrant != "" && webDriver.FindElements(documentCrownGrantTypeCrownLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewCrownGrantContent,document.CrownGrant);
-            
-        //    if (document.Date != "" && webDriver.FindElements(documentPhotosCorrespondenceTypeDateLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewDateContent, TranformFormatDateDocument(document.Date));
-            
-        //    if (document.DateSigned != "" && webDriver.FindElements(documentDateSignedLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewDateSignedContent, TranformFormatDateDocument(document.DateSigned));
-            
-        //    if (document.DistrictLot != "" && webDriver.FindElements(documentFieldNotesTypeDistrictLotLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewDistrictLotContent, document.DistrictLot);
-            
-        //    if (document.ElectoralDistrict != "" && webDriver.FindElements(documentDistrictRoadRegisterTypeElectoralDistrictLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewElectoralDistrictContent, document.ElectoralDistrict);
-            
-        //    if (document.EndDate != "" && webDriver.FindElements(documentHistoricFileTypeEndDateLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewEndDateContent, TranformFormatDateDocument(document.EndDate));
-            
-        //    if (document.FieldBook != "" && webDriver.FindElements(documentFieldNotesTypeYearLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewFieldBookContent, document.FieldBook);
-            
-        //    if (document.File != "" && webDriver.FindElements(documentHistoricFileTypeFileLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewFileNumberContent, document.File);
-            
-        //    if (document.GazetteDate != "" && webDriver.FindElements(documentGazetteDateLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewGazetteDateContent, TranformFormatDateDocument(document.GazetteDate));
-            
-        //    if (document.GazettePage != "" && webDriver.FindElements(documentGazettePageLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewGazettePageContent, document.GazettePage);
-            
-        //    if (document.GazettePublishedDate != "" && webDriver.FindElements(documentGazettePublishedDateLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewGazettePublishedDateContent, TranformFormatDateDocument(document.GazettePublishedDate));
-            
-        //    if (document.GazetteType != "" && webDriver.FindElements(documentGazettePublishedTypeLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewGazettePublishedTypeContent, document.GazetteType);
-            
-        //    if (document.HighwayDistrict != "" && webDriver.FindElements(documentDistrictRoadRegisterTypeHighwayDistrictLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewGazetteHighwayDistrictContent, document.HighwayDistrict);
-            
-        //    if (document.IndianReserveOrNationalPark != "" && webDriver.FindElements(documentCanLandSurveyTypeIndianReserveLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewIndianReserveContent, document.IndianReserveOrNationalPark);
-            
-        //    if (document.Jurisdiction != "" && webDriver.FindElements(documentBCAssessmentTypeJurisdictionLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewJurisdictionContent, document.Jurisdiction);
-            
-        //    if (document.LandDistrict != "" && webDriver.FindElements(documentFieldNotesTypeLandDistrictLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewLandDistrictContent, document.LandDistrict);
-            
-        //    if (document.LegalSurveyPlan != "" && webDriver.FindElements(documentLegalSurveyNbrLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewLegalSurveyPlanContent, document.LegalSurveyPlan);
-            
-        //    if (document.LTSAScheduleFiling != "" && webDriver.FindElements(documentGazetteLTSALabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewLTSAScheduleFilingContent, document.LTSAScheduleFiling);
-            
-        //    if (document.MO != "" && webDriver.FindElements(documentMinisterialOrderTypeMOLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewMOContent, document.MO);
-            
-        //    if (document.MoTIFile != "" && webDriver.FindElements(documentMOTIFileLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewMotiFileContent, document.MoTIFile);
-            
-        //    if (document.MoTIPlan != "" && webDriver.FindElements(documentMOTIPlanLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewMotiPlanContent, document.MoTIPlan);
-            
-        //    if (document.OIC != "" && webDriver.FindElements(documentOICTypeOICLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewOICNumberContent, document.OIC);
-            
-        //    if (document.OICRoute != "" && webDriver.FindElements(documentOICTypeOICRouteLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewOICRouteContent, document.OICRoute);
-            
-        //    if (document.OICType != "" && webDriver.FindElements(documentOICTypeOICTypeLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewOICTypeContent, document.OICType);
-            
-        //    if (document.Owner != "" && webDriver.FindElements(documentOwnerLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewOwnerContent, document.Owner);
-            
-        //    if (document.PhysicalLocation != "" && webDriver.FindElements(documentHistoricFileTypePhyLocationLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewPhysicalLocationContent, document.PhysicalLocation);
-            
-        //    if (document.PIDNumber != "" && webDriver.FindElements(documentViewPIDLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewPIDContent, document.PIDNumber);
-            
-        //    if (document.PINNumber != "" && webDriver.FindElements(documentOtherTypePINLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewPINContent, document.PINNumber);
-            
-        //    if (document.Plan != "" && webDriver.FindElements(documentPAPlanNbrLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewPlanNumberContent, document.Plan);
-            
-        //    if (document.PlanRevision != "" && webDriver.FindElements(documentPAPlanRevisionLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewPlanRevisionContent, document.PlanRevision);
-            
-        //    if (document.PlanType != "" && webDriver.FindElements(documentLegalSurveyPlanTypeLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewPlanTypeContent, document.PlanType);
-            
-        //    if (document.Project != "" && webDriver.FindElements(documentPAPlanProjectLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewProjectNumberContent, document.Project);
-            
-        //    if (document.ProjectName != "" && webDriver.FindElements(documentViewProjectLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewProjectContent, document.ProjectName);
-            
-        //    if (document.PropertyIdentifier != "" && webDriver.FindElements(documentViewPropertyIdentifierLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewPropertyIdentifierContent, document.PropertyIdentifier);
-            
-        //    if (document.PublishedDate != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyPublishDateLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewPublishedDateContent,TranformFormatDateDocument(document.PublishedDate));
-            
-        //    if (document.RelatedGazette != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyRelatedGazetteLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewRelatedGazetteContent, document.RelatedGazette);
-            
-        //    if (document.RoadName != "" && webDriver.FindElements(documentRoadNameLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewRoadNameContent, document.RoadName);
-            
-        //    if (document.Roll != "" && webDriver.FindElements(documentBCAssessmentTypeRollLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewRollContent, document.Roll);
-            
-        //    if (document.Section != "" && webDriver.FindElements(documentHistoricFileTypeSectionLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewSectionContent, document.Section);
-            
-        //    if (document.ShortDescriptor != "" && webDriver.FindElements(documentShortDescriptorLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewShortDescriptorContent, document.ShortDescriptor);
-            
-        //    if (document.StartDate != "" && webDriver.FindElements(documentHistoricFileTypeStartDateLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewStartDateContent, TranformFormatDateDocument(document.StartDate));
-            
-        //    if (document.Title != "" && webDriver.FindElements(documentTitleSearchTypeTitleLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewTitleContent, document.Title);
-            
-        //    if (document.Transfer != "" && webDriver.FindElements(documentTransferAdmTypeTransferLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewTransferContent, document.Transfer);
-            
-        //    if (document.Year != "" && webDriver.FindElements(documentYearLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewYearContent, document.Year);
-            
-        //    if (document.YearPrivyCouncil != "" && webDriver.FindElements(documentPrivyCouncilTypePrivyLabel).Count > 0)
-        //        AssertTrueContentEquals(documentViewYearPrivyCouncilContent, document.YearPrivyCouncil);
-        //}
-
         public void VerifyInitUploadDocumentForm()
         {
             WaitUntilVisible(documentsUploadHeader);
@@ -1372,13 +1212,13 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(documentsUploadHeader);
 
             AssertTrueIsDisplayed(documentsUploadHeader);
-            AssertTrueIsDisplayed(documentViewDocumentTypeLabel);
-            AssertTrueIsDisplayed(documentViewDocumentTypeContent);
             AssertTrueIsDisplayed(documenyViewDocumentNameLabel);
             AssertTrueIsDisplayed(documentViewFileNameContent);
 
             AssertTrueIsDisplayed(documentViewInfoSubtitle);
-            AssertTrueIsDisplayed(documentUploadStatusSelect);
+            AssertTrueIsDisplayed(documentsGeneralUpdateDocumentTypeLabel);
+            AssertTrueIsDisplayed(documentGeneralUpdateDocumentSelect);
+            AssertTrueIsDisplayed(documentGeneralUpdateStatusLabel);
             AssertTrueIsDisplayed(documentUploadStatusSelect);
 
             AssertTrueIsDisplayed(documentUpdateDetailsSubtitle);
