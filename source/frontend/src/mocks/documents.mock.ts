@@ -1886,7 +1886,7 @@ export const mockDocumentBatchUploadResponse =
         },
         documentExternalResponse: {
           status: ApiGen_CodeTypes_ExternalResponseStatus.Success,
-          message: null,
+          message: 'File uploaded',
           payload: {
             id: 162,
             label: 'Test.PDF',

@@ -74,14 +74,13 @@ vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider');
 vi.mocked(useDocumentRelationshipProvider).mockReturnValue(mockDocumentRelationshipApi);
 
 describe('DocumentUploadContainer component', () => {
-  // render component under test
-
   let viewProps: IDocumentUploadFormProps | undefined;
   const View: React.FC<IDocumentUploadFormProps> = props => {
     viewProps = props;
     return <>Content Rendered</>;
   };
 
+  // render component under test
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<IDocumentUploadContainerProps> } = {},
   ) => {
