@@ -1,0 +1,1203 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/11/2024 9:58:56 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{6643E1D4-A1D4-4AD8-80FB-56DF966D15E3}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="BKP_PSP_PIMS_PROPERTY_DISTRICT_REGION_FIX"
+  DTS:PackageType="5"
+  DTS:VersionBuild="97"
+  DTS:VersionGUID="{5439FF13-198C-462D-BFFD-69547372AE91}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task - BKP PIMS_PROPERTY"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E04FFD37-FDDF-4F61-9413-BBA73FD06E45}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task - BKP PIMS_PROPERTY"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3240E4ED-22D8-4686-9ACC-CD9642381A84}"
+          SQLTask:SqlStatementSource="BEGIN&#xA;DROP TABLE if exists etl.PIMS_PROPERTY_BKP_PSP8357;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_PROPERTY_BKP_PSP8357 FROM dbo.PIMS_PROPERTY;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task - Fix District Code 12"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{9A5C219F-1DA2-4615-8A99-6F99AEB56C40}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task - Fix District Code 12"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="( SELECT ) PIMS_PROPERTY"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">with p as (
+SELECT 
+    PROPERTY_ID,
+ DISTRICT_CODE,     
+    REGION_CODE, 
+    [LOCATION], 
+    cast([LOCATION].STAsText() as varchar(max)) as LOCATION_TEXT ,
+	cast([LOCATION].STAsText() as geometry) as LOC ,
+	LOCATION.STPointOnSurface().STX as X,
+	LOCATION.STPointOnSurface().STY as Y 
+FROM 
+    dbo.PIMS_PROPERTY 
+WHERE
+    LOCATION IS NOT NULL
+	AND
+    DISTRICT_CODE = 12
+ )
+
+SELECT 
+	p.PROPERTY_ID, 
+	g.DISTRICT_NUMBER 
+FROM  p
+	JOIN etl.DSA_DISTRICT_BOUNDARY g
+	ON p.LOC.STWithin(g.WKT_GEOMETRY) = 1
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[DISTRICT_NUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].ExternalColumns[DISTRICT_NUMBER]"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[DISTRICT_NUMBER]"
+                      name="DISTRICT_NUMBER"
+                      precision="2"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].ExternalColumns[DISTRICT_NUMBER]"
+                      dataType="numeric"
+                      name="DISTRICT_NUMBER"
+                      precision="2" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[DISTRICT_NUMBER]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[DISTRICT_NUMBER]"
+                      name="DISTRICT_NUMBER"
+                      precision="2" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="( UPDATE ) PIMS_PROPERTY"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">update PIMS_PROPERTY
+set DISTRICT_CODE = ?
+,CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER+1
+,APP_LAST_UPDATE_USERID=?
+,APP_LAST_UPDATE_TIMESTAMP=?
+WHERE PROPERTY_ID = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[DISTRICT_NUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="DISTRICT_NUMBER"
+                      cachedPrecision="2"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[DISTRICT_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[APP_LAST_UPDATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="17"
+                      cachedName="APP_LAST_UPDATE_USERID"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_LAST_UPDATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i2"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="wstr"
+                      length="30"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="dbTimeStamp"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="i8"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="AUDIT TRAIL"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="17"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      name="APP_LAST_UPDATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PSP_PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PSP_PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      name="APP_LAST_UPDATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task - Fix District Code 12.Paths[Derived Column Output]"
+              endId="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input]"
+              name="Derived Column Output"
+              startId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Data Flow Task - Fix District Code 12.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task - Fix Region Code 4"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0235d526-a52d-428c-bb1b-ad43fba8d970}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task - Fix Region Code 4"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="( SELECT ) PIMS_PROPERTY"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">with p as (
+SELECT 
+    PROPERTY_ID,
+	DISTRICT_CODE,
+    REGION_CODE, 
+    [LOCATION], 
+    cast([LOCATION].STAsText() as varchar(max)) as LOCATION_TEXT ,
+	cast([LOCATION].STAsText() as geometry) as LOC ,
+	LOCATION.STPointOnSurface().STX as X,
+	LOCATION.STPointOnSurface().STY as Y 
+FROM 
+    dbo.PIMS_PROPERTY 
+WHERE
+    LOCATION IS NOT NULL
+	AND
+   REGION_CODE = 4
+ )
+
+SELECT 
+	p.PROPERTY_ID, 
+	g.REGION_NUMBER 
+FROM  p
+	JOIN etl.DSA_REGION_BOUNDARY g
+	ON p.LOC.STWithin(g.WKT_GEOMETRY) = 1
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[REGION_NUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].ExternalColumns[REGION_NUMBER]"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[REGION_NUMBER]"
+                      name="REGION_NUMBER"
+                      precision="1"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].ExternalColumns[REGION_NUMBER]"
+                      dataType="numeric"
+                      name="REGION_NUMBER"
+                      precision="1" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[REGION_NUMBER]"
+                      dataType="numeric"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[REGION_NUMBER]"
+                      name="REGION_NUMBER"
+                      precision="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="( UPDATE ) PIMS_PROPERTY"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">update dbo.PIMS_PROPERTY
+set REGION_CODE = ?
+,CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER+1
+,APP_LAST_UPDATE_USERID=?
+,APP_LAST_UPDATE_TIMESTAMP=?
+WHERE PROPERTY_ID = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[REGION_NUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="REGION_NUMBER"
+                      cachedPrecision="1"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[REGION_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[APP_LAST_UPDATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="17"
+                      cachedName="APP_LAST_UPDATE_USERID"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_LAST_UPDATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i2"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="wstr"
+                      length="30"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="dbTimeStamp"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="i8"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="AUDIT TRAIL"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="17"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      name="APP_LAST_UPDATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PSP_PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PSP_PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      name="APP_LAST_UPDATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task - Fix Region Code 4.Paths[Derived Column Output]"
+              endId="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY.Inputs[OLE DB Command Input]"
+              name="Derived Column Output"
+              startId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Data Flow Task - Fix Region Code 4.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{DD51BA99-E730-469D-8B1B-9CE9985590CD}"
+      DTS:From="Package\Data Flow Task - Fix District Code 12"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task - Fix Region Code 4" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{5F579E29-8800-4F1C-B7BB-12FEE32AF9AC}"
+      DTS:From="Package\Data Flow Task - BKP PIMS_PROPERTY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Data Flow Task - Fix District Code 12" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="277.333333333334,42.6666666666667"
+          Id="Package\Data Flow Task - BKP PIMS_PROPERTY"
+          TopLeft="213.749996814877,151.210529161952" />
+        <NodeLayout
+          Size="256,42.6666666666667"
+          Id="Package\Data Flow Task - Fix District Code 12"
+          TopLeft="543.124991906807,149.842108083564" />
+        <NodeLayout
+          Size="250.666666666667,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Code 4"
+          TopLeft="899.999986588955,149.877193871077" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="799.124991906807,171.192984310654">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="100.874994682148,0"
+              Start="0,0"
+              End="93.374994682148,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="93.374994682148,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="491.08333014821,171.859651956092">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="52.0416617585968,0"
+              Start="0,0"
+              End="44.5416617585968,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="44.5416617585968,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="PSP-8537"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="80,40"
+          Id="9474d8d6-1d8f-42ab-9663-6e44ee3e6e2d"
+          TopLeft="244.999996349216,41.0526323516614" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task - Fix District Code 12">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="145.333333333334,42.6666666666667"
+          Id="Package\Data Flow Task - Fix District Code 12\AUDIT TRAIL"
+          TopLeft="685.624989783391,202.526319601529" />
+        <NodeLayout
+          Size="229.333333333334,42.6666666666667"
+          Id="Package\Data Flow Task - Fix District Code 12\( UPDATE ) PIMS_PROPERTY"
+          TopLeft="891.874986710027,284.631584304852" />
+        <NodeLayout
+          Size="228,42.6666666666667"
+          Id="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY"
+          TopLeft="475.916659569989,128.631581368539" />
+        <EdgeLayout
+          Id="Package\Data Flow Task - Fix District Code 12.Paths[OLE DB Source Output]"
+          TopLeft="589.916659569989,171.298248035206">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="168.374996880069,31.2280715663233"
+              Start="0,0"
+              End="168.374996880069,23.7280715663233">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,11.6140357831617" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,11.6140357831617"
+                    Point2="0,15.6140357831617"
+                    Point3="4,15.6140357831617" />
+                  <mssgle:LineSegment
+                    End="164.374996880069,15.6140357831617" />
+                  <mssgle:CubicBezierSegment
+                    Point1="164.374996880069,15.6140357831617"
+                    Point2="168.374996880069,15.6140357831617"
+                    Point3="168.374996880069,19.6140357831617" />
+                  <mssgle:LineSegment
+                    End="168.374996880069,23.7280715663233" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task - Fix District Code 12.Paths[Derived Column Output]"
+          TopLeft="758.291656450058,245.192986268196">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="248.249996926636,39.438598036656"
+              Start="0,0"
+              End="248.249996926636,31.938598036656">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,15.719299018328" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,15.719299018328"
+                    Point2="0,19.719299018328"
+                    Point3="4,19.719299018328" />
+                  <mssgle:LineSegment
+                    End="244.249996926636,19.719299018328" />
+                  <mssgle:CubicBezierSegment
+                    Point1="244.249996926636,19.719299018328"
+                    Point2="248.249996926636,19.719299018328"
+                    Point3="248.249996926636,23.719299018328" />
+                  <mssgle:LineSegment
+                    End="248.249996926636,31.938598036656" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Fix District Code with 12"
+          ParentId="Package\Data Flow Task - Fix District Code 12"
+          FontInfo="{assembly:Null}"
+          Size="157.333333333334,40"
+          Id="d2e11b9f-6a47-4cab-8708-aa86b18bcfc0"
+          TopLeft="132.499998025596,13.6842107838871" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task - Fix District Code 12\( SELECT ) PIMS_PROPERTY">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Data Flow Task - Fix Region Code 4">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="145.333333333334,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Code 4\AUDIT TRAIL"
+          TopLeft="502.249989140778,176.28947817883" />
+        <NodeLayout
+          Size="229.333333333334,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Code 4\( UPDATE ) PIMS_PROPERTY"
+          TopLeft="678.749989885837,266.842110285799" />
+        <NodeLayout
+          Size="228,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY"
+          TopLeft="249.749992903322,66.131581368539" />
+        <EdgeLayout
+          Id="Package\Data Flow Task - Fix Region Code 4.Paths[OLE DB Source Output]"
+          TopLeft="363.749992903322,108.798248035206">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="211.166662904123,67.4912301436241"
+              Start="0,0"
+              End="211.166662904123,59.9912301436241">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.7456150718121" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,29.7456150718121"
+                    Point2="0,33.7456150718121"
+                    Point3="4,33.7456150718121" />
+                  <mssgle:LineSegment
+                    End="207.166662904123,33.7456150718121" />
+                  <mssgle:CubicBezierSegment
+                    Point1="207.166662904123,33.7456150718121"
+                    Point2="211.166662904123,33.7456150718121"
+                    Point3="211.166662904123,37.7456150718121" />
+                  <mssgle:LineSegment
+                    End="211.166662904123,59.9912301436241" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task - Fix Region Code 4.Paths[Derived Column Output]"
+          TopLeft="574.916655807445,218.956144845496">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="218.500000745059,47.8859654403022"
+              Start="0,0"
+              End="218.500000745059,40.3859654403022">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.9429827201511" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.9429827201511"
+                    Point2="0,23.9429827201511"
+                    Point3="4,23.9429827201511" />
+                  <mssgle:LineSegment
+                    End="214.500000745059,23.9429827201511" />
+                  <mssgle:CubicBezierSegment
+                    Point1="214.500000745059,23.9429827201511"
+                    Point2="218.500000745059,23.9429827201511"
+                    Point3="218.500000745059,27.9429827201511" />
+                  <mssgle:LineSegment
+                    End="218.500000745059,40.3859654403022" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="Fix Region Code 4"
+          ParentId="Package\Data Flow Task - Fix Region Code 4"
+          FontInfo="{assembly:Null}"
+          Size="124,40"
+          Id="d2e11b9f-6a47-4cab-8708-aa86b18bcfc0"
+          TopLeft="124.499998025596,12.1842107838871" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task - Fix Region Code 4\( SELECT ) PIMS_PROPERTY">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

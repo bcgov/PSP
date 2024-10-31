@@ -1,0 +1,2032 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/11/2024 4:27:28 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{F251F11E-AAD6-41A6-B476-944077D7F419}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:VersionBuild="82"
+  DTS:VersionGUID="{652FBA94-CAA0-4C79-B489-616C70A08FDE}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{75A4D509-C482-4841-8E4A-06EA449C150F}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{75A4D509-C482-4841-8E4A-06EA449C150F}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{935A7E29-39AC-4037-B3C8-60A0FE2D9779}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="AUDIT TRAIL"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
+                      name="APP_CREATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      name="APP_LAST_UPDATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]"
+                      name="APP_CREATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      name="APP_LAST_UPDATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Inputs[Data Conversion Input].Columns[DESCRIPTION]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="DESCRIPTION"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[DESCRIPTION]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="4000"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]"
+                      name="Copy of DESCRIPTION"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[DESCRIPTION]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="INSERT INTO PIMS_PROPERTY_ACTIVITY Table"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PIMS_PROPERTY_ACTIVITY]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS,FIRE_TRIGGERS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="PROP_MGMT_ACTIVITY_TYPE_CODE"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_TYPE_CODE]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="PROP_MGMT_ACTIVITY_SUBTYPE_CODE"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[SERVICE_PROVIDER_PERSON_ID]"
+                      cachedDataType="i8"
+                      cachedName="SERVICE_PROVIDER_PERSON_ID"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[SERVICE_PROVIDER_PERSON_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[SERVICE_PROVIDER_PERSON_ID]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[SERVICE_PROVIDER_ORG_ID]"
+                      cachedDataType="i8"
+                      cachedName="SERVICE_PROVIDER_ORG_ID"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[SERVICE_PROVIDER_ORG_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[SERVICE_PROVIDER_ORG_ID]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[REQUEST_ADDED_DT]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="REQUEST_ADDED_DT"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[REQUEST_ADDED_DT]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[REQUEST_ADDED_DT]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[COMPLETION_DT]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="COMPLETION_DT"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[COMPLETION_DT]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[COMPLETION_DT]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[REQUEST_SOURCE]"
+                      cachedDataType="wstr"
+                      cachedLength="2000"
+                      cachedName="REQUEST_SOURCE"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[REQUEST_SOURCE]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[REQUEST_SOURCE]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[IS_DISABLED]"
+                      cachedDataType="i4"
+                      cachedName="IS_DISABLED"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[IS_DISABLED]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[IS_DISABLED]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="APP_CREATE_USERID"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="APP_LAST_UPDATE_USERID"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[APP_CREATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_CREATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_LAST_UPDATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].Columns[Copy of DESCRIPTION]"
+                      cachedDataType="wstr"
+                      cachedLength="4000"
+                      cachedName="Copy of DESCRIPTION"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[DESCRIPTION]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of DESCRIPTION]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      dataType="i8"
+                      name="PIMS_PROPERTY_ACTIVITY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="PROP_MGMT_ACTIVITY_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="PROP_MGMT_ACTIVITY_SUBTYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[SERVICE_PROVIDER_PERSON_ID]"
+                      dataType="i8"
+                      name="SERVICE_PROVIDER_PERSON_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[SERVICE_PROVIDER_ORG_ID]"
+                      dataType="i8"
+                      name="SERVICE_PROVIDER_ORG_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[REQUEST_ADDED_DT]"
+                      dataType="wstr"
+                      length="10"
+                      name="REQUEST_ADDED_DT" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[COMPLETION_DT]"
+                      dataType="wstr"
+                      length="10"
+                      name="COMPLETION_DT" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[DESCRIPTION]"
+                      dataType="wstr"
+                      length="500"
+                      name="DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[REQUEST_SOURCE]"
+                      dataType="wstr"
+                      length="2000"
+                      name="REQUEST_SOURCE" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[IS_DISABLED]"
+                      dataType="bool"
+                      name="IS_DISABLED" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[CONCURRENCY_CONTROL_NUMBER]"
+                      dataType="i8"
+                      name="CONCURRENCY_CONTROL_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_CREATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_GUID]"
+                      dataType="guid"
+                      name="APP_CREATE_USER_GUID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_CREATE_USER_DIRECTORY" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_LAST_UPDATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_GUID]"
+                      dataType="guid"
+                      name="APP_LAST_UPDATE_USER_GUID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_LAST_UPDATE_USER_DIRECTORY" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="DB_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="DB_CREATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="DB_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="DB_LAST_UPDATE_USERID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="PIMS Records to INSERT"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT top 1
+	PB.PROPERTY_ID,
+	MAX(PA.PROP_MGMT_ACTIVITY_TYPE_CODE) AS PROP_MGMT_ACTIVITY_TYPE_CODE,
+	MAX(PA.PROP_MGMT_ACTIVITY_SUBTYPE_CODE) AS PROP_MGMT_ACTIVITY_SUBTYPE_CODE,
+    MAX(PA.PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE) AS PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE,
+    MAX(PA.SERVICE_PROVIDER_PERSON_ID) AS SERVICE_PROVIDER_PERSON_ID,
+    MAX(PA.SERVICE_PROVIDER_ORG_ID) AS SERVICE_PROVIDER_ORG_ID,
+    MAX(PA.REQUEST_ADDED_DT) AS REQUEST_ADDED_DT,
+    MAX(PA.COMPLETION_DT) AS COMPLETION_DT,	
+	STRING_AGG(PA.[DESCRIPTION], ' \n ') WITHIN GROUP (ORDER BY PA.[APP_LAST_UPDATE_TIMESTAMP] ASC) AS [DESCRIPTION],	
+    MAX(PA.REQUEST_SOURCE) AS REQUEST_SOURCE,
+	MAX(CAST(IS_DISABLED AS INT)) AS IS_DISABLED
+FROM
+	  dbo.PIMS_PROPERTY_ACTIVITY PA
+JOIN 
+	dbo.PIMS_PROP_PROP_ACTIVITY PB ON PA.PIMS_PROPERTY_ACTIVITY_ID = PB.PIMS_PROPERTY_ACTIVITY_ID
+WHERE
+	PB.PROPERTY_ID IN (SELECT DISTINCT PROPERTY_ID FROM etl.PIMS_PROPERTY_ACTIVITY_PROPERTYID_DUPLICATED)
+	AND PA.PROP_MGMT_ACTIVITY_TYPE_CODE  = 'PROPERTYMTC'
+    AND PA.PROP_MGMT_ACTIVITY_SUBTYPE_CODE = 'SITEINSPECT'
+	
+GROUP BY
+	PB.PROPERTY_ID
+ 
+	;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      length="20"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      name="PROP_MGMT_ACTIVITY_TYPE_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      length="20"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      name="PROP_MGMT_ACTIVITY_SUBTYPE_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      length="20"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      name="PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[SERVICE_PROVIDER_PERSON_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[SERVICE_PROVIDER_PERSON_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[SERVICE_PROVIDER_PERSON_ID]"
+                      name="SERVICE_PROVIDER_PERSON_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[SERVICE_PROVIDER_ORG_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[SERVICE_PROVIDER_ORG_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[SERVICE_PROVIDER_ORG_ID]"
+                      name="SERVICE_PROVIDER_ORG_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[REQUEST_ADDED_DT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[REQUEST_ADDED_DT]"
+                      length="10"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[REQUEST_ADDED_DT]"
+                      name="REQUEST_ADDED_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[COMPLETION_DT]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[COMPLETION_DT]"
+                      length="10"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[COMPLETION_DT]"
+                      name="COMPLETION_DT"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[DESCRIPTION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[DESCRIPTION]"
+                      length="4000"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[DESCRIPTION]"
+                      name="DESCRIPTION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[REQUEST_SOURCE]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[REQUEST_SOURCE]"
+                      length="2000"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[REQUEST_SOURCE]"
+                      name="REQUEST_SOURCE"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[IS_DISABLED]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[IS_DISABLED]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].Columns[IS_DISABLED]"
+                      name="IS_DISABLED"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="PROP_MGMT_ACTIVITY_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="PROP_MGMT_ACTIVITY_SUBTYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[SERVICE_PROVIDER_PERSON_ID]"
+                      dataType="i8"
+                      name="SERVICE_PROVIDER_PERSON_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[SERVICE_PROVIDER_ORG_ID]"
+                      dataType="i8"
+                      name="SERVICE_PROVIDER_ORG_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[REQUEST_ADDED_DT]"
+                      dataType="wstr"
+                      length="10"
+                      name="REQUEST_ADDED_DT" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[COMPLETION_DT]"
+                      dataType="wstr"
+                      length="10"
+                      name="COMPLETION_DT" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[DESCRIPTION]"
+                      dataType="wstr"
+                      length="4000"
+                      name="DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[REQUEST_SOURCE]"
+                      dataType="wstr"
+                      length="2000"
+                      name="REQUEST_SOURCE" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output].ExternalColumns[IS_DISABLED]"
+                      dataType="i4"
+                      name="IS_DISABLED" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[PROP_MGMT_ACTIVITY_TYPE_CODE]"
+                      name="PROP_MGMT_ACTIVITY_TYPE_CODE" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[PROP_MGMT_ACTIVITY_SUBTYPE_CODE]"
+                      name="PROP_MGMT_ACTIVITY_SUBTYPE_CODE" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE]"
+                      name="PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[SERVICE_PROVIDER_PERSON_ID]"
+                      dataType="i8"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[SERVICE_PROVIDER_PERSON_ID]"
+                      name="SERVICE_PROVIDER_PERSON_ID" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[SERVICE_PROVIDER_ORG_ID]"
+                      dataType="i8"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[SERVICE_PROVIDER_ORG_ID]"
+                      name="SERVICE_PROVIDER_ORG_ID" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[REQUEST_ADDED_DT]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[REQUEST_ADDED_DT]"
+                      name="REQUEST_ADDED_DT" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[COMPLETION_DT]"
+                      dataType="wstr"
+                      length="10"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[COMPLETION_DT]"
+                      name="COMPLETION_DT" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[DESCRIPTION]"
+                      dataType="wstr"
+                      length="4000"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[DESCRIPTION]"
+                      name="DESCRIPTION" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[REQUEST_SOURCE]"
+                      dataType="wstr"
+                      length="2000"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[REQUEST_SOURCE]"
+                      name="REQUEST_SOURCE" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[IS_DISABLED]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[IS_DISABLED]"
+                      name="IS_DISABLED" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS.Paths[Data Conversion Output]"
+              endId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table.Inputs[OLE DB Destination Input]"
+              name="Data Conversion Output"
+              startId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS.Paths[Derived Column Output]"
+              endId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion.Inputs[Data Conversion Input]"
+              name="Derived Column Output"
+              startId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS.Paths[OLE DB Source Output]"
+              endId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{a3477a03-6c26-45e2-9276-ad9ba601a757}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="AUDIT TRAIL"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]"
+                      name="APP_CREATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USER_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USER_ID]"
+                      name="APP_CREATE_USER_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      name="APP_LAST_UPDATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
+                      name="APP_LAST_UPDATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="PIMS_PROP_PROP_ACTIVITY"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[PIMS_PROP_PROP_ACTIVITY]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS,FIRE_TRIGGERS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].Columns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PIMS_PROPERTY_ACTIVITY_ID"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].Columns[PIMS_PROPERTY_ACTIVITY_ID]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].Columns[APP_CREATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_CREATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="APP_LAST_UPDATE_USERID"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USER_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="APP_CREATE_USER_ID"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USER_ID]" />
+                    <inputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_LAST_UPDATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[PROP_PROP_ACTIVITY_ID]"
+                      dataType="i8"
+                      name="PROP_PROP_ACTIVITY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      dataType="i8"
+                      name="PIMS_PROPERTY_ACTIVITY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[CONCURRENCY_CONTROL_NUMBER]"
+                      dataType="i8"
+                      name="CONCURRENCY_CONTROL_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_CREATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_GUID]"
+                      dataType="guid"
+                      name="APP_CREATE_USER_GUID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_CREATE_USER_DIRECTORY" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_LAST_UPDATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_GUID]"
+                      dataType="guid"
+                      name="APP_LAST_UPDATE_USER_GUID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_LAST_UPDATE_USER_DIRECTORY" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="DB_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="DB_CREATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="DB_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="DB_LAST_UPDATE_USERID" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SELECT RECORDS FOR INSERTION"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">WITH B AS
+(SELECT
+	PB.PROPERTY_ID,
+	MAX(PA.PROP_MGMT_ACTIVITY_TYPE_CODE) AS PROP_MGMT_ACTIVITY_TYPE_CODE,
+	MAX(PA.PROP_MGMT_ACTIVITY_SUBTYPE_CODE) AS PROP_MGMT_ACTIVITY_SUBTYPE_CODE,
+    MAX(PA.PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE) AS PROP_MGMT_ACTIVITY_STATUS_TYPE_CODE,
+    MAX(PA.SERVICE_PROVIDER_PERSON_ID) AS SERVICE_PROVIDER_PERSON_ID,
+    MAX(PA.SERVICE_PROVIDER_ORG_ID) AS SERVICE_PROVIDER_ORG_ID,
+    MAX(PA.REQUEST_ADDED_DT) AS REQUEST_ADDED_DT,
+    MAX(PA.COMPLETION_DT) AS COMPLETION_DT,	
+	STRING_AGG(PA.[DESCRIPTION], ' \n ') WITHIN GROUP (ORDER BY PA.[APP_LAST_UPDATE_TIMESTAMP] ASC) AS [DESCRIPTION],	
+    MAX(PA.REQUEST_SOURCE) AS REQUEST_SOURCE,
+	MAX(CAST(IS_DISABLED AS INT)) AS IS_DISABLED
+FROM
+	  dbo.PIMS_PROPERTY_ACTIVITY PA
+JOIN 
+	dbo.PIMS_PROP_PROP_ACTIVITY PB ON PA.PIMS_PROPERTY_ACTIVITY_ID = PB.PIMS_PROPERTY_ACTIVITY_ID
+WHERE
+	PB.PROPERTY_ID IN (SELECT DISTINCT PROPERTY_ID FROM etl.PIMS_PROPERTY_ACTIVITY_PROPERTYID_DUPLICATED)
+	AND PA.PROP_MGMT_ACTIVITY_TYPE_CODE  = 'PROPERTYMTC'
+    AND PA.PROP_MGMT_ACTIVITY_SUBTYPE_CODE = 'SITEINSPECT'
+GROUP BY
+	PB.PROPERTY_ID
+
+	)
+ 
+
+SELECT
+
+	  --A.[DESCRIPTION], 
+	  B.PROPERTY_ID,
+	  A.[PIMS_PROPERTY_ACTIVITY_ID]
+	  
+	  FROM 
+		dbo.PIMS_PROPERTY_ACTIVITY A
+		JOIN B ON A.[DESCRIPTION] = B.[DESCRIPTION]
+WHERE A.APP_CREATE_USERID = 'PIMS_ETL_USER'
+;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].Columns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].ExternalColumns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].Columns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      name="PIMS_PROPERTY_ACTIVITY_ID"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output].ExternalColumns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      dataType="i8"
+                      name="PIMS_PROPERTY_ACTIVITY_ID" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output].Columns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      dataType="i8"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output].Columns[PIMS_PROPERTY_ACTIVITY_ID]"
+                      name="PIMS_PROPERTY_ACTIVITY_ID" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY.Paths[Derived Column Output]"
+              endId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY.Paths[OLE DB Source Output]"
+              endId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL TASK - BKP PIMS_PROPERTY_ACTIVITY"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{B313E7BF-E838-459A-9261-4E86733B6EB6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL TASK - BKP PIMS_PROPERTY_ACTIVITY"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{75A4D509-C482-4841-8E4A-06EA449C150F}"
+          SQLTask:SqlStatementSource="BEGIN&#xA;DROP TABLE if exists etl.PIMS_PROPERTY_ACTIVITY_BKP_PSP7584;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_PROPERTY_ACTIVITY_BKP_PSP7584 FROM dbo.PIMS_PROPERTY_ACTIVITY;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL TASK - BKP PIMS_PROP_PROP_ACTIVITY"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{f0b30b5b-b962-4f7f-88a8-5eb882df5b62}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL TASK - BKP PIMS_PROP_PROP_ACTIVITY"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{75A4D509-C482-4841-8E4A-06EA449C150F}"
+          SQLTask:SqlStatementSource="BEGIN&#xA;DROP TABLE if exists etl.PIMS_PROP_PROP_ACTIVITY_BKP_PSP7584;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_PROP_PROP_ACTIVITY_BKP_PSP7584 FROM dbo.PIMS_PROP_PROP_ACTIVITY;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL TASK - CLEANUP -  DELETE DUPLICATE IDs from PIMS_PROP_ACTIVITY table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DelayValidation="True"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{7520EA34-743E-48F5-9ABF-A0D2FE0F0A48}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL TASK - CLEANUP -  DELETE DUPLICATE IDs from PIMS_PROP_ACTIVITY table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{75A4D509-C482-4841-8E4A-06EA449C150F}"
+          SQLTask:SqlStatementSource="DELETE FROM dbo.PIMS_PROPERTY_ACTIVITY WHERE PIMS_PROPERTY_ACTIVITY_ID IN ( SELECT PIMS_PROPERTY_ACTIVITY_ID FROM etl.PIMS_PROPERTY_ACTIVITY_PROPERTYID_DUPLICATED )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL TASK - CLEANUP - DELETE DUPLICATE IDs from PIMS_PROP_PROP_ACTIVITY table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:DelayValidation="True"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{D2688D47-5B10-4DC1-AAB8-F76F7A07E350}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL TASK - CLEANUP - DELETE DUPLICATE IDs from PIMS_PROP_PROP_ACTIVITY table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{75A4D509-C482-4841-8E4A-06EA449C150F}"
+          SQLTask:SqlStatementSource="DELETE FROM dbo.PIMS_PROP_PROP_ACTIVITY WHERE PIMS_PROPERTY_ACTIVITY_ID IN ( SELECT PIMS_PROPERTY_ACTIVITY_ID FROM etl.PIMS_PROPERTY_ACTIVITY_PROPERTYID_DUPLICATED )" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\SQL TASK - CREATE TEMP TABLE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:Disabled="True"
+      DTS:DTSID="{65199050-A72C-432C-AB7E-C6F5F2B7F9BB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="SQL TASK - CREATE TEMP TABLE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{75A4D509-C482-4841-8E4A-06EA449C150F}"
+          SQLTask:SqlStatementSource="BEGIN&#xA;&#x9;DROP TABLE if exists etl.PIMS_PROPERTY_ACTIVITY_PROPERTYID_DUPLICATED;&#xA;END&#xA;&#xA;BEGIN&#xA;&#x9;SELECT &#xA;&#x9;&#x9;distinct B.PROPERTY_ID , A.PIMS_PROPERTY_ACTIVITY_ID&#xA;&#x9;&#x9;INTO etl.PIMS_PROPERTY_ACTIVITY_PROPERTYID_DUPLICATED&#xA;&#x9;FROM &#xA;&#x9;&#x9;dbo.PIMS_PROPERTY_ACTIVITY A  JOIN dbo.PIMS_PROP_PROP_ACTIVITY B  ON A.PIMS_PROPERTY_ACTIVITY_ID = B.PIMS_PROPERTY_ACTIVITY_ID&#xA;&#x9;WHERE&#xA;&#x9;&#x9;PROP_MGMT_ACTIVITY_TYPE_CODE  = 'PROPERTYMTC'&#xA;&#x9;&#x9;AND PROP_MGMT_ACTIVITY_SUBTYPE_CODE = 'SITEINSPECT'&#xA;&#x9;&#x9;AND B.PROPERTY_ID IS NOT NULL;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{271075F3-14EE-4896-BF86-54199E9E1834}"
+      DTS:From="Package\SQL TASK - BKP PIMS_PROPERTY_ACTIVITY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\SQL TASK - CREATE TEMP TABLE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{89F7E38C-3FEC-4BBB-A022-9117F914DCCF}"
+      DTS:From="Package\SQL TASK - CREATE TEMP TABLE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{01E0DEB1-DC86-46A4-BF9B-5B80AA711E23}"
+      DTS:From="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{FDA71F15-CED3-48E8-854D-AA44FF6C4FFD}"
+      DTS:From="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\SQL TASK - CLEANUP - DELETE DUPLICATE IDs from PIMS_PROP_PROP_ACTIVITY table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{4907ACAA-3CDC-4CEF-BF7F-7DB166F7F7E5}"
+      DTS:From="Package\SQL TASK - CLEANUP - DELETE DUPLICATE IDs from PIMS_PROP_PROP_ACTIVITY table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\SQL TASK - CLEANUP -  DELETE DUPLICATE IDs from PIMS_PROP_ACTIVITY table" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{95379B9E-C445-4CBE-B7A2-F259AFDA8CE7}"
+      DTS:From="Package\SQL TASK - BKP PIMS_PROP_PROP_ACTIVITY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\SQL TASK - BKP PIMS_PROPERTY_ACTIVITY" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="404,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY"
+          TopLeft="1005.62498501502,242.894741413996" />
+        <NodeLayout
+          Size="497.333333333334,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS"
+          TopLeft="958.124985722825,104.000001957543" />
+        <NodeLayout
+          Size="317.333333333334,42.6666666666667"
+          Id="Package\SQL TASK - BKP PIMS_PROP_PROP_ACTIVITY"
+          TopLeft="269.999995976687,219.631583081388" />
+        <NodeLayout
+          Size="309.333333333334,42.6666666666667"
+          Id="Package\SQL TASK - BKP PIMS_PROPERTY_ACTIVITY"
+          TopLeft="272.499995939434,101.263159800765" />
+        <NodeLayout
+          Size="496,42.6666666666667"
+          Id="Package\SQL TASK - CLEANUP -  DELETE DUPLICATE IDs from PIMS_PROP_ACTIVITY table"
+          TopLeft="957.49998573214,497.421061994296" />
+        <NodeLayout
+          Size="529.333333333334,42.6666666666667"
+          Id="Package\SQL TASK - CLEANUP - DELETE DUPLICATE IDs from PIMS_PROP_PROP_ACTIVITY table"
+          TopLeft="934.999986067414,372.210533321729" />
+        <NodeLayout
+          Size="253.333333333334,42.6666666666667"
+          Id="Package\SQL TASK - CREATE TEMP TABLE"
+          TopLeft="633.124990565702,100.57894926157" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="581.833329272767,122.254387864501">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="51.2916612929346,0"
+              Start="0,0"
+              End="43.7916612929346,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="43.7916612929346,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="886.458323899035,123.62280894289">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="71.6666618237903,0"
+              Start="0,0"
+              End="64.1666618237903,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="64.1666618237903,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="1207.20831870226,146.666668624209">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,96.2280727897867"
+              Start="0,0"
+              End="0,88.7280727897867">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,88.7280727897867" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1203.64581887455,285.561408080663">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,86.6491252410664"
+              Start="0,0"
+              End="0,79.1491252410664">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,79.1491252410664" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="1202.58331923311,414.877199988396">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,82.5438620059"
+              Start="0,0"
+              End="0,75.0438620059">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,75.0438620059" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="427.916662624727,219.631583081388">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,-75.7017566139568"
+              Start="0,0"
+              End="0,-68.2017566139568">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-68.2017566139568" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="TEMP TABLE TO STORE PROPERTY_ID that are selected as duplicates&#xA;&#xA;etl.PIMS_PROPERTY_ACTIVITY_PROPERTYID_DUPLICATED"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="388,72"
+          Id="5677b9f6-86cb-49ce-b71f-ebb254124dd7"
+          TopLeft="614.999990835786,154.631581857924" />
+        <AnnotationLayout
+          Text="PSP-7584"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="80,40"
+          Id="7105051f-0b5e-43e8-bc27-8a16aa21df2a"
+          TopLeft="1048.74998437241,17.7894740190533" />
+        <AnnotationLayout
+          Text="Using Description concatenated field extract Property_ID and associate PIMS_PROPERTY_ACTIVITY_ID and insert into&#xA;PIMS_PROP_PROP_ACTIVITY table to maintain relationship"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="642.666666666667,56"
+          Id="d8ca33c8-1c08-4225-83cc-216d3f3fbab4"
+          TopLeft="1427.49997872859,234.684214943664" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="232,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY"
+          TopLeft="1028.25641025641,266.076923076923" />
+        <NodeLayout
+          Size="264,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION"
+          TopLeft="450.624999990687,259" />
+        <NodeLayout
+          Size="145.333333333334,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\AUDIT TRAIL"
+          TopLeft="748.230769230769,260.538461538462" />
+        <EdgeLayout
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY.Paths[OLE DB Source Output]"
+          TopLeft="714.624999990687,281.102564102564">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="33.6057692400821,0"
+              Start="0,0"
+              End="26.1057692400821,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="26.1057692400821,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY.Paths[Derived Column Output]"
+          TopLeft="893.564102564102,284.641025641026">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="134.692307692311,0"
+              Start="0,0"
+              End="127.192307692311,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="127.192307692311,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\PIMS_PROP_PROP_ACTIVITY">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DATA FLOW TASK - INSERT INTO PIMS_PROP_PROP_ACTIVITY\SELECT RECORDS FOR INSERTION">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="324,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table"
+          TopLeft="846.124988405034,144.263160779536" />
+        <NodeLayout
+          Size="201.333333333334,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT"
+          TopLeft="244.124996377155,152.526318622758" />
+        <NodeLayout
+          Size="145.333333333334,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\AUDIT TRAIL"
+          TopLeft="521.874992223457,151.894739701147" />
+        <EdgeLayout
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS.Paths[OLE DB Source Output]"
+          TopLeft="445.458329710488,173.543862495286">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76.4166625129686,0"
+              Start="0,0"
+              End="68.9166625129686,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="68.9166625129686,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\Data Conversion"
+          TopLeft="674.999989941717,275.052636756131" />
+        <EdgeLayout
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS.Paths[Derived Column Output]"
+          TopLeft="594.541658890124,194.561406367814">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="134.680553273815,80.4912303883173"
+              Start="0,0"
+              End="134.680553273815,72.9912303883173">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.812594423676" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43.812594423676"
+                    Point2="0,47.812594423676"
+                    Point3="4,47.812594423676" />
+                  <mssgle:LineSegment
+                    End="130.680553273815,47.812594423676" />
+                  <mssgle:CubicBezierSegment
+                    Point1="130.680553273815,47.812594423676"
+                    Point2="134.680553273815,47.812594423676"
+                    Point3="134.680553273815,51.812594423676" />
+                  <mssgle:LineSegment
+                    End="134.680553273815,72.9912303883173" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS.Paths[Data Conversion Output]"
+          TopLeft="779.444434386161,275.052636756131">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="228.680554018873,-88.1228093099283"
+              Start="0,0"
+              End="228.680554018873,-80.6228093099283">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-31.7769808180075" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-31.7769808180075"
+                    Point2="0,-35.7769808180075"
+                    Point3="4,-35.7769808180075" />
+                  <mssgle:LineSegment
+                    End="224.680554018873,-35.7769808180075" />
+                  <mssgle:CubicBezierSegment
+                    Point1="224.680554018873,-35.7769808180075"
+                    Point2="228.680554018873,-35.7769808180075"
+                    Point3="228.680554018873,-39.7769808180075" />
+                  <mssgle:LineSegment
+                    End="228.680554018873,-80.6228093099283" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\INSERT INTO PIMS_PROPERTY_ACTIVITY Table">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\DATA FLOW TASK - INSERT INTO PIMS_PROPERTY_ACTIVITY AS NEW RECORDS\PIMS Records to INSERT">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

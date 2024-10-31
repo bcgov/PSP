@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="PSP"
+  DTS:DTSID="{A138AC21-CEB4-46E6-89FF-EA314DDC2BAF}"
+  DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/DEV01;User ID=app_dsa_proxy_psp_read;Persist Security Info=True;Unicode=True;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA/475NWuf7Eusdu8b62swfQAAAAACAAAAAAAQZgAAAAEAACAAAAAPLvF46tfjZT9n+DgdwjD1WsPXDrNbi71MT0a4uIURUAAAAAAOgAAAAAIAACAAAABztjVjyPOTqU9BtxFEF2LMSMu+gNlz12oaKtbJxXFS0YAAAADxapYoTYGwof71KqeYOCTx/HJk0FCEC3kBpdFShHl4URp6sL+V+hp8a3PdTcLpzoaQUhDFTm7fiOUBiq2sU/G7X8BphFMjeeuOm9mYZ4ScWAckaY6YEFMuc+NFTQwkypfPe5ex/RmJq0UksOOL23eYh5yBsVugh3EAoEqz/zz2k0AAAABuNsXBaP4S9M9kscTRgWkIgOYHYfY0DUGbfW/LsKjtECVSn0bZVRwxICw4B1HDI7+FJ9gHz3hSG1X6xly4MEgo</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
