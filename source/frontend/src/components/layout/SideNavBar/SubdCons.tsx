@@ -1,11 +1,10 @@
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 
 import { Claims } from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 import { ISideTrayPageProps } from './SideTray';
-import * as Styled from './styles';
+import { HalfHeightDiv } from './styles';
 
 /**
  * Subdivision & Consolidation Tray page.
@@ -16,14 +15,21 @@ export const SubdivisionConsolidationTray = ({ onLinkClick }: ISideTrayPageProps
   return (
     <>
       <HalfHeightDiv>
-        <Styled.TrayHeader>Subdivision & Consolidation</Styled.TrayHeader>
         {hasClaim(Claims.PROPERTY_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/sidebar/subdivision/new">
+          <Link
+            onClick={onLinkClick}
+            to="/mapview/sidebar/subdivision/new"
+            className="nav-item pl-9 pb-3"
+          >
             Create a Subdivision
           </Link>
         )}
         {hasClaim(Claims.PROPERTY_ADD) && (
-          <Link onClick={onLinkClick} to="/mapview/sidebar/consolidation/new">
+          <Link
+            onClick={onLinkClick}
+            to="/mapview/sidebar/consolidation/new"
+            className="nav-item pl-9 pb-3"
+          >
             Create a Consolidation
           </Link>
         )}
@@ -31,9 +37,3 @@ export const SubdivisionConsolidationTray = ({ onLinkClick }: ISideTrayPageProps
     </>
   );
 };
-
-const HalfHeightDiv = styled.div`
-  flex-direction: column;
-  display: flex;
-  height: 50%;
-`;

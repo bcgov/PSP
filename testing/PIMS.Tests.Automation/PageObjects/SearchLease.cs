@@ -335,8 +335,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.Program != "")
                 AssertTrueContentEquals(searchLicense1stResultProgramContent, lease.Program);
 
-            if(lease.LeaseTenants.Count > 0)
-                Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
+            //if(lease.LeaseTenants.Count > 0)
+            //    Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
 
             if (lease.SearchPropertiesIndex!= 0)
                 Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);

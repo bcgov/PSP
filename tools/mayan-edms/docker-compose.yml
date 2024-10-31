@@ -8,7 +8,10 @@ x-mayan-container: &mayan-container
     MAYAN_DATABASES: "{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'${MAYAN_DATABASE_NAME:-mayan}','PASSWORD':'${MAYAN_DATABASE_PASSWORD:-mayandbpass}','USER':'${MAYAN_DATABASE_USER:-mayan}','HOST':'${MAYAN_DATABASE_HOST:-postgresql}'}}"
     MAYAN_LOCK_MANAGER_BACKEND: mayan.apps.lock_manager.backends.redis_lock.RedisLock
     MAYAN_LOCK_MANAGER_BACKEND_ARGUMENTS: "{'redis_url':'redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/2'}"
-  image: ${MAYAN_DOCKER_IMAGE_NAME:-mayanedms/mayanedms}:${MAYAN_DOCKER_IMAGE_TAG:-s4.7}
+
+  build:
+    context: https://github.com/bcgov/mayan-openshift.git#dev
+    dockerfile: ./docker/Dockerfile
   networks:
     - psp
   restart: unless-stopped
@@ -27,6 +30,8 @@ services:
       - mayan
     ports:
       - "7080:8000"
+    command:
+      - run_frontend
 
   elasticsearch:
     environment:
@@ -212,7 +217,7 @@ services:
   command_initialsetup_or_performupgrade:
     <<: *mayan-container
     command:
-      - run_initialsetup_or_performupgrade
+      - run_initial_setup_or_perform_upgrade
     profiles:
       - extra_command_initialsetup_or_performupgrade
     restart: "no"

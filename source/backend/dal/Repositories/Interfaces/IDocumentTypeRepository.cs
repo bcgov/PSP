@@ -8,6 +8,8 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IDocumentTypeRepository : IRepository<PimsDocumentTyp>
     {
+        PimsDocumentTyp GetById(long id);
+
         IList<PimsDocumentTyp> GetAll();
 
         IList<PimsDocumentTyp> GetByCategory(string category);

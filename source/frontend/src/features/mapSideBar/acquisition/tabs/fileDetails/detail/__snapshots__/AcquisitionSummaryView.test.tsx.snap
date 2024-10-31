@@ -7,6 +7,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
   />
   <div />
   .c0 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
@@ -16,7 +17,8 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
 
 .c3 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -40,6 +42,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
 }
 
 .c7 {
+  color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;

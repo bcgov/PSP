@@ -111,12 +111,13 @@ export const useApiDocuments = () => {
           formData,
         );
       },
-      updateDocumentMetadataApiCall: (
+
+      updateDocumentApiCall: (
         documentId: number,
         updateRequest: ApiGen_Requests_DocumentUpdateRequest,
       ) => {
         return api.put<ApiGen_Requests_DocumentUpdateResponse>(
-          `/documents/${documentId}/metadata`,
+          `/documents/${documentId}`,
           updateRequest,
         );
       },

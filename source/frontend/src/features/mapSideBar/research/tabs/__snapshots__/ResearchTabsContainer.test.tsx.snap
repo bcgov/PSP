@@ -7,6 +7,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
   />
   <div />
   .c2 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
@@ -16,7 +17,8 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
 
 .c5 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -35,6 +37,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
 .c0 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
+  background-color: #f2f2f2;
 }
 
 .c0 .tab-content .tab-pane {
@@ -43,6 +46,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
 
 .c1 {
   background-color: white;
+  color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
@@ -52,18 +56,22 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
 }
 
 .c1 .nav-item {
+  color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.2rem;
 }
 
 .c1 .nav-item:hover {
+  color: var(--surface-color-primary-button-hover);
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
 }
 
 .c1 .nav-item.active {
+  background-color: #f2f2f2;
   font-family: 'BCSans-Bold';
+  color: var(--surface-color-primary-button-hover);
   border-color: transparent;
 }
 

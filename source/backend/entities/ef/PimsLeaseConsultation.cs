@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 [Table("PIMS_LEASE_CONSULTATION")]
+[Index("ConsultationOutcomeTypeCode", Name = "LESCON_CONSULTATION_OUTCOME_TYPE_CODE_IDX")]
 [Index("ConsultationStatusTypeCode", Name = "LESCON_CONSULTATION_STATUS_TYPE_CODE_IDX")]
 [Index("ConsultationTypeCode", Name = "LESCON_CONSULTATION_TYPE_CODE_IDX")]
 [Index("LeaseId", Name = "LESCON_LEASE_ID_IDX")]
@@ -61,6 +62,14 @@ public partial class PimsLeaseConsultation
     [Column("CONSULTATION_STATUS_TYPE_CODE")]
     [StringLength(20)]
     public string ConsultationStatusTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_CONSULTATION_OUTCOME_TYPE table.
+    /// </summary>
+    [Required]
+    [Column("CONSULTATION_OUTCOME_TYPE_CODE")]
+    [StringLength(20)]
+    public string ConsultationOutcomeTypeCode { get; set; }
 
     /// <summary>
     /// Description for the approval / consultation when &quot;Other&quot; consultation type is selected.
@@ -188,6 +197,10 @@ public partial class PimsLeaseConsultation
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [ForeignKey("ConsultationOutcomeTypeCode")]
+    [InverseProperty("PimsLeaseConsultations")]
+    public virtual PimsConsultationOutcomeType ConsultationOutcomeTypeCodeNavigation { get; set; }
 
     [ForeignKey("ConsultationStatusTypeCode")]
     [InverseProperty("PimsLeaseConsultations")]

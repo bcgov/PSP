@@ -26,15 +26,17 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
 }
 
 .c1 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.6rem;
-  border-bottom: solid 0.2rem;
+  border-bottom: solid 0.2rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;
 }
 
 .c5 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
   border-bottom: solid 0.2rem;
@@ -50,13 +52,24 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
 .c2 {
   border-radius: 0.5rem;
   background-color: white;
-  border: 1px solid;
+  border: 1px solid #606060;
   padding: 0.5rem 1.5rem;
   font-size: 1.6rem;
+  color: #606060;
 }
 
 .c2.active {
-  border: 1px solid;
+  color: #42814A;
+  border: 1px solid #42814A;
+}
+
+.c7 {
+  color: #428bca;
+}
+
+.c7 a {
+  font-weight: bold;
+  color: #428bca !important;
 }
 
 <div
@@ -136,7 +149,7 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
             />
           </svg>
           <b>
-            Fake Corp Incorporated
+            Test Organization
           </b>
         </div>
       </div>
@@ -214,9 +227,40 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
         <div
           class="col-md-9"
         >
-          <span>
-            N.A
-          </span>
+          <div
+            class="c6 row"
+          >
+            <div
+              class="col"
+              data-testid="phone-value"
+            >
+              555-666-7777
+            </div>
+            <div
+              class="col"
+            >
+              <em>
+                Mobile
+              </em>
+            </div>
+          </div>
+          <div
+            class="c6 row"
+          >
+            <div
+              class="col"
+              data-testid="phone-value"
+            >
+              222-333-4444
+            </div>
+            <div
+              class="col"
+            >
+              <em>
+                Work
+              </em>
+            </div>
+          </div>
         </div>
       </div>
       <h3
@@ -267,7 +311,17 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
             <div
               class="c4 text-left col"
               data-testid="contact-organization-person-list"
-            />
+            >
+              <div
+                class="c7"
+              >
+                <a
+                  class="d-block"
+                  data-testid="contact-organization-person"
+                  href="/contact/P3"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -282,8 +336,19 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
 }
 
 .c1 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.6rem;
+  border-bottom: solid 0.2rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c2 {
+  color: var(--theme-blue-100);
+  font-family: 'BCSans-Bold';
+  font-size: 2.2rem;
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
@@ -301,6 +366,36 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
       >
         Address
       </h2>
+      <h3
+        class="c2 mt-10"
+      />
+      <div
+        class="pb-3 row"
+      >
+        <div
+          class="col-md-3"
+        />
+        <div
+          class="col"
+          data-testid="contact-organization-address"
+        >
+          <div>
+            1234 mock Street 
+          </div>
+          <div>
+            N/A 
+          </div>
+          <div>
+            Victoria BC 
+          </div>
+          <div>
+            V1V1V1 
+          </div>
+          <div>
+            Canada
+          </div>
+        </div>
+      </div>
     </div>
   </div>
   .c0 {
@@ -312,9 +407,10 @@ exports[`Contact OrganizationView component > renders as expected 1`] = `
 }
 
 .c1 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.6rem;
-  border-bottom: solid 0.2rem;
+  border-bottom: solid 0.2rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;

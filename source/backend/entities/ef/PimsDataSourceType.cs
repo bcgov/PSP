@@ -60,6 +60,9 @@ public partial class PimsDataSourceType
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("DataSourceTypeCodeNavigation")]
+    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
+
+    [InverseProperty("DataSourceTypeCodeNavigation")]
     public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
 
     [InverseProperty("PropertyDataSourceTypeCodeNavigation")]

@@ -48,16 +48,16 @@ namespace Pims.Dal.Repositories
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.UserTypeCodeNavigation)
                 .Include(a => a.User)
-                .ThenInclude(u => u.Person)
-                .ThenInclude(p => p.PimsContactMethods)
-                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                    .ThenInclude(u => u.Person)
+                    .ThenInclude(p => p.PimsContactMethods)
+                    .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(x => x.User)
-                .ThenInclude(u => u.UserTypeCodeNavigation)
+                    .ThenInclude(u => u.UserTypeCodeNavigation)
                 .Include(a => a.Role)
                 .Include(a => a.UserTypeCodeNavigation)
                 .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
-                .ThenInclude(a => a.Organization)
+                    .ThenInclude(a => a.Organization)
                 .AsNoTracking()
                 .OrderByDescending(a => a.AppCreateTimestamp)
                 .FirstOrDefault(a => a.User.GuidIdentifierValue == key);
@@ -109,12 +109,12 @@ namespace Pims.Dal.Repositories
 
             var query = this.Context.PimsAccessRequests
                 .Include(a => a.User)
-                .ThenInclude(u => u.Person)
-                .ThenInclude(p => p.PimsContactMethods)
-                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                    .ThenInclude(u => u.Person)
+                    .ThenInclude(p => p.PimsContactMethods)
+                    .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(a => a.Role)
                 .Include(a => a.PimsAccessRequestOrganizations)
-                .ThenInclude(a => a.Organization)
+                    .ThenInclude(a => a.Organization)
                 .Include(a => a.AccessRequestStatusTypeCodeNavigation)
                 .Include(a => a.RegionCodeNavigation)
                 .AsNoTracking();
@@ -167,10 +167,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsAccessRequest Add(PimsAccessRequest addRequest)
         {
-            if (addRequest == null)
-            {
-                throw new ArgumentNullException(nameof(addRequest));
-            }
+            addRequest.ThrowIfNull(nameof(addRequest));
 
             var key = this.User.GetUserKey();
             var position = addRequest.User.Position;
@@ -194,10 +191,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsAccessRequest Update(PimsAccessRequest updateRequest)
         {
-            if (updateRequest == null)
-            {
-                throw new ArgumentNullException(nameof(updateRequest));
-            }
+            updateRequest.ThrowIfNull(nameof(updateRequest));
 
             var isAdmin = this.User.HasPermission(Permissions.AdminUsers);
             var key = this.User.GetUserKey();
@@ -211,14 +205,14 @@ namespace Pims.Dal.Repositories
             // fetch the existing request from the datasource.
             var accessRequest = this.Context.PimsAccessRequests
                 .Include(a => a.User)
-                .ThenInclude(u => u.Person)
-                .ThenInclude(p => p.PimsContactMethods)
-                .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                    .ThenInclude(u => u.Person)
+                    .ThenInclude(p => p.PimsContactMethods)
+                    .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
                 .Include(a => a.Role)
                 .Include(a => a.UserTypeCodeNavigation)
                 .Include(a => a.RegionCodeNavigation)
                 .Include(a => a.PimsAccessRequestOrganizations)
-                .ThenInclude(a => a.Organization)
+                    .ThenInclude(a => a.Organization)
                 .FirstOrDefault(a => a.AccessRequestId == updateRequest.AccessRequestId) ?? throw new KeyNotFoundException();
 
             // Copy values into entity.

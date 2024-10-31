@@ -89,4 +89,8 @@ public partial class PimsDocumentHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("DOCUMENT_EXTERNAL_ID")]
+    [StringLength(1000)]
+    public string DocumentExternalId { get; set; }
 }

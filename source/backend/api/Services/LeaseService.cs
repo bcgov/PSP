@@ -280,6 +280,11 @@ namespace Pims.Api.Services
             List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
+                if (_propertyLeaseRepository.LeaseFilePropertyInCompensationReq(deletedProperty.PropertyLeaseId))
+                {
+                    throw new BusinessRuleViolationException("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
+                }
+
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
                 if (totalAssociationCount <= 1)
                 {
@@ -371,7 +376,7 @@ namespace Pims.Api.Services
         public PimsLeaseConsultation GetConsultationById(long consultationId)
         {
             _logger.LogInformation("Getting consultation with id: {consultationId}", consultationId);
-            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
 
             return _consultationRepository.GetConsultationById(consultationId);
         }

@@ -45,6 +45,11 @@ public partial class PimsLeaseConsultationHist
     [StringLength(20)]
     public string ConsultationStatusTypeCode { get; set; }
 
+    [Required]
+    [Column("CONSULTATION_OUTCOME_TYPE_CODE")]
+    [StringLength(20)]
+    public string ConsultationOutcomeTypeCode { get; set; }
+
     [Column("OTHER_DESCRIPTION")]
     [StringLength(2000)]
     public string OtherDescription { get; set; }

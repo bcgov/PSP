@@ -546,6 +546,7 @@ namespace Pims.Api.Test.Services
                             DocumentCategoryTypeCode = "TEST_CATEGORY"
                         },
                     },
+                    IsDisabled = false,
                     DisplayOrder = 1,
                 },
             });
@@ -561,6 +562,42 @@ namespace Pims.Api.Test.Services
             result.Added.Should().BeEmpty();
             result.Deleted.Should().BeEmpty();
             result.Updated.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void Update_SyncPimsDocumentTypes_Disabled()
+        {
+            // Arrange
+            var service = this.CreateDocumentySyncServiceWithPermissions(Permissions.DocumentAdmin);
+
+            SyncModel model = this.CreateSyncModel(documentTypeModels: new List<Pims.Api.Models.PimsSync.DocumentTypeModel>() { new Pims.Api.Models.PimsSync.DocumentTypeModel() { Name = "TEST", Label = "test", Categories = new List<string>() { "TEST_CATEGORY" }, DisplayOrder = 1 } });
+
+            var pimsDocumentRepository = this._helper.GetService<Mock<IDocumentTypeRepository>>();
+            pimsDocumentRepository.Setup(x => x.GetAll()).Returns(new List<PimsDocumentTyp>() {
+                new PimsDocumentTyp() {
+                    DocumentType = "TEST",
+                    DocumentTypeDescription = "test",
+                    PimsDocumentCategorySubtypes = new List<PimsDocumentCategorySubtype>() {
+                        new PimsDocumentCategorySubtype() {
+                            DocumentCategoryTypeCode = "TEST_CATEGORY"
+                        },
+                    },
+                    IsDisabled = true,
+                    DisplayOrder = 1,
+                },
+            });
+            pimsDocumentRepository.Setup(x => x.Add(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
+            pimsDocumentRepository.Setup(x => x.Update(It.IsAny<PimsDocumentTyp>())).Returns(new PimsDocumentTyp());
+
+            // Act
+            var result = service.SyncPimsDocumentTypes(model);
+
+            // Assert
+            pimsDocumentRepository.Verify(x => x.Add(It.IsAny<PimsDocumentTyp>()), Times.Never());
+            pimsDocumentRepository.Verify(x => x.Update(It.IsAny<PimsDocumentTyp>()), Times.Once());
+            result.Added.Should().BeEmpty();
+            result.Deleted.Should().BeEmpty();
+            result.Updated.Should().HaveCount(1);
         }
 
         [Fact]

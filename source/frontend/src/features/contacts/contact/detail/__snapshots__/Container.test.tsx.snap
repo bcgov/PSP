@@ -7,9 +7,10 @@ exports[`ContactViewContainer component > renders as expected 1`] = `
   />
   <div />
   .c2 {
+  color: #474543;
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
-  border-bottom: solid 0.5rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;
@@ -25,6 +26,7 @@ exports[`ContactViewContainer component > renders as expected 1`] = `
   min-width: 30rem;
   overflow: auto;
   padding: 1rem;
+  background-color: #f2f2f2;
 }
 
 <div
@@ -77,11 +79,11 @@ exports[`ContactViewContainer component > renders as expected 1`] = `
               >
                 <svg
                   fill="currentColor"
-                  height="24"
+                  height="28"
                   stroke="currentColor"
                   stroke-width="0"
                   viewBox="0 0 512 512"
-                  width="24"
+                  width="28"
                   xmlns="http://www.w3.org/2000/svg"
                 >
                   <path

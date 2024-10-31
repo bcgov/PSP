@@ -54,6 +54,8 @@ export const defaultTenant: ITenantConfig2 = {
   layers: [],
   propertiesUrl:
     'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
+  minimalPropertiesUrl:
+    'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_LITE_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
   //NOTE: The fully attributed parcel layer does not work locally unless the SITEMINDER cookie SameSite=None; is set manually in the browser.
   parcelMapFullyAttributed: {
     url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows',

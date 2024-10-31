@@ -6,7 +6,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,53 +35,121 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.btn .Button__value {
+.c7.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c6.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c7.btn:focus {
   outline-width: 0.4rem;
   outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
   outline-offset: 1px;
   box-shadow: none;
 }
 
-.c6.btn.btn-secondary {
-  background: none;
+.c7.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c6.btn.btn-info {
+.c7.btn.btn-primary:hover,
+.c7.btn.btn-primary:active,
+.c7.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c7.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c7.btn.btn-secondary:hover,
+.c7.btn.btn-secondary:active,
+.c7.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c7.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c6.btn.btn-light {
+.c7.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c6.btn.btn-dark {
+.c7.btn.btn-light:hover,
+.c7.btn.btn-light:active,
+.c7.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c7.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c6.btn.btn-link {
+.c7.btn.btn-dark:hover,
+.c7.btn.btn-dark:active,
+.c7.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c7.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-danger:hover,
+.c7.btn.btn-danger:active,
+.c7.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c7.btn.btn-warning:hover,
+.c7.btn.btn-warning:active,
+.c7.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +182,15 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -129,32 +201,32 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   opacity: 0.65;
 }
 
-.c6.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c7.c7.btn {
+.c8.c8.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c7.c7.btn .text {
+.c8.c8.btn .text {
   display: none;
 }
 
-.c7.c7.btn:hover,
-.c7.c7.btn:active,
-.c7.c7.btn:focus {
+.c8.c8.btn:hover,
+.c8.c8.btn:active,
+.c8.c8.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -168,19 +240,28 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c7.c7.btn:hover .text,
-.c7.c7.btn:active .text,
-.c7.c7.btn:focus .text {
+.c8.c8.btn:hover .text,
+.c8.c8.btn:active .text,
+.c8.c8.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c8 {
+.c10 {
   margin-left: 0.5rem;
   cursor: pointer;
+  fill: #474543;
 }
 
-.c13 {
+.c10:hover {
+  fill: #CE3E39;
+}
+
+.c9 {
+  color: #474543;
+}
+
+.c15 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -207,7 +288,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c12.form-group {
+.c14.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -215,7 +296,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c12.form-group .radio-group {
+.c14.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -228,7 +309,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c12.form-group .radio-group .form-check {
+.c14.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -243,25 +324,26 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   justify-content: center;
 }
 
-.c12.form-group .radio-group .form-check .form-check-input {
+.c14.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c12.form-group .radio-group .form-check-label {
+.c14.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c12 .form-label {
+.c14 .form-label {
   margin-bottom: unset;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -269,43 +351,51 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
+.c6.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
+.c5 {
   font-weight: bold;
-}
-
-.c9 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
 }
 
 .c11 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #42814A;
   border-radius: 0.5rem;
 }
 
-.c14 {
+.c13 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #053662;
   border-radius: 0.5rem;
 }
 
-.c10 {
+.c16 {
+  max-width: 25rem;
+  padding: 1rem;
+  background-color: #d9eaf7;
+  border: 1px solid #053662;
+  border-radius: 0.5rem;
+}
+
+.c12 {
   max-width: 9rem;
 }
 
-.c3 {
+.c1 {
+  background-color: #f2f2f2;
+}
+
+.c4 {
+  color: #9F9D9C;
   text-align: left;
 }
 
@@ -313,13 +403,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
     class="c0"
   >
     <div
-      class=""
+      class="c1"
     >
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -335,7 +425,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
           class="collapse show"
         >
           <p
-            class="c3"
+            class="c4"
           >
             This is the address stored in PIMS application for this property and will be used wherever this property's address is needed.
           </p>
@@ -346,13 +436,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Address (line 1):
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="row"
@@ -382,13 +472,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Address (line 2):
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="row"
@@ -421,13 +511,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Address (line 3):
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="row"
@@ -451,7 +541,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   class="pl-0 col-3"
                 >
                   <button
-                    class="c6 Button c7 btn btn-link"
+                    class="c7 Button c8 btn btn-link"
                     type="button"
                   >
                     <div
@@ -497,13 +587,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 City:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="input form-group"
@@ -525,13 +615,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Postal code:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="input form-group"
@@ -553,13 +643,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 General location:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="input form-group"
@@ -576,10 +666,10 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -601,16 +691,16 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Historical File #:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <button
-                class="c6 Button btn btn-link"
+                class="c7 Button btn btn-link"
                 data-testid="add-historical-number"
                 type="button"
               >
@@ -629,13 +719,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Legal Description:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="textarea input form-group"
@@ -655,13 +745,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 MOTI region:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="form-group"
@@ -715,13 +805,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Highways district:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="form-group"
@@ -831,16 +921,16 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Electoral district:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <span
-                class=""
+                class="c9"
               />
             </div>
           </div>
@@ -851,16 +941,16 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Agricultural Land Reserve:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <span
-                class=""
+                class="c9"
               >
                 No
               </span>
@@ -873,19 +963,19 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Railway belt / Dominion patent:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="form-group"
               >
                 <select
-                  class="form-control"
+                  class="form-select form-control"
                   id="input-isRwyBeltDomPatent"
                   name="isRwyBeltDomPatent"
                 >
@@ -915,13 +1005,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Land parcel type:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="form-group"
@@ -1012,13 +1102,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Municipal zoning:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="input form-group"
@@ -1040,13 +1130,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Anomalies:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="form-group"
@@ -1070,7 +1160,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c8"
+                            class="c10"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -1094,7 +1184,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c8"
+                            class="c10"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -1190,10 +1280,10 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -1215,13 +1305,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Tenure status:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="form-group"
@@ -1245,7 +1335,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c8"
+                            class="c10"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -1269,7 +1359,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c8"
+                            class="c10"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -1399,13 +1489,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Provincial Public Hwy:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="form-group"
@@ -1481,13 +1571,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-4"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Highway / Road Details:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="form-group"
@@ -1511,7 +1601,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c8"
+                            class="c10"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -1535,7 +1625,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                           class="custom-close"
                         >
                           <svg
-                            class="c8"
+                            class="c10"
                             fill="currentColor"
                             height="16"
                             stroke="currentColor"
@@ -1656,10 +1746,10 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"
@@ -1681,13 +1771,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Area:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="row"
@@ -1696,7 +1786,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c9"
+                    class="c11"
                   >
                     <div
                       class="pb-2 row"
@@ -1706,7 +1796,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="square metres"
-                          class="c10"
+                          class="c12"
                           name="area-sq-meters"
                           step=".01"
                           type="number"
@@ -1727,7 +1817,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="hectares"
-                          class="c10"
+                          class="c12"
                           name="area-hectares"
                           step=".01"
                           type="number"
@@ -1746,7 +1836,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c11"
+                    class="c13"
                   >
                     <div
                       class="pb-2 row"
@@ -1756,7 +1846,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="square feet"
-                          class="c10"
+                          class="c12"
                           name="area-sq-feet"
                           step=".01"
                           type="number"
@@ -1777,7 +1867,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="acres"
-                          class="c10"
+                          class="c12"
                           name="area-acres"
                           step=".01"
                           type="number"
@@ -1802,22 +1892,22 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-auto"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Is this a volumetric parcel?:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
-                class="c12 form-group"
+                class="c14 form-group"
               >
                 <div
                   class="radio-group"
                 >
                   <div
-                    class="c13 pb-3"
+                    class="c15 pb-3"
                   >
                     <div
                       class="form-check"
@@ -1840,7 +1930,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                     </label>
                   </div>
                   <div
-                    class="c13 pb-3"
+                    class="c15 pb-3"
                   >
                     <div
                       class="form-check"
@@ -1872,13 +1962,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="pr-0 text-left col-2"
             >
               <label
-                class="c4"
+                class="c5"
               >
                 Volume:
               </label>
             </div>
             <div
-              class="c5 text-left col"
+              class="c6 text-left col"
             >
               <div
                 class="row"
@@ -1893,7 +1983,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       class="col"
                     >
                       <div
-                        class="c14"
+                        class="c16"
                       >
                         <div
                           class="pb-2 row"
@@ -1903,7 +1993,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                           >
                             <input
                               aria-label="cubic metres"
-                              class="c10"
+                              class="c12"
                               name="volume-cubic-meters"
                               step=".01"
                               type="number"
@@ -1929,7 +2019,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                           >
                             <input
                               aria-label="cubic feet"
-                              class="c10"
+                              class="c12"
                               name="volume-cubic-feet"
                               step=".01"
                               type="number"
@@ -1961,13 +2051,13 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                       class="pr-0 text-left col-3"
                     >
                       <label
-                        class="c4"
+                        class="c5"
                       >
                         Type:
                       </label>
                     </div>
                     <div
-                      class="c5 text-left col-auto"
+                      class="c6 text-left col-auto"
                     >
                       <div
                         class="form-group"
@@ -2002,10 +2092,10 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
         </div>
       </div>
       <div
-        class="c1 form-section"
+        class="c2 form-section"
       >
         <h2
-          class="c2"
+          class="c3"
         >
           <div
             class="no-gutters row"

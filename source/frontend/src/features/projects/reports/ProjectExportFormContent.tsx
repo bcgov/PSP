@@ -47,7 +47,7 @@ export const ProjectExportFormContent: React.FunctionComponent<IProjectExportFor
   if (isExportTypeSelected) {
     return (
       <>
-        <SectionField label="Project" contentWidth="8">
+        <SectionField label="Project" contentWidth="8" className="pl-7">
           <Multiselect
             field="projects"
             displayValue="codeTypeDescription"
@@ -56,7 +56,7 @@ export const ProjectExportFormContent: React.FunctionComponent<IProjectExportFor
             placeholder=""
           ></Multiselect>
         </SectionField>
-        <SectionField label="Team Member" contentWidth="8">
+        <SectionField label="Team Member" contentWidth="8" className="pl-7">
           <Multiselect
             field="acquisitionTeam"
             displayValue="codeTypeDescription"

@@ -25,7 +25,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             login.LoginUsingIDIR(user.User, user.Password);
         }
-
     }
 
     public class IdirUser

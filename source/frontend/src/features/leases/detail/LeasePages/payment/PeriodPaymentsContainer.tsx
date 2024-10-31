@@ -9,7 +9,6 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { ModalContext } from '@/contexts/modalContext';
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
-import { useGenerateLicenceOfOccupation } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateLicenceOfOccupation';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
@@ -18,7 +17,7 @@ import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGe
 import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
 import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
-import { exists, isValidId, isValidIsoDateTime } from '@/utils';
+import { isValidId, isValidIsoDateTime } from '@/utils';
 
 import { useDeletePeriodsPayments } from './hooks/useDeletePeriodsPayments';
 import PaymentModal from './modal/payment/PaymentModal';
@@ -33,7 +32,6 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
   LeasePageProps<IPeriodPaymentsViewProps>
 > = ({ formikRef, onSuccess, componentView }) => {
   const { lease } = useContext(LeaseStateContext);
-  const generateLicenceOfOccupation = useGenerateLicenceOfOccupation();
   const [editModalValues, setEditModalValues] = useState<FormLeasePeriod | undefined>(undefined);
   const [editPaymentModalValues, setEditPaymentModalValues] = useState<
     FormLeasePayment | undefined
@@ -158,12 +156,6 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
     setEditPaymentModalValues(values);
   }, []);
 
-  const onGenerate = () => {
-    if (exists(lease)) {
-      generateLicenceOfOccupation(lease);
-    }
-  };
-
   const onCancelPeriod = useCallback(() => {
     setEditModalValues(undefined);
     setDisplayModal(false);
@@ -221,7 +213,6 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         onDelete={onDeletePeriod}
         onDeletePayment={onDeletePayment}
         onSavePayment={onSavePayment}
-        onGenerate={onGenerate}
         isReceivable={
           lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString()
         }
