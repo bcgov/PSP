@@ -95,8 +95,10 @@ describe('UpdateAcquisitionForm component', () => {
       getCloseButton: () => utils.getByTitle('close'),
       getFileStatusDropdown: () =>
         utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,
-      getFileCompletionDatePicker: () =>
-        utils.container.querySelector(`input[name="completionDate"]`) as HTMLInputElement,
+      getEstimatedCompletionDatePicker: () =>
+        utils.container.querySelector(`input[name="estimatedCompletionDate"]`) as HTMLInputElement,
+      getPossessionDatePicker: () =>
+        utils.container.querySelector(`input[name="possessionDate"]`) as HTMLInputElement,
       getTeamMemberProfileDropDownList: (index = 0) =>
         utils.container.querySelector(
           `select[name="team.${index}.contactTypeCode"]`,
@@ -127,23 +129,30 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment, findByDisplayValue } = setup({ initialValues });
-    expect(asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({ initialValues });
     await act(async () => {});
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays legacy file number', async () => {
     const { getByDisplayValue } = setup({ initialValues });
-    expect(getByDisplayValue('legacy file number')).toBeVisible();
     await act(async () => {});
+    expect(getByDisplayValue('legacy file number')).toBeVisible();
   });
 
   it('displays owner solicitor and owner representative', async () => {
     const { getByText } = setup({ initialValues });
+    await act(async () => {});
     expect(getByText('Millennium Inc')).toBeVisible();
     expect(getByText('Han Solo')).toBeVisible();
     expect(getByText('test representative comment')).toBeVisible();
+  });
+
+  it('displays estimated completion and possession dates', async () => {
+    const { getEstimatedCompletionDatePicker, getPossessionDatePicker } = setup({ initialValues });
     await act(async () => {});
+    expect(getEstimatedCompletionDatePicker()).toHaveValue('Jul 10, 2024');
+    expect(getPossessionDatePicker()).toHaveValue('Jul 10, 2025');
   });
 
   it('displays Individual type Owner with data', async () => {
@@ -157,6 +166,7 @@ describe('UpdateAcquisitionForm component', () => {
       getEmailTextbox,
       getPhoneTextbox,
     } = setup({ initialValues });
+    await act(async () => {});
 
     expect(getIsOrganizationRadioButtonValue()).toEqual('false');
 
@@ -169,7 +179,6 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getEmailTextbox(0).value).toEqual('jonh.doe@gmail.com');
     expect(getPhoneTextbox(0).value).toEqual('775-111-1111');
-    await act(async () => {});
   });
 
   it('displays Corporation type Owner with data', async () => {
@@ -183,6 +192,7 @@ describe('UpdateAcquisitionForm component', () => {
       getEmailTextbox,
       getPhoneTextbox,
     } = setup({ initialValues });
+    await act(async () => {});
 
     expect(getIsOrganizationRadioButtonValue(1)).toEqual('true');
 
@@ -196,7 +206,6 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getEmailTextbox(1).value).toEqual('fake@email.ca');
     expect(getPhoneTextbox(1).value).toEqual('775-111-1111');
-    await act(async () => {});
   });
 
   it('it validates that only profile is not repeated on another team member', async () => {
