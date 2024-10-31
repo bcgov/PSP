@@ -1,3 +1,4 @@
+import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 
@@ -13,8 +14,10 @@ describe('Create acquisition model tests', () => {
         parentAcquisitionFileId: null,
         assignedDate: '2023-07-01',
         deliveryDate: '2023-07-31',
+        estimatedCompletionDate: '2025-01-01',
+        possessionDate: '2025-03-15',
         acquisitionTypeCode: {
-          id: 'SECTN6',
+          id: EnumAcquisitionFileType.SECTN6,
           description: 'Section 6 Expropriation',
           isDisabled: false,
           displayOrder: null,
@@ -107,7 +110,9 @@ describe('Create acquisition model tests', () => {
       expect(model.product).toBe('16592');
       expect(model.assignedDate).toBe('2023-07-01');
       expect(model.deliveryDate).toBe('2023-07-31');
-      expect(model.acquisitionType).toBe('SECTN6');
+      expect(model.estimatedCompletionDate).toBe('2025-01-01');
+      expect(model.possessionDate).toBe('2025-03-15');
+      expect(model.acquisitionType).toBe(EnumAcquisitionFileType.SECTN6);
       expect(model.region).toBe('1');
       expect(model.team).toHaveLength(1);
     });
@@ -148,6 +153,9 @@ describe('Create acquisition model tests', () => {
       model.parentAcquisitionFileId = 100;
       model.fileName = 'Test sub-file';
       model.assignedDate = '2023-07-01';
+      model.deliveryDate = '2024-03-01';
+      model.estimatedCompletionDate = '2028-12-15';
+      model.possessionDate = '2030-08-01';
       model.region = '1';
       model.product = '1234';
       model.project = { id: 789, text: 'test project' };
@@ -159,6 +167,9 @@ describe('Create acquisition model tests', () => {
       expect(apiAcquisitionFile.parentAcquisitionFileId).toBe(100);
       expect(apiAcquisitionFile.fileName).toBe('Test sub-file');
       expect(apiAcquisitionFile.assignedDate).toBe('2023-07-01');
+      expect(apiAcquisitionFile.deliveryDate).toBe('2024-03-01');
+      expect(apiAcquisitionFile.estimatedCompletionDate).toBe('2028-12-15');
+      expect(apiAcquisitionFile.possessionDate).toBe('2030-08-01');
       expect(apiAcquisitionFile.regionCode).toEqual(expect.objectContaining({ id: 1 }));
       // project + product
       expect(apiAcquisitionFile.projectId).toBe(789);

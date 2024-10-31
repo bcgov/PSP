@@ -238,6 +238,15 @@ const AcquisitionDetailSubForm: React.FC<{
         >
           <FastDatePicker field="deliveryDate" formikProps={formikProps} />
         </SectionField>
+        <SectionField
+          label="Estimated date"
+          tooltip="Estimated date by which the acquisition would be completed"
+        >
+          <FastDatePicker field="estimatedCompletionDate" formikProps={formikProps} />
+        </SectionField>
+        <SectionField label="Possession date">
+          <FastDatePicker field="possessionDate" formikProps={formikProps} />
+        </SectionField>
       </Section>
 
       <Section header="Acquisition Details">

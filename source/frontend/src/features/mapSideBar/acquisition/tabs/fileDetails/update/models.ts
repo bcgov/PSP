@@ -27,6 +27,8 @@ export class UpdateAcquisitionSummaryFormModel
   legacyFileNumber?: string = '';
   assignedDate?: string;
   deliveryDate?: string;
+  estimatedCompletionDate?: string;
+  possessionDate?: string;
   rowVersion?: number;
   // Code Tables
   fileStatusTypeCode?: string;
@@ -67,6 +69,10 @@ export class UpdateAcquisitionSummaryFormModel
       fileName: this.fileName ?? null,
       assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
       deliveryDate: isValidIsoDateTime(this.deliveryDate) ? this.deliveryDate : null,
+      estimatedCompletionDate: isValidIsoDateTime(this.estimatedCompletionDate)
+        ? this.estimatedCompletionDate
+        : null,
+      possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
       fileStatusTypeCode: toTypeCodeNullable(this.fileStatusTypeCode),
       acquisitionPhysFileStatusTypeCode: toTypeCodeNullable(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCodeNullable(this.acquisitionType),
@@ -109,6 +115,8 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.assignedDate = model.assignedDate ?? undefined;
     newForm.deliveryDate = model.deliveryDate ?? undefined;
+    newForm.estimatedCompletionDate = model.estimatedCompletionDate ?? undefined;
+    newForm.possessionDate = model.possessionDate ?? undefined;
     newForm.fileStatusTypeCode = fromTypeCode(model.fileStatusTypeCode) ?? undefined;
     newForm.acquisitionPhysFileStatusType =
       fromTypeCode(model.acquisitionPhysFileStatusTypeCode) ?? undefined;
