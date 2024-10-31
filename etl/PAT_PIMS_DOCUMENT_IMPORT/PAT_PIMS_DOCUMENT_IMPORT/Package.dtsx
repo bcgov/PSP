@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="10"
-  DTS:VersionGUID="{46F91CA0-BA68-4CDB-A1B4-DBAD0B905125}">
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{86E4D25B-067A-4D5A-AECE-65AA00C4FA03}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -126,7 +126,7 @@
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAANxzwbmXiIk+Q1qON+tA1IQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABEOQEfTbsopyooOYGqz02PEgCwhdMvrOGqUyDHuheVnwAAAAAOgAAAAAIAACAAAAAyYjppUeHXjmNaxSFzTPMR7iB0twELxamPYtYfN+p4xyAAAADfMZn5xy5xoS8N/5TqhvKgoIF4m6hVQ2t87bTDtDjzu0AAAACMqBxykw2QNgEzFxfZI/RxyWY8Df47hQkw+32TGlelxCpTiA+1mLisAC2KTvx+yrnLP2rgk7SBDLySOQjrTon3</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAANxzwbmXiIk+Q1qON+tA1IQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAAD3w0SFfsS5rqRZgp8+f8oni4+FKj1yB9FOjWefiV/mPQAAAAAOgAAAAAIAACAAAAA7Q274iD6M9sGTRuephKQ+en7bPY8oIoWec8gqIJU/iCAAAADeVlu9FmAQONGigpgVi2rZGDWcdyYjzpJtYs5OeoGTlEAAAAB4Fdzwzfxj4hllqEmRsKenxB0w9qrugQROrvu14f7dnvZa+4rMEd6evJ5UE45LPG7KyCoiCoe87ejT6qP6UX+7</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -139,11 +139,11 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Application Name=SSIS-Package-{8BFC6FCC-AD79-4DE2-B828-D69AE2AC1874}localhost,5433.pims.admin;Auto Translate=False;">
+          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLNCLI11.1;Auto Translate=False;Application Name=SSIS-Package-{8BFC6FCC-AD79-4DE2-B828-D69AE2AC1874}localhost,5433.pims.admin;">
           <DTS:Password
             DTS:Name="Password"
             Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAANxzwbmXiIk+Q1qON+tA1IQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACR6og9eFJgKTQTGLDiduAErPsOaS3O+0M8C07k6oVxpQAAAAAOgAAAAAIAACAAAAAyIJaLLKD5pDqGaUrtaTNsxcPSI0DHEj0ixfauNESK51AAAAAshFGsUrK41j1axPoWwEfIPGKLNSS4+GjpTaAWU0Cxq9TmNpiy9Ag2pqYTlWSlhsvePXEFOo9fsc+l5d00waEBWzFLZq9pC3+ZEJicNIgu3EAAAABOIWHYE/lmTzeYqBd1hBY7O/tKU2P5rFOo/sjppf44IXkyxQOrGnZDu7Z8vufNk4kmUEaprpIyYliTBhyfIUPq</DTS:Password>
+            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAANxzwbmXiIk+Q1qON+tA1IQAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAACVi1w+eAe5DZZacvloVLNd9YXEI5iIwx/7p9Vk7ei4AwAAAAAOgAAAAAIAACAAAACCd0V7mxOmuk9avgcvruii7XAA53eOsc+3wd5IzcU8rVAAAACdb2flaxFfNcfsraWFNlIS0gK6jG3dCJrUGJMBJykvYOjUm30nXL1oLzryaWX5Cpf4wPLVyFoHFTnkvJySfs8s+m/3SXfnKdJJteWnjfVCP0AAAAAyWREu9/ZZ5Daea/gmb2TUys2CwGYN7FWj1yVKKv83trpva/Q3uPTNnI244v0DlrF+Vb524nBA+UyggXWT1dZj</DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>
@@ -305,11 +305,10 @@
                   <outputColumns>
                     <outputColumn
                       refId="Package\IMPORT_DOCUMENTS\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of MULTIMEDIA_OBJECT_ID]"
-                      codePage="1252"
-                      dataType="str"
+                      dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      length="200"
+                      length="1000"
                       lineageId="Package\IMPORT_DOCUMENTS\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of MULTIMEDIA_OBJECT_ID]"
                       name="Copy of MULTIMEDIA_OBJECT_ID"
                       truncationRowDisposition="FailComponent">
@@ -353,74 +352,185 @@
               </outputs>
             </component>
             <component
-              refId="Package\IMPORT_DOCUMENTS\Data Conversion 1"
-              componentClassID="Microsoft.DataConvert"
-              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
-              description="Data Conversion"
-              name="Data Conversion 1"
+              refId="Package\IMPORT_DOCUMENTS\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
               usesDispositions="true">
               <inputs>
                 <input
-                  refId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Inputs[Data Conversion Input]"
-                  name="Data Conversion Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Inputs[Data Conversion Input].Columns[DIGITAL_REPRESENTATION]"
-                      cachedDataType="image"
-                      cachedName="DIGITAL_REPRESENTATION"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[DIGITAL_REPRESENTATION]" />
-                  </inputColumns>
+                  refId="Package\IMPORT_DOCUMENTS\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
                   <externalMetadataColumns />
                 </input>
               </inputs>
               <outputs>
                 <output
-                  refId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Output]"
+                  refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
                   exclusionGroup="1"
-                  name="Data Conversion Output"
-                  synchronousInputId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Inputs[Data Conversion Input]">
+                  name="Derived Column Output"
+                  synchronousInputId="Package\IMPORT_DOCUMENTS\Derived Column.Inputs[Derived Column Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of DIGITAL_REPRESENTATION]"
-                      codePage="1252"
-                      dataType="text"
-                      errorOrTruncationOperation="Conversion"
+                      refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_DT_TM]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      lineageId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of DIGITAL_REPRESENTATION]"
-                      name="Copy of DIGITAL_REPRESENTATION"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_DT_TM]"
+                      name="APP_CREATE_DT_TM"
                       truncationRowDisposition="FailComponent">
                       <properties>
                         <property
                           containsID="true"
-                          dataType="System.Int32"
-                          description="Specifies the input column used as the source of data for the conversion."
-                          name="SourceInputColumnLineageID">#{Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[DIGITAL_REPRESENTATION]}</property>
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETUTCDATE]()</property>
                         <property
-                          dataType="System.Boolean"
-                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
-                          name="FastParse">false</property>
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETUTCDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DEFAULT_STATUS]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DEFAULT_STATUS]"
+                      name="DEFAULT_STATUS"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_WSTR,10)"PENDING"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_WSTR,10)"PENDING"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DB_CREATE_DT_TM]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DB_CREATE_DT_TM]"
+                      name="DB_CREATE_DT_TM"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETUTCDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETUTCDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DATA_SOURCE_CD]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DATA_SOURCE_CD]"
+                      name="DATA_SOURCE_CD"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_WSTR,10)"PAT"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_WSTR,10)"PAT"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
+                      name="APP_CREATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_WSTR,10)"PAT_DOCUMENT_ETL"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_WSTR,10)"PAT_DOCUMENT_ETL"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DB_CREATE_USERID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="10"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DB_CREATE_USERID]"
+                      name="DB_CREATE_USERID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_WSTR,10)"PAT_DOCUMENT_ETL"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_WSTR,10)"PAT_DOCUMENT_ETL"</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
                   <externalMetadataColumns />
                 </output>
                 <output
-                  refId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Error Output]"
+                  refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
                   exclusionGroup="1"
                   isErrorOut="true"
-                  name="Data Conversion Error Output"
-                  synchronousInputId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Inputs[Data Conversion Input]">
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\IMPORT_DOCUMENTS\Derived Column.Inputs[Derived Column Input]">
                   <outputColumns>
                     <outputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
                       dataType="i4"
-                      lineageId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
                       name="ErrorCode"
                       specialFlags="1" />
                     <outputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      refId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       dataType="i4"
-                      lineageId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
                       name="ErrorColumn"
                       specialFlags="2" />
                   </outputColumns>
@@ -480,7 +590,7 @@ where [refTable].[DOCUMENT_EXTERNAL_ID] = ?</property>
                 <property
                   dataType="System.String"
                   description="Indicates whether to reference metadata in an XML format."
-                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DOCUMENT" dataType="DT_IMAGE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOCUMENT_EXTERNAL_ID" dataType="DT_STR" length="200" precision="0" scale="0" codePage="1252"/&gt;&lt;referenceColumn name="DOCUMENT_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="IS_UPLOADED" dataType="DT_BOOL" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="DOCUMENT_QUEUE_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOCUMENT_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOCUMENT_QUEUE_STATUS_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DATA_SOURCE_TYPE_CODE" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOCUMENT_EXTERNAL_ID" dataType="DT_WSTR" length="1000" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOC_PROCESS_START_DT" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOC_PROCESS_END_DT" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOC_PROCESS_RETRIES" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MAYAN_ERROR" dataType="DT_WSTR" length="4000" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DOCUMENT" dataType="DT_IMAGE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CONCURRENCY_CONTROL_NUMBER" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_GUID" dataType="DT_GUID" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_USER_DIRECTORY" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_CREATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DB_LAST_UPDATE_USERID" dataType="DT_WSTR" length="30" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
                 <property
                   containsID="true"
                   dataType="System.String"
@@ -510,9 +620,8 @@ where [refTable].[DOCUMENT_EXTERNAL_ID] = ?</property>
                   <inputColumns>
                     <inputColumn
                       refId="Package\IMPORT_DOCUMENTS\Find Existing Documents.Inputs[Lookup Input].Columns[Copy of MULTIMEDIA_OBJECT_ID]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="200"
+                      cachedDataType="wstr"
+                      cachedLength="1000"
                       cachedName="Copy of MULTIMEDIA_OBJECT_ID"
                       lineageId="Package\IMPORT_DOCUMENTS\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of MULTIMEDIA_OBJECT_ID]">
                       <properties>
@@ -572,162 +681,6 @@ where [refTable].[DOCUMENT_EXTERNAL_ID] = ?</property>
               </outputs>
             </component>
             <component
-              refId="Package\IMPORT_DOCUMENTS\Flat File Destination"
-              componentClassID="Microsoft.FlatFileDestination"
-              contactInfo="Flat File Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
-              description="Flat File Destination"
-              localeId="1033"
-              name="Flat File Destination"
-              version="1">
-              <properties>
-                <property
-                  dataType="System.Boolean"
-                  description="Specifies whether the data will overwrite or append to the destination file."
-                  name="Overwrite">true</property>
-                <property
-                  dataType="System.Null"
-                  description="Specifies the text to write to the destination file before any data is written."
-                  expressionType="Notify"
-                  name="Header" />
-                <property
-                  dataType="System.Boolean"
-                  description="When text qualifier is enabled, specifies whether the text qualifier in the data written to the destination file will be escaped or not."
-                  name="EscapeQualifier">false</property>
-              </properties>
-              <connections>
-                <connection
-                  refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Connections[FlatFileConnection]"
-                  connectionManagerID="Package.ConnectionManagers[Flat File Connection Manager]"
-                  connectionManagerRefId="Package.ConnectionManagers[Flat File Connection Manager]"
-                  name="FlatFileConnection" />
-              </connections>
-              <inputs>
-                <input
-                  refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input]"
-                  hasSideEffects="true"
-                  name="Flat File Destination Input">
-                  <inputColumns>
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[MULTIMEDIA_OBJECT_ID]"
-                      cachedDataType="numeric"
-                      cachedName="MULTIMEDIA_OBJECT_ID"
-                      cachedPrecision="10"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[MULTIMEDIA_OBJECT_ID]"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[MULTIMEDIA_OBJECT_ID]" />
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[DOCUMENT_CODE]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="20"
-                      cachedName="DOCUMENT_CODE"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DOCUMENT_CODE]"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[DOCUMENT_CODE]" />
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[LAST_UPDATE_USERID]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="30"
-                      cachedName="LAST_UPDATE_USERID"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[LAST_UPDATE_USERID]"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_USERID]" />
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[LAST_UPDATE_DATETIME]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="LAST_UPDATE_DATETIME"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[LAST_UPDATE_DATETIME]"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_DATETIME]" />
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[CREATE_USERID]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="30"
-                      cachedName="CREATE_USERID"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[CREATE_USERID]"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[CREATE_USERID]" />
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[CREATE_DATETIME]"
-                      cachedDataType="dbTimeStamp"
-                      cachedName="CREATE_DATETIME"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[CREATE_DATETIME]"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[CREATE_DATETIME]" />
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[ACCESS_TYPE_CODE]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="3"
-                      cachedName="ACCESS_TYPE_CODE"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ACCESS_TYPE_CODE]"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[ACCESS_TYPE_CODE]" />
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[FILE_EXTENSION_TYPE_CODE]"
-                      cachedCodepage="1252"
-                      cachedDataType="str"
-                      cachedLength="10"
-                      cachedName="FILE_EXTENSION_TYPE_CODE"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[FILE_EXTENSION_TYPE_CODE]"
-                      lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[FILE_EXTENSION_TYPE_CODE]" />
-                    <inputColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].Columns[Copy of DIGITAL_REPRESENTATION]"
-                      cachedCodepage="1252"
-                      cachedDataType="text"
-                      cachedName="Copy of DIGITAL_REPRESENTATION"
-                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DIGITAL_REPRESENTATION]"
-                      lineageId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Output].Columns[Copy of DIGITAL_REPRESENTATION]" />
-                  </inputColumns>
-                  <externalMetadataColumns
-                    isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[MULTIMEDIA_OBJECT_ID]"
-                      dataType="numeric"
-                      name="MULTIMEDIA_OBJECT_ID"
-                      precision="10" />
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DOCUMENT_CODE]"
-                      codePage="1252"
-                      dataType="str"
-                      length="20"
-                      name="DOCUMENT_CODE" />
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[DIGITAL_REPRESENTATION]"
-                      dataType="image"
-                      name="DIGITAL_REPRESENTATION" />
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[LAST_UPDATE_USERID]"
-                      codePage="1252"
-                      dataType="str"
-                      length="30"
-                      name="LAST_UPDATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[LAST_UPDATE_DATETIME]"
-                      dataType="dbTimeStamp"
-                      name="LAST_UPDATE_DATETIME" />
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[CREATE_USERID]"
-                      codePage="1252"
-                      dataType="str"
-                      length="30"
-                      name="CREATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[CREATE_DATETIME]"
-                      dataType="dbTimeStamp"
-                      name="CREATE_DATETIME" />
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[ACCESS_TYPE_CODE]"
-                      codePage="1252"
-                      dataType="str"
-                      length="3"
-                      name="ACCESS_TYPE_CODE" />
-                    <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input].ExternalColumns[FILE_EXTENSION_TYPE_CODE]"
-                      codePage="1252"
-                      dataType="str"
-                      length="10"
-                      name="FILE_EXTENSION_TYPE_CODE" />
-                  </externalMetadataColumns>
-                </input>
-              </inputs>
-            </component>
-            <component
               refId="Package\IMPORT_DOCUMENTS\Multicast"
               componentClassID="Microsoft.Multicast"
               contactInfo="Multicast;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
@@ -745,13 +698,6 @@ where [refTable].[DOCUMENT_EXTERNAL_ID] = ?</property>
                   refId="Package\IMPORT_DOCUMENTS\Multicast.Outputs[Multicast Output 1]"
                   deleteOutputOnPathDetached="true"
                   name="Multicast Output 1"
-                  synchronousInputId="Package\IMPORT_DOCUMENTS\Multicast.Inputs[Multicast Input 1]">
-                  <externalMetadataColumns />
-                </output>
-                <output
-                  refId="Package\IMPORT_DOCUMENTS\Multicast.Outputs[Multicast Output 3]"
-                  deleteOutputOnPathDetached="true"
-                  name="Multicast Output 3"
                   synchronousInputId="Package\IMPORT_DOCUMENTS\Multicast.Inputs[Multicast Input 1]">
                   <externalMetadataColumns />
                 </output>
@@ -850,6 +796,46 @@ where [refTable].[DOCUMENT_EXTERNAL_ID] = ?</property>
                       cachedPrecision="10"
                       externalMetadataColumnId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOCUMENT_EXTERNAL_ID]"
                       lineageId="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS.Outputs[OLE DB Source Output].Columns[MULTIMEDIA_OBJECT_ID]" />
+                    <inputColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DEFAULT_STATUS]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DEFAULT_STATUS"
+                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOCUMENT_QUEUE_STATUS_TYPE_CODE]"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DEFAULT_STATUS]" />
+                    <inputColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DB_CREATE_DT_TM]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="DB_CREATE_DT_TM"
+                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DB_CREATE_DT_TM]" />
+                    <inputColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[APP_CREATE_DT_TM]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_CREATE_DT_TM"
+                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_DT_TM]" />
+                    <inputColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DATA_SOURCE_CD]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DATA_SOURCE_CD"
+                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DATA_SOURCE_TYPE_CODE]"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DATA_SOURCE_CD]" />
+                    <inputColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[DB_CREATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="DB_CREATE_USERID"
+                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_USERID]"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[DB_CREATE_USERID]" />
+                    <inputColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USERID]"
+                      cachedDataType="wstr"
+                      cachedLength="10"
+                      cachedName="APP_CREATE_USERID"
+                      externalMetadataColumnId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                      lineageId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
@@ -859,18 +845,102 @@ where [refTable].[DOCUMENT_EXTERNAL_ID] = ?</property>
                       name="DOCUMENT" />
                     <externalMetadataColumn
                       refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOCUMENT_EXTERNAL_ID]"
-                      codePage="1252"
-                      dataType="str"
-                      length="200"
+                      dataType="wstr"
+                      length="1000"
                       name="DOCUMENT_EXTERNAL_ID" />
                     <externalMetadataColumn
                       refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOCUMENT_ID]"
                       dataType="i8"
                       name="DOCUMENT_ID" />
                     <externalMetadataColumn
-                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[IS_UPLOADED]"
-                      dataType="bool"
-                      name="IS_UPLOADED" />
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOCUMENT_QUEUE_ID]"
+                      dataType="i8"
+                      name="DOCUMENT_QUEUE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOCUMENT_QUEUE_STATUS_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="DOCUMENT_QUEUE_STATUS_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DATA_SOURCE_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="DATA_SOURCE_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOC_PROCESS_START_DT]"
+                      dataType="dbTimeStamp"
+                      name="DOC_PROCESS_START_DT" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOC_PROCESS_END_DT]"
+                      dataType="dbTimeStamp"
+                      name="DOC_PROCESS_END_DT" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DOC_PROCESS_RETRIES]"
+                      dataType="i4"
+                      name="DOC_PROCESS_RETRIES" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[MAYAN_ERROR]"
+                      dataType="wstr"
+                      length="4000"
+                      name="MAYAN_ERROR" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CONCURRENCY_CONTROL_NUMBER]"
+                      dataType="i8"
+                      name="CONCURRENCY_CONTROL_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_CREATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_GUID]"
+                      dataType="guid"
+                      name="APP_CREATE_USER_GUID" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_CREATE_USER_DIRECTORY" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_LAST_UPDATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_GUID]"
+                      dataType="guid"
+                      name="APP_LAST_UPDATE_USER_GUID" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
+                      dataType="wstr"
+                      length="30"
+                      name="APP_LAST_UPDATE_USER_DIRECTORY" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="DB_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="DB_CREATE_USERID" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="DB_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_USERID]"
+                      dataType="wstr"
+                      length="30"
+                      name="DB_LAST_UPDATE_USERID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -2059,13 +2129,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               name="Data Conversion Output"
               startId="Package\IMPORT_DOCUMENTS\Data Conversion.Outputs[Data Conversion Output]" />
             <path
-              refId="Package\IMPORT_DOCUMENTS.Paths[Data Conversion Output1]"
-              endId="Package\IMPORT_DOCUMENTS\Flat File Destination.Inputs[Flat File Destination Input]"
-              name="Data Conversion Output"
-              startId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Outputs[Data Conversion Output]" />
+              refId="Package\IMPORT_DOCUMENTS.Paths[Derived Column Output]"
+              endId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\IMPORT_DOCUMENTS\Derived Column.Outputs[Derived Column Output]" />
             <path
               refId="Package\IMPORT_DOCUMENTS.Paths[LESS_THAN]"
-              endId="Package\IMPORT_DOCUMENTS\OLE DB Destination.Inputs[OLE DB Destination Input]"
+              endId="Package\IMPORT_DOCUMENTS\Derived Column.Inputs[Derived Column Input]"
               name="LESS_THAN"
               startId="Package\IMPORT_DOCUMENTS\Conditional Split.Outputs[LESS_THAN]" />
             <path
@@ -2078,11 +2148,6 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
               endId="Package\IMPORT_DOCUMENTS\Data Conversion.Inputs[Data Conversion Input]"
               name="Multicast Output 1"
               startId="Package\IMPORT_DOCUMENTS\Multicast.Outputs[Multicast Output 1]" />
-            <path
-              refId="Package\IMPORT_DOCUMENTS.Paths[Multicast Output 3]"
-              endId="Package\IMPORT_DOCUMENTS\Data Conversion 1.Inputs[Data Conversion Input]"
-              name="Multicast Output 3"
-              startId="Package\IMPORT_DOCUMENTS\Multicast.Outputs[Multicast Output 3]" />
             <path
               refId="Package\IMPORT_DOCUMENTS.Paths[OLE DB Source Output]"
               endId="Package\IMPORT_DOCUMENTS\Multicast.Inputs[Multicast Input 1]"
@@ -2121,23 +2186,81 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
     design-time-name="Package\IMPORT_DOCUMENTS">
     <LayoutInfo>
       <GraphLayout
-        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="167,42"
+          Id="Package\IMPORT_DOCUMENTS\Script Component"
+          TopLeft="232,403" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\IMPORT_DOCUMENTS\Data Conversion"
+          TopLeft="242.5,232.5" />
+        <NodeLayout
+          Size="123,42"
+          Id="Package\IMPORT_DOCUMENTS\Multicast"
+          TopLeft="262,140" />
         <NodeLayout
           Size="229,42"
           Id="Package\IMPORT_DOCUMENTS\PAT_ORACLE_DOCUMENTS"
           TopLeft="207,75" />
         <NodeLayout
+          Size="159,42"
+          Id="Package\IMPORT_DOCUMENTS\Conditional Split"
+          TopLeft="239,480" />
+        <NodeLayout
           Size="177,42"
           Id="Package\IMPORT_DOCUMENTS\OLE DB Destination"
-          TopLeft="218,567" />
+          TopLeft="232,686" />
         <NodeLayout
           Size="201,42"
           Id="Package\IMPORT_DOCUMENTS\Find Existing Documents"
           TopLeft="213,311" />
-        <NodeLayout
-          Size="161,42"
-          Id="Package\IMPORT_DOCUMENTS\Data Conversion"
-          TopLeft="242.5,232.5" />
+        <EdgeLayout
+          Id="Package\IMPORT_DOCUMENTS.Paths[Multicast Output 1]"
+          TopLeft="323.25,182">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50.5"
+              Start="0,0"
+              End="0,43">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\IMPORT_DOCUMENTS.Paths[Lookup No Match Output]"
+          TopLeft="314.5,353">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-55.80638671875,15.4453125,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\IMPORT_DOCUMENTS.Paths[Data Conversion Output]"
           TopLeft="323,274.5">
@@ -2172,114 +2295,20 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="159,42"
-          Id="Package\IMPORT_DOCUMENTS\Conditional Split"
-          TopLeft="227,498" />
-        <EdgeLayout
-          Id="Package\IMPORT_DOCUMENTS.Paths[LESS_THAN]"
-          TopLeft="306.5,540">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,27"
-              Start="0,0"
-              End="0,19.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,19.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-35.35875,1.75,70.7175,16"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="167,42"
-          Id="Package\IMPORT_DOCUMENTS\Script Component"
-          TopLeft="232,403" />
-        <EdgeLayout
-          Id="Package\IMPORT_DOCUMENTS.Paths[Lookup No Match Output]"
-          TopLeft="314.5,353">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,50"
-              Start="0,0"
-              End="0,42.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,42.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,15.4453125,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\IMPORT_DOCUMENTS.Paths[Output 0]"
-          TopLeft="315.5,445">
+          TopLeft="317,445">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-9,53"
+              EndConnector="0,35"
               Start="0,0"
-              End="-9,45.5">
+              End="0,27.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,22.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,22.5"
-                    Point2="0,26.5"
-                    Point3="-4,26.5" />
-                  <mssgle:LineSegment
-                    End="-5,26.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-5,26.5"
-                    Point2="-9,26.5"
-                    Point3="-9,30.5" />
-                  <mssgle:LineSegment
-                    End="-9,45.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="123,42"
-          Id="Package\IMPORT_DOCUMENTS\Multicast"
-          TopLeft="262,140" />
-        <EdgeLayout
-          Id="Package\IMPORT_DOCUMENTS.Paths[Multicast Output 1]"
-          TopLeft="323.25,182">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,50.5"
-              Start="0,0"
-              End="0,43">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,43" />
+                    End="0,27.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2311,61 +2340,47 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==]]></arrayElement>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <NodeLayout
-          Size="170,42"
-          Id="Package\IMPORT_DOCUMENTS\Data Conversion 1"
-          TopLeft="467,146" />
+          Size="158,42"
+          Id="Package\IMPORT_DOCUMENTS\Derived Column"
+          TopLeft="241,578" />
         <EdgeLayout
-          Id="Package\IMPORT_DOCUMENTS.Paths[Multicast Output 3]"
-          TopLeft="385,164">
+          Id="Package\IMPORT_DOCUMENTS.Paths[LESS_THAN]"
+          TopLeft="319.25,522">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="82,0"
+              EndConnector="0,56"
               Start="0,0"
-              End="74.5,0">
+              End="0,48.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="74.5,0" />
+                    End="0,48.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="-26.49009765625,18.81640625,52.9801953125,10.8671875"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="176,42"
-          Id="Package\IMPORT_DOCUMENTS\Flat File Destination"
-          TopLeft="673,235" />
         <EdgeLayout
-          Id="Package\IMPORT_DOCUMENTS.Paths[Data Conversion Output1]"
-          TopLeft="552,188">
+          Id="Package\IMPORT_DOCUMENTS.Paths[Derived Column Output]"
+          TopLeft="320.25,620">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="209,47"
+              EndConnector="0,66"
               Start="0,0"
-              End="209,39.5">
+              End="0,58.5">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,19.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,19.5"
-                    Point2="0,23.5"
-                    Point3="4,23.5" />
-                  <mssgle:LineSegment
-                    End="205,23.5" />
-                  <mssgle:CubicBezierSegment
-                    Point1="205,23.5"
-                    Point2="209,23.5"
-                    Point3="209,27.5" />
-                  <mssgle:LineSegment
-                    End="209,39.5" />
+                    End="0,58.5" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
