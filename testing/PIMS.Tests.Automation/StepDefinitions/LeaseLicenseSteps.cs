@@ -157,7 +157,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.SaveLicense();
 
             //Verify File Details Form
-            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails);
+            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails, lease.AccountType);
         }
 
         [StepDefinition(@"I update a Lease's Details from row number (.*)")]
@@ -221,7 +221,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.SaveLicense();
 
             //Verify File Details Form
-            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails);
+            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails, lease.AccountType);
 
             //Edit File Details Section
             leaseDetails.EditLeaseFileDetailsBttn();

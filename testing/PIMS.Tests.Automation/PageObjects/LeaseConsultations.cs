@@ -19,10 +19,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By consultationFirstNationExpandBttn = By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/following-sibling::div/*");
         private readonly By consultationHeadquarterSubtitle = By.XPath("//span[contains(text(),'Headquarter (HQ)')]");
         private readonly By consultationHeadquarterExpandBttn = By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/following-sibling::div/*");
-        private readonly By consultationRegionalPlanningSubtitle = By.XPath("//span[contains(text(),'Regional planning')]");
-        private readonly By consultationRegionalPlanningExpandBttn = By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/following-sibling::div/*");
-        private readonly By consultationRegionalPropServicesSubtitle = By.XPath("//span[contains(text(),'Regional property services')]");
-        private readonly By consultationRegionalPropServicesExpandBttn = By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/following-sibling::div/*");
+        private readonly By consultationRegionalPlanningSubtitle = By.XPath("//span[contains(text(),'Regional Planning')]");
+        private readonly By consultationRegionalPlanningExpandBttn = By.XPath("//span[contains(text(),'Regional Planning')]/parent::div/parent::div/parent::div/following-sibling::div/*");
+        private readonly By consultationRegionalPropServicesSubtitle = By.XPath("//span[contains(text(),'Regional Property Services')]");
+        private readonly By consultationRegionalPropServicesExpandBttn = By.XPath("//span[contains(text(),'Regional Property Services')]/parent::div/parent::div/parent::div/following-sibling::div/*");
         private readonly By consultationSRESubtitle = By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]");
         private readonly By consultationSREExpandBttn = By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/following-sibling::div/*");
         private readonly By consultationOtherSubtitle = By.XPath("//span[contains(text(),'Other')]");
