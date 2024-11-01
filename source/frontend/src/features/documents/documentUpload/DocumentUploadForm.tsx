@@ -14,7 +14,7 @@ import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocumen
 import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
 import SelectedDocumentRow from './SelectedDocumentRow';
 
-interface IDocumentUploadFormProps {
+export interface IDocumentUploadFormProps {
   isLoading: boolean;
   formikRef: React.RefObject<FormikProps<BatchUploadFormModel>>;
   initialDocumentType: string;
@@ -31,7 +31,7 @@ interface IDocumentUploadFormProps {
 /**
  * Component that provides functionality to upload multiple documents. Can be embedded as a widget.
  */
-const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
+export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProps> = ({
   isLoading,
   formikRef,
   initialDocumentType,
