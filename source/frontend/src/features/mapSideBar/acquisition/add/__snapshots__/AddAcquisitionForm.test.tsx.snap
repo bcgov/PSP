@@ -389,6 +389,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c9 .nav-item.active {
@@ -2512,6 +2513,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c10 .nav-item.active {

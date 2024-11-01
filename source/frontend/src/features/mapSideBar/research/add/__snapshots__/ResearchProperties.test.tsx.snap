@@ -439,6 +439,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c4 .nav-item.active {

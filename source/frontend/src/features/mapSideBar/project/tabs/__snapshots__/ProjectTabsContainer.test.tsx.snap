@@ -46,6 +46,7 @@ exports[`Project Tabs component > matches snapshot 1`] = `
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c1 .nav-item.active {

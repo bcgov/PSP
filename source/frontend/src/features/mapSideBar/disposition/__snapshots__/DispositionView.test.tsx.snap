@@ -375,6 +375,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c28 .nav-item.active {

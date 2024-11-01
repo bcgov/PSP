@@ -337,6 +337,7 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c2 .nav-item.active {
