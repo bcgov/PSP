@@ -673,7 +673,7 @@ exports[`AccessRequestPage > renders correctly 1`] = `
               <label
                 class="c2"
               >
-                Notes:
+                Comments:
               </label>
             </div>
             <div

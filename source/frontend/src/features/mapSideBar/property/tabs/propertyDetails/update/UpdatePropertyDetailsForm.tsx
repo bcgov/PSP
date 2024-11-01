@@ -177,10 +177,10 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </SectionField>
       </Section>
       <Section header="Property Attributes">
-        <SectionField label="Historical File #">
+        <SectionField label="Historical file #">
           <UpdateHistoricalNumbersSubForm propertyId={values?.id ?? 0} />
         </SectionField>
-        <SectionField label="Legal Description">
+        <SectionField label="Legal description">
           <TextArea field="landLegalDescription" />
         </SectionField>
         <SectionField label="MOTI region">
@@ -208,7 +208,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         <SectionField label="Electoral district">
           <Text field="electoralDistrict.ED_NAME" />
         </SectionField>
-        <SectionField label="Agricultural Land Reserve">
+        <SectionField label="Agricultural land reserve">
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
         </SectionField>
         <SectionField label="Railway belt / Dominion patent">
@@ -245,7 +245,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
             options={tenureOptions}
           />
         </SectionField>
-        <SectionField label="Provincial Public Hwy">
+        <SectionField label="Provincial public hwy">
           <Select field="pphStatusTypeCode" options={pphTypeOptions} />
           {values?.pphStatusUpdateTimestamp && (
             <p className="text-right font-italic">
@@ -339,7 +339,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         )}
       </Section>
 
-      <Section header="Notes">
+      <Section header="Comments">
         <TextArea field="notes" rows={4} />
       </Section>
     </StyledSummarySection>
