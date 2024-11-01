@@ -68,19 +68,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        leasePage={leasePages.get(LeasePageNames.CONSULTATIONS)}
-        isEditing={isEditing}
-        formikRef={formikRef}
-        onSuccess={onSuccess}
-      />
-    ),
-    key: LeaseFileTabNames.consultations,
-    name: 'Approval/Consultations',
-  });
-
-  tabViews.push({
-    content: (
-      <LeaseTab
         leasePage={leasePages.get(LeasePageNames.CHECKLIST)}
         onEdit={() => setContainerState({ isEditing: true })}
         isEditing={isEditing}
@@ -93,6 +80,19 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     ),
     key: LeaseFileTabNames.checklist,
     name: 'Checklist',
+  });
+
+  tabViews.push({
+    content: (
+      <LeaseTab
+        leasePage={leasePages.get(LeasePageNames.CONSULTATIONS)}
+        isEditing={isEditing}
+        formikRef={formikRef}
+        onSuccess={onSuccess}
+      />
+    ),
+    key: LeaseFileTabNames.consultations,
+    name: 'Approval/Consultations',
   });
 
   tabViews.push({
@@ -184,6 +184,25 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     name: 'Surplus Declaration',
   });
 
+  if (
+    lease?.id &&
+    (lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA ||
+      lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLMOTI) &&
+    hasClaim(Claims.COMPENSATION_REQUISITION_VIEW)
+  ) {
+    tabViews.push({
+      content: (
+        <CompensationListContainer
+          fileType={ApiGen_CodeTypes_FileTypes.Lease}
+          file={lease}
+          View={CompensationListView}
+        />
+      ),
+      key: LeaseFileTabNames.compensation,
+      name: 'Compensation',
+    });
+  }
+
   if (lease?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
@@ -206,25 +225,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       ),
       key: LeaseFileTabNames.notes,
       name: 'Notes',
-    });
-  }
-
-  if (
-    lease?.id &&
-    (lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA ||
-      lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLMOTI) &&
-    hasClaim(Claims.COMPENSATION_REQUISITION_VIEW)
-  ) {
-    tabViews.push({
-      content: (
-        <CompensationListContainer
-          fileType={ApiGen_CodeTypes_FileTypes.Lease}
-          file={lease}
-          View={CompensationListView}
-        />
-      ),
-      key: LeaseFileTabNames.compensation,
-      name: 'Compensation',
     });
   }
 

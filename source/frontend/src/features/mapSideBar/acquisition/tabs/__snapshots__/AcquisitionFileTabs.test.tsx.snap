@@ -138,15 +138,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
       <a
         aria-selected="false"
         class="nav-item nav-link"
-        data-rb-event-key="documents"
-        href="#"
-        role="tab"
-      >
-        Documents
-      </a>
-      <a
-        aria-selected="false"
-        class="nav-item nav-link"
         data-rb-event-key="stakeholders"
         href="#"
         role="tab"
@@ -161,6 +152,15 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
         role="tab"
       >
         Sub-Files
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="documents"
+        href="#"
+        role="tab"
+      >
+        Documents
       </a>
     </nav>
     <div
