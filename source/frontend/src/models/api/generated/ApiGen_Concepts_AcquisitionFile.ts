@@ -34,6 +34,8 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   projectId: number | null;
   project: ApiGen_Concepts_Project | null;
   regionCode: ApiGen_Base_CodeType<number> | null;
+  subfileInterestTypeCode: ApiGen_Base_CodeType<string> | null;
+  otherSubfileInterestType: string | null;
   legacyStakeholders: string[] | null;
   fileProperties: ApiGen_Concepts_AcquisitionFileProperty[] | null;
   acquisitionTeam: ApiGen_Concepts_AcquisitionFileTeam[] | null;

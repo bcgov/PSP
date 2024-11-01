@@ -20,7 +20,7 @@ export class UpdateAcquisitionSummaryFormModel
   implements WithAcquisitionTeam, WithAcquisitionOwners
 {
   id?: number;
-  parentAcquisitionFileId?: number;
+  parentAcquisitionFileId: number | null = null;
   fileNo?: number;
   fileNumber?: string;
   fileName?: string = '';
@@ -39,6 +39,9 @@ export class UpdateAcquisitionSummaryFormModel
   team: AcquisitionTeamFormModel[] = [];
   owners: AcquisitionOwnerFormModel[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
+
+  subfileInterestTypeCode: string | null = null;
+  otherSubfileInterestType: string | null = null;
 
   project?: IAutocompletePrediction;
   product = '';
@@ -81,6 +84,8 @@ export class UpdateAcquisitionSummaryFormModel
       productId: this.product !== '' ? Number(this.product) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
+      subfileInterestTypeCode: toTypeCodeNullable(this.subfileInterestTypeCode),
+      otherSubfileInterestType: this.otherSubfileInterestType,
       acquisitionFileOwners: this.owners
         .filter(x => !x.isEmpty())
         .map<ApiGen_Concepts_AcquisitionFileOwner>(x => x.toApi()),
@@ -138,7 +143,8 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.formatterProduct = exists(model.product)
       ? model.product.code + ' ' + model.product.description
       : '';
-
+    newForm.subfileInterestTypeCode = fromTypeCode(model.subfileInterestTypeCode);
+    newForm.otherSubfileInterestType = model.otherSubfileInterestType;
     const interestHolders = model.acquisitionFileInterestHolders?.map(x =>
       InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),
     );

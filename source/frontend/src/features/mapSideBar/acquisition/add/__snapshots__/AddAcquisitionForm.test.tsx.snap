@@ -1715,6 +1715,110 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
             <label
               class="c3"
             >
+              Sub-file interest:
+            </label>
+          </div>
+          <div
+            class="c4 required text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <select
+                class="form-select form-control"
+                data-testid="subfileInterestTypeCode"
+                id="input-subfileInterestTypeCode"
+                name="subfileInterestTypeCode"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-XINGPERMIT"
+                  value="XINGPERMIT"
+                >
+                  Crossing Permit
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EASEMENT"
+                  value="EASEMENT"
+                >
+                  Easement Holder
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-LICOCCUPY"
+                  value="LICOCCUPY"
+                >
+                  License of Occupation
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-LIEN"
+                  value="LIEN"
+                >
+                  Lis Pendens / Lien
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MORTGAGE"
+                  value="MORTGAGE"
+                >
+                  Mortgage Interest
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SRWUTILITY"
+                  value="SRWUTILITY"
+                >
+                  SRW / Utility Holder
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-STRATALOT"
+                  value="STRATALOT"
+                >
+                  Strata Lot Owner
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SUBTENANT"
+                  value="SUBTENANT"
+                >
+                  Sub-Tenant / Lease
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-TENANT"
+                  value="TENANT"
+                >
+                  Tenant (Monthly) Leaseholder
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-OTHER"
+                  value="OTHER"
+                >
+                  Other 
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
               Ministry region:
             </label>
           </div>
