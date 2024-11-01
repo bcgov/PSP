@@ -377,20 +377,26 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
 .c9 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c9 .nav-item:hover {
-  color: var(--surface-color-primary-button-hover);
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c9 .nav-item.active {
-  background-color: #f2f2f2;
+  border-radius: 0.4rem;
+  color: #f2f2f2;
   font-family: 'BCSans-Bold';
-  color: var(--surface-color-primary-button-hover);
+  background-color: #053662;
   border-color: transparent;
 }
 
@@ -2495,20 +2501,26 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 .c10 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c10 .nav-item:hover {
-  color: var(--surface-color-primary-button-hover);
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c10 .nav-item.active {
-  background-color: #f2f2f2;
+  border-radius: 0.4rem;
+  color: #f2f2f2;
   font-family: 'BCSans-Bold';
-  color: var(--surface-color-primary-button-hover);
+  background-color: #053662;
   border-color: transparent;
 }
 
