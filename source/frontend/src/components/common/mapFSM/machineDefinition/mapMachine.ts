@@ -3,6 +3,7 @@ import { assign, createMachine, raise, send } from 'xstate';
 
 import { defaultBounds } from '@/components/maps/constants';
 import { PIMS_PROPERTY_BOUNDARY_KEY } from '@/components/maps/leaflet/Control/LayersControl/data';
+import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { emptyFeatureData } from '../models';
@@ -373,7 +374,6 @@ const advancedFilterSideBarStates = {
       },
     },
     mapFilterOpened: {
-      entry: [assign({ isFiltering: () => true })],
       on: {
         TOGGLE_FILTER: {
           target: 'closed',
@@ -381,8 +381,10 @@ const advancedFilterSideBarStates = {
         TOGGLE_LAYERS: {
           target: 'layerControl',
         },
-        SET_VISIBLE_PROPERTIES: {
-          actions: assign({ activePimsPropertyIds: (_, event: any) => event.propertyIds }),
+        SET_ADVANCED_SEARCH_CRITERIA: {
+          actions: assign({
+            advancedSearchCriteria: (_, event: any) => event.advancedSearchCriteria,
+          }),
         },
         SET_SHOW_DISPOSED: {
           actions: assign({ showDisposed: (_, event: any) => event.show }),
@@ -436,6 +438,7 @@ export const mapMachine = createMachine<MachineContext>({
     isLoading: false,
     fitToResultsAfterLoading: false,
     searchCriteria: null,
+    advancedSearchCriteria: new PropertyFilterFormModel(),
     mapFeatureData: emptyFeatureData,
     filePropertyLocations: [],
     activePimsPropertyIds: [],
@@ -495,6 +498,9 @@ export const mapMachine = createMachine<MachineContext>({
         },
         DEFAULT_MAP_LAYERS: {
           actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        },
+        SET_VISIBLE_PROPERTIES: {
+          actions: assign({ activePimsPropertyIds: (_, event: any) => event.propertyIds }),
         },
       },
       states: {

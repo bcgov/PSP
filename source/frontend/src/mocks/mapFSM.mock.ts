@@ -81,4 +81,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setFullWidthSideBar: vi.fn(),
   resetMapFilter: vi.fn(),
   setMapLayersToRefresh: vi.fn(),
+  setIsFiltering: vi.fn(),
 };

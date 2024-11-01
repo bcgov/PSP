@@ -46,7 +46,7 @@ describe('FilterContentContainer component', () => {
       ...renderOptions,
       store: storeState,
       history,
-      mockMapMachine: { ...mapMachineBaseMock, isFiltering: true },
+      mockMapMachine: { ...mapMachineBaseMock, isFiltering: false, isShowingMapFilter: true },
     });
 
     return {
@@ -62,11 +62,21 @@ describe('FilterContentContainer component', () => {
     vi.clearAllMocks();
   });
 
-  it('fetches filter data from the api', async () => {
+  it('delete me', async () => {
     mockGetApi.execute.mockResolvedValue([1, 2]);
     setup({});
     await act(async () => viewProps.onChange(new PropertyFilterFormModel()));
-    expect(mockGetApi.execute).toHaveBeenCalledWith(new PropertyFilterFormModel().toApi());
+    expect(mockGetApi.execute).not.toHaveBeenCalled();
+  });
+
+  it('fetches filter data from the api if filter changed', async () => {
+    mockGetApi.execute.mockResolvedValue([1, 2]);
+    setup({});
+    const filter = new PropertyFilterFormModel();
+    filter.isRetired = true;
+
+    await act(async () => viewProps.onChange(filter));
+    expect(mockGetApi.execute).toHaveBeenCalledWith(filter.toApi());
     expect(mapMachineBaseMock.setVisiblePimsProperties).toHaveBeenCalledWith([1, 2]);
   });
 
