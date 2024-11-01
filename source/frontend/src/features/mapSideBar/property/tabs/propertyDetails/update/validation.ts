@@ -28,7 +28,7 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
     then: Yup.string().required('Volumetric Type is required'),
     otherwise: Yup.string().nullable(),
   }),
-  notes: Yup.string().max(4000, 'Notes must be less than 4000 characters'),
+  notes: Yup.string().max(4000, 'Comments must be less than 4000 characters'),
   address: Yup.object().shape({
     streetAddress1: Yup.string().max(200, 'Address (line 1) must be at most 200 characters'),
     streetAddress2: Yup.string().max(200, 'Address (line 2) must be at most 200 characters'),

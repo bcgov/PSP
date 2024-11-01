@@ -495,20 +495,26 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 .c20 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c20 .nav-item:hover {
-  color: var(--surface-color-primary-button-hover);
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c20 .nav-item.active {
-  background-color: #f2f2f2;
+  border-radius: 0.4rem;
+  color: #f2f2f2;
   font-family: 'BCSans-Bold';
-  color: var(--surface-color-primary-button-hover);
+  background-color: #053662;
   border-color: transparent;
 }
 
@@ -1929,6 +1935,110 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     <label
                       class="c14"
                     >
+                      Sub-file interest:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 required text-left col"
+                  >
+                    <div
+                      class="required form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        data-testid="subfileInterestTypeCode"
+                        id="input-subfileInterestTypeCode"
+                        name="subfileInterestTypeCode"
+                        required=""
+                      >
+                        <option
+                          value=""
+                        >
+                          Select...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-XINGPERMIT"
+                          value="XINGPERMIT"
+                        >
+                          Crossing Permit
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-EASEMENT"
+                          value="EASEMENT"
+                        >
+                          Easement Holder
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-LICOCCUPY"
+                          value="LICOCCUPY"
+                        >
+                          License of Occupation
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-LIEN"
+                          value="LIEN"
+                        >
+                          Lis Pendens / Lien
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MORTGAGE"
+                          value="MORTGAGE"
+                        >
+                          Mortgage Interest
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-SRWUTILITY"
+                          value="SRWUTILITY"
+                        >
+                          SRW / Utility Holder
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-STRATALOT"
+                          value="STRATALOT"
+                        >
+                          Strata Lot Owner
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-SUBTENANT"
+                          value="SUBTENANT"
+                        >
+                          Sub-Tenant / Lease
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-TENANT"
+                          value="TENANT"
+                        >
+                          Tenant (Monthly) Leaseholder
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-OTHER"
+                          value="OTHER"
+                        >
+                          Other 
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
                       Ministry region:
                     </label>
                   </div>
@@ -2760,20 +2870,26 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 .c21 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c21 .nav-item:hover {
-  color: var(--surface-color-primary-button-hover);
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  font-family: 'BCSans-Bold';
 }
 
 .c21 .nav-item.active {
-  background-color: #f2f2f2;
+  border-radius: 0.4rem;
+  color: #f2f2f2;
   font-family: 'BCSans-Bold';
-  color: var(--surface-color-primary-button-hover);
+  background-color: #053662;
   border-color: transparent;
 }
 

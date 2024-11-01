@@ -1,5 +1,3679 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
+exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c8.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c8.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c8.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c8.btn:focus {
+  outline-width: 0.4rem;
+  outline-style: solid;
+  outline-color: var(--surface-color-primary-button-hover);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.c8.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:active,
+.c8.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c8.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c8.btn.btn-secondary:hover,
+.c8.btn.btn-secondary:active,
+.c8.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c8.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c8.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c8.btn.btn-light:hover,
+.c8.btn.btn-light:active,
+.c8.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c8.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c8.btn.btn-dark:hover,
+.c8.btn.btn-dark:active,
+.c8.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c8.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c8.btn.btn-danger:hover,
+.c8.btn.btn-danger:active,
+.c8.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c8.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c8.btn.btn-warning:hover,
+.c8.btn.btn-warning:active,
+.c8.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c8.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+  opacity: 0.65;
+}
+
+.c8.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c8.Button--icon-only:focus {
+  outline: none;
+}
+
+.c8.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c10.c10.btn {
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c10.c10.btn .text {
+  display: none;
+}
+
+.c10.c10.btn:hover,
+.c10.c10.btn:active,
+.c10.c10.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c10.c10.btn:hover .text,
+.c10.c10.btn:active .text,
+.c10.c10.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c18.c18.btn {
+  font-size: 1.3rem;
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c18.c18.btn .text {
+  display: none;
+}
+
+.c18.c18.btn:hover,
+.c18.c18.btn:active,
+.c18.c18.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c18.c18.btn:hover .text,
+.c18.c18.btn:active .text,
+.c18.c18.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c5 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  fill: var(--surface-color-primary-button-default);
+  pointer-events: none;
+}
+
+.c5 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c5 .react-datepicker-wrapper {
+  max-width: 17rem;
+}
+
+.c6.c6.form-control.is-valid {
+  background-image: none;
+}
+
+.c6.c6.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c14 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c11 {
+  color: #474543;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c13.form-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 0;
+}
+
+.c13.form-group .radio-group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  row-gap: unset;
+  -webkit-column-gap: 0.4rem;
+  column-gap: 0.4rem;
+}
+
+.c13.form-group .radio-group .form-check {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+.c13.form-group .radio-group .form-check .form-check-input {
+  margin-left: 0;
+}
+
+.c13.form-group .radio-group .form-check-label {
+  margin-left: 1rem;
+}
+
+.c13 .form-label {
+  margin-bottom: unset;
+}
+
+.c7 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  background-image: none;
+  color: #474543;
+  border: #606060 solid 0.1rem;
+  cursor: default;
+}
+
+.c7.is-invalid {
+  border: #CE3E39 solid 0.1rem;
+}
+
+.c9.c9.btn {
+  position: absolute;
+  top: calc(50% - 1.4rem);
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-right: 1.2rem;
+  height: 1.6rem;
+  right: 0rem;
+  color: #9F9D9C;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c9.c9.btn .text {
+  display: none;
+}
+
+.c9.c9.btn:hover,
+.c9.c9.btn:active,
+.c9.c9.btn:focus {
+  color: #CE3E39;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+}
+
+.c4 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+.c17 {
+  background-color: none;
+}
+
+.c16 {
+  margin: 1.5rem;
+}
+
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: end;
+  -ms-flex-pack: end;
+  justify-content: end;
+}
+
+.c15 {
+  font-size: 2rem;
+  font-weight: 700;
+  -webkit-text-decoration: none solid rgb(33,37,41);
+  text-decoration: none solid rgb(33,37,41);
+  line-height: 2rem;
+  margin-bottom: 1rem;
+}
+
+.c0 {
+  background-color: #f2f2f2;
+}
+
+.c0 [name='region'] {
+  max-width: 25rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Status:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-status-field-tooltip"
+                  id="status-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-fileStatusTypeCode"
+                name="fileStatusTypeCode"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ACTIVE"
+                  value="ACTIVE"
+                >
+                  Active
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIV"
+                  value="ARCHIV"
+                >
+                  Archived
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CANCEL"
+                  value="CANCEL"
+                >
+                  Cancelled
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-COMPLT"
+                  value="COMPLT"
+                >
+                  Complete
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DRAFT"
+                  value="DRAFT"
+                >
+                  Draft
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-HOLD"
+                  value="HOLD"
+                >
+                  Hold
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Project
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Ministry project:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            1111 - Test Project
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Product:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            00048 MISCELLANEOUS CLAIMS
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Funding:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-fundingTypeCode"
+                name="fundingTypeCode"
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-BCTFA"
+                  value="BCTFA"
+                >
+                  BCTFA
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CAPITAL"
+                  value="CAPITAL"
+                >
+                  Capital Program
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-DFAA"
+                  value="DFAA"
+                >
+                  DFAA (Disaster Financial Assistance Arrangement)
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EVERGRN"
+                  value="EVERGRN"
+                >
+                  Evergreen
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-FEDERAL"
+                  value="FEDERAL"
+                >
+                  Federal
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MAJORPR"
+                  value="MAJORPR"
+                >
+                  Major Projects
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTIDST"
+                  value="MOTIDST"
+                >
+                  MoTI District
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTIREG"
+                  value="MOTIREG"
+                >
+                  MoTI Region
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-OTHER"
+                  value="OTHER"
+                >
+                  Other
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-REHAB"
+                  value="REHAB"
+                >
+                  Rehab & Maintenance
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-TICORP"
+                  value="TICORP"
+                >
+                  TI Corp
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Schedule
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Assigned date:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="c5 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    id="datepicker-assignedDate"
+                    name="assignedDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value="Jun 27, 2022"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Delivery date:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="c5 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    id="datepicker-deliveryDate"
+                    name="deliveryDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value="Jul 29, 2022"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Estimated date:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="c5 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    id="datepicker-estimatedCompletionDate"
+                    name="estimatedCompletionDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value="Jul 10, 2024"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Possession date:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="c5 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    id="datepicker-possessionDate"
+                    name="possessionDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value="Jul 10, 2025"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Acquisition Details
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Acquisition file name:
+            </label>
+          </div>
+          <div
+            class="c3 required text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-fileName"
+                name="fileName"
+                title="Test ACQ File"
+                value="Test ACQ File"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Historical file number:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-legacyFileNumber"
+                name="legacyFileNumber"
+                title="legacy file number"
+                value="legacy file number"
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Physical file status:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-acquisitionPhysFileStatusType"
+                name="acquisitionPhysFileStatusType"
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ACTIVE"
+                  value="ACTIVE"
+                >
+                  Active
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-ARCHIVE"
+                  value="ARCHIVE"
+                >
+                  Archive - Offsite
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PENDING"
+                  value="PENDING"
+                >
+                  Pending Litigation
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Acquisition type:
+            </label>
+          </div>
+          <div
+            class="c3 required text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-acquisitionType"
+                name="acquisitionType"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CONSEN"
+                  value="CONSEN"
+                >
+                  Consensual Agreement
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-HISTORY"
+                  value="HISTORY"
+                >
+                  Historical
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SECTN3"
+                  value="SECTN3"
+                >
+                  Section 3 Agreement
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SECTN6"
+                  value="SECTN6"
+                >
+                  Section 6 Expropriation
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-XFR"
+                  value="XFR"
+                >
+                  Transferred
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Sub-file interest:
+            </label>
+          </div>
+          <div
+            class="c3 required text-left col"
+          >
+            <div
+              class="required form-group"
+            >
+              <select
+                class="form-select form-control"
+                data-testid="subfileInterestTypeCode"
+                id="input-subfileInterestTypeCode"
+                name="subfileInterestTypeCode"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Select...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-XINGPERMIT"
+                  value="XINGPERMIT"
+                >
+                  Crossing Permit
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EASEMENT"
+                  value="EASEMENT"
+                >
+                  Easement Holder
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-LICOCCUPY"
+                  value="LICOCCUPY"
+                >
+                  License of Occupation
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-LIEN"
+                  value="LIEN"
+                >
+                  Lis Pendens / Lien
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MORTGAGE"
+                  value="MORTGAGE"
+                >
+                  Mortgage Interest
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SRWUTILITY"
+                  value="SRWUTILITY"
+                >
+                  SRW / Utility Holder
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-STRATALOT"
+                  value="STRATALOT"
+                >
+                  Strata Lot Owner
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-SUBTENANT"
+                  value="SUBTENANT"
+                >
+                  Sub-Tenant / Lease
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-TENANT"
+                  value="TENANT"
+                >
+                  Tenant (Monthly) Leaseholder
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-OTHER"
+                  value="OTHER"
+                >
+                  Other 
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Ministry region:
+            </label>
+          </div>
+          <div
+            class="c3 required text-left col"
+          >
+            <div
+              class="required d-flex form-group"
+            >
+              <span
+                class="tooltip-icon"
+                data-testid="tooltip-icon-region-tooltip"
+                id="region-tooltip"
+              >
+                <svg
+                  class="tooltip-icon"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+              </span>
+              <select
+                class="form-select form-control"
+                id="input-region"
+                name="region"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Select region...
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Acquisition Team
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="py-3 row"
+          data-testid="teamMemberRow[0]"
+        >
+          <div
+            class="col-xl-5 col-auto"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                data-testid="select-profile"
+                id="input-team.0.contactTypeCode"
+                name="team.0.contactTypeCode"
+              >
+                <option
+                  value=""
+                >
+                  Select profile...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EXPRAGENT"
+                  value="EXPRAGENT"
+                >
+                  Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NEGOTAGENT"
+                  value="NEGOTAGENT"
+                >
+                  Negotiation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPAGENT"
+                  value="PROPAGENT"
+                >
+                  Property agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPANLYS"
+                  value="PROPANLYS"
+                >
+                  Property analyst
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPCOORD"
+                  value="PROPCOORD"
+                >
+                  Property coordinator
+                </option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="pl-0 col-xl-5 col-auto"
+            data-testid="contact-input"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="c7"
+                  >
+                    Bob Billy Smith
+                    <button
+                      class="c8 Button c9 btn btn-link"
+                      title="remove"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                  <div
+                    class="d-none input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-team.0.contact.id"
+                      name="team.0.contact.id"
+                      placeholder="Select from Contacts"
+                      title="P1"
+                      value="P1"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="pl-0 col-auto"
+                >
+                  <button
+                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    title="Select Contact"
+                    type="button"
+                  >
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+          <div
+            class="pl-0 mt-2 col-xl-2 col-auto"
+          >
+            <button
+              class="c8 Button c10 btn btn-link"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  data-testid="team.0.remove-button"
+                  fill="currentColor"
+                  height="2rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="2rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    remove
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                 
+                <span
+                  class="text"
+                >
+                  Remove
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
+        <div
+          class="py-3 row"
+          data-testid="teamMemberRow[1]"
+        >
+          <div
+            class="col-xl-5 col-auto"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                data-testid="select-profile"
+                id="input-team.1.contactTypeCode"
+                name="team.1.contactTypeCode"
+              >
+                <option
+                  value=""
+                >
+                  Select profile...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EXPRAGENT"
+                  value="EXPRAGENT"
+                >
+                  Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NEGOTAGENT"
+                  value="NEGOTAGENT"
+                >
+                  Negotiation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPAGENT"
+                  value="PROPAGENT"
+                >
+                  Property agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPANLYS"
+                  value="PROPANLYS"
+                >
+                  Property analyst
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPCOORD"
+                  value="PROPCOORD"
+                >
+                  Property coordinator
+                </option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="pl-0 col-xl-5 col-auto"
+            data-testid="contact-input"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="c7"
+                  >
+                    Stinky Cheese
+                    <button
+                      class="c8 Button c9 btn btn-link"
+                      title="remove"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                  <div
+                    class="d-none input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-team.1.contact.id"
+                      name="team.1.contact.id"
+                      placeholder="Select from Contacts"
+                      title="P3"
+                      value="P3"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="pl-0 col-auto"
+                >
+                  <button
+                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    title="Select Contact"
+                    type="button"
+                  >
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+          <div
+            class="pl-0 mt-2 col-xl-2 col-auto"
+          >
+            <button
+              class="c8 Button c10 btn btn-link"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  data-testid="team.1.remove-button"
+                  fill="currentColor"
+                  height="2rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="2rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    remove
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                 
+                <span
+                  class="text"
+                >
+                  Remove
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
+        <button
+          class="c8 Button btn btn-link"
+          data-testid="add-team-member"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add another team member
+          </div>
+        </button>
+        <div />
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Owners
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <p
+          class="c11"
+        >
+          Each property in this file should be owned by the owner(s) in this section
+        </p>
+        <div
+          class="py-3 row"
+        >
+          <div
+            class="container"
+          >
+            <div
+              class="c12"
+            >
+              <button
+                class="c8 Button c10 btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    data-testid="owners[0]-remove-button"
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      remove
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="text"
+                  >
+                    Remove Owner
+                  </span>
+                </div>
+              </button>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Is this owner an individual / corporation ?:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="c13 form-group"
+                >
+                  <div
+                    class="radio-group"
+                  >
+                    <div
+                      class="c14"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          checked=""
+                          class="form-check-input position-static"
+                          data-testid="radio-owners[0].isorganization-individual"
+                          id="input-false"
+                          name="owners[0].isOrganization"
+                          type="radio"
+                          value="false"
+                        />
+                      </div>
+                      <label
+                        class="form-check-label form-label"
+                        for="owners[0].isOrganization"
+                      >
+                        Individual
+                      </label>
+                    </div>
+                    <div
+                      class="c14"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input position-static"
+                          data-testid="radio-owners[0].isorganization-corporation"
+                          id="input-true"
+                          name="owners[0].isOrganization"
+                          type="radio"
+                          value="true"
+                        />
+                      </div>
+                      <label
+                        class="form-check-label form-label"
+                        for="owners[0].isOrganization"
+                      >
+                        Corporation
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="c15"
+            >
+              Name
+            </h3>
+            <div
+              class="c16"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                />
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="c13 form-group"
+                  >
+                    <div
+                      class="radio-group"
+                    >
+                      <div
+                        class="c14"
+                      >
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input position-static"
+                            data-testid="radio-owners[0].isprimarycontact-primary contact"
+                            id="input-true"
+                            name="owners[0].isPrimaryContact"
+                            type="radio"
+                            value="true"
+                          />
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="owners[0].isPrimaryContact"
+                        >
+                          Primary Contact
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Given names:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].givenName"
+                    name="owners[0].givenName"
+                    placeholder="First name Middle name (individuals only)"
+                    title="John"
+                    value="John"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Last name:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].lastNameAndCorpName"
+                    name="owners[0].lastNameAndCorpName"
+                    placeholder="Individual's last name"
+                    title="Doe"
+                    value="Doe"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Other name:
+                  <span>
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-section-field-tooltip"
+                      id="section-field-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].otherName"
+                    name="owners[0].otherName"
+                    placeholder="Alias/Doing business as etc."
+                    title="Jr."
+                    value="Jr."
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="c17"
+            >
+              <h3
+                class="c15"
+              >
+                Mailing Address
+              </h3>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 1):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[0].address.streetAddress1"
+                          name="owners[0].address.streetAddress1"
+                          title="456 Souris Street"
+                          value="456 Souris Street"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 2):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[0].address.streetAddress2"
+                          name="owners[0].address.streetAddress2"
+                          title="PO Box 250"
+                          value="PO Box 250"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 pt-2 col"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 3):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[0].address.streetAddress3"
+                          name="owners[0].address.streetAddress3"
+                          title="A Hoot and a holler from the A&W"
+                          value="A Hoot and a holler from the A&W"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 pt-2 col"
+                    >
+                      <button
+                        class="c8 Button c18 btn btn-link"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            data-testid="remove-button"
+                            fill="currentColor"
+                            height="2rem"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="2rem"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <title>
+                              remove
+                            </title>
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                            />
+                          </svg>
+                           
+                          <span
+                            class="text"
+                          >
+                            Remove
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Country:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-owners[0].address.countryId"
+                      name="owners[0].address.countryId"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1"
+                        value="1"
+                      >
+                        Canada
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-2"
+                        value="2"
+                      >
+                        United States of America
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-3"
+                        value="3"
+                      >
+                        Mexico
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-4"
+                        value="4"
+                      >
+                        Other
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    City:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-owners[0].address.municipality"
+                      name="owners[0].address.municipality"
+                      title="North Podunk"
+                      value="North Podunk"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Province:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-owners[0].address.provinceId"
+                      name="owners[0].address.provinceId"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select province
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1"
+                        value="1"
+                      >
+                        British Columbia
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-2"
+                        value="2"
+                      >
+                        Alberta
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-3"
+                        value="3"
+                      >
+                        Manitoba
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-4"
+                        value="4"
+                      >
+                        Newfoundland
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-5"
+                        value="5"
+                      >
+                        New Brunswick
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-6"
+                        value="6"
+                      >
+                        Nova Scotia
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-7"
+                        value="7"
+                      >
+                        North West Territories
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-8"
+                        value="8"
+                      >
+                        Nunavut
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-9"
+                        value="9"
+                      >
+                        Ontario
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-10"
+                        value="10"
+                      >
+                        Prince Edward Island
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-11"
+                        value="11"
+                      >
+                        Quebec
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-12"
+                        value="12"
+                      >
+                        Saskatchewan
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-13"
+                        value="13"
+                      >
+                        Yukon Territory
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Postal Code:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-owners[0].address.postal"
+                      name="owners[0].address.postal"
+                      title="IH8 B0B"
+                      value="IH8 B0B"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="c15"
+            >
+              Contact Information
+            </h3>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Email:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].contactEmailAddress"
+                    name="owners[0].contactEmailAddress"
+                    title="jonh.doe@gmail.com"
+                    value="jonh.doe@gmail.com"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Phone:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[0].contactPhoneNumber"
+                    name="owners[0].contactPhoneNumber"
+                    title="775-111-1111"
+                    value="775-111-1111"
+                  />
+                </div>
+              </div>
+            </div>
+            <hr />
+          </div>
+        </div>
+        <div
+          class="py-3 row"
+        >
+          <div
+            class="container"
+          >
+            <div
+              class="c12"
+            >
+              <button
+                class="c8 Button c10 btn btn-link"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    data-testid="owners[1]-remove-button"
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      remove
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="text"
+                  >
+                    Remove Owner
+                  </span>
+                </div>
+              </button>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Is this owner an individual / corporation ?:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="c13 form-group"
+                >
+                  <div
+                    class="radio-group"
+                  >
+                    <div
+                      class="c14"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          class="form-check-input position-static"
+                          data-testid="radio-owners[1].isorganization-individual"
+                          id="input-false"
+                          name="owners[1].isOrganization"
+                          type="radio"
+                          value="false"
+                        />
+                      </div>
+                      <label
+                        class="form-check-label form-label"
+                        for="owners[1].isOrganization"
+                      >
+                        Individual
+                      </label>
+                    </div>
+                    <div
+                      class="c14"
+                    >
+                      <div
+                        class="form-check"
+                      >
+                        <input
+                          checked=""
+                          class="form-check-input position-static"
+                          data-testid="radio-owners[1].isorganization-corporation"
+                          id="input-true"
+                          name="owners[1].isOrganization"
+                          type="radio"
+                          value="true"
+                        />
+                      </div>
+                      <label
+                        class="form-check-label form-label"
+                        for="owners[1].isOrganization"
+                      >
+                        Corporation
+                      </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="c15"
+            >
+              Name
+            </h3>
+            <div
+              class="c16"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                />
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="c13 form-group"
+                  >
+                    <div
+                      class="radio-group"
+                    >
+                      <div
+                        class="c14"
+                      >
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            class="form-check-input position-static"
+                            data-testid="radio-owners[1].isprimarycontact-primary contact"
+                            id="input-true"
+                            name="owners[1].isPrimaryContact"
+                            type="radio"
+                            value="true"
+                          />
+                        </div>
+                        <label
+                          class="form-check-label form-label"
+                          for="owners[1].isPrimaryContact"
+                        >
+                          Primary Contact
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Corporation name :
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].lastNameAndCorpName"
+                    name="owners[1].lastNameAndCorpName"
+                    placeholder="Business' legal name"
+                    title="FORTIS BC"
+                    value="FORTIS BC"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Other name:
+                  <span>
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-section-field-tooltip"
+                      id="section-field-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].otherName"
+                    name="owners[1].otherName"
+                    placeholder="Alias/Doing business as etc."
+                    title="LTD"
+                    value="LTD"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Incorporation number:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].incorporationNumber"
+                    name="owners[1].incorporationNumber"
+                    placeholder="Incorporation #"
+                    title="9999"
+                    value="9999"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Registration number:
+                  <span>
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-section-field-tooltip"
+                      id="section-field-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </span>
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].registrationNumber"
+                    name="owners[1].registrationNumber"
+                    placeholder="If no Incorporation #"
+                    title="12345"
+                    value="12345"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="c17"
+            >
+              <h3
+                class="c15"
+              >
+                Mailing Address
+              </h3>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 1):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[1].address.streetAddress1"
+                          name="owners[1].address.streetAddress1"
+                          title="123 Main Street"
+                          value="123 Main Street"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 2):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[1].address.streetAddress2"
+                          name="owners[1].address.streetAddress2"
+                          title="PO Box 123"
+                          value="PO Box 123"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 pt-2 col"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Address (line 3):
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col"
+                >
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-md-9"
+                    >
+                      <div
+                        class="input form-group"
+                      >
+                        <input
+                          class="form-control"
+                          id="input-owners[1].address.streetAddress3"
+                          name="owners[1].address.streetAddress3"
+                          title="Next to the Dairy Queen"
+                          value="Next to the Dairy Queen"
+                        />
+                      </div>
+                    </div>
+                    <div
+                      class="pl-0 pt-2 col"
+                    >
+                      <button
+                        class="c8 Button c18 btn btn-link"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            data-testid="remove-button"
+                            fill="currentColor"
+                            height="2rem"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 24 24"
+                            width="2rem"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <title>
+                              remove
+                            </title>
+                            <path
+                              d="M0 0h24v24H0z"
+                              fill="none"
+                            />
+                            <path
+                              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                            />
+                          </svg>
+                           
+                          <span
+                            class="text"
+                          >
+                            Remove
+                          </span>
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Country:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-owners[1].address.countryId"
+                      name="owners[1].address.countryId"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select...
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1"
+                        value="1"
+                      >
+                        Canada
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-2"
+                        value="2"
+                      >
+                        United States of America
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-3"
+                        value="3"
+                      >
+                        Mexico
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-4"
+                        value="4"
+                      >
+                        Other
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    City:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-owners[1].address.municipality"
+                      name="owners[1].address.municipality"
+                      title="East Podunk"
+                      value="East Podunk"
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Province:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-owners[1].address.provinceId"
+                      name="owners[1].address.provinceId"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select province
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1"
+                        value="1"
+                      >
+                        British Columbia
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-2"
+                        value="2"
+                      >
+                        Alberta
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-3"
+                        value="3"
+                      >
+                        Manitoba
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-4"
+                        value="4"
+                      >
+                        Newfoundland
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-5"
+                        value="5"
+                      >
+                        New Brunswick
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-6"
+                        value="6"
+                      >
+                        Nova Scotia
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-7"
+                        value="7"
+                      >
+                        North West Territories
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-8"
+                        value="8"
+                      >
+                        Nunavut
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-9"
+                        value="9"
+                      >
+                        Ontario
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-10"
+                        value="10"
+                      >
+                        Prince Edward Island
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-11"
+                        value="11"
+                      >
+                        Quebec
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-12"
+                        value="12"
+                      >
+                        Saskatchewan
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-13"
+                        value="13"
+                      >
+                        Yukon Territory
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c2"
+                  >
+                    Postal Code:
+                  </label>
+                </div>
+                <div
+                  class="c3 text-left col-4"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-owners[1].address.postal"
+                      name="owners[1].address.postal"
+                      title="I4M B0B"
+                      value="I4M B0B"
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <h3
+              class="c15"
+            >
+              Contact Information
+            </h3>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Email:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].contactEmailAddress"
+                    name="owners[1].contactEmailAddress"
+                    title="fake@email.ca"
+                    value="fake@email.ca"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c2"
+                >
+                  Phone:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-owners[1].contactPhoneNumber"
+                    name="owners[1].contactPhoneNumber"
+                    title="775-111-1111"
+                    value="775-111-1111"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button
+          class="c8 Button btn btn-link"
+          data-testid="add-file-owner"
+          type="button"
+        >
+          <div
+            class="Button__value"
+          >
+            + Add owner
+          </div>
+        </button>
+        <div />
+        <div
+          class="mt-4 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Owner solicitor:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="c7"
+                  >
+                    Millennium Inc
+                    <button
+                      class="c8 Button c9 btn btn-link"
+                      title="remove"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                  <div
+                    class="d-none input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-ownerSolicitor.contact.id"
+                      name="ownerSolicitor.contact.id"
+                      placeholder="Select from Contacts"
+                      title="O1"
+                      value="O1"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="pl-0 col-auto"
+                >
+                  <button
+                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    title="Select Contact"
+                    type="button"
+                  >
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
+        <div
+          class="mt-4 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Primary contact:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            No contacts available
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Owner representative:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <div
+                class="row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="c7"
+                  >
+                    Han Solo
+                    <button
+                      class="c8 Button c9 btn btn-link"
+                      title="remove"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
+                  <div
+                    class="d-none input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-ownerRepresentative.contact.id"
+                      name="ownerRepresentative.contact.id"
+                      placeholder="Select from Contacts"
+                      title="P2"
+                      value="P2"
+                    />
+                  </div>
+                </div>
+                <div
+                  class="pl-0 col-auto"
+                >
+                  <button
+                    class="c8 Button Button--icon-only px-2 btn btn-primary"
+                    title="Select Contact"
+                    type="button"
+                  >
+                    <div
+                      class="Button__icon"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="20"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="20"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div />
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Comment:
+            </label>
+          </div>
+          <div
+            class="c3 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-ownerRepresentative.comment"
+                name="ownerRepresentative.comment"
+                placeholder="Remarks or additional representative(s)"
+                title="test representative comment"
+              >
+                test representative comment
+              </textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
 exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div

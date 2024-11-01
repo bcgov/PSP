@@ -1194,7 +1194,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               <label
                 class="c5"
               >
-                Historical File #:
+                Historical file #:
               </label>
             </div>
             <div
@@ -1222,7 +1222,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               <label
                 class="c5"
               >
-                Legal Description:
+                Legal description:
               </label>
             </div>
             <div
@@ -1444,7 +1444,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               <label
                 class="c5"
               >
-                Agricultural Land Reserve:
+                Agricultural land reserve:
               </label>
             </div>
             <div
@@ -1992,7 +1992,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               <label
                 class="c5"
               >
-                Provincial Public Hwy:
+                Provincial public hwy:
               </label>
             </div>
             <div
@@ -2604,7 +2604,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
             <div
               class="col"
             >
-              Notes
+              Comments
             </div>
           </div>
         </h2>

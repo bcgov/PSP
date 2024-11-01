@@ -39,17 +39,17 @@ export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProp
         hasClaim(Claims.LEASE_EDIT) && disabled ? (
           <SectionListHeader
             claims={[Claims.LEASE_EDIT]}
-            title="Deposit Notes"
-            addButtonText="Edit Notes"
+            title="Deposit Comments"
+            addButtonText="Edit Comments"
             addButtonIcon={<FaEdit size={'2rem'} />}
-            data-testId="edit-notes"
+            data-testId="edit-comments"
             onAdd={() => {
               onEdit();
               setCollapsed(false);
             }}
           />
         ) : (
-          <span>Deposit Notes</span>
+          <span>Deposit Comments</span>
         )
       }
     >

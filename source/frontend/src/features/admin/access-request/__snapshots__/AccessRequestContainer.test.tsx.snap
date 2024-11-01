@@ -714,7 +714,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
         <label
           class="c0"
         >
-          Notes:
+          Comments:
         </label>
       </div>
       <div
@@ -1510,7 +1510,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
         <label
           class="c0"
         >
-          Notes:
+          Comments:
         </label>
       </div>
       <div

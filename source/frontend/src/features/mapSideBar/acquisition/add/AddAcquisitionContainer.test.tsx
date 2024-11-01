@@ -141,6 +141,8 @@ describe('AddAcquisitionContainer component', () => {
         utils.container.querySelector(`select[name="acquisitionType"]`) as HTMLSelectElement,
       getFundingTypeDropdown: () =>
         utils.container.querySelector(`select[name="fundingTypeCode"]`) as HTMLSelectElement,
+      getSubfileInterestTypeDropdown: () =>
+        utils.container.querySelector(`select[name="subfileInterestTypeCode"]`) as HTMLSelectElement,
       getFundingOtherTextbox: () =>
         utils.container.querySelector(
           `input[name="fundingTypeOtherDescription"]`,
@@ -203,7 +205,7 @@ describe('AddAcquisitionContainer component', () => {
   });
 
   it('renders the underlying form', async () => {
-    const { getByText, getNameTextbox, getRegionDropdown } = await setup();
+    const { getByText, getNameTextbox, getRegionDropdown, getSubfileInterestTypeDropdown } = await setup();
 
     const formTitle = getByText(/Create Acquisition File/i);
     const input = getNameTextbox();
@@ -214,6 +216,7 @@ describe('AddAcquisitionContainer component', () => {
     expect(input.tagName).toBe('INPUT');
     expect(select).toBeVisible();
     expect(select.tagName).toBe('SELECT');
+    expect(getSubfileInterestTypeDropdown()).not.toBeInTheDocument();
   });
 
   it('should close the form when Cancel button is clicked', async () => {
