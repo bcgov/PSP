@@ -26,6 +26,7 @@ describe('NotesModal component', () => {
       <NotesModal
         notesLabel="test label"
         title="test title"
+        description="test description"
         initialValues={renderOptions.initialValues}
       />,
       {
@@ -53,7 +54,7 @@ describe('NotesModal component', () => {
       component: { getByTitle, findByTestId },
     } = await setup({ initialValues: { note: 'test note' } });
     await act(async () => {
-      userEvent.click(getByTitle('notes'));
+      userEvent.click(getByTitle('test description'));
     });
     const noteField = await findByTestId('note-field');
     expect(noteField).toHaveValue('test note');
@@ -64,7 +65,7 @@ describe('NotesModal component', () => {
       component: { getByTitle, getByText, findByTestId },
     } = await setup({ initialValues: { note: '' } });
     await act(async () => {
-      userEvent.click(getByTitle('notes'));
+      userEvent.click(getByTitle('test description'));
     });
 
     const noteField = await findByTestId('note-field');
@@ -77,7 +78,7 @@ describe('NotesModal component', () => {
     });
 
     await act(async () => {
-      userEvent.click(getByTitle('notes'));
+      userEvent.click(getByTitle('test description'));
     });
 
     expect(noteField).toHaveValue('test note');
@@ -88,7 +89,7 @@ describe('NotesModal component', () => {
       component: { getByTitle, getByText, findByTestId },
     } = await setup({ initialValues: { note: '' } });
     await act(async () => {
-      userEvent.click(getByTitle('notes'));
+      userEvent.click(getByTitle('test description'));
     });
     let noteField = await findByTestId('note-field');
     await act(async () => {
@@ -100,7 +101,7 @@ describe('NotesModal component', () => {
     });
 
     await act(async () => {
-      userEvent.click(getByTitle('notes'));
+      userEvent.click(getByTitle('test description'));
     });
     noteField = await findByTestId('note-field');
     await act(async () => {

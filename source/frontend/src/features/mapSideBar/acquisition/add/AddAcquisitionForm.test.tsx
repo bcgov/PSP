@@ -12,11 +12,13 @@ import {
   act,
   cleanup,
   fakeText,
+  fireEvent,
   render,
   RenderOptions,
   screen,
   userEvent,
   waitFor,
+  waitForEffects,
   within,
 } from '@/utils/test-utils';
 
@@ -74,6 +76,12 @@ describe('AddAcquisitionForm component', () => {
         utils.container.querySelector(`select[name="region"]`) as HTMLSelectElement,
       getAcquisitionTypeDropdown: () =>
         utils.container.querySelector(`select[name="acquisitionType"]`) as HTMLSelectElement,
+      getSubfileInterestTypeDropdown: () =>
+        utils.container.querySelector(
+          `select[name="subfileInterestTypeCode"]`,
+        ) as HTMLSelectElement,
+      getOtherSubfileInterestTypeTextbox: () =>
+        utils.container.querySelector(`input[name="otherSubfileInterestType"]`) as HTMLInputElement,
     };
   };
 
@@ -94,7 +102,7 @@ describe('AddAcquisitionForm component', () => {
   });
 
   it('renders form fields as expected', () => {
-    const { getByText, getNameTextbox, getRegionDropdown } = setup({
+    const { getByText, getNameTextbox, getRegionDropdown, getSubfileInterestTypeDropdown } = setup({
       initialValues,
       confirmBeforeAdd: vi.fn(),
     });
@@ -108,6 +116,7 @@ describe('AddAcquisitionForm component', () => {
     expect(input.tagName).toBe('INPUT');
     expect(select).toBeVisible();
     expect(select.tagName).toBe('SELECT');
+    expect(getSubfileInterestTypeDropdown()).not.toBeInTheDocument();
   });
 
   it('displays existing values if they exist', async () => {
@@ -170,6 +179,60 @@ describe('AddAcquisitionForm component', () => {
     it('should display interest solicitor input', async () => {
       const { getByText } = setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
       expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
+    });
+
+    it('should display Subfile interest type SELECT', async () => {
+      const { getSubfileInterestTypeDropdown } = setup({
+        initialValues,
+        parentId,
+        confirmBeforeAdd: vi.fn(),
+      });
+      expect(getSubfileInterestTypeDropdown()).toBeInTheDocument();
+    });
+
+    it('should display OTHER Subfile interest type', async () => {
+      const { getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox } = setup({
+        initialValues,
+        parentId,
+        confirmBeforeAdd: vi.fn(),
+      });
+      const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
+
+      expect(subfileInterestTypeDropdown).toBeInTheDocument();
+      await act(async () => {
+        userEvent.click(subfileInterestTypeDropdown);
+        userEvent.selectOptions(screen.getByTestId('subfileInterestTypeCode'), ['OTHER']);
+      });
+      await waitForEffects();
+
+      const otherSubfileInterestTextbox = getOtherSubfileInterestTypeTextbox();
+      expect(otherSubfileInterestTextbox).toBeInTheDocument();
+    });
+
+    it('should validate OTHER Subfile interest type max length', async () => {
+      const { findByText, getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox } =
+        setup({ initialValues, parentId, confirmBeforeAdd: vi.fn() });
+      const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
+
+      expect(subfileInterestTypeDropdown).toBeInTheDocument();
+      await act(async () => {
+        userEvent.click(subfileInterestTypeDropdown);
+        userEvent.selectOptions(screen.getByTestId('subfileInterestTypeCode'), ['OTHER']);
+      });
+      await waitForEffects();
+
+      const otherSubfileInterestTextbox = getOtherSubfileInterestTypeTextbox();
+      expect(otherSubfileInterestTextbox).toBeInTheDocument();
+
+      await act(async () => {
+        userEvent.paste(otherSubfileInterestTextbox, fakeText(201));
+        fireEvent.blur(otherSubfileInterestTextbox);
+      });
+      await waitForEffects();
+
+      expect(
+        await findByText(/Other Subfile interest description must be at most 200 characters/i),
+      ).toBeVisible();
     });
 
     it('should display interest representative input', async () => {

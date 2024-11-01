@@ -101,7 +101,7 @@ export const AccessRequestForm: React.FunctionComponent<
         <SectionField label="MoTI Region" labelWidth="2" required>
           <Select field="regionCodeId" options={selectRegions} placeholder="Select MoTI Region" />
         </SectionField>
-        <SectionField label="Notes" labelWidth="2">
+        <SectionField label="Comments" labelWidth="2">
           <TextArea
             field="note"
             placeholder="Please specify why you need access to PIMS and include your manager's name."

@@ -79,7 +79,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                         </SectionField>
                       </Col>
                     </Row>
-                    <SectionField label="Notes" contentWidth="12">
+                    <SectionField label="Comments" contentWidth="12">
                       <TextArea field={`${fieldName}.${index}.renewalNote`} />
                     </SectionField>
                   </Section>

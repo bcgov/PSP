@@ -439,7 +439,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                   <label
                     class="c6"
                   >
-                    Expropriation notes:
+                    Expropriation comments:
                   </label>
                 </div>
                 <div

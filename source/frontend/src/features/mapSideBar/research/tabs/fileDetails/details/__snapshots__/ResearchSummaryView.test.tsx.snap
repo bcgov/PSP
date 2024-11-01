@@ -355,7 +355,7 @@ exports[`ResearchSummaryView component > renders as expected when research file 
             <label
               class="c4"
             >
-              Expropriation notes:
+              Expropriation comments:
             </label>
           </div>
           <div

@@ -44,6 +44,16 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public DateOnly? DeliveryDate { get; set; }
 
         /// <summary>
+        /// Estimated date by which the acquisition would be completed.
+        /// </summary>
+        public DateOnly? EstimatedCompletionDate { get; set; }
+
+        /// <summary>
+        /// Date of possession following acquisition completion.
+        /// </summary>
+        public DateOnly? PossessionDate { get; set; }
+
+        /// <summary>
         /// get/set - The acquisition physical file status type.
         /// </summary>
         public CodeTypeModel<string> AcquisitionPhysFileStatusTypeCode { get; set; }
@@ -87,6 +97,16 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// get/set - The MOTI region that this acquisition file falls under.
         /// </summary>
         public CodeTypeModel<short> RegionCode { get; set; }
+
+        /// <summary>
+        /// get/set - The SubfileInterestTypeCode that this acquisition file falls under.
+        /// </summary>
+        public CodeTypeModel<string> SubfileInterestTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - Description wheb 'Other' SubfileInterestTypeCode.
+        /// </summary>
+        public string OtherSubfileInterestType { get; set; }
 
         /// <summary>
         /// get/set - List of Legacy Stakeholders.

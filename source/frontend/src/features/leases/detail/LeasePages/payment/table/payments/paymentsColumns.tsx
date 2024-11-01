@@ -190,15 +190,16 @@ export const getActualsColumns = ({
       Cell: renderTypeCode,
     },
     {
-      Header: 'Notes',
+      Header: 'Comments',
       maxWidth: 40,
       accessor: 'note',
       align: 'center',
       Cell: ({ row }: CellProps<FormLeasePayment, string | undefined>) => {
         return (
           <NotesModal<FormLeasePayment>
-            title="Payment Notes"
-            notesLabel="Notes:"
+            title="Payment Comments"
+            notesLabel="Comments:"
+            description="Payment comments"
             onSave={(values: FormLeasePayment) => {
               const valuesToSave = row.original;
               valuesToSave.note = values.note;

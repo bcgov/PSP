@@ -97,6 +97,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
                 digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[l]);
                 digitalDocumentsTab.SaveDigitalDocumentUpdate();
+
             }
 
             //Go back to 1st page

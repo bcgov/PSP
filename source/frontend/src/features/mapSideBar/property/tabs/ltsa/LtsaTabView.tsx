@@ -109,7 +109,7 @@ export const LtsaTabView: React.FunctionComponent<React.PropsWithChildren<ILtsaT
             <Section header="Transfers">
               <LtsaTransferSubForm nameSpace={titleNameSpace} />
             </Section>
-            <Section header="Notes">
+            <Section header="Title Notes">
               <SectionField label="Miscellaneous notes">
                 {getIn(ltsaData, 'parcelInfo.orderedProduct.fieldedData.miscellaneousNotes') ||
                   'None'}

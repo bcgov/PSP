@@ -2679,12 +2679,12 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 class="pb-2 row"
               >
                 <div
-                  class="pr-0 text-left col-2"
+                  class="pr-0 text-left col-3"
                 >
                   <label
                     class="c13"
                   >
-                    Lease notes:
+                    Lease comments:
                   </label>
                 </div>
                 <div
