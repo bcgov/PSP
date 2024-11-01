@@ -134,7 +134,6 @@ const fakeProperty: ApiGen_Concepts_Property = {
   pphStatusUpdateUserid: 'USER',
   isRwyBeltDomPatent: false,
   pphStatusTypeCode: 'Non-PPH',
-
   address: {
     ...getEmptyAddress(),
     id: 1,
@@ -231,6 +230,9 @@ describe('UpdatePropertyDetailsForm component', () => {
   it('shows property address if available', () => {
     const { container } = setup({ initialValues });
     const addressLine1 = container.querySelector(`input[name='address.streetAddress1']`);
+    const province = container.querySelector(`select[name='address.provinceStateId']`);
+
     expect(addressLine1).toHaveValue('45 - 904 Hollywood Crescent');
+    expect(province).toHaveValue('British Columbia');
   });
 });
