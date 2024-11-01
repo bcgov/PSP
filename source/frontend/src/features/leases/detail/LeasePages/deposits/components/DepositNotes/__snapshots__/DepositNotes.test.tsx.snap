@@ -40,7 +40,7 @@ exports[`DepositNotes component > renders as expected 1`] = `
           class="col"
         >
           <span>
-            Deposit Notes
+            Deposit Comments
           </span>
         </div>
         <div

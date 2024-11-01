@@ -1290,7 +1290,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 <label
                                   class="c33"
                                 >
-                                  Expropriation notes
+                                  Expropriation comments
                                   :
                                 </label>
                               </div>

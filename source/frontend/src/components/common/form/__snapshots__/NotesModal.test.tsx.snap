@@ -262,7 +262,7 @@ exports[`NotesModal component > renders as expected 1`] = `
 
 <button
     class="c0 Button c1 btn btn-primary"
-    title="notes"
+    title="test description"
     type="button"
   >
     <div

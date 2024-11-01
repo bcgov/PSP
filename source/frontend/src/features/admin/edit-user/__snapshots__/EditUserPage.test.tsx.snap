@@ -701,7 +701,7 @@ exports[`Edit user page > EditUserPage renders 1`] = `
               <label
                 class="c2"
               >
-                Notes:
+                Comments:
               </label>
             </div>
             <div
@@ -712,10 +712,10 @@ exports[`Edit user page > EditUserPage renders 1`] = `
               >
                 <textarea
                   class="form-control"
-                  data-testid="note"
+                  data-testid="comments"
                   id="input-note"
                   name="note"
-                  placeholder="A note about this user"
+                  placeholder="A comment about this user"
                   title=""
                   type="text"
                 />
