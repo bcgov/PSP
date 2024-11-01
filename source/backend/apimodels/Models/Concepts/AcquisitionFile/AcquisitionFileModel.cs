@@ -99,6 +99,16 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public CodeTypeModel<short> RegionCode { get; set; }
 
         /// <summary>
+        /// get/set - The SubfileInterestTypeCode that this acquisition file falls under.
+        /// </summary>
+        public CodeTypeModel<string> SubfileInterestTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - Description wheb 'Other' SubfileInterestTypeCode.
+        /// </summary>
+        public string OtherSubfileInterestType { get; set; }
+
+        /// <summary>
         /// get/set - List of Legacy Stakeholders.
         /// </summary>
         public IList<string> LegacyStakeholders { get; set; }
