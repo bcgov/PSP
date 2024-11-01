@@ -403,11 +403,19 @@ exports[`MapContainer > Renders the map 1`] = `
   align-items: center;
 }
 
+.c5.c5.btn:hover {
+  color: white;
+}
+
 .c6.c6.btn {
   background-color: #ffffff;
   color: #474543;
   width: 4rem;
   height: 4rem;
+}
+
+.c6.c6.btn:hover {
+  color: white;
 }
 
 .c1 {

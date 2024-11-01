@@ -22,6 +22,10 @@ const LegendButton = styled(Button as any)`
     display: flex;
     align-items: center;
   }
+
+  &&.btn:hover {
+    color: white;
+  }
 `;
 
 export const LegendControl: React.FC<React.PropsWithChildren<unknown>> = () => {
