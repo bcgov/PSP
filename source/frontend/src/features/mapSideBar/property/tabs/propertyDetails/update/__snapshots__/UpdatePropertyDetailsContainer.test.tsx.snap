@@ -634,7 +634,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
                   <option
                     value=""
                   >
-                    N/A
+                    Please Select
                   </option>
                   <option
                     class="option"
