@@ -255,7 +255,7 @@ describe('PaymentsView component', () => {
         initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: false,
       });
-      const notesButton = await findByTitle('notes');
+      const notesButton = await findByTitle('Payment comments');
       await act(async () => {
         userEvent.click(notesButton);
       });

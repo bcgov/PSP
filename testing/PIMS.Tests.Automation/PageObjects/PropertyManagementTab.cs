@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementAdditionalDetailsContent = By.XPath("//label[contains(text(),'Additional details')]/parent::div/following-sibling::div");
 
         //Create Summary Elements
-        private readonly By managementSummaryEditBttn = By.XPath("//div[contains(text(),'Summary')]/parent::div/parent::h2/following-sibling::div/div/button[@data-testid='edit-button']");
+        private readonly By managementSummaryEditBttn = By.CssSelector("button[title='Edit property management information']");
         private readonly By managementPropertyPurposeInput = By.Id("multiselect-managementPurposes_input");
         private readonly By managementPropertyPurposeOptions = By.XPath("//input[@id='multiselect-managementPurposes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private readonly By managementPropertyPurposeDeleteBttns = By.CssSelector("div[id='multiselect-managementPurposes'] i[class='custom-close']");
@@ -111,7 +111,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActInvoiceGrandTotalContent = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]/parent::div/following-sibling::div");
 
         //Invoices View Element
-        private readonly By managementAddInvoiceBttn = By.XPath("//div[contains(text(),'Invoices Total')]/parent::div/parent::h2/parent::div/preceding-sibling::div/div/button");
+        private readonly By managementAddInvoiceBttn = By.XPath("//div[contains(text(),'Invoices Total')]/following-sibling::div/button");
         private readonly By managementInvoicesTotalSubtitle = By.XPath("//div[contains(text(),'Invoices Total')]");
         private readonly By managementActPretaxAmountLabel = By.XPath("//label[contains(text(),'Total (before tax)')]");
         private readonly By managementActPretaxAmountInput = By.Id("input-pretaxAmount");

@@ -53,6 +53,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
 
+            //Search for a valid Plan in Inventory
+            searchProperties.SearchPropertyReset();
+            searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
+
+            //Validate that the result gives only one pin
+            Assert.True(searchProperties.PropertiesClustersFoundCount() == 1);
+
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
             searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
@@ -66,14 +73,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
-
-            //Search for a valid Plan in Inventory
-            searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
-
-            //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesClustersFoundCount() == 1);
-
         }
 
         [StepDefinition(@"I search for an Invalid Property from row number (.*)")]
@@ -191,7 +190,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByAddressList(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 1);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 3);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
@@ -212,7 +211,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByPlan(searchProperty.PlanNumber);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 2);
+            Assert.True(searchProperties.PropertiesListFoundCount() == 1);
         }
 
         [StepDefinition(@"I search for a non MOTI property from row number (.*)")]

@@ -59,7 +59,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By productDeleteButton = By.CssSelector("button[title='Delete Project']");
 
         //View Project Form Elements
-        private By projectViewTitle = By.XPath("//h1[contains(text(),'Project')]");
+        private By projectViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Project')]");
         private By projectHeaderProjectNameLabel = By.XPath("//h1[contains(text(),'Project')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div/label[contains(text(),'Project')]");
         private By projectHeaderProjectNameContent = By.XPath("//h1[contains(text(),'Project')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div/label[contains(text(),'Project')]/parent::div/following-sibling::div");
         private By projectHeaderMoTIRegionLabel = By.XPath("//label[contains(text(),'MoTI region')]");

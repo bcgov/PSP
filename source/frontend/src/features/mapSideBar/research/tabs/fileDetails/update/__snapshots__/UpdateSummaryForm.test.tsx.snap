@@ -1294,7 +1294,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             <label
               class="c3"
             >
-              Expropriation notes:
+              Expropriation comments:
             </label>
           </div>
           <div

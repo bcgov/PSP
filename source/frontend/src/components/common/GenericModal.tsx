@@ -12,6 +12,7 @@ import { FaExclamationCircle, FaTimesCircle, FaWindowClose } from 'react-icons/f
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons/Button';
+import { exists } from '@/utils';
 
 export enum ModalSize {
   XLARGE = 'modal-xl',
@@ -93,6 +94,8 @@ export interface ModalContent {
   hideFooter?: boolean;
   /** optional override to make the modal draggable. Defaults to false. */
   draggable?: boolean;
+  /** Optional error message to display in the footer - no default. */
+  errorMessage?: string | React.ReactNode;
 }
 
 export type ModalProps = ModalVisibleState & ModalContent;
@@ -121,6 +124,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     className,
     headerIcon,
     draggable,
+    errorMessage,
     ...rest
   } = props;
   const [show, setShow] = useState(true);
@@ -228,15 +232,19 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       {!hideFooter && (
         <Modal.Footer>
           <div className="button-wrap">
+            {exists(errorMessage) && <>{errorMessage}</>}
             {cancelButtonText && (
-              <Button
-                title="cancel-modal"
-                variant={cancelButtonVariant ?? 'secondary'}
-                onClick={close}
-                data-testid="cancel-modal-button"
-              >
-                {cancelButtonText}
-              </Button>
+              <>
+                <Spacing24 />
+                <Button
+                  title="cancel-modal"
+                  variant={cancelButtonVariant ?? 'secondary'}
+                  onClick={close}
+                  data-testid="cancel-modal-button"
+                >
+                  {cancelButtonText}
+                </Button>
+              </>
             )}
             <Spacing24 />
             <Button
@@ -292,7 +300,7 @@ const Spacing8 = styled.span`
 `;
 
 const Spacing24 = styled.span`
-  width: 2.4rem;
+  min-width: 2.4rem;
 `;
 
 const Spacer = styled.hr`
@@ -361,6 +369,8 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
       margin: 0px;
       padding: 0px;
       display: inline-flex;
+      justify-content: flex-end;
+      align-items: center;
       .Button {
         min-width: 9.5rem;
         height: 3.9rem;

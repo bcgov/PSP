@@ -10,7 +10,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, getByName, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
@@ -141,6 +141,8 @@ describe('AddAcquisitionContainer component', () => {
         utils.container.querySelector(`select[name="acquisitionType"]`) as HTMLSelectElement,
       getFundingTypeDropdown: () =>
         utils.container.querySelector(`select[name="fundingTypeCode"]`) as HTMLSelectElement,
+      getSubfileInterestTypeDropdown: () =>
+        utils.container.querySelector(`select[name="subfileInterestTypeCode"]`) as HTMLSelectElement,
       getFundingOtherTextbox: () =>
         utils.container.querySelector(
           `input[name="fundingTypeOtherDescription"]`,
@@ -203,7 +205,7 @@ describe('AddAcquisitionContainer component', () => {
   });
 
   it('renders the underlying form', async () => {
-    const { getByText, getNameTextbox, getRegionDropdown } = await setup();
+    const { getByText, getNameTextbox, getRegionDropdown, getSubfileInterestTypeDropdown } = await setup();
 
     const formTitle = getByText(/Create Acquisition File/i);
     const input = getNameTextbox();
@@ -214,6 +216,7 @@ describe('AddAcquisitionContainer component', () => {
     expect(input.tagName).toBe('INPUT');
     expect(select).toBeVisible();
     expect(select.tagName).toBe('SELECT');
+    expect(getSubfileInterestTypeDropdown()).not.toBeInTheDocument();
   });
 
   it('should close the form when Cancel button is clicked', async () => {
@@ -421,6 +424,8 @@ describe('AddAcquisitionContainer component', () => {
         const apiResponse = mockAcquisitionFileResponse(99, 'TEST Main File');
         const parentFile: ApiGen_Concepts_AcquisitionFile = {
           ...apiResponse,
+          estimatedCompletionDate: '2024-11-01',
+          possessionDate: '2024-12-20',
           project: {
             ...apiResponse.project,
             code: '999',
@@ -480,6 +485,11 @@ describe('AddAcquisitionContainer component', () => {
       // acquisition team is copied as well
       expect(await screen.findByText('Bob Billy Smith')).toBeVisible();
       expect(await screen.findByText('Stinky Cheese')).toBeVisible();
+      // acquisition-related dates are copied too
+      const estimatedDatePicker = getByName('estimatedCompletionDate');
+      const possessionDatePicker = getByName('possessionDate');
+      expect(estimatedDatePicker).toHaveValue('Nov 01, 2024');
+      expect(possessionDatePicker).toHaveValue('Dec 20, 2024');
     });
 
     it('should go back to main file "Sub-Files" tab the when Cancel button is clicked for Sub-files', async () => {

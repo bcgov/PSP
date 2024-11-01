@@ -19,11 +19,13 @@ import { InterestHolderForm } from '../tabs/stakeholders/update/models';
 
 export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwners {
   id?: number;
-  parentAcquisitionFileId?: number;
+  parentAcquisitionFileId: number | null = null;
   fileName?: string = '';
   legacyFileNumber?: string = '';
   assignedDate?: string = '';
   deliveryDate?: string = '';
+  estimatedCompletionDate?: string = '';
+  possessionDate?: string = '';
   rowVersion?: number;
   // Code Tables
   acquisitionFileStatusType?: string = '';
@@ -35,6 +37,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   team: AcquisitionTeamFormModel[] = [];
   owners: AcquisitionOwnerFormModel[] = [];
   fileCheckList: ChecklistItemFormModel[] = [];
+
+  subfileInterestTypeCode: string | null = null;
+  otherSubfileInterestType: string | null = null;
 
   project?: IAutocompletePrediction;
   product = '';
@@ -59,6 +64,10 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       fileName: this.fileName ?? null,
       assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
       deliveryDate: isValidIsoDateTime(this.deliveryDate) ? this.deliveryDate : null,
+      estimatedCompletionDate: isValidIsoDateTime(this.estimatedCompletionDate)
+        ? this.estimatedCompletionDate
+        : null,
+      possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
       totalAllowableCompensation: stringToNumberOrNull(this.totalAllowableCompensation),
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileStatusTypeCode: toTypeCodeNullable(this.acquisitionFileStatusType),
@@ -69,6 +78,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       productId: this.product !== '' ? Number(this.product) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
+      subfileInterestTypeCode: toTypeCodeNullable(this.subfileInterestTypeCode),
+      otherSubfileInterestType: this.otherSubfileInterestType,
       // ACQ file properties
       fileProperties: this.properties.map(x => this.toPropertyApi(x)),
       acquisitionFileOwners: this.owners
@@ -131,6 +142,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     // schedule
     newForm.assignedDate = parentFile.assignedDate ?? undefined;
     newForm.deliveryDate = parentFile.deliveryDate ?? undefined;
+    newForm.estimatedCompletionDate = parentFile.estimatedCompletionDate ?? undefined;
+    newForm.possessionDate = parentFile.possessionDate ?? undefined;
     // acquisition details
     newForm.fileName = '';
     newForm.legacyFileNumber = parentFile.legacyFileNumber ?? undefined;
@@ -157,6 +170,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.rowVersion = model.rowVersion ?? undefined;
     newForm.assignedDate = model.assignedDate ?? undefined;
     newForm.deliveryDate = model.deliveryDate ?? undefined;
+    newForm.estimatedCompletionDate = model.estimatedCompletionDate ?? undefined;
+    newForm.possessionDate = model.possessionDate ?? undefined;
     newForm.totalAllowableCompensation = model.totalAllowableCompensation || '';
     newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;
     newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode) ?? undefined;
@@ -172,6 +187,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.project = exists(model.project)
       ? { id: model.project.id || 0, text: model.project.description || '' }
       : undefined;
+    newForm.subfileInterestTypeCode = fromTypeCode(model.subfileInterestTypeCode);
+    newForm.otherSubfileInterestType = model.otherSubfileInterestType;
 
     const interestHolders = model.acquisitionFileInterestHolders?.map(x =>
       InterestHolderForm.fromApi(x, x.interestHolderType?.id as InterestHolderType),
