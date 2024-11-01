@@ -48,10 +48,10 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 }
 
 .c3.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -191,6 +191,8 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 .c3.btn:disabled,
 .c3.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -198,7 +200,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c3.Button .Button__icon {
@@ -2441,10 +2442,10 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 }
 
 .c3.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -2584,6 +2585,8 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c3.btn:disabled,
 .c3.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -2591,7 +2594,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c3.Button .Button__icon {
