@@ -45,6 +45,7 @@ const StyledTabs = styled(BsTabs)`
       border-color: transparent;
       text-decoration: underline;
       border-radius: 0.4rem;
+      font-family: 'BCSans-Bold';
     }
     &.active {
       border-radius: 0.4rem;
