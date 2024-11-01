@@ -4,6 +4,7 @@ import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
+import { LinkButton } from '@/components/common/buttons/LinkButton';
 import EditButton from '@/components/common/EditButton';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants/index';
@@ -43,6 +44,7 @@ const AcquisitionMenu: React.FunctionComponent<
     <>
       <StyledMenuWrapper>
         {props.items.map((label: string, index: number) => {
+          const activeIndex = props.selectedIndex === index;
           if (index === 0) {
             return (
               <StyledRow
@@ -50,10 +52,12 @@ const AcquisitionMenu: React.FunctionComponent<
                 data-testid={`menu-item-row-${index}`}
                 className={cx('no-gutters', { selected: props.selectedIndex === index })}
               >
-                <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
-                <Col onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}>
-                  {label}
-                </Col>
+                {activeIndex && <Col>{label}</Col>}
+                {!activeIndex && (
+                  <Col>
+                    <LinkButton onClick={() => handleClick(index)}>{label}</LinkButton>
+                  </Col>
+                )}
                 <StyledMenuHeaderWrapper>
                   <StyledMenuHeader>Properties</StyledMenuHeader>
                   {hasClaim(Claims.ACQUISITION_EDIT) && canEditDetails() && (
@@ -86,7 +90,12 @@ const AcquisitionMenu: React.FunctionComponent<
                     {index}
                   </StyledIconWrapper>
                 </Col>
-                <Col>{label}</Col>
+                {activeIndex && <Col>{label}</Col>}
+                {!activeIndex && (
+                  <Col>
+                    <LinkButton>{label}</LinkButton>
+                  </Col>
+                )}
               </StyledRow>
             );
           }
@@ -118,9 +127,14 @@ const StyledRow = styled(Row)`
     cursor: default;
   }
 
+  font-size: 1.4rem;
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
+
+  div.Button__value {
+    font-size: 1.4rem;
+  }
 `;
 
 const StyledIconWrapper = styled.div`
@@ -149,7 +163,8 @@ const StyledMenuHeaderWrapper = styled.div`
 `;
 
 const StyledMenuHeader = styled.span`
-  font-size: 1.4rem;
-  color: ${props => props.theme.css.themeGray70};
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: ${props => props.theme.bcTokens.iconsColorSecondary};
   line-height: 2.2rem;
 `;
