@@ -174,7 +174,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           <Select
             field="address.provinceStateId"
             options={provinceOptions}
-            placeholder={values.address?.provinceStateId ? undefined : 'Please Select'}
+            placeholder={values.address?.provinceStateId === null ? undefined : 'Please Select'}
           />
         </SectionField>
         <SectionField label="Postal code">
