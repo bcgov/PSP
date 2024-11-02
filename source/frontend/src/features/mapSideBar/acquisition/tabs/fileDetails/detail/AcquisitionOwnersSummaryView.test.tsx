@@ -50,12 +50,19 @@ describe('Acquisition File Owners View component', () => {
     vi.resetAllMocks();
   });
 
-  it('Renders Component as expected', () => {
+  it('renders as expected', () => {
     const { asFragment } = setup({});
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('Display the Person Owner data', () => {
+  it('renders a spinner while loading', async () => {
+    const { getByTestId } = setup({ props: { isLoading: true } });
+
+    const spinner = getByTestId('filter-backdrop-loading');
+    expect(spinner).toBeVisible();
+  });
+
+  it('displays the Person Owner data', () => {
     const { getByText, getIsPrymaryContactRadioButton, findAllByDisplayValue } = setup({
       props: { ownersList: [ownerIndividual], isLoading: false },
     });
@@ -68,7 +75,7 @@ describe('Acquisition File Owners View component', () => {
     expect(findAllByDisplayValue('North Podunk, British Columbia, IH8 B0B')).not.toBeNull();
   });
 
-  it('Display the Organization Owner data with Incorporation and Registration Number', () => {
+  it('displays the Organization Owner data with Incorporation and Registration Number', () => {
     const { getByText, getIsPrymaryContactRadioButton } = setup({
       props: { ownersList: [ownerCorporate], isLoading: false },
     });
@@ -83,7 +90,7 @@ describe('Acquisition File Owners View component', () => {
     ).toBeVisible();
   });
 
-  it('Display the Organization Owner data with Incorporation and NO Registration Number', () => {
+  it('displays the Organization Owner data with Incorporation and NO Registration Number', () => {
     const ownerTest = {
       ...ownerCorporate,
       registrationNumber: null,
@@ -103,7 +110,7 @@ describe('Acquisition File Owners View component', () => {
     expect(getByText('775-111-1111')).toBeVisible();
   });
 
-  it('Display the Organization Owner data with NO Incorporation and Registration Number', () => {
+  it('displays the Organization Owner data with NO Incorporation and Registration Number', () => {
     const ownerTest = {
       ...ownerCorporate,
       incorporationNumber: null,
