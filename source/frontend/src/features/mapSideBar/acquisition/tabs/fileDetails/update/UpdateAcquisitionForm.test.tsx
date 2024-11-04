@@ -8,7 +8,17 @@ import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor, screen, waitForEffects, fakeText, fireEvent } from '@/utils/test-utils';
+import {
+  act,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+  screen,
+  waitForEffects,
+  fakeText,
+  fireEvent,
+} from '@/utils/test-utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
@@ -107,12 +117,12 @@ describe('UpdateAcquisitionForm component', () => {
         utils.container.querySelector(
           `div[data-testid="typeahead-project"] button`,
         ) as HTMLSelectElement,
-        getSubfileInterestTypeDropdown: () =>
-          utils.container.querySelector(
-            `select[name="subfileInterestTypeCode"]`,
-          ) as HTMLSelectElement,
-        getOtherSubfileInterestTypeTextbox: () =>
-          utils.container.querySelector(`input[name="otherSubfileInterestType"]`) as HTMLInputElement,
+      getSubfileInterestTypeDropdown: () =>
+        utils.container.querySelector(
+          `select[name="subfileInterestTypeCode"]`,
+        ) as HTMLSelectElement,
+      getOtherSubfileInterestTypeTextbox: () =>
+        utils.container.querySelector(`input[name="otherSubfileInterestType"]`) as HTMLInputElement,
     };
   };
 
@@ -264,17 +274,18 @@ describe('UpdateAcquisitionForm component', () => {
       expect(asFragment()).toMatchSnapshot();
     });
 
-    it('should display Subfile interest type SELECT', async () => {
+    it('should display sub file interest type SELECT', async () => {
       const { getSubfileInterestTypeDropdown } = setup({
         initialValues,
       });
       expect(getSubfileInterestTypeDropdown()).toBeInTheDocument();
     });
 
-    it('should display OTHER Subfile interest type', async () => {
-      const { getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox, getByTestId } = setup({
-        initialValues,
-      });
+    it('should display OTHER sub file interest type', async () => {
+      const { getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox, getByTestId } =
+        setup({
+          initialValues,
+        });
       const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
 
       expect(subfileInterestTypeDropdown).toBeInTheDocument();
@@ -288,7 +299,7 @@ describe('UpdateAcquisitionForm component', () => {
       expect(otherSubfileInterestTextbox).toBeInTheDocument();
     });
 
-    it('should validate OTHER Subfile interest type max length', async () => {
+    it('should validate OTHER sub file interest type max length', async () => {
       const { findByText, getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox } =
         setup({ initialValues });
       const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
@@ -312,6 +323,20 @@ describe('UpdateAcquisitionForm component', () => {
       expect(
         await findByText(/Other Subfile interest description must be at most 200 characters/i),
       ).toBeVisible();
+    });
+
+    it('renders sub-interest information section', async () => {
+      const { getByText } = setup({ initialValues });
+      await waitForEffects();
+
+      expect(
+        getByText(
+          'Each property in this sub-file should be impacted by the sub-interest(s) in this section',
+        ),
+      ).toBeVisible();
+      expect(getByText('+ Add Sub-interest')).toBeVisible();
+      expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
+      expect(getByText(/Sub-interest representative/i)).toBeVisible();
     });
   });
 });

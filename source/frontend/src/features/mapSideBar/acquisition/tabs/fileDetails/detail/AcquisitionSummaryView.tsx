@@ -7,6 +7,7 @@ import EditButton from '@/components/common/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { StyledSectionParagraph } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
@@ -169,7 +170,16 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           </React.Fragment>
         ))}
       </Section>
-      <Section header="Owner Information">
+      <Section header={detail.isSubFile ? 'Sub-Interest Information' : 'Owner Information'}>
+        {detail.isSubFile ? (
+          <StyledSectionParagraph>
+            Each property in this sub-file should be impacted by the sub-interest(s) in this section
+          </StyledSectionParagraph>
+        ) : (
+          <StyledSectionParagraph>
+            Each property in this file should be owned by the owner(s) in this section
+          </StyledSectionParagraph>
+        )}
         {acquisitionFile?.id !== undefined && (
           <AcquisitionOwnersSummaryContainer
             acquisitionFileId={acquisitionFile.id}
@@ -177,7 +187,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           ></AcquisitionOwnersSummaryContainer>
         )}
         {!!ownerSolicitor && (
-          <SectionField label="Owner solicitor">
+          <SectionField label={detail.isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}>
             <StyledLink
               target="_blank"
               rel="noopener noreferrer"
@@ -214,7 +224,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         )}
         {!!ownerRepresentative && (
           <>
-            <SectionField label="Owner representative">
+            <SectionField
+              label={detail.isSubFile ? 'Sub-interest representative' : 'Owner representative'}
+            >
               <StyledLink
                 target="_blank"
                 rel="noopener noreferrer"

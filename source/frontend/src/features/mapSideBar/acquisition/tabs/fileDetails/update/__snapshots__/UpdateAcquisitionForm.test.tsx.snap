@@ -1867,7 +1867,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           <div
             class="col"
           >
-            Owners
+            Sub-Interest
           </div>
         </div>
       </h2>
@@ -1877,7 +1877,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
         <p
           class="c11"
         >
-          Each property in this file should be owned by the owner(s) in this section
+          Each property in this sub-file should be impacted by the sub-interest(s) in this section
         </p>
         <div
           class="py-3 row"
@@ -1920,7 +1920,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                   <span
                     class="text"
                   >
-                    Remove Owner
+                    Remove Sub-interest
                   </span>
                 </div>
               </button>
@@ -1934,7 +1934,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                 <label
                   class="c2"
                 >
-                  Is this owner an individual / corporation ?:
+                  Is this sub-interest an individual / corporation ?:
                 </label>
               </div>
               <div
@@ -2659,7 +2659,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                   <span
                     class="text"
                   >
-                    Remove Owner
+                    Remove Sub-interest
                   </span>
                 </div>
               </button>
@@ -2673,7 +2673,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                 <label
                   class="c2"
                 >
-                  Is this owner an individual / corporation ?:
+                  Is this sub-interest an individual / corporation ?:
                 </label>
               </div>
               <div
@@ -3414,7 +3414,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           <div
             class="Button__value"
           >
-            + Add owner
+            + Add Sub-interest
           </div>
         </button>
         <div />
@@ -3427,7 +3427,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
             <label
               class="c2"
             >
-              Owner solicitor:
+              Sub-interest solicitor:
             </label>
           </div>
           <div
@@ -3546,7 +3546,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
             <label
               class="c2"
             >
-              Owner representative:
+              Sub-interest representative:
             </label>
           </div>
           <div
