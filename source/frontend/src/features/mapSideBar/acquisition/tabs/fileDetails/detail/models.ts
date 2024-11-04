@@ -22,7 +22,7 @@ export class DetailAcquisitionFile {
     const detail = new DetailAcquisitionFile();
 
     detail.isSubFile =
-      exists(model.parentAcquisitionFileId) && isValidId(model.parentAcquisitionFileId);
+      exists(model?.parentAcquisitionFileId) && isValidId(model?.parentAcquisitionFileId);
     detail.fileName = model?.fileName ?? undefined;
     detail.legacyFileNumber = model?.legacyFileNumber ?? undefined;
     detail.assignedDate = model?.assignedDate ?? undefined;
@@ -34,8 +34,8 @@ export class DetailAcquisitionFile {
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;
 
     if (detail.isSubFile) {
-      detail.subfileInterestTypeDescription = model.subfileInterestTypeCode?.description ?? '';
-      detail.otherSubfileInterestTypeDescription = model.otherSubfileInterestType ?? '';
+      detail.subfileInterestTypeDescription = model?.subfileInterestTypeCode?.description ?? '';
+      detail.otherSubfileInterestTypeDescription = model?.otherSubfileInterestType ?? '';
     }
     detail.regionDescription = model?.regionCode?.description ?? undefined;
     detail.acquisitionTeam =
