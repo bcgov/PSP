@@ -107,6 +107,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         isEditing={isEditing}
         formikRef={formikRef}
         onSuccess={onSuccess}
+        refreshLease={refreshLease}
       />
     ),
     key: stakeholderPageName,
