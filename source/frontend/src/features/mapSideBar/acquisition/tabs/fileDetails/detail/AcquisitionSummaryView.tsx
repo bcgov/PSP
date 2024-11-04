@@ -127,11 +127,6 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
             {detail.subfileInterestTypeDescription}
           </SectionField>
         )}
-        {detail.isSubFile && detail.otherSubfileInterestTypeDescription && (
-          <SectionField label="" valueTestId="other-subFile-interest-type">
-            {detail.otherSubfileInterestTypeDescription}
-          </SectionField>
-        )}
         <SectionField label="Ministry region">{detail.regionDescription}</SectionField>
       </Section>
       <Section header="Acquisition Team">
