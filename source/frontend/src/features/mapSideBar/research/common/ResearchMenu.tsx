@@ -39,8 +39,9 @@ const ResearchMenu: React.FunctionComponent<
                   {index}
                 </StyledIconWrapper>
               </Col>
-              {props.selectedIndex === index && <Col>{label}</Col>}
-              {props.selectedIndex !== index && (
+              {props.selectedIndex === index ? (
+                <Col>{label}</Col>
+              ) : (
                 <Col>
                   <LinkButton onClick={() => handleClick(index)}>{label}</LinkButton>
                 </Col>
@@ -50,8 +51,9 @@ const ResearchMenu: React.FunctionComponent<
 
           {index === 0 && (
             <>
-              {props.selectedIndex === index && <Col>{label}</Col>}
-              {props.selectedIndex !== index && (
+              {props.selectedIndex === index ? (
+                <Col>{label}</Col>
+              ) : (
                 <Col>
                   <LinkButton onClick={() => handleClick(index)}>{label}</LinkButton>
                 </Col>

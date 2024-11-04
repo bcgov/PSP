@@ -49,8 +49,9 @@ const DispositionMenu: React.FunctionComponent<
                 data-testid={`menu-item-row-${index}`}
                 className={cx('no-gutters', { selected: props.selectedIndex === index })}
               >
-                {activeIndex && <Col>{label}</Col>}
-                {!activeIndex && (
+                {activeIndex ? (
+                  <Col>{label}</Col>
+                ) : (
                   <Col>
                     <LinkButton onClick={() => handleClick(index)}>{label}</LinkButton>
                   </Col>
@@ -87,8 +88,9 @@ const DispositionMenu: React.FunctionComponent<
                     {index}
                   </StyledIconWrapper>
                 </Col>
-                {activeIndex && <Col>{label}</Col>}
-                {!activeIndex && (
+                {activeIndex ? (
+                  <Col>{label}</Col>
+                ) : (
                   <Col>
                     <LinkButton>{label}</LinkButton>
                   </Col>
