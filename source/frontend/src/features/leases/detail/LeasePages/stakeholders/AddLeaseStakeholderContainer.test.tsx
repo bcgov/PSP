@@ -41,6 +41,7 @@ const getPersonConcept = vi.fn();
 const updateTenants = vi.fn().mockResolvedValue({ ...defaultApiLease(), id: 1 });
 const onEdit = vi.fn();
 const onSuccess = vi.fn();
+const refreshLease = vi.fn();
 
 const history = createMemoryHistory();
 const storeState = {
@@ -88,6 +89,7 @@ describe('AddLeaseTenantContainer component', () => {
           onEdit={onEdit}
           stakeholders={renderOptions.tenants ?? []}
           onSuccess={onSuccess}
+          refreshLease={refreshLease}
           isPayableLease={false}
         >
           <SaveButton />
@@ -253,6 +255,7 @@ describe('AddLeaseTenantContainer component', () => {
     await waitFor(() => {
       expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(onEdit).toHaveBeenCalledWith(false);
+      expect(refreshLease).toHaveBeenCalled();
     });
   });
 
@@ -266,6 +269,7 @@ describe('AddLeaseTenantContainer component', () => {
     await waitFor(async () => {
       expect(updateTenants).toHaveBeenCalledTimes(1);
       expect(onEdit).toHaveBeenCalledWith(false);
+      expect(refreshLease).toHaveBeenCalled();
       expect(updateTenants.mock.calls[0][1][0]).toStrictEqual<ApiGen_Concepts_LeaseStakeholder>({
         personId: 1,
         person: null,
