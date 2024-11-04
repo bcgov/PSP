@@ -166,6 +166,10 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
           if (axiosError?.response?.status === 409) {
             toast.error(axiosError?.response.data.error);
             formikRef?.current?.resetForm();
+            setStakeholders(initialStakeholders ?? []);
+            setSelectedContacts(
+              initialStakeholders?.map(t => FormStakeholder.toContactSearchResult(t)) ?? [],
+            );
           } else {
             if (axiosError.response?.status === 400) {
               toast.error(axiosError.response.data.error);
