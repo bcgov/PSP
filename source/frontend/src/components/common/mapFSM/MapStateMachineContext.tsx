@@ -46,6 +46,7 @@ export interface IMapStateMachineContext {
   showDisposed: boolean;
   showRetired: boolean;
   activeLayers: ILayerItem[];
+  mapLayersToRefresh: ILayerItem[];
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -74,6 +75,7 @@ export interface IMapStateMachineContext {
   toggleMapLayerControl: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
+  setMapLayersToRefresh: (layers: ILayerItem[]) => void;
   setDefaultMapLayers: (layers: ILayerItem[]) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
@@ -299,6 +301,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setMapLayersToRefresh = useCallback(
+    (refreshLayers: ILayerItem[]) => {
+      serviceSend({ type: 'SET_REFRESH_MAP_LAYERS', refreshLayers });
+    },
+    [serviceSend],
+  );
+
   const setDefaultMapLayers = useCallback(
     (activeLayers: ILayerItem[]) => {
       serviceSend({ type: 'DEFAULT_MAP_LAYERS', activeLayers });
@@ -397,6 +406,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
         showRetired: state.context.showRetired,
+        mapLayersToRefresh: state.context.mapLayersToRefresh,
 
         setMapSearchCriteria,
         refreshMapProperties,
@@ -422,6 +432,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setShowDisposed,
         setShowRetired,
         setMapLayers,
+        setMapLayersToRefresh,
         setDefaultMapLayers,
         setFullWidthSideBar,
         resetMapFilter,

@@ -2,6 +2,7 @@ import { latLngBounds } from 'leaflet';
 import { assign, createMachine, raise, send } from 'xstate';
 
 import { defaultBounds } from '@/components/maps/constants';
+import { PIMS_PROPERTY_BOUNDARY_KEY } from '@/components/maps/leaflet/Control/LayersControl/data';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
 import { emptyFeatureData } from '../models';
@@ -97,6 +98,7 @@ const featureDataLoaderStates = {
                 isLoading: () => false,
                 mapFeatureData: (_, event: any) => event.data,
                 fitToResultsAfterLoading: () => false,
+                mapLayersToRefresh: () => [{ key: PIMS_PROPERTY_BOUNDARY_KEY }],
               }),
               raise('REQUEST_FIT_BOUNDS'),
             ],
@@ -108,6 +110,7 @@ const featureDataLoaderStates = {
                 isLoading: () => false,
                 mapFeatureData: (_, event: any) => event.data,
                 fitToResultsAfterLoading: () => false,
+                mapLayersToRefresh: () => [{ key: PIMS_PROPERTY_BOUNDARY_KEY }],
               }),
             ],
             target: 'idle',
@@ -437,6 +440,7 @@ export const mapMachine = createMachine<MachineContext>({
     showDisposed: false,
     showRetired: false,
     activeLayers: [],
+    mapLayersToRefresh: [],
   },
 
   // State definitions

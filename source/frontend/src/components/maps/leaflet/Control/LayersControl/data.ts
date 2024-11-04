@@ -2,6 +2,8 @@ import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from '@/constants/strings';
 
 import { ILayerItem } from './types';
 
+export const PIMS_PROPERTY_BOUNDARY_KEY = 'pims_properties';
+
 export const layersTree: ILayerItem[] = [
   {
     key: 'Administrative Boundaries',
@@ -357,7 +359,7 @@ export const layersTree: ILayerItem[] = [
     on: false,
     nodes: [
       {
-        key: 'pims_properties',
+        key: 'PIMS_PROPERTY_BOUNDARY_KEY',
         label: 'Property Boundaries',
         on: true,
         layers: 'psp:PIMS_PROPERTY_BOUNDARY_VW',
