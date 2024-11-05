@@ -9,11 +9,9 @@ import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { act, cleanup, findAllByTestId, findByTestId, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
+import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
-import { vi } from 'vitest';
-import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 
 // mock auth library
 
@@ -93,11 +91,7 @@ describe('AcquisitionSummaryView component', () => {
 
   it('does not render the edit button for users that do not have acquisition edit permissions', async () => {
     const { queryByTitle } = setup(
-      {
-        acquisitionFile: {
-          ...mockAcquisitionFileResponse(),
-        },
-      },
+      { acquisitionFile: mockAcquisitionFileResponse() },
       { claims: [] },
     );
     await waitForEffects();
@@ -122,46 +116,8 @@ describe('AcquisitionSummaryView component', () => {
     expect(editWarningText).toBeVisible();
   });
 
-  it('renders sub file interest type', async () => {
-    const mockResponse: ApiGen_Concepts_AcquisitionFile = {
-      ...mockAcquisitionFileResponse(),
-      parentAcquisitionFileId: 100,
-      subfileInterestTypeCode: {
-        id: 'SUBTENANT',
-        description: 'Sub-Tenant / Lease',
-        isDisabled: false,
-        displayOrder: 8,
-      },
-      otherSubfileInterestType: null,
-    };
-    const { getByTestId } = setup({ acquisitionFile: mockResponse }, { claims: [] });
-    await waitForEffects();
-
-    expect(getByTestId('subFile-interest-type')).toHaveTextContent('Sub-Tenant / Lease');
-  });
-
-  it('renders OTHER sub file interest type', async () => {
-    const mockResponse: ApiGen_Concepts_AcquisitionFile = {
-      ...mockAcquisitionFileResponse(),
-      parentAcquisitionFileId: 100,
-      subfileInterestTypeCode: {
-        id: 'OTHER',
-        description: 'Other',
-        isDisabled: false,
-        displayOrder: 8,
-      },
-      otherSubfileInterestType: 'SOME OTHER VALUE',
-    };
-    const { getByTestId } = setup({ acquisitionFile: mockResponse }, { claims: [] });
-    await waitForEffects();
-
-    expect(getByTestId('subFile-interest-type')).toHaveTextContent('Other');
-    expect(getByTestId('other-subFile-interest-type')).toHaveTextContent('SOME OTHER VALUE');
-  });
-
   it('renders historical file number', async () => {
-    const mockResponse = mockAcquisitionFileResponse();
-    const { getByText } = setup({ acquisitionFile: mockResponse }, { claims: [] });
+    const { getByText } = setup({ acquisitionFile: mockAcquisitionFileResponse() }, { claims: [] });
     await waitForEffects();
     expect(getByText('legacy file number')).toBeVisible();
   });
@@ -200,11 +156,10 @@ describe('AcquisitionSummaryView component', () => {
   });
 
   it('renders acquisition team member person', async () => {
-    const apiMock = mockAcquisitionFileResponse();
     const { findByText } = setup(
       {
         acquisitionFile: {
-          ...apiMock,
+          ...mockAcquisitionFileResponse(),
           acquisitionTeam: [
             {
               id: 1,
@@ -245,11 +200,10 @@ describe('AcquisitionSummaryView component', () => {
   });
 
   it('renders acquisition team member organization', async () => {
-    const apiMock = mockAcquisitionFileResponse();
     const { findByText } = setup(
       {
         acquisitionFile: {
-          ...apiMock,
+          ...mockAcquisitionFileResponse(),
           acquisitionTeam: [
             {
               id: 1,
@@ -289,11 +243,10 @@ describe('AcquisitionSummaryView component', () => {
   });
 
   it('renders acquisition team member organization and primary contact', async () => {
-    const apiMock = mockAcquisitionFileResponse();
     const { findByText } = setup(
       {
         acquisitionFile: {
-          ...apiMock,
+          ...mockAcquisitionFileResponse(),
           acquisitionFileInterestHolders: [],
           acquisitionTeam: [
             {
@@ -344,5 +297,80 @@ describe('AcquisitionSummaryView component', () => {
     expect(await findByText(/Test Organization/)).toBeVisible();
     expect(await findByText(/Primary contact/)).toBeVisible();
     expect(await findByText(/Bob Billy Smith/)).toBeVisible();
+  });
+
+  describe('Sub-interest files', () => {
+    it('renders sub file interest type', async () => {
+      const { getByTestId } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            parentAcquisitionFileId: 100,
+            subfileInterestTypeCode: {
+              id: 'SUBTENANT',
+              description: 'Sub-Tenant / Lease',
+              isDisabled: false,
+              displayOrder: 8,
+            },
+            otherSubfileInterestType: null,
+          },
+        },
+        { claims: [] },
+      );
+      await waitForEffects();
+
+      expect(getByTestId('subFile-interest-type')).toHaveTextContent('Sub-Tenant / Lease');
+    });
+
+    it('renders OTHER sub file interest type', async () => {
+      const { getByTestId } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            parentAcquisitionFileId: 100,
+            subfileInterestTypeCode: {
+              id: 'OTHER',
+              description: 'Other',
+              isDisabled: false,
+              displayOrder: 8,
+            },
+            otherSubfileInterestType: 'SOME OTHER VALUE',
+          },
+        },
+        { claims: [] },
+      );
+      await waitForEffects();
+
+      expect(getByTestId('subFile-interest-type')).toHaveTextContent('Other-SOME OTHER VALUE');
+    });
+
+    it('renders sub-interest information section', async () => {
+      const { getByText } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            parentAcquisitionFileId: 100,
+            subfileInterestTypeCode: {
+              id: 'SUBTENANT',
+              description: 'Sub-Tenant / Lease',
+              isDisabled: false,
+              displayOrder: 8,
+            },
+            otherSubfileInterestType: null,
+          },
+        },
+        { claims: [] },
+      );
+      await waitForEffects();
+
+      expect(getByText('Sub-Interest Information')).toBeVisible();
+      expect(
+        getByText(
+          'Each property in this sub-file should be impacted by the sub-interest(s) in this section',
+        ),
+      ).toBeVisible();
+      expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
+      expect(getByText(/Sub-interest representative/i)).toBeVisible();
+    });
   });
 });

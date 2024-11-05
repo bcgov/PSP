@@ -48,10 +48,10 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
 }
 
 .c8.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -191,6 +191,8 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
 
 .c8.btn:disabled,
 .c8.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -198,7 +200,6 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c8.Button .Button__icon {
@@ -1867,7 +1868,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           <div
             class="col"
           >
-            Owners
+            Sub-Interest
           </div>
         </div>
       </h2>
@@ -1877,7 +1878,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
         <p
           class="c11"
         >
-          Each property in this file should be owned by the owner(s) in this section
+          Each property in this sub-file should be impacted by the sub-interest(s) in this section
         </p>
         <div
           class="py-3 row"
@@ -1920,7 +1921,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                   <span
                     class="text"
                   >
-                    Remove Owner
+                    Remove Sub-interest
                   </span>
                 </div>
               </button>
@@ -1934,7 +1935,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                 <label
                   class="c2"
                 >
-                  Is this owner an individual / corporation ?:
+                  Is this sub-interest an individual / corporation ?:
                 </label>
               </div>
               <div
@@ -2659,7 +2660,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                   <span
                     class="text"
                   >
-                    Remove Owner
+                    Remove Sub-interest
                   </span>
                 </div>
               </button>
@@ -2673,7 +2674,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                 <label
                   class="c2"
                 >
-                  Is this owner an individual / corporation ?:
+                  Is this sub-interest an individual / corporation ?:
                 </label>
               </div>
               <div
@@ -3414,7 +3415,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           <div
             class="Button__value"
           >
-            + Add owner
+            + Add Sub-interest
           </div>
         </button>
         <div />
@@ -3427,7 +3428,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
             <label
               class="c2"
             >
-              Owner solicitor:
+              Sub-interest solicitor:
             </label>
           </div>
           <div
@@ -3546,7 +3547,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
             <label
               class="c2"
             >
-              Owner representative:
+              Sub-interest representative:
             </label>
           </div>
           <div
@@ -3722,10 +3723,10 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 }
 
 .c9.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -3865,6 +3866,8 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 
 .c9.btn:disabled,
 .c9.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -3872,7 +3875,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c9.Button .Button__icon {

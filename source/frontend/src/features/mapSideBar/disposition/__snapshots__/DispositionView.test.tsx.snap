@@ -48,10 +48,10 @@ exports[`DispositionView component > renders as expected 1`] = `
 }
 
 .c3.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -191,6 +191,8 @@ exports[`DispositionView component > renders as expected 1`] = `
 
 .c3.btn:disabled,
 .c3.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -198,7 +200,6 @@ exports[`DispositionView component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c3.Button .Button__icon {
@@ -375,15 +376,15 @@ exports[`DispositionView component > renders as expected 1`] = `
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
-  font-family: 'BCSans-Bold';
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c28 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
-  font-family: 'BCSans-Bold';
   background-color: #053662;
   border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c26 {

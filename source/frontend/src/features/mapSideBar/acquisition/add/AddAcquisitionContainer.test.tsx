@@ -142,7 +142,9 @@ describe('AddAcquisitionContainer component', () => {
       getFundingTypeDropdown: () =>
         utils.container.querySelector(`select[name="fundingTypeCode"]`) as HTMLSelectElement,
       getSubfileInterestTypeDropdown: () =>
-        utils.container.querySelector(`select[name="subfileInterestTypeCode"]`) as HTMLSelectElement,
+        utils.container.querySelector(
+          `select[name="subfileInterestTypeCode"]`,
+        ) as HTMLSelectElement,
       getFundingOtherTextbox: () =>
         utils.container.querySelector(
           `input[name="fundingTypeOtherDescription"]`,
@@ -205,7 +207,8 @@ describe('AddAcquisitionContainer component', () => {
   });
 
   it('renders the underlying form', async () => {
-    const { getByText, getNameTextbox, getRegionDropdown, getSubfileInterestTypeDropdown } = await setup();
+    const { getByText, getNameTextbox, getRegionDropdown, getSubfileInterestTypeDropdown } =
+      await setup();
 
     const formTitle = getByText(/Create Acquisition File/i);
     const input = getNameTextbox();

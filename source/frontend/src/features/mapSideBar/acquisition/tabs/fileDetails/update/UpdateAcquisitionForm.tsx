@@ -304,7 +304,7 @@ const AcquisitionDetailSubForm: React.FC<{
         {isSubFile &&
           values?.subfileInterestTypeCode === ApiGen_CodeTypes_SubfileInterestTypes.OTHER && (
             <SectionField label="" required>
-              <Input field="otherSubfileInterestType" required />
+              <Input field="otherSubfileInterestType" placeholder="Describe other" required />
             </SectionField>
           )}
 
@@ -327,12 +327,21 @@ const AcquisitionDetailSubForm: React.FC<{
         )}
       </Section>
 
-      <Section header="Owners">
-        <StyledSectionParagraph>
-          Each property in this file should be owned by the owner(s) in this section
-        </StyledSectionParagraph>
-        <UpdateAcquisitionOwnersSubForm />
-        <SectionField label="Owner solicitor" className="mt-4">
+      <Section header={isSubFile ? 'Sub-Interest' : 'Owners'}>
+        {isSubFile ? (
+          <StyledSectionParagraph>
+            Each property in this sub-file should be impacted by the sub-interest(s) in this section
+          </StyledSectionParagraph>
+        ) : (
+          <StyledSectionParagraph>
+            Each property in this file should be owned by the owner(s) in this section
+          </StyledSectionParagraph>
+        )}
+        <UpdateAcquisitionOwnersSubForm isSubFile={isSubFile} />
+        <SectionField
+          label={isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}
+          className="mt-4"
+        >
           <ContactInputContainer
             field="ownerSolicitor.contact"
             View={ContactInputView}
@@ -353,7 +362,7 @@ const AcquisitionDetailSubForm: React.FC<{
             )}
           </SectionField>
         )}
-        <SectionField label="Owner representative">
+        <SectionField label={isSubFile ? 'Sub-interest representative' : 'Owner representative'}>
           <ContactInputContainer
             field="ownerRepresentative.contact"
             View={ContactInputView}
