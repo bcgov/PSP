@@ -3,7 +3,6 @@ import styled from 'styled-components';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { StyledSectionParagraph } from '@/components/common/styles';
 
 import { DetailAcquisitionFileOwner } from '../../../models/DetailAcquisitionFileOwner';
 import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryContainer';
@@ -20,9 +19,6 @@ const AcquisitionOwnersSummaryView: React.FC<IAcquisitionOwnersSummaryViewProps>
 
   return (
     <>
-      <StyledSectionParagraph>
-        Each property in this file should be owned by the owner(s) in this section
-      </StyledSectionParagraph>
       {ownerDetailList?.map((owner, index) => {
         return (
           <span key={`owner-${index}-${owner.ownerName}`} data-testid={`owner[${index}]`}>

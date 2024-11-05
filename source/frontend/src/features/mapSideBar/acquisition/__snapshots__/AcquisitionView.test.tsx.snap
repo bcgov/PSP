@@ -253,15 +253,15 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
-  font-family: 'BCSans-Bold';
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c28 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
-  font-family: 'BCSans-Bold';
   background-color: #053662;
   border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c18 {
@@ -300,6 +300,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
+.c36 {
+  color: #474543;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c5 {
   border-left: 0.1rem solid #ECEAE8;
   width: 0.1rem;
@@ -312,7 +319,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c36 {
+.c37 {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -1498,8 +1505,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                         <div
                           class="collapse show"
                         >
-                          <div
+                          <p
                             class="c36"
+                          >
+                            Each property in this file should be owned by the owner(s) in this section
+                          </p>
+                          <div
+                            class="c37"
                           >
                             <div
                               class="spinner-border text-warning"
