@@ -26,6 +26,7 @@ interface IAddLeaseStakeholderContainerProps {
   onEdit?: (isEditing: boolean) => void;
   stakeholders: FormStakeholder[];
   onSuccess: () => void;
+  refreshLease: () => void;
   View: React.FunctionComponent<
     React.PropsWithChildren<IAddLeaseStakeholderFormProps & IPrimaryContactWarningModalProps>
   >;
@@ -41,6 +42,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
   View,
   stakeholders: initialStakeholders,
   onSuccess,
+  refreshLease,
   isPayableLease,
 }) => {
   const { lease } = useContext(LeaseStateContext);
@@ -152,6 +154,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
             }),
           });
           onEdit && onEdit(false);
+          refreshLease && refreshLease();
           onSuccess();
         }
       } finally {

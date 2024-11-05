@@ -45,14 +45,14 @@ const StyledTabs = styled(BsTabs)`
       border-color: transparent;
       text-decoration: underline;
       border-radius: 0.4rem;
-      font-family: 'BCSans-Bold';
+      text-shadow: 0.1rem 0 0 currentColor;
     }
     &.active {
       border-radius: 0.4rem;
       color: ${props => props.theme.css.highlightBackgroundColor};
-      font-family: 'BCSans-Bold';
       background-color: ${props => props.theme.css.primaryActiveActionColor};
       border-color: transparent;
+      text-shadow: 0.1rem 0 0 currentColor;
     }
   }
 `;

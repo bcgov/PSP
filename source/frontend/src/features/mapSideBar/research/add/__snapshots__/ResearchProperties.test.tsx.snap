@@ -439,15 +439,15 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border-radius: 0.4rem;
-  font-family: 'BCSans-Bold';
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c4 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
-  font-family: 'BCSans-Bold';
   background-color: #053662;
   border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c3 {

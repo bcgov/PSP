@@ -20,6 +20,7 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
   formikRef,
   onEdit,
   onSuccess,
+  refreshLease,
 }) => {
   const { lease } = useContext(LeaseStateContext);
   const getIsPayableLease = () => {
@@ -53,6 +54,7 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
         stakeholders={formStakeholders}
         View={AddLeaseStakeholderForm}
         onSuccess={onSuccess}
+        refreshLease={refreshLease}
         isPayableLease={getIsPayableLease()}
       />
     </ProtectedComponent>
