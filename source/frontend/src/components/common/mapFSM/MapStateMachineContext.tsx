@@ -122,11 +122,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
         );
         if (event.type === 'MAP_MARKER_CLICK') {
-          // In the case of the map marker being clicked, always used the clicked marker instead of the search result.
-          // TODO: refactor loadLocationDetails method to allow for optional loading of various feature types.
+          // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data. However, use the coordinates of the clicked marker.
           result.then(data => {
             data.pimsFeature = {
-              properties: event.featureSelected?.pimsLocationFeature,
+              properties: { ...data.pimsFeature.properties },
               type: 'Feature',
               geometry: {
                 type: 'Point',
