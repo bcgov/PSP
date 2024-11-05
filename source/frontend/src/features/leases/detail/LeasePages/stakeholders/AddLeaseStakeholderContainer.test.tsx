@@ -45,6 +45,7 @@ vi.mock('@/hooks/repositories/useLeaseRepository');
 const getPersonConcept = vi.fn();
 const onEdit = vi.fn();
 const onSuccess = vi.fn();
+const refreshLease = vi.fn();
 
 const history = createMemoryHistory();
 const storeState = {
@@ -112,6 +113,7 @@ describe('AddLeaseTenantContainer component', () => {
           onEdit={onEdit}
           stakeholders={renderOptions?.props?.stakeholders ?? []}
           onSuccess={onSuccess}
+          refreshLease={refreshLease}
           isPayableLease={false}
         ></AddLeaseStakeholderContainer>
       </LeaseContextProvider>,
@@ -304,6 +306,7 @@ describe('AddLeaseTenantContainer component', () => {
       ], // array of stakeholders
     );
     expect(onEdit).toHaveBeenCalledWith(false);
+    expect(refreshLease).toHaveBeenCalled();
   });
 
   it('onSubmit calls api with expected data when a person with organization is populated', async () => {
@@ -318,7 +321,6 @@ describe('AddLeaseTenantContainer component', () => {
       });
     });
 
-    expect(onEdit).toHaveBeenCalledWith(false);
     expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
     expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledWith(
       1, // lease Id
@@ -339,6 +341,8 @@ describe('AddLeaseTenantContainer component', () => {
         },
       ], // array of stakeholders
     );
+    expect(onEdit).toHaveBeenCalledWith(false);
+    expect(refreshLease).toHaveBeenCalled();
   });
 
   it('shows a friendly error message when user attempts to delete a stakeholder that is associated to a compensation', async () => {
