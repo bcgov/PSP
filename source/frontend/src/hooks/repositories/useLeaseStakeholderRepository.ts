@@ -26,12 +26,12 @@ export const useLeaseStakeholderRepository = () => {
   const updateLeaseStakeholdersApi = useApiRequestWrapper<
     (
       leaseId: number,
-      improvements: ApiGen_Concepts_LeaseStakeholder[],
+      stakeholders: ApiGen_Concepts_LeaseStakeholder[],
     ) => Promise<AxiosResponse<ApiGen_Concepts_LeaseStakeholder[], any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, improvements: ApiGen_Concepts_LeaseStakeholder[]) =>
-        await updateLeaseStakeholders(leaseId, improvements),
+      async (leaseId: number, stakeholders: ApiGen_Concepts_LeaseStakeholder[]) =>
+        await updateLeaseStakeholders(leaseId, stakeholders),
       [],
     ),
     requestName: 'updateLeaseStakeholders',
