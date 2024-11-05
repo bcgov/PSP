@@ -341,8 +341,7 @@ describe('AcquisitionSummaryView component', () => {
       );
       await waitForEffects();
 
-      expect(getByTestId('subFile-interest-type')).toHaveTextContent('Other');
-      expect(getByTestId('other-subFile-interest-type')).toHaveTextContent('SOME OTHER VALUE');
+      expect(getByTestId('subFile-interest-type')).toHaveTextContent('Other-SOME OTHER VALUE');
     });
 
     it('renders sub-interest information section', async () => {
