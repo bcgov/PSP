@@ -1,3 +1,4 @@
+import { ApiGen_CodeTypes_SubfileInterestTypes } from '@/models/api/generated/ApiGen_CodeTypes_SubfileInterestTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -14,7 +15,6 @@ export class DetailAcquisitionFile {
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
   subfileInterestTypeDescription: string | null = null;
-  otherSubfileInterestTypeDescription: string | null = null;
   regionDescription?: string;
   acquisitionTeam: DetailAcquisitionFileTeam[] = [];
 
@@ -34,8 +34,11 @@ export class DetailAcquisitionFile {
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;
 
     if (detail.isSubFile) {
-      detail.subfileInterestTypeDescription = model?.subfileInterestTypeCode?.description ?? '';
-      detail.otherSubfileInterestTypeDescription = model?.otherSubfileInterestType ?? '';
+      if (model?.subfileInterestTypeCode.id === ApiGen_CodeTypes_SubfileInterestTypes.OTHER) {
+        detail.subfileInterestTypeDescription = `Other-${model.otherSubfileInterestType ?? ''}`;
+      } else {
+        detail.subfileInterestTypeDescription = model?.subfileInterestTypeCode?.description ?? '';
+      }
     }
     detail.regionDescription = model?.regionCode?.description ?? undefined;
     detail.acquisitionTeam =
