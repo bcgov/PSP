@@ -12,11 +12,11 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{ecd9adfa-d0ff-45cc-817d-6973a46f874c}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">PAT_PIMS_DOCUMENT_IMPORT</SSIS:Property>
-          <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionMajor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionComments">
@@ -26,7 +26,6 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">XERCES</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAANxzwbmXiIk+Q1qON+tA1IQAAAAACAAAAAAAQZgAAAAEAACAAAAAVWQ9JwNHZquhCXWNy1bd4P7Rvmt1KsZMaYIyHhQGfGAAAAAAOgAAAAAIAACAAAADZ/9nyLk6Dja1FZZ9kZSpNy20lOxj/b0LM9SK/7wlUPpAAAAAo3ZzqJERyHdjwafJNRQi2KiIbnhCncfi39aNR5FB1FC99gtJN3mGZY6Is7yxGrlrZiDA/X+OqoxDyIyzlgz+tRGDUqaUp0tH0mkqWbI9mqarWjgKFOKGR7e3ZuFDilRe28Z1NF02Lt2GJfQ7TSD0rSmLhmojLYrs4qFS1+KoB1ULVKhSbg2iOyvfxh16LmKxAAAAAy/PmVlRg8wkx6+YSB5gs52WGQDE4MurqyURvNBmUlc0lRdH30bc4juOuqs4CsONFGrBp12q4iLBY9DVH+h/cbw==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -42,14 +41,14 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">21</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">22</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{3BF7711A-66B5-482A-B15F-8772F9F92C5F}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{CA638372-6C4F-415F-ABCB-F3DE6FB49975}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
                 <SSIS:Parameter SSIS:Name="Parameter">
