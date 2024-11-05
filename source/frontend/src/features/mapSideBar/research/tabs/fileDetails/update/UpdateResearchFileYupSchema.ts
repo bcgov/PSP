@@ -13,6 +13,6 @@ export const UpdateResearchFileYupSchema = Yup.object().shape({
   researchResult: Yup.string().max(4000, 'Result of request must be less than 4000 characters'),
   expropriationNotes: Yup.string().max(
     4000,
-    'Expropriation notes must be less than 4000 characters',
+    'Expropriation comments must be less than 4000 characters',
   ),
 });

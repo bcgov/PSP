@@ -59,6 +59,7 @@ export interface LeasePageProps<T> {
   onEdit?: (isEditing: boolean) => void;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onSuccess: () => void;
+  refreshLease?: () => void;
   componentView: React.FunctionComponent<React.PropsWithChildren<T>>;
 }
 

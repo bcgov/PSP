@@ -73,7 +73,7 @@ const FeeDeterminationSubForm: React.FunctionComponent<IFeeDeterminationSubFormP
       </SectionField>
 
       <SectionField
-        label="Notes"
+        label="Comments"
         tooltip="Deviations from standard fees should be explained here"
         labelWidth="2"
         contentWidth="8"

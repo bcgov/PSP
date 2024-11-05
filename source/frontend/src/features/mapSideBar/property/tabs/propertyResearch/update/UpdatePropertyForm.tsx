@@ -109,7 +109,7 @@ const UpdatePropertyForm: React.FunctionComponent<
       </Section>
 
       <Section header="Research Summary">
-        <SectionField label="Summary notes" />
+        <SectionField label="Summary comments" />
         <TextArea field="researchSummary" />
       </Section>
     </StyledSummarySection>

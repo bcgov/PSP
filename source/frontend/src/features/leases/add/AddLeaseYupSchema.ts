@@ -108,7 +108,7 @@ export const AddLeaseYupSchema = Yup.object().shape({
     .max(200, 'Primary arbitration city must be at most ${max} characters'),
   feeDeterminationNote: Yup.string()
     .nullable()
-    .max(1000, 'Fee determination notes must be at most ${max} characters'),
+    .max(1000, 'Fee determination comments must be at most ${max} characters'),
   renewals: Yup.array().of(
     Yup.object().shape({
       renewalNote: Yup.string().max(2000, 'Renewal note must be at most ${max} characters'),

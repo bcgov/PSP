@@ -4,11 +4,11 @@ import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_
 
 export const updateLeaseStakeholders = (
   leaseId: number,
-  improvements: ApiGen_Concepts_LeaseStakeholder[],
+  stakeholders: ApiGen_Concepts_LeaseStakeholder[],
 ) =>
   CustomAxios({ baseURL: ENVIRONMENT.apiUrl }).put<ApiGen_Concepts_LeaseStakeholder[]>(
     `/leases/${leaseId}/stakeholders`,
-    improvements,
+    stakeholders,
   );
 
 export const getLeaseStakeholders = (leaseId: number) =>

@@ -56,10 +56,10 @@ exports[`Contact List View > matches snapshot 1`] = `
 }
 
 .c13.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -199,6 +199,8 @@ exports[`Contact List View > matches snapshot 1`] = `
 
 .c13.btn:disabled,
 .c13.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -206,7 +208,6 @@ exports[`Contact List View > matches snapshot 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c13.Button .Button__icon {

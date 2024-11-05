@@ -217,7 +217,7 @@ const AdministrationSubForm: React.FunctionComponent<
       <SectionField label="Primary arbitration city">
         <Input field="primaryArbitrationCity" />
       </SectionField>
-      <SectionField label="Lease notes" labelWidth="2">
+      <SectionField label="Lease comments" labelWidth="3">
         <Styled.MediumTextArea field="note" readOnly={true} />
       </SectionField>
     </Section>

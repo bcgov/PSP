@@ -219,7 +219,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         <LoadingBackdrop show={helper.loading} parentScreen={true} />
         <AddAcquisitionForm
           ref={formikRef}
-          parentId={isSubFile ? Number(parentId) : undefined}
+          parentId={isSubFile ? Number(parentId) : null}
           initialValues={initialValues}
           onSubmit={helper.handleSubmit}
           validationSchema={helper.validationSchema}
