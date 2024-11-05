@@ -39,6 +39,10 @@ class DocumentType:
     def add_metadata(self, metadata_reference):
         self.metadata_references.append(metadata_reference)
 
+    def sort_internal(self):
+        self.categories.sort(reverse=False)
+        self.metadata_references.sort(key=lambda x: x.name, reverse=False)
+
     def toJson(self):
         return {
             "categories": [value for value in self.categories],
@@ -85,7 +89,7 @@ def load_document_definitions():
         project = doctype_sheet.cell_value(i, 4)
         research = doctype_sheet.cell_value(i, 5)
         acquisition = doctype_sheet.cell_value(i, 6)
-        lease = doctype_sheet.cell_value(i, 6)
+        lease = doctype_sheet.cell_value(i, 7)
         disposition = doctype_sheet.cell_value(i, 8)
         management = doctype_sheet.cell_value(i, 9)
 
@@ -156,33 +160,44 @@ def match_doc_metadata(document_types, metadata_types):
 
     doctype_sort_order = []
 
-    for i in range(3, sheet.nrows):
+    first_row = 2
+
+    document_type_col = 1
+    metadata_type_col = 2
+    metadata_required_col = 3
+
+    for i in range(first_row, sheet.nrows):
         print("--------------" + str(i))
-        current_row_name = sheet.cell_value(i, 1)
+        current_row_doctype = sheet.cell_value(i, document_type_col)
 
-        if current_row_name != "":
-            doc_type_name = current_row_name
+        if current_row_doctype == "":
+            raise Exception('Invalid document type', current_row_doctype)
 
-        if doc_type_name not in doctype_sort_order:
-            doctype_sort_order.append(doc_type_name)
-
+        # for debugging
         for a in document_types:
-            print(a.label + "|" + doc_type_name +
-                  "|" + str(a.label == doc_type_name))
-        # Get document object from list based on the current label
-        doc_type = next(x for x in document_types if x.label == doc_type_name)
+            print(a.name + "|" + current_row_doctype +
+                  "|" + str(a.name == current_row_doctype))
 
-        metadata_label = sheet.cell_value(i, 2)
-        if metadata_label != "":
+        # Get document object from list based on the current document type
+        doc_type = next(x for x in document_types if x.name ==
+                        current_row_doctype)
 
+        metadata_type = sheet.cell_value(i, metadata_type_col)
+
+        # skip empty metadata associations
+        if metadata_type != "":
+
+            # for debugging
             for a in metadata_types:
-                print(a.label + "|" + metadata_label +
-                      "|" + str(a.label == metadata_label))
+                print(a.name + "|" + metadata_type +
+                      "|" + str(a.name == metadata_type))
+
+            # Get metadata object from list based on the current metadata type
             metadata_type = next(
-                x for x in metadata_types if x.label == metadata_label)
+                x for x in metadata_types if x.name == metadata_type)
 
             # get required field
-            meta_data_required = sheet.cell_value(i, 3)
+            meta_data_required = sheet.cell_value(i, metadata_required_col)
             if meta_data_required != "":
                 meta_data_required = meta_data_required.lower() == "yes"
             else:
@@ -193,18 +208,13 @@ def match_doc_metadata(document_types, metadata_types):
 
             doc_type.add_metadata(meta_data_type)
 
-    sorted_docs = []
-    for name in doctype_sort_order:
-        doc = next(x for x in document_types if x.label == name)
-        index = document_types.index(doc)
-        sorted_docs.append(doc)
-        del document_types[index]
+    # sort the documents for the request by document type
+    document_types.sort(key=lambda x: x.name, reverse=False)
+    [doctype.sort_internal() for doctype in document_types]
 
-    # add the reamining doc types
-    for doc in document_types:
-        sorted_docs.append(doc)
+    metadata_types.sort(key=lambda x: x.name, reverse=False)
 
-    return MayanRequest(sorted_docs, metadata_types)
+    return MayanRequest(document_types, metadata_types)
 
 
 meta_types = load_metadata_definitions()
