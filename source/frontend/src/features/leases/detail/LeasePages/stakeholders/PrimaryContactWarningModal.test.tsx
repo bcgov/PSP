@@ -14,12 +14,15 @@ const history = createMemoryHistory();
 
 describe('PrimaryContactWarningModal component', () => {
   const setup = (
-    renderOptions: RenderOptions & { tenants?: FormStakeholder[]; saveCallback?: () => void } = {},
+    renderOptions: RenderOptions & {
+      stakeholders?: FormStakeholder[];
+      saveCallback?: () => void;
+    } = {},
   ) => {
     // render component under test
     const component = render(
       <PrimaryContactWarningModal
-        selectedStakeholders={renderOptions.tenants ?? []}
+        selectedStakeholders={renderOptions.stakeholders ?? []}
         saveCallback={renderOptions.saveCallback}
       />,
       {
@@ -34,7 +37,7 @@ describe('PrimaryContactWarningModal component', () => {
   };
   it('renders as expected', () => {
     const { component } = setup({
-      tenants: LeaseFormModel.fromApi({
+      stakeholders: LeaseFormModel.fromApi({
         ...defaultApiLease(),
         stakeholders: [
           { ...getEmptyLeaseStakeholder(), leaseId: 1, person: mockApiPerson },
@@ -48,7 +51,7 @@ describe('PrimaryContactWarningModal component', () => {
     const saveCallback = vi.fn();
     const { component } = setup({
       saveCallback: saveCallback,
-      tenants: LeaseFormModel.fromApi({
+      stakeholders: LeaseFormModel.fromApi({
         ...defaultApiLease(),
         stakeholders: [
           { ...getEmptyLeaseStakeholder(), leaseId: 1, person: mockApiPerson },
@@ -65,7 +68,7 @@ describe('PrimaryContactWarningModal component', () => {
 
   it('displays all organization tenants that have multiple persons and no primary contact', () => {
     setup({
-      tenants: LeaseFormModel.fromApi({
+      stakeholders: LeaseFormModel.fromApi({
         ...getMockApiLease(),
         stakeholders: [
           {
