@@ -332,7 +332,11 @@ const AddAcquisitionDetailSubForm: React.FC<{
           {isSubFile &&
             values?.subfileInterestTypeCode === ApiGen_CodeTypes_SubfileInterestTypes.OTHER && (
               <SectionField label="" required>
-                <LargeInput field="otherSubfileInterestType" required />
+                <LargeInput
+                  field="otherSubfileInterestType"
+                  placeholder="Describe other"
+                  required
+                />
               </SectionField>
             )}
 
