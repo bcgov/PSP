@@ -98,6 +98,7 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.AcquisitionTypeCodeNavigation)
                 .Include(r => r.RegionCodeNavigation)
                 .Include(r => r.AcquisitionFundingTypeCodeNavigation)
+                .Include(r => r.SubfileInterestTypeCodeNavigation)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.WorkActivityCode)
                 .Include(r => r.Project)

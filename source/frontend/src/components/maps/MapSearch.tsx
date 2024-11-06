@@ -67,7 +67,6 @@ const StyledFilterContainer = styled(Container)`
       border-width: 0.2rem;
     }
     .btn-primary {
-      color: white;
       font-weight: bold;
       height: 3.5rem;
       width: 3.5rem;

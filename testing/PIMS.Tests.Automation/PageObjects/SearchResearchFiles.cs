@@ -68,7 +68,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Research File
         public void NavigateToSearchResearchFile()
         {
-            Wait();
+            Wait(4000);
             FocusAndClick(menuResearchButton);
 
             Wait();

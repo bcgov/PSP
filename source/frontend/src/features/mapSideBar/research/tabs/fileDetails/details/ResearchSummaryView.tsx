@@ -126,7 +126,7 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
       </Section>
       <Section header="Expropriation">
         <SectionField label="Expropriation?">{detail.isExpropriation ? 'Yes' : 'No'}</SectionField>
-        <SectionField label="Expropriation notes" />
+        <SectionField label="Expropriation comments" />
         {detail.expropriationNotes}
       </Section>
     </StyledSummarySection>

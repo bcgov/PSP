@@ -63,6 +63,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const roadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES).map(x =>
     PropertyRoadFormModel.fromLookup(x),
   );
+  const provinceOptions = getOptionsByType(API.PROVINCE_TYPES);
   const regionOptions = getOptionsByType(API.REGION_TYPES);
   const districtOptions = getOptionsByType(API.DISTRICT_TYPES);
 
@@ -169,6 +170,13 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         <SectionField label="City">
           <Input field="address.municipality" />
         </SectionField>
+        <SectionField label="Province">
+          <Select
+            field="address.provinceStateId"
+            options={provinceOptions}
+            placeholder={values.address?.provinceStateId === null ? undefined : 'Please Select'}
+          />
+        </SectionField>
         <SectionField label="Postal code">
           <Input field="address.postal" />
         </SectionField>
@@ -177,10 +185,10 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </SectionField>
       </Section>
       <Section header="Property Attributes">
-        <SectionField label="Historical File #">
+        <SectionField label="Historical file #">
           <UpdateHistoricalNumbersSubForm propertyId={values?.id ?? 0} />
         </SectionField>
-        <SectionField label="Legal Description">
+        <SectionField label="Legal description">
           <TextArea field="landLegalDescription" />
         </SectionField>
         <SectionField label="MOTI region">
@@ -208,7 +216,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         <SectionField label="Electoral district">
           <Text field="electoralDistrict.ED_NAME" />
         </SectionField>
-        <SectionField label="Agricultural Land Reserve">
+        <SectionField label="Agricultural land reserve">
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
         </SectionField>
         <SectionField label="Railway belt / Dominion patent">
@@ -245,7 +253,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
             options={tenureOptions}
           />
         </SectionField>
-        <SectionField label="Provincial Public Hwy">
+        <SectionField label="Provincial public hwy">
           <Select field="pphStatusTypeCode" options={pphTypeOptions} />
           {values?.pphStatusUpdateTimestamp && (
             <p className="text-right font-italic">
@@ -339,7 +347,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         )}
       </Section>
 
-      <Section header="Notes">
+      <Section header="Comments">
         <TextArea field="notes" rows={4} />
       </Section>
     </StyledSummarySection>

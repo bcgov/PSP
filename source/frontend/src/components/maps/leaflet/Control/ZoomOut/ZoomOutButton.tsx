@@ -16,6 +16,9 @@ const ZoomButton = styled(Button)`
     width: 4rem;
     height: 4rem;
   }
+  &&.btn:hover {
+    color: white;
+  }
 `;
 
 /**

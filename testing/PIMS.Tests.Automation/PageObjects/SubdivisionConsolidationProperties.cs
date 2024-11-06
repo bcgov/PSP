@@ -167,7 +167,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelSubdivisionConsolidation()
         {
-            Wait();
+            Wait(4000);
             webDriver.FindElement(subconPropertiesCancelButton).Click();
 
             sharedModals.CancelActionModal();

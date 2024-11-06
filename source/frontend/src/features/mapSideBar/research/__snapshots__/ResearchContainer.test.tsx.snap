@@ -43,10 +43,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 }
 
 .c3.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -186,6 +186,8 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 
 .c3.btn:disabled,
 .c3.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -193,7 +195,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c3.Button .Button__icon {
@@ -375,21 +376,27 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 .c28 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c28 .nav-item:hover {
-  color: var(--surface-color-primary-button-hover);
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c28 .nav-item.active {
-  background-color: #f2f2f2;
-  font-family: 'BCSans-Bold';
-  color: var(--surface-color-primary-button-hover);
+  border-radius: 0.4rem;
+  color: #f2f2f2;
+  background-color: #053662;
   border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c29 {
@@ -490,6 +497,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 }
 
 .c21 {
+  font-size: 1.4rem;
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
@@ -498,6 +506,10 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 .c21.selected {
   font-weight: bold;
   cursor: default;
+}
+
+.c21 div.Button__value {
+  font-size: 1.4rem;
 }
 
 .c24 {
@@ -544,7 +556,9 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 }
 
 .c23 {
-  font-size: 1.4rem;
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #474543;
   line-height: 2.2rem;
 }
 
@@ -878,23 +892,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   data-testid="menu-item-row-0"
                 >
                   <div
-                    class="col-1"
-                  >
-                    <svg
-                      fill="currentColor"
-                      height="1em"
-                      stroke="currentColor"
-                      stroke-width="0"
-                      viewBox="0 0 192 512"
-                      width="1em"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-                      />
-                    </svg>
-                  </div>
-                  <div
                     class="col"
                   >
                     File Summary
@@ -928,7 +925,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   <div
                     class="col"
                   >
-                    123-456-789
+                    <button
+                      class="c3 Button btn btn-link"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        123-456-789
+                      </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1290,7 +1296,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 <label
                                   class="c33"
                                 >
-                                  Expropriation notes
+                                  Expropriation comments
                                   :
                                 </label>
                               </div>

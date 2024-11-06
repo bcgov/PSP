@@ -7,5 +7,8 @@ export const EditPropertiesIcon: React.FC = () => {
 };
 
 const EditMapMarkerButton = styled(EditMapMarkerIcon)`
-  fill: ${props => props.theme.css.primaryColor};
+  fill: ${props => props.theme.css.iconBlueAction};
+  &:hover {
+    fill: ${props => props.theme.css.iconBlueHover};
+  }
 `;

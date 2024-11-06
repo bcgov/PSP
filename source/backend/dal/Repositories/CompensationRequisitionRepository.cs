@@ -39,6 +39,7 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsCompensationRequisitions
                 .Include(c => c.PimsCompReqFinancials)
+                .Include(c => c.PimsLeaseStakeholderCompReqs)
                 .AsNoTracking()
                 .Where(c => c.LeaseId == leaseFileId).ToList();
         }
@@ -114,7 +115,7 @@ namespace Pims.Dal.Repositories
                     Context.PimsCompReqFinancials.Remove(new PimsCompReqFinancial() { CompReqFinancialId = financial.CompReqFinancialId });
                 }
 
-                foreach(var propAcqFile in deletedEntity.PimsPropAcqFlCompReqs)
+                foreach (var propAcqFile in deletedEntity.PimsPropAcqFlCompReqs)
                 {
                     Context.PimsPropAcqFlCompReqs.Remove(new PimsPropAcqFlCompReq() { PropAcqFlCompReqId = propAcqFile.PropAcqFlCompReqId });
                 }
