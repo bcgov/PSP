@@ -227,6 +227,111 @@ describe('LayerPopupView component', () => {
       expect(history.location.pathname).toBe('/mapview/sidebar/research/new');
     });
 
+    it('only shows research file option if file disposed or retired', async () => {
+      const { getByTestId, getByText, queryByText } = setup({
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
+        featureDataset: null,
+
+        claims: [Claims.RESEARCH_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('Research File');
+      expect(queryByText('Acquisition File')).toBeNull();
+      expect(queryByText('Disposition File')).toBeNull();
+      expect(queryByText('Lease/Licence File')).toBeNull();
+      expect(link).toBeVisible();
+    });
+
+    it('only shows research file option if file disposed or retired', async () => {
+      const { getByTestId, getByText, queryByText } = setup({
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
+        featureDataset: {
+          pimsFeature: {
+            type: 'Feature',
+            properties: {
+              ...EmptyPropertyLocation,
+              IS_RETIRED: true,
+              IS_DISPOSED: true,
+              PROPERTY_ID: 1,
+            },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          fileLocation: null,
+          parcelFeature: null,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          highwayFeature: null,
+          selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null,
+        },
+
+        claims: [Claims.RESEARCH_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('Research File');
+      expect(queryByText('Acquisition File')).toBeNull();
+      expect(queryByText('Disposition File')).toBeNull();
+      expect(queryByText('Lease/Licence File')).toBeNull();
+      expect(link).toBeVisible();
+    });
+
+    it('only shows all file options if file not disposed or retired', async () => {
+      const { getByTestId, getByText, queryByText } = setup({
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
+        featureDataset: {
+          pimsFeature: {
+            type: 'Feature',
+            properties: {
+              ...EmptyPropertyLocation,
+              IS_RETIRED: false,
+              IS_DISPOSED: false,
+              PROPERTY_ID: 1,
+            },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          fileLocation: null,
+          parcelFeature: null,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          highwayFeature: null,
+          selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null,
+        },
+
+        claims: [Claims.RESEARCH_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('Research File');
+      expect(queryByText('Acquisition File')).toBeNull();
+      expect(queryByText('Disposition File')).toBeNull();
+      expect(queryByText('Lease/Licence File')).toBeNull();
+      expect(link).toBeVisible();
+    });
+
     it('handles create acquisition file action', async () => {
       const { getByTestId, getByText } = setup({
         layerPopup: {

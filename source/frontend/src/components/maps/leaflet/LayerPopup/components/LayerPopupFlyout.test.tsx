@@ -34,6 +34,7 @@ describe('LayerPopupFlyout component', () => {
         onCreateDispositionFile={onCreateDispositionFile}
         onCreateSubdivision={onCreateSubdivision}
         onCreateConsolidation={onCreateConsolidation}
+        isDisposedProperty={renderOptions?.isDisposedProperty}
       />,
       {
         ...renderOptions,

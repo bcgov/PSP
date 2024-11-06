@@ -8,6 +8,7 @@ import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 export interface ILayerPopupFlyoutProps {
   isInPims: boolean;
   isRetiredProperty: boolean;
+  isDisposedProperty: boolean;
   onViewPropertyInfo: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
@@ -20,6 +21,7 @@ export interface ILayerPopupFlyoutProps {
 export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyoutProps>> = ({
   isInPims,
   isRetiredProperty,
+  isDisposedProperty,
   onViewPropertyInfo,
   onCreateResearchFile,
   onCreateAcquisitionFile,
@@ -37,7 +39,7 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
           <LinkButton onClick={onViewPropertyInfo}>View Property Info</LinkButton>
         </StyledLinkWrapper>
       </StyledLinkSection>
-      {!isRetiredProperty && (
+      {!isRetiredProperty && !isDisposedProperty ? (
         <StyledLinkSection>
           <StyledLinkWrapper>
             <StyledSubheading>Create:</StyledSubheading>
@@ -63,9 +65,7 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
             </StyledLinkWrapper>
           )}
         </StyledLinkSection>
-      )}
-
-      {isRetiredProperty && (
+      ) : (
         <StyledLinkSection>
           <StyledLinkWrapper>
             <StyledSubheading>Create:</StyledSubheading>
