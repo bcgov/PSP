@@ -72,7 +72,7 @@ export const PropertyResearchTabView: React.FunctionComponent<
         <SectionField label="Document reference">{detail.documentReference}</SectionField>
       </Section>
       <Section header="Research Summary">
-        <SectionField label="Summary notes" />
+        <SectionField label="Summary comments" />
         {detail.summaryNotes}
       </Section>
     </StyledSummarySection>

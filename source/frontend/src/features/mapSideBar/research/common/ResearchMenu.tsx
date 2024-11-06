@@ -2,6 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import { LinkButton } from '@/components/common/buttons';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { EditButton } from '@/components/common/EditButton';
 import { Claims } from '@/constants/index';
@@ -30,28 +31,46 @@ const ResearchMenu: React.FunctionComponent<
           className={`no-gutters ${props.selectedIndex === index ? 'selected' : ''}`}
           onClick={() => (props.selectedIndex !== index ? handleClick(index) : '')}
         >
-          <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
           {index !== 0 && (
-            <Col xs="auto" className="pr-2">
-              <StyledIconWrapper className={props.selectedIndex === index ? 'selected' : ''}>
-                {index}
-              </StyledIconWrapper>
-            </Col>
-          )}
-          <Col>{label}</Col>
-          {index === 0 && (
-            <StyledMenuHeaderWrapper>
-              <StyledMenuHeader>Properties</StyledMenuHeader>
-              {hasClaim(Claims.RESEARCH_EDIT) && (
-                <EditButton
-                  title="Change properties"
-                  icon={<EditPropertiesIcon />}
-                  onClick={() => {
-                    props.onEdit();
-                  }}
-                />
+            <>
+              <Col xs="1">{props.selectedIndex === index && <FaCaretRight />}</Col>
+              <Col xs="auto" className="pr-2">
+                <StyledIconWrapper className={props.selectedIndex === index ? 'selected' : ''}>
+                  {index}
+                </StyledIconWrapper>
+              </Col>
+              {props.selectedIndex === index ? (
+                <Col>{label}</Col>
+              ) : (
+                <Col>
+                  <LinkButton onClick={() => handleClick(index)}>{label}</LinkButton>
+                </Col>
               )}
-            </StyledMenuHeaderWrapper>
+            </>
+          )}
+
+          {index === 0 && (
+            <>
+              {props.selectedIndex === index ? (
+                <Col>{label}</Col>
+              ) : (
+                <Col>
+                  <LinkButton onClick={() => handleClick(index)}>{label}</LinkButton>
+                </Col>
+              )}
+              <StyledMenuHeaderWrapper>
+                <StyledMenuHeader>Properties</StyledMenuHeader>
+                {hasClaim(Claims.RESEARCH_EDIT) && (
+                  <EditButton
+                    title="Change properties"
+                    icon={<EditPropertiesIcon />}
+                    onClick={() => {
+                      props.onEdit();
+                    }}
+                  />
+                )}
+              </StyledMenuHeaderWrapper>
+            </>
           )}
         </StyledRow>
       ))}
@@ -74,10 +93,15 @@ const StyledRow = styled(Row)`
     font-weight: bold;
     cursor: default;
   }
+
+  font-size: 1.4rem;
   font-weight: normal;
   cursor: pointer;
-
   padding-bottom: 0.5rem;
+
+  div.Button__value {
+    font-size: 1.4rem;
+  }
 `;
 
 const StyledIconWrapper = styled.div`
@@ -109,7 +133,8 @@ const StyledMenuHeaderWrapper = styled.div`
 `;
 
 const StyledMenuHeader = styled.span`
-  font-size: 1.4rem;
-  color: ${props => props.theme.css.themeGray70};
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: ${props => props.theme.bcTokens.iconsColorSecondary};
   line-height: 2.2rem;
 `;

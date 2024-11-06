@@ -45,7 +45,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ModalClickCancelBttn()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(generalModalCancelBttn).Click();
         }
 

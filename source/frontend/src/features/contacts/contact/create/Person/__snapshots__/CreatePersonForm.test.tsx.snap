@@ -6,7 +6,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  <div />
   .c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
@@ -49,10 +48,10 @@ exports[`CreatePersonForm > renders as expected 1`] = `
 }
 
 .c9.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -192,6 +191,8 @@ exports[`CreatePersonForm > renders as expected 1`] = `
 
 .c9.btn:disabled,
 .c9.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -199,7 +200,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c9.Button .Button__icon {
@@ -1730,10 +1730,10 @@ exports[`CreatePersonForm > renders as expected 1`] = `
 }
 
 .c2.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -1873,6 +1873,8 @@ exports[`CreatePersonForm > renders as expected 1`] = `
 
 .c2.btn:disabled,
 .c2.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1880,7 +1882,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c2.Button .Button__icon {

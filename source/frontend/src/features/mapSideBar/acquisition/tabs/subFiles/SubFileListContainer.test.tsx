@@ -1,12 +1,17 @@
+import { createMemoryHistory } from 'history';
+
 import Claims from '@/constants/claims';
-import SubFileListContainer, { ISubFileListContainerProps } from './SubFileListContainer';
-import { ISubFileListViewProps } from './SubFileListView';
-import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
 import {
   mockAcquisitionFileResponse,
   mockAcquisitionFileSubFilesResponse,
 } from '@/mocks/acquisitionFiles.mock';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
+
+import SubFileListContainer, { ISubFileListContainerProps } from './SubFileListContainer';
+import { ISubFileListViewProps } from './SubFileListView';
+
+const history = createMemoryHistory();
 
 const mockGetAcquisitionSubFilesApi = {
   error: undefined,
@@ -30,12 +35,14 @@ vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
 }));
 
 let viewProps: ISubFileListViewProps | null;
+
 const TestView: React.FC<ISubFileListViewProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };
+
 describe('SubFileListContainer component', () => {
-  const setup = async (
+  const setup = (
     renderOptions: RenderOptions & {
       props?: Partial<ISubFileListContainerProps>;
     } = {},
@@ -47,6 +54,7 @@ describe('SubFileListContainer component', () => {
       />,
       {
         useMockAuthentication: true,
+        history,
         claims: renderOptions?.claims ?? [Claims.ACQUISITION_VIEW],
         ...renderOptions,
       },
@@ -62,7 +70,7 @@ describe('SubFileListContainer component', () => {
   });
 
   it('renders the underlying view', async () => {
-    const { getByText } = await setup();
+    const { getByText } = setup();
     await act(async () => {});
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
@@ -70,9 +78,7 @@ describe('SubFileListContainer component', () => {
   it('makes the request to get the Acquisition Sub-Files', async () => {
     mockGetAcquisitionSubFilesApi.execute.mockResolvedValue(mockAcquisitionFileSubFilesResponse());
 
-    await act(async () => {
-      setup({});
-    });
+    setup();
     await waitForEffects();
 
     expect(mockGetAcquisitionSubFilesApi.execute).toHaveBeenCalledWith(1);
@@ -86,16 +92,24 @@ describe('SubFileListContainer component', () => {
     mockGetAcquisitionFileApi.execute.mockResolvedValue(mockCurrentAcquisitionFile);
     mockGetAcquisitionSubFilesApi.execute.mockResolvedValue(mockAcquisitionFileSubFilesResponse());
 
-    await act(async () => {
-      setup({
-        props: {
-          acquisitionFile: mockCurrentAcquisitionFile,
-        },
-      });
+    setup({
+      props: {
+        acquisitionFile: mockCurrentAcquisitionFile,
+      },
     });
     await waitForEffects();
 
     expect(mockGetAcquisitionFileApi.execute).toHaveBeenCalledWith(1);
     expect(mockGetAcquisitionSubFilesApi.execute).toHaveBeenCalledWith(1);
+  });
+
+  it('redirects to create acquisition form for sub-files', async () => {
+    setup({ props: { acquisitionFile: mockAcquisitionFileResponse(100) } });
+    await act(async () => {
+      viewProps.onAdd();
+    });
+
+    expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/new');
+    expect(history.location.search).toBe('?parentId=100'); // parentId should be appended to the route
   });
 });

@@ -48,10 +48,10 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
 }
 
 .c6.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -191,6 +191,8 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
 
 .c6.btn:disabled,
 .c6.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -198,7 +200,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c6.Button .Button__icon {
@@ -597,6 +598,507 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
+              Province:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-address.provinceStateId"
+                name="address.provinceStateId"
+              >
+                <option
+                  value=""
+                >
+                  Please Select
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-1"
+                  value="1"
+                >
+                  British Columbia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-2"
+                  value="2"
+                >
+                  Alberta
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-3"
+                  value="3"
+                >
+                  Manitoba
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-4"
+                  value="4"
+                >
+                  Newfoundland
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-5"
+                  value="5"
+                >
+                  New Brunswick
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-6"
+                  value="6"
+                >
+                  Nova Scotia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-7"
+                  value="7"
+                >
+                  North West Territories
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-8"
+                  value="8"
+                >
+                  Nunavut
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-9"
+                  value="9"
+                >
+                  Ontario
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-10"
+                  value="10"
+                >
+                  Prince Edward Island
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-11"
+                  value="11"
+                >
+                  Quebec
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-12"
+                  value="12"
+                >
+                  Saskatchewan
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-13"
+                  value="13"
+                >
+                  Yukon Territory
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-14"
+                  value="14"
+                >
+                  Alaska
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-15"
+                  value="15"
+                >
+                  Alabama
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-16"
+                  value="16"
+                >
+                  Arkansas
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-17"
+                  value="17"
+                >
+                  Arizona
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-18"
+                  value="18"
+                >
+                  California
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-19"
+                  value="19"
+                >
+                  Colorado
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-20"
+                  value="20"
+                >
+                  Connecticut
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-21"
+                  value="21"
+                >
+                  District Of Columbia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-22"
+                  value="22"
+                >
+                  Delaware
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-23"
+                  value="23"
+                >
+                  Florida
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-24"
+                  value="24"
+                >
+                  Georgia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-25"
+                  value="25"
+                >
+                  Hawaii
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-26"
+                  value="26"
+                >
+                  Iowa
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-27"
+                  value="27"
+                >
+                  Idaho
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-28"
+                  value="28"
+                >
+                  Illinois
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-29"
+                  value="29"
+                >
+                  Indiana
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-30"
+                  value="30"
+                >
+                  Kansas
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-31"
+                  value="31"
+                >
+                  Kentucky
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-32"
+                  value="32"
+                >
+                  Louisiana
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-33"
+                  value="33"
+                >
+                  Massachusetts
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-34"
+                  value="34"
+                >
+                  Maryland
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-35"
+                  value="35"
+                >
+                  Maine
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-36"
+                  value="36"
+                >
+                  Michigan
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-37"
+                  value="37"
+                >
+                  Minnesota
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-38"
+                  value="38"
+                >
+                  Missouri
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-39"
+                  value="39"
+                >
+                  Mississippi
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-40"
+                  value="40"
+                >
+                  Montana
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-41"
+                  value="41"
+                >
+                  North Carolina
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-42"
+                  value="42"
+                >
+                  North Dakota
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-43"
+                  value="43"
+                >
+                  Nebraska
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-44"
+                  value="44"
+                >
+                  New Hampshire
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-45"
+                  value="45"
+                >
+                  New Jersey
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-46"
+                  value="46"
+                >
+                  New Mexico
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-47"
+                  value="47"
+                >
+                  Nevada
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-48"
+                  value="48"
+                >
+                  New York
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-49"
+                  value="49"
+                >
+                  Ohio
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-50"
+                  value="50"
+                >
+                  Oklahoma
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-51"
+                  value="51"
+                >
+                  Oregon
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-52"
+                  value="52"
+                >
+                  Pennsylvania
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-53"
+                  value="53"
+                >
+                  Rhode Island
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-54"
+                  value="54"
+                >
+                  South Carolina
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-55"
+                  value="55"
+                >
+                  South Dakota
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-56"
+                  value="56"
+                >
+                  Tennessee
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-57"
+                  value="57"
+                >
+                  Texas
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-58"
+                  value="58"
+                >
+                  Utah
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-59"
+                  value="59"
+                >
+                  Virginia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-60"
+                  value="60"
+                >
+                  Vermont
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-61"
+                  value="61"
+                >
+                  Washington
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-62"
+                  value="62"
+                >
+                  Wisconsin
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-63"
+                  value="63"
+                >
+                  West Virginia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-64"
+                  value="64"
+                >
+                  Wyoming
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-65"
+                  value="65"
+                >
+                  Mexico
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-78"
+                  value="78"
+                >
+                  Other
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-79"
+                  value="79"
+                >
+                  Unknown
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
               Postal code:
             </label>
           </div>
@@ -673,7 +1175,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
-              Historical File #:
+              Historical file #:
             </label>
           </div>
           <div
@@ -701,7 +1203,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
-              Legal Description:
+              Legal description:
             </label>
           </div>
           <div
@@ -923,7 +1425,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
-              Agricultural Land Reserve:
+              Agricultural land reserve:
             </label>
           </div>
           <div
@@ -1471,7 +1973,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             <label
               class="c4"
             >
-              Provincial Public Hwy:
+              Provincial public hwy:
             </label>
           </div>
           <div
@@ -2083,7 +2585,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
           <div
             class="col"
           >
-            Notes
+            Comments
           </div>
         </div>
       </h2>

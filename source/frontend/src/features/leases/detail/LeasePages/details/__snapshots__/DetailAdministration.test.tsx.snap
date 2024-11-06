@@ -434,7 +434,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
           <label
             class="c3"
           >
-            Lease notes:
+            Lease comments:
           </label>
         </div>
         <div
@@ -878,7 +878,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
           <label
             class="c3"
           >
-            Lease notes:
+            Lease comments:
           </label>
         </div>
         <div

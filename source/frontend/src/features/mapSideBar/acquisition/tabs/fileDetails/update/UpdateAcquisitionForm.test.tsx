@@ -8,7 +8,17 @@ import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+  screen,
+  waitForEffects,
+  fakeText,
+  fireEvent,
+} from '@/utils/test-utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import { UpdateAcquisitionFileYupSchema } from './UpdateAcquisitionFileYupSchema';
@@ -95,8 +105,10 @@ describe('UpdateAcquisitionForm component', () => {
       getCloseButton: () => utils.getByTitle('close'),
       getFileStatusDropdown: () =>
         utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,
-      getFileCompletionDatePicker: () =>
-        utils.container.querySelector(`input[name="completionDate"]`) as HTMLInputElement,
+      getEstimatedCompletionDatePicker: () =>
+        utils.container.querySelector(`input[name="estimatedCompletionDate"]`) as HTMLInputElement,
+      getPossessionDatePicker: () =>
+        utils.container.querySelector(`input[name="possessionDate"]`) as HTMLInputElement,
       getTeamMemberProfileDropDownList: (index = 0) =>
         utils.container.querySelector(
           `select[name="team.${index}.contactTypeCode"]`,
@@ -105,6 +117,12 @@ describe('UpdateAcquisitionForm component', () => {
         utils.container.querySelector(
           `div[data-testid="typeahead-project"] button`,
         ) as HTMLSelectElement,
+      getSubfileInterestTypeDropdown: () =>
+        utils.container.querySelector(
+          `select[name="subfileInterestTypeCode"]`,
+        ) as HTMLSelectElement,
+      getOtherSubfileInterestTypeTextbox: () =>
+        utils.container.querySelector(`input[name="otherSubfileInterestType"]`) as HTMLInputElement,
     };
   };
 
@@ -127,23 +145,30 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment, findByDisplayValue } = setup({ initialValues });
-    expect(asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({ initialValues });
     await act(async () => {});
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('displays legacy file number', async () => {
     const { getByDisplayValue } = setup({ initialValues });
-    expect(getByDisplayValue('legacy file number')).toBeVisible();
     await act(async () => {});
+    expect(getByDisplayValue('legacy file number')).toBeVisible();
   });
 
   it('displays owner solicitor and owner representative', async () => {
     const { getByText } = setup({ initialValues });
+    await act(async () => {});
     expect(getByText('Millennium Inc')).toBeVisible();
     expect(getByText('Han Solo')).toBeVisible();
     expect(getByText('test representative comment')).toBeVisible();
+  });
+
+  it('displays estimated completion and possession dates', async () => {
+    const { getEstimatedCompletionDatePicker, getPossessionDatePicker } = setup({ initialValues });
     await act(async () => {});
+    expect(getEstimatedCompletionDatePicker()).toHaveValue('Jul 10, 2024');
+    expect(getPossessionDatePicker()).toHaveValue('Jul 10, 2025');
   });
 
   it('displays Individual type Owner with data', async () => {
@@ -157,6 +182,7 @@ describe('UpdateAcquisitionForm component', () => {
       getEmailTextbox,
       getPhoneTextbox,
     } = setup({ initialValues });
+    await act(async () => {});
 
     expect(getIsOrganizationRadioButtonValue()).toEqual('false');
 
@@ -169,7 +195,6 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getEmailTextbox(0).value).toEqual('jonh.doe@gmail.com');
     expect(getPhoneTextbox(0).value).toEqual('775-111-1111');
-    await act(async () => {});
   });
 
   it('displays Corporation type Owner with data', async () => {
@@ -183,6 +208,7 @@ describe('UpdateAcquisitionForm component', () => {
       getEmailTextbox,
       getPhoneTextbox,
     } = setup({ initialValues });
+    await act(async () => {});
 
     expect(getIsOrganizationRadioButtonValue(1)).toEqual('true');
 
@@ -196,7 +222,6 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(getEmailTextbox(1).value).toEqual('fake@email.ca');
     expect(getPhoneTextbox(1).value).toEqual('775-111-1111');
-    await act(async () => {});
   });
 
   it('it validates that only profile is not repeated on another team member', async () => {
@@ -234,5 +259,84 @@ describe('UpdateAcquisitionForm component', () => {
 
     expect(validationSchema).toBeCalled();
     expect(onSubmit).toHaveBeenLastCalledWith(initialValues, expect.anything());
+  });
+
+  describe('Sub-interest files', () => {
+    let parentId: number;
+    beforeEach(() => {
+      parentId = 99;
+      initialValues.parentAcquisitionFileId = parentId;
+      initialValues.formattedProject = '1111 - Test Project';
+    });
+
+    it('renders as expected', () => {
+      const { asFragment } = setup({ initialValues });
+      expect(asFragment()).toMatchSnapshot();
+    });
+
+    it('should display sub file interest type SELECT', async () => {
+      const { getSubfileInterestTypeDropdown } = setup({
+        initialValues,
+      });
+      expect(getSubfileInterestTypeDropdown()).toBeInTheDocument();
+    });
+
+    it('should display OTHER sub file interest type', async () => {
+      const { getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox, getByTestId } =
+        setup({
+          initialValues,
+        });
+      const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
+
+      expect(subfileInterestTypeDropdown).toBeInTheDocument();
+      await act(async () => {
+        userEvent.click(subfileInterestTypeDropdown);
+        userEvent.selectOptions(screen.getByTestId('subfileInterestTypeCode'), ['OTHER']);
+      });
+      await waitForEffects();
+
+      const otherSubfileInterestTextbox = getOtherSubfileInterestTypeTextbox();
+      expect(otherSubfileInterestTextbox).toBeInTheDocument();
+    });
+
+    it('should validate OTHER sub file interest type max length', async () => {
+      const { findByText, getSubfileInterestTypeDropdown, getOtherSubfileInterestTypeTextbox } =
+        setup({ initialValues });
+      const subfileInterestTypeDropdown = getSubfileInterestTypeDropdown();
+
+      expect(subfileInterestTypeDropdown).toBeInTheDocument();
+      await act(async () => {
+        userEvent.click(subfileInterestTypeDropdown);
+        userEvent.selectOptions(screen.getByTestId('subfileInterestTypeCode'), ['OTHER']);
+      });
+      await waitForEffects();
+
+      const otherSubfileInterestTextbox = getOtherSubfileInterestTypeTextbox();
+      expect(otherSubfileInterestTextbox).toBeInTheDocument();
+
+      await act(async () => {
+        userEvent.paste(otherSubfileInterestTextbox, fakeText(201));
+        fireEvent.blur(otherSubfileInterestTextbox);
+      });
+      await waitForEffects();
+
+      expect(
+        await findByText(/Other Subfile interest description must be at most 200 characters/i),
+      ).toBeVisible();
+    });
+
+    it('renders sub-interest information section', async () => {
+      const { getByText } = setup({ initialValues });
+      await waitForEffects();
+
+      expect(
+        getByText(
+          'Each property in this sub-file should be impacted by the sub-interest(s) in this section',
+        ),
+      ).toBeVisible();
+      expect(getByText('+ Add Sub-interest')).toBeVisible();
+      expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
+      expect(getByText(/Sub-interest representative/i)).toBeVisible();
+    });
   });
 });

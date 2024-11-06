@@ -48,6 +48,10 @@ export const UpdateAcquisitionContainer = React.forwardRef<
   // Customize the look and feel of the user-override modal. For region change confirmation, the modal should be of type "info" (blue)
   const customModalOptions = new Map<UserOverrideCode, CustomModalOptions>([
     [UserOverrideCode.UPDATE_REGION, { variant: 'info', title: 'Different Ministry region' }],
+    [
+      UserOverrideCode.UPDATE_SUBFILES_PROJECT_PRODUCT,
+      { variant: 'info', title: 'Different Project or Product' },
+    ],
   ]);
 
   const withUserOverride = useApiUserOverride<

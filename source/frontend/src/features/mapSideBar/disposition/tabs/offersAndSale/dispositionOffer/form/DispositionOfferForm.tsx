@@ -131,7 +131,7 @@ const DispositionOfferForm: React.FC<IDispositionOfferFormProps> = ({
                       <FastCurrencyInput formikProps={formikProps} field="offerAmount" />
                     </SectionField>
                     <SectionField
-                      label="Notes"
+                      label="Comments"
                       contentWidth="12"
                       tooltip="Provide any additional details such as offer terms or conditions, and any commentary on why the offer was accepted/countered/rejected"
                     >
