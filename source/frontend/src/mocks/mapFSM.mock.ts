@@ -50,6 +50,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   isShowingMapLayers: false,
   showDisposed: false,
   showRetired: false,
+  mapLayersToRefresh: [],
 
   requestFlyToLocation: vi.fn(),
 
@@ -79,4 +80,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   toggleSidebarDisplay: vi.fn(),
   setFullWidthSideBar: vi.fn(),
   resetMapFilter: vi.fn(),
+  setMapLayersToRefresh: vi.fn(),
 };
