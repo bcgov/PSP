@@ -85,6 +85,9 @@ const featureDataLoaderStates = {
           }),
           target: 'loading',
         },
+        SET_REFRESH_MAP_LAYERS: {
+          actions: assign({ mapLayersToRefresh: (_, event: any) => event.refreshLayers }),
+        },
       },
     },
     loading: {

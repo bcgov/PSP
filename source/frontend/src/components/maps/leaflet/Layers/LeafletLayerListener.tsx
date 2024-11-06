@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { exists } from '@/utils';
 
 import { wmsHeaders } from '../Control/LayersControl/wmsHeaders';
@@ -23,7 +24,7 @@ export const LeafletLayerListener = () => {
     };
   }, [mapInstance]);
 
-  useEffect(() => {
+  useDeepCompareEffect(() => {
     if (mapLayersToRefresh?.length) {
       const currentLayers = featureGroup.getLayers().filter(exists);
       mapLayersToRefresh.forEach(configLayer => {
@@ -39,7 +40,6 @@ export const LeafletLayerListener = () => {
   }, [mapInstance, mapLayersToRefresh, setMapLayersToRefresh]);
 
   useEffect(() => {
-    console.log(featureGroup.getLayers());
     if (mapInstance) {
       const currentLayers = featureGroup.getLayers().filter(exists);
       const mapLayers = flatten(activeLayers.map(l => l.nodes));

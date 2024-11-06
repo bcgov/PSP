@@ -2,7 +2,7 @@ import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM } from '@/constants/strings';
 
 import { ILayerItem } from './types';
 
-export const PIMS_PROPERTY_BOUNDARY_KEY = 'pims_properties';
+export const PIMS_PROPERTY_BOUNDARY_KEY = 'PIMS_PROPERTY_BOUNDARY_KEY';
 
 export const layersTree: ILayerItem[] = [
   {
