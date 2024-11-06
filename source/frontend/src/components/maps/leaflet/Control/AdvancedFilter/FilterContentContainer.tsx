@@ -17,6 +17,7 @@ export const FilterContentContainer: React.FC<IFilterContentContainerProps> = ({
     setAdvancedSearchCriteria,
     isShowingMapFilter,
     isLoading,
+    advancedSearchCriteria,
   } = useMapStateMachine();
 
   const onChange = useCallback(
@@ -30,7 +31,14 @@ export const FilterContentContainer: React.FC<IFilterContentContainerProps> = ({
 
   // Only render if the map state is filtering.
   if (isShowingMapFilter) {
-    return <View onChange={onChange} onReset={resetMapFilter} isLoading={isLoading} />;
+    return (
+      <View
+        existingFilter={advancedSearchCriteria}
+        onChange={onChange}
+        onReset={resetMapFilter}
+        isLoading={isLoading}
+      />
+    );
   } else {
     return <></>;
   }
