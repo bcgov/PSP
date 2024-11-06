@@ -535,6 +535,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c21 {
+  font-size: 1.4rem;
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
@@ -543,6 +544,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 .c21.selected {
   font-weight: bold;
   cursor: default;
+}
+
+.c21 div.Button__value {
+  font-size: 1.4rem;
 }
 
 .c24 {
@@ -589,7 +594,9 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c23 {
-  font-size: 1.4rem;
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #474543;
   line-height: 2.2rem;
 }
 
@@ -902,23 +909,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                 data-testid="menu-item-row-0"
               >
                 <div
-                  class="col-1"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 192 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-                    />
-                  </svg>
-                </div>
-                <div
                   class="col"
                 >
                   File Summary
@@ -952,7 +942,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                 <div
                   class="col"
                 >
-                  023-214-937
+                  <button
+                    class="c3 Button btn btn-link"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      023-214-937
+                    </div>
+                  </button>
                 </div>
               </div>
               <div
@@ -974,7 +973,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                 <div
                   class="col"
                 >
-                  024-996-777
+                  <button
+                    class="c3 Button btn btn-link"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      024-996-777
+                    </div>
+                  </button>
                 </div>
               </div>
             </div>
