@@ -1,8 +1,10 @@
 import { useInterpret, useSelector } from '@xstate/react';
+import { dequal } from 'dequal';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IGeoSearchParams } from '@/constants/API';
 import { IMapSideBarViewState } from '@/features/mapSideBar/MapSideBar';
@@ -47,6 +49,8 @@ export interface IMapStateMachineContext {
   showRetired: boolean;
   activeLayers: ILayerItem[];
   mapLayersToRefresh: ILayerItem[];
+  advancedSearchCriteria: PropertyFilterFormModel;
+  isMapVisible: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -83,6 +87,7 @@ export interface IMapStateMachineContext {
   setShowRetired: (show: boolean) => void;
   setFullWidthSideBar: (fullWidth: boolean) => void;
   resetMapFilter: () => void;
+  setAdvancedSearchCriteria: (advancedSearchCriteria: PropertyFilterFormModel) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -252,6 +257,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setAdvancedSearchCriteria = useCallback(
+    (advancedSearchCriteria: PropertyFilterFormModel) => {
+      serviceSend({ type: 'SET_ADVANCED_SEARCH_CRITERIA', advancedSearchCriteria });
+    },
+    [serviceSend],
+  );
+
   const prepareForCreation = useCallback(() => {
     serviceSend({ type: 'PREPARE_FOR_CREATION' });
   }, [serviceSend]);
@@ -380,7 +392,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     <MapStateMachineContext.Provider
       value={{
         mapSideBarViewState: state.context.mapSideBarState,
-        isShowingSearchBar: !state.context.mapSideBarState.isOpen && !state.context.isFiltering,
+        isShowingSearchBar:
+          !state.context.mapSideBarState.isOpen &&
+          !(
+            isShowingMapFilter ||
+            !dequal(state.context.advancedSearchCriteria, new PropertyFilterFormModel())
+          ),
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
@@ -392,6 +409,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         showPopup: showPopup,
         isLoading: state.context.isLoading,
         mapSearchCriteria: state.context.searchCriteria,
+        advancedSearchCriteria: state.context.advancedSearchCriteria,
         mapFeatureData: state.context.mapFeatureData,
         filePropertyLocations: state.context.filePropertyLocations,
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
@@ -399,7 +417,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
         isRepositioning: isRepositioning,
         selectingComponentId: state.context.selectingComponentId,
-        isFiltering: state.context.isFiltering,
+        isFiltering: !dequal(state.context.advancedSearchCriteria, new PropertyFilterFormModel()),
         isShowingMapFilter: isShowingMapFilter,
         isShowingMapLayers: isShowingMapLayers,
         activeLayers: state.context.activeLayers,
@@ -407,6 +425,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         showDisposed: state.context.showDisposed,
         showRetired: state.context.showRetired,
         mapLayersToRefresh: state.context.mapLayersToRefresh,
+        isMapVisible: state.matches({ mapVisible: {} }),
 
         setMapSearchCriteria,
         refreshMapProperties,
@@ -436,6 +455,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setDefaultMapLayers,
         setFullWidthSideBar,
         resetMapFilter,
+        setAdvancedSearchCriteria,
       }}
     >
       {children}

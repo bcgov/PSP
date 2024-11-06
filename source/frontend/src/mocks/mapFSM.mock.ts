@@ -6,6 +6,7 @@ import {
   emptyPmbcFeatureCollection,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
+import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { layersTree } from '@/components/maps/leaflet/Control/LayersControl/data';
 
 export const mapMachineBaseMock: IMapStateMachineContext = {
@@ -51,6 +52,8 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   showDisposed: false,
   showRetired: false,
   mapLayersToRefresh: [],
+  advancedSearchCriteria: new PropertyFilterFormModel(),
+  isMapVisible: true,
 
   requestFlyToLocation: vi.fn(),
 
@@ -81,4 +84,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setFullWidthSideBar: vi.fn(),
   resetMapFilter: vi.fn(),
   setMapLayersToRefresh: vi.fn(),
+  setAdvancedSearchCriteria: vi.fn(),
 };
