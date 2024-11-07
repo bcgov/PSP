@@ -42,13 +42,6 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const [showAddressLine3, setShowAddressLine3] = useState(false);
   const address = values.address;
 
-  useDeepCompareEffect(() => {
-    if (address !== undefined) {
-      setShowAddressLine2(!isEmpty(address.streetAddress2));
-      setShowAddressLine3(!isEmpty(address.streetAddress3));
-    }
-  }, [address]);
-
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
   const volumetricTypeOptions = getOptionsByType(API.PROPERTY_VOLUMETRIC_TYPES);
@@ -83,8 +76,16 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   // volume measurements table inputs
   const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
   const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
+  const provinceState = getIn(values, 'address.provinceStateId') as string | null;
 
   const setFieldValue = formikProps.setFieldValue;
+
+  useDeepCompareEffect(() => {
+    if (address !== undefined) {
+      setShowAddressLine2(!isEmpty(address.streetAddress2));
+      setShowAddressLine3(!isEmpty(address.streetAddress3));
+    }
+  }, [address]);
 
   // clear related fields when volumetric parcel radio changes
   useEffect(() => {
@@ -101,6 +102,12 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
       setFieldValue('roadTypes', []);
     }
   }, [isHighwayRoad, setFieldValue]);
+
+  useEffect(() => {
+    if (!provinceState) {
+      setFieldValue('address.provinceStateId', 1);
+    }
+  }, [provinceState, setFieldValue]);
 
   const cannotDetermineInfoText =
     'This means the property is out of bounds or there was an error at the time of determining this value. If needed, edit property details and pick the appropriate  value to update it.';
