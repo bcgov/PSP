@@ -1,5 +1,5 @@
 import clsx from 'classnames';
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { MapContainerProps } from 'react-leaflet';
 import styled from 'styled-components';
 
@@ -16,6 +16,8 @@ import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
 import PropertyActivityRouter from '@/features/mapSideBar/router/PropertyActivityRouter';
 import RightSideLayout from '@/features/rightSideLayout/RightSideLayout';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
+import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 
 enum MapCursors {
   DRAFT = 'draft-cursor',
@@ -32,7 +34,31 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
     isRepositioning,
     toggleMapFilterDisplay,
     toggleMapLayerControl,
+    setVisiblePimsProperties,
+    advancedSearchCriteria,
+    isMapVisible,
   } = useMapStateMachine();
+
+  const { getMatchingProperties } = usePimsPropertyRepository();
+
+  const matchProperties = getMatchingProperties.execute;
+
+  const filterProperties = useCallback(
+    async (filter: Api_PropertyFilterCriteria) => {
+      if (isMapVisible) {
+        const retrievedProperties = await matchProperties(filter);
+
+        if (retrievedProperties !== undefined) {
+          setVisiblePimsProperties(retrievedProperties);
+        }
+      }
+    },
+    [matchProperties, setVisiblePimsProperties, isMapVisible],
+  );
+
+  useEffect(() => {
+    filterProperties(advancedSearchCriteria?.toApi());
+  }, [filterProperties, advancedSearchCriteria]);
 
   const cursorClass = isSelecting
     ? MapCursors.DRAFT

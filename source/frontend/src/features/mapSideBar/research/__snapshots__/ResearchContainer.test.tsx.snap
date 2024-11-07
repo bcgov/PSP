@@ -894,7 +894,11 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   <div
                     class="col"
                   >
-                    File Summary
+                    <span
+                      title="File Details"
+                    >
+                      File Summary
+                    </span>
                   </div>
                   <div
                     class="c22"
@@ -927,6 +931,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                   >
                     <button
                       class="c3 Button btn btn-link"
+                      title="View"
                       type="button"
                     >
                       <div

@@ -8,7 +8,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
@@ -235,6 +235,15 @@ describe('UpdatePropertyDetailsForm component', () => {
     const province = container.querySelector(`select[name='address.provinceStateId']`);
 
     expect(addressLine1).toHaveValue('45 - 904 Hollywood Crescent');
+    expect(province).toHaveValue('1');
+  });
+
+  it('province defaults to BC when null', () => {
+    initialValues.address.provinceStateId = null;
+    const { container } = setup({ initialValues });
+    waitForEffects();
+
+    const province = container.querySelector(`select[name='address.provinceStateId']`);
     expect(province).toHaveValue('1');
   });
 });
