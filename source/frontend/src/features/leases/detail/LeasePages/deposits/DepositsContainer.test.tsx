@@ -80,7 +80,7 @@ describe('DepositsContainer', () => {
       },
       claims: [Claims.LEASE_EDIT],
     });
-    const editButton = getByTestId('edit-notes');
+    const editButton = getByTestId('edit-comments');
     await act(async () => userEvent.click(editButton));
     await fillInput(container, 'returnNotes', 'test note', 'textarea');
     const saveButton = getByText('Save');
@@ -100,7 +100,7 @@ describe('DepositsContainer', () => {
       },
       claims: [Claims.LEASE_EDIT],
     });
-    const editButton = getByTestId('edit-notes');
+    const editButton = getByTestId('edit-comments');
     await act(async () => userEvent.click(editButton));
     const noteField = await fillInput(container, 'returnNotes', 'test note', 'textarea');
     const cancelButton = getByText('Cancel');

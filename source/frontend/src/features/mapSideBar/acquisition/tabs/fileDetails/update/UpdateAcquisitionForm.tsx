@@ -23,6 +23,7 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces';
+import { ApiGen_CodeTypes_SubfileInterestTypes } from '@/models/api/generated/ApiGen_CodeTypes_SubfileInterestTypes';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { exists, isValidId, isValidString } from '@/utils';
@@ -82,6 +83,7 @@ const AcquisitionDetailSubForm: React.FC<{
   const fileStatusTypeCodes = getOptionsByType(API.ACQUISITION_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
   const ownerSolicitorContact = values.ownerSolicitor.contact;
+  const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTEREST_TYPES);
 
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
@@ -238,6 +240,15 @@ const AcquisitionDetailSubForm: React.FC<{
         >
           <FastDatePicker field="deliveryDate" formikProps={formikProps} />
         </SectionField>
+        <SectionField
+          label="Estimated date"
+          tooltip="Estimated date by which the acquisition would be completed"
+        >
+          <FastDatePicker field="estimatedCompletionDate" formikProps={formikProps} />
+        </SectionField>
+        <SectionField label="Possession date">
+          <FastDatePicker field="possessionDate" formikProps={formikProps} />
+        </SectionField>
       </Section>
 
       <Section header="Acquisition Details">
@@ -265,6 +276,38 @@ const AcquisitionDetailSubForm: React.FC<{
             required
           />
         </SectionField>
+
+        {isSubFile && (
+          <SectionField label="Sub-file interest" required>
+            <Select
+              field="subfileInterestTypeCode"
+              options={subfileInterestTypes}
+              placeholder="Select..."
+              onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                const selectedValue = [].slice
+                  .call(e.target.selectedOptions)
+                  .map((option: HTMLOptionElement & number) => option.value)[0];
+                if (
+                  !!selectedValue &&
+                  selectedValue !== ApiGen_CodeTypes_SubfileInterestTypes.OTHER
+                ) {
+                  formikProps.setFieldValue('otherSubfileInterestType', null);
+                } else {
+                  formikProps.setFieldValue('otherSubfileInterestType', '');
+                }
+              }}
+              required
+              data-testid="subfileInterestTypeCode"
+            />
+          </SectionField>
+        )}
+        {isSubFile &&
+          values?.subfileInterestTypeCode === ApiGen_CodeTypes_SubfileInterestTypes.OTHER && (
+            <SectionField label="" required>
+              <Input field="otherSubfileInterestType" placeholder="Describe other" required />
+            </SectionField>
+          )}
+
         <SectionField label="Ministry region" required>
           <UserRegionSelectContainer
             field="region"
@@ -284,12 +327,21 @@ const AcquisitionDetailSubForm: React.FC<{
         )}
       </Section>
 
-      <Section header="Owners">
-        <StyledSectionParagraph>
-          Each property in this file should be owned by the owner(s) in this section
-        </StyledSectionParagraph>
-        <UpdateAcquisitionOwnersSubForm />
-        <SectionField label="Owner solicitor" className="mt-4">
+      <Section header={isSubFile ? 'Sub-Interest' : 'Owners'}>
+        {isSubFile ? (
+          <StyledSectionParagraph>
+            Each property in this sub-file should be impacted by the sub-interest(s) in this section
+          </StyledSectionParagraph>
+        ) : (
+          <StyledSectionParagraph>
+            Each property in this file should be owned by the owner(s) in this section
+          </StyledSectionParagraph>
+        )}
+        <UpdateAcquisitionOwnersSubForm isSubFile={isSubFile} />
+        <SectionField
+          label={isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}
+          className="mt-4"
+        >
           <ContactInputContainer
             field="ownerSolicitor.contact"
             View={ContactInputView}
@@ -310,7 +362,7 @@ const AcquisitionDetailSubForm: React.FC<{
             )}
           </SectionField>
         )}
-        <SectionField label="Owner representative">
+        <SectionField label={isSubFile ? 'Sub-interest representative' : 'Owner representative'}>
           <ContactInputContainer
             field="ownerRepresentative.contact"
             View={ContactInputView}

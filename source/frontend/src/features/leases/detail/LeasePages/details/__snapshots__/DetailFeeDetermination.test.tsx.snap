@@ -236,7 +236,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
           <label
             class="c3"
           >
-            Notes:
+            Comments:
             <span>
               <span
                 class="tooltip-icon"
@@ -499,7 +499,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
           <label
             class="c3"
           >
-            Notes:
+            Comments:
             <span>
               <span
                 class="tooltip-icon"

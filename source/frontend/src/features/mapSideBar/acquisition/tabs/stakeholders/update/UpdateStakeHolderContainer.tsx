@@ -46,7 +46,7 @@ export const UpdateStakeHolderContainer: React.FunctionComponent<
     try {
       if (acquisitionFile?.id) {
         const stakeholders = StakeHolderForm.toApi(interestHolders);
-        // Add the other non interest holder concats
+        // Add the other non interest holder contacts
         const otherInterestHolders =
           apiInterestHolders?.filter(
             x => x.interestHolderType?.id !== InterestHolderType.INTEREST_HOLDER,

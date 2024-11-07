@@ -113,7 +113,6 @@ namespace PIMS.Tests.Automation.PageObjects
             var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Equals(option)).Subject;
 
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-
             selectedOption.Click();
         }
 

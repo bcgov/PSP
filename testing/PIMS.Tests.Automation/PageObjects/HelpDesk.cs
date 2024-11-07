@@ -5,7 +5,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class HelpDesk : PageObjectBase
     {
         //Help Desk Main Button
-        private By mainMenuHelpDeskBttn = By.CssSelector("div[class='nav-item'] svg");
+        private By mainMenuHelpDeskBttn = By.CssSelector("header div[class='nav-item'] div");
 
         //Modal Header
         private By mainMenuHeader = By.XPath("//div[contains(text(),'Help Desk')]");
@@ -13,7 +13,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Modal Content
         private By helpDeskSubtitle = By.XPath("//h3[contains(text(),'Get started with PIMS')]");
         private By helpDeskDescription = By.XPath("//p[contains(text(),'This overview has useful tools that will support you to start using the application. You can also watch the video demos.')]");
-        private By helpDeskPIMSResourcesLink = By.XPath("//a[contains(text(),'PIMS Resources')]");
+        private By helpDeskPIMSResourcesLink = By.XPath("//a[contains(text(),'PIMS Training Materials')]");
 
         private By helpDeskContactUsSubtitle = By.XPath("//h3[contains(text(),'Contact us')]");
         private By helpDeskUserLabel = By.XPath("//label[contains(text(),'Name')]");
@@ -26,7 +26,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Help Desk Buttons Elements
         private By noButton = By.CssSelector("button[data-testid='cancel-modal-button']");
-        private By yesButton = By.CssSelector("a[data-testid='ok-modal-button']");
+        private By yesButton = By.CssSelector("div[class='modal-footer'] button[data-testid='ok-modal-button']");
 
         public HelpDesk(IWebDriver webDriver) : base(webDriver)
         {}
@@ -34,7 +34,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToHelpDesk()
         {
             Wait();
-            webDriver.FindElement(mainMenuHelpDeskBttn).Click();
+            FocusAndClick(mainMenuHelpDeskBttn);
         }
 
         public void VerifyHelpDeskModal()

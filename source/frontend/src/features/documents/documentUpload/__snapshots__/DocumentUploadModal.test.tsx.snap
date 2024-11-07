@@ -1,0 +1,590 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DocumentUploadModal component > renders correctly 1`] = `
+.c12.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c12.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c12.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c12.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c12.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c12.btn.btn-primary:hover,
+.c12.btn.btn-primary:active,
+.c12.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c12.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c12.btn.btn-secondary:hover,
+.c12.btn.btn-secondary:active,
+.c12.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c12.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c12.btn.btn-info:hover,
+.c12.btn.btn-info:active,
+.c12.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c12.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c12.btn.btn-light:hover,
+.c12.btn.btn-light:active,
+.c12.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c12.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c12.btn.btn-dark:hover,
+.c12.btn.btn-dark:active,
+.c12.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c12.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c12.btn.btn-danger:hover,
+.c12.btn.btn-danger:active,
+.c12.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c12.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c12.btn.btn-warning:hover,
+.c12.btn.btn-warning:active,
+.c12.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c12.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c12.btn.btn-link:hover,
+.c12.btn.btn-link:active,
+.c12.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c12.btn.btn-link:disabled,
+.c12.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c12.btn:disabled,
+.c12.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c12.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c12.Button--icon-only:focus {
+  outline: none;
+}
+
+.c12.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c1 {
+  width: 0.8rem;
+}
+
+.c11 {
+  min-width: 2.4rem;
+}
+
+.c10 {
+  padding: 0px;
+  margin: 0px;
+  margin-left: 1.6rem;
+  margin-right: 1.6rem;
+}
+
+.c0 .modal-header {
+  height: 4.8rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  color: #FFFFFF;
+  background-color: #053662;
+  cursor: default;
+}
+
+.c0 .modal-header .modal-title {
+  font-family: BcSans-Bold;
+  font-size: 2.2rem;
+  -webkit-align-self: center;
+  -ms-flex-item-align: center;
+  align-self: center;
+}
+
+.c0 .modal-header .modal-close-btn {
+  margin-left: auto;
+  cursor: pointer;
+}
+
+.c0 .modal-header .close {
+  margin-left: auto;
+  color: white;
+  opacity: 1;
+  font-size: 3rem;
+  font-weight: 10;
+  text-shadow: none;
+  font-family: 'Helvetica Narrow';
+}
+
+.c0 .modal-body {
+  padding-top: 2.4rem;
+  padding-bottom: 2.4rem;
+  padding-left: 1.6rem;
+  padding-right: 1.6rem;
+}
+
+.c0 .modal-footer {
+  border: 0px;
+  padding-top: 3.6rem;
+  padding-bottom: 3.6rem;
+  padding-left: 1.6rem;
+  padding-right: 3.6rem;
+}
+
+.c0 .modal-footer .button-wrap {
+  margin: 0px;
+  padding: 0px;
+  display: -webkit-inline-box;
+  display: -webkit-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c0 .modal-footer .button-wrap .Button {
+  min-width: 9.5rem;
+  height: 3.9rem;
+}
+
+.c0 .close {
+  color: black;
+}
+
+.c0 .modal-xl {
+  max-width: 100rem;
+}
+
+.c0 .modal-l {
+  max-width: 75rem;
+}
+
+.c0 .modal-m {
+  max-width: 60rem;
+}
+
+.c0 .modal-s {
+  max-width: 40rem;
+}
+
+.c0.info-variant .modal-header {
+  color: #053662;
+  background-color: #d9eaf7;
+}
+
+.c0.info-variant .modal-close-btn {
+  color: #474543;
+  cursor: pointer;
+}
+
+.c0.error-variant .modal-header {
+  color: #CE3E39;
+  background-color: #f2dede;
+}
+
+.c0.error-variant .modal-close-btn {
+  color: #474543;
+  cursor: pointer;
+}
+
+.c0.warning-variant .modal-header {
+  color: #6c4a00;
+  background-color: #fef1d8;
+}
+
+.c0.warning-variant .modal-close-btn {
+  color: #474543;
+  cursor: pointer;
+}
+
+.c4 {
+  border: 1px solid #606060;
+  border-style: dashed;
+  height: 10rem;
+  line-height: 10rem;
+  text-align: center;
+}
+
+.c5 {
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.c6 {
+  display: inline-block;
+  color: var(--surface-color-primary-button-default);
+  cursor: pointer;
+}
+
+.c6:hover {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c7 {
+  display: none;
+}
+
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+.c8 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.c9 {
+  overflow-x: hidden;
+  max-height: 50rem;
+}
+
+<body
+  class="modal-open"
+  style="padding-right: 0px;"
+>
+  <div
+    aria-hidden="true"
+  >
+    <div
+      class="Toastify"
+    />
+    <div />
+    <div />
+  </div>
+  <div
+    class="fade modal-backdrop show"
+  />
+  <div
+    aria-modal="true"
+    class="fade c0 info-variant modal show"
+    role="dialog"
+    style="display: block;"
+    tabindex="-1"
+  >
+    <div
+      class="modal-dialog modal-l info-variant"
+      variant="info"
+    >
+      <div
+        class="modal-content"
+      >
+        <div
+          class="modal-header"
+        >
+          <div
+            class="header-icon"
+          >
+            <svg
+              fill="currentColor"
+              height="22"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="22"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"
+              />
+            </svg>
+          </div>
+          <span
+            class="c1"
+          />
+          <div
+            class="modal-title h4"
+          >
+            Add Document
+          </div>
+          <div
+            class="modal-close-btn"
+          >
+            <svg
+              fill="currentColor"
+              height="24"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+              />
+            </svg>
+          </div>
+        </div>
+        <div
+          class="modal-body"
+          style="white-space: pre-line;"
+        >
+          <div
+            class="mb-4 row"
+          >
+            <div
+              class="pr-0 text-left col-12"
+            >
+              <label
+                class="c2"
+              >
+                Choose a max of 10 files to attach at the time
+                :
+              </label>
+            </div>
+            <div
+              class="c3 text-left col"
+            >
+              <div
+                class="pt-2"
+              />
+              <div>
+                <div
+                  class="c4"
+                >
+                  <div
+                    class="c5"
+                  >
+                    Drag files here to attach or
+                     
+                    <label
+                      class="c6"
+                    >
+                      Browse
+                      <input
+                        accept=".txt,.pdf,.docx,.doc,.xlsx,.xls,.html,.odt,.png,.jpg,.bmp,.tif,.tiff,.jpeg,.gif,.shp,.gml,.kml,.kmz,.msg"
+                        class="c7"
+                        data-testid="upload-input"
+                        id="uploadInput"
+                        multiple=""
+                        name="documentFile"
+                        type="file"
+                      />
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c8 c9"
+          />
+          <div
+            class="pt-4"
+          />
+        </div>
+        <hr
+          class="c10"
+        />
+        <div
+          class="modal-footer"
+        >
+          <div
+            class="button-wrap"
+          >
+            <span
+              class="c11"
+            />
+            <button
+              class="c12 Button btn btn-secondary"
+              data-testid="cancel-modal-button"
+              title="cancel-modal"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                No
+              </div>
+            </button>
+            <span
+              class="c11"
+            />
+            <button
+              class="c12 Button Button--disabled btn btn-primary"
+              data-testid="ok-modal-button"
+              disabled=""
+              title="ok-modal"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                Yes
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+`;

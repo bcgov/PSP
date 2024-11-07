@@ -29,7 +29,9 @@ export class AddressFormModel {
   streetAddress3?: string;
   municipality?: string;
   postal?: string;
+  provinceStateId: number | null;
   province?: ApiGen_Concepts_CodeType;
+  countryId: number | null;
   country?: ApiGen_Concepts_CodeType;
 
   static fromApi(apiAddress: ApiGen_Concepts_Address): AddressFormModel {
@@ -41,7 +43,9 @@ export class AddressFormModel {
     model.streetAddress3 = apiAddress.streetAddress3 ?? undefined;
     model.municipality = apiAddress.municipality ?? undefined;
     model.postal = apiAddress.postal ?? undefined;
+    model.provinceStateId = apiAddress.provinceStateId;
     model.province = apiAddress.province ?? undefined;
+    model.countryId = apiAddress.countryId;
     model.country = apiAddress.country ?? undefined;
 
     return model;
@@ -61,15 +65,15 @@ export class AddressFormModel {
       streetAddress3: this.streetAddress3 ?? null,
       municipality: this.municipality ?? null,
       postal: this.postal ?? null,
+      provinceStateId: this.provinceStateId,
       province: this.province ?? null,
+      countryId: this.countryId,
       country: this.country ?? null,
       comment: null,
-      countryId: null,
       countryOther: null,
       district: null,
       latitude: null,
       longitude: null,
-      provinceStateId: null,
       region: null,
       regionCode: null,
       districtCode: null,

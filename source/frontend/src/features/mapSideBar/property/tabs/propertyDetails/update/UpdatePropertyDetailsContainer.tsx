@@ -106,14 +106,14 @@ export const UpdatePropertyDetailsContainer = React.forwardRef<
         if (values.address !== undefined) {
           values.address.province = {
             id: Number(provinceBC?.id),
-            code: null,
-            description: null,
+            code: 'BC',
+            description: 'British Columbia',
             displayOrder: null,
           };
           values.address.country = {
             id: Number(countryCA?.id),
-            code: null,
-            description: null,
+            code: 'CA',
+            description: 'Canada',
             displayOrder: null,
           };
         }

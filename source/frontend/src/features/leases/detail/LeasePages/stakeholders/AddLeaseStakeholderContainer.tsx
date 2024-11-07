@@ -1,6 +1,8 @@
+import axios, { AxiosError } from 'axios';
 import { FormikProps } from 'formik/dist/types';
 import { filter, find, orderBy, some } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
@@ -9,6 +11,7 @@ import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IContactSearchResult } from '@/interfaces';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
@@ -26,6 +29,7 @@ interface IAddLeaseStakeholderContainerProps {
   onEdit?: (isEditing: boolean) => void;
   stakeholders: FormStakeholder[];
   onSuccess: () => void;
+  refreshLease: () => void;
   View: React.FunctionComponent<
     React.PropsWithChildren<IAddLeaseStakeholderFormProps & IPrimaryContactWarningModalProps>
   >;
@@ -41,6 +45,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
   View,
   stakeholders: initialStakeholders,
   onSuccess,
+  refreshLease,
   isPayableLease,
 }) => {
   const { lease } = useContext(LeaseStateContext);
@@ -152,7 +157,26 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
             }),
           });
           onEdit && onEdit(false);
+          refreshLease && refreshLease();
           onSuccess();
+        }
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          if (axiosError?.response?.status === 409) {
+            toast.error(axiosError?.response.data.error);
+            formikRef?.current?.resetForm();
+            setStakeholders(initialStakeholders ?? []);
+            setSelectedContacts(
+              initialStakeholders?.map(t => FormStakeholder.toContactSearchResult(t)) ?? [],
+            );
+          } else {
+            if (axiosError.response?.status === 400) {
+              toast.error(axiosError.response.data.error);
+            } else {
+              toast.error('Unable to save. Please try again.');
+            }
+          }
         }
       } finally {
         formikRef?.current?.setSubmitting(false);

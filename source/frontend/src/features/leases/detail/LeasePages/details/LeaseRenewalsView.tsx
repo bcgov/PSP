@@ -32,7 +32,7 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
               <SectionField label="Expiry">{prettyFormatDate(renewal.expiryDt)}</SectionField>
             </Col>
           </Row>
-          <SectionField label="Notes" labelWidth="3">
+          <SectionField label="Comments" labelWidth="3">
             {renewal.renewalNote}
           </SectionField>
         </Section>

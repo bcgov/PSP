@@ -42,13 +42,6 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const [showAddressLine3, setShowAddressLine3] = useState(false);
   const address = values.address;
 
-  useDeepCompareEffect(() => {
-    if (address !== undefined) {
-      setShowAddressLine2(!isEmpty(address.streetAddress2));
-      setShowAddressLine3(!isEmpty(address.streetAddress3));
-    }
-  }, [address]);
-
   // Lookup codes
   const { getByType, getOptionsByType } = useLookupCodeHelpers();
   const volumetricTypeOptions = getOptionsByType(API.PROPERTY_VOLUMETRIC_TYPES);
@@ -63,6 +56,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const roadTypeOptions = getByType(API.PROPERTY_ROAD_TYPES).map(x =>
     PropertyRoadFormModel.fromLookup(x),
   );
+  const provinceOptions = getOptionsByType(API.PROVINCE_TYPES);
   const regionOptions = getOptionsByType(API.REGION_TYPES);
   const districtOptions = getOptionsByType(API.DISTRICT_TYPES);
 
@@ -82,8 +76,16 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   // volume measurements table inputs
   const volumetricMeasurement = getIn(values, 'volumetricMeasurement') as number;
   const volumetricUnit = getIn(values, 'volumetricUnitTypeCode') as string;
+  const provinceState = getIn(values, 'address.provinceStateId') as string | null;
 
   const setFieldValue = formikProps.setFieldValue;
+
+  useDeepCompareEffect(() => {
+    if (address !== undefined) {
+      setShowAddressLine2(!isEmpty(address.streetAddress2));
+      setShowAddressLine3(!isEmpty(address.streetAddress3));
+    }
+  }, [address]);
 
   // clear related fields when volumetric parcel radio changes
   useEffect(() => {
@@ -100,6 +102,12 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
       setFieldValue('roadTypes', []);
     }
   }, [isHighwayRoad, setFieldValue]);
+
+  useEffect(() => {
+    if (!provinceState) {
+      setFieldValue('address.provinceStateId', 1);
+    }
+  }, [provinceState, setFieldValue]);
 
   const cannotDetermineInfoText =
     'This means the property is out of bounds or there was an error at the time of determining this value. If needed, edit property details and pick the appropriate  value to update it.';
@@ -169,6 +177,13 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         <SectionField label="City">
           <Input field="address.municipality" />
         </SectionField>
+        <SectionField label="Province">
+          <Select
+            field="address.provinceStateId"
+            options={provinceOptions}
+            placeholder={values.address?.provinceStateId === null ? undefined : 'Please Select'}
+          />
+        </SectionField>
         <SectionField label="Postal code">
           <Input field="address.postal" />
         </SectionField>
@@ -177,10 +192,10 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </SectionField>
       </Section>
       <Section header="Property Attributes">
-        <SectionField label="Historical File #">
+        <SectionField label="Historical file #">
           <UpdateHistoricalNumbersSubForm propertyId={values?.id ?? 0} />
         </SectionField>
-        <SectionField label="Legal Description">
+        <SectionField label="Legal description">
           <TextArea field="landLegalDescription" />
         </SectionField>
         <SectionField label="MOTI region">
@@ -208,7 +223,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         <SectionField label="Electoral district">
           <Text field="electoralDistrict.ED_NAME" />
         </SectionField>
-        <SectionField label="Agricultural Land Reserve">
+        <SectionField label="Agricultural land reserve">
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
         </SectionField>
         <SectionField label="Railway belt / Dominion patent">
@@ -245,7 +260,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
             options={tenureOptions}
           />
         </SectionField>
-        <SectionField label="Provincial Public Hwy">
+        <SectionField label="Provincial public hwy">
           <Select field="pphStatusTypeCode" options={pphTypeOptions} />
           {values?.pphStatusUpdateTimestamp && (
             <p className="text-right font-italic">
@@ -339,7 +354,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         )}
       </Section>
 
-      <Section header="Notes">
+      <Section header="Comments">
         <TextArea field="notes" rows={4} />
       </Section>
     </StyledSummarySection>

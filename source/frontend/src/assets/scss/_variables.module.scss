@@ -23,6 +23,8 @@
   linkColor: $link-color;
   linkHoverColor: $link-hover-color;
   activeActionColor: $active-action-color;
+  primaryHoverActionColor: $primary-hover-action-color;
+  primaryActiveActionColor: $primary-active-action-color;
   hoverActionColor: $hover-action-color;
   headerTextColor: $header-text-color;
   headerBorderColor: $header-border-color;
@@ -41,4 +43,6 @@
   variableColor: $variable-color;
 
   uploadFileCheckColor: $upload-file-check-color;
+  iconBlueAction: $icons-color-secondary;
+  iconBlueHover: $icons-hover-secondary;
 }

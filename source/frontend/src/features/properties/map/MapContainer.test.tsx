@@ -35,6 +35,7 @@ import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import MapContainer from './MapContainer';
+import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -87,17 +88,17 @@ interface ParcelSeed {
 }
 
 export const largeMockParcels: ParcelSeed[] = [
-  { id: 1, latitude: 53.917061, longitude: -122.749672 },
-  { id: 2, latitude: 53.917062, longitude: -122.749692 },
-  { id: 3, latitude: 53.917063, longitude: -122.749682 },
-  { id: 4, latitude: 53.917064, longitude: -122.749672 },
-  { id: 5, latitude: 53.917065, longitude: -122.749662 },
-  { id: 6, latitude: 53.917066, longitude: -122.749652 },
-  { id: 7, latitude: 53.917067, longitude: -122.749642 },
-  { id: 8, latitude: 53.917068, longitude: -122.749632 },
-  { id: 9, latitude: 53.917069, longitude: -122.749622 },
-  { id: 10, latitude: 53.917071, longitude: -122.749612 },
-  { id: 11, latitude: 53.918172, longitude: -122.749772 },
+  { id: 1, latitude: 53.917061, longitude: -122.749672, propertyId: 1 },
+  { id: 2, latitude: 53.917062, longitude: -122.749692, propertyId: 2 },
+  { id: 3, latitude: 53.917063, longitude: -122.749682, propertyId: 3 },
+  { id: 4, latitude: 53.917064, longitude: -122.749672, propertyId: 4 },
+  { id: 5, latitude: 53.917065, longitude: -122.749662, propertyId: 5 },
+  { id: 6, latitude: 53.917066, longitude: -122.749652, propertyId: 6 },
+  { id: 7, latitude: 53.917067, longitude: -122.749642, propertyId: 7 },
+  { id: 8, latitude: 53.917068, longitude: -122.749632, propertyId: 8 },
+  { id: 9, latitude: 53.917069, longitude: -122.749622, propertyId: 9 },
+  { id: 10, latitude: 53.917071, longitude: -122.749612, propertyId: 10 },
+  { id: 11, latitude: 53.918172, longitude: -122.749772, propertyId: 11 },
 ];
 
 export const distantMockParcels: ParcelSeed[] = [
@@ -122,23 +123,38 @@ export const createPimsFeatures = (
           PROPERTY_ID: x.propertyId ?? null,
           PID: x.pid ?? null,
           IS_OWNED: true,
+          IS_OTHER_INTEREST: true,
         },
       };
     }),
   };
 };
 
+const mockGetApi = {
+  error: undefined,
+  response: [1] as number[] | undefined,
+  execute: vi.fn().mockResolvedValue([1]),
+  loading: false,
+};
+vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
+  usePimsPropertyRepository: () => {
+    return {
+      getMatchingProperties: mockGetApi,
+    };
+  },
+}));
+
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const smallMockParcels: ParcelSeed[] = [
-  { id: 1, latitude: 54.917061, longitude: -122.749672 },
-  { id: 3, latitude: 54.918162, longitude: -122.749772 },
+  { id: 1, latitude: 54.917061, longitude: -122.749672, propertyId: 1 },
+  { id: 3, latitude: 54.918162, longitude: -122.749772, propertyId: 2 },
 ];
 
 // This mocks the parcels of land a user can see - render a cluster and a marker
 const mockParcels: ParcelSeed[] = [
-  { id: 1, latitude: 55.917161, longitude: -122.749612, pid: 7771 },
-  { id: 2, latitude: 55.917262, longitude: -122.749622, pid: 7772 },
-  { id: 3, latitude: 55.917363, longitude: -122.749732, pid: 7773 },
+  { id: 1, latitude: 55.917161, longitude: -122.749612, pid: 7771, propertyId: 1 },
+  { id: 2, latitude: 55.917262, longitude: -122.749622, pid: 7772, propertyId: 2 },
+  { id: 3, latitude: 55.917363, longitude: -122.749732, pid: 7773, propertyId: 3 },
 ];
 
 // This will spoof the active parcel (the one that will populate the popup details)
@@ -155,6 +171,25 @@ let history = createMemoryHistory();
 
 describe('MapContainer', () => {
   const setup = async (renderOptions: RenderOptions = {}) => {
+    const activePimsPropertyIds = mockParcels.map(mp => mp.propertyId);
+    const defaultMapMachine = {
+      ...mapMachineBaseMock,
+      activePimsPropertyIds: activePimsPropertyIds,
+      mapFeatureData: {
+        pimsLocationFeatures: createPimsFeatures(mockParcels),
+        pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+        fullyAttributedFeatures: emptyPmbcFeatureCollection,
+      },
+    };
+    if (
+      renderOptions?.mockMapMachine?.mapFeatureData?.pimsLocationFeatures &&
+      !renderOptions?.mockMapMachine?.activePimsPropertyIds?.length
+    ) {
+      renderOptions.mockMapMachine.activePimsPropertyIds =
+        renderOptions.mockMapMachine.mapFeatureData.pimsLocationFeatures?.features.map(
+          mp => mp.properties.PROPERTY_ID,
+        );
+    }
     const utils = render(
       <>
         <MapContainer />
@@ -162,14 +197,7 @@ describe('MapContainer', () => {
       {
         store,
         history,
-        mockMapMachine: {
-          ...mapMachineBaseMock,
-          mapFeatureData: {
-            pimsLocationFeatures: createPimsFeatures(mockParcels),
-            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            fullyAttributedFeatures: emptyPmbcFeatureCollection,
-          },
-        },
+        mockMapMachine: defaultMapMachine,
         ...renderOptions,
         useMockAuthentication: true,
       },
@@ -484,5 +512,25 @@ describe('MapContainer', () => {
 
     // verify the correct feature got clicked
     expect(testMapMock.mapMarkerClick).toHaveBeenCalledWith(expectedFeature);
+  });
+
+  it('calls matchproperties with advanced search criteria', async () => {
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
+    const testMapMock: IMapStateMachineContext = {
+      ...mapMachineBaseMock,
+      isMapVisible: false,
+    };
+    await setup({ mockMapMachine: testMapMock });
+
+    expect(mockGetApi.execute).not.toHaveBeenCalled();
+    expect(mapMachineBaseMock.setVisiblePimsProperties).not.toHaveBeenCalled();
+  });
+
+  it('Does not call matchproperties with advanced search criteria if map not visible', async () => {
+    mockKeycloak({ claims: [Claims.ADMIN_PROPERTIES] });
+    await setup();
+
+    expect(mockGetApi.execute).toHaveBeenCalledWith(new PropertyFilterFormModel().toApi());
+    expect(mapMachineBaseMock.setVisiblePimsProperties).toHaveBeenCalled();
   });
 });
