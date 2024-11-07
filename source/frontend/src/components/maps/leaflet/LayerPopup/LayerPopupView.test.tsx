@@ -247,7 +247,7 @@ describe('LayerPopupView component', () => {
     });
 
     it('only shows research file option if file disposed or retired', async () => {
-      const { getByTestId, getByText, queryByText } = setup({
+      const { getByTestId, getByText } = setup({
         layerPopup: {
           latlng: undefined,
           layers: [],
@@ -278,14 +278,19 @@ describe('LayerPopupView component', () => {
           crownLandInclusionsFeature: null,
         },
 
-        claims: [Claims.RESEARCH_ADD],
+        claims: [
+          Claims.RESEARCH_ADD,
+          Claims.ACQUISITION_ADD,
+          Claims.DISPOSITION_ADD,
+          Claims.LEASE_ADD,
+        ],
       });
       const ellipsis = getByTestId('fly-out-ellipsis');
       await act(async () => userEvent.click(ellipsis));
       const link = getByText('Research File');
-      expect(queryByText('Acquisition File')).toBeNull();
-      expect(queryByText('Disposition File')).toBeNull();
-      expect(queryByText('Lease/Licence File')).toBeNull();
+      expect(getByText('Acquisition File')).toBeVisible();
+      expect(getByText('Disposition File')).toBeVisible();
+      expect(getByText('Lease/Licence File')).toBeVisible();
       expect(link).toBeVisible();
     });
 
