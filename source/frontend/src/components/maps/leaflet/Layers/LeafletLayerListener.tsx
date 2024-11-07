@@ -4,13 +4,14 @@ import { useEffect } from 'react';
 import { useMap } from 'react-leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { exists } from '@/utils';
 
 import { wmsHeaders } from '../Control/LayersControl/wmsHeaders';
 
 const featureGroup = new L.FeatureGroup<L.TileLayer.WMS>();
 export const LeafletLayerListener = () => {
-  const { activeLayers } = useMapStateMachine();
+  const { activeLayers, mapLayersToRefresh, setMapLayersToRefresh } = useMapStateMachine();
   const mapInstance = useMap();
 
   useEffect(() => {
@@ -22,6 +23,21 @@ export const LeafletLayerListener = () => {
       mapInstance?.removeLayer(featureGroup);
     };
   }, [mapInstance]);
+
+  useDeepCompareEffect(() => {
+    if (mapLayersToRefresh?.length) {
+      const currentLayers = featureGroup.getLayers().filter(exists);
+      mapLayersToRefresh.forEach(configLayer => {
+        const currentLayer = currentLayers.find(l => (l as any).options.key === configLayer.key);
+
+        if (currentLayer) {
+          featureGroup.removeLayer(currentLayer);
+          featureGroup.addLayer(currentLayer);
+        }
+      });
+      setMapLayersToRefresh([]);
+    }
+  }, [mapInstance, mapLayersToRefresh, setMapLayersToRefresh]);
 
   useEffect(() => {
     if (mapInstance) {
