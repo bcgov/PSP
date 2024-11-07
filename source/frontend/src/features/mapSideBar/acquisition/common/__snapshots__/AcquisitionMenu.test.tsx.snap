@@ -306,7 +306,11 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
       <div
         class="col"
       >
-        one
+        <span
+          title="File Details"
+        >
+          one
+        </span>
       </div>
       <div
         class="c2"
@@ -366,6 +370,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
       >
         <button
           class="c6 Button btn btn-link"
+          title="View"
           type="button"
         >
           <div
@@ -397,6 +402,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
       >
         <button
           class="c6 Button btn btn-link"
+          title="View"
           type="button"
         >
           <div

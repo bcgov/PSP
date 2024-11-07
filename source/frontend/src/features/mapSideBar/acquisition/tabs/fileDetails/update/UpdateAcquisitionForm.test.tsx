@@ -10,14 +10,14 @@ import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
-  render,
-  RenderOptions,
-  userEvent,
-  waitFor,
-  screen,
-  waitForEffects,
   fakeText,
   fireEvent,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { UpdateAcquisitionSummaryFormModel } from './models';
