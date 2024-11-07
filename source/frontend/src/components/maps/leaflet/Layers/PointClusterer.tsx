@@ -18,11 +18,12 @@ import {
   PIMS_Property_Boundary_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
+import { exists } from '@/utils';
 
 import { ONE_HUNDRED_METER_PRECISION } from '../../constants';
 import SinglePropertyMarker from '../Markers/SingleMarker';
 import { Spiderfier, SpiderSet } from './Spiderfier';
-import { getDraftIcon, pointToLayer, zoomToCluster } from './util';
+import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './util';
 
 export type PointClustererProps = {
   bounds?: BBox;
@@ -100,38 +101,23 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> =
     useMemo(() => {
-      if (mapMachine.isFiltering && mapMachine.mapFeatureData.pimsLocationFeatures !== null) {
-        let filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(x =>
-          mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
-        );
+      let filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(x =>
+        mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
+      );
 
-        // allow clustering of retired properties when advanced filter is open
-        if (!mapMachine.showRetired) {
-          filteredFeatures = filteredFeatures.filter(x => !x.properties.IS_RETIRED);
-        }
-
-        return {
-          type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
-          features: filteredFeatures,
-        };
-      } else {
-        if (mapMachine.mapFeatureData.pimsLocationFeatures !== null) {
-          // By default, all properties that are marked as retired, are not displayed on the map, regardless of other states on the property
-          const filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(
-            x => !x.properties.IS_RETIRED,
-          );
-
-          return {
-            type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
-            features: filteredFeatures,
-          };
-        }
-
-        return mapMachine.mapFeatureData.pimsLocationFeatures;
+      if (!mapMachine.showRetired) {
+        filteredFeatures = filteredFeatures.filter(x => !x.properties.IS_RETIRED);
       }
+
+      // Do not cluster any points that do not have markers on the map.
+      const displayableFeatures = filteredFeatures.filter(f => exists(getMarkerIcon(f, false)));
+
+      return {
+        type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
+        features: displayableFeatures,
+      };
     }, [
       mapMachine.activePimsPropertyIds,
-      mapMachine.isFiltering,
       mapMachine.mapFeatureData.pimsLocationFeatures,
       mapMachine.showRetired,
     ]);

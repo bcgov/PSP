@@ -81,7 +81,7 @@ describe('DepositNotes component', () => {
       claims: [Claims.LEASE_EDIT],
       disabled: true,
     });
-    const editButton = getByTestId('edit-notes');
+    const editButton = getByTestId('edit-comments');
     await act(async () => userEvent.click(editButton));
     expect(onEdit).toHaveBeenCalled();
   });

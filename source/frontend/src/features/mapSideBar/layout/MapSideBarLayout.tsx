@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { ExpandCollapseButton } from '@/components/common/buttons/ExpandCollapseButton';
@@ -23,8 +22,15 @@ export interface IMapSideBarLayoutProps {
  */
 const MapSideBarLayout: React.FunctionComponent<
   React.PropsWithChildren<IMapSideBarLayoutProps>
-> = ({ title, header, icon, showCloseButton, ...props }) => {
+> = ({ title, header, icon, showCloseButton, onClose, ...props }) => {
   const { mapSideBarViewState, toggleSidebarDisplay } = useMapStateMachine();
+
+  const close = useCallback(() => {
+    if (typeof onClose === 'function') {
+      onClose();
+    }
+  }, [onClose]);
+
   return (
     <StyledSidebarWrapper className={mapSideBarViewState.isCollapsed ? '' : 'expanded'}>
       {mapSideBarViewState.isCollapsed ? (
@@ -34,7 +40,7 @@ const MapSideBarLayout: React.FunctionComponent<
               {icon}
             </Col>
           </Row>
-          <Underline className="mb-4" />
+          <Styled.Underline className="mb-4" />
           <Row>
             <StyledButtonBar xs={12} className="align-items-center d-flex flex-column-reverse">
               <TooltipWrapper tooltipId="expand-sidebar-tooltip-expand" tooltip={'Expand Screen'}>
@@ -47,7 +53,7 @@ const MapSideBarLayout: React.FunctionComponent<
               </TooltipWrapper>
               {showCloseButton && (
                 <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
-                  <CloseIcon title="close" onClick={props.onClose} />
+                  <Styled.CloseIcon title="close" onClick={close} />
                 </TooltipWrapper>
               )}
             </StyledButtonBar>
@@ -80,12 +86,12 @@ const MapSideBarLayout: React.FunctionComponent<
               <Styled.VerticalLine />
               {showCloseButton && (
                 <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
-                  <CloseIcon title="close" onClick={props.onClose} />
+                  <Styled.CloseIcon title="close" onClick={close} />
                 </TooltipWrapper>
               )}
             </StyledButtonBar>
           </Row>
-          <Underline />
+          <Styled.Underline />
         </>
       )}
       <Content className={mapSideBarViewState.isCollapsed ? 'd-none' : ''}>
@@ -134,16 +140,5 @@ const Header = styled.div`
 `;
 
 const Footer = styled.div``;
-
-const Underline = styled.div`
-  width: 100%;
-  border-bottom: solid 0.5rem ${props => props.theme.bcTokens.themeBlue80};
-`;
-
-const CloseIcon = styled(FaWindowClose)`
-  color: ${props => props.theme.css.textColor};
-  font-size: 2.4rem;
-  cursor: pointer;
-`;
 
 export default MapSideBarLayout;

@@ -20,6 +20,7 @@ namespace Pims.Dal.Entities;
 [Index("ProductId", Name = "ACQNFL_PRODUCT_ID_IDX")]
 [Index("ProjectId", Name = "ACQNFL_PROJECT_ID_IDX")]
 [Index("RegionCode", Name = "ACQNFL_REGION_CODE_IDX")]
+[Index("SubfileInterestTypeCode", Name = "ACQNFL_SUBFILE_INTEREST_TYPE_CODE_IDX")]
 public partial class PimsAcquisitionFile
 {
     /// <summary>
@@ -82,6 +83,13 @@ public partial class PimsAcquisitionFile
     /// </summary>
     [Column("REGION_CODE")]
     public short RegionCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_SUBFILE_INTEREST_TYPE table.
+    /// </summary>
+    [Column("SUBFILE_INTEREST_TYPE_CODE")]
+    [StringLength(20)]
+    public string SubfileInterestTypeCode { get; set; }
 
     /// <summary>
     /// Descriptive name given to the acquisition file.
@@ -149,6 +157,25 @@ public partial class PimsAcquisitionFile
     /// </summary>
     [Column("TOTAL_ALLOWABLE_COMPENSATION", TypeName = "money")]
     public decimal? TotalAllowableCompensation { get; set; }
+
+    /// <summary>
+    /// If the user selects ?Other? then they will need to provide a subfile type description, which will be displayed as &apos;Other - &lt;description&gt;
+    /// </summary>
+    [Column("OTHER_SUBFILE_INTEREST_TYPE")]
+    [StringLength(200)]
+    public string OtherSubfileInterestType { get; set; }
+
+    /// <summary>
+    /// Estimated date by which the acquisition would be completed.
+    /// </summary>
+    [Column("EST_COMPLETION_DT", TypeName = "datetime")]
+    public DateTime? EstCompletionDt { get; set; }
+
+    /// <summary>
+    /// Date of possession following acquisition completion.
+    /// </summary>
+    [Column("POSSESSION_DT", TypeName = "datetime")]
+    public DateTime? PossessionDt { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -307,4 +334,8 @@ public partial class PimsAcquisitionFile
     [ForeignKey("RegionCode")]
     [InverseProperty("PimsAcquisitionFiles")]
     public virtual PimsRegion RegionCodeNavigation { get; set; }
+
+    [ForeignKey("SubfileInterestTypeCode")]
+    [InverseProperty("PimsAcquisitionFiles")]
+    public virtual PimsSubfileInterestType SubfileInterestTypeCodeNavigation { get; set; }
 }

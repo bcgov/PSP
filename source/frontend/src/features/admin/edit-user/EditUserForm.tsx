@@ -127,13 +127,13 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
             />
           </SectionField>
 
-          <SectionField label="Notes" labelWidth="2">
+          <SectionField label="Comments" labelWidth="2">
             <Input
               as="textarea"
               field="note"
-              placeholder="A note about this user"
+              placeholder="A comment about this user"
               type="text"
-              data-testid="note"
+              data-testid="comments"
             />
           </SectionField>
 

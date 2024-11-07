@@ -1,6 +1,6 @@
 import { Form, Formik, useFormikContext } from 'formik';
 import noop from 'lodash/noop';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
@@ -37,27 +37,18 @@ const FormObserver: React.FC<IFormObserverProps> = ({ onChange }) => {
 };
 
 export interface IFilterContentFormProps {
+  existingFilter: PropertyFilterFormModel;
   onChange: (model: PropertyFilterFormModel) => void;
   onReset: () => void;
   isLoading: boolean;
 }
 
 export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentFormProps>> = ({
+  existingFilter,
   onChange,
   onReset,
   isLoading,
 }) => {
-  const initialFilter = useMemo(() => {
-    return new PropertyFilterFormModel();
-  }, []);
-
-  useEffect(() => {
-    const firstLoad = () => {
-      onChange(initialFilter);
-    };
-    firstLoad();
-  }, [initialFilter, onChange]);
-
   const { getByType } = useLookupCodeHelpers();
 
   // Property options
@@ -101,7 +92,10 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
   leasePaymentRcvblOptions.push({ value: 'all', label: 'Payable and Receivable' });
 
   return (
-    <Formik<PropertyFilterFormModel> initialValues={initialFilter} onSubmit={noop}>
+    <Formik<PropertyFilterFormModel>
+      initialValues={existingFilter ?? new PropertyFilterFormModel()}
+      onSubmit={noop}
+    >
       <Form>
         <FormObserver onChange={onChange} />
         <LoadingBackdrop show={isLoading} parentScreen />

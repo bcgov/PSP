@@ -7,6 +7,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { FilterContentForm, IFilterContentFormProps } from './FilterContentForm';
+import { PropertyFilterFormModel } from './models';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -25,6 +26,7 @@ describe('FilterContentForm component', () => {
         isLoading={renderOptions?.props?.isLoading ?? false}
         onChange={renderOptions?.props?.onChange ?? onChange}
         onReset={renderOptions?.props?.onReset ?? onReset}
+        existingFilter={renderOptions?.props?.existingFilter ?? new PropertyFilterFormModel()}
       />,
       {
         ...renderOptions,

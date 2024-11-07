@@ -121,7 +121,7 @@ export const DetailAdministration: React.FunctionComponent<
         >
           <Input disabled={disabled} field={withNameSpace(nameSpace, 'primaryArbitrationCity')} />
         </SectionField>
-        <SectionField label="Lease notes" labelWidth="3">
+        <SectionField label="Lease comments" labelWidth="3">
           {note}
         </SectionField>
       </Section>

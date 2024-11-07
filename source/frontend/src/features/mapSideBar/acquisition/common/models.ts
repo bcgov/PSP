@@ -62,11 +62,11 @@ export class AcquisitionTeamFormModel {
   }
 
   static fromApi(model: ApiGen_Concepts_AcquisitionFileTeam | null): AcquisitionTeamFormModel {
-    // todo:the method 'exists' here should allow the compiler to validate the child property. this works correctly in typescropt 5.3 +
+    // The method 'exists' below allows the compiler to validate the child property. This works correctly in typescript 5.3+
     const contact: IContactSearchResult | undefined = exists(model?.person)
-      ? fromApiPerson(model!.person)
+      ? fromApiPerson(model.person)
       : exists(model?.organization)
-      ? fromApiOrganization(model!.organization)
+      ? fromApiOrganization(model.organization)
       : undefined;
 
     const newForm = new AcquisitionTeamFormModel(
