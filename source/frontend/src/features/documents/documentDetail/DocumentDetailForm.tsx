@@ -1,4 +1,5 @@
 import { Formik, FormikProps } from 'formik';
+import { ChangeEvent, useCallback, useEffect, useState } from 'react';
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -17,6 +18,7 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
+import { exists } from '@/utils/utils';
 
 import { StyledH3, StyledScrollable } from '../commonStyles';
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
@@ -56,6 +58,36 @@ export const DocumentDetailForm: React.FunctionComponent<
         return { label: x.documentTypeDescription || '', value: x.id?.toString() || '' };
       }),
     [props.documentTypes],
+  );
+
+  const [documentTypePurpose, setDocumentTypePurpose] = useState(null);
+
+  const matchDocumentType = useCallback(
+    (documentTypeId: number) => {
+      const purpose = props.documentTypes.find(
+        x => x.id === Number(documentTypeId),
+      )?.documentTypePurpose;
+
+      setDocumentTypePurpose(purpose);
+    },
+    [props.documentTypes],
+  );
+
+  useEffect(() => {
+    const documentTypeId = Number(props.formikRef.current?.values?.documentTypeId);
+    matchDocumentType(documentTypeId);
+  }, [matchDocumentType, props.formikRef]);
+
+  const onDocumentTypeChange = useCallback(
+    async (changeEvent: ChangeEvent<HTMLInputElement>) => {
+      if (changeEvent.target.value) {
+        const documentTypeId = Number(changeEvent.target.value);
+        matchDocumentType(documentTypeId);
+      }
+
+      props.onDocumentTypeChange(changeEvent);
+    },
+    [matchDocumentType, props],
   );
 
   return (
@@ -105,13 +137,18 @@ export const DocumentDetailForm: React.FunctionComponent<
                         }
                         field={'documentTypeId'}
                         options={documentTypeOptions}
-                        onChange={props.onDocumentTypeChange}
+                        onChange={onDocumentTypeChange}
                         disabled={
                           documentTypeOptions.length === 1 ||
                           props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates
                         }
                       />
                     </SectionField>
+                    {exists(documentTypePurpose) && (
+                      <SectionField label={null}>
+                        <StyledPurposeText>{documentTypePurpose}</StyledPurposeText>
+                      </SectionField>
+                    )}
                     <SectionField label="Status" labelWidth="4">
                       <Select field="documentStatusCode" options={documentStatusTypes} />
                     </SectionField>
@@ -160,4 +197,9 @@ export const DocumentDetailForm: React.FunctionComponent<
 
 export const StyledDiv = styled.div`
   margin-bottom: 1rem;
+`;
+
+const StyledPurposeText = styled.div`
+  color: black;
+  font-style: italic;
 `;
