@@ -53,10 +53,14 @@ const AcquisitionMenu: React.FunctionComponent<
                 className={cx('no-gutters', { selected: props.selectedIndex === index })}
               >
                 {activeIndex ? (
-                  <Col>{label}</Col>
+                  <Col>
+                    <span title="File Details">{label}</span>
+                  </Col>
                 ) : (
                   <Col>
-                    <LinkButton onClick={() => handleClick(index)}>{label}</LinkButton>
+                    <LinkButton title="File Details" onClick={() => handleClick(index)}>
+                      {label}
+                    </LinkButton>
                   </Col>
                 )}
                 <StyledMenuHeaderWrapper>
@@ -92,10 +96,12 @@ const AcquisitionMenu: React.FunctionComponent<
                   </StyledIconWrapper>
                 </Col>
                 {activeIndex ? (
-                  <Col>{label}</Col>
+                  <Col>
+                    <span title="View">{label}</span>
+                  </Col>
                 ) : (
                   <Col>
-                    <LinkButton>{label}</LinkButton>
+                    <LinkButton title="View">{label}</LinkButton>
                   </Col>
                 )}
               </StyledRow>

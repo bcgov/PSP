@@ -306,7 +306,11 @@ exports[`ResearchMenu component > renders as expected when provided no research 
       <div
         class="col"
       >
-        First label
+        <span
+          title="File Details"
+        >
+          First label
+        </span>
       </div>
       <div
         class="c2"
@@ -366,6 +370,7 @@ exports[`ResearchMenu component > renders as expected when provided no research 
       >
         <button
           class="c6 Button btn btn-link"
+          title="View"
           type="button"
         >
           <div
@@ -397,6 +402,7 @@ exports[`ResearchMenu component > renders as expected when provided no research 
       >
         <button
           class="c6 Button btn btn-link"
+          title="View"
           type="button"
         >
           <div
