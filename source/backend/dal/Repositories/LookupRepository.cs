@@ -440,6 +440,11 @@ namespace Pims.Dal.Repositories
             return Context.PimsConsultationOutcomeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
+        public IEnumerable<PimsSubfileInterestType> GetAllSubfileInterestTypes()
+        {
+            return Context.PimsSubfileInterestTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
         #endregion
     }
 }

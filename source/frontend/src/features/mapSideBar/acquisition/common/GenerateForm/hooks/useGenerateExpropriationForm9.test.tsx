@@ -16,6 +16,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 
 import { ExpropriationForm9Model } from '../../../tabs/expropriation/models';
 import { useGenerateExpropriationForm9 } from './useGenerateExpropriationForm9';
+import { fromContactSummary } from '@/interfaces';
 
 const generateFn = vi
   .fn()
@@ -99,7 +100,9 @@ describe('useGenerateExpropriationForm5 functions', () => {
 
   it('makes requests to expected api endpoints when expropriation authority is provided', async () => {
     const expropFormValues = new ExpropriationForm9Model();
-    expropFormValues.expropriationAuthority.contact = getMockContactOrganizationWithOnePerson();
+    expropFormValues.expropriationAuthority.contact = fromContactSummary(
+      getMockContactOrganizationWithOnePerson(),
+    );
     const generate = setup();
     await act(async () => generate(1, expropFormValues));
 

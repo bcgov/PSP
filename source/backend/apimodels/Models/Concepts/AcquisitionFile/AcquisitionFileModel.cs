@@ -14,9 +14,19 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         #region Properties
 
         /// <summary>
+        ///  get/set - Link to the parent acquisition file. Only used for sub-files.
+        /// </summary>
+        public long? ParentAcquisitionFileId { get; set; }
+
+        /// <summary>
         /// get/set - The auto-generated portion of the acquisition file number.
         /// </summary>
         public long FileNo { get; set; }
+
+        /// <summary>
+        /// get/set - The File number Suffix.
+        /// </summary>
+        public string FileNumberSuffix { get; set; }
 
         /// <summary>
         /// get/set - A historical reference number of this file in a legacy system (likely PAIMS).
@@ -32,6 +42,16 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// The date for delivery of the property to the project.
         /// </summary>
         public DateOnly? DeliveryDate { get; set; }
+
+        /// <summary>
+        /// Estimated date by which the acquisition would be completed.
+        /// </summary>
+        public DateOnly? EstimatedCompletionDate { get; set; }
+
+        /// <summary>
+        /// Date of possession following acquisition completion.
+        /// </summary>
+        public DateOnly? PossessionDate { get; set; }
 
         /// <summary>
         /// get/set - The acquisition physical file status type.
@@ -77,6 +97,16 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// get/set - The MOTI region that this acquisition file falls under.
         /// </summary>
         public CodeTypeModel<short> RegionCode { get; set; }
+
+        /// <summary>
+        /// get/set - The SubfileInterestTypeCode that this acquisition file falls under.
+        /// </summary>
+        public CodeTypeModel<string> SubfileInterestTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - Description wheb 'Other' SubfileInterestTypeCode.
+        /// </summary>
+        public string OtherSubfileInterestType { get; set; }
 
         /// <summary>
         /// get/set - List of Legacy Stakeholders.

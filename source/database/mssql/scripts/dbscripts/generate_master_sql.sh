@@ -35,9 +35,13 @@ generate_file()
   for sql_file in "$SQLFOLDER"/*.sql; do
     [[ "$sql_file" = *"master.sql" ]] && continue
 
-    echo "  Processing '${sql_file}'..."
+    # Add the contsnts to the file. Note that the intermidiary variable is necessary
+    # to avoud issues with spaces in the file path
+
+    echo "   Processing '${sql_file}'..."
     echo "   PRINT '- Executing" $sql_file "'" >> "${FILE}"
-    echo '   :r' $sql_file >> "${FILE}"
+    echo '   :setvar filepath' "\"$sql_file\"" >> "${FILE}"
+    echo '   :r' "\$(filepath)" >> "${FILE}"
   done
 
   # Finalize the destination file

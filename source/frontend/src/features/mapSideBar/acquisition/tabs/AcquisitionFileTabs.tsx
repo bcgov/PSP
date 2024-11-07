@@ -12,6 +12,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { exists } from '@/utils';
 
 import CompensationListContainer from '../../compensation/list/CompensationListContainer';
 import CompensationListView from '../../compensation/list/CompensationListView';
@@ -25,6 +26,8 @@ import ExpropriationTabContainerView from './expropriation/ExpropriationTabConta
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
 import StakeHolderContainer from './stakeholders/detail/StakeHolderContainer';
 import StakeHolderView from './stakeholders/detail/StakeHolderView';
+import SubFileListContainer from './subFiles/SubFileListContainer';
+import SubFileListView from './subFiles/SubFileListView';
 
 export interface IAcquisitionFileTabsProps {
   acquisitionFile?: ApiGen_Concepts_AcquisitionFile;
@@ -81,6 +84,67 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     name: 'Checklist',
   });
 
+  if (acquisitionFile?.id && hasClaim(Claims.AGREEMENT_VIEW)) {
+    tabViews.push({
+      content: <AgreementContainer acquisitionFileId={acquisitionFile.id} View={AgreementView} />,
+      key: FileTabType.AGREEMENTS,
+      name: 'Agreements',
+    });
+  }
+
+  if (acquisitionFile?.id) {
+    tabViews.push({
+      content: (
+        <StakeHolderContainer
+          View={StakeHolderView}
+          onEdit={() => setIsEditing(true)}
+          acquisitionFile={acquisitionFile}
+        />
+      ),
+      key: FileTabType.STAKEHOLDERS,
+      name: 'Stakeholders',
+    });
+  }
+
+  if (
+    acquisitionFile?.id &&
+    (acquisitionFile.acquisitionTypeCode?.id === EnumAcquisitionFileType.SECTN3 ||
+      acquisitionFile.acquisitionTypeCode?.id === EnumAcquisitionFileType.SECTN6)
+  ) {
+    tabViews.push({
+      content: (
+        <ExpropriationTabContainer
+          acquisitionFile={acquisitionFile}
+          View={ExpropriationTabContainerView}
+        />
+      ),
+      key: FileTabType.EXPROPRIATION,
+      name: 'Expropriation',
+    });
+  }
+
+  if (acquisitionFile?.id && hasClaim(Claims.COMPENSATION_REQUISITION_VIEW)) {
+    tabViews.push({
+      content: (
+        <CompensationListContainer
+          fileType={ApiGen_CodeTypes_FileTypes.Acquisition}
+          file={acquisitionFile}
+          View={CompensationListView}
+        />
+      ),
+      key: FileTabType.COMPENSATIONS,
+      name: 'Compensation',
+    });
+  }
+
+  if (exists(acquisitionFile?.id)) {
+    tabViews.push({
+      content: <SubFileListContainer acquisitionFile={acquisitionFile} View={SubFileListView} />,
+      key: FileTabType.SUB_FILES,
+      name: 'Sub-Files',
+    });
+  }
+
   if (acquisitionFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
@@ -106,59 +170,6 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       ),
       key: FileTabType.NOTES,
       name: 'Notes',
-    });
-  }
-
-  if (acquisitionFile?.id && hasClaim(Claims.AGREEMENT_VIEW)) {
-    tabViews.push({
-      content: <AgreementContainer acquisitionFileId={acquisitionFile.id} View={AgreementView} />,
-      key: FileTabType.AGREEMENTS,
-      name: 'Agreements',
-    });
-  }
-
-  if (acquisitionFile?.id) {
-    tabViews.push({
-      content: (
-        <StakeHolderContainer
-          View={StakeHolderView}
-          onEdit={() => setIsEditing(true)}
-          acquisitionFile={acquisitionFile}
-        />
-      ),
-      key: FileTabType.STAKEHOLDERS,
-      name: 'Stakeholders',
-    });
-  }
-
-  if (acquisitionFile?.id && hasClaim(Claims.COMPENSATION_REQUISITION_VIEW)) {
-    tabViews.push({
-      content: (
-        <CompensationListContainer
-          fileType={ApiGen_CodeTypes_FileTypes.Acquisition}
-          file={acquisitionFile}
-          View={CompensationListView}
-        />
-      ),
-      key: FileTabType.COMPENSATIONS,
-      name: 'Compensation',
-    });
-  }
-
-  if (
-    acquisitionFile?.id &&
-    (acquisitionFile.acquisitionTypeCode?.id === EnumAcquisitionFileType.SECTN3 ||
-      acquisitionFile.acquisitionTypeCode?.id === EnumAcquisitionFileType.SECTN6)
-  ) {
-    tabViews.push({
-      content: (
-        <ExpropriationTabContainer
-          acquisitionFile={acquisitionFile}
-          View={ExpropriationTabContainerView}
-        />
-      ),
-      key: FileTabType.EXPROPRIATION,
-      name: 'Expropriation',
     });
   }
 

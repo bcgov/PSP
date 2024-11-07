@@ -153,7 +153,6 @@ const fakeProperty: ApiGen_Concepts_Property = {
   pphStatusUpdateUserid: 'USER',
   isRwyBeltDomPatent: false,
   pphStatusTypeCode: 'Non-PPH',
-
   address: {
     ...getEmptyAddress(),
     id: 1,
@@ -161,12 +160,14 @@ const fakeProperty: ApiGen_Concepts_Property = {
     streetAddress2: 'Living in a van',
     streetAddress3: 'Down by the River',
     municipality: 'Hollywood North',
+    provinceStateId: 1,
     province: {
       id: 1,
       code: 'BC',
       description: 'British Columbia',
       displayOrder: 10,
     },
+    countryId: 1,
     country: {
       id: 1,
       code: 'CA',
@@ -292,9 +293,11 @@ describe('UpdatePropertyDetailsContainer component', () => {
         streetAddress3: fakeProperty.address?.streetAddress3,
         municipality: fakeProperty.address?.municipality,
         postal: fakeProperty.address?.postal,
+        countryId: fakeProperty.address!.country!.id,
         country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
           id: fakeProperty.address!.country!.id,
         }),
+        provinceStateId: fakeProperty.address!.province!.id,
         province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
           id: fakeProperty.address!.province!.id,
         }),
@@ -324,9 +327,11 @@ describe('UpdatePropertyDetailsContainer component', () => {
         streetAddress3: fakeProperty.address?.streetAddress3,
         municipality: fakeProperty.address?.municipality,
         postal: fakeProperty.address?.postal,
+        countryId: fakeProperty.address!.country!.id,
         country: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
           id: fakeProperty.address!.country!.id,
         }),
+        provinceStateId: fakeProperty.address!.province!.id,
         province: expect.objectContaining<Partial<ApiGen_Concepts_CodeType>>({
           id: fakeProperty.address!.province!.id,
         }),

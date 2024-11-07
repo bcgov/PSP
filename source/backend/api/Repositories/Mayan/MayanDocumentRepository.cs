@@ -151,6 +151,22 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResponse<string>> TryUpdateDocumentTypeAsync(long documentId, long documentTypeId)
+        {
+            _logger.LogDebug("Updating Document Type for document {documentId}...", documentId);
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/type/change/");
+            using MultipartFormDataContent multiContent = new MultipartFormDataContent();
+            using HttpContent content = new StringContent(documentTypeId.ToString(CultureInfo.InvariantCulture));
+            multiContent.Add(content, "document_type_id");
+
+            var response = await PostAsync<string>(endpoint, multiContent, authenticationToken).ConfigureAwait(true);
+            _logger.LogDebug("Finished updating document type for document {documentId}", documentId);
+
+            return response;
+        }
+
         public async Task<ExternalResponse<QueryResponse<DocumentMetadataModel>>> TryGetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving document metadata {documentId}...", documentId);

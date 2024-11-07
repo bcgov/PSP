@@ -29,7 +29,7 @@ export class ConsultationFormModel {
     this.consultationTypeCode = '';
     this.consultationTypeDescription = '';
     this.consultationStatusTypeDescription = '';
-    this.consultationOutcomeTypeCode = '';
+    this.consultationOutcomeTypeCode = 'INPROGRESS';
     this.consultationOutcomeTypeCodeDescription = '';
     this.otherDescription = '';
     this.requestedOn = '';

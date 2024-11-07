@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.33027.164
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "PAT_PIMS_DOCUMENT_IMPORT", "PAT_PIMS_DOCUMENT_IMPORT.dtproj", "{8D688065-BC77-4671-BF5F-057201FBF3F4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8D688065-BC77-4671-BF5F-057201FBF3F4}.Development|Default.ActiveCfg = Development
+		{8D688065-BC77-4671-BF5F-057201FBF3F4}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A0AAEAFE-BC23-413A-AC3B-8C50D579C4D3}
+	EndGlobalSection
+EndGlobal

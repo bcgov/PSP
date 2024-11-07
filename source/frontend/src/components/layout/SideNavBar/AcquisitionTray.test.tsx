@@ -25,11 +25,6 @@ describe('AcquisitionTray', () => {
     expect(fragment).toMatchSnapshot();
   });
 
-  it('should have the Acquisition Files header in the component', async () => {
-    setup({});
-    expect(screen.getByText(`Acquisition Files`)).toBeInTheDocument();
-  });
-
   it(`should have the "Manage acquisition files" link in the component`, async () => {
     mockKeycloak({ claims: [Claims.ACQUISITION_VIEW] });
     setup({});

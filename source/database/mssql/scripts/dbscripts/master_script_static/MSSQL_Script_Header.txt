@@ -4,11 +4,11 @@
 SET XACT_ABORT ON
 GO
 
-PRINT '======= DB SCRIPT START ========'
+PRINT '     == DB SCRIPT START ========'
 GO
 
 BEGIN TRANSACTION
-PRINT '======= DB TRANSACTION START ========'
+PRINT '     == DB TRANSACTION START ========'
    GO
 
    --Script section

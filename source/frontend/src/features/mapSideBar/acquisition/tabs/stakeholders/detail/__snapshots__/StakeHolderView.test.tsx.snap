@@ -6,7 +6,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c3 {
+  .c4 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -17,7 +17,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
   padding-top: 1rem;
 }
 
-.c4 {
+.c3 {
   text-align: right;
 }
 
@@ -51,13 +51,28 @@ exports[`StakeHolderView component > renders as expected 1`] = `
           <div
             class="col"
           >
-            Interests
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-10"
+              >
+                Interests
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-end pr-0 col-md-2"
+              >
+                <div
+                  class="c3"
+                />
+              </div>
+            </div>
           </div>
           <div
             class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
-              class="c3"
+              class="c4"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -83,9 +98,6 @@ exports[`StakeHolderView component > renders as expected 1`] = `
       <div
         class="collapse show"
       >
-        <div
-          class="c4 mr-3 my-1"
-        />
         <div
           class="table"
           data-testid="interest-holders-by-property-table"
@@ -317,7 +329,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c3 {
+  .c4 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -328,7 +340,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
   padding-top: 1rem;
 }
 
-.c4 {
+.c3 {
   text-align: right;
 }
 
@@ -362,13 +374,28 @@ exports[`StakeHolderView component > renders as expected 1`] = `
           <div
             class="col"
           >
-            Non-interest Payees
+            <div
+              class="row"
+            >
+              <div
+                class="col-md-10"
+              >
+                Non-interest Payees
+              </div>
+              <div
+                class="d-flex align-items-center justify-content-end pr-0 col-md-2"
+              >
+                <div
+                  class="c3"
+                />
+              </div>
+            </div>
           </div>
           <div
             class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
-              class="c3"
+              class="c4"
               fill="currentColor"
               height="1em"
               stroke="currentColor"
@@ -394,9 +421,6 @@ exports[`StakeHolderView component > renders as expected 1`] = `
       <div
         class="collapse show"
       >
-        <div
-          class="c4 mr-3 my-1"
-        />
         <div
           class="table"
           data-testid="interest-holders-by-property-table"

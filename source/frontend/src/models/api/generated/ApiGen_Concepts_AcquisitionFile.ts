@@ -17,10 +17,14 @@ import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
 // LINK: @backend/apimodels/Models/Concepts/AcquisitionFile/AcquisitionFileModel.cs
 export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWithChecklist {
+  parentAcquisitionFileId: number | null;
   fileNo: number;
+  fileNumberSuffix: string | null;
   legacyFileNumber: string | null;
   assignedDate: UtcIsoDateTime | null;
   deliveryDate: UtcIsoDate | null;
+  estimatedCompletionDate: UtcIsoDate | null;
+  possessionDate: UtcIsoDate | null;
   acquisitionPhysFileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   acquisitionTypeCode: ApiGen_Base_CodeType<string> | null;
   productId: number | null;
@@ -30,6 +34,8 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   projectId: number | null;
   project: ApiGen_Concepts_Project | null;
   regionCode: ApiGen_Base_CodeType<number> | null;
+  subfileInterestTypeCode: ApiGen_Base_CodeType<string> | null;
+  otherSubfileInterestType: string | null;
   legacyStakeholders: string[] | null;
   fileProperties: ApiGen_Concepts_AcquisitionFileProperty[] | null;
   acquisitionTeam: ApiGen_Concepts_AcquisitionFileTeam[] | null;

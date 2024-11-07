@@ -4,6 +4,8 @@ import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Co
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 import { InterestHolderForm, StakeHolderForm } from './models';
+import { fromContactSummary } from '@/interfaces';
+import { getEmptyContactSummary } from '@/mocks/contacts.mock';
 
 const emptyInterestHolderForm: InterestHolderForm = {
   interestHolderId: null,
@@ -259,7 +261,11 @@ describe('Interest Holder model tests', () => {
     model.interestHolders = [
       {
         ...emptyInterestHolderForm,
-        contact: { id: 'P1', personId: 1 },
+        contact: fromContactSummary({
+          ...getEmptyContactSummary(),
+          id: 'P1',
+          personId: 1,
+        }),
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
@@ -271,7 +277,11 @@ describe('Interest Holder model tests', () => {
       },
       {
         ...emptyInterestHolderForm,
-        contact: { id: 'P1', personId: 1 },
+        contact: fromContactSummary({
+          ...getEmptyContactSummary(),
+          id: 'P1',
+          personId: 1,
+        }),
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
@@ -292,7 +302,11 @@ describe('Interest Holder model tests', () => {
     model.interestHolders = [
       {
         ...emptyInterestHolderForm,
-        contact: { id: 'P1', personId: 1 },
+        contact: fromContactSummary({
+          ...getEmptyContactSummary(),
+          id: 'P1',
+          personId: 1,
+        }),
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
@@ -304,7 +318,11 @@ describe('Interest Holder model tests', () => {
       },
       {
         ...emptyInterestHolderForm,
-        contact: { id: 'P1', personId: 1 },
+        contact: fromContactSummary({
+          ...getEmptyContactSummary(),
+          id: 'P1',
+          personId: 1,
+        }),
         impactedProperties: [
           {
             ...emptyInterestHolderProperty,
@@ -325,7 +343,11 @@ describe('Interest Holder model tests', () => {
     model.interestHolders = [
       {
         ...emptyInterestHolderForm,
-        contact: { id: 'P1', personId: 1 },
+        contact: fromContactSummary({
+          ...getEmptyContactSummary(),
+          id: 'P1',
+          personId: 1,
+        }),
         propertyInterestTypeCode: 'IP',
         impactedProperties: [
           {
@@ -341,7 +363,11 @@ describe('Interest Holder model tests', () => {
     model.nonInterestPayees = [
       {
         ...emptyInterestHolderForm,
-        contact: { id: 'P1', personId: 1 },
+        contact: fromContactSummary({
+          ...getEmptyContactSummary(),
+          id: 'P1',
+          personId: 1,
+        }),
         propertyInterestTypeCode: 'NIP',
         impactedProperties: [
           {
@@ -363,7 +389,11 @@ describe('Interest Holder model tests', () => {
     model.interestHolders = [
       {
         ...emptyInterestHolderForm,
-        contact: { id: 'P1', personId: 1 },
+        contact: fromContactSummary({
+          ...getEmptyContactSummary(),
+          id: 'P1',
+          personId: 1,
+        }),
         interestTypeCode: InterestHolderType.INTEREST_HOLDER,
         propertyInterestTypeCode: 'IP',
         impactedProperties: [
@@ -377,7 +407,7 @@ describe('Interest Holder model tests', () => {
       },
       {
         ...emptyInterestHolderForm,
-        contact: { id: 'P1', personId: 1 },
+        contact: fromContactSummary({ ...getEmptyContactSummary(), id: 'P1', personId: 1 }),
         interestTypeCode: InterestHolderType.INTEREST_HOLDER,
         propertyInterestTypeCode: 'PI',
         impactedProperties: [
@@ -415,7 +445,7 @@ describe('Interest Holder model tests', () => {
   it('InterestHolderForm sets person info from contact', () => {
     const interestHolderModel: InterestHolderForm = {
       ...emptyInterestHolderForm,
-      contact: { id: 'P1', personId: 1 },
+      contact: fromContactSummary({ ...getEmptyContactSummary(), id: 'P1', personId: 1 }),
     };
 
     const apiInterestHolder = InterestHolderForm.toApi(interestHolderModel, []);
@@ -425,7 +455,7 @@ describe('Interest Holder model tests', () => {
   it('InterestHolderForm sets organization info from contact', () => {
     const interestHolderModel: InterestHolderForm = {
       ...emptyInterestHolderForm,
-      contact: { id: 'O1', organizationId: 1 },
+      contact: fromContactSummary({ ...getEmptyContactSummary(), id: 'O1', organizationId: 1 }),
     };
 
     const apiInterestHolder = InterestHolderForm.toApi(interestHolderModel, []);

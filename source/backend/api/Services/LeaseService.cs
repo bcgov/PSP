@@ -31,6 +31,7 @@ namespace Pims.Api.Services
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseStakeholderRepository _stakeholderRepository;
+        private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly ILeaseRenewalRepository _renewalRepository;
         private readonly IConsultationRepository _consultationRepository;
         private readonly IUserRepository _userRepository;
@@ -42,13 +43,13 @@ namespace Pims.Api.Services
             ClaimsPrincipal user,
             ILogger<LeaseService> logger,
             ILeaseRepository leaseRepository,
-            ICoordinateTransformService coordinateTransformService,
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
             IPropertyImprovementRepository propertyImprovementRepository,
             IEntityNoteRepository entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseStakeholderRepository stakeholderRepository,
+            ICompensationRequisitionRepository compensationRequisitionRepository,
             ILeaseRenewalRepository renewalRepository,
             IConsultationRepository consultationRepository,
             IUserRepository userRepository,
@@ -66,6 +67,7 @@ namespace Pims.Api.Services
             _propertyImprovementRepository = propertyImprovementRepository;
             _insuranceRepository = insuranceRepository;
             _stakeholderRepository = stakeholderRepository;
+            _compensationRequisitionRepository = compensationRequisitionRepository;
             _renewalRepository = renewalRepository;
             _consultationRepository = consultationRepository;
             _userRepository = userRepository;
@@ -180,6 +182,7 @@ namespace Pims.Api.Services
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
+            ValidateStakeholdersDependency(leaseId, pimsLeaseStakeholders);
             _stakeholderRepository.Update(leaseId, pimsLeaseStakeholders);
             _stakeholderRepository.CommitTransaction();
 
@@ -280,6 +283,11 @@ namespace Pims.Api.Services
             List<PimsPropertyLease> differenceSet = currentFileProperties.Where(x => !lease.PimsPropertyLeases.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
+                if (_propertyLeaseRepository.LeaseFilePropertyInCompensationReq(deletedProperty.PropertyLeaseId))
+                {
+                    throw new BusinessRuleViolationException("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
+                }
+
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
                 if (totalAssociationCount <= 1)
                 {
@@ -659,6 +667,36 @@ namespace Pims.Api.Services
                     };
 
                     pimsLeaseChecklistItems.Add(checklistItem);
+                }
+            }
+        }
+
+        private void ValidateStakeholdersDependency(long leaseId, IEnumerable<PimsLeaseStakeholder> stakeholders)
+        {
+            var currentLease = _leaseRepository.GetNoTracking(leaseId);
+            var compensationRequisitions = _compensationRequisitionRepository.GetAllByLeaseFileId(leaseId);
+
+            if (compensationRequisitions.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var compReq in compensationRequisitions)
+            {
+                var leaseStakeholderCompensationRequisitions = compReq.PimsLeaseStakeholderCompReqs;
+                if (leaseStakeholderCompensationRequisitions is null || leaseStakeholderCompensationRequisitions.Count == 0)
+                {
+                    continue;
+                }
+
+                // Check for lease stakeholders
+                foreach (var leaseStakeholderCompReq in leaseStakeholderCompensationRequisitions)
+                {
+                    if (!stakeholders.Any(x => x.Internal_Id.Equals(leaseStakeholderCompReq.LeaseStakeholderId))
+                        && currentLease.PimsLeaseStakeholders.Any(x => x.Internal_Id.Equals(leaseStakeholderCompReq.LeaseStakeholderId)))
+                    {
+                        throw new ForeignKeyDependencyException("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition");
+                    }
                 }
             }
         }

@@ -68,20 +68,18 @@ namespace Pims.Api.Controllers
         }
 
         /// <summary>
-        /// Updates document metadata and status.
+        /// Updates document's type, status and metadata.
         /// </summary>
         /// <param name="documentId">Used to identify document.</param>
         /// <param name="updateRequest">Contains information about the document metadata.</param>
         /// <returns></returns>
-        [HttpPut("{documentId}/metadata")]
+        [HttpPut("{documentId}")]
         [Produces("application/json")]
         [HasPermission(Permissions.DocumentEdit)]
         [ProducesResponseType(typeof(DocumentUpdateResponse), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public async Task<IActionResult> UpdateDocumentMetadata(
-            long documentId,
-            [FromBody] DocumentUpdateRequest updateRequest)
+        public async Task<IActionResult> UpdateDocument(long documentId, [FromBody] DocumentUpdateRequest updateRequest)
         {
             if (documentId != updateRequest.DocumentId)
             {

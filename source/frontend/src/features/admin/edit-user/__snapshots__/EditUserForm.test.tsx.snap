@@ -48,10 +48,10 @@ exports[`EditUserForm component > renders as expected 1`] = `
 }
 
 .c6.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -191,6 +191,8 @@ exports[`EditUserForm component > renders as expected 1`] = `
 
 .c6.btn:disabled,
 .c6.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -198,7 +200,6 @@ exports[`EditUserForm component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c6.Button .Button__icon {
@@ -794,7 +795,7 @@ exports[`EditUserForm component > renders as expected 1`] = `
         <label
           class="c0"
         >
-          Notes:
+          Comments:
         </label>
       </div>
       <div
@@ -805,10 +806,10 @@ exports[`EditUserForm component > renders as expected 1`] = `
         >
           <textarea
             class="form-control"
-            data-testid="note"
+            data-testid="comments"
             id="input-note"
             name="note"
-            placeholder="A note about this user"
+            placeholder="A comment about this user"
             title=""
             type="text"
           />

@@ -1,23 +1,11 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Acquisition File Owners View component > Renders Component as expected 1`] = `
+exports[`Acquisition File Owners View component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
   />
   <div />
-  .c0 {
-  color: #474543;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-}
-
-<p
-    class="c0"
-  >
-    Each property in this file should be owned by the owner(s) in this section
-  </p>
   .c0.required::before {
   content: '*';
   position: absolute;

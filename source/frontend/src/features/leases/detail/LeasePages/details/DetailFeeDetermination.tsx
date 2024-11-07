@@ -73,7 +73,7 @@ export const DetailFeeDetermination: React.FunctionComponent<
       </SectionField>
 
       <SectionField
-        label="Notes"
+        label="Comments"
         tooltip="Deviations from standard fees should be explained here"
         labelWidth="3"
       >

@@ -53,10 +53,10 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 }
 
 .c13.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -196,6 +196,8 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 
 .c13.btn:disabled,
 .c13.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -203,7 +205,6 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c13.Button .Button__icon {
@@ -325,21 +326,27 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 .c2 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c2 .nav-item:hover {
-  color: var(--surface-color-primary-button-hover);
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c2 .nav-item.active {
-  background-color: #f2f2f2;
-  font-family: 'BCSans-Bold';
-  color: var(--surface-color-primary-button-hover);
+  border-radius: 0.4rem;
+  color: #f2f2f2;
+  background-color: #053662;
   border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c1 {
@@ -922,10 +929,10 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 }
 
 .c7.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -1065,6 +1072,8 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
 
 .c7.btn:disabled,
 .c7.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1072,7 +1081,6 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c7.Button .Button__icon {

@@ -1,5 +1,4 @@
 import { FormikProps } from 'formik/dist/types';
-import { Location } from 'history';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -9,7 +8,9 @@ import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
+import { useQuery } from '@/hooks/use-query';
 import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, isValidId } from '@/utils';
@@ -23,7 +24,7 @@ import { AddAcquisitionForm } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionContainerProps {
-  onClose: () => void;
+  onClose: (nextLocation?: string) => void;
   onSuccess: (newAcquisitionId: number) => void;
 }
 
@@ -40,24 +41,30 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { execute: getPropertyAssociations } = usePropertyAssociations();
   const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
-  // Warn user that property is part of an existing acquisition file
-  const confirmBeforeAdd = useCallback(
-    async (propertyForm: PropertyForm) => {
-      if (isValidId(propertyForm.apiId)) {
-        const response = await getPropertyAssociations(propertyForm.apiId);
-        const acquisitionAssociations = response?.acquisitionAssociations ?? [];
-        const otherAcqFiles = acquisitionAssociations.filter(a => exists(a.id));
-        return otherAcqFiles.length > 0;
-      } else {
-        // the property is not in PIMS db -> no need to confirm
-        return false;
+  const {
+    getAcquisitionFile: { execute: getAcquisitionFile, response: parentAcquisitionFile },
+  } = useAcquisitionProvider();
+
+  // Check for parent acquisition file id for sub-files
+  const params = useQuery();
+  const parentId = params.get('parentId');
+  const isSubFile = exists(parentId) && isValidId(Number(parentId));
+
+  useEffect(() => {
+    const fetchParentFile = async () => {
+      if (exists(parentId) && isValidId(Number(parentId)) && !exists(parentAcquisitionFile)) {
+        await getAcquisitionFile(Number(parentId));
       }
-    },
-    [getPropertyAssociations],
-  );
+    };
+
+    fetchParentFile();
+  }, [getAcquisitionFile, parentAcquisitionFile, parentId]);
 
   const initialForm = useMemo(() => {
-    const acquisitionForm = new AcquisitionForm();
+    const acquisitionForm = exists(parentAcquisitionFile)
+      ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
+      : new AcquisitionForm();
+
     if (selectedFeatureDataset !== null) {
       const property = PropertyForm.fromMapProperty(
         featuresetToMapProperty(selectedFeatureDataset),
@@ -67,7 +74,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         property.regionName !== 'Cannot determine' ? property.region?.toString() : undefined;
     }
     return acquisitionForm;
-  }, [selectedFeatureDataset]);
+  }, [parentAcquisitionFile, selectedFeatureDataset]);
 
   const handleSave = async () => {
     // Sets the formik field `isValid` to false at start
@@ -102,11 +109,33 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     formikRef,
   });
 
-  const handleCancel = () => {
-    onClose();
-  };
+  const handleCancel = useCallback(() => {
+    if (isSubFile) {
+      // Go back to the main file (sub-files tab) if they cancel the action without saving
+      onClose(`/mapview/sidebar/acquisition/${parentId}/subFiles`);
+    } else {
+      onClose();
+    }
+  }, [isSubFile, onClose, parentId]);
 
   const { initialValues } = helper;
+
+  // Warn user that property is part of an existing acquisition file
+  const confirmBeforeAdd = useCallback(
+    async (propertyForm: PropertyForm) => {
+      if (isValidId(propertyForm.apiId)) {
+        const response = await getPropertyAssociations(propertyForm.apiId);
+        const acquisitionAssociations = response?.acquisitionAssociations ?? [];
+        const otherAcqFiles = acquisitionAssociations.filter(a => exists(a.id));
+        return otherAcqFiles.length > 0;
+      } else {
+        // the property is not in PIMS db -> no need to confirm
+        return false;
+      }
+    },
+    [getPropertyAssociations],
+  );
+
   // Require user confirmation before adding a property to file
   // This is the flow for Map Marker -> right-click -> create Acquisition File
   useEffect(() => {
@@ -160,21 +189,14 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     setModalContent,
   ]);
 
-  const checkState = useCallback(
-    (location: Location) => {
-      return (
-        !location.pathname.startsWith('/mapview/sidebar/acquisition/') &&
-        formikRef?.current?.dirty &&
-        !formikRef?.current?.isSubmitting
-      );
-    },
-    [formikRef],
-  );
+  const checkState = useCallback(() => {
+    return (isSubFile || formikRef?.current?.dirty) && !formikRef?.current?.isSubmitting;
+  }, [formikRef, isSubFile]);
 
   return (
     <MapSideBarLayout
       showCloseButton
-      title="Create Acquisition File"
+      title={isSubFile ? 'Create Acquisition Sub-Interest File' : 'Create Acquisition File'}
       icon={
         <AcquisitionFileIcon
           title="Acquisition file Icon"
@@ -197,7 +219,8 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         <LoadingBackdrop show={helper.loading} parentScreen={true} />
         <AddAcquisitionForm
           ref={formikRef}
-          initialValues={helper.initialValues}
+          parentId={isSubFile ? Number(parentId) : null}
+          initialValues={initialValues}
           onSubmit={helper.handleSubmit}
           validationSchema={helper.validationSchema}
           confirmBeforeAdd={confirmBeforeAdd}
