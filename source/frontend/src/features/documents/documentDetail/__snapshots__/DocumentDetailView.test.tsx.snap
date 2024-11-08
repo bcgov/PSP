@@ -233,7 +233,7 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c9 {
+.c10 {
   width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -242,7 +242,7 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c8 {
+.c9 {
   font-weight: 700;
   font-size: 1.7rem;
   margin-bottom: 1rem;
@@ -252,7 +252,7 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
   border-bottom: solid 0.1rem var(--theme-blue-90);
 }
 
-.c10 {
+.c11 {
   overflow-x: hidden;
   max-height: 50rem;
 }
@@ -291,6 +291,11 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
   -webkit-flex-direction: row-reverse;
   -ms-flex-direction: row-reverse;
   flex-direction: row-reverse;
+}
+
+.c8 {
+  color: black;
+  font-style: italic;
 }
 
 <body>
@@ -445,6 +450,20 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
           >
             <div
               class="pr-0 text-left col-4"
+            />
+            <div
+              class="c2 text-left col"
+            >
+              <div
+                class="c8"
+              />
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
             >
               <label
                 class="c1"
@@ -460,12 +479,12 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
             </div>
           </div>
           <h3
-            class="c8"
+            class="c9"
           >
             Details
           </h3>
           <div
-            class="c9 c10"
+            class="c10 c11"
           >
             <div
               class="pb-2 row"
