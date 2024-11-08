@@ -64,9 +64,7 @@ export const DocumentDetailForm: React.FunctionComponent<
 
   const matchDocumentType = useCallback(
     (documentTypeId: number) => {
-      const purpose = props.documentTypes.find(
-        x => x.id === Number(documentTypeId),
-      )?.documentTypePurpose;
+      const purpose = props.documentTypes.find(x => x.id === documentTypeId)?.documentTypePurpose;
 
       setDocumentTypePurpose(purpose);
     },
