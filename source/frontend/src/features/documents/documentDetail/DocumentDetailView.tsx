@@ -8,6 +8,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { exists } from '@/utils';
 
 import { StyledH3, StyledNoData, StyledScrollable } from '../commonStyles';
 import { ComposedDocument } from '../ComposedDocument';
@@ -30,6 +31,9 @@ export const DocumentDetailView: React.FunctionComponent<
 
   const documentTypeLabel =
     props.document.pimsDocumentRelationship?.document?.documentType?.documentTypeDescription;
+
+  const documentTypePurpose =
+    props.document.pimsDocumentRelationship?.document?.documentType?.documentTypePurpose;
 
   return (
     <StyledContainer>
@@ -70,6 +74,11 @@ export const DocumentDetailView: React.FunctionComponent<
             >
               {documentTypeLabel}
             </SectionField>
+            {exists(documentTypePurpose) && (
+              <SectionField label={null}>
+                <StyledPurposeText>{documentTypePurpose}</StyledPurposeText>
+              </SectionField>
+            )}
             <SectionField label="Status" labelWidth="4">
               {props.document.pimsDocumentRelationship?.document?.statusTypeCode?.description}
             </SectionField>
@@ -98,4 +107,9 @@ export const DocumentDetailView: React.FunctionComponent<
 const RightFlexDiv = styled.div`
   display: flex;
   flex-direction: row-reverse;
+`;
+
+const StyledPurposeText = styled.div`
+  color: black;
+  font-style: italic;
 `;
