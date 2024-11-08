@@ -116,9 +116,10 @@
       fill: var(--theme-gold-100);
     }
     &.expander {
+      display: flex;
+      align-items: center;
       color: var(--surface-color-primary-button-default);
     }
-    &.expander,
     &.reset-filter {
       display: flex;
       align-items: center;
