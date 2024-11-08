@@ -1,5 +1,6 @@
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
+import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IMapSideBarViewState as IMapSideBarState } from '@/features/mapSideBar/MapSideBar';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
@@ -35,6 +36,7 @@ export type MachineContext = {
 
   // TODO: this is partially in the URL. Either move it completly there or remove it
   searchCriteria: IPropertyFilter | null;
+  advancedSearchCriteria: PropertyFilterFormModel | null;
 
   isLoading: boolean;
   fitToResultsAfterLoading: boolean;
@@ -43,6 +45,7 @@ export type MachineContext = {
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
   activeLayers: ILayerItem[];
+  mapLayersToRefresh: ILayerItem[];
   isFiltering: boolean;
   showDisposed: boolean;
   showRetired: boolean;

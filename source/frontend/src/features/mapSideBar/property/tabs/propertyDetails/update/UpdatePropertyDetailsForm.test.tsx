@@ -8,7 +8,7 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
@@ -134,7 +134,6 @@ const fakeProperty: ApiGen_Concepts_Property = {
   pphStatusUpdateUserid: 'USER',
   isRwyBeltDomPatent: false,
   pphStatusTypeCode: 'Non-PPH',
-
   address: {
     ...getEmptyAddress(),
     id: 1,
@@ -142,12 +141,14 @@ const fakeProperty: ApiGen_Concepts_Property = {
     streetAddress2: 'Living in a van',
     streetAddress3: 'Down by the River',
     municipality: 'Hollywood North',
+    provinceStateId: 1,
     province: {
       id: 1,
       code: 'BC',
       description: 'British Columbia',
       displayOrder: 10,
     },
+    countryId: 1,
     country: {
       id: 1,
       code: 'CA',
@@ -231,6 +232,18 @@ describe('UpdatePropertyDetailsForm component', () => {
   it('shows property address if available', () => {
     const { container } = setup({ initialValues });
     const addressLine1 = container.querySelector(`input[name='address.streetAddress1']`);
+    const province = container.querySelector(`select[name='address.provinceStateId']`);
+
     expect(addressLine1).toHaveValue('45 - 904 Hollywood Crescent');
+    expect(province).toHaveValue('1');
+  });
+
+  it('province defaults to BC when null', () => {
+    initialValues.address.provinceStateId = null;
+    const { container } = setup({ initialValues });
+    waitForEffects();
+
+    const province = container.querySelector(`select[name='address.provinceStateId']`);
+    expect(province).toHaveValue('1');
   });
 });

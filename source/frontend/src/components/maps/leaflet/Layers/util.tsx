@@ -1,4 +1,4 @@
-import { GeoJsonProperties } from 'geojson';
+import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
@@ -169,7 +169,9 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
  * 5. Disposed (only if advanced filter is open)
  */
 export function getMarkerIcon(
-  feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
+  feature:
+    | Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>
+    | Feature<Geometry, PIMS_Property_Location_View>,
   selected: boolean,
   showDisposed = false,
   showRetired = false,

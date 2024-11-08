@@ -16,20 +16,6 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-const mockGetApi = {
-  error: undefined,
-  response: [1] as number[] | undefined,
-  execute: vi.fn().mockResolvedValue([1]),
-  loading: false,
-};
-vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
-  usePimsPropertyRepository: () => {
-    return {
-      getMatchingProperties: mockGetApi,
-    };
-  },
-}));
-
 describe('FilterContentContainer component', () => {
   let viewProps: IFilterContentFormProps;
 
@@ -46,7 +32,7 @@ describe('FilterContentContainer component', () => {
       ...renderOptions,
       store: storeState,
       history,
-      mockMapMachine: { ...mapMachineBaseMock, isFiltering: true },
+      mockMapMachine: { ...mapMachineBaseMock, isFiltering: false, isShowingMapFilter: true },
     });
 
     return {
@@ -62,12 +48,13 @@ describe('FilterContentContainer component', () => {
     vi.clearAllMocks();
   });
 
-  it('fetches filter data from the api', async () => {
-    mockGetApi.execute.mockResolvedValue([1, 2]);
+  it('fetches filter data from the api if filter changed', async () => {
     setup({});
-    await act(async () => viewProps.onChange(new PropertyFilterFormModel()));
-    expect(mockGetApi.execute).toHaveBeenCalledWith(new PropertyFilterFormModel().toApi());
-    expect(mapMachineBaseMock.setVisiblePimsProperties).toHaveBeenCalledWith([1, 2]);
+    const filter = new PropertyFilterFormModel();
+    filter.isRetired = true;
+
+    await act(async () => viewProps.onChange(filter));
+    expect(mapMachineBaseMock.setAdvancedSearchCriteria).toHaveBeenCalledWith(filter);
   });
 
   it(`resets the map filter state when "onReset" is called`, async () => {

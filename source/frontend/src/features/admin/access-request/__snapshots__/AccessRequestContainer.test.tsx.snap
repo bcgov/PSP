@@ -54,10 +54,10 @@ exports[`AccessRequestContainer component > makes a request based on the access 
 }
 
 .c5.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -197,6 +197,8 @@ exports[`AccessRequestContainer component > makes a request based on the access 
 
 .c5.btn:disabled,
 .c5.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -204,7 +206,6 @@ exports[`AccessRequestContainer component > makes a request based on the access 
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c5.Button .Button__icon {
@@ -850,10 +851,10 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
 }
 
 .c5.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -993,6 +994,8 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
 
 .c5.btn:disabled,
 .c5.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -1000,7 +1003,6 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c5.Button .Button__icon {

@@ -83,12 +83,16 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
               )}
             </HeaderContentCol>
           </Row>
-          <HistoricalNumbersContainer
-            propertyIds={propertyIds}
-            labelWidth="4"
-            contentWidth="8"
-            View={HistoricalNumberSectionView}
-          />
+          <HistoricalRow>
+            <Col>
+              <HistoricalNumbersContainer
+                propertyIds={propertyIds}
+                labelWidth="4"
+                contentWidth="8"
+                View={HistoricalNumberSectionView}
+              />
+            </Col>
+          </HistoricalRow>
         </Col>
 
         <Col>
@@ -113,6 +117,12 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
 };
 
 export default LeaseHeader;
+
+const HistoricalRow = styled(Row)`
+  max-height: 10rem;
+  overflow-y: auto;
+  margin-right: 1rem;
+`;
 
 const Container = styled.div`
   margin-top: 0.5rem;

@@ -48,10 +48,10 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
 }
 
 .c3.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-color: var(--surface-color-primary-button-hover);
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
@@ -191,6 +191,8 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
 
 .c3.btn:disabled,
 .c3.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -198,7 +200,6 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c3.Button .Button__icon {
@@ -213,7 +214,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   margin-right: 0;
 }
 
-.c5 {
+.c6 {
   font-size: 0.87em;
   line-height: 1.9;
 }
@@ -223,7 +224,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   white-space: nowrap;
 }
 
-.c4 {
+.c5 {
   height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -232,6 +233,12 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
+}
+
+.c4 {
+  max-height: 10rem;
+  overflow-y: auto;
+  margin-right: 1rem;
 }
 
 .c0 {
@@ -415,21 +422,29 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           />
         </div>
         <div
-          class="row"
+          class="c4 row"
         >
           <div
-            class="pr-0 text-left col-4"
+            class="col"
           >
-            <label
-              class="c1"
+            <div
+              class="row"
             >
-              Historical file #:
-            </label>
-          </div>
-          <div
-            class="pl-1 text-left col-8"
-          >
-            <div />
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c1"
+                >
+                  Historical file #:
+                </label>
+              </div>
+              <div
+                class="pl-1 text-left col-8"
+              >
+                <div />
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -437,7 +452,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
         class="col"
       >
         <div
-          class="c4"
+          class="c5"
         >
           <div
             class="no-gutters row"
@@ -446,7 +461,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               class="text-right col"
             >
               <span
-                class="c5"
+                class="c6"
               >
                 <strong>
                   Created: 
@@ -471,7 +486,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               class="text-right col"
             >
               <span
-                class="c5"
+                class="c6"
               >
                 <strong>
                   Updated: 
