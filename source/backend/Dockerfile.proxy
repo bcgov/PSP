@@ -12,7 +12,7 @@ COPY backend/api backend/api/
 COPY backend/core backend/core/
 COPY backend/core.api backend/core.api/
 COPY backend/keycloak backend/keycloak/
-COPY proxy/proxy-api/*.csproj proxy/proxy-api/
+COPY proxy/*.csproj proxy/
 
 RUN dotnet restore proxy/Proxy.sln
 ENV PATH="$PATH:/root/.dotnet/tools"
