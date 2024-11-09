@@ -1,4 +1,3 @@
-
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -27,8 +26,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         public static IQueryable<Entity.PimsPropertyVw> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
         {
-            filter.ThrowIfNull(nameof(filter));
-            filter.ThrowIfNull(nameof(user));
+            ArgumentNullException.ThrowIfNull(filter, nameof(filter));
+            ArgumentNullException.ThrowIfNull(user, nameof(user));
 
             var query = context.PimsPropertyVws
                 .AsNoTracking();
@@ -36,7 +35,7 @@ namespace Pims.Dal.Helpers.Extensions
             var predicate = GenerateCommonPropertyQuery(context, user, filter);
             query = query.Where(predicate);
 
-            if (filter.Sort?.Any() == true)
+            if (filter.Sort is not null && filter.Sort.Length > 0)
             {
                 query = query.OrderByProperty(true, filter.Sort);
             }
@@ -56,11 +55,8 @@ namespace Pims.Dal.Helpers.Extensions
         /// <returns></returns>
         private static ExpressionStarter<PimsPropertyVw> GenerateCommonPropertyQuery(PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
         {
-            filter.ThrowIfNull(nameof(filter));
-            filter.ThrowIfNull(nameof(user));
-
-            // Check if user has the ability to view sensitive properties.
-            var viewSensitive = user.HasPermission(Permissions.SensitiveView);
+            ArgumentNullException.ThrowIfNull(filter, nameof(filter));
+            ArgumentNullException.ThrowIfNull(user, nameof(user));
 
             var predicateBuilder = PredicateBuilder.New<PimsPropertyVw>(p => true);
 
