@@ -85,8 +85,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
     ports:
-      - ${API_HTTPS_PORT:-5003}:443
-      - ${API_HTTP_PORT:-5002}:8080
+      - ${PROXY_HTTPS_PORT:-5003}:443
+      - ${PROXY_HTTP_PORT:-5002}:8080
     depends_on:
       - geoserver
     networks:
