@@ -1,4 +1,4 @@
-PSP_PIMS | Development Sprint: S93.00 | Design Sprint: 92 | Date: 2024-Nov-05  -- Go Kamala!!!
+PSP_PIMS | Development Sprint: S93.00 | Design Sprint: 92 | Date: 2024-Nov-05
 - Altered tables:
   - PIMS_DOCUMENT_QUEUE
   - PIMS_DOCUMENT_QUEUE_HIST
