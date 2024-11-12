@@ -271,7 +271,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public long GetRowVersion(long id)
+        public long? GetRowVersion(long id)
         {
             return this.Context.PimsResearchFiles.AsNoTracking()
                 .Where(p => p.ResearchFileId == id)?
