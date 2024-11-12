@@ -29,6 +29,9 @@ public partial class PimsDispositionFileDocumentHist
     [Column("DOCUMENT_ID")]
     public long DocumentId { get; set; }
 
+    [Column("CONCURRENCY_CONTROL_NUMBER")]
+    public long? ConcurrencyControlNumber { get; set; }
+
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
 
@@ -60,9 +63,6 @@ public partial class PimsDispositionFileDocumentHist
     [Column("APP_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string AppLastUpdateUserid { get; set; }
-
-    [Column("CONCURRENCY_CONTROL_NUMBER")]
-    public long ConcurrencyControlNumber { get; set; }
 
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }

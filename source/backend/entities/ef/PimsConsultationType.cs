@@ -48,7 +48,7 @@ public partial class PimsConsultationType
     public bool IsDisabled { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
-    public long ConcurrencyControlNumber { get; set; }
+    public long? ConcurrencyControlNumber { get; set; }
 
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }

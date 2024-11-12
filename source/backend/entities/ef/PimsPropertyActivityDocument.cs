@@ -22,7 +22,7 @@ public partial class PimsPropertyActivityDocument
     public long DocumentId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
-    public long ConcurrencyControlNumber { get; set; }
+    public long? ConcurrencyControlNumber { get; set; }
 
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
@@ -75,6 +75,9 @@ public partial class PimsPropertyActivityDocument
     [ForeignKey("DocumentId")]
     [InverseProperty("PimsPropertyActivityDocuments")]
     public virtual PimsDocument Document { get; set; }
+
+    [InverseProperty("PropertyActivityDocument")]
+    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
 
     [ForeignKey("PimsPropertyActivityId")]
     [InverseProperty("PimsPropertyActivityDocuments")]

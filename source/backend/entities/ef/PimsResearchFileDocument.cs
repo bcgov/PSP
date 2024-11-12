@@ -26,7 +26,7 @@ public partial class PimsResearchFileDocument
     public long DocumentId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
-    public long ConcurrencyControlNumber { get; set; }
+    public long? ConcurrencyControlNumber { get; set; }
 
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
@@ -78,6 +78,9 @@ public partial class PimsResearchFileDocument
     [ForeignKey("DocumentId")]
     [InverseProperty("PimsResearchFileDocuments")]
     public virtual PimsDocument Document { get; set; }
+
+    [InverseProperty("ResearchFileDocument")]
+    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
 
     [ForeignKey("ResearchFileId")]
     [InverseProperty("PimsResearchFileDocuments")]
