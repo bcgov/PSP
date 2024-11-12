@@ -24,10 +24,9 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
-
-pull_request_target:
-  workflow_dispatch:
-    branches: [dev]	
+on:
+  pull_request_target:
+    branches: [dev]
     types: [closed]
 
 jobs:
