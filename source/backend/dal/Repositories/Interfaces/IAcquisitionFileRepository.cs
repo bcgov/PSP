@@ -20,7 +20,7 @@ namespace Pims.Dal.Repositories
 
         PimsAcquisitionFile Update(PimsAcquisitionFile acquisitionFile);
 
-        long GetRowVersion(long id);
+        long? GetRowVersion(long id);
 
         short GetRegion(long id);
 

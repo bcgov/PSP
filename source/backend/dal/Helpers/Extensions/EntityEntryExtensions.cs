@@ -86,7 +86,7 @@ namespace Pims.Dal.Extensions
                 entity.AppLastUpdateUserDirectory = userDirectory;
             }
             UpdateDbAuditProperties(entry, username);
-            entry.UpdateRowversion();
+            //entry.UpdateRowversion(); TODO: Verify and remove this
         }
 
         /// <summary>

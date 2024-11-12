@@ -753,7 +753,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="id"></param>
         /// <returns>The file row version.</returns>
-        public long GetRowVersion(long id)
+        public long? GetRowVersion(long id)
         {
             using var scope = Logger.QueryScope();
 

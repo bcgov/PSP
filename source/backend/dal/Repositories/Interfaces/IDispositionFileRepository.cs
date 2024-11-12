@@ -40,7 +40,7 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionAppraisal UpdateDispositionFileAppraisal(long id, PimsDispositionAppraisal dispositionAppraisal);
 
-        long GetRowVersion(long id);
+        long? GetRowVersion(long id);
 
         short GetRegion(long id);
 

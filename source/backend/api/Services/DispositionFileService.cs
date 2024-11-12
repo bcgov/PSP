@@ -810,9 +810,9 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateVersion(long dispositionFileId, long dispositionFileVersion)
+        private void ValidateVersion(long dispositionFileId, long? dispositionFileVersion)
         {
-            long currentRowVersion = _dispositionFileRepository.GetRowVersion(dispositionFileId);
+            long? currentRowVersion = _dispositionFileRepository.GetRowVersion(dispositionFileId);
             if (currentRowVersion != dispositionFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this disposition file, please refresh the application and retry.");

@@ -686,9 +686,9 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidateVersion(long acqFileId, long acqFileVersion)
+        private void ValidateVersion(long acqFileId, long? acqFileVersion)
         {
-            long currentRowVersion = _acqFileRepository.GetRowVersion(acqFileId);
+            long? currentRowVersion = _acqFileRepository.GetRowVersion(acqFileId);
             if (currentRowVersion != acqFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this acquisition file, please refresh the application and retry.");
