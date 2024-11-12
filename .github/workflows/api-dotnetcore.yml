@@ -9,7 +9,6 @@ on:
 jobs:
   # JOB to run change detection
   check-changes:
-    if: ${{ needs.check-changes.outputs.backend == 'true' }}
     runs-on: ubuntu-latest
     # Set job outputs to values from filter step
     outputs:
@@ -26,6 +25,7 @@ jobs:
   build-backend:
     needs: check-changes
     runs-on: ubuntu-latest
+    if: ${{ needs.check-changes.outputs.backend == 'true' }}
     strategy:
       matrix:
         services: [{directory: ./source/backend/api, solution: 'Pims.sln'}, {directory: ./source/backend/proxy, solution: 'Proxy.sln'}]
