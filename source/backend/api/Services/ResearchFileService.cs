@@ -239,7 +239,7 @@ namespace Pims.Api.Services
 
         private void ValidateVersion(long researchFileId, long? researchFileVersion)
         {
-            long currentRowVersion = _researchFileRepository.GetRowVersion(researchFileId);
+            long? currentRowVersion = _researchFileRepository.GetRowVersion(researchFileId);
             if (currentRowVersion != researchFileVersion)
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this research file, please refresh the application and retry.");
