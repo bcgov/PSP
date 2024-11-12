@@ -1,0 +1,14 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="lizzard.th.gov.bc.ca_20208_dev03.aparasur1"
+  DTS:DTSID="{CC64C7CC-BD11-485A-BD98-4ADC9A4398EE}"
+  DTS:CreationName="ADO.NET:System.Data.OracleClient.OracleConnection, System.Data.OracleClient, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/dev03;User ID=aparasur;Persist Security Info=True;Unicode=True;">
+      <DTS:Password
+        DTS:Name="Password"
+        Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA/475NWuf7Eusdu8b62swfQAAAAACAAAAAAAQZgAAAAEAACAAAADyUdAILU4up0whQp4rQZ9ieVBFUFl+zVpA5/Pv/BV61QAAAAAOgAAAAAIAACAAAABxRJl7DAPuFpMDXVlCWWfnBZDrf9Dx6tpJbq4Yh7FCZ4AAAADRcg0frqOE6gJtrdhLv/Lmyk8J+xdfOE9UQxXPHTINLlGPJbYWUCkat0+A6OwLA2nZW0SgyC3SKDdXdMVUYCnbWmn6E/9+uSXrrQ89WgKhrL5rTn2Btg9PRMJGfQwLA1rEMnPOu6xuUfgZwKrO9aq24UXHWcnr4KhdNpyWvjD2XEAAAADradmFgHTic778i4P0m1ThYt3qS5z267P51Hv/IAcsmLeQJbLIK1mcUuA1/mjcaf9ITZUTWGz4oyip3qFC4jpv</DTS:Password>
+    </DTS:ConnectionManager>
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

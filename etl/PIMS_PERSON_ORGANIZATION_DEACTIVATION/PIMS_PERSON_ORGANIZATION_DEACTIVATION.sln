@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34729.46
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "PIMS_PERSON_ORGANIZATION_DEACTIVATION", "PIMS_PERSON_ORGANIZATION_DEACTIVATION.dtproj", "{53E29CB6-D280-4FE0-90D4-BD736D800141}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{53E29CB6-D280-4FE0-90D4-BD736D800141}.Development|Default.ActiveCfg = Development
+		{53E29CB6-D280-4FE0-90D4-BD736D800141}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7F2FB046-8E2A-460E-9B7A-A46007FE1C4D}
+	EndGlobalSection
+EndGlobal
