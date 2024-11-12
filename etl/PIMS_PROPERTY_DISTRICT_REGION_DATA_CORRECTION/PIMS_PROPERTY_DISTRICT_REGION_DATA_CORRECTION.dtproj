@@ -12,11 +12,11 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{90516b22-d60c-4962-9be8-207a51e107cf}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">PIMS_PROPERTY_DISTRICT_REGION_DATA_CORRECTION</SSIS:Property>
-          <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionMajor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionComments">
@@ -26,7 +26,6 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">ARIMA-DELL</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA/475NWuf7Eusdu8b62swfQAAAAACAAAAAAAQZgAAAAEAACAAAACOpPfAbRp8Sbg1IJc+fAggcO0dwK6ZZlzGY7iBa+q5GwAAAAAOgAAAAAIAACAAAACa5IhWMpS9hUOeJNATRzJoa0EsaWAmPKF87Yr+QK8chJAAAABFuUjVB0oYwotA2tGAY7JesYeINiaOF3nvx++zjrGJFeccGCLQ6yX+KQfdUxKOMSBdPt3m2NYYQGW2mwQQJaRYhCjjFUk6Wi3C8u8oVCiMK9p88Pq1YK3DIh2nJ7QHZBhbW3QyOQZr4A2W0tWq/42ssHvUGEFEF8CrFCJ8EyUGMf8mv4auwzmNsmfueSWHrFVAAAAAw5JlRkTnCslWkutXA8gwC+yqB90nmzyEZDOiLDrE6PDncJAqZdEqasJnntJhTySFbIYo75z5rTdq3gWa9rXdMw==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -314,14 +313,14 @@
                 <SSIS:Property SSIS:Name="Name">Package1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">26</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">29</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{9FE6C3A7-FA3A-4A46-A1DE-66A2826466B8}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{4C639D0E-E099-4500-9858-EFFB137DC6AC}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters />
             </SSIS:PackageMetaData>
@@ -331,14 +330,14 @@
                 <SSIS:Property SSIS:Name="Name">PSP_PIMS_DISPOSITION_FILE_REGION_FIX</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">24</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">25</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{0A29A4BE-FD0B-4448-9992-E39B6214898D}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{5AA7EA1B-76D6-46FA-A4C7-F8652A203FA7}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters />
             </SSIS:PackageMetaData>
@@ -348,14 +347,14 @@
                 <SSIS:Property SSIS:Name="Name">BKP_PSP_PIMS_PROPERTY_DISTRICT_REGION_FIX</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">97</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">98</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{5439FF13-198C-462D-BFFD-69547372AE91}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{6FA0C2BC-3E47-447E-94F7-C8E200BC8EE0}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters />
             </SSIS:PackageMetaData>

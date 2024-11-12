@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0"?>
 <DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
-  DTS:ObjectName="sqldevtst.th.gov.bc.ca.PIMS_DEV"
+  DTS:ObjectName="PIMS"
   DTS:DTSID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
   DTS:CreationName="OLEDB">
   <DTS:ObjectData>

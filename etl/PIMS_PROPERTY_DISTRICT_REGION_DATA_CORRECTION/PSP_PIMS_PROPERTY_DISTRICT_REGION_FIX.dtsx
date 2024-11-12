@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="BKP_PSP_PIMS_PROPERTY_DISTRICT_REGION_FIX"
   DTS:PackageType="5"
-  DTS:VersionBuild="97"
-  DTS:VersionGUID="{5439FF13-198C-462D-BFFD-69547372AE91}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="98"
+  DTS:VersionGUID="{6FA0C2BC-3E47-447E-94F7-C8E200BC8EE0}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />

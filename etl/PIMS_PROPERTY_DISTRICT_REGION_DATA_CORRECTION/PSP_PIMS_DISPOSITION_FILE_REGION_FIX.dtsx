@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="PSP_PIMS_DISPOSITION_FILE_REGION_FIX"
   DTS:PackageType="5"
-  DTS:VersionBuild="24"
-  DTS:VersionGUID="{0A29A4BE-FD0B-4448-9992-E39B6214898D}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{5AA7EA1B-76D6-46FA-A4C7-F8652A203FA7}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -828,7 +829,7 @@ WHERE DISPOSITION_FILE_ID= ?</property>
       <Property>
         <Name>OverwriteParamsSQLProp</Name>
         <Value
-          type="q2:boolean">false</Value>
+          type="q2:string">false</Value>
       </Property>
       <Property>
         <Name>UsedTableName</Name>
@@ -838,7 +839,7 @@ WHERE DISPOSITION_FILE_ID= ?</property>
       <Property>
         <Name>TableInfoObjectType</Name>
         <Value
-          type="q4:int">0</Value>
+          type="q4:string">0</Value>
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>

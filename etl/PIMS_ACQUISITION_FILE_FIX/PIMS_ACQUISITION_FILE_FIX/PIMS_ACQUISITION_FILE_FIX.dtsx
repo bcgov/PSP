@@ -5,36 +5,20 @@
   DTS:CreationName="Microsoft.Package"
   DTS:CreatorComputerName="ARIMA-DELL"
   DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DelayValidation="True"
   DTS:DTSID="{529F8BCF-6017-4DD2-8CBA-CAD606BE2751}"
   DTS:ExecutableType="Microsoft.Package"
   DTS:LastModifiedProductVersion="16.0.5270.0"
   DTS:LocaleID="1033"
   DTS:ObjectName="PIMS_ACQUISITION_FILE_FIX"
   DTS:PackageType="5"
-  DTS:VersionBuild="65"
-  DTS:VersionGUID="{7ECE3119-56DE-4776-8524-BE0F331F55E7}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="87"
+  DTS:VersionGUID="{4C4EAD16-DF6F-474F-9BFB-F22BC485B8D0}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
   <DTS:Executables>
-    <DTS:Executable
-      DTS:refId="Package\CASE 1 - MAIN FILES"
-      DTS:CreationName="Microsoft.ExecuteSQLTask"
-      DTS:Description="Execute SQL Task"
-      DTS:Disabled="True"
-      DTS:DTSID="{244E3A20-FCD3-4D54-9970-98A17D1C43A3}"
-      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
-      DTS:LocaleID="-1"
-      DTS:ObjectName="CASE 1 - MAIN FILES"
-      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
-      DTS:ThreadHint="0">
-      <DTS:Variables />
-      <DTS:ObjectData>
-        <SQLTask:SqlTaskData
-          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
-          SQLTask:SqlStatementSource="-- CASE 1 -- MAIN FILE records ( donot touch - will be kept as is main file )&#xA;WITH &#xA;&#xA;SAME_FILE_3NUMBERS AS&#xA;(&#xA;&#x9;SELECT FILE_NUMBER, COUNT(1) as COUNTS FROM dbo.PIMS_ACQUISITION_FILE WHERE APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;GROUP BY FILE_NUMBER&#xA;&#x9;HAVING COUNT(1) = 3&#xA;)&#xA;&#xA;,SAME_FILE_2NUMBERS AS&#xA;(&#xA;&#x9;SELECT FILE_NUMBER, COUNT(1) as COUNTS FROM dbo.PIMS_ACQUISITION_FILE WHERE APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;AND FILE_NUMBER NOT IN (SELECT FILE_NUMBER FROM SAME_FILE_3NUMBERS)&#xA;&#x9;GROUP BY FILE_NUMBER&#xA;&#x9;HAVING COUNT(1) = 2&#xA;)&#xA;&#xA;,SAME_LEGACY_FILE_2NUMBERS AS&#xA;(&#xA;&#x9;SELECT LEGACY_FILE_NUMBER, COUNT(1) as COUNTS FROM dbo.PIMS_ACQUISITION_FILE WHERE APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;GROUP BY LEGACY_FILE_NUMBER&#xA;&#x9;HAVING COUNT(1) = 2&#xA;&#xA;)&#xA;&#xA;-- MAIN FILES&#xA;,MAIN_FILES AS (&#xA;SELECT [ACQUISITION_FILE_ID],FILE_NUMBER, LEGACY_FILE_NUMBER, LEFT(FILE_NUMBER, 2) as REGION_CODE,LEFT(LEGACY_FILE_NUMBER, 2) AS OLD_REGION_CODE FROM [dbo].[PIMS_ACQUISITION_FILE] &#xA;WHERE &#xA;&#x9;FILE_NUMBER IN ( SELECT FILE_NUMBER FROM SAME_FILE_2NUMBERS )&#xA;&#x9;AND LEGACY_FILE_NUMBER NOT IN ( SELECT LEGACY_FILE_NUMBER FROM SAME_LEGACY_FILE_2NUMBERS )&#xA;&#x9;AND APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#xA;)&#xA;&#xA;SELECT * into etl.CASE1_MAIN_FILES FROM MAIN_FILES order by FILE_NUMBER&#xA;&#xA;&#xA;&#xA;;&#xA; &#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
-      </DTS:ObjectData>
-    </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\CASE 2 - ALPHABETS"
       DTS:CreationName="Microsoft.ExecuteSQLTask"
@@ -49,7 +33,7 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
-          SQLTask:SqlStatementSource="WITH CASE2 AS  &#xA;(&#xA;    SELECT&#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO,&#xA;        FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;        CASE &#xA;            WHEN PATINDEX('%[A-Z]%', SUBSTRING(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1) + 1, LEN(FILE_NUMBER))) &gt; 0 &#xA;            THEN 'YES'&#xA;            ELSE 'NO'&#xA;        END AS HasAlphabets&#xA;    FROM &#xA;        dbo.PIMS_ACQUISITION_FILE&#xA;    WHERE&#xA;        FILE_NUMBER NOT LIKE '%-R%' &#xA;        AND APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;),&#xA;NUMBERED_FILES AS &#xA;(&#xA;    SELECT&#xA;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;        ROW_NUMBER() OVER (PARTITION BY REGION_CODE, FILE_NO ORDER BY FILE_NUMBER) AS NewSuffixNumber&#xA;    FROM &#xA;        CASE2&#xA;    WHERE &#xA;        HasAlphabets = 'YES'&#xA;),&#xA;UPDATED_FILES AS&#xA;(&#xA;    SELECT &#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER, &#xA;        ACQUISITION_FILE_ID,&#xA;        LEFT(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1)) &#xA;        + RIGHT('00' + CAST(NewSuffixNumber AS VARCHAR(2)), 2) AS Updated_FILE_NUMBER,&#xA;        NewSuffixNumber&#xA;    FROM &#xA;        NUMBERED_FILES&#xA;)&#xA;SELECT &#xA;&#x9;UF.REGION_CODE,&#xA;    UF.FILE_NO, &#xA;    UF.FILE_NUMBER, &#xA;    UF.ACQUISITION_FILE_ID,&#xA;    UF.Updated_FILE_NUMBER,&#xA;    CASE &#xA;        WHEN UF.NewSuffixNumber = 1 THEN NULL  -- Parent file (Updated_FILE_NUMBER = &quot;01&quot;)&#xA;        ELSE PF.ACQUISITION_FILE_ID           -- Child file points to the ACQUISITION_FILE_ID of the parent file&#xA;    END AS PRNT_ACQUISITION_FILE_ID&#xA;&#xA;INTO etl.CASE2_ALPHABETS&#xA;&#xA;FROM &#xA;    UPDATED_FILES UF&#xA;LEFT JOIN &#xA;    UPDATED_FILES PF &#xA;    ON UF.FILE_NO = PF.FILE_NO &#xA;    AND PF.NewSuffixNumber = 1  -- Find the parent file with Updated_FILE_NUMBER = &quot;01&quot;&#xA;ORDER BY &#xA;    UF.FILE_NO, UF.NewSuffixNumber;&#xA;&#xA;&#x9; &#xA; &#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="WITH CASE2 AS  &#xA;(&#xA;    SELECT&#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO,&#xA;        FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;        CASE &#xA;            WHEN PATINDEX('%[A-Z]%', SUBSTRING(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1) + 1, LEN(FILE_NUMBER))) &gt; 0 &#xA;            THEN 'YES'&#xA;            ELSE 'NO'&#xA;        END AS HasAlphabets&#xA;    FROM &#xA;        dbo.PIMS_ACQUISITION_FILE&#xA;    WHERE&#xA;        FILE_NUMBER NOT LIKE '%-R%' &#xA;        AND APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;),&#xA;NUMBERED_FILES AS &#xA;(&#xA;    SELECT&#xA;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;        ROW_NUMBER() OVER (PARTITION BY REGION_CODE, FILE_NO ORDER BY FILE_NUMBER) AS NewSuffixNumber&#xA;    FROM &#xA;        CASE2&#xA;    WHERE &#xA;        HasAlphabets = 'YES'&#xA;&#x9;AND NOT ( LEN(FILE_NUMBER) &gt;= 2 AND ISNUMERIC(RIGHT(FILE_NUMBER, 1)) = 1 AND PATINDEX('%[A-Z]%', RIGHT(FILE_NUMBER, 2)) &gt; 0 )&#xA;),&#xA;UPDATED_FILES AS&#xA;(&#xA;    SELECT &#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER, &#xA;        ACQUISITION_FILE_ID,&#xA;        LEFT(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1)) &#xA;        + RIGHT('00' + CAST(NewSuffixNumber AS VARCHAR(2)), 2) AS Updated_FILE_NUMBER,&#xA;        NewSuffixNumber&#xA;    FROM &#xA;        NUMBERED_FILES&#xA;)&#xA;SELECT &#xA;&#x9;UF.REGION_CODE,&#xA;    UF.FILE_NO, &#xA;    UF.FILE_NUMBER, &#xA;    UF.ACQUISITION_FILE_ID,&#xA;    UF.Updated_FILE_NUMBER,&#xA;    CASE &#xA;        WHEN UF.NewSuffixNumber = 1 THEN NULL  -- Parent file (Updated_FILE_NUMBER = &quot;01&quot;)&#xA;        ELSE PF.ACQUISITION_FILE_ID           -- Child file points to the ACQUISITION_FILE_ID of the parent file&#xA;    END AS PRNT_ACQUISITION_FILE_ID&#xA;&#xA;INTO etl.CASE2_ALPHABETS&#xA;&#xA;FROM &#xA;    UPDATED_FILES UF&#xA;LEFT JOIN &#xA;    UPDATED_FILES PF &#xA;    ON UF.FILE_NO = PF.FILE_NO &#xA;    AND PF.NewSuffixNumber = 1  -- Find the parent file with Updated_FILE_NUMBER = &quot;01&quot;&#xA;ORDER BY &#xA;    UF.FILE_NO, UF.NewSuffixNumber;&#xA;&#xA;&#x9; &#xA; &#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
@@ -100,12 +84,13 @@
       <DTS:ObjectData>
         <SQLTask:SqlTaskData
           SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
-          SQLTask:SqlStatementSource="WITH CASE4 AS&#xA;(&#xA;SELECT FILE_NUMBER, COUNT(1) as COUNTS FROM dbo.PIMS_ACQUISITION_FILE WHERE APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;GROUP BY FILE_NUMBER&#xA;&#x9;HAVING COUNT(1) = 3&#xA;)&#xA;&#xA;SELECT &#xA;&#x9;PAIMS_ACQUISITION_FILE_ID,&#xA;&#x9;ACQUISITION_FILE_ID, &#xA;&#x9;FILE_NO, &#xA;&#x9;FILE_NUMBER, &#xA;&#x9;LEGACY_FILE_NUMBER,  &#xA;&#x9;[ACQUISITION_FILE_STATUS_TYPE_CODE],&#xA;&#x9;LEFT(FILE_NUMBER, 2) as REGION_CODE,LEFT(LEGACY_FILE_NUMBER, 2) AS OLD_REGION_CODE, &#xA;&#x9;PRNT_ACQUISITION_FILE_ID, NULL AS SUFFIX&#xA;INTO etl.CASE4_SUFFIX_NULL&#xA;FROM&#x9;dbo.PIMS_ACQUISITION_FILE&#xA;WHERE &#xA;&#x9;FILE_NUMBER IN ( Select FILE_NUMBER FROM CASE4 )&#xA;&#x9;AND LEFT(LEGACY_FILE_NUMBER, 2) = '01'&#xA;ORDER BY FILE_NO&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          SQLTask:SqlStatementSource="WITH CASE4 AS&#xA;(&#xA;&#x9;SELECT FILE_NUMBER, COUNT(1) AS X FROM etl.PIMS_ACQUISITION_FILE_BKP&#xA;&#x9;WHERE FILE_NUMBER = LEGACY_FILE_NUMBER&#xA;&#xA;&#x9;GROUP BY FILE_NUMBER&#xA;&#x9;HAVING COUNT(1) &gt; 1&#xA;)&#xA;&#xA;SELECT &#xA;&#x9;PAIMS_ACQUISITION_FILE_ID,&#xA;&#x9;ACQUISITION_FILE_ID, &#xA;&#x9;FILE_NO, &#xA;&#x9;FILE_NUMBER, &#xA;&#x9;LEGACY_FILE_NUMBER,  &#xA;&#x9;[ACQUISITION_FILE_STATUS_TYPE_CODE],&#xA;&#x9;LEFT(FILE_NUMBER, 2) as REGION_CODE,LEFT(LEGACY_FILE_NUMBER, 2) AS OLD_REGION_CODE, &#xA;&#x9;PRNT_ACQUISITION_FILE_ID, NULL AS SUFFIX&#xA;INTO etl.CASE4_SUFFIX_NULL&#xA;FROM&#x9;dbo.PIMS_ACQUISITION_FILE&#xA;WHERE &#xA;&#x9;FILE_NUMBER IN ( Select FILE_NUMBER FROM CASE4 )&#xA;&#xA;ORDER BY FILE_NO&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
       </DTS:ObjectData>
     </DTS:Executable>
     <DTS:Executable
       DTS:refId="Package\Case4_UPDATE_PARENT"
       DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
       DTS:Description="Data Flow Task"
       DTS:DTSID="{A527997E-CD36-49A9-A9EC-1C0F114434AE}"
       DTS:ExecutableType="Microsoft.Pipeline"
@@ -244,7 +229,7 @@ where [refTable].[FILE_NO] = ? and [refTable].[SUFFIX] = ?</property>
                 <connection
                   refId="Package\Case4_UPDATE_PARENT\Lookup.Connections[OleDbConnection]"
                   connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[sqldevtst.th.gov.bc.ca.PIMS_DEV]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -425,7 +410,7 @@ where [refTable].[FILE_NO] = ? and [refTable].[SUFFIX] = ?</property>
                 <connection
                   refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Connections[OleDbConnection]"
                   connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[sqldevtst.th.gov.bc.ca.PIMS_DEV]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -597,7 +582,7 @@ where [refTable].[FILE_NO] = ? and [refTable].[SUFFIX] = ?</property>
                 <connection
                   refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[sqldevtst.th.gov.bc.ca.PIMS_DEV]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -784,8 +769,8 @@ LPAD( A.REGION_NO, 2, '0') || '-' ||  A.AGENT_ASSIGNMENT_NO || '-' || COALESCE( 
               <connections>
                 <connection
                   refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Connections[IDbConnection]"
-                  connectionManagerID="{CC64C7CC-BD11-485A-BD98-4ADC9A4398EE}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[lizzard.th.gov.bc.ca_20208_dev03.aparasur1]"
+                  connectionManagerID="{AA4C833B-EEC7-4D87-B05B-32E4CBC8755B}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PAIMS-ORACLE]"
                   description="Managed connection manager"
                   name="IDbConnection" />
               </connections>
@@ -1108,7 +1093,7 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
                 <connection
                   refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Connections[OleDbConnection]"
                   connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[sqldevtst.th.gov.bc.ca.PIMS_DEV]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="Connection manager used to access lookup data."
                   name="OleDbConnection" />
               </connections>
@@ -1351,7 +1336,7 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
                 <connection
                   refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Connections[OleDbConnection]"
                   connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[sqldevtst.th.gov.bc.ca.PIMS_DEV]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1488,7 +1473,7 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
                 <connection
                   refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Connections[OleDbConnection]"
                   connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
-                  connectionManagerRefId="Project.ConnectionManagers[sqldevtst.th.gov.bc.ca.PIMS_DEV]"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
                   description="The OLE DB runtime connection used to access the database."
                   name="OleDbConnection" />
               </connections>
@@ -1975,8 +1960,8 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint]"
       DTS:CreationName=""
-      DTS:DTSID="{7B1D210C-4D08-4CDD-A11A-09562B1A2108}"
-      DTS:From="Package\CASE 1 - MAIN FILES"
+      DTS:DTSID="{F50CCAD6-84C8-474D-A36F-FBF8EF14B324}"
+      DTS:From="Package\PRE-REQ"
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint"
       DTS:To="Package\CASE 2 - ALPHABETS" />
@@ -2037,14 +2022,6 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
       DTS:ObjectName="Constraint 7"
       DTS:To="Package\UPDATE PIMS_ACQUISITION_FILE" />
     <DTS:PrecedenceConstraint
-      DTS:refId="Package.PrecedenceConstraints[Constraint 8]"
-      DTS:CreationName=""
-      DTS:DTSID="{56D2439A-26F5-471D-9196-802D7C45F96D}"
-      DTS:From="Package\PRE-REQ"
-      DTS:LogicalAnd="True"
-      DTS:ObjectName="Constraint 8"
-      DTS:To="Package\CASE 1 - MAIN FILES" />
-    <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
       DTS:CreationName=""
       DTS:DTSID="{A96DC173-765C-4C34-9250-524D5A54EDDD}"
@@ -2066,21 +2043,21 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="185.333333333334,42.6666666666667"
-          Id="Package\CASE 1 - MAIN FILES"
-          TopLeft="293.124995632097,74.5789487721847" />
-        <NodeLayout
           Size="189.333333333334,42.6666666666667"
           Id="Package\CASE 2 - ALPHABETS"
-          TopLeft="290.62499566935,160.789476710674" />
+          TopLeft="290.62499566935,162.157897789063" />
         <NodeLayout
           Size="200.666666666667,42.6666666666667"
           Id="Package\CASE3_SINGLE_DIGITS"
           TopLeft="284.99999575317,251.789478423523" />
         <NodeLayout
+          Size="276,42.6666666666667"
+          Id="Package\CASE3_UPDATE_PIMS_FILE_NUMBER"
+          TopLeft="608.124990938231,249.73684680594" />
+        <NodeLayout
           Size="192,42.6666666666667"
           Id="Package\CASE4_SUFFIX_NULL"
-          TopLeft="284.374995762486,344.157901214761" />
+          TopLeft="282.499995790426,342.789480136372" />
         <NodeLayout
           Size="209.333333333334,42.6666666666667"
           Id="Package\Case4_UPDATE_PARENT"
@@ -2107,18 +2084,18 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           TopLeft="266.249996032566,690.368434047105" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
-          TopLeft="385.54166231739,117.245615438851">
+          TopLeft="382.458328816419,45.4035088234441">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,43.5438612718226"
+              EndConnector="0,116.754388965619"
               Start="0,0"
-              End="0,36.0438612718226">
+              End="0,109.254388965619">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,36.0438612718226" />
+                    End="0,109.254388965619" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2129,18 +2106,40 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 1]"
-          TopLeft="385.31249571126,203.456143377341">
+          TopLeft="385.31249571126,204.824564455729">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,48.3333350461821"
+              EndConnector="0,46.9649139677936"
               Start="0,0"
-              End="0,40.8333350461821">
+              End="0,39.4649139677936">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,40.8333350461821" />
+                    End="0,39.4649139677936" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="485.666662419837,272.096495948065">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="122.458328518395,0"
+              Start="0,0"
+              End="114.958328518395,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="114.958328518395,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2151,18 +2150,18 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
         </EdgeLayout>
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint 3]"
-          TopLeft="476.374995762486,366.175445087289">
+          TopLeft="474.499995790426,365.491234548094">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="106.749995548275,0"
+              EndConnector="108.624995520335,0"
               Start="0,0"
-              End="99.2499955482749,0">
+              End="101.124995520335,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="99.2499955482749,0" />
+                    End="101.124995520335,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2199,26 +2198,26 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-676.249990072102,76.385967153151"
+              EndConnector="-676.249990072101,76.3859671531513"
               Start="0,0"
-              End="-676.249990072102,68.885967153151">
+              End="-676.249990072101,68.8859671531513">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,34.1929835765755" />
+                    End="0,34.1929835765756" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,34.1929835765755"
-                    Point2="0,38.1929835765755"
-                    Point3="-4,38.1929835765755" />
+                    Point1="0,34.1929835765756"
+                    Point2="0,38.1929835765756"
+                    Point3="-4,38.1929835765756" />
                   <mssgle:LineSegment
-                    End="-672.249990072102,38.1929835765755" />
+                    End="-672.249990072101,38.1929835765756" />
                   <mssgle:CubicBezierSegment
-                    Point1="-672.249990072102,38.1929835765755"
-                    Point2="-676.249990072102,38.1929835765755"
-                    Point3="-676.249990072102,42.1929835765755" />
+                    Point1="-672.249990072101,38.1929835765756"
+                    Point2="-676.249990072101,38.1929835765756"
+                    Point3="-676.249990072101,42.1929835765756" />
                   <mssgle:LineSegment
-                    End="-676.249990072102,68.885967153151" />
+                    End="-676.249990072101,68.8859671531513" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2272,19 +2271,31 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 8]"
-          TopLeft="382.708328797792,45.4035088234441">
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="746.124990938231,292.403513472607">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,29.1754399487406"
+              EndConnector="-367.624995147805,50.3859666637657"
               Start="0,0"
-              End="0,21.6754399487406">
+              End="-367.624995147805,42.8859666637657">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,21.6754399487406" />
+                    End="0,21.1929833318828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.1929833318828"
+                    Point2="0,25.1929833318828"
+                    Point3="-4,25.1929833318828" />
+                  <mssgle:LineSegment
+                    End="-363.624995147805,25.1929833318828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-363.624995147805,25.1929833318828"
+                    Point2="-367.624995147805,25.1929833318828"
+                    Point3="-367.624995147805,29.1929833318828" />
+                  <mssgle:LineSegment
+                    End="-367.624995147805,42.8859666637657" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2293,13 +2304,6 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <AnnotationLayout
-          Text="etl.CASE1_MAIN_FILES"
-          ParentId="Package"
-          FontInfo="{assembly:Null}"
-          Size="146.666666666667,40"
-          Id="996a4be2-3ea0-41b9-9db3-c903c8cd95d9"
-          TopLeft="116.24999826774,78.000001468157" />
         <AnnotationLayout
           Text="etl.CASE2_ALPHABETS"
           ParentId="Package"
@@ -2341,14 +2345,7 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           FontInfo="{assembly:Null}"
           Size="148,40"
           Id="dc72f7c2-57d6-4b6f-ae8a-e68b3af8e3dc"
-          TopLeft="107.499998398125,569.263168609704" />
-        <AnnotationLayout
-          Text="this case can be removed"
-          ParentId="Package"
-          FontInfo="{assembly:Null}"
-          Size="162.666666666667,40"
-          Id="4a7f8891-f78f-4931-b12d-6ca3d6f3391d"
-          TopLeft="509.999992400408,86.8947384776831" />
+          TopLeft="107.499998398125,570.631589688093" />
         <AnnotationLayout
           Text="CASE 6 = CASE 1 ( Equivalent )"
           ParentId="Package"
@@ -2356,66 +2353,6 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           Size="190.666666666667,40"
           Id="a6c1475a-55b1-4824-a04a-65f329a13666"
           TopLeft="506.249992456287,568.57895807051" />
-        <NodeLayout
-          Size="276,42.6666666666667"
-          Id="Package\CASE3_UPDATE_PIMS_FILE_NUMBER"
-          TopLeft="608.124990938231,249.73684680594" />
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 2]"
-          TopLeft="485.666662419837,272.096495948065">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="122.458328518395,0"
-              Start="0,0"
-              End="114.958328518395,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="114.958328518395,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package.PrecedenceConstraints[Constraint 9]"
-          TopLeft="746.124990938231,292.403513472606">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-365.749995175745,51.7543877421547"
-              Start="0,0"
-              End="-365.749995175745,44.2543877421547">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,21.8771938710773" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,21.8771938710773"
-                    Point2="0,25.8771938710773"
-                    Point3="-4,25.8771938710773" />
-                  <mssgle:LineSegment
-                    End="-361.749995175745,25.8771938710773" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-361.749995175745,25.8771938710773"
-                    Point2="-365.749995175745,25.8771938710773"
-                    Point3="-365.749995175745,29.8771938710773" />
-                  <mssgle:LineSegment
-                    End="-365.749995175745,44.2543877421547" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -2432,6 +2369,10 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           Size="114.666666666667,42.6666666666667"
           Id="Package\Case4_UPDATE_PARENT\Lookup"
           TopLeft="504.5,167" />
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\Case4_UPDATE_PARENT\OLE DB Command"
+          TopLeft="750,254" />
         <EdgeLayout
           Id="Package\Case4_UPDATE_PARENT.Paths[OLE DB Source Output]"
           TopLeft="285.564102564102,249.153846153846">
@@ -2466,43 +2407,39 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="170.666666666667,42.6666666666667"
-          Id="Package\Case4_UPDATE_PARENT\OLE DB Command"
-          TopLeft="751,252" />
         <EdgeLayout
           Id="Package\Case4_UPDATE_PARENT.Paths[Lookup Match Output]"
           TopLeft="579.611111111111,209.666666666667">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="256.722222222222,42.3333333333333"
+              EndConnector="255.722222222222,44.3333333333333"
               Start="0,0"
-              End="256.722222222222,34.8333333333333">
+              End="255.722222222222,36.8333333333333">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,13.282874617737" />
+                    End="0,14.0993883792049" />
                   <mssgle:CubicBezierSegment
-                    Point1="0,13.282874617737"
-                    Point2="0,17.282874617737"
-                    Point3="4,17.282874617737" />
+                    Point1="0,14.0993883792049"
+                    Point2="0,18.0993883792049"
+                    Point3="4,18.0993883792049" />
                   <mssgle:LineSegment
-                    End="252.722222222222,17.282874617737" />
+                    End="251.722222222222,18.0993883792049" />
                   <mssgle:CubicBezierSegment
-                    Point1="252.722222222222,17.282874617737"
-                    Point2="256.722222222222,17.282874617737"
-                    Point3="256.722222222222,21.282874617737" />
+                    Point1="251.722222222222,18.0993883792049"
+                    Point2="255.722222222222,18.0993883792049"
+                    Point3="255.722222222222,22.0993883792049" />
                   <mssgle:LineSegment
-                    End="256.722222222222,34.8333333333333" />
+                    End="255.722222222222,36.8333333333333" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="80.1697243923611,22.282874617737,96.3827734375,11.609375"
+              BoundingBox="79.669724392361,23.0993883792049,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -2546,6 +2483,30 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1"
+          TopLeft="494.374992633238,370.157901704146" />
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command"
+          TopLeft="1369.99997958541,281.894742148075" />
+        <NodeLayout
+          Size="114.666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Lookup"
+          TopLeft="1149.37498287298,180.63158234731" />
+        <NodeLayout
+          Size="108,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1"
+          TopLeft="738.749988991767,365.368427929786" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion"
+          TopLeft="483.749992791564,201.842109062335" />
+        <NodeLayout
+          Size="98.6666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Sort"
+          TopLeft="744.999988898635,207.31579337589" />
+        <NodeLayout
           Size="164,42.6666666666667"
           Id="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source"
           TopLeft="271.874995948747,369.473691164952" />
@@ -2554,55 +2515,9 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           Id="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source"
           TopLeft="272.499995939434,203.210530140724" />
         <NodeLayout
-          Size="98.6666666666667,42.6666666666667"
-          Id="Package\CASE4_UPDATE_suffix_from Oracle\Sort"
-          TopLeft="744.999988898635,207.31579337589" />
-        <NodeLayout
-          Size="108,42.6666666666667"
-          Id="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1"
-          TopLeft="738.749988991767,365.368427929786" />
-        <NodeLayout
           Size="132,42.6666666666667"
           Id="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join"
           TopLeft="921.874986262992,275.052636756131" />
-        <NodeLayout
-          Size="114.666666666667,42.6666666666667"
-          Id="Package\CASE4_UPDATE_suffix_from Oracle\Lookup"
-          TopLeft="1149.37498287298,180.63158234731" />
-        <NodeLayout
-          Size="170.666666666667,42.6666666666667"
-          Id="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command"
-          TopLeft="1369.99997958541,281.894742148075" />
-        <NodeLayout
-          Size="158.666666666667,42.6666666666667"
-          Id="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion"
-          TopLeft="483.749992791564,201.842109062335" />
-        <EdgeLayout
-          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[OLE DB Source Output]"
-          TopLeft="427.1666626061,223.859652934863">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="56.5833301854635,0"
-              Start="0,0"
-              End="49.0833301854635,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="49.0833301854635,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="168,42.6666666666667"
-          Id="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1"
-          TopLeft="494.374992633238,370.157901704146" />
         <EdgeLayout
           Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[ADO NET Source Output]"
           TopLeft="435.874995948747,391.149129767883">
@@ -2626,41 +2541,31 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Data Conversion Output]"
-          TopLeft="642.41665945823,225.912284552446">
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Sort Output1]"
+          TopLeft="792.749988991767,365.368427929786">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="102.583329440405,0"
+              EndConnector="195.124997271225,-47.6491245069882"
               Start="0,0"
-              End="95.0833294404048,0">
+              End="195.124997271225,-40.1491245069882">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="95.0833294404048,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Data Conversion Output1]"
-          TopLeft="662.374992633238,389.096498150299">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="76.374996358529,0"
-              Start="0,0"
-              End="68.874996358529,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
+                    End="0,-19.8245622534941" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-19.8245622534941"
+                    Point2="0,-23.8245622534941"
+                    Point3="4,-23.8245622534941" />
                   <mssgle:LineSegment
-                    End="68.874996358529,0" />
+                    End="191.124997271225,-23.8245622534941" />
+                  <mssgle:CubicBezierSegment
+                    Point1="191.124997271225,-23.8245622534941"
+                    Point2="195.124997271225,-23.8245622534941"
+                    Point3="195.124997271225,-27.8245622534941" />
+                  <mssgle:LineSegment
+                    End="195.124997271225,-40.1491245069882" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2704,31 +2609,19 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
-          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Sort Output1]"
-          TopLeft="792.749988991767,365.368427929786">
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[OLE DB Source Output]"
+          TopLeft="427.1666626061,223.859652934863">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="195.124997271225,-47.6491245069882"
+              EndConnector="56.5833301854635,0"
               Start="0,0"
-              End="195.124997271225,-40.1491245069882">
+              End="49.0833301854635,0">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,-19.8245622534941" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-19.8245622534941"
-                    Point2="0,-23.8245622534941"
-                    Point3="4,-23.8245622534941" />
-                  <mssgle:LineSegment
-                    End="191.124997271225,-23.8245622534941" />
-                  <mssgle:CubicBezierSegment
-                    Point1="191.124997271225,-23.8245622534941"
-                    Point2="195.124997271225,-23.8245622534941"
-                    Point3="195.124997271225,-27.8245622534941" />
-                  <mssgle:LineSegment
-                    End="195.124997271225,-40.1491245069882" />
+                    End="49.0833301854635,0" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -2807,11 +2700,55 @@ where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Data Conversion Output1]"
+          TopLeft="662.374992633238,389.096498150299">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76.374996358529,0"
+              Start="0,0"
+              End="68.874996358529,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="68.874996358529,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Data Conversion Output]"
+          TopLeft="642.41665945823,225.912284552446">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="102.583329440405,0"
+              Start="0,0"
+              End="95.0833294404048,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="95.0833294404048,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <AnnotationLayout
           Text="UPDATE etl.CASE4_SUFFIX_NULL"
           ParentId="Package\CASE4_UPDATE_suffix_from Oracle"
           FontInfo="{assembly:Null}"
-          Size="200,60"
+          Size="200,40"
           Id="b7305808-1c05-4100-868d-59375786e45a"
           TopLeft="1403.12497909181,370.842112243341" />
       </GraphLayout>

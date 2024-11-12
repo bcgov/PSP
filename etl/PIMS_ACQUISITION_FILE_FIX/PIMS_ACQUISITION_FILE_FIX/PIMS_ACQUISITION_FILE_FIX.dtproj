@@ -12,11 +12,11 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{def19ecf-ff80-4a99-b3ec-7aaceb7d7f21}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">PIMS_ACQUISITION_FILE_FIX</SSIS:Property>
-          <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionMajor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionComments">
@@ -26,7 +26,6 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">ARIMA-DELL</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA/475NWuf7Eusdu8b62swfQAAAAACAAAAAAAQZgAAAAEAACAAAADOK6PIb3PPdHuq5+YgyvWD8IVd7P/xxw6YkCg9e3LiTgAAAAAOgAAAAAIAACAAAABYxSKAdJMu7U58UgHdsBZxaxyROn6TJSjUos4nFNbqwZAAAADbf8WFNGTscVwj7zX71P/uV0GdnWg7oPc5XLp3S6hDRtdTrCuiYmfd/oX8fQfDGeBM94NKa0osfVs97nhkkTKy40PN8kiR6tsJqL9BO34eRxqK10PQzXFJkfgX/j0fr5ueoxVZHRVQAzopW6ESyVMMjq6FfO7zmEE4CP35kpuqXzAB7hHZ7L9zI6dfnZKrxDpAAAAAU7Ng/JSThJc4czKU020nf6M5usiOEfz49Epa6/POfv4kIyByN+lxQr0A5Wc2xPBwPJqe/7StfWnbpQ6oUV4vyg==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -38,7 +37,7 @@
         </SSIS:ConnectionManagers>
         <SSIS:DeploymentInfo>
           <SSIS:ProjectConnectionParameters>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.ConnectByProxy">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectByProxy">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -53,7 +52,7 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.ConnectionString">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectionString">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -68,7 +67,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.ConnectRetryCount">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectRetryCount">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -83,7 +82,7 @@
                 <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.ConnectRetryInterval">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectRetryInterval">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -98,7 +97,7 @@
                 <SSIS:Property SSIS:Name="DataType">9</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.ConnectUsingManagedIdentity">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectUsingManagedIdentity">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -113,7 +112,7 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.InitialCatalog">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.InitialCatalog">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -128,7 +127,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.Password">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.Password">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -142,7 +141,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.RetainSameConnection">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.RetainSameConnection">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -157,7 +156,7 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.ServerName">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.ServerName">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -172,7 +171,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.sqldevtst.th.gov.bc.ca.PIMS_DEV.UserName">
+            <SSIS:Parameter SSIS:Name="CM.PIMS.UserName">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -186,7 +185,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.lizzard.th.gov.bc.ca_20208_dev03.aparasur1.ConnectByProxy">
+            <SSIS:Parameter SSIS:Name="CM.PAIMS-ORACLE.ConnectByProxy">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -201,7 +200,7 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.lizzard.th.gov.bc.ca_20208_dev03.aparasur1.ConnectionString">
+            <SSIS:Parameter SSIS:Name="CM.PAIMS-ORACLE.ConnectionString">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -212,11 +211,11 @@
                 <SSIS:Property SSIS:Name="IncludeInDebugDump">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Required">0</SSIS:Property>
                 <SSIS:Property SSIS:Name="Sensitive">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="Value">Data Source=lizzard.th.gov.bc.ca:20208/dev03;User ID=aparasur;Persist Security Info=True;Unicode=True;</SSIS:Property>
+                <SSIS:Property SSIS:Name="Value">Data Source=lizzard.th.gov.bc.ca:20208/dev03;User ID=aparasur;Unicode=True;</SSIS:Property>
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.lizzard.th.gov.bc.ca_20208_dev03.aparasur1.ConnectUsingManagedIdentity">
+            <SSIS:Parameter SSIS:Name="CM.PAIMS-ORACLE.ConnectUsingManagedIdentity">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -231,7 +230,7 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.lizzard.th.gov.bc.ca_20208_dev03.aparasur1.InitialCatalog">
+            <SSIS:Parameter SSIS:Name="CM.PAIMS-ORACLE.InitialCatalog">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -245,7 +244,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.lizzard.th.gov.bc.ca_20208_dev03.aparasur1.Password">
+            <SSIS:Parameter SSIS:Name="CM.PAIMS-ORACLE.Password">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -259,7 +258,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.lizzard.th.gov.bc.ca_20208_dev03.aparasur1.RetainSameConnection">
+            <SSIS:Parameter SSIS:Name="CM.PAIMS-ORACLE.RetainSameConnection">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -274,7 +273,7 @@
                 <SSIS:Property SSIS:Name="DataType">3</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.lizzard.th.gov.bc.ca_20208_dev03.aparasur1.ServerName">
+            <SSIS:Parameter SSIS:Name="CM.PAIMS-ORACLE.ServerName">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -289,7 +288,7 @@
                 <SSIS:Property SSIS:Name="DataType">18</SSIS:Property>
               </SSIS:Properties>
             </SSIS:Parameter>
-            <SSIS:Parameter SSIS:Name="CM.lizzard.th.gov.bc.ca_20208_dev03.aparasur1.UserName">
+            <SSIS:Parameter SSIS:Name="CM.PAIMS-ORACLE.UserName">
               <SSIS:Properties>
                 <SSIS:Property SSIS:Name="ID">
                 </SSIS:Property>
@@ -312,14 +311,14 @@
                 <SSIS:Property SSIS:Name="Name">PIMS_ACQUISITION_FILE_FIX</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">59</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">87</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{833B6A6F-E70F-4455-9FE6-19010398FB78}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{4C4EAD16-DF6F-474F-9BFB-F22BC485B8D0}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters />
             </SSIS:PackageMetaData>

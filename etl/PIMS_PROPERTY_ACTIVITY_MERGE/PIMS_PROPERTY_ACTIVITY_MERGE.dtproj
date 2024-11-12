@@ -12,11 +12,11 @@
   <DataSourceViews />
   <DeploymentModelSpecificContent>
     <Manifest>
-      <SSIS:Project SSIS:ProtectionLevel="EncryptSensitiveWithUserKey" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
+      <SSIS:Project SSIS:ProtectionLevel="DontSaveSensitive" xmlns:SSIS="www.microsoft.com/SqlServer/SSIS">
         <SSIS:Properties>
           <SSIS:Property SSIS:Name="ID">{4b483016-6888-471e-9b83-33f7a8a253b0}</SSIS:Property>
           <SSIS:Property SSIS:Name="Name">PIMS_PROPERTY_ACTIVITY_MERGE</SSIS:Property>
-          <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
+          <SSIS:Property SSIS:Name="VersionMajor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionBuild">0</SSIS:Property>
           <SSIS:Property SSIS:Name="VersionComments">
@@ -26,7 +26,6 @@
           <SSIS:Property SSIS:Name="CreatorComputerName">ARIMA-DELL</SSIS:Property>
           <SSIS:Property SSIS:Name="Description">
           </SSIS:Property>
-          <SSIS:Property SSIS:Name="PasswordVerifier" SSIS:Sensitive="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAA/475NWuf7Eusdu8b62swfQAAAAACAAAAAAAQZgAAAAEAACAAAADloHcYnnnLsF7Bf6XqAO2FmxwOUgGPnx2XA7NhQEbydQAAAAAOgAAAAAIAACAAAADieMmg9Ff0joz3oVwtzRGlko9j4RW9YmThNLXIXPxqTZAAAADYYjBis7Ha4exA/He2S5v8mzIbB0t3U9tGwhKT5TVgnj9L8uAlh60qig1coVwRzB1kbXWhOBnPlro9o4mWcsXX+VlD32bUQNfPk8Iqgi2ro7KndPPSf8rvmclfP4BYqjCcodc+hC7+++J2MI6ba/FcUmSjd1zbnxdKEuXxEEv2LPYLxBJxK1B4Yl2U4ct0xSdAAAAAZrLjD0zcDPPvwnF3gCwjSF/vktTg6kQZ75dmC1DGT9aSMLH1eruMEZxU4MwbBA/lhXEEm/OkV/pHY4kTjOkwJA==</SSIS:Property>
           <SSIS:Property SSIS:Name="FormatVersion">1</SSIS:Property>
         </SSIS:Properties>
         <SSIS:Packages>
@@ -43,14 +42,14 @@
                 <SSIS:Property SSIS:Name="Name">Package</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">78</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">83</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{88513A43-547F-47F1-8A50-159E7C0409AC}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{C817E8C8-C3BF-43D7-9044-02D493951221}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
                 <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectByProxy">
@@ -209,14 +208,14 @@
                 <SSIS:Property SSIS:Name="Name">Package1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMajor">1</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionMinor">0</SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionBuild">6</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionBuild">7</SSIS:Property>
                 <SSIS:Property SSIS:Name="VersionComments">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="VersionGUID">{BA1C7AD0-C522-4FB4-8399-6B816A30FF6F}</SSIS:Property>
+                <SSIS:Property SSIS:Name="VersionGUID">{006ECCFA-0100-4E71-980E-FC06CD06A829}</SSIS:Property>
                 <SSIS:Property SSIS:Name="PackageFormatVersion">8</SSIS:Property>
                 <SSIS:Property SSIS:Name="Description">
                 </SSIS:Property>
-                <SSIS:Property SSIS:Name="ProtectionLevel">1</SSIS:Property>
+                <SSIS:Property SSIS:Name="ProtectionLevel">0</SSIS:Property>
               </SSIS:Properties>
               <SSIS:Parameters>
                 <SSIS:Parameter SSIS:Name="CM.PIMS.ConnectByProxy">
