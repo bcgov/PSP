@@ -174,7 +174,6 @@ namespace Pims.Proxy
 
             services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
             services.AddScoped<IProxyRequestClient, ProxyRequestClient>();
-            services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
             services.AddResponseCaching();
             services.AddMemoryCache();
 
@@ -232,7 +231,6 @@ namespace Pims.Proxy
         /// </summary>
         /// <param name="app"></param>
         /// <param name="env"></param>
-        /// <param name="provider"></param>
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             app.UseMetricServer();
