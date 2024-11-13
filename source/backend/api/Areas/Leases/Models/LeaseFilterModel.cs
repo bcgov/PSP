@@ -10,9 +10,14 @@ namespace Pims.Api.Areas.Lease.Models.Search
         #region Properties
 
         /// <summary>
-        /// get/set - The unique identifier for titled property, either pid or pin.
+        /// get/set - The unique PID identifier for titled property.
         /// </summary>
-        public string PinOrPid { get; set; }
+        public string Pid { get; set; }
+
+        /// <summary>
+        /// get/set - The unique PIN identifier for titled property.
+        /// </summary>
+        public string Pin { get; set; }
 
         /// <summary>
         /// get/set - The LIS L File #.
@@ -84,7 +89,8 @@ namespace Pims.Api.Areas.Lease.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
+            this.Pid = filter.GetStringValue(nameof(this.Pid));
+            this.Pin = filter.GetStringValue(nameof(this.Pin));
             this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
             this.Address = filter.GetStringValue(nameof(this.Address));
             this.Historical = filter.GetStringValue(nameof(this.Historical));
@@ -112,7 +118,8 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 Page = model.Page,
                 Quantity = model.Quantity,
 
-                PinOrPid = model.PinOrPid,
+                Pid = model.Pid,
+                Pin = model.Pin,
                 LFileNo = model.LFileNo,
                 Address = model.Address,
                 Historical = model.Historical,
@@ -142,7 +149,8 @@ namespace Pims.Api.Areas.Lease.Models.Search
             }
 
             return base.IsValid()
-                || !string.IsNullOrWhiteSpace(PinOrPid)
+                || !string.IsNullOrWhiteSpace(Pid)
+                || !string.IsNullOrWhiteSpace(Pin)
                 || !string.IsNullOrWhiteSpace(LFileNo)
                 || !string.IsNullOrWhiteSpace(Address)
                 || !string.IsNullOrWhiteSpace(Historical)

@@ -1071,10 +1071,16 @@ namespace Pims.Dal.Repositories
                  || l.PimsLeaseStakeholders.Any(stakeholder => stakeholder.Organization != null && EF.Functions.Like(stakeholder.Organization.OrganizationName, $"%{filter.TenantName}%")));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
             {
-                var pinOrPidValue = filter.PinOrPid.Replace("-", string.Empty).Trim().TrimStart('0');
-                predicateBuilder = predicateBuilder.And(l => l.PimsPropertyLeases.Any(pl => pl != null && (EF.Functions.Like(pl.Property.Pid.ToString(), $"%{pinOrPidValue}%") || EF.Functions.Like(pl.Property.Pin.ToString(), $"%{pinOrPidValue}%"))));
+                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicateBuilder = predicateBuilder.And(l => l.PimsPropertyLeases.Any(pl => pl != null && EF.Functions.Like(pl.Property.Pid.ToString(), $"%{pidValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pin))
+            {
+                var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicateBuilder = predicateBuilder.And(l => l.PimsPropertyLeases.Any(pl => pl != null && EF.Functions.Like(pl.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.LFileNo))

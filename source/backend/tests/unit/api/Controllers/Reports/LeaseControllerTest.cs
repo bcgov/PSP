@@ -38,14 +38,16 @@ namespace Pims.Api.Test.Controllers.Reports
         {
             new object [] { new LeaseFilterModel() },
             new object [] { new LeaseFilterModel() { LFileNo = "L-000-001" } },
-            new object [] { new LeaseFilterModel() { PinOrPid = "999999" } },
+            new object [] { new LeaseFilterModel() { Pid = "999999" } },
+            new object [] { new LeaseFilterModel() { Pin = "888888" } },
             new object [] { new LeaseFilterModel() { TenantName = "George" } },
         };
 
         public static IEnumerable<object[]> LeaseQueryFilters = new List<object[]>()
         {
             new object [] { new Uri("http://host/api/leases?LFileNo=L-000-001") },
-            new object [] { new Uri("http://host/api/leases?PinOrPid=999999") },
+            new object [] { new Uri("http://host/api/leases?Pid=999999") },
+            new object [] { new Uri("http://host/api/leases?Pin=888888") },
             new object [] { new Uri("http://host/api/leases?TenantName=George") },
         };
 

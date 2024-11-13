@@ -40,14 +40,14 @@ namespace Pims.Api.Test.Controllers.Lease
         {
             new object [] { new SModel.LeaseFilterModel() { TenantName = "test" } },
             new object [] { new SModel.LeaseFilterModel() { LFileNo = "1234" } },
-            new object [] { new SModel.LeaseFilterModel() { PinOrPid = "123" } },
+            new object [] { new SModel.LeaseFilterModel() { Pid = "123" } },
         };
 
         public readonly static IEnumerable<object[]> LeaseQueryFilters = new List<object[]>()
         {
             new object [] { "?TenantName=test" },
             new object [] { "?LFileNo=1" },
-            new object [] { "?PinOrPid=2" },
+            new object [] { "?Pid=2" },
         };
         #endregion
 
