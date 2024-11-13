@@ -34,7 +34,7 @@ export class DetailAcquisitionFile {
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;
 
     if (detail.isSubFile) {
-      if (model?.subfileInterestTypeCode.id === ApiGen_CodeTypes_SubfileInterestTypes.OTHER) {
+      if (model?.subfileInterestTypeCode?.id === ApiGen_CodeTypes_SubfileInterestTypes.OTHER) {
         detail.subfileInterestTypeDescription = `Other-${model.otherSubfileInterestType ?? ''}`;
       } else {
         detail.subfileInterestTypeDescription = model?.subfileInterestTypeCode?.description ?? '';
