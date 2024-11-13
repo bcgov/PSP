@@ -1,31 +1,19 @@
-import { useKeycloak } from '@react-keycloak/web';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { createMemoryHistory } from 'history';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import * as API from '@/constants/API';
-import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
-import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import filterSlice from '@/store/slices/filter/filterSlice';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  act,
-  cleanup,
-  fireEvent,
-  getByDisplayValue,
-  render,
-  waitFor,
-  screen,
-} from '@/utils/test-utils';
-import { fillInput } from '@/utils/test-utils';
+import { act, cleanup, fillInput, fireEvent, render, screen, waitFor } from '@/utils/test-utils';
 import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
+import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { PropertyFilter } from '.';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
-import { IGeocoderPidsResponse, IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
-import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
+import { Claims } from '@/constants';
 
 const onFilterChange = vi.fn();
 //prevent web calls from being made during tests.
@@ -92,11 +80,7 @@ const getStore = (filter: any) =>
     [lookupCodesSlice.name]: lCodes,
   });
 
-const getUiElement = (
-  filter: IPropertyFilter,
-  showAllOrganizationSelect = true,
-  useGeocoder = true,
-) => (
+const getUiElement = (filter: IPropertyFilter, useGeocoder = true) => (
   <TestCommonWrapper store={getStore(filter)} history={history}>
     <PropertyFilter
       propertyFilter={filter}
@@ -121,10 +105,9 @@ describe('MapFilterBar', () => {
   });
 
   it('renders correctly', () => {
-    //mockKeycloak(['property-view']);
     // Capture any changes
     const { container } = render(getUiElement(defaultPropertyFilter), {
-      claims: ['property-view'],
+      claims: [Claims.PROPERTY_VIEW],
     });
     expect(container.firstChild).toMatchSnapshot();
   });
@@ -133,7 +116,7 @@ describe('MapFilterBar', () => {
     // Arrange
 
     const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
-      claims: ['admin-properties'],
+      claims: [Claims.ADMIN_PROPERTIES],
     });
     const submit = container.querySelector('button[type="submit"]');
 
@@ -153,7 +136,7 @@ describe('MapFilterBar', () => {
     // Arrange
 
     const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
-      claims: ['admin-properties'],
+      claims: [Claims.ADMIN_PROPERTIES],
     });
     const submit = container.querySelector('button[type="submit"]');
     searchAddressApi.mockResolvedValue([
@@ -195,7 +178,7 @@ describe('MapFilterBar', () => {
     // Arrange
 
     const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
-      claims: ['admin-properties'],
+      claims: [Claims.ADMIN_PROPERTIES],
     });
     const submit = container.querySelector('button[type="submit"]');
     searchAddressApi.mockResolvedValue([
@@ -241,8 +224,8 @@ describe('MapFilterBar', () => {
     // Arrange
 
     const { container } = await render(
-      getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }, true, false),
-      { claims: ['admin-properties'] },
+      getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }, false),
+      { claims: [Claims.ADMIN_PROPERTIES] },
     );
     const submit = container.querySelector('button[type="submit"]');
 
@@ -268,11 +251,12 @@ describe('MapFilterBar', () => {
     await waitFor(() => {
       fireEvent.click(getByTestId('reset-button'));
     });
-    expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
-      pinOrPid: '',
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '',
       planNumber: '',
       address: '',
-      searchBy: 'pinOrPid',
+      searchBy: 'pid',
       page: undefined,
       quantity: undefined,
       latitude: '',
