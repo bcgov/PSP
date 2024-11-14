@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
-using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 
 namespace Pims.Core.Extensions

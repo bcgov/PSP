@@ -23,23 +23,5 @@ namespace Pims.Api.Helpers
                 HelpDeskEmail = configuration["Pims:HelpDeskEmail"],
             };
         }
-
-        /// <summary>
-        /// Parses the environment configuration and returns 'JsonSerializerOptions'.
-        /// </summary>
-        /// <param name="configuration"></param>
-        /// <returns></returns>
-        public static JsonSerializerOptions GenerateJsonSerializerOptions(this IConfiguration configuration)
-        {
-            return new JsonSerializerOptions()
-            {
-                DefaultIgnoreCondition = (!string.IsNullOrWhiteSpace(configuration["Serialization:Json:IgnoreNullValues"]) && bool.Parse(configuration["Serialization:Json:IgnoreNullValues"])) ? JsonIgnoreCondition.WhenWritingNull : JsonIgnoreCondition.Never,
-                PropertyNameCaseInsensitive = !string.IsNullOrWhiteSpace(configuration["Serialization:Json:PropertyNameCaseInsensitive"]) && bool.Parse(configuration["Serialization:Json:PropertyNameCaseInsensitive"]),
-                PropertyNamingPolicy = configuration["Serialization:Json:PropertyNamingPolicy"] == "CamelCase" ? JsonNamingPolicy.CamelCase : null,
-                WriteIndented = !string.IsNullOrWhiteSpace(configuration["Serialization:Json:WriteIndented"]) && bool.Parse(configuration["Serialization:Json:WriteIndented"]),
-                Converters = { new JsonStringEnumMemberConverter(JsonNamingPolicy.CamelCase) },
-                ReferenceHandler = ReferenceHandler.IgnoreCycles,
-            };
-        }
     }
 }

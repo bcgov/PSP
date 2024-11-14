@@ -6,11 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Areas.Projects.Models;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Project;
-using Pims.Api.Policies;
+using Pims.Core.Api.Policies;
 using Pims.Api.Services;
 using Pims.Core.Json;
 using Pims.Dal.Entities.Models;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Projects.Controllers

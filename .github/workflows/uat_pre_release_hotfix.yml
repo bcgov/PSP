@@ -106,6 +106,7 @@ jobs:
       - name: Call script to build backend (pims-api)
         run: |
           OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh build api -apply
+          OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh build proxy -apply
 
   deploy:
     name: Deploy frontend and api to OpenShift
@@ -124,6 +125,7 @@ jobs:
       - name: call scripts to deploy api and frontend
         run: |
           RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
           RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy app $DESTINATION -apply
 
   # the command:
@@ -212,6 +214,7 @@ jobs:
           VERSION=$(make version)
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
+          oc tag pims-proxy:uat pims-api:v${VERSION}-master
 
   ci-cd-end-notification:
     if: always()

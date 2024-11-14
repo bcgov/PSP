@@ -8,13 +8,13 @@ using Microsoft.Extensions.Logging;
 using Pims.Api.Models;
 using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.ExpropriationPayment;
-using Pims.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Acquisition.Controllers
