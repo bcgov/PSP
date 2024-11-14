@@ -4,6 +4,7 @@
     {
         public string DocumentType { get; set; } = null!;
         public string DocumentStatus { get; set; } = null!;
+        public string ApplicationNumber { get; set; } = null!;
         public string CanadaLandSurvey { get; set; } = null!;
         public string CivicAddress { get; set; } = null!;
         public string CrownGrant { get; set; } = null!;
@@ -42,6 +43,8 @@
         public string PropertyIdentifier { get; set; } = null!;
         public string PublishedDate { get; set; } = null!;
         public string RelatedGazette { get; set; } = null!;
+        public string ReferenceAgencyDocumentNbr { get; set; } = null!;
+        public string ReferenceAgencyLandsFileNbr { get; set; } = null!;
         public string RoadName { get; set; } = null!;
         public string Roll { get; set; } = null!;
         public string Section { get; set; } = null!;
