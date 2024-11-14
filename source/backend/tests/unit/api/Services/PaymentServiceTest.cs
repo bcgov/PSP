@@ -7,7 +7,7 @@ using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 

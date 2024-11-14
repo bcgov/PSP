@@ -8,7 +8,8 @@ using Pims.Core.Http.Configuration;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
+using Pims.Core.Security;
+using Pims.Core.Extensions;
 
 namespace Pims.Dal.Repositories
 {

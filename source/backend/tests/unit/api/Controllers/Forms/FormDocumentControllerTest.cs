@@ -6,11 +6,11 @@ using Moq;
 using Pims.Api.Models.Concepts.FormDocument;
 using Pims.Api.Constants;
 using Pims.Api.Controllers;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Controllers

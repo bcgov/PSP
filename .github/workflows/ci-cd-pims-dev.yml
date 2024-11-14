@@ -24,7 +24,6 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
-
 on:
   pull_request_target:
     branches: [dev]
@@ -78,9 +77,10 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build backend (pims-api)
+      - name: Call script to build backend services
         run: |
           ./openshift/4.0/player.sh build api -apply
+          ./openshift/4.0/player.sh build proxy -apply
 
   deploy:
     name: Deploy frontend and api to OpenShift
@@ -99,6 +99,7 @@ jobs:
       - name: call scripts to deploy api and frontend
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
           oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
 

@@ -6,7 +6,7 @@ using Pims.Api.Areas.Property.Controllers;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Controllers.Property

@@ -11,7 +11,7 @@ using Pims.Api.Models.Concepts.Property;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Pims.Api.Areas.Property.Models.Search;

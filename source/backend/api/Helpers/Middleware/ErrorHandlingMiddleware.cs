@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Dal.Exceptions;
 
