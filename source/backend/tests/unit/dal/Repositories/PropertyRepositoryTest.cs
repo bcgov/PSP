@@ -29,8 +29,8 @@ namespace Pims.Dal.Test.Repositories
         public static IEnumerable<object[]> AllPropertyFilters =>
             new List<object[]>
             {
-                new object[] { new PropertyFilter() { PinOrPid = "111-111-111" , Ownership = new List<string>()}, 1 },
-                new object[] { new PropertyFilter() { PinOrPid = "111"  , Ownership = new List<string>()}, 2 },
+                new object[] { new PropertyFilter() { Pid = "111-111-111" , Ownership = new List<string>()}, 1 },
+                new object[] { new PropertyFilter() { Pin = "111"  , Ownership = new List<string>()}, 2 },
                 new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 8 },
                 new object[] { new PropertyFilter() { PlanNumber = "SP-89TTXY", Ownership = new List<string>()}, 1 },
                 new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 8 },

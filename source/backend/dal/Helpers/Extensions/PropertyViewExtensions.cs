@@ -60,12 +60,20 @@ namespace Pims.Dal.Helpers.Extensions
 
             var predicateBuilder = PredicateBuilder.New<PimsPropertyVw>(p => true);
 
-            if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
             {
                 // note - 2 part search required. all matches found by removing leading 0's, then matches filtered in subsequent step. This is because EF core does not support an lpad method.
                 Regex nonInteger = new Regex("[^\\d]");
-                var formattedPidPin = Convert.ToInt32(nonInteger.Replace(filter.PinOrPid, string.Empty)).ToString();
-                predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.Pid.ToString(), $"%{formattedPidPin}%") || EF.Functions.Like(p.Pin.ToString(), $"%{formattedPidPin}%"));
+                var formattedPid = Convert.ToInt32(nonInteger.Replace(filter.Pid, string.Empty)).ToString();
+                predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.Pid.ToString(), $"%{formattedPid}%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pin))
+            {
+                // note - 2 part search required. all matches found by removing leading 0's, then matches filtered in subsequent step. This is because EF core does not support an lpad method.
+                Regex nonInteger = new Regex("[^\\d]");
+                var formattedPin = Convert.ToInt32(nonInteger.Replace(filter.Pin, string.Empty)).ToString();
+                predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.Pin.ToString(), $"%{formattedPin}%"));
             }
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
