@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.User;
-using Pims.Api.Policies;
+using Pims.Core.Api.Policies;
 using Pims.Core.Json;
 using Pims.Dal.Keycloak;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
 using Entity = Pims.Dal.Entities;
 

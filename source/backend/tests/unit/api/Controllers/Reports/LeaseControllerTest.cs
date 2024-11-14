@@ -13,14 +13,14 @@ using Moq;
 using Pims.Api.Areas.Lease.Models.Search;
 using Pims.Api.Areas.Reports.Controllers;
 using Pims.Api.Helpers.Constants;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -533,7 +533,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var lease = EntityHelper.CreateLease(1, region: new PimsRegion() { Id = 1 });
             var leases = new[] { lease };
 
-            var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
+            var path = Directory.GetCurrentDirectory();
             this._webHost.SetupGet(m => m.ContentRootPath).Returns(path);
 
             this._lookupRepository.Setup(m => m.GetAllRegions()).Returns(new List<PimsRegion>() { lease.RegionCodeNavigation });
@@ -562,9 +562,6 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var leases = new[] { EntityHelper.CreateLease(1) };
 
-            var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
-            this._webHost.SetupGet(m => m.ContentRootPath).Returns(path);
-
             this._service.Setup(m => m.GetAggregatedLeaseReport(It.IsAny<int>())).Returns(leases);
 
             // Act
@@ -586,7 +583,7 @@ namespace Pims.Api.Test.Controllers.Reports
             var helper = new TestHelper();
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCELX);
 
-            var path = Path.Combine(SolutionProvider.TryGetSolutionDirectoryInfo().FullName, "api");
+            var path = Directory.GetCurrentDirectory();
             this._webHost.SetupGet(m => m.ContentRootPath).Returns(path);
 
             this._paymentService.Setup(m => m.GetAllByDateRange(It.IsAny<DateTime>(), It.IsAny<DateTime>())).Returns(new List<PimsLeasePayment>());

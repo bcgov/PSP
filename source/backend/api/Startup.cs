@@ -31,28 +31,27 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Pims.Api.Handlers;
 using Pims.Api.Helpers;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Api.Helpers.Healthchecks;
 using Pims.Api.Helpers.HealthChecks;
-using Pims.Api.Helpers.Logging;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
-using Pims.Api.Helpers.Swagger;
 using Pims.Api.Models.Config;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Api.Services.Interfaces;
 using Pims.Av;
+using Pims.Core.Api.Helpers;
 using Pims.Core.Converters;
 using Pims.Core.Http;
-using Pims.Core.Http.Configuration;
 using Pims.Core.Json;
 using Pims.Dal;
 using Pims.Dal.Keycloak;
 using Pims.Geocoder;
 using Pims.Ltsa;
 using Prometheus;
+using Pims.Core.Api.Middleware;
 
 namespace Pims.Api
 {
@@ -127,7 +126,6 @@ namespace Pims.Api
             services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
             services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<Pims.Dal.PimsOptions>(this.Configuration.GetSection("Pims"));
-            services.Configure<GeoserverProxyOptions>(this.Configuration.GetSection("Geoserver"));
             services.Configure<AllHealthCheckOptions>(this.Configuration.GetSection("HealthChecks"));
             services.AddOptions();
 
@@ -364,7 +362,7 @@ namespace Pims.Api
             {
                 options.EnableAnnotations(false, true);
                 options.CustomSchemaIds(o => o.FullName);
-                options.OperationFilter<Helpers.Swagger.SwaggerDefaultValues>();
+                options.OperationFilter<SwaggerDefaultValues>();
                 options.DocumentFilter<Helpers.Swagger.SwaggerDocumentFilter>();
                 options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 {

@@ -12,7 +12,7 @@ using Pims.Dal.Entities.Comparers;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Dal.Repositories
 {

@@ -7,7 +7,7 @@ using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions

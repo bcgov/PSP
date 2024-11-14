@@ -14,9 +14,9 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Av;
+using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {
