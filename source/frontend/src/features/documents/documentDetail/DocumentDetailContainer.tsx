@@ -160,6 +160,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
         if (documentTypeId !== props.pimsDocument.documentType.id) {
           await updateDocumentType(documentTypes.find(x => x.id === documentTypeId));
           setDocumentTypeUpdated(true);
+          formikRef?.current?.setValues({ ...formikRef?.current?.values, documentMetadata: {} });
         } else {
           setDocumentTypeUpdated(false);
         }
