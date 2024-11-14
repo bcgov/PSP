@@ -12,9 +12,14 @@ namespace Pims.Dal.Entities.Models
         #region Properties
 
         /// <summary>
-        /// get/set - The pin or pid property.
+        /// get/set - The pid property identified.
         /// </summary>
-        public string PinOrPid { get; set; }
+        public string Pid { get; set; }
+
+        /// <summary>
+        /// get/set - The pin property identifier.
+        /// </summary>
+        public string Pin { get; set; }
 
         /// <summary>
         /// get/set - The property address.
@@ -58,10 +63,11 @@ namespace Pims.Dal.Entities.Models
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.Address = filter.GetStringValue(nameof(this.Address));
-            this.PinOrPid = filter.GetStringValue(nameof(this.PinOrPid));
-            this.PlanNumber = filter.GetStringValue(nameof(this.PlanNumber));
-            this.Ownership = filter.GetStringArrayValue(nameof(this.Ownership));
+            Address = filter.GetStringValue(nameof(Address));
+            Pid = filter.GetStringValue(nameof(Pid));
+            Pin = filter.GetStringValue(nameof(Pin));
+            PlanNumber = filter.GetStringValue(nameof(PlanNumber));
+            Ownership = filter.GetStringArrayValue(nameof(Ownership));
         }
         #endregion
 
@@ -74,8 +80,9 @@ namespace Pims.Dal.Entities.Models
         public override bool IsValid()
         {
             return base.IsValid()
-                || !string.IsNullOrWhiteSpace(this.PinOrPid)
-                || !string.IsNullOrWhiteSpace(this.Address);
+                || !string.IsNullOrWhiteSpace(Pid)
+                || !string.IsNullOrWhiteSpace(Pin)
+                || !string.IsNullOrWhiteSpace(Address);
         }
         #endregion
     }
