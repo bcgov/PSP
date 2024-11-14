@@ -532,11 +532,10 @@ namespace Pims.Dal.Repositories
             }
             if (filter.IsOtherInterest)
             {
-                var today = DateOnly.FromDateTime(DateTime.Now);
-                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLandAct && authorizationTypes.Contains(t.LandActTypeCode) && t.LandActEndDt >= today)));
-                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewInterestInSrw && t.SrwEndDt >= today)));
-                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLicenseToConstruct && t.LtcEndDt >= today)));
-                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsActiveLease && t.ActiveLeaseEndDt >= today)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLandAct && authorizationTypes.Contains(t.LandActTypeCode))));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewInterestInSrw)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsNewLicenseToConstruct)));
+                ownershipBuilder.Or(p => p.PimsPropertyAcquisitionFiles.Any(x => x.PimsTakes.Any(t => t.TakeStatusTypeCode == "COMPLETE" && t.IsActiveLease)));
             }
             if (filter.IsDisposed)
             {
