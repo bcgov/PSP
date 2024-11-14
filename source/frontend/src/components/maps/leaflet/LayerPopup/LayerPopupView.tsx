@@ -39,6 +39,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
   const pimsPropertyId = featureDataset?.pimsFeature?.properties?.PROPERTY_ID;
   const isInPims = isValidId(Number(pimsPropertyId));
   const isRetiredProperty = featureDataset?.pimsFeature?.properties?.IS_RETIRED ?? false;
+  const isDisposedProperty = featureDataset?.pimsFeature?.properties?.IS_DISPOSED ?? false;
 
   const onPropertyViewClicked = () => {
     if (isInPims) {
@@ -148,6 +149,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
           <LayerPopupFlyout
             isInPims={isInPims}
             isRetiredProperty={isRetiredProperty}
+            isDisposedProperty={isDisposedProperty}
             onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
@@ -193,7 +195,7 @@ const StyledScrollable = styled(Scrollable)`
 
 const StyledFlyoutContainer = styled.div`
   position: absolute;
-  bottom: -18.5rem;
+  top: 90%;
   left: 100.9%;
   border: 2px solid #bcbec5;
   box-shadow: 6px 6px 12px rgb(0 0 0 / 40%);
