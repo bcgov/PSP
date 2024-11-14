@@ -1422,7 +1422,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c34 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+          class="c34 justify-content-end mb-6 mt-6 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
