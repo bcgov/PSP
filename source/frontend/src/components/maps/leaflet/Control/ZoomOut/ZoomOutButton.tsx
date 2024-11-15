@@ -19,6 +19,9 @@ const ZoomButton = styled(Button)`
   &&.btn:hover {
     color: white;
   }
+  &&.btn:focus {
+    color: white;
+  }
 `;
 
 /**
