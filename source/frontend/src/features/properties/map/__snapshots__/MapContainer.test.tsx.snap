@@ -408,6 +408,10 @@ exports[`MapContainer > Renders the map 1`] = `
   color: white;
 }
 
+.c5.c5.btn:focus {
+  color: white;
+}
+
 .c6.c6.btn {
   background-color: #ffffff;
   color: #474543;
@@ -416,6 +420,10 @@ exports[`MapContainer > Renders the map 1`] = `
 }
 
 .c6.c6.btn:hover {
+  color: white;
+}
+
+.c6.c6.btn:focus {
   color: white;
 }
 
