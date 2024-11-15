@@ -123,6 +123,7 @@ jobs:
       - name: Deploy mayan
         shell: bash
         run: |
+          ./openshift/4.0/player.sh deploy scheduler $DESTINATION -apply
           oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
 
   # the command:

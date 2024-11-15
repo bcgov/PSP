@@ -91,7 +91,7 @@ namespace Pims.Scheduler
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
             services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
             services.AddSingleton<JwtSecurityTokenHandler>();
-            services.AddScoped<IPimsDocumentQueueRepository, PimsDocumentQueueRepository>();
+            services.AddSingleton<IPimsDocumentQueueRepository, PimsDocumentQueueRepository>();
             services.AddSingleton<IJobRescheduler, JobRescheduler>();
 
             services.AddSerilogging(this.Configuration);
