@@ -6,8 +6,6 @@ using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Core.Security;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
 {
@@ -24,7 +22,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public static IQueryable<Entity.PimsPropertyVw> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
+        public static IQueryable<PimsPropertyVw> GeneratePropertyQuery(this PimsContext context, ClaimsPrincipal user, Entities.Models.PropertyFilter filter)
         {
             ArgumentNullException.ThrowIfNull(filter, nameof(filter));
             ArgumentNullException.ThrowIfNull(user, nameof(user));
@@ -53,7 +51,7 @@ namespace Pims.Dal.Helpers.Extensions
         /// <param name="user"></param>
         /// <param name="filter"></param>
         /// <returns></returns>
-        private static ExpressionStarter<PimsPropertyVw> GenerateCommonPropertyQuery(PimsContext context, ClaimsPrincipal user, Entity.Models.PropertyFilter filter)
+        private static ExpressionStarter<PimsPropertyVw> GenerateCommonPropertyQuery(PimsContext context, ClaimsPrincipal user, Entities.Models.PropertyFilter filter)
         {
             ArgumentNullException.ThrowIfNull(filter, nameof(filter));
             ArgumentNullException.ThrowIfNull(user, nameof(user));

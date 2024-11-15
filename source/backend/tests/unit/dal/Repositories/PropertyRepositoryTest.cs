@@ -13,7 +13,6 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -141,7 +140,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeAssignableTo<IEnumerable<Entity.PimsPropertyVw>>();
+            result.Should().BeAssignableTo<IEnumerable<PimsPropertyVw>>();
             result.Total.Should().Be(expectedCount);
         }
 
@@ -685,7 +684,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1, isRetired: isRetired);
             _helper.AddAndSaveChanges(property);
 
-            var newValues = new Entity.PimsProperty();
+            var newValues = new PimsProperty();
             property.CopyValues(newValues);
             newValues.Pid = pid;
 
@@ -704,7 +703,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1, isRetired: true);
             _helper.AddAndSaveChanges(property);
 
-            var newValues = new Entity.PimsProperty();
+            var newValues = new PimsProperty();
             property.CopyValues(newValues);
             newValues.Pid = 200;
 
@@ -865,7 +864,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1);
             _helper.AddAndSaveChanges(property);
 
-            var newValues = new Entity.PimsProperty();
+            var newValues = new PimsProperty();
             property.CopyValues(newValues);
             newValues.AdditionalDetails = "test";
             newValues.IsTaxesPayable = true;
@@ -888,7 +887,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1);
             _helper.AddAndSaveChanges(property);
 
-            var newValues = new Entity.PimsProperty();
+            var newValues = new PimsProperty();
             property.CopyValues(newValues);
             newValues.AdditionalDetails = "test";
             newValues.IsTaxesPayable = true;

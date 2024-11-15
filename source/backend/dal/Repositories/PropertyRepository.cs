@@ -10,10 +10,10 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Core.Security;
 
 namespace Pims.Dal.Repositories
 {

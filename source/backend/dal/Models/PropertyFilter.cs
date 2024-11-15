@@ -12,7 +12,7 @@ namespace Pims.Dal.Entities.Models
         #region Properties
 
         /// <summary>
-        /// get/set - The pid property identified.
+        /// get/set - The pid property identifier.
         /// </summary>
         public string Pid { get; set; }
 
