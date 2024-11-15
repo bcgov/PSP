@@ -84,8 +84,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const mapMachineRequestedFitBounds = mapMachine.requestedFitBounds;
 
   const hasPendingFlyTo = mapMachine.pendingFlyTo;
+  const hasPendingCenterTo = mapMachine.pendingCenterTo;
   const requestedFlyTo = mapMachine.requestedFlyTo;
+  const requestedCenterTo = mapMachine.requestedCenterTo;
+
   const mapMachineProcessFlyTo = mapMachine.processFlyTo;
+  const mapMachineProcessCenterTo = mapMachine.processCenterTo;
 
   useEffect(() => {
     if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
@@ -150,11 +154,19 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         mapRef?.current?.flyTo(requestedFlyTo.location, MAP_MAX_ZOOM, {
           animate: false,
         });
+        mapRef?.current?.panTo(requestedFlyTo.location);
       }
 
       mapMachineProcessFlyTo();
     }
   }, [isMapReady, hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
+
+  useEffect(() => {
+    if (hasPendingCenterTo && isMapReady && requestedCenterTo.location) {
+      mapRef.current?.setView(requestedCenterTo.location);
+    }
+    mapMachineProcessCenterTo();
+  }, [hasPendingCenterTo, isMapReady, mapMachineProcessCenterTo, requestedCenterTo.location]);
 
   useEffect(() => {
     mapRef.current?.invalidateSize();

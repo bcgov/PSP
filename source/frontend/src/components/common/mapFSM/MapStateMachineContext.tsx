@@ -16,7 +16,7 @@ import { pidParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { MachineContext, SideBarType } from './machineDefinition/types';
-import { FeatureSelected, MapFeatureData, RequestedFlyTo } from './models';
+import { FeatureSelected, MapFeatureData, RequestedCenterTo, RequestedFlyTo } from './models';
 import useLocationFeatureLoader, { LocationFeatureDataset } from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
@@ -24,7 +24,9 @@ export interface IMapStateMachineContext {
   mapSideBarViewState: IMapSideBarViewState;
   isShowingSearchBar: boolean;
   pendingFlyTo: boolean;
+  pendingCenterTo: boolean;
   requestedFlyTo: RequestedFlyTo;
+  requestedCenterTo: RequestedCenterTo;
   mapFeatureSelected: FeatureSelected | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
@@ -53,8 +55,10 @@ export interface IMapStateMachineContext {
   isMapVisible: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
+  requestCenterToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
   processFlyTo: () => void;
+  processCenterTo: () => void;
   processFitBounds: () => void;
   openSidebar: (sidebarType: SideBarType) => void;
   closeSidebar: () => void;
@@ -128,8 +132,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         const result = locationLoader.loadLocationDetails(
           event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
         );
+
         if (event.type === 'MAP_MARKER_CLICK') {
-          // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data. However, use the coordinates of the clicked marker.
+          // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data.
+          // However, use the coordinates of the clicked marker.
           result.then(data => {
             data.pimsFeature = {
               properties: { ...data.pimsFeature.properties },
@@ -220,6 +226,16 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const requestCenterToLocation = useCallback(
+    (latlng: LatLngLiteral) => {
+      serviceSend({
+        type: 'REQUEST_CENTER_TO_LOCATION',
+        latlng,
+      });
+    },
+    [serviceSend],
+  );
+
   const requestFlyToBounds = useCallback(
     (bounds: LatLngBounds) => {
       serviceSend({
@@ -233,6 +249,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const processFlyTo = useCallback(() => {
     serviceSend({
       type: 'PROCESS_FLY_TO',
+    });
+  }, [serviceSend]);
+
+  const processCenterTo = useCallback(() => {
+    serviceSend({
+      type: 'PROCESS_CENTER_TO',
     });
   }, [serviceSend]);
 
@@ -399,7 +421,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
             !dequal(state.context.advancedSearchCriteria, new PropertyFilterFormModel())
           ),
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
+        pendingCenterTo: state.matches({ mapVisible: { mapRequest: 'pendingCenterTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
+        requestedCenterTo: state.context.requestedCenterTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
@@ -430,10 +454,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setMapSearchCriteria,
         refreshMapProperties,
         processFlyTo,
+        processCenterTo,
         processFitBounds,
         openSidebar,
         closeSidebar,
         requestFlyToLocation,
+        requestCenterToLocation,
         requestFlyToBounds,
         mapClick,
         mapMarkerClick,

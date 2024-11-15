@@ -139,6 +139,14 @@ const mapRequestStates = {
           }),
           target: 'pendingFlyTo',
         },
+        REQUEST_CENTER_TO_LOCATION: {
+          actions: assign({
+            requestedCenterTo: (_, event: any) => ({
+              location: event.latlng,
+            }),
+          }),
+          target: 'pendingCenterTo',
+        },
         REQUEST_FLY_TO_BOUNDS: {
           actions: assign({
             requestedFlyTo: (_, event: any) => ({
@@ -166,6 +174,18 @@ const mapRequestStates = {
           actions: assign({
             requestedFlyTo: () => ({
               bounds: null,
+              location: null,
+            }),
+          }),
+          target: 'nothingPending',
+        },
+      },
+    },
+    pendingCenterTo: {
+      on: {
+        PROCESS_CENTER_TO: {
+          actions: assign({
+            requestedCenterTo: () => ({
               location: null,
             }),
           }),
@@ -427,6 +447,9 @@ export const mapMachine = createMachine<MachineContext>({
       location: null,
       bounds: null,
     },
+    requestedCenterTo: {
+      location: null,
+    },
     requestedFitBounds: defaultBounds,
     mapLocationSelected: null,
     mapFeatureSelected: null,
@@ -477,7 +500,6 @@ export const mapMachine = createMachine<MachineContext>({
             target: 'mapVisible.sideBar.opened',
           },
         ],
-
         CLOSE_SIDEBAR: {
           target: 'mapVisible.sideBar.closed',
         },
@@ -490,7 +512,6 @@ export const mapMachine = createMachine<MachineContext>({
         EXIT_MAP: {
           target: 'notMap',
         },
-
         PREPARE_FOR_CREATION: {
           actions: assign({
             selectedFeatureDataset: (context: MachineContext) => context.mapLocationFeatureDataset,
