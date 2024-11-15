@@ -78,6 +78,7 @@ jobs:
         run: |
           ./openshift/4.0/player.sh build api -apply
           ./openshift/4.0/player.sh build proxy -apply
+          ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
     name: Deploy frontend and api to OpenShift
@@ -97,6 +98,7 @@ jobs:
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy scheduler $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
           oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
 

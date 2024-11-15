@@ -3,7 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Pims.Api.Models.Requests.Http;
 
-namespace Pims.Api.Repositories.Rest
+namespace Pims.Core.Api.Repositories.Rest
 {
     /// <summary>
     /// IRestRespository interface, defines common functionality among Rest-ful Interfaces.

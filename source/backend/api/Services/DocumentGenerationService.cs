@@ -14,6 +14,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Av;
+using Pims.Core.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Security;
