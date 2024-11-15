@@ -6,8 +6,9 @@ namespace PIMS.Tests.Automation.PageObjects
     public class Contacts : PageObjectBase
     {
         //Contact Menu Elements
-        private By menuContactsButton = By.CssSelector("div[data-testid='nav-tooltip-contacts'] a");
-        private By createContactButton = By.XPath("//a[contains(text(),'Add a Contact')]");
+        private By menuContactsLink = By.CssSelector("div[data-testid='nav-tooltip-contacts'] a");
+        private By createContactLink = By.XPath("//a[contains(text(),'Add a Contact')]");
+        private By createContactButton = By.XPath("//div[contains(text(),'Add new contact')]/parent::button");
 
         //Contacts Create Elements
         private By contactIndividualRadioBttn = By.Id("contact-individual");
@@ -187,11 +188,11 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            WaitUntilClickable(menuContactsButton);
-            FocusAndClick(menuContactsButton);
+            WaitUntilClickable(menuContactsLink);
+            FocusAndClick(menuContactsLink);
 
-            WaitUntilClickable(createContactButton);
-            FocusAndClick(createContactButton);
+            Wait();
+            FocusAndClick(createContactLink);
         }
 
         //Create new Contact Button

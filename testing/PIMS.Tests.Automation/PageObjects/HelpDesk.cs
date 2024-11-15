@@ -26,7 +26,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Help Desk Buttons Elements
         private By noButton = By.CssSelector("button[data-testid='cancel-modal-button']");
-        private By yesButton = By.CssSelector("div[class='modal-footer'] button[data-testid='ok-modal-button']");
+        private By yesButton = By.CssSelector("div[class='modal-footer'] a[data-testid='ok-modal-button']");
 
         public HelpDesk(IWebDriver webDriver) : base(webDriver)
         {}
