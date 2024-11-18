@@ -87,6 +87,14 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const requestedFlyTo = mapMachine.requestedFlyTo;
   const mapMachineProcessFlyTo = mapMachine.processFlyTo;
 
+  // Set the bounds when the map is ready. Not called from existing handleMapCreated as that function is called every time a state change occurs.
+  useEffect(() => {
+    const bounds = mapRef?.current?.getBounds();
+    if (exists(bounds)) {
+      setBounds(bounds);
+    }
+  }, [isMapReady, setBounds]);
+
   useEffect(() => {
     if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
       // PSP-9347 it is possible that a fit bounds request will be made with an empty array of selected properties. In that case, we do not want to change the screen bounds, so cancel the request with no changes to the map.
