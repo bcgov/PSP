@@ -87,8 +87,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void Delete1stTemplate()
         {
-            WaitUntilClickable(CDOGSTableResults1stDeleteBttn);
-            webDriver.FindElement(CDOGSTableResults1stDeleteBttn).Click();
+            Wait();
+            FocusAndClick(CDOGSTableResults1stDeleteBttn);
             
             WaitUntilVisible(documentDeleteHeader);
             Assert.Equal("Delete a document", webDriver.FindElement(documentDeleteHeader).Text);
