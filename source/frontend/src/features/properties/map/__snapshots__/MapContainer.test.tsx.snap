@@ -642,20 +642,7 @@ exports[`MapContainer > Renders the map 1`] = `
             />
             <div
               class="leaflet-pane leaflet-marker-pane"
-            >
-              <div
-                class="leaflet-marker-icon marker-cluster marker-cluster-small leaflet-zoom-hide leaflet-interactive"
-                role="button"
-                style="margin-left: -20px; margin-top: -20px; width: 40px; height: 40px; left: 88px; top: -242px; z-index: -242;"
-                tabindex="0"
-              >
-                <div>
-                  <span>
-                    3
-                  </span>
-                </div>
-              </div>
-            </div>
+            />
             <div
               class="leaflet-pane leaflet-tooltip-pane"
             />
