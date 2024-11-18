@@ -595,7 +595,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                       data-testid="select-option-4"
                       value="4"
                     >
-                      MoTI plan
+                      MOTI plan
                     </option>
                     <option
                       class="option"
