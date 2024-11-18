@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Security.Claims;
 using Pims.Dal;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Core.Test
 {

@@ -1,4 +1,4 @@
-import { bypass, http, HttpResponse } from 'msw';
+import { http, HttpResponse } from 'msw';
 
 import {
   getMockAddresses,
@@ -35,15 +35,6 @@ export const handlers = [
       return HttpResponse.json(mockMotiRegionLayerResponse, { status: 200 });
     } else if (search.includes('hwy:DSA_DISTRICT_BOUNDARY')) {
       return HttpResponse.json(mockDistrictLayerResponse, { status: 200 });
-    }
-  }),
-
-  http.get('http://localhost:3000/ogs-internal/ows', async ({ request }) => {
-    const search = new URL(request.url).search;
-    if (search.includes('ISS_PROVINCIAL_PUBLIC_HIGHWAY')) {
-      return HttpResponse.json(mockMotiRegionLayerResponse, { status: 200 });
-    } else {
-      return await fetch(bypass(request));
     }
   }),
 ];

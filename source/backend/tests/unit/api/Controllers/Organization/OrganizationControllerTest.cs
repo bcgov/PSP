@@ -5,7 +5,7 @@ using Pims.Api.Areas.Organizations.Controllers;
 using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Controllers

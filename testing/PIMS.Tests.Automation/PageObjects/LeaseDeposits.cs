@@ -36,8 +36,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By licenseDepositReturnActionsColumn = By.XPath("//div[@data-testid='securityDepositReturnsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
         private By licenseDepositNoReturnsData = By.XPath("//div[@data-testid='securityDepositReturnsTable']/div[contains(text(),'There is no corresponding data')]");
 
-        private By licenseDepositNotesSubtitle = By.XPath("//div[contains(text(),'Deposit Notes')]");
-        private By licenseDepositEditNotesBttn = By.CssSelector("button[data-testid='edit-notes']");
+        private By licenseDepositNotesSubtitle = By.XPath("//div[contains(text(),'Deposit Comments')]");
+        private By licenseDepositEditNotesBttn = By.CssSelector("button[data-testid='edit-comments']");
 
         //Deposit Add Deposit Elements
         private By licenseDepositAddTypeLabel = By.XPath("//label[contains(text(),'Deposit type')]");

@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Tools.Controllers;
 using Pims.Core.Test;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Pims.Ltsa;
 using Xunit;
 using Model = Pims.Ltsa.Models;

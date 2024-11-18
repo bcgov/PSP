@@ -10,9 +10,10 @@ using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using Pims.Core.Exceptions;
 
 namespace Pims.Dal.Test.Repositories
 {

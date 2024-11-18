@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Dal.Helpers.Extensions
 {

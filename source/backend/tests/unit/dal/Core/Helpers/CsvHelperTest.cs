@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
 using Pims.Core.Helpers;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
