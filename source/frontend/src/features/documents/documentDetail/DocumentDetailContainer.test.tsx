@@ -133,10 +133,42 @@ describe('DocumentDetailContainer component', () => {
       },
       httpStatusCode: ApiGen_System_HttpStatusCode.OK,
     });
+
     setup();
 
     await act(async () => {});
     expect(mockDocumentApi.retrieveDocumentTypeMetadata).toHaveBeenCalled();
+  });
+
+  it('should fetch additional document child entities upon rendering this component', async () => {
+    mockDocumentApi.retrieveDocumentMetadata.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Success,
+      message: null,
+      payload: {
+        results: [],
+      },
+      httpStatusCode: ApiGen_System_HttpStatusCode.OK,
+    });
+    mockDocumentApi.retrieveDocumentDetail.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Success,
+      message: null,
+      payload: {
+        id: 1,
+        label: null,
+        datetime_created: new Date().toISOString(),
+        description: null,
+        uuid: null,
+        file_latest: { id: 1 },
+        document_type: null,
+      },
+      httpStatusCode: ApiGen_System_HttpStatusCode.OK,
+    });
+
+    setup();
+
+    await act(async () => {});
+    expect(mockDocumentApi.retrieveDocumentMetadata).toHaveBeenCalled();
+    expect(mockDocumentApi.retrieveDocumentDetail).toHaveBeenCalled();
   });
 
   it('should refresh the document type metadata when document type is changed', async () => {
@@ -148,8 +180,8 @@ describe('DocumentDetailContainer component', () => {
       },
       httpStatusCode: ApiGen_System_HttpStatusCode.OK,
     });
-
     vi.spyOn(console, 'error').mockImplementationOnce(() => {});
+
     const { getDocumentTypeDropdown } = setup();
 
     await act(async () => {});
@@ -166,5 +198,36 @@ describe('DocumentDetailContainer component', () => {
 
     // document type metadata should be refreshed
     expect(mockDocumentApi.retrieveDocumentTypeMetadata).toHaveBeenCalled();
+  });
+
+  it('should submit the form as expected', async () => {
+    mockDocumentApi.retrieveDocumentTypeMetadata.mockResolvedValue({
+      status: ApiGen_CodeTypes_ExternalResponseStatus.Success,
+      message: null,
+      payload: {
+        results: mockDocumentTypeMetadataBcAssessment(),
+      },
+      httpStatusCode: ApiGen_System_HttpStatusCode.OK,
+    });
+    mockDocumentApi.updateDocument.mockResolvedValue({
+      metadataExternalResponse: [],
+    });
+
+    setup();
+
+    await act(async () => {});
+    expect(mockDocumentApi.retrieveDocumentTypeMetadata).toHaveBeenCalled();
+    await act(async () => {
+      userEvent.click(screen.getByTitle(/Edit document information/i));
+    });
+
+    const yesButton = screen.getByText('Yes');
+    expect(yesButton).toBeVisible();
+    await act(async () => {
+      userEvent.click(yesButton);
+    });
+
+    // document update was called
+    expect(onUpdateSuccess).toHaveBeenCalled();
   });
 });
