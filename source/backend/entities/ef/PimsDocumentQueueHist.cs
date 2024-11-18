@@ -36,9 +36,28 @@ public partial class PimsDocumentQueueHist
     [StringLength(20)]
     public string DataSourceTypeCode { get; set; }
 
+    [Column("PROPERTY_ACTIVITY_DOCUMENT_ID")]
+    public long? PropertyActivityDocumentId { get; set; }
+
+    [Column("ACQUISITION_FILE_DOCUMENT_ID")]
+    public long? AcquisitionFileDocumentId { get; set; }
+
+    [Column("RESEARCH_FILE_DOCUMENT_ID")]
+    public long? ResearchFileDocumentId { get; set; }
+
+    [Column("LEASE_DOCUMENT_ID")]
+    public long? LeaseDocumentId { get; set; }
+
+    [Column("DISPOSITION_FILE_DOCUMENT_ID")]
+    public long? DispositionFileDocumentId { get; set; }
+
     [Column("DOCUMENT_EXTERNAL_ID")]
     [StringLength(1000)]
     public string DocumentExternalId { get; set; }
+
+    [Column("DOCUMENT_METADATA")]
+    [StringLength(4000)]
+    public string DocumentMetadata { get; set; }
 
     [Column("DOC_PROCESS_START_DT", TypeName = "datetime")]
     public DateTime? DocProcessStartDt { get; set; }
