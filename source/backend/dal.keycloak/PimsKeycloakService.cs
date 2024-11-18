@@ -6,7 +6,7 @@ using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Pims.Keycloak;
 using Pims.Keycloak.Models;
 using Entity = Pims.Dal.Entities;

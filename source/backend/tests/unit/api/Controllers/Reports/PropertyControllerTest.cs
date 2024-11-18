@@ -8,11 +8,11 @@ using Moq;
 using Pims.Api.Areas.Property.Models.Search;
 using Pims.Api.Areas.Reports.Controllers;
 using Pims.Api.Helpers.Constants;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 

@@ -7,15 +7,15 @@ namespace Pims.Api.Areas.Research.Controllers
     using Microsoft.AspNetCore.Http.Extensions;
     using Microsoft.AspNetCore.Mvc;
     using Pims.Api.Areas.Research.Models.Search;
-    using Pims.Api.Helpers.Exceptions;
+    using Pims.Core.Api.Exceptions;
     using Pims.Api.Helpers.Extensions;
     using Pims.Api.Models.Base;
     using Pims.Api.Models.Concepts.ResearchFile;
-    using Pims.Api.Policies;
+    using Pims.Core.Api.Policies;
     using Pims.Api.Services;
     using Pims.Core.Json;
     using Pims.Dal.Entities.Models;
-    using Pims.Dal.Security;
+    using Pims.Core.Security;
     using Swashbuckle.AspNetCore.Annotations;
 
     /// <summary>

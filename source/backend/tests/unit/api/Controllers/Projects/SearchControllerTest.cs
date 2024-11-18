@@ -4,7 +4,7 @@ using Pims.Api.Areas.Projects.Models;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities.Models;
 

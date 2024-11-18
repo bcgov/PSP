@@ -108,7 +108,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
       </Section>
 
       <Section header="Property Attributes">
-        <SectionField label="Legal Description">{property?.landLegalDescription}</SectionField>
+        <SectionField label="Legal description">{property?.landLegalDescription}</SectionField>
         <SectionField label="MOTI region">{property?.region?.description}</SectionField>
         <SectionField label="Highways district">
           <InlineContainer>
@@ -121,7 +121,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         <SectionField label="Electoral district">
           {property?.electoralDistrict?.properties.ED_NAME}
         </SectionField>
-        <SectionField label="Agricultural Land Reserve">
+        <SectionField label="Agricultural land reserve">
           {property?.isALR ? 'Yes' : 'No'}
         </SectionField>
         <SectionField label="Railway belt / Dominion patent">

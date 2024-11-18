@@ -4,7 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
@@ -15,7 +15,8 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
+using Pims.Core.Api.Exceptions;
 
 namespace Pims.Api.Services
 {

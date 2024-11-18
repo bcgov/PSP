@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Pims.Api.Areas.Tools.Controllers;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Routes.Project
