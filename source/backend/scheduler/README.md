@@ -1,8 +1,15 @@
-# PIMS PROXY API
+# PIMS scheduler
 
-The PROXY API provides a keycloak-authenticated passthrough to the PIMS geoserver instance (via service account credentials).
+The PROXY scheduler provides a keycloak-authenticated hangfire instance.
 
 To run the API locally you will need to create the appropriate environment variable `.env` files. You can do this through using the prebuilt scripts [here](../../scripts/README.md).
+
+## Hangfire
+
+1. All serilog logging is piped into hangfire and visible in the job dashboard.
+2. All recurring hangfire jobs must be registered in code (currently within Startup.cs). They can then be controlled in the appsettings files or by env.
+3. Hangfire is dependent on redis to store job state. This is handled by a separate container with storage in local docker and OS.
+4. See best practices for hangfire jobs, but all jobs should be written such that they can continue at any point if the are interupted.
 
 ## API Environment Variables
 
