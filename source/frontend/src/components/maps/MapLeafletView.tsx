@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { dequal } from 'dequal';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import {
   geoJSON,
@@ -86,6 +87,14 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const hasPendingFlyTo = mapMachine.pendingFlyTo;
   const requestedFlyTo = mapMachine.requestedFlyTo;
   const mapMachineProcessFlyTo = mapMachine.processFlyTo;
+
+  // Set the bounds when the map is ready. Not called from existing handleMapCreated as that function is called every time a state change occurs.
+  useEffect(() => {
+    const bounds = mapRef?.current?.getBounds();
+    if (exists(bounds) && isMapReady && !dequal(bounds.getNorthEast(), bounds.getSouthWest())) {
+      setBounds(bounds);
+    }
+  }, [isMapReady, setBounds]);
 
   useEffect(() => {
     if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
