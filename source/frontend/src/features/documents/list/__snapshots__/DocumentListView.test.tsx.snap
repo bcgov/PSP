@@ -931,7 +931,7 @@ exports[`Document List View > renders as expected 1`] = `
                 style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                MOTIPLAN
+                MOTI Plan
               </div>
               <div
                 class="td"
