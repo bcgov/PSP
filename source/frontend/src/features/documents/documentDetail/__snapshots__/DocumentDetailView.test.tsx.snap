@@ -405,6 +405,7 @@ exports[`DocumentDetailView component > renders as expected 1`] = `
           >
             <button
               class="c7 Button d-inline-block btn btn-link"
+              title="Edit document information"
               type="button"
             >
               <div

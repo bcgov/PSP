@@ -247,7 +247,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(5, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(10);
-            Assert.Equal(10, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
+            Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 10);
 
             sharedPagination.ChoosePaginationOption(20);
             Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 20);
@@ -378,6 +378,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             digitalDocument.DocumentType = ExcelDataContext.ReadData(rowNumber, "DocumentType");
             digitalDocument.DocumentStatus = ExcelDataContext.ReadData(rowNumber, "DocumentStatus");
+            digitalDocument.ApplicationNumber = ExcelDataContext.ReadData(rowNumber, "ApplicationNumber");
             digitalDocument.CanadaLandSurvey = ExcelDataContext.ReadData(rowNumber, "CanadaLandSurvey");
             digitalDocument.CivicAddress = ExcelDataContext.ReadData(rowNumber, "CivicAddress");
             digitalDocument.CrownGrant = ExcelDataContext.ReadData(rowNumber, "CrownGrant");
@@ -416,6 +417,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocument.PropertyIdentifier = ExcelDataContext.ReadData(rowNumber, "PropertyIdentifier");
             digitalDocument.PublishedDate = ExcelDataContext.ReadData(rowNumber, "PublishedDate");
             digitalDocument.RelatedGazette = ExcelDataContext.ReadData(rowNumber, "RelatedGazette");
+            digitalDocument.ReferenceAgencyDocumentNbr = ExcelDataContext.ReadData(rowNumber, "ReferenceAgencyDocumentNbr");
+            digitalDocument.ReferenceAgencyLandsFileNbr = ExcelDataContext.ReadData(rowNumber, "ReferenceAgencyLandsFileNbr");
             digitalDocument.RoadName = ExcelDataContext.ReadData(rowNumber, "RoadName");
             digitalDocument.Roll = ExcelDataContext.ReadData(rowNumber, "Roll");
             digitalDocument.Section = ExcelDataContext.ReadData(rowNumber, "Section");

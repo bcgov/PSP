@@ -117,7 +117,7 @@ export const DocumentDetailForm: React.FunctionComponent<
                     props.document?.pimsDocumentRelationship?.id &&
                     values.documentStatusCode !== undefined
                   ) {
-                    const request = values.toRequestApi();
+                    const request = DocumentUpdateFormData.toRequestApi(values);
                     await props.onUpdate(request);
                     setSubmitting(false);
                   } else {

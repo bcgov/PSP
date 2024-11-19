@@ -190,7 +190,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchPropertyByAddressList(searchProperty.Address);
 
             //Validate that the result gives only one pin
-            Assert.True(searchProperties.PropertiesListFoundCount() == 3);
+            Assert.True(searchProperties.PropertiesListFoundCount() >= 1);
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();

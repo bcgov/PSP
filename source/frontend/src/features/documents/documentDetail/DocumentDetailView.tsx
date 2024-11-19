@@ -58,6 +58,7 @@ export const DocumentDetailView: React.FunctionComponent<
               <RightFlexDiv>
                 <LinkButton
                   className="d-inline-block"
+                  title="Edit document information"
                   onClick={() => {
                     props.setIsEditable(true);
                   }}

@@ -1,4 +1,6 @@
+import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
+import { createRef } from 'react';
 
 import { Claims } from '@/constants/claims';
 import { mockDocumentTypesAcquisition } from '@/mocks/documents.mock';
@@ -14,8 +16,6 @@ import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
 import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
-import { FormikProps } from 'formik';
-import { createRef } from 'react';
 
 // mock auth library
 
@@ -245,14 +245,14 @@ describe('DocumentDetailForm component', () => {
     expect(select).toBeDisabled();
   });
 
-  it('displays a warning leyend when the document type has changed.', async () => {
+  it('displays a warning legend when the document type has changed.', async () => {
     const { getByText } = await setup({
       props: { documentTypeUpdated: true },
     });
 
-    const warningLeyend = getByText(
+    const warningLegend = getByText(
       'Some associated metadata may be lost if the document type is changed.',
     );
-    expect(warningLeyend).toBeInTheDocument();
+    expect(warningLegend).toBeInTheDocument();
   });
 });
