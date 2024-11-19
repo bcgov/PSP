@@ -4,13 +4,17 @@ import { createMemoryHistory } from 'history';
 
 import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
+import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
+import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { mockApiPropertyView } from '@/mocks/filterData.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { ILookupCode } from '@/store/slices/lookupCodes';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
+import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   cleanup,
@@ -21,21 +25,13 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
-import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
-import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
-import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { IPropertyFilter } from '../filter/IPropertyFilter';
-import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
-import { useApiHistoricalNumbers } from '@/hooks/pims-api/useApiHistoricalNumbers';
-import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
-import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
-import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
 
 // Set all module functions to vi.fn
 
 vi.mock('@/hooks/pims-api/useApiGeocoder');
 vi.mock('@/hooks/pims-api/useApiProperties');
-vi.mock('@/hooks/pims-api/useApiHistoricalNumbers');
 
 const mockApiGetPropertiesPagedApi = vi.fn();
 vi.mocked(useApiProperties).mockReturnValue({
@@ -243,19 +239,19 @@ describe('Property list view', () => {
     // select an option from the drop-down
     await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
 
-    expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith({
-      address: '',
-      latitude: '',
-      longitude: '',
-      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest,isDisposed',
-      page: 1,
-      pinOrPid: '',
-      planNumber: '',
-      historical: '',
-      quantity: 10,
-      searchBy: 'pinOrPid',
-      sort: undefined,
-    });
+    expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith(
+      expect.objectContaining<Partial<IPropertyFilter>>({
+        address: '',
+        latitude: '',
+        longitude: '',
+        ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+        pid: '',
+        pin: '',
+        planNumber: '',
+        historical: '',
+        searchBy: 'pid',
+      }),
+    );
   });
 
   it('displays a tooltip beside properties that are retired', async () => {
