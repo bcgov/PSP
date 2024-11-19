@@ -45,18 +45,43 @@ describe('Lease Filter', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('searches by pid/pin', async () => {
+  it('searches by pid', async () => {
     const { container, searchButton, setFilter } = setup();
 
-    fillInput(container, 'searchBy', 'pinOrPid', 'select');
-    fillInput(container, 'pinOrPid', '123');
+    fillInput(container, 'searchBy', 'pid', 'select');
+    fillInput(container, 'pid', '123');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pinOrPid: '123',
-        searchBy: 'pinOrPid',
+        pid: '123',
+        pin: '',
+        searchBy: 'pid',
+        tenantName: '',
+        programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
+      }),
+    );
+  });
+
+  it('searches by pin', async () => {
+    const { container, searchButton, setFilter } = setup();
+
+    fillInput(container, 'searchBy', 'pin', 'select');
+    fillInput(container, 'pin', '123');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining<ILeaseFilter>({
+        lFileNo: '',
+        pid: '',
+        pin: '123',
+        searchBy: 'pin',
         tenantName: '',
         programs: [],
         leaseStatusTypes: ['ACTIVE'],
@@ -78,7 +103,8 @@ describe('Lease Filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '123',
-        pinOrPid: '',
+        pid: '',
+        pin: '',
         searchBy: 'lFileNo',
         tenantName: '',
         programs: [],
@@ -94,15 +120,16 @@ describe('Lease Filter', () => {
   it('searches tenant name', async () => {
     const { container, searchButton, setFilter } = setup();
 
-    fillInput(container, 'searchBy', 'pinOrPid', 'select');
+    fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'tenantName', 'Chester');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pinOrPid: '',
-        searchBy: 'pinOrPid',
+        pid: '',
+        pin: '',
+        searchBy: 'pid',
         tenantName: 'Chester',
         programs: [],
         leaseStatusTypes: ['ACTIVE'],
@@ -117,14 +144,15 @@ describe('Lease Filter', () => {
   it('resets the filter when reset button is clicked', async () => {
     const { container, resetButton, setFilter } = setup();
 
-    fillInput(container, 'searchBy', 'pinOrPid', 'select');
-    fillInput(container, 'pinOrPid', 'foo-bar-baz');
+    fillInput(container, 'searchBy', 'pid', 'select');
+    fillInput(container, 'pid', 'foo-bar-baz');
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pinOrPid: '',
+        pid: '',
+        pin: '',
         searchBy: 'lFileNo',
         tenantName: '',
         programs: [],

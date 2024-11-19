@@ -77,7 +77,61 @@ describe('Lease and License List View', () => {
     expect(fragment).toMatchSnapshot();
   });
 
-  it('searches by pid/pin', async () => {
+  it('searches by pid', async () => {
+    setupMockSearch([
+      {
+        ...getEmptyLease(),
+        id: 1,
+        lFileNo: 'L-123-456',
+        programName: 'TRAN-IT',
+        stakeholders: [
+          {
+            ...getEmptyLeaseStakeholder(),
+            person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
+          },
+        ],
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...getEmptyProperty(),
+              id: 12,
+              address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
+              pid: 123,
+            },
+          },
+        ],
+      },
+    ]);
+    const { container, searchButton, findByText, getByTitle } = setup();
+    await waitForElementToBeRemoved(getByTitle('table-loading'));
+
+    await act(async () => {
+      fillInput(container, 'searchBy', 'pid', 'select');
+      fillInput(container, 'pid', '123');
+    });
+    await act(async () => userEvent.click(searchButton));
+
+    expect(getLeases).toHaveBeenCalledWith(
+      expect.objectContaining<ILeaseFilter>({
+        lFileNo: '',
+        pid: '123',
+        pin: '',
+        searchBy: 'pid',
+        tenantName: '',
+        programs: [],
+        leaseStatusTypes: ['ACTIVE'],
+        expiryStartDate: '',
+        expiryEndDate: '',
+        regionType: '',
+        details: '',
+      }),
+    );
+
+    expect(await findByText(/TRAN-IT/i)).toBeInTheDocument();
+  });
+
+  it('searches by pin', async () => {
     setupMockSearch([
       {
         ...getEmptyLease(),
@@ -107,16 +161,17 @@ describe('Lease and License List View', () => {
     await waitForElementToBeRemoved(getByTitle('table-loading'));
 
     await act(async () => {
-      fillInput(container, 'searchBy', 'pinOrPid', 'select');
-      fillInput(container, 'pinOrPid', '123');
+      fillInput(container, 'searchBy', 'pin', 'select');
+      fillInput(container, 'pin', '123');
     });
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pinOrPid: '123',
-        searchBy: 'pinOrPid',
+        pid: '',
+        pin: '123',
+        searchBy: 'pin',
         tenantName: '',
         programs: [],
         leaseStatusTypes: ['ACTIVE'],
@@ -165,7 +220,8 @@ describe('Lease and License List View', () => {
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining({
         lFileNo: '123',
-        pinOrPid: '',
+        pid: '',
+        pin: '',
         searchBy: 'lFileNo',
         tenantName: '',
       }),
@@ -218,7 +274,8 @@ describe('Lease and License List View', () => {
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining({
         historical: '0309-001',
-        pinOrPid: '',
+        pid: '',
+        pin: '',
         searchBy: 'historical',
       }),
     );
@@ -270,7 +327,8 @@ describe('Lease and License List View', () => {
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining({
         historical: '0309-000',
-        pinOrPid: '',
+        pid: '',
+        pin: '',
         searchBy: 'historical',
       }),
     );
@@ -323,7 +381,8 @@ describe('Lease and License List View', () => {
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining({
         historical: '0309-999',
-        pinOrPid: '',
+        pid: '',
+        pin: '',
         searchBy: 'historical',
       }),
     );
@@ -359,15 +418,16 @@ describe('Lease and License List View', () => {
     ]);
     const { container, searchButton, findByText } = setup();
 
-    fillInput(container, 'searchBy', 'pinOrPid', 'select');
+    fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'tenantName', 'Chester');
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pinOrPid: '',
-        searchBy: 'pinOrPid',
+        pid: '',
+        pin: '',
+        searchBy: 'pid',
         tenantName: 'Chester',
         programs: [],
         leaseStatusTypes: ['ACTIVE'],
@@ -385,15 +445,16 @@ describe('Lease and License List View', () => {
     setupMockSearch();
     const { container, searchButton, findAllByText } = setup();
 
-    fillInput(container, 'searchBy', 'pinOrPid', 'select');
-    fillInput(container, 'pinOrPid', 'foo-bar-baz');
+    fillInput(container, 'searchBy', 'pid', 'select');
+    fillInput(container, 'pid', 'foo-bar-baz');
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pinOrPid: 'foo-bar-baz',
-        searchBy: 'pinOrPid',
+        pid: 'foo-bar-baz',
+        pin: '',
+        searchBy: 'pid',
         tenantName: '',
         programs: [],
         leaseStatusTypes: ['ACTIVE'],
@@ -412,15 +473,16 @@ describe('Lease and License List View', () => {
     getLeases.mockRejectedValue(new Error('network error'));
     const { container, searchButton, findAllByText } = setup();
 
-    fillInput(container, 'searchBy', 'pinOrPid', 'select');
-    fillInput(container, 'pinOrPid', '123');
+    fillInput(container, 'searchBy', 'pid', 'select');
+    fillInput(container, 'pid', '123');
     await act(async () => userEvent.click(searchButton));
 
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
-        pinOrPid: '123',
-        searchBy: 'pinOrPid',
+        pid: '123',
+        pin: '',
+        searchBy: 'pid',
         tenantName: '',
         programs: [],
         leaseStatusTypes: ['ACTIVE'],
