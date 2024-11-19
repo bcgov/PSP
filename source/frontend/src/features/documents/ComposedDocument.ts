@@ -221,11 +221,13 @@ export class DocumentUpdateFormData {
     return model;
   }
 
-  public toRequestApi(): ApiGen_Requests_DocumentUpdateRequest {
+  public static toRequestApi(
+    formData: DocumentUpdateFormData,
+  ): ApiGen_Requests_DocumentUpdateRequest {
     const metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
 
-    for (const key in this.documentMetadata) {
-      const value = this.documentMetadata[key];
+    for (const key in formData.documentMetadata) {
+      const value = formData.documentMetadata[key];
       const metadataTypeId = Number(key);
       metadata.push({
         value: value,
@@ -235,10 +237,10 @@ export class DocumentUpdateFormData {
     }
 
     return {
-      documentId: this.documentId,
-      mayanDocumentId: this.mayanDocumentId,
-      documentTypeId: stringToNumber(this.documentTypeId),
-      documentStatusCode: this.documentStatusCode,
+      documentId: formData.documentId,
+      mayanDocumentId: formData.mayanDocumentId,
+      documentTypeId: stringToNumber(formData.documentTypeId),
+      documentStatusCode: formData.documentStatusCode,
       documentMetadata: metadata,
     };
   }
