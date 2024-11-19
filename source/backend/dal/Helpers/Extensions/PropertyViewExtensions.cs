@@ -68,10 +68,7 @@ namespace Pims.Dal.Helpers.Extensions
 
             if (!string.IsNullOrWhiteSpace(filter.Pin))
             {
-                // note - 2 part search required. all matches found by removing leading 0's, then matches filtered in subsequent step. This is because EF core does not support an lpad method.
-                Regex nonInteger = new Regex("[^\\d]");
-                var formattedPin = Convert.ToInt32(nonInteger.Replace(filter.Pin, string.Empty)).ToString();
-                predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.Pin.ToString(), $"%{formattedPin}%"));
+                predicateBuilder = predicateBuilder.And(p => EF.Functions.Like(p.Pin.ToString(), $"%{filter.Pin}%"));
             }
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {

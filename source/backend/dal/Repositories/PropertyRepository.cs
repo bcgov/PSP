@@ -77,13 +77,6 @@ namespace Pims.Dal.Repositories
                 items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPid)).ToArray();
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.Pin))
-            {
-                Regex nonInteger = new Regex("[^\\d]");
-                var formattedPin = nonInteger.Replace(filter.Pin, string.Empty);
-                items = items.Where(i => i.Pin.ToString().Contains(formattedPin)).ToArray();
-            }
-
             return new Paged<PimsPropertyVw>(items, filter.Page, filter.Quantity, query.Count());
         }
 
