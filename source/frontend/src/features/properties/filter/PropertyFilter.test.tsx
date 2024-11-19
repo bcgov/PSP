@@ -1,31 +1,26 @@
-import { useKeycloak } from '@react-keycloak/web';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
 import { createMemoryHistory } from 'history';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 
-import * as API from '@/constants/API';
-import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
-import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import filterSlice from '@/store/slices/filter/filterSlice';
-import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { Claims } from '@/constants';
+import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
+import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   cleanup,
-  fireEvent,
-  getByDisplayValue,
+  fillInput,
+  getByName,
   render,
-  waitFor,
+  RenderOptions,
   screen,
+  userEvent,
 } from '@/utils/test-utils';
-import { fillInput } from '@/utils/test-utils';
-import TestCommonWrapper from '@/utils/TestCommonWrapper';
 
 import { PropertyFilter } from '.';
 import { defaultPropertyFilter, IPropertyFilter } from './IPropertyFilter';
-import { IGeocoderPidsResponse, IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
-import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
+import { IPropertyFilterProps } from './PropertyFilter';
+import { SearchToggleOption } from './PropertySearchToggle';
 
 const onFilterChange = vi.fn();
 //prevent web calls from being made during tests.
@@ -46,73 +41,43 @@ vi.mocked(useGeocoderRepository).mockReturnValue({
 });
 
 const mockedAxios = vi.mocked(axios);
-const mockStore = configureMockStore([thunk]);
 let history = createMemoryHistory();
-
-const lCodes = {
-  lookupCodes: [
-    { id: 1, name: 'roleVal', isDisabled: false, type: API.ROLE_TYPES },
-    { id: 2, name: 'disabledRole', isDisabled: true, type: API.ROLE_TYPES },
-    {
-      id: 1,
-      name: 'Core Operational',
-      isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_TYPES,
-    },
-    {
-      id: 2,
-      name: 'Core Strategic',
-      isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_TYPES,
-    },
-    {
-      id: 5,
-      name: 'Disposed',
-      isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_TYPES,
-    },
-    {
-      id: 6,
-      name: 'Demolished',
-      isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_TYPES,
-    },
-    {
-      id: 7,
-      name: 'Subdivided',
-      isDisabled: false,
-      type: API.PROPERTY_CLASSIFICATION_TYPES,
-    },
-  ] as ILookupCode[],
-};
-
-const getStore = (filter: any) =>
-  mockStore({
-    [filterSlice.name]: filter,
-    [lookupCodesSlice.name]: lCodes,
-  });
-
-const getUiElement = (
-  filter: IPropertyFilter,
-  showAllOrganizationSelect = true,
-  useGeocoder = true,
-) => (
-  <TestCommonWrapper store={getStore(filter)} history={history}>
-    <PropertyFilter
-      propertyFilter={filter}
-      useGeocoder={useGeocoder}
-      defaultFilter={filter}
-      onChange={onFilterChange}
-    />
-  </TestCommonWrapper>
-);
 
 describe('MapFilterBar', () => {
   vi.mocked(mockedAxios.get).mockImplementationOnce(() => Promise.resolve({}));
 
+  const setup = (
+    renderOptions: RenderOptions & {
+      props?: Partial<IPropertyFilterProps>;
+    } = {},
+  ) => {
+    const utils = render(
+      <PropertyFilter
+        propertyFilter={renderOptions?.props?.propertyFilter ?? defaultPropertyFilter}
+        useGeocoder={renderOptions?.props?.useGeocoder ?? true}
+        defaultFilter={defaultPropertyFilter}
+        onChange={onFilterChange}
+        toggle={renderOptions?.props?.toggle ?? SearchToggleOption.Map}
+      />,
+      {
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
+        useMockAuthentication: true,
+        claims: renderOptions?.claims ?? [Claims.PROPERTY_VIEW],
+        history,
+        ...renderOptions,
+      },
+    );
+
+    const searchButton = screen.getByTitle('search');
+    const resetButton = screen.getByTitle('reset-button');
+    const searchByDropdown = getByName('searchBy') as HTMLSelectElement;
+    return { ...utils, searchButton, resetButton, searchByDropdown };
+  };
+
   beforeEach(() => {
     import.meta.env.VITE_TENANT = 'MOTI';
-    history = createMemoryHistory();
   });
 
   afterEach(() => {
@@ -121,41 +86,97 @@ describe('MapFilterBar', () => {
   });
 
   it('renders correctly', () => {
-    //mockKeycloak(['property-view']);
-    // Capture any changes
-    const { container } = render(getUiElement(defaultPropertyFilter), {
-      claims: ['property-view'],
-    });
-    expect(container.firstChild).toMatchSnapshot();
+    const { asFragment } = setup();
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('does not submit if there is no pid/pin for address', async () => {
-    // Arrange
-
-    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
-      claims: ['admin-properties'],
+  it('disables the search button if there are no pid, pin or address', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'address' },
+      },
     });
-    const submit = container.querySelector('button[type="submit"]');
 
-    // Act
-    // Enter values on the form fields, then click the Search button
-    await waitFor(() => fillInput(container, 'address', 'Victoria'));
+    expect(searchButton).toBeDisabled();
+  });
+
+  it('shows search by PID option', async () => {
+    setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pid' },
+      },
+    });
+
+    expect(screen.getByPlaceholderText(/Enter a PID/i)).toBeVisible();
+  });
+
+  it('shows search by PIN option', async () => {
+    setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pin' },
+      },
+    });
+
+    expect(screen.getByPlaceholderText(/Enter a PIN/i)).toBeVisible();
+  });
+
+  it('shows search by Plan Number option', async () => {
+    setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'planNumber' },
+      },
+    });
+
+    expect(screen.getByPlaceholderText(/Enter a plan number/i)).toBeVisible();
+  });
+
+  it('shows search by Historical File Number option', async () => {
+    setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'historical' },
+      },
+    });
+
+    expect(screen.getByPlaceholderText('Enter a historical file#', { exact: false })).toBeVisible();
+  });
+
+  it('clears the form when changing the search by option', async () => {
+    const { searchByDropdown } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pid' },
+      },
+    });
+
+    let pid = screen.getByPlaceholderText(/Enter a PID/i);
+    expect(pid).toBeVisible();
 
     await act(async () => {
-      fireEvent.click(submit!);
+      userEvent.paste(pid, '9999');
     });
 
-    // Assert
-    expect(onFilterChange).not.toHaveBeenCalled();
+    await act(async () => {
+      userEvent.selectOptions(searchByDropdown, 'address');
+    });
+
+    pid = screen.queryByPlaceholderText(/Enter a PID/i);
+    expect(pid).toBeNull();
+
+    await act(async () => {
+      userEvent.selectOptions(searchByDropdown, 'pid');
+    });
+
+    pid = screen.getByPlaceholderText(/Enter a PID/i);
+    expect(pid).toBeVisible();
+    expect(pid).toHaveValue('');
   });
 
-  it('does submit if there is pid/pin for address.', async () => {
+  it('submits the form if there is pid/pin for address when using the geocoder', async () => {
     // Arrange
-
-    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
-      claims: ['admin-properties'],
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'address' },
+      },
     });
-    const submit = container.querySelector('button[type="submit"]');
     searchAddressApi.mockResolvedValue([
       {
         siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
@@ -175,29 +196,31 @@ describe('MapFilterBar', () => {
 
     // Act
     // Enter values on the form fields, then click the Search button
-    await waitFor(() => fillInput(container, 'address', 'Victoria'));
+    await act(async () => {
+      fillInput(container, 'address', 'Victoria');
+    });
 
-    const addressButton = await screen.findByText('510 Catherine St', { exact: false });
+    const addressSuggestion = await screen.findByText('510 Catherine St', { exact: false });
 
     await act(async () => {
-      fireEvent.click(addressButton!);
+      userEvent.click(addressSuggestion!);
     });
 
     await act(async () => {
-      fireEvent.click(submit!);
+      userEvent.click(searchButton);
     });
 
     // Assert
     expect(onFilterChange).toHaveBeenCalled();
   });
 
-  it('does submit if there is pid/pin for address, and handles multiple pids in the response.', async () => {
+  it('submits the form if there is pid/pin for address, and handles multiple pids in the geocoder response.', async () => {
     // Arrange
-
-    const { container } = render(getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }), {
-      claims: ['admin-properties'],
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'address' },
+      },
     });
-    const submit = container.querySelector('button[type="submit"]');
     searchAddressApi.mockResolvedValue([
       {
         siteId: '3744cde1-18cd-4c45-9d39-472285295fd3',
@@ -217,62 +240,73 @@ describe('MapFilterBar', () => {
 
     // Act
     // Enter values on the form fields, then click the Search button
-    await waitFor(() => fillInput(container, 'address', 'Victoria'));
+    await act(async () => {
+      fillInput(container, 'address', 'Victoria');
+    });
 
     const addressButton = await screen.findByText('510 Catherine St', { exact: false });
 
     await act(async () => {
-      fireEvent.click(addressButton!);
+      userEvent.click(addressButton!);
     });
 
-    await screen.findAllByText('Warning, multiple PIDs found for this address', {
-      exact: false,
-    })[0];
+    expect(
+      await screen.findByText('Warning, multiple PIDs found for this address', { exact: false }),
+    ).toBeVisible();
 
     await act(async () => {
-      fireEvent.click(submit!);
+      userEvent.click(searchButton);
     });
 
     // Assert
     expect(onFilterChange).toHaveBeenCalled();
   });
 
-  it('submits if address set and useGeocoder false', async () => {
+  it('submits if the address is set and useGeocoder is false', async () => {
     // Arrange
-
-    const { container } = await render(
-      getUiElement({ ...defaultPropertyFilter, searchBy: 'address' }, true, false),
-      { claims: ['admin-properties'] },
-    );
-    const submit = container.querySelector('button[type="submit"]');
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'address' },
+        useGeocoder: false,
+      },
+    });
 
     // Act
     // Enter values on the form fields, then click the Search button
-    await waitFor(() => fillInput(container, 'address', 'Victoria'));
-
-    await screen.findByDisplayValue('Victoria');
     await act(async () => {
-      fireEvent.click(submit!);
+      fillInput(container, 'address', 'Victoria');
+    });
+
+    expect(await screen.findByDisplayValue('Victoria')).toBeVisible();
+    await act(async () => {
+      userEvent.click(searchButton);
     });
 
     // Assert
     expect(onFilterChange).toHaveBeenCalled();
   });
 
-  it('resets values when reset button is clicked', async () => {
-    const { container, getByTestId } = render(getUiElement(defaultPropertyFilter));
+  it('resets the form values when reset button is clicked', async () => {
+    const { container, resetButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'address' },
+      },
+    });
 
     // Act
     // Enter values on the form fields, then click the Search button
-    await waitFor(() => fillInput(container, 'address', 'Victoria'));
-    await waitFor(() => {
-      fireEvent.click(getByTestId('reset-button'));
+    await act(async () => {
+      fillInput(container, 'address', 'Victoria');
     });
-    expect(onFilterChange).toBeCalledWith<[IPropertyFilter]>({
-      pinOrPid: '',
+    await act(async () => {
+      userEvent.click(resetButton);
+    });
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '',
       planNumber: '',
       address: '',
-      searchBy: 'pinOrPid',
+      searchBy: 'pid',
       page: undefined,
       quantity: undefined,
       latitude: '',
@@ -281,4 +315,88 @@ describe('MapFilterBar', () => {
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
     });
   });
+
+  it('searches by PID', async () => {
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pid' },
+      },
+    });
+
+    // Enter values on the form fields, then click the Search button
+    await act(async () => {
+      fillInput(container, 'pid', '123');
+    });
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '123',
+      pin: '',
+      planNumber: '',
+      address: '',
+      searchBy: 'pid',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
+      historical: '',
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+    });
+  });
+
+  it('searches by PIN', async () => {
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'pin' },
+      },
+    });
+
+    // Enter values on the form fields, then click the Search button
+    await act(async () => {
+      fillInput(container, 'pin', '999999');
+    });
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '999999',
+      planNumber: '',
+      address: '',
+      searchBy: 'pin',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
+      historical: '',
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+    });
+  });
+
+  it.each([
+    ['The map is the active page', SearchToggleOption.Map, 'list-view', '/properties/list'],
+    ['Property List View is the active page', SearchToggleOption.List, 'map-view', '/mapview'],
+  ])(
+    'navigates between the map and the property list view when toggle button is clicked - %s',
+    async (
+      _: string,
+      toggleValue: SearchToggleOption,
+      buttonTitle: string,
+      expectedRoute: string,
+    ) => {
+      setup({ props: { toggle: toggleValue } });
+
+      const iconButton = screen.getByTitle(buttonTitle);
+      expect(iconButton).toBeVisible();
+
+      await act(async () => {
+        userEvent.click(iconButton);
+      });
+
+      expect(history.location.pathname).toBe(expectedRoute);
+    },
+  );
 });

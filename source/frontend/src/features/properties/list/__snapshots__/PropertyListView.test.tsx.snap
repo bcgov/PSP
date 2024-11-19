@@ -457,10 +457,17 @@ exports[`Property list view > matches snapshot 1`] = `
                 >
                   <option
                     class="option"
-                    data-testid="select-option-pinOrPid"
-                    value="pinOrPid"
+                    data-testid="select-option-pid"
+                    value="pid"
                   >
-                    PID/PIN
+                    PID
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-pin"
+                    value="pin"
+                  >
+                    PIN
                   </option>
                   <option
                     class="option"
@@ -494,9 +501,9 @@ exports[`Property list view > matches snapshot 1`] = `
               >
                 <input
                   class="form-control"
-                  id="input-pinOrPid"
-                  name="pinOrPid"
-                  placeholder="Enter a PID or PIN"
+                  id="input-pid"
+                  name="pid"
+                  placeholder="Enter a PID"
                   title=""
                   value=""
                 />
@@ -576,6 +583,7 @@ exports[`Property list view > matches snapshot 1`] = `
                     <svg
                       fill="#000000"
                       height="24px"
+                      title="map-view"
                       viewBox="0 0 24 24"
                       width="24px"
                       xmlns="http://www.w3.org/2000/svg"
@@ -599,6 +607,7 @@ exports[`Property list view > matches snapshot 1`] = `
                     <svg
                       fill="#000000"
                       height="24px"
+                      title="list-view"
                       viewBox="0 0 24 24"
                       width="24px"
                       xmlns="http://www.w3.org/2000/svg"

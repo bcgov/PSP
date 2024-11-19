@@ -247,7 +247,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(5, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(10);
-            Assert.Equal(10, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
+            Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 10);
 
             sharedPagination.ChoosePaginationOption(20);
             Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 20);

@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using FluentAssertions.Equivalency.Steps;
+using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -30,7 +31,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Upload Documents Agricultural Land Comission
         private readonly By documentALCTypeAppNumberLabel = By.XPath("//label[contains(text(),'Application #')]");
-        private readonly By documentALCTypeAppNumberInput = By.CssSelector("input[metadata-input-APPLICATION_NUMBER']");
+        private readonly By documentALCTypeAppNumberInput = By.CssSelector("input[data-testid='metadata-input-APPLICATION_NUMBER']");
 
         //Upload BC Assessment Search Type Fields
         private readonly By documentCivicAddressLabel = By.XPath("//label[contains(text(),'Civic address')]");
@@ -82,19 +83,19 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentHistoricFileTypeEndDateLabel = By.XPath("//label[contains(text(),'End date')]");
         private readonly By documentHistoricFileTypeEndDateInput = By.CssSelector("input[data-testid='metadata-input-END_DATE']");
         private readonly By documentHistoricFileTypeFileLabel = By.XPath("//div[@class='pr-0 text-left col-4']/label[contains(text(),'File #')]");
-        private readonly By documentHistoricFileTypeFileInput = By.CssSelector("input[data-testid='metadata-input-END_DATE']");
+        private readonly By documentHistoricFileTypeFileInput = By.CssSelector("input[data-testid='metadata-input-FILE_NUMBER']");
         private readonly By documentHistoricFileTypePhyLocationLabel = By.XPath("//label[contains(text(),'Physical location')]");
         private readonly By documentHistoricFileTypePhyLocationInput = By.CssSelector("input[data-testid='metadata-input-PHYSICAL_LOCATION']");
         private readonly By documentHistoricFileTypeSectionLabel = By.XPath("//label[contains(text(),'Section')]");
-        private readonly By documentHistoricFileTypeSectionInput = By.Id("input[data-testid='metadata-input-SECTION_NUMBER']");
+        private readonly By documentHistoricFileTypeSectionInput = By.CssSelector("input[data-testid='metadata-input-SECTION_NUMBER']");
         private readonly By documentHistoricFileTypeStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
-        private readonly By documentHistoricFileTypeStartDateInput = By.Id("input[data-testid='metadata-input-START_DATE']");
+        private readonly By documentHistoricFileTypeStartDateInput = By.CssSelector("input[data-testid='metadata-input-START_DATE']");
 
         //Upload Land Act Tenure Fields
         private readonly By documentLandActTypeReferenceAgencyLabel = By.XPath("//label[contains(text(),'Reference/Agency Document #')]");
-        private readonly By documentLandActTypeReferenceAgencyInput = By.Id("input[data-testid='metadata-input-REFAG_DOC_NUMBER']");
+        private readonly By documentLandActTypeReferenceAgencyInput = By.CssSelector("input[data-testid='metadata-input-REFAG_DOC_NUMBER']");
         private readonly By documentLandActTypeReferenceLandsLabel = By.XPath("//label[contains(text(),'Reference/Agency Lands file #')]");
-        private readonly By documentLandActTypeReferenceLandsInput = By.Id("input[data-testid='metadata-input-REFAG_LANDFILE_NUMBER']");
+        private readonly By documentLandActTypeReferenceLandsInput = By.CssSelector("input[data-testid='metadata-input-REFAG_LANDFILE_NUMBER']");
 
 
         //Upload Legal Survey Plans Fields
@@ -133,9 +134,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentYearInput = By.CssSelector("input[data-testid='metadata-input-YEAR']");
 
         //Upload Other Type Fields
-        private readonly By documentOtherTypePINLabel = By.XPath("//div[@class='pb-2 row'][3]/div/label[contains(text(),'PIN')]");
+        private readonly By documentOtherTypePINLabel = By.XPath("//input[@data-testid='metadata-input-PIN']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PIN')]");
         private readonly By documentOtherTypePINInput = By.CssSelector("input[data-testid='metadata-input-PIN']");
-        private readonly By documentOtherTypePropIdLabel = By.XPath("//div[@class='pb-2 row'][4]/div/label[contains(text(),'Property identifier')]");
+        private readonly By documentOtherTypePropIdLabel = By.XPath("//input[@data-testid='metadata-input-PROPERTY_IDENTIFIER']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Property identifier')]");
         private readonly By documentRoadNameInput = By.CssSelector("input[data-testid='metadata-input-ROAD_NAME']");
         private readonly By documentShortDescriptorLabel = By.XPath("//label[contains(text(),'Short descriptor')]");
 
@@ -160,14 +161,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Upload Privy Council Fields
         private readonly By documentPrivyCouncilTypePrivyLabel = By.XPath("//label[contains(text(),'Year - privy council #')]");
-        private readonly By documentPrivyCouncilTypePrivyInput = By.Id("input[data-testid='metadata-input-YEAR_PRIVY_COUNCIL_NUMBER']");
+        private readonly By documentPrivyCouncilTypePrivyInput = By.CssSelector("input[data-testid='metadata-input-YEAR_PRIVY_COUNCIL_NUMBER']");
 
         //Upload Short Descriptor Field
         private readonly By documentShortDescriptorInput = By.CssSelector("input[data-testid='metadata-input-SHORT_DESCRIPTOR']");
 
         //Upload Title search/ Historical title Fields
         private readonly By documentTitleSearchTypePIDLabel = By.XPath("//input[@data-testid='metadata-input-PID']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
-        private readonly By documentTitleSearchTypeTitleLabel = By.XPath("//input[@data-testid='metadata-input-Title']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Title')]");
+        private readonly By documentTitleSearchTypeTitleLabel = By.XPath("//input[@data-testid='metadata-input-TITLE_NUMBER']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Title')]");
         private readonly By documentTitleSearchTypeTitleInput = By.CssSelector("input[data-testid='metadata-input-TITLE_NUMBER']");
 
         //Upload Transfer of Administration Type Fields
@@ -251,6 +252,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div/div/div/button");
         private readonly By documentCancelEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'No')]/parent::button");
         private readonly By documentSaveEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'Yes')]/parent::button");
+        private readonly By documentCancelEmbbedWarning = By.XPath("//div[@class='modal-footer']/div[@class='button-wrap']/p");
 
         //Document Confirmation Modal Elements
         private readonly By documentConfirmationModal = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div");
@@ -306,7 +308,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentPreiewZoomOutBttn = By.CssSelector("button[aria-label='Zoom out']");
         private readonly By documentPreiewEnterScreenBttn = By.CssSelector("button[aria-label='Enter Fullscreen']");
         private readonly By documentPreiewCloseBttn = By.CssSelector("button[aria-label='Close']");
-
 
         private SharedModals sharedModals;
 
@@ -573,6 +574,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 webDriver.FindElement(documentConfirmModalOkBttn).Click();
             }
+            else
+            {
+                WaitUntilVisible(documentCancelEmbbedWarning);
+                AssertTrueElementContains(documentCancelEmbbedWarning, "Unsaved updates will be lost. Click");
+                AssertTrueElementContains(documentCancelEmbbedWarning, "again to proceed without saving, or");
+                AssertTrueElementContains(documentCancelEmbbedWarning, "to save the changes.");
+                sharedModals.ModalClickCancelBttn();
+            }
         }
 
         public void CancelEditDigitalDocument()
@@ -736,8 +745,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (document.Owner != "" && webDriver.FindElements(documentTypeOwnerInput).Count > 0)
                 webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.Owner);
 
-            if (document.PhysicalLocation != "" && webDriver.FindElements(documentTypeOwnerInput).Count > 0)
-                webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.PhysicalLocation);
+            if (document.PhysicalLocation != "" && webDriver.FindElements(documentHistoricFileTypePhyLocationInput).Count > 0)
+                webDriver.FindElement(documentHistoricFileTypePhyLocationInput).SendKeys(document.PhysicalLocation);
 
             if (document.PIDNumber != "" && webDriver.FindElements(documentTypePropIdInput).Count > 0)
                 webDriver.FindElement(documentTypePropIdInput).SendKeys(document.PIDNumber);
@@ -1334,7 +1343,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentLegalSurveyInput);
 
             AssertTrueIsDisplayed(documentMOTIPlanLabel);
-            AssertTrueIsDisplayed(documentTypeMotiFileInput);
+            AssertTrueIsDisplayed(documentMOTIPlanInput);
 
             AssertTrueIsDisplayed(documentShortDescriptorLabel);
             AssertTrueIsDisplayed(documentShortDescriptorInput);
