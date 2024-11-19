@@ -33,10 +33,10 @@ Scenario: 06. Lease and License Deposits
 	When  I add Deposits to the Lease
 	Then A new lease is created successfully
 
-#Scenario: 07. Lease and License Payments
-#	Given I create a new minimum Lease from row number 5
-#	When  I add Payments to the Lease
-#	Then A new lease is created successfully
+Scenario: 07. Lease and License Payments
+	Given I create a new minimum Lease from row number 5
+	When  I add Periods and Payments to the Lease
+	Then A new lease is created successfully
 
 Scenario: 08. Research File Properties
 	Given I create a basic Research File from row number 10
