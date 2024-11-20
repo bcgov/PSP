@@ -62,6 +62,7 @@ jobs:
       - name: call scripts to deploy api and frontend
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
           oc tag mayan-bcgov:dev mayan-bcgov:$DESTINATION
 
