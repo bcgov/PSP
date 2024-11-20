@@ -23,14 +23,15 @@ namespace Pims.Dal.Test.Entities
             // Assert
             filter.Page.Should().Be(1);
             filter.Quantity.Should().Be(10);
-            filter.PinOrPid.Should().BeNull();
+            filter.Pid.Should().BeNull();
+            filter.Pin.Should().BeNull();
         }
 
         [Fact]
         public void PropertyFilter_Constructor_03()
         {
             // Arrange
-            var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery("?page=2&quantity=3&pinOrPid=323423&sort=one,two");
+            var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery("?page=2&quantity=3&pid=323423&sort=one,two");
 
             // Act
             var filter = new PropertyFilter(query);
@@ -38,7 +39,7 @@ namespace Pims.Dal.Test.Entities
             // Assert
             filter.Page.Should().Be(2);
             filter.Quantity.Should().Be(3);
-            filter.PinOrPid.Should().Be("323423");
+            filter.Pid.Should().Be("323423");
             filter.Sort.Should().BeEquivalentTo(new[] { "one", "two" });
         }
 
@@ -47,7 +48,7 @@ namespace Pims.Dal.Test.Entities
         public void PropertyFilter_IsValid()
         {
             // Arrange
-            var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery("?pinOrPid=323423");
+            var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery("?pid=323423");
             var filter = new PropertyFilter(query);
 
             // Act

@@ -21,7 +21,7 @@ import PropertySearchToggle, { SearchToggleOption } from './PropertySearchToggle
  * PropertyFilter component properties.
  */
 export interface IPropertyFilterProps {
-  /** The default filter to apply if a different one hasn't been set in the URL or stored in redux. */
+  /** The default filter to apply if a different one hasn't been set. */
   defaultFilter: IPropertyFilter;
   /** The current property filter */
   propertyFilter: IPropertyFilter;
@@ -93,7 +93,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
               <StyledSelect
                 field="searchBy"
                 options={[
-                  { label: 'PID/PIN', value: 'pinOrPid' },
+                  { label: 'PID', value: 'pid' },
+                  { label: 'PIN', value: 'pin' },
                   { label: 'Address', value: 'address' },
                   { label: 'Plan #', value: 'planNumber' },
                   {
@@ -105,19 +106,19 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 onChange={() => {
                   setFieldValue('latitude', null);
                   setFieldValue('longitude', null);
-                  setFieldValue('pinOrPid', null);
+                  setFieldValue('pid', null);
+                  setFieldValue('pin', null);
                   setFieldValue('planNumber', null);
                   setFieldValue('historical', null);
                 }}
               />
             </NoRightPaddingColumn>
             <StyledCol xs="3" md="2" lg="4" xl="3">
-              {values.searchBy === 'pinOrPid' && (
-                <Input
-                  field="pinOrPid"
-                  placeholder="Enter a PID or PIN"
-                  displayErrorTooltips
-                ></Input>
+              {values.searchBy === 'pid' && (
+                <Input field="pid" placeholder="Enter a PID" displayErrorTooltips></Input>
+              )}
+              {values.searchBy === 'pin' && (
+                <Input field="pin" placeholder="Enter a PIN" displayErrorTooltips></Input>
               )}
               {values.searchBy === 'address' && useGeocoder && (
                 <GeocoderAutoComplete
@@ -130,7 +131,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                       geocoderPidResponse?.pids?.length === 1 &&
                       geocoderPidResponse?.pids[0] !== ''
                     ) {
-                      setFieldValue('pinOrPid', geocoderPidResponse?.pids[0]);
+                      setFieldValue('pid', geocoderPidResponse?.pids[0]);
                     } else {
                       if (geocoderPidResponse?.pids?.length > 1) {
                         toast.warn(
@@ -169,7 +170,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 disabled={
                   isSubmitting ||
                   !(
-                    values.pinOrPid ||
+                    values.pid ||
+                    values.pin ||
                     values.latitude ||
                     values.longitude ||
                     values.planNumber ||
