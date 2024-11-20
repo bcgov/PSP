@@ -35,16 +35,17 @@ jobs:
       #    sudo apt update
       #    sudo apt install -y microsoft-edge-stable
 
-      - name: Install Chrome Browser
-        run: |
-          sudo apt update
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt install -y ./google-chrome-stable_current_amd64.deb
+      #- name: Install Chrome Browser
+      # run: |
+      #    sudo apt update
+      #    wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      #    sudo apt install -y ./google-chrome-stable_current_amd64.deb
 
-      # Edge Browser setup - missing dependencies
-      #- uses: browser-actions/setup-edge@v1
-      #- name: Print Edge version
-      #  run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
+      - name: Install Firefox
+        run: |
+           sudo apt update
+           wget -O ~/FirefoxSetup.tar.bz2 "https://download.mozilla.org/?product=firefox-latest&os=linux64"
+           sudo apt install firefox
 
       - name: Restore dependencies
         run: dotnet restore ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.sln
