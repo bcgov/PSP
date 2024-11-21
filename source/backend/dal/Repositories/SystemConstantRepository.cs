@@ -35,6 +35,12 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.PimsStaticVariables.AsNoTracking().ToArray();
         }
+
+        public string GetDataBaseVersion()
+        {
+            return this.Context.PimsStaticVariables.Where(x => x.StaticVariableName == "DBVERSION")
+                .AsNoTracking().FirstOrDefault().StaticVariableValue ?? string.Empty;
+        }
         #endregion
     }
 }

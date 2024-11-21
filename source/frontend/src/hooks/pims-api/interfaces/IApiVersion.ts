@@ -10,6 +10,8 @@ export interface IApiVersion {
   fileVersion: string;
   // Additional information related to the version (i.e. 1.1.1.1-alpha)
   informationalVersion: string;
+  // Curnet DB Version
+  dbVersion: string;
 }
 
 export default IApiVersion;
