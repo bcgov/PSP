@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.Drivers
 
         public BrowserDriver()
         {
-            currentWebDriverLazy = new Lazy<IWebDriver>(CreateFirefoxWebDriver);
+            currentWebDriverLazy = new Lazy<IWebDriver>(CreateChromeWebDriver);
             configurationLazy = new Lazy<IConfiguration>(ReadConfiguration);
             closeBrowserOnDispose = Configuration.GetValue("CloseBrowserAfterEachTest", true);
             runAutomationHeadless = Configuration.GetValue("RunHeadless", true);
@@ -30,12 +30,14 @@ namespace PIMS.Tests.Automation.Drivers
         private IWebDriver CreateChromeWebDriver()
         {
             ChromeOptions options = new ChromeOptions();
+            //options.AddAdditionalOption("selenoid:options", new { credentials_enable_service = false, profile.password_manager_enabled = false });
+            //options.AddLocalStatePreference("browser", new { enabled_labs_experiments = new string[] { "credentials_enable_service@false", "profile.password_manager_enabled@false" } });
 
             if (runAutomationHeadless)
-                options.AddArguments("window-size=1920,1080", "headless", "no-sandbox");
+                options.AddArguments("window-size=1920,1080", "headless", "no-sandbox", "remote debugging pipe", "disable notifications", "disable infobars");
             else
-                options.AddArguments("start-maximized", "no-sandbox");
-            
+                options.AddArguments("start-maximized", "no sandbox", "remote debugging pipe", "disable notifications", "disable infobars", "--disable-dev-shm-usage");
+
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(3));
             chromeDriver.Url = Configuration.GetValue<string>("Base_url");
 
