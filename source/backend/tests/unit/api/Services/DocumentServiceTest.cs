@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Moq;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
@@ -16,7 +16,7 @@ using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 using Pims.Api.Models.Concepts.Document;

@@ -6,10 +6,10 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Requests.Http;
+using Pims.Core.Api.Exceptions;
 
 namespace Pims.Api.Repositories.Mayan
 {

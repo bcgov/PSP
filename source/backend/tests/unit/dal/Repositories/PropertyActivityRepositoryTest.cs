@@ -5,7 +5,7 @@ using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -17,18 +17,6 @@ namespace Pims.Dal.Test.Repositories
     public class PropertyActivityRepositoryTest
     {
         private TestHelper _helper;
-
-        #region Data
-        public static IEnumerable<object[]> AllPropertyFilters =>
-            new List<object[]>
-            {
-                new object[] { new PropertyFilter() { PinOrPid = "111-111-111" }, 1 },
-                new object[] { new PropertyFilter() { PinOrPid = "111" }, 2 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 5 },
-                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 }, 6 },
-                new object[] { new PropertyFilter(), 6 },
-            };
-        #endregion
 
         public PropertyActivityRepositoryTest()
         {

@@ -29,7 +29,8 @@ interface MultiSelectOption {
 }
 
 export const defaultFilter: ILeaseFilter = {
-  pinOrPid: '',
+  pid: '',
+  pin: '',
   lFileNo: '',
   searchBy: 'lFileNo',
   leaseStatusTypes: ['ACTIVE'],
@@ -118,10 +119,11 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                     <Col xl="7">
                       <SelectInput<ILeaseSearchBy, ILeaseFilter>
                         field="searchBy"
-                        defaultKey="pinOrPid"
+                        defaultKey="pid"
                         defaultValue={''}
                         selectOptions={[
-                          { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
+                          { label: 'PID', key: 'pid', placeholder: 'Enter a PID' },
+                          { label: 'PIN', key: 'pin', placeholder: 'Enter a PIN' },
                           { label: 'Address', key: 'address', placeholder: 'Enter an address' },
                           {
                             label: 'L-File #',

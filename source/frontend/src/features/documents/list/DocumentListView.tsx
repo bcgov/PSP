@@ -1,5 +1,6 @@
 import orderBy from 'lodash/orderBy';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { FaPlus } from 'react-icons/fa';
 
 import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
@@ -179,6 +180,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       <SectionListHeader
         claims={[Claims.DOCUMENT_ADD]}
         title={title ?? 'Documents'}
+        addButtonIcon={<FaPlus size={'2rem'} />}
         addButtonText={props.addButtonText || 'Add Document'}
         onAdd={() => setIsUploadVisible(true)}
       />

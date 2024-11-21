@@ -19,9 +19,14 @@ namespace Pims.Api.Areas.Property.Models.Search
         public string Address { get; set; }
 
         /// <summary>
-        /// get/set - The pin or pid property identifier.
+        /// get/set - The pid property identifier.
         /// </summary>
-        public string PinOrPid { get; set; }
+        public string Pid { get; set; }
+
+        /// <summary>
+        /// get/set - The pin property identifier.
+        /// </summary>
+        public string Pin { get; set; }
 
         /// <summary>
         /// get/set - The property plan number.
@@ -87,7 +92,8 @@ namespace Pims.Api.Areas.Property.Models.Search
             }
             Sort = tempSort.ToArray();
 
-            PinOrPid = filter.GetStringValue(nameof(PinOrPid));
+            Pid = filter.GetStringValue(nameof(Pid));
+            Pin = filter.GetStringValue(nameof(Pin));
             Address = filter.GetStringValue(nameof(Address));
             PlanNumber = filter.GetStringValue(nameof(PlanNumber));
             Historical = filter.GetStringValue(nameof(Historical));
@@ -98,7 +104,7 @@ namespace Pims.Api.Areas.Property.Models.Search
         #region Methods
 
         /// <summary>
-        /// Convert to a ParcelFilter.
+        /// Convert to a PropertyFilter.
         /// </summary>
         /// <param name="model"></param>
         public static explicit operator PropertyFilter(PropertyFilterModel model)
@@ -109,7 +115,8 @@ namespace Pims.Api.Areas.Property.Models.Search
                 Quantity = model.Quantity,
                 Sort = model.Sort,
 
-                PinOrPid = model.PinOrPid,
+                Pid = model.Pid,
+                Pin = model.Pin,
                 Address = model.Address,
                 PlanNumber = model.PlanNumber,
                 Historical = model.Historical,
@@ -126,7 +133,8 @@ namespace Pims.Api.Areas.Property.Models.Search
         public override bool IsValid()
         {
             return base.IsValid()
-                || !string.IsNullOrWhiteSpace(PinOrPid)
+                || !string.IsNullOrWhiteSpace(Pid)
+                || !string.IsNullOrWhiteSpace(Pin)
                 || !string.IsNullOrWhiteSpace(Historical)
                 || !string.IsNullOrWhiteSpace(Address);
         }

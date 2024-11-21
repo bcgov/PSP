@@ -1,5 +1,6 @@
 import orderBy from 'lodash/orderBy';
 import React, { useCallback } from 'react';
+import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
 import GenericModal from '@/components/common/GenericModal';
@@ -100,6 +101,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
               claims={[Claims.NOTE_ADD]}
               title="Notes"
               addButtonText="Add a Note"
+              addButtonIcon={<FaPlus size={'2rem'} />}
               onAdd={openAddNotes}
             />
           }

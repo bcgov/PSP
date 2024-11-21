@@ -26,6 +26,10 @@ const LegendButton = styled(Button as any)`
   &&.btn:hover {
     color: white;
   }
+
+  &&.btn:focus {
+    color: white;
+  }
 `;
 
 export const LegendControl: React.FC<React.PropsWithChildren<unknown>> = () => {

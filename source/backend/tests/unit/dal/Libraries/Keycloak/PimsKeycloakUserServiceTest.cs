@@ -9,10 +9,11 @@ using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Keycloak;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Pims.Keycloak.Models;
 using Xunit;
 using Entity = Pims.Dal.Entities;
+using Pims.Core.Exceptions;
 
 namespace Pims.Dal.Test.Libraries.Keycloak
 {

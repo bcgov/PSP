@@ -2,10 +2,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
-    <Version>5.6.2-92.37</Version>
-    <AssemblyVersion>5.6.2.92</AssemblyVersion>
+    <Version>5.7.0-93.21</Version>
+    <AssemblyVersion>5.7.0.93</AssemblyVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
-    <ProjectGuid>16BC0468-78F6-4C91-87DA-7403C919E646</ProjectGuid>
+    <ProjectGuid>{16BC0468-78F6-4C91-87DA-7403C919E646}</ProjectGuid>
     <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
@@ -16,7 +16,6 @@
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="7.1.0" />
     <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="7.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="7.0.2" />
-    <PackageReference Include="AspNetCore.Proxy" Version="4.4.0" />
     <PackageReference Include="CommandLineParser" Version="2.9.1" />
     <PackageReference Include="DotNetEnv" Version="2.5.0" />
     <PackageReference Include="Mapster" Version="7.4.0" />
@@ -26,8 +25,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.HealthChecks" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.1.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning.ApiExplorer" Version="5.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Common" Version="4.8.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common" Version="4.8.0" />
@@ -43,24 +42,23 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.Identity.Core" Version="8.0.0" />
     <PackageReference Include="Microsoft.Extensions.PlatformAbstractions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.3.2" />
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="3.0.1" />
     <PackageReference Include="NetTopologySuite.IO.GeoJSON4STJ" Version="4.0.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="NuGet.CommandLine" Version="6.8.0">
+    <PackageReference Include="NuGet.CommandLine" Version="6.11.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="prometheus-net.AspNetCore" Version="8.2.1" />
     <PackageReference Include="prometheus-net.AspNetCore.HealthChecks" Version="8.2.1" />
-    <PackageReference Include="Serilog.AspNetCore" Version="8.0.0" />
-    <PackageReference Include="Serilog.Enrichers.Environment" Version="2.3.0" />
-    <PackageReference Include="Serilog.Sinks.Debug" Version="2.0.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
-    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.5.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.9.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Annotations" Version="6.9.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\apimodels\Pims.Api.Models.csproj" />
     <ProjectReference Include="..\clamav\Pims.Av.csproj" />
+    <ProjectReference Include="..\core.api\Pims.Core.Api.csproj" />
+    <ProjectReference Include="..\core\Pims.Core.csproj" />
     <ProjectReference Include="..\dal\Pims.Dal.csproj" />
     <ProjectReference Include="..\dal.keycloak\Pims.Dal.Keycloak.csproj" />
     <ProjectReference Include="..\entities\Pims.Dal.Entities.csproj" />
@@ -85,5 +83,6 @@
     <Folder Include="Areas\Keycloak\Mapping\AccessRequest\" />
     <Folder Include="Areas\Keycloak\Mapping\Role\" />
     <Folder Include="Areas\Keycloak\Mapping\User\" />
+    <Folder Include="Helpers\Swagger\" />
   </ItemGroup>
 </Project>

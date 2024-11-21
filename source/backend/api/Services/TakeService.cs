@@ -7,9 +7,9 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers.Extensions;
+using Pims.Core.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {
