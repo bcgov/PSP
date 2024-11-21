@@ -119,8 +119,6 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
 export default LeaseHeader;
 
 const HistoricalRow = styled(Row)`
-  max-height: 10rem;
-  overflow-y: auto;
   margin-right: 1rem;
 `;
 

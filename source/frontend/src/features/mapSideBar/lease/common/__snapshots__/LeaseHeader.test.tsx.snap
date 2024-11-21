@@ -304,9 +304,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           </div>
           <div
             class="pl-1 text-left col-8"
-          >
-            <div />
-          </div>
+          />
         </div>
         <div
           class="row"
@@ -323,23 +321,21 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
           <div
             class="pl-1 text-left col-8"
           >
-            <div>
-              <span>
-                French Mouse Property Management
-                <br />
-              </span>
-              <button
-                class="c3 Button btn btn-link"
-                data-testid="expand"
-                type="button"
+            <span>
+              French Mouse Property Management
+              <br />
+            </span>
+            <button
+              class="c3 Button btn btn-link"
+              data-testid="expand"
+              type="button"
+            >
+              <div
+                class="Button__value"
               >
-                <div
-                  class="Button__value"
-                >
-                  [+2 more...]
-                </div>
-              </button>
-            </div>
+                [+2 more...]
+              </div>
+            </button>
           </div>
         </div>
         <div
@@ -441,9 +437,7 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
               </div>
               <div
                 class="pl-1 text-left col-8"
-              >
-                <div />
-              </div>
+              />
             </div>
           </div>
         </div>
