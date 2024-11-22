@@ -30,7 +30,7 @@ namespace Pims.Api.Test.Controllers.Reports
         {
             new object [] { new PropertyFilterModel() },
             new object [] { new PropertyFilterModel() { Address = "Address" } },
-            new object [] { new PropertyFilterModel() { PinOrPid = "999999" } },
+            new object [] { new PropertyFilterModel() { Pid = "999999" } },
         };
 
         public static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()

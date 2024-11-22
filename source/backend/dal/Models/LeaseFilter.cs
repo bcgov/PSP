@@ -11,9 +11,14 @@ namespace Pims.Dal.Entities.Models
         #region Properties
 
         /// <summary>
-        /// get/set - The unique identifier for titled property, either pid or pin.
+        /// get/set - The unique PID identifier for titled property.
         /// </summary>
-        public string PinOrPid { get; set; }
+        public string Pid { get; set; }
+
+        /// <summary>
+        /// get/set - The unique PIN identifier for titled property.
+        /// </summary>
+        public string Pin { get; set; }
 
         /// <summary>
         /// get/set - The LIS L File #.
@@ -75,11 +80,12 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public DateOnly? ExpiryEndDate { get; set; }
 
-        public LeaseFilter(string lFileNo, string tenantName, string pinOrPid, string historical, string[] sort)
+        public LeaseFilter(string lFileNo, string tenantName, string pid, string pin, string historical, string[] sort)
         {
             this.LFileNo = lFileNo;
             this.TenantName = tenantName;
-            this.PinOrPid = pinOrPid;
+            this.Pid = pid;
+            this.Pin = pin;
             this.Historical = historical;
             this.Sort = sort;
         }
@@ -119,7 +125,8 @@ namespace Pims.Dal.Entities.Models
             }
 
             return base.IsValid()
-                || !string.IsNullOrWhiteSpace(PinOrPid)
+                || !string.IsNullOrWhiteSpace(Pid)
+                || !string.IsNullOrWhiteSpace(Pin)
                 || !string.IsNullOrWhiteSpace(LFileNo)
                 || !string.IsNullOrWhiteSpace(Address)
                 || !string.IsNullOrWhiteSpace(Historical)

@@ -33,6 +33,7 @@ export const PropertySearchToggle: React.FunctionComponent<
         <StyledLink>
           <TooltipWrapper tooltipId={`${toolId}-map`} tooltip="Map View">
             <MapSvg
+              title="map-view"
               onClick={() => {
                 if (toggle !== SearchToggleOption.Map) {
                   onPageToggle(SearchToggleOption.Map);
@@ -46,6 +47,7 @@ export const PropertySearchToggle: React.FunctionComponent<
         <StyledLink>
           <TooltipWrapper tooltipId={`${toolId}-list`} tooltip="List View">
             <TableSvg
+              title="list-view"
               onClick={() => {
                 if (toggle !== SearchToggleOption.List) {
                   onPageToggle(SearchToggleOption.List);

@@ -3112,6 +3112,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DocumentQueueId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_QUEUE_ID_SEQ])")
                 .HasComment("Generated surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileDocumentId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE_DOCUMENT table.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
@@ -3148,24 +3149,39 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DispositionFileDocumentId).HasComment("Foreign key to the PIMS_DISPOSITION_FILE_DOCUMENT table.");
             entity.Property(e => e.DocProcessEndDt).HasComment("When the document?s processing finishes, this will be populated");
             entity.Property(e => e.DocProcessRetries).HasComment("The number of times that this document has been queued for upload.");
             entity.Property(e => e.DocProcessStartDt).HasComment("When the document is sent to the backend for processing, this will be populated.");
             entity.Property(e => e.Document).HasComment("The actual document blob, stored temporarily until after processing completes.");
             entity.Property(e => e.DocumentExternalId).HasComment("Fluid key used to uniquely identify document in external system.");
             entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
+            entity.Property(e => e.DocumentMetadata).HasComment("Used to store JSON-encoded metadata that needs to be added to the document during upload.");
             entity.Property(e => e.DocumentQueueStatusTypeCode).HasComment("Code value that represents the current status of the document as it is processed by PIMS/MAYAN");
+            entity.Property(e => e.LeaseDocumentId).HasComment("Foreign key to the PIMS_LEASE_DOCUMENT table.");
             entity.Property(e => e.MayanError).HasComment("If the upload process fails, the error corresponding to the failure will be displayed here.");
+            entity.Property(e => e.PropertyActivityDocumentId).HasComment("Foreign key to the PIMS_PROPERTY_ACTIVITY_DOCUMENT table.");
+            entity.Property(e => e.ResearchFileDocumentId).HasComment("Foreign key to the PIMS_RESEARCH_FILE_DOCUMENT table.");
+
+            entity.HasOne(d => d.AcquisitionFileDocument).WithMany(p => p.PimsDocumentQueues).HasConstraintName("PIM_ACQDOC_PIM_DOCQUE_FK");
 
             entity.HasOne(d => d.DataSourceTypeCodeNavigation).WithMany(p => p.PimsDocumentQueues)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_PIDSRT_PIM_DOCQUE_FK");
+
+            entity.HasOne(d => d.DispositionFileDocument).WithMany(p => p.PimsDocumentQueues).HasConstraintName("PIM_DSPDOC_PIM_DOCQUE_FK");
 
             entity.HasOne(d => d.DocumentNavigation).WithMany(p => p.PimsDocumentQueues).HasConstraintName("PIM_DOCMNT_PIM_DOCQUE_FK");
 
             entity.HasOne(d => d.DocumentQueueStatusTypeCodeNavigation).WithMany(p => p.PimsDocumentQueues)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_DOCQST_PIM_DOCQUE_FK");
+
+            entity.HasOne(d => d.LeaseDocument).WithMany(p => p.PimsDocumentQueues).HasConstraintName("PIM_LESDOC_PIM_DOCQUE_FK");
+
+            entity.HasOne(d => d.PropertyActivityDocument).WithMany(p => p.PimsDocumentQueues).HasConstraintName("PIM_PRACDO_PIM_DOCQUE_FK");
+
+            entity.HasOne(d => d.ResearchFileDocument).WithMany(p => p.PimsDocumentQueues).HasConstraintName("PIM_RFLDOC_PIM_DOCQUE_FK");
         });
 
         modelBuilder.Entity<PimsDocumentQueueHist>(entity =>

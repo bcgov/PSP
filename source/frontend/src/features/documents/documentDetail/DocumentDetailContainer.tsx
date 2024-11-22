@@ -4,7 +4,6 @@ import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useRef, useSt
 import { ModalProps } from '@/components/common/GenericModal';
 import { DocumentTypeName } from '@/constants/documentType';
 import { ModalContext } from '@/contexts/modalContext';
-import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
 import { getCancelModalProps } from '@/hooks/useModalContext';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
@@ -13,7 +12,7 @@ import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
-import { exists } from '@/utils/utils';
+import { exists, isValidId } from '@/utils/utils';
 
 import { ComposedDocument, DocumentRow, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -50,7 +49,6 @@ export const DocumentDetailContainer: React.FunctionComponent<
     getDocumentRelationshipTypes,
     retrieveDocumentTypeMetadata,
   } = useDocumentProvider();
-  const { getDocumentTypeMetadataApiCall } = useApiDocuments();
 
   const formikRef = useRef<FormikProps<DocumentUpdateFormData>>(null);
 
@@ -94,6 +92,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
     }
   };
 
+  // callback to fetch available document types for a given context (i.e. Acquisition File, Research File, etc)
   const fetchDocumentTypes = useCallback(async () => {
     if (props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates) {
       const response = await getDocumentTypes();
@@ -108,58 +107,41 @@ export const DocumentDetailContainer: React.FunctionComponent<
     }
   }, [getDocumentRelationshipTypes, getDocumentTypes, isMounted, props.relationshipType]);
 
+  // callback to fetch document type metadata from mayan API endpoints
   const getDocumentMetadata = useCallback(
     async (documentType?: ApiGen_Concepts_DocumentType) => {
       if (
-        documentType === undefined ||
+        !exists(documentType) ||
         props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates
       ) {
         return;
       }
 
-      if (documentTypeMetadataTypes[documentType.id.toString()] === undefined) {
-        if (documentType.mayanId) {
-          const results = await retrieveDocumentTypeMetadata(documentType.mayanId);
-
-          if (results?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success) {
-            setDocumentTypeMetadataTypes(prevState => ({
-              ...prevState,
-              [documentType.id.toString()]: results.payload.results,
-            }));
-            return results.payload.results;
-          }
-        } else {
-          console.error('Document type does not have a mayan id type');
+      if (isValidId(documentType.mayanId)) {
+        const retrievedMetadata = await retrieveDocumentTypeMetadata(documentType.mayanId);
+        if (
+          retrievedMetadata?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
+          isMounted()
+        ) {
+          setDocumentTypeMetadataTypes(retrievedMetadata?.payload?.results ?? []);
         }
       } else {
-        return documentTypeMetadataTypes[documentType.id.toString()];
+        console.error('Document type does not have a mayan id type');
       }
     },
-    [documentTypeMetadataTypes, props.relationshipType, retrieveDocumentTypeMetadata],
+    [isMounted, props.relationshipType, retrieveDocumentTypeMetadata],
   );
 
-  const updateDocumentType = useCallback(
-    async (documentType?: ApiGen_Concepts_DocumentType) => {
-      if (!exists(documentType)) {
-        return;
-      }
-      if (documentType.mayanId) {
-        const retrievedMetadata = await getDocumentMetadata(documentType);
-        if (exists(retrievedMetadata)) {
-          setDocumentTypeMetadataTypes(retrievedMetadata);
-        }
-      }
-    },
-    [getDocumentMetadata],
-  );
-
+  // refresh document type metadata fields whenever a new document type is selected
   const onDocumentTypeChange = useCallback(
     async (changeEvent: ChangeEvent<HTMLInputElement>) => {
-      if (changeEvent.target.value) {
+      if (exists(changeEvent.target.value)) {
         const documentTypeId = Number(changeEvent.target.value);
+        await getDocumentMetadata(documentTypes.find(x => x.id === documentTypeId));
+
         if (documentTypeId !== props.pimsDocument.documentType.id) {
-          await updateDocumentType(documentTypes.find(x => x.id === documentTypeId));
           setDocumentTypeUpdated(true);
+          formikRef?.current?.setValues({ ...formikRef?.current?.values, documentMetadata: {} });
         } else {
           setDocumentTypeUpdated(false);
         }
@@ -168,9 +150,10 @@ export const DocumentDetailContainer: React.FunctionComponent<
         setDocumentTypeUpdated(false);
       }
     },
-    [documentTypes, props.pimsDocument.documentType.id, updateDocumentType],
+    [documentTypes, props.pimsDocument.documentType.id, getDocumentMetadata],
   );
 
+  // fetch additional document child entities (like metadata and document details) upon rendering this component
   useEffect(() => {
     const fetch = async () => {
       if (props.pimsDocument.mayanDocumentId !== undefined) {
@@ -211,6 +194,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
     retrieveDocumentDetail,
   ]);
 
+  // fetch document type metadata upon rendering this component
   useEffect(() => {
     const fetch = async () => {
       if (props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates) {
@@ -218,28 +202,18 @@ export const DocumentDetailContainer: React.FunctionComponent<
       }
 
       if (props.pimsDocument.mayanDocumentId !== undefined) {
-        const mayanDocumentTypeId = props.pimsDocument.documentType?.mayanId;
-        if (mayanDocumentTypeId) {
-          const axiosResponse = await getDocumentTypeMetadataApiCall(mayanDocumentTypeId);
-          if (
-            axiosResponse?.data.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
-            isMounted()
-          ) {
-            const results = axiosResponse?.data.payload?.results;
-            setDocumentTypeMetadataTypes(results || []);
-          }
-        }
+        await getDocumentMetadata(props.pimsDocument.documentType);
       }
     };
     fetch();
   }, [
+    getDocumentMetadata,
+    props.pimsDocument.documentType,
     props.pimsDocument.mayanDocumentId,
-    props.pimsDocument.documentType?.mayanId,
-    getDocumentTypeMetadataApiCall,
-    isMounted,
     props.relationshipType,
   ]);
 
+  // fetch document types upon entering in Edit mode
   useEffect(() => {
     if (isEditable) {
       fetchDocumentTypes();
