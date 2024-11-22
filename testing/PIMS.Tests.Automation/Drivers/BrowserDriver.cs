@@ -3,7 +3,6 @@ using DotNetEnv.Configuration;
 using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Edge;
 using OpenQA.Selenium.Firefox;
 
 namespace PIMS.Tests.Automation.Drivers
@@ -34,9 +33,9 @@ namespace PIMS.Tests.Automation.Drivers
             //options.AddLocalStatePreference("browser", new { enabled_labs_experiments = new string[] { "credentials_enable_service@false", "profile.password_manager_enabled@false" } });
 
             if (runAutomationHeadless)
-                options.AddArguments("window-size=1920,1080", "headless", "no-sandbox", "remote debugging pipe", "disable notifications", "disable infobars");
+                options.AddArguments("window-size=1920,1080", "headless");
             else
-                options.AddArguments("start-maximized", "no sandbox", "remote debugging pipe", "disable notifications", "disable infobars", "--disable-dev-shm-usage");
+                options.AddArguments("start-maximized");
 
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(3));
             chromeDriver.Url = Configuration.GetValue<string>("Base_url");
@@ -44,21 +43,21 @@ namespace PIMS.Tests.Automation.Drivers
             return chromeDriver;
         }
 
-        private IWebDriver CreateEdgeWebDriver()
-        {
-            var options = new EdgeOptions();
-            if (runAutomationHeadless)
-                options.AddArguments("window-size=1920,1080", "headless", "no-sandbox");
-            else
-                options.AddArguments("start-maximized", "no-sandbox");
+        //private IWebDriver CreateEdgeWebDriver()
+        //{
+        //    var options = new EdgeOptions();
+        //    if (runAutomationHeadless)
+        //        options.AddArguments("window-size=1920,1080", "headless", "no-sandbox");
+        //    else
+        //        options.AddArguments("start-maximized", "no-sandbox");
            
-            var edgeDriver = new EdgeDriver(EdgeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(3));
-            edgeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(120);
-            edgeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(120);
-            edgeDriver.Url = Configuration.GetValue<string>("Base_url");
+        //    var edgeDriver = new EdgeDriver(EdgeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(3));
+        //    edgeDriver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(120);
+        //    edgeDriver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(120);
+        //    edgeDriver.Url = Configuration.GetValue<string>("Base_url");
 
-            return edgeDriver;
-        }
+        //    return edgeDriver;
+        //}
 
         private IWebDriver CreateFirefoxWebDriver()
         {
