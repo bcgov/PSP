@@ -192,7 +192,7 @@ exports[`Footer > renders correctly 1`] = `
           class="version"
           data-testid="version-tag"
         >
-          v5.7.0-93.19
+          v5.7.0-94.1
         </div>
         <div
           class="c2 c3"
