@@ -236,8 +236,6 @@ exports[`LeaseHeader component > renders as expected when no data is provided 1`
 }
 
 .c4 {
-  max-height: 10rem;
-  overflow-y: auto;
   margin-right: 1rem;
 }
 
