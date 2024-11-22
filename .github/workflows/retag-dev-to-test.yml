@@ -63,6 +63,7 @@ jobs:
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
+          oc tag pims-proxy:dev pims-proxy:$DESTINATION
           oc tag mayan-bcgov:dev mayan-bcgov:$DESTINATION
 
   # the command:
