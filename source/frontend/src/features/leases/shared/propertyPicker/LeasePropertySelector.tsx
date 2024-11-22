@@ -61,8 +61,9 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     newProperty: IMapProperty,
   ): Promise<ApiGen_Concepts_PropertyView[] | undefined> => {
     const params: IPropertyFilter = {
-      pinOrPid: (newProperty.pid || newProperty.pin || '')?.toString(),
-      searchBy: 'pinOrPid',
+      pid: exists(newProperty.pid) ? newProperty.pid.toString() : '',
+      pin: exists(newProperty.pin) ? newProperty.pin.toString() : '',
+      searchBy: exists(newProperty.pid) ? 'pid' : 'pin',
       address: '',
       page: undefined,
       quantity: undefined,

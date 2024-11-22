@@ -397,10 +397,9 @@ const advancedFilterSideBarStates = {
           actions: [
             send({ type: 'REFRESH_PROPERTIES' }),
             assign({
-              isFiltering: () => false,
               showDisposed: () => false,
               showRetired: () => false,
-              activePimsPropertyIds: () => [],
+              advancedSearchCriteria: () => new PropertyFilterFormModel(),
             }),
           ],
         },

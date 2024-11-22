@@ -70,6 +70,7 @@ namespace Pims.Core.Test
             var property = new PimsPropertyVw()
             {
                 PropertyId = pid,
+                Pid = pid,
                 Pin = pin,
                 IsRetired = false,
                 PropertyTypeCode = type.PropertyTypeCode,
@@ -126,9 +127,19 @@ namespace Pims.Core.Test
         public static PimsPropertyVw CreatePropertyView(this PimsContext context, int pid, int? pin = null, PimsPropertyType type = null, PimsAddress address = null, PimsPropertyTenureType tenure = null, PimsAreaUnitType areaUnit = null, PimsDataSourceType dataSource = null, PimsPropertyStatusType status = null, Geometry location = null, bool isRetired = false)
         {
             type ??= context.PimsPropertyTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property type.");
+            tenure ??= context.PimsPropertyTenureTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property tenure type.");
+            status ??= context.PimsPropertyStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property status type.");
+            dataSource ??= context.PimsDataSourceTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property data source type.");
+            areaUnit ??= context.PimsAreaUnitTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find a property area unit type.");
             address ??= context.CreateAddress(pid, "12342 Test Street");
             var property = CreatePropertyView(pid, pin, type, address);
+            property.Location = location;
             property.IsRetired = isRetired;
+            property.PropertyStatusTypeCode = status.PropertyStatusTypeCode;
+            property.PropertyDataSourceTypeCode = dataSource.DataSourceTypeCode;
+            property.PropertyTenureTypeCode = tenure.PropertyTenureTypeCode;
+            property.PropertyAreaUnitTypeCode = areaUnit.AreaUnitTypeCode;
+
             context.PimsPropertyVws.Add(property);
             return property;
         }

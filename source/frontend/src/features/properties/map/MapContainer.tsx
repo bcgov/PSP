@@ -37,6 +37,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
     setVisiblePimsProperties,
     advancedSearchCriteria,
     isMapVisible,
+    isLoading,
   } = useMapStateMachine();
 
   const { getMatchingProperties } = usePimsPropertyRepository();
@@ -58,7 +59,7 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
 
   useEffect(() => {
     filterProperties(advancedSearchCriteria?.toApi());
-  }, [filterProperties, advancedSearchCriteria]);
+  }, [filterProperties, advancedSearchCriteria, isLoading]);
 
   const cursorClass = isSelecting
     ? MapCursors.DRAFT
