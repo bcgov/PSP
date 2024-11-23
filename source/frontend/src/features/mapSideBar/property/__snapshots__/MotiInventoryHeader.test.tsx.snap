@@ -29,6 +29,40 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
       class="col-7"
     >
       <div
+        class="justify-content-start row"
+      >
+        <div
+          class="pr-0 text-left col-3"
+        >
+          <label
+            class="c0"
+          >
+            PID #:
+          </label>
+        </div>
+        <div
+          class="pl-1 text-left col-auto"
+        />
+        <div
+          class="pr-0 text-left col-auto"
+        >
+          <label
+            class="c0"
+          >
+            PIN #:
+          </label>
+        </div>
+        <div
+          class="pl-1 text-left col-auto"
+        >
+          <span
+            class="pl-2"
+          >
+            -
+          </span>
+        </div>
+      </div>
+      <div
         class="row"
       >
         <div
@@ -69,36 +103,6 @@ exports[`MotiInventoryHeader component > renders as expected 1`] = `
       <div
         class="c1"
       >
-        <div
-          class="justify-content-end row"
-        >
-          <div
-            class="pr-0 text-left col-auto"
-          >
-            <label
-              class="c0"
-            >
-              PID:
-            </label>
-          </div>
-          <div
-            class="pl-1 text-left col-auto"
-          />
-          <div
-            class="pr-0 text-left col-auto"
-          >
-            <label
-              class="c0"
-            >
-              PIN:
-            </label>
-          </div>
-          <div
-            class="pl-1 text-left col-auto"
-          >
-            -
-          </div>
-        </div>
         <div
           class="justify-content-end row"
         >
