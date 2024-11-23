@@ -30,17 +30,17 @@ export interface IMotiInventoryHeaderProps {
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
-  const pid = pidFormatter(props.composedProperty.pid);
-
   const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
   const geoserverMapData = props.composedProperty.geoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
 
   let property: IMapProperty | null = null;
 
-  if (parcelMapData?.features[0]) {
+  if (exists(parcelMapData?.features[0])) {
     property = mapFeatureToProperty(parcelMapData?.features[0]);
   }
+
+  const pid = pidFormatter(props.composedProperty.pid);
   const pin = props.composedProperty?.pin ?? apiProperty?.pin ?? property?.pin ?? '-';
 
   const isLoading = props.isLoading;
@@ -81,10 +81,18 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Row className="no-gutters">
         <Col xs="7">
-          <HeaderField label="Civic Address:" labelWidth={'3'} contentWidth="9">
+          <Row className="justify-content-start">
+            <HeaderLabelCol label="PID #:" labelWidth="3" />
+            <HeaderContentCol>{pid}</HeaderContentCol>
+            <HeaderLabelCol label="PIN #:" />
+            <HeaderContentCol>
+              <span className="pl-2">{pin}</span>
+            </HeaderContentCol>
+          </Row>
+          <HeaderField label="Civic Address:" labelWidth="3" contentWidth="9">
             {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
           </HeaderField>
-          <HeaderField label="Plan #:" labelWidth={'3'} contentWidth="9">
+          <HeaderField label="Plan #:" labelWidth="3" contentWidth="9">
             {property?.planNumber}
           </HeaderField>
           {exists(apiProperty) && (
@@ -96,12 +104,6 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
         </Col>
         <Col className="text-right">
           <StyledFiller>
-            <Row className="justify-content-end">
-              <HeaderLabelCol label="PID:" />
-              <HeaderContentCol>{pid}</HeaderContentCol>
-              <HeaderLabelCol label={'PIN:'} />
-              <HeaderContentCol>{pin}</HeaderContentCol>
-            </Row>
             <HeaderField label="Land parcel type:" className="justify-content-end">
               {apiProperty?.propertyType?.description}
             </HeaderField>
