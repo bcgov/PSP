@@ -14,7 +14,7 @@ namespace Pims.Dal.Entities;
 [Index("AcquisitionFundingTypeCode", Name = "ACQNFL_ACQUISITION_FUNDING_TYPE_CODE_IDX")]
 [Index("AcquisitionTypeCode", Name = "ACQNFL_ACQUISITION_TYPE_CODE_IDX")]
 [Index("AcqPhysFileStatusTypeCode", Name = "ACQNFL_ACQ_PHYS_FILE_STATUS_TYPE_CODE_IDX")]
-[Index("FileNumber", Name = "ACQNFL_FILE_NUMBER_IDX")]
+[Index("FileNo", Name = "ACQNFL_FILE_NO_IDX")]
 [Index("LegacyFileNumber", Name = "ACQNFL_LEGACY_FILE_NUMBER_IDX")]
 [Index("PrntAcquisitionFileId", Name = "ACQNFL_PRNT_ACQUISITION_FILE_ID_IDX")]
 [Index("ProductId", Name = "ACQNFL_PRODUCT_ID_IDX")]
@@ -106,12 +106,12 @@ public partial class PimsAcquisitionFile
     public int FileNo { get; set; }
 
     /// <summary>
-    /// Formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;)
+    /// Acquisition file number suffix
     /// </summary>
     [Required]
-    [Column("FILE_NUMBER")]
-    [StringLength(18)]
-    public string FileNumber { get; set; }
+    [Column("FILE_NUM_SUFFIX")]
+    [StringLength(2)]
+    public string FileNumSuffix { get; set; }
 
     /// <summary>
     /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t

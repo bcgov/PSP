@@ -946,9 +946,9 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.FileNo)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NO_SEQ])")
                 .HasComment("File number assigned to the acquisition file.");
-            entity.Property(e => e.FileNumber)
-                .HasDefaultValue("<Empty>")
-                .HasComment("Formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01')");
+            entity.Property(e => e.FileNumSuffix)
+                .HasDefaultValue("00")
+                .HasComment("Acquisition file number suffix");
             entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
             entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
             entity.Property(e => e.LegacyStakeholder).HasComment("Legacy stakeholders imported from PAIMS.");
@@ -3158,6 +3158,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
             entity.Property(e => e.DocumentMetadata).HasComment("Used to store JSON-encoded metadata that needs to be added to the document during upload.");
             entity.Property(e => e.DocumentQueueStatusTypeCode).HasComment("Code value that represents the current status of the document as it is processed by PIMS/MAYAN");
+            entity.Property(e => e.FileName).HasComment("Name of the file to be stored on Mayan EDMS.");
             entity.Property(e => e.LeaseDocumentId).HasComment("Foreign key to the PIMS_LEASE_DOCUMENT table.");
             entity.Property(e => e.MayanError).HasComment("If the upload process fails, the error corresponding to the failure will be displayed here.");
             entity.Property(e => e.PropertyActivityDocumentId).HasComment("Foreign key to the PIMS_PROPERTY_ACTIVITY_DOCUMENT table.");
