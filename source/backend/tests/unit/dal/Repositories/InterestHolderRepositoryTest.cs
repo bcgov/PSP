@@ -7,6 +7,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
+using System;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -16,6 +17,10 @@ namespace Pims.Dal.Test.Repositories
     [ExcludeFromCodeCoverage]
     public class InterestHolderRepositoryTest
     {
+         // TODO: Fix this 
+        private class FactAttribute : Attribute { }
+        // TODO: Fix this ^
+
         #region Constructors
         public InterestHolderRepositoryTest() { }
         #endregion

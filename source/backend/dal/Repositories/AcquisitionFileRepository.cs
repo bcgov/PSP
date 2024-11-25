@@ -677,7 +677,8 @@ namespace Pims.Dal.Repositories
                 // generate file number for "main" files
                 int nextFileNo = GetNextAcquisitionFileNumberSequenceValue();
                 acquisitionFile.FileNo = nextFileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, nextFileNo, 1);
+                // TODO: Fix mappings
+                //acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, nextFileNo, 1);
             }
             else
             {
@@ -687,7 +688,8 @@ namespace Pims.Dal.Repositories
 
                 int nextSuffix = GetNextSubFileSuffixValue(parentFile.Internal_Id);
                 acquisitionFile.FileNo = parentFile.FileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, parentFile.FileNo, nextSuffix);
+                // TODO: Fix mappings
+                //acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, parentFile.FileNo, nextSuffix);
             }
 
             Context.PimsAcquisitionFiles.Add(acquisitionFile);
@@ -716,13 +718,15 @@ namespace Pims.Dal.Repositories
                     throw new BusinessRuleViolationException("Cannot parse Acquisition File Number suffix.");
                 }
                 acquisitionFile.FileNo = existingAcqFile.FileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, acquisitionFile.FileNo, suffix);
+                //TODO: Fix mappings
+                //acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, acquisitionFile.FileNo, suffix);
             }
             else
             {
                 // Make sure the frontend cannot override these auto-generated fields
                 acquisitionFile.FileNo = existingAcqFile.FileNo;
-                acquisitionFile.FileNumber = existingAcqFile.FileNumber;
+                // TODO: Fix mappings
+                //acquisitionFile.FileNumber = existingAcqFile.FileNumber;
             }
 
             // PSP-9268 Changes to Project/Product on the main file need to be propagated to all sub-files
@@ -812,9 +816,10 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId));
             }
 
+            //TODO: Fix file number
             return Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
-                .Where(predicate).OrderBy(x => x.FileNumber).ToList();
+                .Where(predicate).OrderBy(x => x.FileNo).ToList();
         }
 
         /// <summary>
@@ -909,7 +914,8 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
             {
-                predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+                // TODO: Fix acquisition file number
+                //predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))

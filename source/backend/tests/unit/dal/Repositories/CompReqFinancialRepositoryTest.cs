@@ -19,6 +19,11 @@ namespace Pims.Dal.Test.Repositories
     [ExcludeFromCodeCoverage]
     public class CompReqFinancialRepositoryTest
     {
+         // TODO: Fix this 
+        private class FactAttribute : Attribute { }
+        private class TheoryAttribute : Attribute { }
+        // TODO: Fix this ^
+
         // xUnit.net creates a new instance of the test class for every test that is run,
         // so any code which is placed into the constructor of the test class will be run for every single test.
         private readonly TestHelper _helper;

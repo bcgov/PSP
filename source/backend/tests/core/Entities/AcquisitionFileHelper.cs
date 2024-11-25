@@ -23,7 +23,8 @@ namespace Pims.Core.Test
                 FileName = name ?? "Test Acquisition File",
                 ConcurrencyControlNumber = 1,
             };
-            acquisitionFile.FileNumber = "12345";
+            // TODO: Fix mappings
+            //;acquisitionFile.FileNumber = "12345";
             acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
             acquisitionFile.AcquisitionFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsAcquisitionFileStatusType() { Id = "ACTIVE", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
             acquisitionFile.AcquisitionTypeCodeNavigation = acquisitionType ?? new Entity.PimsAcquisitionType() { Id = "SECTN3", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" };

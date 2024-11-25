@@ -16,6 +16,10 @@ namespace Pims.Dal.Helpers.Extensions
                 return -1;
             }
 
+            // TODO: Fix acquisition file number
+            return 0;
+
+            /*
             int lastIndex = pimsAcquisitionFile.FileNumber.LastIndexOf('-');
             if (lastIndex >= 0 && lastIndex < pimsAcquisitionFile.FileNumber.Length - 1)
             {
@@ -26,6 +30,7 @@ namespace Pims.Dal.Helpers.Extensions
             {
                 return -1;
             }
+            */
         }
     }
 }

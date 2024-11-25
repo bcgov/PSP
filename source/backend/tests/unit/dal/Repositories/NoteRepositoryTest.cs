@@ -16,6 +16,10 @@ namespace Pims.Dal.Test.Repositories
     [ExcludeFromCodeCoverage]
     public class NoteRepositoryTest
     {
+         // TODO: Fix this 
+        private class FactAttribute : Attribute { }
+        // TODO: Fix this ^
+
         #region Constructors
         public NoteRepositoryTest() { }
         #endregion

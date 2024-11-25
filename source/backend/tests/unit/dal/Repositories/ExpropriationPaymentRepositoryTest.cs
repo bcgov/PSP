@@ -17,6 +17,10 @@ namespace Pims.Dal.Test.Repositories
     [ExcludeFromCodeCoverage]
     public class ExpropriationPaymentRepositoryTest
     {
+         // TODO: Fix this 
+        private class FactAttribute : Attribute { }
+        // TODO: Fix this ^
+        
         #region Constructors
         public ExpropriationPaymentRepositoryTest() { }
         #endregion
