@@ -1,12 +1,27 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 14.5.1                     */
 /* Target DBMS:           MS SQL Server 2019                              */
-/* Project file:          PIMS S93.00.dez                                 */
-/* Project name:          PIMS S93.00                                     */
+/* Project file:          PIMS S94.00.dez                                 */
+/* Project name:          PIMS S94.00                                     */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2024-11-12 16:26                                */
+/* Created on:            2024-11-15 13:09                                */
 /* ---------------------------------------------------------------------- */
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop procedures                                                        */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+DROP FUNCTION [dbo].[pims_ColumnExists]
+GO
+
+
+DROP PROCEDURE [dbo].[pims_error_handling]
+GO
 
 
 /* ---------------------------------------------------------------------- */
@@ -2346,6 +2361,10 @@ ALTER TABLE [dbo].[PIMS_PROP_PROP_ANOMALY_TYPE] DROP CONSTRAINT [PRPRAT_PROP_PRO
 GO
 
 
+ALTER TABLE [dbo].[PIMS_PROP_PROP_ANOMALY_TYPE] DROP CONSTRAINT [PRPRAT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_PROP_PROP_ANOMALY_TYPE] DROP CONSTRAINT [PRPRAT_APP_CREATE_TIMESTAMP_DEF]
 GO
 
@@ -2367,10 +2386,6 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_PROP_PROP_ANOMALY_TYPE] DROP CONSTRAINT [PRPRAT_APP_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROP_PROP_ANOMALY_TYPE] DROP CONSTRAINT [PRPRAT_CONCURRENCY_CONTROL_NUMBER_DEF]
 GO
 
 
@@ -3577,6 +3592,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DISPOSITION_FILE_DOCUMENT_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'FILE_NAME'
 GO
 
 
@@ -5022,6 +5041,10 @@ ALTER TABLE [dbo].[PIMS_DISPOSITION_FILE_DOCUMENT] DROP CONSTRAINT [DSPDOC_DISPO
 GO
 
 
+ALTER TABLE [dbo].[PIMS_DISPOSITION_FILE_DOCUMENT] DROP CONSTRAINT [DSPDOC_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_DISPOSITION_FILE_DOCUMENT] DROP CONSTRAINT [DSPDOC_APP_CREATE_TIMESTAMP_DEF]
 GO
 
@@ -5043,10 +5066,6 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_DISPOSITION_FILE_DOCUMENT] DROP CONSTRAINT [DSPDOC_APP_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DISPOSITION_FILE_DOCUMENT] DROP CONSTRAINT [DSPDOC_CONCURRENCY_CONTROL_NUMBER_DEF]
 GO
 
 
@@ -5075,6 +5094,10 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DISPOSITION_FILE_DOCUMENT', 'COLUMN', N'DISPOSITION_FILE_DOCUMENT_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DISPOSITION_FILE_DOCUMENT', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
 GO
 
 
@@ -5107,10 +5130,6 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DISPOSITION_FILE_DOCUMENT', 'COLUMN', N'APP_LAST_UPDATE_USERID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DISPOSITION_FILE_DOCUMENT', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
 GO
 
 
@@ -8093,7 +8112,7 @@ ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [ACQNFL_FILE_NO_DEF]
 GO
 
 
-ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [ACQNFL_FILE_NUMBER_DEF]
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [ACQNFL_FILE_NUM_SUFFIX_DEF]
 GO
 
 
@@ -8149,6 +8168,10 @@ ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [ACQNFL_PK]
 GO
 
 
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [ACQNFL_SUBFILE_INTEREST_TYPE_CODE_TCC]
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'ACQUISITION_FILE_ID'
 GO
 
@@ -8197,7 +8220,7 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'FILE_NUMBER'
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'FILE_NUM_SUFFIX'
 GO
 
 
@@ -11221,6 +11244,10 @@ ALTER TABLE [dbo].[PIMS_PROJECT_PRODUCT] DROP CONSTRAINT [PRJPRD_PROJECT_PRODUCT
 GO
 
 
+ALTER TABLE [dbo].[PIMS_PROJECT_PRODUCT] DROP CONSTRAINT [PRJPRD_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
 ALTER TABLE [dbo].[PIMS_PROJECT_PRODUCT] DROP CONSTRAINT [PRJPRD_APP_CREATE_TIMESTAMP_DEF]
 GO
 
@@ -11242,10 +11269,6 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_PROJECT_PRODUCT] DROP CONSTRAINT [PRJPRD_APP_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROJECT_PRODUCT] DROP CONSTRAINT [PRJPRD_CONCURRENCY_CONTROL_NUMBER_DEF]
 GO
 
 
@@ -14636,64 +14659,6 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_LEASE_STAKEHOLDER_COMP_REQ_HIST"                  */
-/* ---------------------------------------------------------------------- */
-
-GO
-
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_COMP_REQ_HIST] DROP CONSTRAINT [DF__PIMS_LEAS___LEAS__02F25272]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_COMP_REQ_HIST] DROP CONSTRAINT [DF__PIMS_LEAS__EFFEC__03E676AB]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_COMP_REQ_HIST] DROP CONSTRAINT [PIMS_LSKCRQ_H_PK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_COMP_REQ_HIST] DROP CONSTRAINT [PIMS_LSKCRQ_H_UK]
-GO
-
-
-DROP TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_COMP_REQ_HIST]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_LEASE_STAKEHOLDER_HIST"                           */
-/* ---------------------------------------------------------------------- */
-
-GO
-
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_HIST] DROP CONSTRAINT [DF__PIMS_LEAS___LEAS__06C2E356]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_HIST] DROP CONSTRAINT [DF__PIMS_LEAS__EFFEC__07B7078F]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_HIST] DROP CONSTRAINT [PIMS_LSTKHL_H_PK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_HIST] DROP CONSTRAINT [PIMS_LSTKHL_H_UK]
-GO
-
-
-DROP TABLE [dbo].[PIMS_LEASE_STAKEHOLDER_HIST]
-GO
-
-
-/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_TENANT"                                           */
 /* ---------------------------------------------------------------------- */
 
@@ -18040,35 +18005,6 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_PROP_LEASE_COMP_REQ_HIST"                         */
-/* ---------------------------------------------------------------------- */
-
-GO
-
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_PROP_LEASE_COMP_REQ_HIST] DROP CONSTRAINT [DF__PIMS_PROP___PROP__08CB2759]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROP_LEASE_COMP_REQ_HIST] DROP CONSTRAINT [DF__PIMS_PROP__EFFEC__09BF4B92]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROP_LEASE_COMP_REQ_HIST] DROP CONSTRAINT [PIMS_PLCMRQ_H_PK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_PROP_LEASE_COMP_REQ_HIST] DROP CONSTRAINT [PIMS_PLCMRQ_H_UK]
-GO
-
-
-DROP TABLE [dbo].[PIMS_PROP_LEASE_COMP_REQ_HIST]
-GO
-
-
-/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_DOCUMENT_QUEUE_STATUS_TYPE"                       */
 /* ---------------------------------------------------------------------- */
 
@@ -18492,35 +18428,6 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_PROPERTY_ANOMALY_TYPE]
-GO
-
-
-/* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_LEASE_LEASE_PURPOSE_HIST"                         */
-/* ---------------------------------------------------------------------- */
-
-GO
-
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_LEASE_LEASE_PURPOSE_HIST] DROP CONSTRAINT [DF__PIMS_LEAS___LEAS__61C668D1]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_LEASE_PURPOSE_HIST] DROP CONSTRAINT [DF__PIMS_LEAS__EFFEC__62BA8D0A]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_LEASE_PURPOSE_HIST] DROP CONSTRAINT [PIMS_LLPURP_H_PK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_LEASE_LEASE_PURPOSE_HIST] DROP CONSTRAINT [PIMS_LLPURP_H_UK]
-GO
-
-
-DROP TABLE [dbo].[PIMS_LEASE_LEASE_PURPOSE_HIST]
 GO
 
 
