@@ -63,7 +63,7 @@ describe('ApiVersionInfo suite', () => {
     const { queryByTestId } = setup();
     await waitForEffects();
 
-    const element = queryByTestId(`version-missmatch-warning`);
+    const element = queryByTestId(`version-mismatch-warning`);
     expect(element).not.toBeInTheDocument();
     expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
   });
@@ -76,7 +76,7 @@ describe('ApiVersionInfo suite', () => {
     const { queryByTestId } = setup();
     await waitForEffects();
 
-    const element = queryByTestId(`version-missmatch-warning`);
+    const element = queryByTestId(`version-mismatch-warning`);
     expect(element).toBeInTheDocument();
     expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
   });
@@ -89,7 +89,7 @@ describe('ApiVersionInfo suite', () => {
     const { queryByTestId } = setup();
     await waitForEffects();
 
-    const element = queryByTestId(`version-missmatch-warning`);
+    const element = queryByTestId(`version-mismatch-warning`);
     expect(element).toBeInTheDocument();
     expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
   });

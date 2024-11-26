@@ -49,14 +49,14 @@ export const ApiVersionInfo = () => {
   const frontEndVersion = import.meta.env.VITE_PACKAGE_VERSION;
   const frontEndDBVersion = findDBVersion(frontEndVersion);
 
-  const apiVersionMissmatch = version?.informationalVersion !== frontEndVersion;
-  const dbVersionMissmatch = version?.dbVersion !== frontEndDBVersion;
+  const apiVersionMismatch = version?.informationalVersion !== frontEndVersion;
+  const dbVersionMismatch = version?.dbVersion !== frontEndDBVersion;
 
-  const versionMissmatchMsg = (apiMissmatch: boolean, dbMissmatch: boolean): string => {
+  const versionMissmatchMsg = (apiMismatch: boolean, dbMismatch: boolean): string => {
     let msg = '';
-    if (apiMissmatch || dbMissmatch) {
+    if (apiMismatch || dbMismatch) {
       msg = msg.concat(
-        `Warning: There is a version missmatch with the backend.
+        `Warning: There is a version mismatchwith the backend.
          API: ${version?.informationalVersion}; DB: ${version?.dbVersion}`,
       );
     }
@@ -70,11 +70,11 @@ export const ApiVersionInfo = () => {
         {`v${frontEndVersion ?? ''}`}
       </div>
 
-      {(apiVersionMissmatch || dbVersionMissmatch) && (
-        <VersionMissmatchDiv data-testid="version-missmatch-warning">
+      {(apiVersionMismatch || dbVersionMismatch) && (
+        <VersionMissmatchDiv data-testid="version-mismatch-warning">
           <TooltipWrapper
             tooltipId="warning"
-            tooltip={versionMissmatchMsg(apiVersionMissmatch, dbVersionMissmatch)}
+            tooltip={versionMissmatchMsg(apiVersionMismatch, dbVersionMismatch)}
             className="warning"
           >
             <AiOutlineExclamationCircle size={20} />
@@ -97,7 +97,6 @@ const StyledContainer = styled.div`
 `;
 
 export const VersionMissmatchDiv = styled(InlineFlexDiv)`
-  text-transform: uppercase;
   color: ${props => props.theme.css.textWarningColor};
   background-color: ${props => props.theme.css.warningBackgroundColor};
   border-radius: 0.4rem;

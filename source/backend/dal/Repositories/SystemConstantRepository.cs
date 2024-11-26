@@ -39,7 +39,7 @@ namespace Pims.Dal.Repositories
         public string GetDataBaseVersion()
         {
             return this.Context.PimsStaticVariables.Where(x => x.StaticVariableName == "DBVERSION")
-                .AsNoTracking().FirstOrDefault().StaticVariableValue ?? string.Empty;
+                .AsNoTracking().FirstOrDefault()?.StaticVariableValue ?? string.Empty;
         }
         #endregion
     }

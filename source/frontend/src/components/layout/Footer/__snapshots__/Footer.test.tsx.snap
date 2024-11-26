@@ -40,7 +40,6 @@ exports[`Footer > renders correctly 1`] = `
 }
 
 .c3 {
-  text-transform: uppercase;
   color: #6c4a00;
   background-color: #fef1d8;
   border-radius: 0.4rem;
@@ -192,11 +191,11 @@ exports[`Footer > renders correctly 1`] = `
           class="version"
           data-testid="version-tag"
         >
-          v5.7.0-94.1
+          v5.7.0-94.4
         </div>
         <div
           class="c2 c3"
-          data-testid="version-missmatch-warning"
+          data-testid="version-mismatch-warning"
         >
           <svg
             fill="currentColor"
