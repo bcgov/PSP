@@ -1,0 +1,228 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/2/2024 1:39:12 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{DA9E3432-AECD-4AD5-A5B0-F8EE26096547}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="15"
+  DTS:VersionGUID="{1B4CB942-A15E-4BEB-B022-28979E11F566}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{30C2650C-787C-4F97-880D-AA23F385A4B1}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{30C2650C-787C-4F97-880D-AA23F385A4B1}sqldevtst.th.gov.bc.ca.PIMS_DEV;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\BKP PIMS_ORGANIZATION"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{86D23A6A-4C8F-494B-960E-1938E92EAE70}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="BKP PIMS_ORGANIZATION"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30C2650C-787C-4F97-880D-AA23F385A4B1}"
+          SQLTask:SqlStatementSource="BEGIN&#xA;DROP TABLE if exists etl.PIMS_ORGANIZATION_BKP_PSP7624;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_ORGANIZATION_BKP_PSP7624 FROM dbo.PIMS_ORGANIZATION;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DISABLE  PIMS_ORGANIZATION"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E5472966-2A9B-44CB-8547-E0836F42DF3B}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DISABLE  PIMS_ORGANIZATION"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30C2650C-787C-4F97-880D-AA23F385A4B1}"
+          SQLTask:SqlStatementSource="UPDATE dbo.PIMS_ORGANIZATION &#xA;SET &#xA;&#x9;IS_DISABLED = 1, &#xA;&#x9;CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER+1,&#xA;&#x9;APP_LAST_UPDATE_USERID = 'PIMS_ETL_USER',&#xA;&#x9;APP_LAST_UPDATE_TIMESTAMP = CURRENT_TIMESTAMP&#xA;WHERE organization_id NOT IN (SELECT distinct organization_id FROM etl.organization_ids_matched);&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\drop etl schema table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1CA05CCD-AE32-410A-AA82-AA7EA89A7C7E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="drop etl schema table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30C2650C-787C-4F97-880D-AA23F385A4B1}"
+          SQLTask:SqlStatementSource="DROP TABLE IF EXISTS etl.organization_ids_matched;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\insert_into_etl_matching_organization_ids"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{72D9EBED-D441-4ABC-8B85-17F19DBCBD2F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="insert_into_etl_matching_organization_ids"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{30C2650C-787C-4F97-880D-AA23F385A4B1}"
+          SQLTask:SqlStatementSource="&#xA;DECLARE @TableName NVARCHAR(128);&#xA;DECLARE @SQL NVARCHAR(MAX);&#xA;&#xA;-- Create etl.organization_ids_matched table if it does not exist&#xA;IF NOT EXISTS (SELECT 1 FROM sys.tables WHERE name = 'organization_ids_matched' AND schema_id = SCHEMA_ID('etl'))&#xA;BEGIN&#xA;    CREATE TABLE etl.organization_ids_matched (&#xA;        organization_ID INT&#xA;    );&#xA;END&#xA;&#xA;DECLARE table_cursor CURSOR FOR&#xA;SELECT OBJECT_NAME(fk.parent_object_id) AS RelationTableName&#xA;FROM sys.foreign_keys fk&#xA;INNER JOIN sys.foreign_key_columns fkc ON fk.object_id = fkc.constraint_object_id&#xA;INNER JOIN sys.columns c1 ON fkc.parent_column_id = c1.column_id AND fkc.parent_object_id = c1.object_id&#xA;INNER JOIN sys.columns c2 ON fkc.referenced_column_id = c2.column_id AND fkc.referenced_object_id = c2.object_id&#xA;WHERE OBJECT_NAME(fk.referenced_object_id) = 'PIMS_organization' AND c1.name = 'organization_ID';&#xA;&#xA;OPEN table_cursor;&#xA;FETCH NEXT FROM table_cursor INTO @TableName;&#xA;&#xA;WHILE @@FETCH_STATUS = 0&#xA;BEGIN&#xA;    SET @SQL = '&#xA;    INSERT INTO etl.organization_ids_matched (organization_ID)&#xA;    SELECT DISTINCT t1.organization_ID&#xA;    FROM ' + QUOTENAME(@TableName) + ' t1&#xA;    JOIN dbo.PIMS_organization p ON t1.organization_ID = p.organization_ID&#xA;    WHERE t1.organization_ID is not null';&#xA;&#xA;    --PRINT 'Checking table: ' + @TableName;&#xA;    EXEC sp_executesql @SQL;&#xA;&#xA;    FETCH NEXT FROM table_cursor INTO @TableName;&#xA;END&#xA;&#xA;CLOSE table_cursor;&#xA;DEALLOCATE table_cursor;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{1E5C85AC-B887-4535-96D9-C2993267F2E2}"
+      DTS:From="Package\drop etl schema table"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\insert_into_etl_matching_organization_ids" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{A912BD72-A9A0-4AD4-95F7-C55666BFC6E7}"
+      DTS:From="Package\insert_into_etl_matching_organization_ids"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\DISABLE  PIMS_ORGANIZATION" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{5251FABC-35BF-4395-BB66-C782677DB4DA}"
+      DTS:From="Package\BKP PIMS_ORGANIZATION"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\drop etl schema table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="217.333333333334,42.6666666666667"
+          Id="Package\BKP PIMS_ORGANIZATION"
+          TopLeft="42.4999993667007,15.0526318622758" />
+        <NodeLayout
+          Size="244,42.6666666666667"
+          Id="Package\DISABLE  PIMS_ORGANIZATION"
+          TopLeft="648.749990332872,140.263160534843" />
+        <NodeLayout
+          Size="181.333333333334,42.6666666666667"
+          Id="Package\drop etl schema table"
+          TopLeft="61.2499990873039,136.842107838871" />
+        <NodeLayout
+          Size="278.666666666667,42.6666666666667"
+          Id="Package\insert_into_etl_matching_organization_ids"
+          TopLeft="328.124995110556,139.578949995648" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="242.583332420637,159.543862250593">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="85.5416626899192,0"
+              Start="0,0"
+              End="78.0416626899192,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="78.0416626899192,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="606.791661777223,161.254388598579">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="41.9583285556487,0"
+              Start="0,0"
+              End="34.4583285556487,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="34.4583285556487,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="151.541665893669,57.7192985289425">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79.1228093099285"
+              Start="0,0"
+              End="0,71.6228093099285">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,71.6228093099285" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
