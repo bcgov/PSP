@@ -136,6 +136,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateManagementTab()
         {
             WaitUntilSpinnerDisappear();
+            WaitUntilClickable(managementTabLink);
             webDriver.FindElement(managementTabLink).Click();
         }
 

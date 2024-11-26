@@ -1,10 +1,9 @@
-import { KeycloakInstance } from 'keycloak-js/dist/keycloak';
-
 import { clearJwt, saveJwt } from '@/store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from '@/store/slices/keycloakReady/keycloakReadySlice';
 import { store } from '@/store/store';
 
 import getKeycloakEventHandler from './getKeycloakEventHandler';
+import { KeycloakInstance } from 'keycloak-js';
 
 vi.mock('@/store/slices/jwt/JwtSlice', () => ({
   saveJwt: vi.fn(),

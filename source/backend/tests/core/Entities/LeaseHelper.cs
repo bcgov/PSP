@@ -15,7 +15,7 @@ namespace Pims.Core.Test
         /// Create a new instance of a Lease.
         /// </summary>
         /// <returns></returns>
-        public static PimsLease CreateLease(int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true,
+        public static PimsLease CreateLease(int pid, int? pin = null, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true,
             PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeaseStatusType pimsLeaseStatusType = null, PimsLeasePayRvblType pimsLeasePayRvblType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null, bool generateTypeIds = false)
         {
             var lease = new PimsLease()
@@ -32,7 +32,7 @@ namespace Pims.Core.Test
             {
                 lease.PimsPropertyLeases.Add(new PimsPropertyLease()
                 {
-                    Property = CreateProperty(pid: pid),
+                    Property = CreateProperty(pid: pid, pin: pin),
                     Lease = lease,
                 });
             }
@@ -60,7 +60,7 @@ namespace Pims.Core.Test
         /// Create a new instance of a Lease.
         /// </summary>
         /// <returns></returns>
-        public static PimsLease CreateLease(this PimsContext context, int pid, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true)
+        public static PimsLease CreateLease(this PimsContext context, int pid, int? pin = null, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true)
         {
             var programType = context.PimsLeaseProgramTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease program type.");
             var leaseStatusType = context.PimsLeaseStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease status type.");
@@ -69,7 +69,7 @@ namespace Pims.Core.Test
             var leaseResponsibilityType = context.PimsLeaseResponsibilityTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease reponsibility type.");
             var leaseLicenseType = context.PimsLeaseLicenseTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease license type.");
 
-            var lease = CreateLease(pid, lFileNo, stakeholderFirstName, stakeholderLastName, motiFirstName, motiLastName, address, addStakeholder, addProperty, programType, leaseStatusType, leasePayRvblType, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
+            var lease = CreateLease(pid, pin, lFileNo, stakeholderFirstName, stakeholderLastName, motiFirstName, motiLastName, address, addStakeholder, addProperty, programType, leaseStatusType, leasePayRvblType, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
             context.PimsLeases.Add(lease);
 
             return lease;

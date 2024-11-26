@@ -12,6 +12,7 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
+import { exists } from '@/utils';
 import { pidParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
@@ -464,12 +465,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
 };
 
 const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
-  // The map will search for either identifier.
-  const pinOrPidValue = filter.pinOrPid ? filter.pinOrPid?.replaceAll(/-/g, '') : undefined;
+  const pidValue = exists(filter.pid) ? filter.pid?.replaceAll(/-/g, '') : undefined;
+  const pinValue = exists(filter.pin) ? filter.pin?.replaceAll(/-/g, '') : undefined;
+
   return {
-    PID_PADDED: pinOrPidValue,
-    PID: pinOrPidValue,
-    PIN: pinOrPidValue,
+    PID_PADDED: pidValue,
+    PID: pidValue,
+    PIN: pinValue,
     STREET_ADDRESS_1: filter.address,
     SURVEY_PLAN_NUMBER: filter.planNumber,
     HISTORICAL_FILE_NUMBER_STR: filter.historical,
