@@ -10,6 +10,7 @@ const defaultVersion: IApiVersion = {
   version: '11.1.1.1',
   fileVersion: '11.1.1.1',
   informationalVersion: '11.1.1-1.999',
+  dbVersion: '93.00',
 };
 
 const mockGetVersion = vi.fn(async () => {

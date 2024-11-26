@@ -522,6 +522,7 @@ namespace Pims.Api
             services.AddScoped<IDispositionStatusSolver, DispositionStatusSolver>();
             services.AddScoped<IPropertyOperationService, PropertyOperationService>();
             services.AddScoped<ITakeInteractionSolver, TakeInteractionSolver>();
+            services.AddScoped<IEnvironmentService, EnvironmentService>();
         }
 
         /// <summary>

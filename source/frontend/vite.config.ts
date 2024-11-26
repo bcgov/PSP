@@ -7,6 +7,8 @@ import eslint from 'vite-plugin-eslint';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
+import packageJson from './package.json';
+
 // https://vitejs.dev/config/
 export default defineConfig({
   test: {
@@ -117,4 +119,7 @@ export default defineConfig({
       filter: /\.(js|mjs|css|html)$/i,
     }),
   ],
+  define: {
+    'import.meta.env.VITE_PACKAGE_VERSION': JSON.stringify(packageJson.version),
+  },
 });
