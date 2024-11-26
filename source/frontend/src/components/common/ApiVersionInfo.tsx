@@ -52,11 +52,11 @@ export const ApiVersionInfo = () => {
   const apiVersionMismatch = version?.informationalVersion !== frontEndVersion;
   const dbVersionMismatch = version?.dbVersion !== frontEndDBVersion;
 
-  const versionMissmatchMsg = (apiMismatch: boolean, dbMismatch: boolean): string => {
+  const versionMismatchMsg = (apiMismatch: boolean, dbMismatch: boolean): string => {
     let msg = '';
     if (apiMismatch || dbMismatch) {
       msg = msg.concat(
-        `Warning: There is a version mismatchwith the backend.
+        `Warning: There is a version mismatch with the backend.
          API: ${version?.informationalVersion}; DB: ${version?.dbVersion}`,
       );
     }
@@ -74,7 +74,7 @@ export const ApiVersionInfo = () => {
         <VersionMissmatchDiv data-testid="version-mismatch-warning">
           <TooltipWrapper
             tooltipId="warning"
-            tooltip={versionMissmatchMsg(apiVersionMismatch, dbVersionMismatch)}
+            tooltip={versionMismatchMsg(apiVersionMismatch, dbVersionMismatch)}
             className="warning"
           >
             <AiOutlineExclamationCircle size={20} />
