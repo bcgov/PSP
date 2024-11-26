@@ -1,0 +1,850 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="7/2/2024 12:06:22 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{EA4341B3-9BA1-4264-A808-B496B49DA719}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="PSP_PIMS_DISPOSITION_FILE_REGION_FIX"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="25"
+  DTS:VersionGUID="{5AA7EA1B-76D6-46FA-A4C7-F8652A203FA7}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{F0FBC342-9F43-483B-A76D-DC6406A2AC1C}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Output].Columns[UPDATE_BY]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="13"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Output].Columns[UPDATE_BY]"
+                      name="UPDATE_BY"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">"PIMS_ETL_USER"</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">"PIMS_ETL_USER"</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Output].Columns[UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Output].Columns[UPDATE_TIMESTAMP]"
+                      name="UPDATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup  PIMS_PROPERTY"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT 
+    PROPERTY_ID,     
+    REGION_CODE      
+from 
+    dbo.PIMS_PROPERTY
+ WHERE
+   REGION_CODE != 4</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (SELECT 
+    PROPERTY_ID,     
+    REGION_CODE      
+from 
+    dbo.PIMS_PROPERTY
+ WHERE
+   REGION_CODE != 4) [refTable]
+where [refTable].[PROPERTY_ID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="PROPERTY_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="REGION_CODE" dataType="DT_I2" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Inputs[Lookup Input].Columns[PROPERTY_ID]"
+                      cachedDataType="i8"
+                      cachedName="PROPERTY_ID"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">PROPERTY_ID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Match Output].Columns[PIMS_PROPERTY_REGION_CODE]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Match Output].Columns[PIMS_PROPERTY_REGION_CODE]"
+                      name="PIMS_PROPERTY_REGION_CODE"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">REGION_CODE</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Match Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Match Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">PROPERTY_ID</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="SRC_PIMS_DISPOSITION_FILE"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT DISTINCT A.DISPOSITION_FILE_ID, B.PROPERTY_ID, A.REGION_CODE   
+	FROM [dbo].[PIMS_DISPOSITION_FILE] A
+		JOIN [dbo].[PIMS_DISPOSITION_FILE_PROPERTY] B 
+			ON A.DISPOSITION_FILE_ID = B.DISPOSITION_FILE_ID 
+AND A.REGION_CODE=4
+			;</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[DISPOSITION_FILE_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].ExternalColumns[DISPOSITION_FILE_ID]"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[DISPOSITION_FILE_ID]"
+                      name="DISPOSITION_FILE_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[REGION_CODE]"
+                      dataType="i2"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].ExternalColumns[REGION_CODE]"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[REGION_CODE]"
+                      name="REGION_CODE"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].ExternalColumns[DISPOSITION_FILE_ID]"
+                      dataType="i8"
+                      name="DISPOSITION_FILE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].ExternalColumns[PROPERTY_ID]"
+                      dataType="i8"
+                      name="PROPERTY_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].ExternalColumns[REGION_CODE]"
+                      dataType="i2"
+                      name="REGION_CODE" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[DISPOSITION_FILE_ID]"
+                      dataType="i8"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[DISPOSITION_FILE_ID]"
+                      name="DISPOSITION_FILE_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      dataType="i8"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[PROPERTY_ID]"
+                      name="PROPERTY_ID" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[REGION_CODE]"
+                      dataType="i2"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[REGION_CODE]"
+                      name="REGION_CODE" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="TGT_PIMS_DISPOSITION_FILE"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">update dbo.[PIMS_DISPOSITION_FILE]
+set REGION_CODE = ?
+,CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER+1
+,APP_LAST_UPDATE_USERID = ?
+,APP_LAST_UPDATE_TIMESTAMP=?
+WHERE DISPOSITION_FILE_ID= ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].Columns[PIMS_PROPERTY_REGION_CODE]"
+                      cachedDataType="i2"
+                      cachedName="PIMS_PROPERTY_REGION_CODE"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Match Output].Columns[PIMS_PROPERTY_REGION_CODE]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].Columns[UPDATE_BY]"
+                      cachedDataType="wstr"
+                      cachedLength="13"
+                      cachedName="UPDATE_BY"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Output].Columns[UPDATE_BY]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].Columns[UPDATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="UPDATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Output].Columns[UPDATE_TIMESTAMP]" />
+                    <inputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].Columns[DISPOSITION_FILE_ID]"
+                      cachedDataType="i8"
+                      cachedName="DISPOSITION_FILE_ID"
+                      externalMetadataColumnId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output].Columns[DISPOSITION_FILE_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i2"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="wstr"
+                      length="30"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="dbTimeStamp"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="i8"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table.Paths[Derived Column Output]"
+              endId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE.Inputs[OLE DB Command Input]"
+              name="Derived Column Output"
+              startId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table.Paths[Lookup Match Output]"
+              endId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column.Inputs[Derived Column Input]"
+              name="Lookup Match Output"
+              startId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table.Paths[OLE DB Source Output]"
+              endId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task - BKP PIMS_DISPOSITION_FILE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FBEA0967-262F-4656-ADA0-3A68FDBE6283}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task - BKP PIMS_DISPOSITION_FILE"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3240E4ED-22D8-4686-9ACC-CD9642381A84}"
+          SQLTask:SqlStatementSource="BEGIN&#xA;DROP TABLE if exists etl.PIMS_DISPOSITION_FILE_BKP_PSP8283;&#xA;END&#xA;&#xA;BEGIN&#xA;SELECT * INTO etl.PIMS_DISPOSITION_FILE_BKP_PSP8283 FROM dbo.PIMS_DISPOSITION_FILE;&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{E4BDE93D-E1DD-4950-A907-656A4DBEC139}"
+      DTS:From="Package\Execute SQL Task - BKP PIMS_DISPOSITION_FILE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="409.333333333334,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table"
+          TopLeft="268.124996004626,176.526319112143" />
+        <NodeLayout
+          Size="331.333333333334,42.6666666666667"
+          Id="Package\Execute SQL Task - BKP PIMS_DISPOSITION_FILE"
+          TopLeft="303.749995473772,75.2631593113791" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="471.104162405866,117.929825978046">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,58.5964931340978"
+              Start="0,0"
+              End="0,51.0964931340978">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,51.0964931340978" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="PSP-8283"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="80,40"
+          Id="6f84dfb2-2a21-4f11-af8d-2efaaec9ba01"
+          TopLeft="67.4999989941716,53.3684220571597" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="237.333333333334,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE"
+          TopLeft="21.2499996833503,69.7894749978238" />
+        <NodeLayout
+          Size="236,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\TGT_PIMS_DISPOSITION_FILE"
+          TopLeft="787.99998882413,216.894740924611" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Derived Column"
+          TopLeft="499.999992549419,213.473688228639" />
+        <NodeLayout
+          Size="210.666666666667,42.6666666666667"
+          Id="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY"
+          TopLeft="422.49999370426,75.2631593113791" />
+        <EdgeLayout
+          Id="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table.Paths[OLE DB Source Output]"
+          TopLeft="258.583333016684,93.8596504879348">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="163.916660687576,0"
+              Start="0,0"
+              End="156.416660687576,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="156.416660687576,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table.Paths[Lookup Match Output]"
+          TopLeft="527.833327037593,117.929825978046">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="50.166665511826,95.5438622505932"
+              Start="0,0"
+              End="50.166665511826,88.0438622505932">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.7719311252966" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,43.7719311252966"
+                    Point2="0,47.7719311252966"
+                    Point3="4,47.7719311252966" />
+                  <mssgle:LineSegment
+                    End="46.166665511826,47.7719311252966" />
+                  <mssgle:CubicBezierSegment
+                    Point1="46.166665511826,47.7719311252966"
+                    Point2="50.166665511826,47.7719311252966"
+                    Point3="50.166665511826,51.7719311252966" />
+                  <mssgle:LineSegment
+                    End="50.166665511826,88.0438622505932" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-23.108053962837,52.7719311252966,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table.Paths[Derived Column Output]"
+          TopLeft="655.999992549419,236.517547909959">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="131.999996274711,0"
+              Start="0,0"
+              End="124.499996274711,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="124.499996274711,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\SRC_PIMS_DISPOSITION_FILE">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Data Flow Task - Fix Region Field in PIMS_DISPOSITION_FILE table\Lookup  PIMS_PROPERTY">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
