@@ -378,9 +378,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
-          >
-            <div />
-          </div>
+          />
           <div
             class="td"
             role="cell"
@@ -489,9 +487,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
             role="cell"
             style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
-          >
-            <div />
-          </div>
+          />
           <div
             class="td"
             role="cell"

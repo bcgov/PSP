@@ -761,9 +761,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 </div>
                 <div
                   class="pl-1 text-left col-9"
-                >
-                  <div />
-                </div>
+                />
               </div>
             </div>
             <div
