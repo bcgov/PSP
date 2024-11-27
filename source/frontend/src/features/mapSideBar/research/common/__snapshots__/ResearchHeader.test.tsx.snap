@@ -119,9 +119,7 @@ exports[`ResearchHeader component > renders as expected when provided no researc
         </div>
         <div
           class="pl-1 text-left col-9"
-        >
-          <div />
-        </div>
+        />
       </div>
     </div>
     <div
