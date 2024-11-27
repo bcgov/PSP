@@ -5,7 +5,7 @@
 /* Project name:          PIMS S94.00                                     */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2024-11-15 13:09                                */
+/* Created on:            2024-11-27 09:47                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -8112,7 +8112,7 @@ ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [ACQNFL_FILE_NO_DEF]
 GO
 
 
-ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [ACQNFL_FILE_NUM_SUFFIX_DEF]
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [ACQNFL_FILE_NO_SUFFIX_DEF]
 GO
 
 
@@ -8220,7 +8220,11 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'FILE_NUM_SUFFIX'
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'FILE_NO_SUFFIX'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'FILE_NUMBER'
 GO
 
 
@@ -18519,6 +18523,10 @@ GO
 GO
 
 
+DROP SEQUENCE [dbo].[PIMS_DOCUMENT_QUEUE_ID_SEQ]
+GO
+
+
 DROP SEQUENCE [dbo].[PIMS_PROP_LEASE_COMP_REQ_H_ID_SEQ]
 GO
 
@@ -19208,9 +19216,5 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_PROPERTY_SERVICE_FILE_ID_SEQ]
-GO
-
-
-DROP SEQUENCE [dbo].[PIMS_DOCUMENT_QUEUE_ID_SEQ]
 GO
 
