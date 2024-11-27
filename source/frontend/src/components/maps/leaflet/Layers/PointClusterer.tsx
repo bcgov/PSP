@@ -110,7 +110,9 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       }
 
       // Do not cluster any points that do not have markers on the map.
-      const displayableFeatures = filteredFeatures.filter(f => exists(getMarkerIcon(f, false)));
+      const displayableFeatures = filteredFeatures.filter(f =>
+        exists(getMarkerIcon(f, false, mapMachine.showDisposed, mapMachine.showRetired)),
+      );
 
       return {
         type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
@@ -118,7 +120,9 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       };
     }, [
       mapMachine.activePimsPropertyIds,
-      mapMachine.mapFeatureData.pimsLocationFeatures,
+      mapMachine.mapFeatureData.pimsLocationFeatures.features,
+      mapMachine.mapFeatureData.pimsLocationFeatures.type,
+      mapMachine.showDisposed,
       mapMachine.showRetired,
     ]);
 
