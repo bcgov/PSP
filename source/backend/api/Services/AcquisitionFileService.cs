@@ -108,7 +108,7 @@ namespace Pims.Api.Services
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                 .Select(fileProperty => new AcquisitionFileExportModel
                 {
-                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
+                    FileNumber = fileProperty.file.FileNumberFormatted ?? string.Empty,
                     LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
                     FileName = fileProperty.file.FileName ?? string.Empty,
                     MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,
