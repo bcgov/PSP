@@ -1,8 +1,8 @@
 import IApiVersion from '@/hooks/pims-api/interfaces/IApiVersion';
+import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
+import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
-import { act, render, waitForEffects, RenderOptions } from '@/utils/test-utils';
-import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 
 const defaultVersion: IApiVersion = {
   environment: 'test',
