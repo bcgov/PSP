@@ -1,4 +1,4 @@
-import { ReactElement, useState } from 'react';
+import { Fragment, ReactElement, useState } from 'react';
 
 import { exists } from '@/utils/utils';
 
@@ -10,6 +10,9 @@ export interface IExpandableTextListProps<T> {
   keyFunction: (item: T, index: number) => string;
   delimiter?: ReactElement | string;
   maxCollapsedLength?: number;
+  className?: string;
+  moreText?: string;
+  hideText?: string;
 }
 
 /**
@@ -22,12 +25,14 @@ export function ExpandableTextList<T>({
   renderFunction,
   delimiter,
   maxCollapsedLength,
+  moreText,
+  hideText,
 }: IExpandableTextListProps<T>) {
   const [isExpanded, setIsExpanded] = useState(false);
   const displayedItemsLength = !isExpanded ? maxCollapsedLength ?? items.length : items.length;
   const displayedItems = items.slice(0, displayedItemsLength);
   return (
-    <div>
+    <Fragment>
       {displayedItems.map((item: T, index: number) => (
         <span key={keyFunction(item, index)}>
           {renderFunction(item, index)}
@@ -36,10 +41,12 @@ export function ExpandableTextList<T>({
       ))}
       {exists(maxCollapsedLength) && maxCollapsedLength < items.length && (
         <LinkButton data-testid="expand" onClick={() => setIsExpanded(collapse => !collapse)}>
-          {isExpanded ? 'hide' : `[+${items.length - displayedItemsLength} more...]`}
+          {isExpanded
+            ? hideText ?? 'hide'
+            : `[+${items.length - displayedItemsLength} ${moreText ?? 'more...'}]`}
         </LinkButton>
       )}
-    </div>
+    </Fragment>
   );
 }
 

@@ -29,6 +29,11 @@ namespace Pims.Api.Models.Health
         /// get/set - The information version.
         /// </summary>
         public string InformationalVersion { get; set; }
+
+        /// <summary>
+        /// get/set - The DB version.
+        /// </summary>
+        public string DBVersion { get; set; }
         #endregion
 
         #region Constructors

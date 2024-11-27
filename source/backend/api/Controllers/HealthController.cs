@@ -1,5 +1,5 @@
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Pims.Api.Services;
 using Swashbuckle.AspNetCore.Annotations;
 using Model = Pims.Api.Models.Health;
 
@@ -14,19 +14,17 @@ namespace Pims.Api.Controllers
     [Route("health")]
     public class HealthController : ControllerBase
     {
-        #region Variables
-        private readonly IWebHostEnvironment _environment;
-        #endregion
+        private readonly IEnvironmentService _environmentService;
 
         #region Constructors
 
         /// <summary>
         /// Creates a new instances of a HealthController class, initializes it with the specified arguments.
         /// </summary>
-        /// <param name="environment"></param>
-        public HealthController(IWebHostEnvironment environment)
+        /// <param name="environmentService"></param>
+        public HealthController(IEnvironmentService environmentService)
         {
-            _environment = environment;
+            _environmentService = environmentService;
         }
         #endregion
 
@@ -42,7 +40,9 @@ namespace Pims.Api.Controllers
         [SwaggerOperation(Tags = new[] { "health" })]
         public IActionResult Environment()
         {
-            return new JsonResult(new Model.EnvModel(_environment));
+            var environment = _environmentService.GetEnvironmentVariables();
+
+            return new JsonResult(environment);
         }
         #endregion
     }

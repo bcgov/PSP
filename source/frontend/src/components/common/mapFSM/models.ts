@@ -29,6 +29,10 @@ export interface RequestedFlyTo {
   readonly bounds: LatLngBounds | null;
 }
 
+export interface RequestedCenterTo {
+  readonly location: LatLngLiteral | null;
+}
+
 export const emptyPimsLocationFeatureCollection: FeatureCollection<
   Geometry,
   PIMS_Property_Location_View
