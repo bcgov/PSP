@@ -1,20 +1,20 @@
-name: CI-CD PIMS Development
+name: UAT Hotfix (ArgoCD)
 env:
   OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
   # service account: gitaction
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
   MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
-  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET }}
+  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET_UAT }}
   AUTH__KEYCLOAK__SERVICEACCOUNT__SECRET: ${{ secrets.KEYCLOAK_SERVICEACCOUNT_SECRET }}
-  ASPNETCORE_ENVIRONMENT: "Development"
+  ASPNETCORE_ENVIRONMENT: "uat"
 
   ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
   APP_PORT: 8080
-  DESTINATION: "dev"
-  OC_JOB_NAME: "dev"
+  DESTINATION: "uat"
+  OC_JOB_NAME: "test"
   GIT_URL: "${{github.server_url}}/${{github.repository}}"
-  GIT_BRANCH: "${{github.ref}}"
+  GIT_BRANCH: "test"
   APP_NAME: "pims"
   PROJ_PREFIX: "3cd915"
   PROJ_TOOLS: "3cd915-tools"
@@ -24,16 +24,15 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
-  DEPLOYMENT_NAMESPACE: "3cd915-dev"
+  INSTANCE: "-uat"
+  NAMESPACE_OVERRIDE: "3cd915-test"
+  DEPLOYMENT_NAMESPACE: "3cd915-test"
 
 on:
-  pull_request_target:
-    branches: [dev]
-    types: [closed]
+  workflow_dispatch:
 
 jobs:
   ci-cd-start-notification:
-    if: github.event.pull_request.merged == true
     name: CI-CD Start Notification to Teams Channel
     runs-on: ubuntu-latest
     steps:
@@ -42,7 +41,7 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS CI-CD GitHub Action STARTED in DEV
+          notification-summary: PIMS UAT Hotfix started.
           notification-color: 17a2b8
           timezone: America/Los_Angeles
 
@@ -79,7 +78,7 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build backend services
+      - name: Call script to build backend (pims-api)
         run: |
           ./openshift/4.0/player.sh build api -apply
           ./openshift/4.0/player.sh build proxy -apply
@@ -116,10 +115,6 @@ jobs:
           oc tag pims-proxy:latest-$DESTINATION pims-proxy:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
-      - name: Deploy mayan
-        shell: bash
-        run: |
-          oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
@@ -138,16 +133,14 @@ jobs:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
-          namespace: 3cd915-dev
+          namespace: 3cd915-test
       - name: call scripts to upgrade database
         shell: bash
         run: |
-          JOB_NAME=$(oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database -p GIT_BRANCH=dev -p SERVER_NAME=sqldevtst.th.gov.bc.ca -p DB_NAME=PIMS_DEV -p NAMESPACE=3cd915-dev | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*")
-          oc wait --for=condition=complete job/$JOB_NAME --timeout=120s
-          oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
+          oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database-uat -p GIT_BRANCH=test -p SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_UAT -p NAMESPACE=3cd915-test | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*" | (read JOB_NAME; oc wait --for=condition=complete job/$JOB_NAME --timeout=120s)
 
-## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
-## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
@@ -161,15 +154,15 @@ jobs:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
-          namespace: 3cd915-dev
+          namespace: 3cd915-test
       - name: call scripts to sync mayan
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-test -p TOKEN_URL=https://test.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-uat-3cd915-test.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
 
-## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
+  ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
@@ -183,17 +176,38 @@ jobs:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
-          namespace: 3cd915-dev
+          namespace: ${{ env.NAMESPACE_OVERRIDE }}
       - name: call scripts to sync keycloak
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=3cd915-dev -p BRANCH=$DESTINATION -p API_URL=http://pims-api:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=$NAMESPACE_OVERRIDE -p BRANCH=$DESTINATION -p API_URL=http://pims-api-uat:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+
+  tag-release-image:
+    name: Release Tag
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-tools
+      - name: tag uat image such that it can be promoted to prod
+        shell: bash
+        run: |
+          VERSION=$(make version)
+          oc tag pims-app:uat pims-app:v${VERSION}-master
+          oc tag pims-api:uat pims-api:v${VERSION}-master
 
   ci-cd-end-notification:
+    if: always()
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-latest
-    needs: keycloak-sync
-    if: ${{ always() && github.event.pull_request.merged == true }}
+    needs: [mayan-sync, keycloak-sync]
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@v4
@@ -203,6 +217,6 @@ jobs:
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS CI-CD GitHub Action COMPLETED in DEV environment with status ${{ steps.check.outputs.status }}
+          notification-summary: PIMS UAT Hotfix complete with status ${{ steps.check.outputs.status }}
           notification-color: 17a2b8
           timezone: America/Los_Angeles

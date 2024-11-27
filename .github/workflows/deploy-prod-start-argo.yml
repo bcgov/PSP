@@ -1,0 +1,157 @@
+name: PIMS PROD Deployment (ArgoCD)
+env:
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  # service account: gitaction
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+  OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
+  MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET_PROD }}
+  AUTH__KEYCLOAK__SERVICEACCOUNT__SECRET: ${{ secrets.KEYCLOAK_SERVICEACCOUNT_SECRET }}
+  ASPNETCORE_ENVIRONMENT: "prod"
+
+  APP_PORT: 8080
+  DESTINATION: "prod"
+  OC_JOB_NAME: "master"
+  GIT_URL: "${{github.server_url}}/${{github.repository}}"
+  GIT_BRANCH: "master"
+  APP_NAME: "pims"
+  PROJ_PREFIX: "3cd915"
+  PROJ_TOOLS: "3cd915-tools"
+  PROJ_DEV: "dev"
+  PROJ_TEST: "test"
+  PROJ_PROD: "prod"
+  TAG_DEV: "dev"
+  TAG_TEST: "test"
+  TAG_PROD: "prod"
+  DEPLOYMENT_NAMESPACE: "3cd915-prod"
+
+on:
+  workflow_dispatch:
+    inputs:
+      OVERRIDE_VERSION:
+        description: "Enter the version tag for this release in format v<major>.<minor>.<patch>-<IS>.<build> or enter nothing to use the most recently tagged version"
+        required: false
+
+jobs:
+  ci-cd-start-notification:
+    name: CI-CD Start Notification to Teams Channel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start notification to Teams Channel
+        uses: dragos-cojocari/ms-teams-notification@v1.0.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
+          notification-summary: PIMS Deployment to PRODUCTION started.
+          notification-color: 17a2b8
+          timezone: America/Los_Angeles
+
+  deploy:
+    name: Deploy frontend and api to OpenShift
+    runs-on: ubuntu-latest
+    needs: ci-cd-start-notification
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+        with:
+          ref: master
+          fetch-depth: 0
+      - name: "Get Previous tag"
+        id: previoustag
+        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Display the maintenance page instead of the app
+        run: |
+          ./tools/cicd/maintenance/maintenance.sh prod on
+      - name: call scripts to deploy api and frontend
+        run: |
+          [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master
+
+          oc tag pims-app:$RELEASE_VERSION pims-app:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
+
+          oc tag pims-api:$RELEASE_VERSION pims-api:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
+
+          oc tag pims-proxy:$RELEASE_VERSION pims-proxy:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+
+          oc tag mayan-bcgov:$RELEASE_VERSION mayan-bcgov:master
+
+  # the command:
+  # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
+  # 2) greps the generated name from the previous step.
+  # 3) waits for the job to complete using the generated name.
+  database-upgrade:
+    name: Upgrade database
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-prod
+      - name: call scripts to upgrade database
+        shell: bash
+        run: |
+          JOB_NAME=$(oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database -p GIT_BRANCH=master -p SERVER_NAME=sqlprd.th.gov.bc.ca -p DB_NAME=PIMS_PRD -p NAMESPACE=3cd915-prod | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*")
+          oc wait --for=condition=complete job/$JOB_NAME --timeout=120s
+          oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
+
+  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+  mayan-sync:
+    name: sync mayan
+    needs: database-upgrade
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-prod
+      - name: call scripts to sync mayan
+        shell: bash
+        run: |
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+
+## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
+  keycloak-sync:
+    name: sync keycloak
+    needs: database-upgrade
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@v4
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: 3cd915-prod
+      - name: call scripts to sync keycloak
+        shell: bash
+        run: |
+          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=3cd915-prod -p BRANCH=$DESTINATION -p API_URL=http://pims-api:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+
