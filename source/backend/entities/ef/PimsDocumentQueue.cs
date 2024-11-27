@@ -80,6 +80,14 @@ public partial class PimsDocumentQueue
     public long? DispositionFileDocumentId { get; set; }
 
     /// <summary>
+    /// Name of the file to be stored on Mayan EDMS.
+    /// </summary>
+    [Required]
+    [Column("FILE_NAME")]
+    [StringLength(500)]
+    public string FileName { get; set; }
+
+    /// <summary>
     /// Fluid key used to uniquely identify document in external system.
     /// </summary>
     [Column("DOCUMENT_EXTERNAL_ID")]

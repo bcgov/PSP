@@ -51,6 +51,11 @@ public partial class PimsDocumentQueueHist
     [Column("DISPOSITION_FILE_DOCUMENT_ID")]
     public long? DispositionFileDocumentId { get; set; }
 
+    [Required]
+    [Column("FILE_NAME")]
+    [StringLength(500)]
+    public string FileName { get; set; }
+
     [Column("DOCUMENT_EXTERNAL_ID")]
     [StringLength(1000)]
     public string DocumentExternalId { get; set; }
