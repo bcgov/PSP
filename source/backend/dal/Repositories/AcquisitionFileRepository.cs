@@ -817,31 +817,7 @@ namespace Pims.Dal.Repositories
                 .Where(predicate).OrderBy(x => x.FileNumber).ToList();
         }
 
-        /// <summary>
-        /// Generates a new Acquisition Number in the following format.
-        /// </summary>
-        /// <remarks>
-        /// <list type="bullet">
-        /// <item>
-        /// Format: YY-XXXXXXXXXXXX-ZZ
-        /// </item>
-        /// <item>
-        /// Prefix - (YY above) The prefix numbers for an Acquisition file correspond with the MoTI region
-        /// </item>
-        /// <item>
-        /// File # - (XXXXX... above) Acquisition File number is created and each file number should increase in increments of 1.
-        /// The digit base number is unique to the file. Do not pad the number with zeros.
-        /// </item>
-        /// <item>
-        /// Suffix - (ZZ above) The suffix numbers for an Acquisition file defaults to 01 for "Main Files".
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// <returns>The formatted Acquisition File Number.</returns>
-        private static string GenerateAcquisitionNumber(short prefix, long fileNumber, int suffix = 1)
-        {
-            return $"{prefix:00}-{fileNumber}-{suffix:00}";
-        }
+
 
         /// <summary>
         /// Get the next available value from PIMS_ACQUISITION_FILE_NO_SEQ.
