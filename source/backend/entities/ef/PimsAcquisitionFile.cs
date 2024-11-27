@@ -108,10 +108,16 @@ public partial class PimsAcquisitionFile
     /// <summary>
     /// Acquisition file number suffix
     /// </summary>
+    [Column("FILE_NO_SUFFIX")]
+    public short FileNoSuffix { get; set; }
+
+    /// <summary>
+    /// Formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;)
+    /// </summary>
     [Required]
-    [Column("FILE_NUM_SUFFIX")]
-    [StringLength(2)]
-    public string FileNumSuffix { get; set; }
+    [Column("FILE_NUMBER")]
+    [StringLength(18)]
+    public string FileNumber { get; set; }
 
     /// <summary>
     /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t

@@ -946,9 +946,10 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.FileNo)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NO_SEQ])")
                 .HasComment("File number assigned to the acquisition file.");
-            entity.Property(e => e.FileNumSuffix)
-                .HasDefaultValue("00")
+            entity.Property(e => e.FileNoSuffix)
+                .HasDefaultValue((short)1)
                 .HasComment("Acquisition file number suffix");
+            entity.Property(e => e.FileNumber).HasComment("Formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01')");
             entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
             entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
             entity.Property(e => e.LegacyStakeholder).HasComment("Legacy stakeholders imported from PAIMS.");
