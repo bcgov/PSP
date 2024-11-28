@@ -1,0 +1,972 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/15/2024 6:38:30 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{9EFEAC1A-6D9E-48D5-868C-277D3DA50A54}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="29"
+  DTS:VersionGUID="{4C639D0E-E099-4500-9858-EFFB137DC6AC}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CREATE etl Schema TABLES if not exists"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2A4E7CFD-D681-4993-9554-17B3E80E5374}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CREATE etl Schema TABLES if not exists"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3240E4ED-22D8-4686-9ACC-CD9642381A84}"
+          SQLTask:SqlStatementSource="-- REGION&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'DSA_REGION_BOUNDARY' AND schema_id = SCHEMA_ID('etl')&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE [etl].[DSA_REGION_BOUNDARY](&#xA;&#x9;[OBJECTID] [numeric](38, 0) NULL,&#xA;&#x9;[REGION_NUMBER] [numeric](1, 0) NULL,&#xA;&#x9;[REGION_NAME] [nvarchar](30) NULL,&#xA;&#x9;[WKT_GEOMETRY] [nvarchar](max) NULL&#xA;) &#xA;&#xA;END;&#xA;&#xA;-- DISTRICT&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables&#xA;    WHERE name = 'DSA_DISTRICT_BOUNDARY' AND schema_id = SCHEMA_ID('etl')&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE [etl].[DSA_DISTRICT_BOUNDARY](&#xA;&#x9;[OBJECTID] [numeric](38, 0) NULL,&#xA;&#x9;[DISTRICT_NUMBER] [numeric](2, 0) NULL,&#xA;&#x9;[DISTRICT_NAME] [nvarchar](30) NULL,&#xA;&#x9;[WKT_GEOMETRY] [nvarchar](max) NULL&#xA;) &#xA;&#xA;END;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LOAD etl DISTRICT"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{062345A1-BD12-4BBB-80D7-AEF636698CAF}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LOAD etl DISTRICT"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET Source - PSP"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+OBJECTID,
+DISTRICT_NUMBER,
+DISTRICT_NAME,
+SDO_UTIL.TO_WKTGEOMETRY(SHAPE) AS wkt_geometry
+FROM DSA.DSA_DISTRICT_BOUNDARY</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Connections[IDbConnection]"
+                  connectionManagerID="{A138AC21-CEB4-46E6-89FF-EA314DDC2BAF}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PSP]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[OBJECTID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[OBJECTID]"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[OBJECTID]"
+                      name="OBJECTID"
+                      precision="38"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[DISTRICT_NUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[DISTRICT_NUMBER]"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[DISTRICT_NUMBER]"
+                      name="DISTRICT_NUMBER"
+                      precision="2"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[DISTRICT_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[DISTRICT_NAME]"
+                      length="30"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[DISTRICT_NAME]"
+                      name="DISTRICT_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[WKT_GEOMETRY]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[WKT_GEOMETRY]"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[WKT_GEOMETRY]"
+                      name="WKT_GEOMETRY"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[OBJECTID]"
+                      dataType="numeric"
+                      name="OBJECTID"
+                      precision="38" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[DISTRICT_NUMBER]"
+                      dataType="numeric"
+                      name="DISTRICT_NUMBER"
+                      precision="2" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[DISTRICT_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="DISTRICT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[WKT_GEOMETRY]"
+                      dataType="nText"
+                      name="WKT_GEOMETRY" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[OBJECTID]"
+                      dataType="numeric"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[OBJECTID]"
+                      name="OBJECTID"
+                      precision="38" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[DISTRICT_NUMBER]"
+                      dataType="numeric"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[DISTRICT_NUMBER]"
+                      name="DISTRICT_NUMBER"
+                      precision="2" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[DISTRICT_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[DISTRICT_NAME]"
+                      name="DISTRICT_NAME" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[WKT_GEOMETRY]"
+                      dataType="nText"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[WKT_GEOMETRY]"
+                      name="WKT_GEOMETRY" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\LOAD etl DISTRICT\PIMS"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="PIMS"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[etl].[DSA_DISTRICT_BOUNDARY]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\LOAD etl DISTRICT\PIMS.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].Columns[OBJECTID]"
+                      cachedDataType="numeric"
+                      cachedName="OBJECTID"
+                      cachedPrecision="38"
+                      externalMetadataColumnId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[OBJECTID]"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[OBJECTID]" />
+                    <inputColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].Columns[DISTRICT_NUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="DISTRICT_NUMBER"
+                      cachedPrecision="2"
+                      externalMetadataColumnId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[DISTRICT_NUMBER]"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[DISTRICT_NUMBER]" />
+                    <inputColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].Columns[DISTRICT_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="DISTRICT_NAME"
+                      externalMetadataColumnId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[DISTRICT_NAME]"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[DISTRICT_NAME]" />
+                    <inputColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].Columns[WKT_GEOMETRY]"
+                      cachedDataType="nText"
+                      cachedName="WKT_GEOMETRY"
+                      externalMetadataColumnId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[WKT_GEOMETRY]"
+                      lineageId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[WKT_GEOMETRY]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[OBJECTID]"
+                      dataType="numeric"
+                      name="OBJECTID"
+                      precision="38" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[DISTRICT_NUMBER]"
+                      dataType="numeric"
+                      name="DISTRICT_NUMBER"
+                      precision="2" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[DISTRICT_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="DISTRICT_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[WKT_GEOMETRY]"
+                      dataType="nText"
+                      name="WKT_GEOMETRY" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\LOAD etl DISTRICT\PIMS.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LOAD etl DISTRICT\PIMS.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LOAD etl DISTRICT\PIMS.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LOAD etl DISTRICT\PIMS.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\LOAD etl DISTRICT.Paths[ADO NET Source Output]"
+              endId="Package\LOAD etl DISTRICT\PIMS.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\LOAD etl DISTRICT\ADO NET Source - PSP.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\LOAD etl REGION"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{3E61A325-4EE3-4189-8EC5-F917A5D47906}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="LOAD etl REGION"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\LOAD etl REGION\ADO NET Source - PSP"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET Source - PSP"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT 
+OBJECTID,
+REGION_NUMBER,
+REGION_NAME,
+SDO_UTIL.TO_WKTGEOMETRY(SHAPE) AS wkt_geometry
+FROM DSA.DSA_REGION_BOUNDARY</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\LOAD etl REGION\ADO NET Source - PSP.Connections[IDbConnection]"
+                  connectionManagerID="{A138AC21-CEB4-46E6-89FF-EA314DDC2BAF}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PSP]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[OBJECTID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[OBJECTID]"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[OBJECTID]"
+                      name="OBJECTID"
+                      precision="38"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[REGION_NUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[REGION_NUMBER]"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[REGION_NUMBER]"
+                      name="REGION_NUMBER"
+                      precision="1"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[REGION_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[REGION_NAME]"
+                      length="30"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[REGION_NAME]"
+                      name="REGION_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[WKT_GEOMETRY]"
+                      dataType="nText"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[WKT_GEOMETRY]"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[WKT_GEOMETRY]"
+                      name="WKT_GEOMETRY"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[OBJECTID]"
+                      dataType="numeric"
+                      name="OBJECTID"
+                      precision="38" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[REGION_NUMBER]"
+                      dataType="numeric"
+                      name="REGION_NUMBER"
+                      precision="1" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[REGION_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="REGION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].ExternalColumns[WKT_GEOMETRY]"
+                      dataType="nText"
+                      name="WKT_GEOMETRY" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[OBJECTID]"
+                      dataType="numeric"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[OBJECTID]"
+                      name="OBJECTID"
+                      precision="38" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[REGION_NUMBER]"
+                      dataType="numeric"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[REGION_NUMBER]"
+                      name="REGION_NUMBER"
+                      precision="1" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[REGION_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[REGION_NAME]"
+                      name="REGION_NAME" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[WKT_GEOMETRY]"
+                      dataType="nText"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[WKT_GEOMETRY]"
+                      name="WKT_GEOMETRY" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\LOAD etl REGION\PIMS"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="PIMS"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[etl].[DSA_REGION_BOUNDARY]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\LOAD etl REGION\PIMS.Connections[OleDbConnection]"
+                  connectionManagerID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].Columns[OBJECTID]"
+                      cachedDataType="numeric"
+                      cachedName="OBJECTID"
+                      cachedPrecision="38"
+                      externalMetadataColumnId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[OBJECTID]"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[OBJECTID]" />
+                    <inputColumn
+                      refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].Columns[REGION_NUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="REGION_NUMBER"
+                      cachedPrecision="1"
+                      externalMetadataColumnId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[REGION_NUMBER]"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[REGION_NUMBER]" />
+                    <inputColumn
+                      refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].Columns[REGION_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="REGION_NAME"
+                      externalMetadataColumnId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[REGION_NAME]"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[REGION_NAME]" />
+                    <inputColumn
+                      refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].Columns[WKT_GEOMETRY]"
+                      cachedDataType="nText"
+                      cachedName="WKT_GEOMETRY"
+                      externalMetadataColumnId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[WKT_GEOMETRY]"
+                      lineageId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output].Columns[WKT_GEOMETRY]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[OBJECTID]"
+                      dataType="numeric"
+                      name="OBJECTID"
+                      precision="38" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[REGION_NUMBER]"
+                      dataType="numeric"
+                      name="REGION_NUMBER"
+                      precision="1" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[REGION_NAME]"
+                      dataType="wstr"
+                      length="30"
+                      name="REGION_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input].ExternalColumns[WKT_GEOMETRY]"
+                      dataType="nText"
+                      name="WKT_GEOMETRY" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\LOAD etl REGION\PIMS.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\PIMS.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\LOAD etl REGION\PIMS.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\LOAD etl REGION\PIMS.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\LOAD etl REGION\PIMS.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\LOAD etl REGION.Paths[ADO NET Source Output]"
+              endId="Package\LOAD etl REGION\PIMS.Inputs[OLE DB Destination Input]"
+              name="ADO NET Source Output"
+              startId="Package\LOAD etl REGION\ADO NET Source - PSP.Outputs[ADO NET Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\TRUNCATE etl Schema tables"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{217F2428-EACC-4887-8B10-3FC3291D40C3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="TRUNCATE etl Schema tables"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3240E4ED-22D8-4686-9ACC-CD9642381A84}"
+          SQLTask:SqlStatementSource="-- REGION&#xA;TRUNCATE TABLE etl.DSA_REGION_BOUNDARY;&#xA;&#xA;-- DISTRICT&#xA;TRUNCATE TABLE etl.DSA_DISTRICT_BOUNDARY;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{0EAB5F64-B64B-43D3-9C92-7C6A60B4F389}"
+      DTS:From="Package\CREATE etl Schema TABLES if not exists"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\TRUNCATE etl Schema tables" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{631E9CBC-7C2C-4BBF-969F-93361B013E7B}"
+      DTS:From="Package\TRUNCATE etl Schema tables"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\LOAD etl REGION" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{893F300E-CCA2-4EC7-BBAE-7458BADA63FC}"
+      DTS:From="Package\LOAD etl REGION"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\LOAD etl DISTRICT" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="278.666666666667,42.6666666666667"
+          Id="Package\CREATE etl Schema TABLES if not exists"
+          TopLeft="119.374998221174,195.000003670391" />
+        <NodeLayout
+          Size="174.666666666667,42.6666666666667"
+          Id="Package\LOAD etl DISTRICT"
+          TopLeft="1198.12498214654,206.631582836695" />
+        <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\LOAD etl REGION"
+          TopLeft="869.374987045303,202.526319601529" />
+        <NodeLayout
+          Size="225.333333333334,42.6666666666667"
+          Id="Package\TRUNCATE etl Schema tables"
+          TopLeft="508.124992428347,197.052635287974" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="398.041664887841,217.359652812516">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="110.083327540507,0"
+              Start="0,0"
+              End="102.583327540507,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="102.583327540507,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="733.458325761681,221.122810778085">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="135.916661283622,0"
+              Start="0,0"
+              End="128.416661283622,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="128.416661283622,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="1037.3749870453,225.912284552445">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="160.749995101241,0"
+              Start="0,0"
+              End="153.249995101241,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="153.249995101241,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\LOAD etl DISTRICT">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="105.333333333334,42.6666666666667"
+          Id="Package\LOAD etl DISTRICT\PIMS"
+          TopLeft="713.5,207.5" />
+        <NodeLayout
+          Size="194.666666666667,42.6666666666667"
+          Id="Package\LOAD etl DISTRICT\ADO NET Source - PSP"
+          TopLeft="415.5,203.5" />
+        <EdgeLayout
+          Id="Package\LOAD etl DISTRICT.Paths[ADO NET Source Output]"
+          TopLeft="610.166666666667,226.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="103.333333333333,0"
+              Start="0,0"
+              End="95.8333333333334,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="95.8333333333334,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\LOAD etl DISTRICT\ADO NET Source - PSP">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\LOAD etl DISTRICT\PIMS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\LOAD etl REGION">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="105.333333333334,42.6666666666667"
+          Id="Package\LOAD etl REGION\PIMS"
+          TopLeft="861.874987157062,265.47368920741" />
+        <NodeLayout
+          Size="194.666666666667,42.6666666666667"
+          Id="Package\LOAD etl REGION\ADO NET Source - PSP"
+          TopLeft="492.499992661178,264.789478668216" />
+        <EdgeLayout
+          Id="Package\LOAD etl REGION.Paths[ADO NET Source Output]"
+          TopLeft="687.166659327845,286.464917271146">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="174.708327829217,0"
+              Start="0,0"
+              End="167.208327829217,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="167.208327829217,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\LOAD etl REGION\ADO NET Source - PSP">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\LOAD etl REGION\PIMS">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,2797 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="10/30/2024 9:18:09 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DelayValidation="True"
+  DTS:DTSID="{529F8BCF-6017-4DD2-8CBA-CAD606BE2751}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="PIMS_ACQUISITION_FILE_FIX"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="87"
+  DTS:VersionGUID="{4C4EAD16-DF6F-474F-9BFB-F22BC485B8D0}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\CASE 2 - ALPHABETS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5228C191-FB8C-4DBF-9DF2-65D819939284}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CASE 2 - ALPHABETS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
+          SQLTask:SqlStatementSource="WITH CASE2 AS  &#xA;(&#xA;    SELECT&#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO,&#xA;        FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;        CASE &#xA;            WHEN PATINDEX('%[A-Z]%', SUBSTRING(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1) + 1, LEN(FILE_NUMBER))) &gt; 0 &#xA;            THEN 'YES'&#xA;            ELSE 'NO'&#xA;        END AS HasAlphabets&#xA;    FROM &#xA;        dbo.PIMS_ACQUISITION_FILE&#xA;    WHERE&#xA;        FILE_NUMBER NOT LIKE '%-R%' &#xA;        AND APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;),&#xA;NUMBERED_FILES AS &#xA;(&#xA;    SELECT&#xA;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;        ROW_NUMBER() OVER (PARTITION BY REGION_CODE, FILE_NO ORDER BY FILE_NUMBER) AS NewSuffixNumber&#xA;    FROM &#xA;        CASE2&#xA;    WHERE &#xA;        HasAlphabets = 'YES'&#xA;&#x9;AND NOT ( LEN(FILE_NUMBER) &gt;= 2 AND ISNUMERIC(RIGHT(FILE_NUMBER, 1)) = 1 AND PATINDEX('%[A-Z]%', RIGHT(FILE_NUMBER, 2)) &gt; 0 )&#xA;),&#xA;UPDATED_FILES AS&#xA;(&#xA;    SELECT &#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER, &#xA;        ACQUISITION_FILE_ID,&#xA;        LEFT(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1)) &#xA;        + RIGHT('00' + CAST(NewSuffixNumber AS VARCHAR(2)), 2) AS Updated_FILE_NUMBER,&#xA;        NewSuffixNumber&#xA;    FROM &#xA;        NUMBERED_FILES&#xA;)&#xA;SELECT &#xA;&#x9;UF.REGION_CODE,&#xA;    UF.FILE_NO, &#xA;    UF.FILE_NUMBER, &#xA;    UF.ACQUISITION_FILE_ID,&#xA;    UF.Updated_FILE_NUMBER,&#xA;    CASE &#xA;        WHEN UF.NewSuffixNumber = 1 THEN NULL  -- Parent file (Updated_FILE_NUMBER = &quot;01&quot;)&#xA;        ELSE PF.ACQUISITION_FILE_ID           -- Child file points to the ACQUISITION_FILE_ID of the parent file&#xA;    END AS PRNT_ACQUISITION_FILE_ID&#xA;&#xA;INTO etl.CASE2_ALPHABETS&#xA;&#xA;FROM &#xA;    UPDATED_FILES UF&#xA;LEFT JOIN &#xA;    UPDATED_FILES PF &#xA;    ON UF.FILE_NO = PF.FILE_NO &#xA;    AND PF.NewSuffixNumber = 1  -- Find the parent file with Updated_FILE_NUMBER = &quot;01&quot;&#xA;ORDER BY &#xA;    UF.FILE_NO, UF.NewSuffixNumber;&#xA;&#xA;&#x9; &#xA; &#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CASE3_SINGLE_DIGITS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{1D02BF51-ED3F-412A-A4A6-6000BE856EB0}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CASE3_SINGLE_DIGITS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
+          SQLTask:SqlStatementSource="WITH CASE3 AS  &#xA;(&#xA;    SELECT&#xA;        ACQUISITION_FILE_ID,&#xA;        REGION_CODE,&#xA;        FILE_NO,&#xA;        FILE_NUMBER,&#xA;        LEFT(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1)) &#xA;        + '0' &#xA;        + SUBSTRING(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1) + 1, 1) AS UPDATED_FILE_NUMBER&#xA;    FROM &#xA;        dbo.PIMS_ACQUISITION_FILE&#xA;    WHERE &#xA;        LEN(SUBSTRING(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1) + 1, LEN(FILE_NUMBER))) = 1 &#xA;        AND ISNUMERIC(SUBSTRING(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1) + 1, 1)) = 1&#xA;        AND APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;),&#xA;&#xA;NUMBERED_FILES AS &#xA;(&#xA;    SELECT &#xA;        REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;        ROW_NUMBER() OVER (PARTITION BY REGION_CODE, FILE_NO ORDER BY FILE_NUMBER) AS NewSuffixNumber&#xA;    FROM &#xA;        CASE3&#xA;),&#xA;&#xA;UPDATED_FILES AS&#xA;(&#xA;    SELECT &#xA;        REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER, &#xA;        ACQUISITION_FILE_ID,&#xA;        LEFT(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1)) &#xA;        + RIGHT('00' + CAST(NewSuffixNumber AS VARCHAR(2)), 2) AS Updated_FILE_NUMBER,&#xA;        NewSuffixNumber&#xA;    FROM &#xA;        NUMBERED_FILES&#xA;)&#xA;&#xA;SELECT&#xA;    UF.REGION_CODE,&#xA;    UF.FILE_NO, &#xA;    UF.FILE_NUMBER, &#xA;    UF.ACQUISITION_FILE_ID,&#xA;    UF.Updated_FILE_NUMBER,&#xA;    CASE &#xA;        WHEN UF.NewSuffixNumber = 1 THEN NULL  -- Parent file (Updated_FILE_NUMBER = &quot;01&quot;)&#xA;        ELSE PF.ACQUISITION_FILE_ID           -- Child file points to the ACQUISITION_FILE_ID of the parent file (first row)&#xA;    END AS PRNT_ACQUISITION_FILE_ID&#xA;INTO etl.CASE3_SINGLE_DIGITS&#xA;FROM &#xA;    UPDATED_FILES UF&#xA;LEFT JOIN &#xA;    UPDATED_FILES PF &#xA;    ON UF.FILE_NO = PF.FILE_NO &#xA;    AND PF.NewSuffixNumber = 1  -- Ensure PF is the parent row with NewSuffixNumber = 1&#xA;&#x9;--WHERE UF.FILE_NO = 4613&#xA;ORDER BY &#xA;    UF.FILE_NO, UF.NewSuffixNumber;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CASE3_UPDATE_PIMS_FILE_NUMBER"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F27FE688-DD1C-4139-B648-776FD88E34FD}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CASE3_UPDATE_PIMS_FILE_NUMBER"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
+          SQLTask:SqlStatementSource="-- CASE 3 UPDATE&#xA;&#x9;UPDATE A&#xA;&#x9;SET A.FILE_NUMBER = B.Updated_FILE_NUMBER, &#xA;&#x9;&#x9;--A.PRNT_ACQUISITION_FILE_ID = B.PRNT_ACQUISITION_FILE_ID,&#xA;&#x9;&#x9;A.APP_LAST_UPDATE_USERID = 'PIMS_ETL_USER'&#xA;&#x9;&#x9;,A.CONCURRENCY_CONTROL_NUMBER=A.CONCURRENCY_CONTROL_NUMBER+1&#xA;&#x9;FROM &#xA;&#x9;&#x9;--etl.PIMS_ACQUISITION_FILE A&#xA;&#x9;&#x9;dbo.PIMS_ACQUISITION_FILE A&#xA;&#x9;JOIN etl.CASE3_SINGLE_DIGITS B ON A.ACQUISITION_FILE_ID = B.ACQUISITION_FILE_ID;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CASE4_SUFFIX_NULL"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{EF1B5E99-07A9-48E3-A1A3-30849EBEABE8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CASE4_SUFFIX_NULL"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
+          SQLTask:SqlStatementSource="WITH CASE4 AS&#xA;(&#xA;&#x9;SELECT FILE_NUMBER, COUNT(1) AS X FROM etl.PIMS_ACQUISITION_FILE_BKP&#xA;&#x9;WHERE FILE_NUMBER = LEGACY_FILE_NUMBER&#xA;&#xA;&#x9;GROUP BY FILE_NUMBER&#xA;&#x9;HAVING COUNT(1) &gt; 1&#xA;)&#xA;&#xA;SELECT &#xA;&#x9;PAIMS_ACQUISITION_FILE_ID,&#xA;&#x9;ACQUISITION_FILE_ID, &#xA;&#x9;FILE_NO, &#xA;&#x9;FILE_NUMBER, &#xA;&#x9;LEGACY_FILE_NUMBER,  &#xA;&#x9;[ACQUISITION_FILE_STATUS_TYPE_CODE],&#xA;&#x9;LEFT(FILE_NUMBER, 2) as REGION_CODE,LEFT(LEGACY_FILE_NUMBER, 2) AS OLD_REGION_CODE, &#xA;&#x9;PRNT_ACQUISITION_FILE_ID, NULL AS SUFFIX&#xA;INTO etl.CASE4_SUFFIX_NULL&#xA;FROM&#x9;dbo.PIMS_ACQUISITION_FILE&#xA;WHERE &#xA;&#x9;FILE_NUMBER IN ( Select FILE_NUMBER FROM CASE4 )&#xA;&#xA;ORDER BY FILE_NO&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Case4_UPDATE_PARENT"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:DelayValidation="True"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{A527997E-CD36-49A9-A9EC-1C0F114434AE}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Case4_UPDATE_PARENT"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\Case4_UPDATE_PARENT\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">WITH CTE AS (
+    SELECT 
+		ACQUISITION_FILE_ID,
+        FILE_NO,
+        FILE_NUMBER,
+        SUFFIX,
+        ROW_NUMBER() OVER (PARTITION BY FILE_NO ORDER BY SUFFIX) AS row_num
+    FROM 
+        etl.CASE4_SUFFIX_NULL
+)
+
+-- Now, we update FILE_NUMBER and PRNT_ACQUISITION_FILE_ID based on row number
+SELECT 
+	ACQUISITION_FILE_ID,
+    FILE_NO,
+    CASE 
+        WHEN row_num = 1 THEN FILE_NUMBER -- Keep the original FILE_NUMBER for the first row
+        ELSE LEFT(FILE_NUMBER, LEN(FILE_NUMBER) - 2) + RIGHT('0' + CAST((CAST(RIGHT(FILE_NUMBER, 2) AS INT) + 1) AS VARCHAR(2)), 2) -- Increment FILE_NUMBER for subsequent rows
+    END AS FILE_NUMBER,
+    SUFFIX,
+    CASE 
+        WHEN row_num = 1 THEN NULL -- PRNT_ACQUISITION_FILE_ID remains NULL for the first row
+        ELSE (SELECT TOP 1 ACQUISITION_FILE_ID FROM etl.CASE4_SUFFIX_NULL WHERE FILE_NO = CTE.FILE_NO AND SUFFIX IS NULL) -- PRNT_ACQUISITION_FILE_ID takes value from the first row in the group
+    END AS PRNT_ACQUISITION_FILE_ID
+FROM 
+    CTE
+ORDER BY 
+    FILE_NO, row_num
+	;</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (WITH CTE AS (
+    SELECT 
+		ACQUISITION_FILE_ID,
+        FILE_NO,
+        FILE_NUMBER,
+        SUFFIX,
+        ROW_NUMBER() OVER (PARTITION BY FILE_NO ORDER BY SUFFIX) AS row_num
+    FROM 
+        etl.CASE4_SUFFIX_NULL
+)
+
+-- Now, we update FILE_NUMBER and PRNT_ACQUISITION_FILE_ID based on row number
+SELECT 
+	ACQUISITION_FILE_ID,
+    FILE_NO,
+    CASE 
+        WHEN row_num = 1 THEN FILE_NUMBER -- Keep the original FILE_NUMBER for the first row
+        ELSE LEFT(FILE_NUMBER, LEN(FILE_NUMBER) - 2) + RIGHT('0' + CAST((CAST(RIGHT(FILE_NUMBER, 2) AS INT) + 1) AS VARCHAR(2)), 2) -- Increment FILE_NUMBER for subsequent rows
+    END AS FILE_NUMBER,
+    SUFFIX,
+    CASE 
+        WHEN row_num = 1 THEN NULL -- PRNT_ACQUISITION_FILE_ID remains NULL for the first row
+        ELSE (SELECT TOP 1 ACQUISITION_FILE_ID FROM etl.CASE4_SUFFIX_NULL WHERE FILE_NO = CTE.FILE_NO AND SUFFIX IS NULL) -- PRNT_ACQUISITION_FILE_ID takes value from the first row in the group
+    END AS PRNT_ACQUISITION_FILE_ID
+FROM 
+    CTE
+ORDER BY 
+    FILE_NO, row_num
+	;) [refTable]
+where [refTable].[FILE_NO] = ? and [refTable].[SUFFIX] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="ACQUISITION_FILE_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FILE_NO" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FILE_NUMBER" dataType="DT_WSTR" length="20" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SUFFIX" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="PRNT_ACQUISITION_FILE_ID" dataType="DT_I8" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NO]};#{Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[SUFFIX]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Case4_UPDATE_PARENT\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Case4_UPDATE_PARENT\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Case4_UPDATE_PARENT\Lookup.Inputs[Lookup Input].Columns[FILE_NO]"
+                      cachedDataType="i4"
+                      cachedName="FILE_NO"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NO]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">FILE_NO</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\Case4_UPDATE_PARENT\Lookup.Inputs[Lookup Input].Columns[SUFFIX]"
+                      cachedDataType="i4"
+                      cachedName="SUFFIX"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[SUFFIX]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">SUFFIX</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\Case4_UPDATE_PARENT\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[FILE_NO]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[FILE_NO]"
+                      name="FILE_NO"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">FILE_NO</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[FILE_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Copy Column"
+                      length="20"
+                      lineageId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">FILE_NUMBER</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[SUFFIX]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[SUFFIX]"
+                      name="SUFFIX"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">SUFFIX</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[PRNT_ACQUISITION_FILE_ID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[PRNT_ACQUISITION_FILE_ID]"
+                      name="PRNT_ACQUISITION_FILE_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">PRNT_ACQUISITION_FILE_ID</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\Case4_UPDATE_PARENT\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\Case4_UPDATE_PARENT\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Case4_UPDATE_PARENT\OLE DB Command"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="OLE DB Command"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE etl.CASE4_SUFFIX_NULL
+	SET 
+		FILE_NUMBER = ?,
+		PRNT_ACQUISITION_FILE_ID =?
+	WHERE
+		FILE_NO = ?
+		AND 
+		SUFFIX = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Connections[OleDbConnection]"
+                  connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].Columns[FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="20"
+                      cachedName="FILE_NUMBER"
+                      externalMetadataColumnId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[FILE_NUMBER]" />
+                    <inputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].Columns[PRNT_ACQUISITION_FILE_ID]"
+                      cachedDataType="i8"
+                      cachedName="PRNT_ACQUISITION_FILE_ID"
+                      externalMetadataColumnId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output].Columns[PRNT_ACQUISITION_FILE_ID]" />
+                    <inputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].Columns[FILE_NO]"
+                      cachedDataType="i4"
+                      cachedName="FILE_NO"
+                      externalMetadataColumnId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NO]" />
+                    <inputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].Columns[SUFFIX]"
+                      cachedDataType="i4"
+                      cachedName="SUFFIX"
+                      externalMetadataColumnId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[SUFFIX]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="wstr"
+                      length="18"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">1</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="i8"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_2]"
+                      dataType="i4"
+                      name="Param_2">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">17</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_3]"
+                      dataType="i4"
+                      name="Param_3">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\Case4_UPDATE_PARENT\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT * FROM etl.CASE4_SUFFIX_NULL</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NO]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NO]"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NO]"
+                      name="FILE_NO"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[SUFFIX]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SUFFIX]"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].Columns[SUFFIX]"
+                      name="SUFFIX"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PAIMS_ACQUISITION_FILE_ID]"
+                      dataType="i4"
+                      name="PAIMS_ACQUISITION_FILE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ACQUISITION_FILE_ID]"
+                      dataType="i8"
+                      name="ACQUISITION_FILE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NO]"
+                      dataType="i4"
+                      name="FILE_NO" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NUMBER]"
+                      dataType="wstr"
+                      length="18"
+                      name="FILE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LEGACY_FILE_NUMBER]"
+                      dataType="wstr"
+                      length="18"
+                      name="LEGACY_FILE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ACQUISITION_FILE_STATUS_TYPE_CODE]"
+                      dataType="wstr"
+                      length="20"
+                      name="ACQUISITION_FILE_STATUS_TYPE_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[REGION_CODE]"
+                      dataType="wstr"
+                      length="2"
+                      name="REGION_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OLD_REGION_CODE]"
+                      dataType="wstr"
+                      length="2"
+                      name="OLD_REGION_CODE" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PRNT_ACQUISITION_FILE_ID]"
+                      dataType="i8"
+                      name="PRNT_ACQUISITION_FILE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SUFFIX]"
+                      dataType="i4"
+                      name="SUFFIX" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NO]"
+                      dataType="i4"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NO]"
+                      name="FILE_NO" />
+                    <outputColumn
+                      refId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SUFFIX]"
+                      dataType="i4"
+                      lineageId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SUFFIX]"
+                      name="SUFFIX" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\Case4_UPDATE_PARENT.Paths[Lookup Match Output]"
+              endId="Package\Case4_UPDATE_PARENT\OLE DB Command.Inputs[OLE DB Command Input]"
+              name="Lookup Match Output"
+              startId="Package\Case4_UPDATE_PARENT\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\Case4_UPDATE_PARENT.Paths[OLE DB Source Output]"
+              endId="Package\Case4_UPDATE_PARENT\Lookup.Inputs[Lookup Input]"
+              name="OLE DB Source Output"
+              startId="Package\Case4_UPDATE_PARENT\OLE DB Source.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CASE4_UPDATE_suffix_from Oracle"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{0502FBB1-3051-4B2C-B102-E5DF4FBEA411}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CASE4_UPDATE_suffix_from Oracle"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source"
+              componentClassID="Microsoft.ManagedComponentHost"
+              contactInfo="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server.;Microsoft Corporation; Microsoft SQL Server; © Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="Consumes data from SQL Server, OLE DB, ODBC, or Oracle, using the corresponding .NET Framework data provider. Use a Transact-SQL statement to define the result set. For example, extract data from SQL Server with the .NET Framework data provider for SQL Server."
+              name="ADO NET Source"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement used by the component to extract data."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select 
+A.AGENT_ASSIGNMENT_ID AS PAIMS_ACQUISITION_ID,
+LPAD( A.REGION_NO, 2, '0') || '-' ||  A.AGENT_ASSIGNMENT_NO || '-' || COALESCE( A.AGENT_ASSIGNMENT_NO_SUFFIX, '01') AS FILE_NUMBER,
+A.AGENT_ASSIGNMENT_NO_SUFFIX
+ 
+from APP_PAM.PAM_AGENT_ASSIGNMENT A left join APP_PAM.PAM_SUB_PROJECT B ON A.SUB_PROJECT_ID = B.SUB_PROJECT_ID
+where 
+LPAD( A.REGION_NO, 2, '0') || '-' ||  A.AGENT_ASSIGNMENT_NO || '-' || COALESCE( A.AGENT_ASSIGNMENT_NO_SUFFIX, '01') = DECODE(A.AGENT_ASSIGNMENT_NO, NULL, NULL, LPAD(A.AGENT_ASSIGNMENT_NO_PREFIX, 2, '0') || '-' || A.AGENT_ASSIGNMENT_NO || '-' || COALESCE(A.AGENT_ASSIGNMENT_NO_SUFFIX, '01'))</property>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">30</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether to allow non-string external columns to be implicitly converted to strings at the output columns."
+                  name="AllowImplicitStringConversion">true</property>
+                <property
+                  dataType="System.String"
+                  description="The Source database table name."
+                  expressionType="Notify"
+                  name="TableOrViewName"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specify the mode to retrieve external column information"
+                  name="AccessMode"
+                  typeConverter="Microsoft.SqlServer.Dts.Pipeline.DataReaderSourceAdapter+EnumToStringConverter">2</property>
+                <property
+                  dataType="System.String"
+                  name="UserComponentTypeName">Microsoft.DataReaderSourceAdapter</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Connections[IDbConnection]"
+                  connectionManagerID="{AA4C833B-EEC7-4D87-B05B-32E4CBC8755B}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PAIMS-ORACLE]"
+                  description="Managed connection manager"
+                  name="IDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output]"
+                  name="ADO NET Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[PAIMS_ACQUISITION_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PAIMS_ACQUISITION_ID]"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[PAIMS_ACQUISITION_ID]"
+                      name="PAIMS_ACQUISITION_ID"
+                      precision="10"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[FILE_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[FILE_NUMBER]"
+                      length="46"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      length="2"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      name="AGENT_ASSIGNMENT_NO_SUFFIX"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[PAIMS_ACQUISITION_ID]"
+                      dataType="numeric"
+                      name="PAIMS_ACQUISITION_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[FILE_NUMBER]"
+                      dataType="wstr"
+                      length="46"
+                      name="FILE_NUMBER" />
+                    <externalMetadataColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].ExternalColumns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      dataType="wstr"
+                      length="2"
+                      name="AGENT_ASSIGNMENT_NO_SUFFIX" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output]"
+                  isErrorOut="true"
+                  name="ADO NET Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PAIMS_ACQUISITION_ID]"
+                      dataType="numeric"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[PAIMS_ACQUISITION_ID]"
+                      name="PAIMS_ACQUISITION_ID"
+                      precision="10" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[FILE_NUMBER]"
+                      dataType="wstr"
+                      length="46"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      name="AGENT_ASSIGNMENT_NO_SUFFIX" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Inputs[Data Conversion Input].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      cachedDataType="i4"
+                      cachedName="PAIMS_ACQUISITION_FILE_ID"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAIMS_ACQUISITION_FILE_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Output].Columns[PIMS_PAIMS_ACQUISITION_FILE_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Output].Columns[PIMS_PAIMS_ACQUISITION_FILE_ID]"
+                      name="PIMS_PAIMS_ACQUISITION_FILE_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAIMS_ACQUISITION_FILE_ID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion 1"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Inputs[Data Conversion Input].Columns[PAIMS_ACQUISITION_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PAIMS_ACQUISITION_ID"
+                      cachedPrecision="10"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[PAIMS_ACQUISITION_ID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Output].Columns[Oracle_PAIMS_ACQUISITION_ID]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      length="50"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Output].Columns[Oracle_PAIMS_ACQUISITION_ID]"
+                      name="Oracle_PAIMS_ACQUISITION_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[PAIMS_ACQUISITION_ID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT PAIMS_ACQUISITION_FILE_ID, FILE_NUMBER, SUFFIX FROM etl.CASE4_SUFFIX_NULL</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">select * from (SELECT PAIMS_ACQUISITION_FILE_ID, FILE_NUMBER, SUFFIX FROM etl.CASE4_SUFFIX_NULL) [refTable]
+where [refTable].[PAIMS_ACQUISITION_FILE_ID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="PAIMS_ACQUISITION_FILE_ID" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FILE_NUMBER" dataType="DT_WSTR" length="18" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="SUFFIX" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[PAIMS_ACQUISITION_FILE_ID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Inputs[Lookup Input].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      cachedDataType="i4"
+                      cachedName="PAIMS_ACQUISITION_FILE_ID"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[PAIMS_ACQUISITION_FILE_ID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">PAIMS_ACQUISITION_FILE_ID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  errorRowDisposition="IgnoreFailure"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Match Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Copy Column"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Match Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      name="PAIMS_ACQUISITION_FILE_ID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn">PAIMS_ACQUISITION_FILE_ID</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Left Input].Columns[PAIMS_ACQUISITION_ID_SORTED]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="PAIMS_ACQUISITION_ID_SORTED"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_ID_SORTED]" />
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Left Input].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      cachedDataType="i4"
+                      cachedName="PAIMS_ACQUISITION_FILE_ID"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_FILE_ID]" />
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Left Input].Columns[FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="FILE_NUMBER"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[FILE_NUMBER]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Right Input].Columns[PAIMS_ACQUISITION_ID_SORTED]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="PAIMS_ACQUISITION_ID_SORTED"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_ID_SORTED]" />
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Right Input].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="AGENT_ASSIGNMENT_NO_SUFFIX"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output]"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      name="PAIMS_ACQUISITION_FILE_ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Left Input].Columns[PAIMS_ACQUISITION_FILE_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[FILE_NUMBER]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Left Input].Columns[FILE_NUMBER]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      name="AGENT_ASSIGNMENT_NO_SUFFIX">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Right Input].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command"
+              componentClassID="Microsoft.OLEDBCommand"
+              contactInfo="OLE DB Command;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;2"
+              description="Runs an SQL statement for each row in a data flow. For example, call a 'new employee setup' stored procedure for each row in the 'new employees' table. Note: running an SQL statement for each row of a large data flow may take a long time."
+              name="OLE DB Command"
+              usesDispositions="true"
+              version="2">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">UPDATE etl.CASE4_SUFFIX_NULL
+ SET SUFFIX = ?
+ WHERE PAIMS_ACQUISITION_FILE_ID = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Connections[OleDbConnection]"
+                  connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input]"
+                  errorOrTruncationOperation="Command Execution"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Command Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      cachedDataType="i4"
+                      cachedName="PAIMS_ACQUISITION_FILE_ID"
+                      externalMetadataColumnId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Match Output].Columns[PAIMS_ACQUISITION_FILE_ID]" />
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="AGENT_ASSIGNMENT_NO_SUFFIX"
+                      externalMetadataColumnId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_0]"
+                      dataType="i4"
+                      name="Param_0">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                    <externalMetadataColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input].ExternalColumns[Param_1]"
+                      dataType="i4"
+                      name="Param_1">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Parameter information.  Matches OLE DB's DBPARAMFLAGSENUM values."
+                          name="DBParamInfoFlags">81</property>
+                      </properties>
+                    </externalMetadataColumn>
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Outputs[OLE DB Command Output]"
+                  exclusionGroup="1"
+                  name="OLE DB Command Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Outputs[OLE DB Command Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Command Error Output"
+                  synchronousInputId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Outputs[OLE DB Command Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor">SELECT PAIMS_ACQUISITION_FILE_ID, FILE_NUMBER FROM etl.CASE4_SUFFIX_NULL</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">2</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}:external"
+                  connectionManagerRefId="Project.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PAIMS_ACQUISITION_FILE_ID]"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      name="PAIMS_ACQUISITION_FILE_ID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NUMBER]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NUMBER]"
+                      length="18"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PAIMS_ACQUISITION_FILE_ID]"
+                      dataType="i4"
+                      name="PAIMS_ACQUISITION_FILE_ID" />
+                    <externalMetadataColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NUMBER]"
+                      dataType="wstr"
+                      length="18"
+                      name="FILE_NUMBER" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      name="PAIMS_ACQUISITION_FILE_ID" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NUMBER]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Inputs[Sort Input].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      cachedDataType="i4"
+                      cachedName="PAIMS_ACQUISITION_FILE_ID"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAIMS_ACQUISITION_FILE_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Inputs[Sort Input].Columns[FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="18"
+                      cachedName="FILE_NUMBER"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NUMBER]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Inputs[Sort Input].Columns[PIMS_PAIMS_ACQUISITION_FILE_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="PIMS_PAIMS_ACQUISITION_FILE_ID"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Output].Columns[PIMS_PAIMS_ACQUISITION_FILE_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      dataType="i4"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_FILE_ID]"
+                      name="PAIMS_ACQUISITION_FILE_ID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[PAIMS_ACQUISITION_FILE_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[FILE_NUMBER]"
+                      dataType="wstr"
+                      length="18"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NUMBER]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_ID_SORTED]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_ID_SORTED]"
+                      name="PAIMS_ACQUISITION_ID_SORTED"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Output].Columns[PIMS_PAIMS_ACQUISITION_FILE_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Inputs[Sort Input].Columns[PAIMS_ACQUISITION_ID]"
+                      cachedDataType="numeric"
+                      cachedName="PAIMS_ACQUISITION_ID"
+                      cachedPrecision="10"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[PAIMS_ACQUISITION_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Inputs[Sort Input].Columns[FILE_NUMBER]"
+                      cachedDataType="wstr"
+                      cachedLength="46"
+                      cachedName="FILE_NUMBER"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[FILE_NUMBER]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Inputs[Sort Input].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      cachedDataType="wstr"
+                      cachedLength="2"
+                      cachedName="AGENT_ASSIGNMENT_NO_SUFFIX"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Inputs[Sort Input].Columns[Oracle_PAIMS_ACQUISITION_ID]"
+                      cachedDataType="wstr"
+                      cachedLength="50"
+                      cachedName="Oracle_PAIMS_ACQUISITION_ID"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Output].Columns[Oracle_PAIMS_ACQUISITION_ID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_ID]"
+                      dataType="numeric"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_ID]"
+                      name="PAIMS_ACQUISITION_ID"
+                      precision="10">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[PAIMS_ACQUISITION_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[FILE_NUMBER]"
+                      dataType="wstr"
+                      length="46"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[FILE_NUMBER]"
+                      name="FILE_NUMBER">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[FILE_NUMBER]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      dataType="wstr"
+                      length="2"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]"
+                      name="AGENT_ASSIGNMENT_NO_SUFFIX">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output].Columns[AGENT_ASSIGNMENT_NO_SUFFIX]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_ID_SORTED]"
+                      dataType="wstr"
+                      length="50"
+                      lineageId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output].Columns[PAIMS_ACQUISITION_ID_SORTED]"
+                      name="PAIMS_ACQUISITION_ID_SORTED"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Output].Columns[Oracle_PAIMS_ACQUISITION_ID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\CASE4_UPDATE_suffix_from Oracle.Paths[ADO NET Source Output]"
+              endId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Inputs[Data Conversion Input]"
+              name="ADO NET Source Output"
+              startId="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source.Outputs[ADO NET Source Output]" />
+            <path
+              refId="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Data Conversion Output]"
+              endId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Inputs[Sort Input]"
+              name="Data Conversion Output"
+              startId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Data Conversion Output1]"
+              endId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Inputs[Sort Input]"
+              name="Data Conversion Output"
+              startId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Lookup Match Output]"
+              endId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command.Inputs[OLE DB Command Input]"
+              name="Lookup Match Output"
+              startId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Outputs[Lookup Match Output]" />
+            <path
+              refId="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Merge Join Output]"
+              endId="Package\CASE4_UPDATE_suffix_from Oracle\Lookup.Inputs[Lookup Input]"
+              name="Merge Join Output"
+              startId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\CASE4_UPDATE_suffix_from Oracle.Paths[OLE DB Source Output]"
+              endId="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Sort Output]"
+              endId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\CASE4_UPDATE_suffix_from Oracle\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Sort Output1]"
+              endId="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CASE5_ALPHABET_R"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{D41B0D8B-AB71-4BEE-B446-61F329D72DA5}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CASE5_ALPHABET_R"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
+          SQLTask:SqlStatementSource="-- Extract only the necessary records in a more efficient manner&#xA;WITH CASE5 AS  &#xA;(&#xA;    SELECT &#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO,&#xA;        FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;        CASE &#xA;            WHEN PATINDEX('%[A-Z]%', SUBSTRING(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1) + 1, LEN(FILE_NUMBER))) &gt; 0 &#xA;            THEN 'YES'&#xA;            ELSE 'NO'&#xA;        END AS HasAlphabetOnlyR&#xA;    FROM &#xA;        dbo.PIMS_ACQUISITION_FILE&#xA;    WHERE &#xA;        FILE_NUMBER LIKE '%-R'    -- Simplified condition to match only records ending with &quot;-R&quot;&#xA;        AND APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;)&#xA;--SELECT * FROM CASE5 ORDER BY REGION_CODE, FILE_NO&#xA;&#xA;-- Group and filter FILE_NO values with more than one entry&#xA;,group_file_no AS (&#xA;    SELECT &#xA;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        COUNT(1) AS c &#xA;    FROM &#xA;        CASE5 &#xA;    GROUP BY &#xA;        REGION_CODE, FILE_NO &#xA;    HAVING &#xA;        COUNT(1) &gt; 1&#xA;)&#xA;&#xA;--SELECT * FROM group_file_no ORDER BY REGION_CODE, file_no&#xA;-- Use LEFT JOIN and IS NULL instead of NOT IN for better performance&#xA;,NUMBERED_FILES AS &#xA;(&#xA;    SELECT&#xA;&#x9;&#x9;CASE5.REGION_CODE,&#xA;        CASE5.FILE_NO, &#xA;        CASE5.FILE_NUMBER,&#xA;        CASE5.ACQUISITION_FILE_ID,&#xA;        ROW_NUMBER() OVER (PARTITION BY CASE5.REGION_CODE, CASE5.FILE_NO ORDER BY CASE5.FILE_NUMBER) AS NewSuffixNumber&#xA;    FROM &#xA;        CASE5&#xA; &#xA;    WHERE &#xA;        CASE5.HasAlphabetOnlyR = 'YES'&#xA;        AND CASE5.FILE_NO NOT IN ( SELECT FILE_NO FROM group_file_no )&#xA;)&#xA;&#xA;-- SELECT * FROM NUMBERED_FILES ORDER BY REGION_CODE, FILE_NO&#xA;&#xA;-- Generate updated file numbers&#xA;,UPDATED_FILES AS&#xA;(&#xA;    SELECT &#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        FILE_NUMBER, &#xA;        ACQUISITION_FILE_ID,&#xA;        LEFT(FILE_NUMBER, CHARINDEX('-', FILE_NUMBER, CHARINDEX('-', FILE_NUMBER) + 1)) &#xA;        + RIGHT('00' + CAST(NewSuffixNumber AS VARCHAR(2)), 2) AS Updated_FILE_NUMBER,&#xA;        NewSuffixNumber&#xA;    FROM &#xA;        NUMBERED_FILES&#xA;)&#xA;-- SELECT * FROM UPDATED_FILES ORDER BY REGION_CODE, FILE_NO&#xA;-- Final selection&#xA;SELECT &#xA;    UF.FILE_NO, &#xA;    UF.FILE_NUMBER, &#xA;    UF.ACQUISITION_FILE_ID,&#xA;    UF.Updated_FILE_NUMBER,&#xA;    CASE &#xA;        WHEN UF.NewSuffixNumber = 1 THEN NULL  -- Parent file (Updated_FILE_NUMBER = &quot;01&quot;)&#xA;        ELSE PF.ACQUISITION_FILE_ID           -- Child file points to the ACQUISITION_FILE_ID of the parent file&#xA;    END AS PRNT_ACQUISITION_FILE_ID&#xA;&#xA;INTO etl.CASE5_ALPHABET_R&#xA;&#xA;FROM &#xA;    UPDATED_FILES UF&#xA;LEFT JOIN &#xA;    UPDATED_FILES PF &#xA;    ON UF.FILE_NO = PF.FILE_NO &#xA;    AND PF.NewSuffixNumber = 1  -- Join to find the parent file with Updated_FILE_NUMBER = &quot;01&quot;&#xA;ORDER BY &#xA;    UF.FILE_NO, UF.NewSuffixNumber;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CASE6_REMAINING"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{97A18CFD-7108-47E2-B2EA-93FA138EEE69}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CASE6_REMAINING"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
+          SQLTask:SqlStatementSource="-- IDENTIFY RECORDS THAT HAVE SUB FILES&#xA;WITH CASE6 AS  &#xA;(&#xA;    SELECT &#xA;&#x9;&#x9;REGION_CODE,&#xA;        FILE_NO,&#xA;        FILE_NUMBER,&#xA;&#x9;&#x9;LEGACY_FILE_NUMBER,&#xA;        ACQUISITION_FILE_ID,&#xA;&#x9;&#x9;LEFT(FILE_NUMBER, 2) as NEW_REGION_CODE,&#xA;&#x9;&#x9;LEFT(LEGACY_FILE_NUMBER, 2) AS OLD_REGION_CODE&#xA;    FROM &#xA;        dbo.PIMS_ACQUISITION_FILE&#xA;    WHERE &#xA;       APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;   AND ACQUISITION_FILE_ID NOT IN ( Select ACQUISITION_FILE_ID FROM etl.CASE2_ALPHABETS )&#xA;&#x9;   --AND ACQUISITION_FILE_ID NOT IN ( Select ACQUISITION_FILE_ID FROM etl.CASE3_SINGLE_DIGITS )&#xA;&#x9;   AND ACQUISITION_FILE_ID NOT IN ( Select ACQUISITION_FILE_ID FROM etl.CASE5_ALPHABET_R )&#xA;&#x9;   AND ACQUISITION_FILE_ID NOT IN ( Select ACQUISITION_FILE_ID FROM etl.CASE4_SUFFIX_NULL )&#xA;)&#xA;--  SELECT * FROM CASE6 WHERE   FILE_NO =100144 AND REGION_CODE = 2 ORDER BY REGION_CODE, FILE_NO&#xA;&#xA;-- Group and filter FILE_NO values with more than one entry&#xA;,group_file_no AS (&#xA;    SELECT &#xA;&#x9;REGION_CODE,&#xA;        FILE_NO, &#xA;        COUNT(1) AS c &#xA;    FROM &#xA;        CASE6 &#xA;    GROUP BY &#xA;        REGION_CODE, FILE_NO &#xA;    HAVING &#xA;        COUNT(1) &gt; 1&#xA;)&#xA;&#xA;--SELECT * FROM group_file_no WHERE FILE_NO = 100144&#xA;&#xA;--SELECT * FROM group_file_no ORDER BY REGION_CODE, file_no&#xA;-- Use LEFT JOIN and IS NULL instead of NOT IN for better performance&#xA;,NUMBERED_FILES AS &#xA;(&#xA;    SELECT&#xA;&#x9;&#x9;CASE6.REGION_CODE,&#xA;        CASE6.FILE_NO, &#xA;        CASE6.FILE_NUMBER,&#xA;        CASE6.ACQUISITION_FILE_ID,&#xA;&#x9;&#x9;CASE6.NEW_REGION_CODE,&#xA;&#x9;&#x9;CASE6.OLD_REGION_CODE,&#xA;        ROW_NUMBER() OVER (PARTITION BY CASE6.REGION_CODE, CASE6.FILE_NO ORDER BY CASE6.FILE_NUMBER) AS NewSuffixNumber&#xA;    FROM &#xA;        CASE6&#xA; &#xA;    WHERE &#xA;&#x9;&#x9;CASE6.NEW_REGION_CODE &lt;&gt; CASE6.OLD_REGION_CODE AND&#xA;         CASE6.FILE_NO IN ( SELECT FILE_NO FROM group_file_no )&#xA;)&#xA;&#xA;--SELECT * FROM NUMBERED_FILES &#xA;--&#x9;WHERE   FILE_NO =100144 AND REGION_CODE = 2 &#xA;--ORDER BY REGION_CODE, FILE_NO&#xA; &#xA;-- Final selection&#xA;SELECT DISTINCT&#xA;&#x9;UF.REGION_CODE,&#xA;    UF.FILE_NO, &#xA;    UF.FILE_NUMBER, &#xA;    UF.ACQUISITION_FILE_ID,&#xA;    CASE &#xA;        WHEN UF.NewSuffixNumber = 1 THEN NULL  -- Parent file (Updated_FILE_NUMBER = &quot;01&quot;)&#xA;        ELSE PF.ACQUISITION_FILE_ID           -- Child file points to the ACQUISITION_FILE_ID of the parent file&#xA;    END AS PRNT_ACQUISITION_FILE_ID&#xA;into etl.CASE6_REMAINING&#xA;FROM &#xA;    NUMBERED_FILES UF&#xA;LEFT JOIN &#xA;    NUMBERED_FILES PF &#xA;    ON UF.FILE_NO = PF.FILE_NO AND UF.REGION_CODE = PF.REGION_CODE&#xA;    AND PF.NewSuffixNumber = 1  -- Join to find the parent file with Updated_FILE_NUMBER = &quot;01&quot;&#xA;&#xA;ORDER BY &#xA;    UF.FILE_NUMBER;&#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PRE-REQ"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{080A623B-09B9-4828-9505-E52E6D69BE11}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PRE-REQ"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
+          SQLTask:SqlStatementSource="DROP TABLE IF EXISTS etl.CASE1_MAIN_FILES;&#xA;DROP TABLE IF EXISTS etl.CASE2_ALPHABETS ;&#xA;DROP TABLE IF EXISTS etl.CASE3_SINGLE_DIGITS ;&#xA;DROP TABLE IF EXISTS etl.CASE4_SUFFIX_NULL ;&#xA;DROP TABLE IF EXISTS etl.CASE5_ALPHABET_R ;&#xA;DROP TABLE IF EXISTS etl.CASE6_REMAINING ;&#xA;DROP TABLE IF EXISTS etl.PIMS_ACQUISITION_FILE_BKP;&#xA;SELECT * INTO etl.PIMS_ACQUISITION_FILE_BKP FROM dbo.PIMS_ACQUISITION_FILE;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\UPDATE PIMS_ACQUISITION_FILE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{EAC96DCF-F48E-49E9-9ED6-F6768A536E7C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="UPDATE PIMS_ACQUISITION_FILE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{2409A3DC-5AAA-407E-9B0B-7CDE117FABDB}"
+          SQLTask:SqlStatementSource="--CASE 2 UPDATE&#xA;&#x9;UPDATE A&#xA;&#x9;SET A.FILE_NUMBER = B.Updated_FILE_NUMBER, &#xA;&#x9;&#x9;A.PRNT_ACQUISITION_FILE_ID = B.PRNT_ACQUISITION_FILE_ID,&#xA;&#x9;&#x9;A.APP_LAST_UPDATE_USERID = 'PIMS_ETL_USER'&#xA;&#x9;&#x9;,A.CONCURRENCY_CONTROL_NUMBER=A.CONCURRENCY_CONTROL_NUMBER+1&#xA;&#x9;FROM &#xA;&#x9;&#x9;--etl.PIMS_ACQUISITION_FILE A&#xA;&#x9;&#x9;dbo.PIMS_ACQUISITION_FILE A&#xA;&#x9;JOIN etl.CASE2_ALPHABETS B ON A.ACQUISITION_FILE_ID = B.ACQUISITION_FILE_ID;&#xA;&#xA;&#xA;-- CASE 4 UPDATE&#xA;&#x9;UPDATE A&#xA;&#x9;SET A.FILE_NUMBER = B.FILE_NUMBER, &#xA;&#x9;&#x9;A.PRNT_ACQUISITION_FILE_ID = B.PRNT_ACQUISITION_FILE_ID,&#xA;&#x9;&#x9;A.APP_LAST_UPDATE_USERID = 'PIMS_ETL_USER'&#xA;&#x9;&#x9;,A.CONCURRENCY_CONTROL_NUMBER=A.CONCURRENCY_CONTROL_NUMBER+1&#xA;&#x9;FROM &#xA;&#x9;&#x9;--etl.PIMS_ACQUISITION_FILE A&#xA;&#x9;&#x9;dbo.PIMS_ACQUISITION_FILE A&#xA;&#x9;JOIN etl.CASE4_SUFFIX_NULL B ON A.ACQUISITION_FILE_ID = B.ACQUISITION_FILE_ID;&#xA;&#xA;&#xA;-- CASE 5 UPDATE&#xA;&#x9;UPDATE A&#xA;&#x9;SET A.FILE_NUMBER = B.Updated_FILE_NUMBER, &#xA;&#x9;&#x9;A.PRNT_ACQUISITION_FILE_ID = B.PRNT_ACQUISITION_FILE_ID,&#xA;&#x9;&#x9;A.APP_LAST_UPDATE_USERID = 'PIMS_ETL_USER'&#xA;&#x9;&#x9;,A.CONCURRENCY_CONTROL_NUMBER=A.CONCURRENCY_CONTROL_NUMBER+1&#xA;&#x9;FROM &#xA;&#x9;&#x9;--etl.PIMS_ACQUISITION_FILE A&#xA;&#x9;&#x9;dbo.PIMS_ACQUISITION_FILE A&#xA;&#x9;JOIN etl.CASE5_ALPHABET_R B ON A.ACQUISITION_FILE_ID = B.ACQUISITION_FILE_ID;&#xA;&#xA;-- CASE 6 UPDATE ( CASE 1 Equivalent )&#xA;&#x9;UPDATE A&#xA;&#x9;SET A.PRNT_ACQUISITION_FILE_ID = B.PRNT_ACQUISITION_FILE_ID,&#xA;&#x9;&#x9;A.APP_LAST_UPDATE_USERID = 'PIMS_ETL_USER'&#xA;&#x9;&#x9;,A.CONCURRENCY_CONTROL_NUMBER=A.CONCURRENCY_CONTROL_NUMBER+1&#xA;&#x9;FROM &#xA;&#x9;&#x9;--etl.PIMS_ACQUISITION_FILE A&#xA;&#x9;&#x9;dbo.PIMS_ACQUISITION_FILE A&#xA;&#x9;JOIN etl.CASE6_REMAINING B ON A.ACQUISITION_FILE_ID = B.ACQUISITION_FILE_ID;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{F50CCAD6-84C8-474D-A36F-FBF8EF14B324}"
+      DTS:From="Package\PRE-REQ"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\CASE 2 - ALPHABETS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{68A8A3EB-6231-4D21-AF8B-4F26F94B512C}"
+      DTS:From="Package\CASE 2 - ALPHABETS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\CASE3_SINGLE_DIGITS" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{75F86992-67B5-41F0-BAD8-77DBDAE7C92D}"
+      DTS:From="Package\CASE3_SINGLE_DIGITS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\CASE3_UPDATE_PIMS_FILE_NUMBER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{69B544F4-992A-4E99-81B8-2D35C72CA2BB}"
+      DTS:From="Package\CASE4_SUFFIX_NULL"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\CASE4_UPDATE_suffix_from Oracle" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{7B4695DC-9C0A-4135-8BA8-9E0A3DBB3FC7}"
+      DTS:From="Package\CASE4_UPDATE_suffix_from Oracle"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Case4_UPDATE_PARENT" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{CEE4E736-4061-473E-B192-2D1A3068ED5B}"
+      DTS:From="Package\Case4_UPDATE_PARENT"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\CASE5_ALPHABET_R" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{BB439F83-6EB5-49B0-A31D-620690972133}"
+      DTS:From="Package\CASE5_ALPHABET_R"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\CASE6_REMAINING" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{3526AA5D-3BDA-4A3A-8E24-C49A8B572944}"
+      DTS:From="Package\CASE6_REMAINING"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\UPDATE PIMS_ACQUISITION_FILE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 9]"
+      DTS:CreationName=""
+      DTS:DTSID="{A96DC173-765C-4C34-9250-524D5A54EDDD}"
+      DTS:From="Package\CASE3_UPDATE_PIMS_FILE_NUMBER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 9"
+      DTS:To="Package\CASE4_SUFFIX_NULL" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="189.333333333334,42.6666666666667"
+          Id="Package\CASE 2 - ALPHABETS"
+          TopLeft="290.62499566935,162.157897789063" />
+        <NodeLayout
+          Size="200.666666666667,42.6666666666667"
+          Id="Package\CASE3_SINGLE_DIGITS"
+          TopLeft="284.99999575317,251.789478423523" />
+        <NodeLayout
+          Size="276,42.6666666666667"
+          Id="Package\CASE3_UPDATE_PIMS_FILE_NUMBER"
+          TopLeft="608.124990938231,249.73684680594" />
+        <NodeLayout
+          Size="192,42.6666666666667"
+          Id="Package\CASE4_SUFFIX_NULL"
+          TopLeft="282.499995790426,342.789480136372" />
+        <NodeLayout
+          Size="209.333333333334,42.6666666666667"
+          Id="Package\Case4_UPDATE_PARENT"
+          TopLeft="958.124985722825,338.684216901206" />
+        <NodeLayout
+          Size="256,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle"
+          TopLeft="583.124991310761,345.52632229315" />
+        <NodeLayout
+          Size="189.333333333334,42.6666666666667"
+          Id="Package\CASE5_ALPHABET_R"
+          TopLeft="291.874995650724,457.736850721024" />
+        <NodeLayout
+          Size="181.333333333334,42.6666666666667"
+          Id="Package\CASE6_REMAINING"
+          TopLeft="303.124995483086,568.57895807051" />
+        <NodeLayout
+          Size="128,42.6666666666667"
+          Id="Package\PRE-REQ"
+          TopLeft="315.624995296821,2.73684215677743" />
+        <NodeLayout
+          Size="256,42.6666666666667"
+          Id="Package\UPDATE PIMS_ACQUISITION_FILE"
+          TopLeft="266.249996032566,690.368434047105" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="382.458328816419,45.4035088234441">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,116.754388965619"
+              Start="0,0"
+              End="0,109.254388965619">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,109.254388965619" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="385.31249571126,204.824564455729">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,46.9649139677936"
+              Start="0,0"
+              End="0,39.4649139677936">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,39.4649139677936" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="485.666662419837,272.096495948065">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="122.458328518395,0"
+              Start="0,0"
+              End="114.958328518395,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="114.958328518395,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="474.499995790426,365.491234548094">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="108.624995520335,0"
+              Start="0,0"
+              End="101.124995520335,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="101.124995520335,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="839.124991310761,363.438602930511">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="118.999994412064,0"
+              Start="0,0"
+              End="111.499994412064,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="111.499994412064,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="1062.79165238949,381.350883567873">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-676.249990072101,76.3859671531513"
+              Start="0,0"
+              End="-676.249990072101,68.8859671531513">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.1929835765756" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.1929835765756"
+                    Point2="0,38.1929835765756"
+                    Point3="-4,38.1929835765756" />
+                  <mssgle:LineSegment
+                    End="-672.249990072101,38.1929835765756" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-672.249990072101,38.1929835765756"
+                    Point2="-676.249990072101,38.1929835765756"
+                    Point3="-676.249990072101,42.1929835765756" />
+                  <mssgle:LineSegment
+                    End="-676.249990072101,68.8859671531513" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="390.166662233571,500.40351738769">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68.175440682819"
+              Start="0,0"
+              End="0,60.675440682819">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.675440682819" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="394.020829091159,611.245624737177">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,79.1228093099284"
+              Start="0,0"
+              End="0,71.6228093099284">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,71.6228093099284" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 9]"
+          TopLeft="746.124990938231,292.403513472607">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-367.624995147805,50.3859666637657"
+              Start="0,0"
+              End="-367.624995147805,42.8859666637657">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.1929833318828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,21.1929833318828"
+                    Point2="0,25.1929833318828"
+                    Point3="-4,25.1929833318828" />
+                  <mssgle:LineSegment
+                    End="-363.624995147805,25.1929833318828" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-363.624995147805,25.1929833318828"
+                    Point2="-367.624995147805,25.1929833318828"
+                    Point3="-367.624995147805,29.1929833318828" />
+                  <mssgle:LineSegment
+                    End="-367.624995147805,42.8859666637657" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="etl.CASE2_ALPHABETS"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="146,40"
+          Id="05ba6ac3-636f-43cc-8b29-b418e7f43f73"
+          TopLeft="118.124998239801,175.157898033755" />
+        <AnnotationLayout
+          Text="etl.CASE3_SINGLE_DIGITS"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="162.666666666667,40"
+          Id="b3bc082f-b940-42e9-8045-ad7b73fdf39c"
+          TopLeft="88.7499986775224,250.421057345135" />
+        <AnnotationLayout
+          Text="etl.CASE4_SUFFIX_NULL"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="154.666666666667,40"
+          Id="f3f5d227-8f55-43fa-9511-a8203e04fe84"
+          TopLeft="100.624998500574,344.842111753955" />
+        <AnnotationLayout
+          Text="etl.CASE5_ALPHABET_R"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="152,40"
+          Id="b0d89820-20e3-4a29-bb6b-fd5064f9f5e6"
+          TopLeft="99.9999985098839,441.315797780359" />
+        <AnnotationLayout
+          Text="FILE NUMBER FIX ONLY"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="153.333333333334,40"
+          Id="5a651242-085d-4abd-a466-71cb55ee15b5"
+          TopLeft="504.999992474914,458.421061260218" />
+        <AnnotationLayout
+          Text="etl.CASE6_REMAINING"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="148,40"
+          Id="dc72f7c2-57d6-4b6f-ae8a-e68b3af8e3dc"
+          TopLeft="107.499998398125,570.631589688093" />
+        <AnnotationLayout
+          Text="CASE 6 = CASE 1 ( Equivalent )"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="190.666666666667,40"
+          Id="a6c1475a-55b1-4824-a04a-65f329a13666"
+          TopLeft="506.249992456287,568.57895807051" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Case4_UPDATE_PARENT">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\Case4_UPDATE_PARENT\OLE DB Source"
+          TopLeft="208.230769230769,249.153846153846" />
+        <NodeLayout
+          Size="114.666666666667,42.6666666666667"
+          Id="Package\Case4_UPDATE_PARENT\Lookup"
+          TopLeft="504.5,167" />
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\Case4_UPDATE_PARENT\OLE DB Command"
+          TopLeft="750,254" />
+        <EdgeLayout
+          Id="Package\Case4_UPDATE_PARENT.Paths[OLE DB Source Output]"
+          TopLeft="285.564102564102,249.153846153846">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="276.269230769231,-39.4871794871794"
+              Start="0,0"
+              End="276.269230769231,-31.9871794871794">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-15.7435897435897" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-15.7435897435897"
+                    Point2="0,-19.7435897435897"
+                    Point3="4,-19.7435897435897" />
+                  <mssgle:LineSegment
+                    End="272.269230769231,-19.7435897435897" />
+                  <mssgle:CubicBezierSegment
+                    Point1="272.269230769231,-19.7435897435897"
+                    Point2="276.269230769231,-19.7435897435897"
+                    Point3="276.269230769231,-23.7435897435897" />
+                  <mssgle:LineSegment
+                    End="276.269230769231,-31.9871794871794" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Case4_UPDATE_PARENT.Paths[Lookup Match Output]"
+          TopLeft="579.611111111111,209.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="255.722222222222,44.3333333333333"
+              Start="0,0"
+              End="255.722222222222,36.8333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.0993883792049" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.0993883792049"
+                    Point2="0,18.0993883792049"
+                    Point3="4,18.0993883792049" />
+                  <mssgle:LineSegment
+                    End="251.722222222222,18.0993883792049" />
+                  <mssgle:CubicBezierSegment
+                    Point1="251.722222222222,18.0993883792049"
+                    Point2="255.722222222222,18.0993883792049"
+                    Point3="255.722222222222,22.0993883792049" />
+                  <mssgle:LineSegment
+                    End="255.722222222222,36.8333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="79.669724392361,23.0993883792049,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Case4_UPDATE_PARENT\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Case4_UPDATE_PARENT\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\CASE4_UPDATE_suffix_from Oracle">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="168,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion 1"
+          TopLeft="494.374992633238,370.157901704146" />
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Command"
+          TopLeft="1369.99997958541,281.894742148075" />
+        <NodeLayout
+          Size="114.666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Lookup"
+          TopLeft="1149.37498287298,180.63158234731" />
+        <NodeLayout
+          Size="108,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Sort 1"
+          TopLeft="738.749988991767,365.368427929786" />
+        <NodeLayout
+          Size="158.666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Data Conversion"
+          TopLeft="483.749992791564,201.842109062335" />
+        <NodeLayout
+          Size="98.6666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Sort"
+          TopLeft="744.999988898635,207.31579337589" />
+        <NodeLayout
+          Size="164,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source"
+          TopLeft="271.874995948747,369.473691164952" />
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source"
+          TopLeft="272.499995939434,203.210530140724" />
+        <NodeLayout
+          Size="132,42.6666666666667"
+          Id="Package\CASE4_UPDATE_suffix_from Oracle\Merge Join"
+          TopLeft="921.874986262992,275.052636756131" />
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[ADO NET Source Output]"
+          TopLeft="435.874995948747,391.149129767883">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="58.4999966844916,0"
+              Start="0,0"
+              End="50.9999966844916,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="50.9999966844916,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Sort Output1]"
+          TopLeft="792.749988991767,365.368427929786">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="195.124997271225,-47.6491245069882"
+              Start="0,0"
+              End="195.124997271225,-40.1491245069882">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-19.8245622534941" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-19.8245622534941"
+                    Point2="0,-23.8245622534941"
+                    Point3="4,-23.8245622534941" />
+                  <mssgle:LineSegment
+                    End="191.124997271225,-23.8245622534941" />
+                  <mssgle:CubicBezierSegment
+                    Point1="191.124997271225,-23.8245622534941"
+                    Point2="195.124997271225,-23.8245622534941"
+                    Point3="195.124997271225,-27.8245622534941" />
+                  <mssgle:LineSegment
+                    End="195.124997271225,-40.1491245069882" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Sort Output]"
+          TopLeft="794.333322231969,249.982460042556">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="193.541664031024,25.0701767135746"
+              Start="0,0"
+              End="193.541664031024,17.5701767135746">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,8.5350883567873" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,8.5350883567873"
+                    Point2="0,12.5350883567873"
+                    Point3="4,12.5350883567873" />
+                  <mssgle:LineSegment
+                    End="189.541664031024,12.5350883567873" />
+                  <mssgle:CubicBezierSegment
+                    Point1="189.541664031024,12.5350883567873"
+                    Point2="193.541664031024,12.5350883567873"
+                    Point3="193.541664031024,16.5350883567873" />
+                  <mssgle:LineSegment
+                    End="193.541664031024,17.5701767135746" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[OLE DB Source Output]"
+          TopLeft="427.1666626061,223.859652934863">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="56.5833301854635,0"
+              Start="0,0"
+              End="49.0833301854635,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="49.0833301854635,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Merge Join Output]"
+          TopLeft="1008.54165292966,275.052636756131">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="180.388885498875,-51.7543877421544"
+              Start="0,0"
+              End="180.388885498875,-44.2543877421544">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-21.8197969216958" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-21.8197969216958"
+                    Point2="0,-25.8197969216958"
+                    Point3="4,-25.8197969216958" />
+                  <mssgle:LineSegment
+                    End="176.388885498875,-25.8197969216958" />
+                  <mssgle:CubicBezierSegment
+                    Point1="176.388885498875,-25.8197969216958"
+                    Point2="180.388885498875,-25.8197969216958"
+                    Point3="180.388885498875,-29.8197969216958" />
+                  <mssgle:LineSegment
+                    End="180.388885498875,-44.2543877421544" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Lookup Match Output]"
+          TopLeft="1224.48609398409,223.298249013976">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="230.847218934654,58.596493134098"
+              Start="0,0"
+              End="230.847218934654,51.096493134098">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.9224215088749" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.9224215088749"
+                    Point2="0,23.9224215088749"
+                    Point3="4,23.9224215088749" />
+                  <mssgle:LineSegment
+                    End="226.847218934654,23.9224215088749" />
+                  <mssgle:CubicBezierSegment
+                    Point1="226.847218934654,23.9224215088749"
+                    Point2="230.847218934654,23.9224215088749"
+                    Point3="230.847218934654,27.9224215088749" />
+                  <mssgle:LineSegment
+                    End="230.847218934654,51.096493134098" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="67.2322227485768,28.9224215088749,96.3827734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Data Conversion Output1]"
+          TopLeft="662.374992633238,389.096498150299">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="76.374996358529,0"
+              Start="0,0"
+              End="68.874996358529,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="68.874996358529,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CASE4_UPDATE_suffix_from Oracle.Paths[Data Conversion Output]"
+          TopLeft="642.41665945823,225.912284552446">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="102.583329440405,0"
+              Start="0,0"
+              End="95.0833294404048,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="95.0833294404048,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="UPDATE etl.CASE4_SUFFIX_NULL"
+          ParentId="Package\CASE4_UPDATE_suffix_from Oracle"
+          FontInfo="{assembly:Null}"
+          Size="200,40"
+          Id="b7305808-1c05-4100-868d-59375786e45a"
+          TopLeft="1403.12497909181,370.842112243341" />
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\CASE4_UPDATE_suffix_from Oracle\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string"></Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\CASE4_UPDATE_suffix_from Oracle\ADO NET Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\CASE4_UPDATE_suffix_from Oracle\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

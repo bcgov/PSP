@@ -1,4 +1,5 @@
-import { latLngBounds } from 'leaflet';
+import { FeatureCollection, Geometry } from 'geojson';
+import { geoJSON, latLngBounds } from 'leaflet';
 import { assign, createMachine, raise, send } from 'xstate';
 
 import { defaultBounds } from '@/components/maps/constants';
@@ -98,13 +99,13 @@ const featureDataLoaderStates = {
           {
             cond: (context: MachineContext) => context.fitToResultsAfterLoading === true,
             actions: [
+              raise('REQUEST_FIT_BOUNDS'),
               assign({
                 isLoading: () => false,
                 mapFeatureData: (_, event: any) => event.data,
                 fitToResultsAfterLoading: () => false,
                 mapLayersToRefresh: () => [{ key: PIMS_PROPERTY_BOUNDARY_KEY }],
               }),
-              raise('REQUEST_FIT_BOUNDS'),
             ],
             target: 'idle',
           },
@@ -139,6 +140,14 @@ const mapRequestStates = {
           }),
           target: 'pendingFlyTo',
         },
+        REQUEST_CENTER_TO_LOCATION: {
+          actions: assign({
+            requestedCenterTo: (_, event: any) => ({
+              location: event.latlng,
+            }),
+          }),
+          target: 'pendingCenterTo',
+        },
         REQUEST_FLY_TO_BOUNDS: {
           actions: assign({
             requestedFlyTo: (_, event: any) => ({
@@ -151,8 +160,37 @@ const mapRequestStates = {
         REQUEST_FIT_BOUNDS: {
           actions: assign({
             requestedFitBounds: (context: MachineContext) => {
+              const fullyAttributedFeatures =
+                context?.mapFeatureData?.fullyAttributedFeatures?.features ?? [];
+              const pimsBoundaryFeatures =
+                context?.mapFeatureData?.pimsBoundaryFeatures?.features ?? [];
+              const pimsLocationFeatures =
+                context?.mapFeatureData?.pimsLocationFeatures?.features ?? [];
+
+              // business logic, if there are file properties, use those, otherwise, zoom to a single feature if there is only one, or all features if there are more than one.
               if (context.filePropertyLocations.length > 0) {
                 return latLngBounds(context.filePropertyLocations);
+              } else if (pimsLocationFeatures.length + fullyAttributedFeatures.length === 1) {
+                // if there is exactly one pims or pmbc feature, use that feature
+                const features = [...pimsLocationFeatures, ...fullyAttributedFeatures];
+                return geoJSON(features[0]).getBounds();
+              } else {
+                const features = [
+                  ...pimsBoundaryFeatures,
+                  ...pimsLocationFeatures,
+                  ...fullyAttributedFeatures,
+                ];
+                const featureCollection = { features: features } as FeatureCollection<
+                  Geometry,
+                  any
+                >;
+                const filteredBounds = geoJSON(featureCollection).getBounds();
+
+                // if the current map bounds contain the bounds of the filtered properties, use the current map bounds.
+                if (context.currentMapBounds && context.currentMapBounds.contains(filteredBounds)) {
+                  return context.currentMapBounds;
+                }
+                return filteredBounds;
               }
             },
           }),
@@ -166,6 +204,18 @@ const mapRequestStates = {
           actions: assign({
             requestedFlyTo: () => ({
               bounds: null,
+              location: null,
+            }),
+          }),
+          target: 'nothingPending',
+        },
+      },
+    },
+    pendingCenterTo: {
+      on: {
+        PROCESS_CENTER_TO: {
+          actions: assign({
+            requestedCenterTo: () => ({
               location: null,
             }),
           }),
@@ -426,6 +476,9 @@ export const mapMachine = createMachine<MachineContext>({
       location: null,
       bounds: null,
     },
+    requestedCenterTo: {
+      location: null,
+    },
     requestedFitBounds: defaultBounds,
     mapLocationSelected: null,
     mapFeatureSelected: null,
@@ -446,6 +499,7 @@ export const mapMachine = createMachine<MachineContext>({
     showRetired: false,
     activeLayers: [],
     mapLayersToRefresh: [],
+    currentMapBounds: null,
   },
 
   // State definitions
@@ -476,7 +530,6 @@ export const mapMachine = createMachine<MachineContext>({
             target: 'mapVisible.sideBar.opened',
           },
         ],
-
         CLOSE_SIDEBAR: {
           target: 'mapVisible.sideBar.closed',
         },
@@ -489,7 +542,6 @@ export const mapMachine = createMachine<MachineContext>({
         EXIT_MAP: {
           target: 'notMap',
         },
-
         PREPARE_FOR_CREATION: {
           actions: assign({
             selectedFeatureDataset: (context: MachineContext) => context.mapLocationFeatureDataset,
@@ -500,6 +552,9 @@ export const mapMachine = createMachine<MachineContext>({
         },
         SET_VISIBLE_PROPERTIES: {
           actions: assign({ activePimsPropertyIds: (_, event: any) => event.propertyIds }),
+        },
+        SET_CURRENT_MAP_BOUNDS: {
+          actions: assign({ currentMapBounds: (_, event: any) => event.currentMapBounds }),
         },
       },
       states: {

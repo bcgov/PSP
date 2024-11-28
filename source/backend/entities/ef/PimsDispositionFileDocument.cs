@@ -26,6 +26,12 @@ public partial class PimsDispositionFileDocument
     public long DocumentId { get; set; }
 
     /// <summary>
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
+    /// </summary>
+    [Column("CONCURRENCY_CONTROL_NUMBER")]
+    public long ConcurrencyControlNumber { get; set; }
+
+    /// <summary>
     /// The date and time the record was created by the user.
     /// </summary>
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
@@ -80,12 +86,6 @@ public partial class PimsDispositionFileDocument
     [Column("APP_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string AppLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any
-    /// </summary>
-    [Column("CONCURRENCY_CONTROL_NUMBER")]
-    public long ConcurrencyControlNumber { get; set; }
 
     /// <summary>
     /// The date and time the record was created.

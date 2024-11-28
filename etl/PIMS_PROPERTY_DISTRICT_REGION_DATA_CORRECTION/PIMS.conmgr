@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="PIMS"
+  DTS:DTSID="{3240E4ED-22D8-4686-9ACC-CD9642381A84}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-PIMS_PROPERTY_DISTRICT_REGION_DATA_CORRECTION-{3240E4ED-22D8-4686-9ACC-CD9642381A84}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

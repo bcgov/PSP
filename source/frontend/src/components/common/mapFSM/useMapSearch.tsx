@@ -9,6 +9,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { exists } from '@/utils';
 
 import {
   emptyFeatureData,
@@ -300,50 +301,52 @@ export const useMapSearch = () => {
         const [pinPmbcData, pidPmbcData] = await Promise.all([findByPinTask, findByPidTask]);
 
         // If the property was found on the pims inventory, use that.
-        if (pidPinInventoryData?.features && pidPinInventoryData?.features?.length > 0) {
-          const validFeatures = pidPinInventoryData.features.filter(feature => !!feature?.geometry);
+        const attributedFeatures: FeatureCollection<
+          Geometry,
+          PMBC_FullyAttributed_Feature_Properties
+        > = {
+          type: 'FeatureCollection',
+          features: [...(pinPmbcData?.features || []), ...(pidPmbcData?.features || [])],
+          bbox: pinPmbcData?.bbox || pidPmbcData?.bbox,
+        };
+        const validPimsFeatures = pidPinInventoryData.features.filter(
+          feature => !!feature?.geometry,
+        );
 
-          result = {
-            pimsLocationFeatures: {
-              type: pidPinInventoryData.type,
-              bbox: pidPinInventoryData.bbox,
-              features: validFeatures,
-            },
-            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            fullyAttributedFeatures: emptyPmbcFeatureCollection,
-          };
+        //filter out any pmbc features that do not have geometry, or are part of the pims feature result set.
+        const validPmbcFeatures = attributedFeatures.features.filter(
+          feature =>
+            !!feature?.geometry &&
+            !validPimsFeatures?.find(
+              pf =>
+                (exists(feature?.properties?.PID_NUMBER) &&
+                  pf.properties.PID === feature?.properties?.PID_NUMBER) ||
+                (exists(feature?.properties?.PIN) &&
+                  pf.properties.PIN === feature?.properties?.PIN),
+            ),
+        );
+        result = {
+          pimsLocationFeatures: validPimsFeatures.length
+            ? {
+                type: pidPinInventoryData.type,
+                bbox: pidPinInventoryData.bbox,
+                features: validPimsFeatures,
+              }
+            : emptyPimsLocationFeatureCollection,
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: validPmbcFeatures
+            ? {
+                type: attributedFeatures.type,
+                bbox: attributedFeatures.bbox,
+                features: validPmbcFeatures,
+              }
+            : emptyPmbcFeatureCollection,
+        };
 
-          if (validFeatures.length === 0) {
-            toast.info('No search results found');
-          } else {
-            toast.info(`${validFeatures.length} properties found`);
-          }
+        if (validPmbcFeatures.length === 0 && validPimsFeatures.length === 0) {
+          toast.info('No search results found');
         } else {
-          const attributedFeatures: FeatureCollection<
-            Geometry,
-            PMBC_FullyAttributed_Feature_Properties
-          > = {
-            type: 'FeatureCollection',
-            features: [...(pinPmbcData?.features || []), ...(pidPmbcData?.features || [])],
-            bbox: pinPmbcData?.bbox || pidPmbcData?.bbox,
-          };
-
-          const validFeatures = attributedFeatures.features.filter(feature => !!feature?.geometry);
-          result = {
-            pimsLocationFeatures: emptyPimsLocationFeatureCollection,
-            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            fullyAttributedFeatures: {
-              type: attributedFeatures.type,
-              bbox: attributedFeatures.bbox,
-              features: validFeatures,
-            },
-          };
-
-          if (validFeatures.length === 0) {
-            toast.info('No search results found');
-          } else {
-            toast.info(`${validFeatures.length} properties found`);
-          }
+          toast.info(`${validPmbcFeatures.length + validPimsFeatures.length} properties found`);
         }
       } catch (error) {
         toast.error((error as Error).message, { autoClose: 7000 });

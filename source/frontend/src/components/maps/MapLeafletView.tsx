@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { dequal } from 'dequal';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import {
   geoJSON,
@@ -9,7 +8,7 @@ import {
   Map as LeafletMap,
   Popup as LeafletPopup,
 } from 'leaflet';
-import isEqual from 'lodash/isEqual';
+import { isEqual } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
 import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
 
@@ -52,8 +51,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
 
-  const [bounds, setBounds] = useState<LatLngBounds>(defaultBounds);
-
   // a reference to the layer popup
   const popupRef = useRef<LeafletPopup>(null);
 
@@ -85,16 +82,12 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const mapMachineRequestedFitBounds = mapMachine.requestedFitBounds;
 
   const hasPendingFlyTo = mapMachine.pendingFlyTo;
+  const hasPendingCenterTo = mapMachine.pendingCenterTo;
   const requestedFlyTo = mapMachine.requestedFlyTo;
-  const mapMachineProcessFlyTo = mapMachine.processFlyTo;
+  const requestedCenterTo = mapMachine.requestedCenterTo;
 
-  // Set the bounds when the map is ready. Not called from existing handleMapCreated as that function is called every time a state change occurs.
-  useEffect(() => {
-    const bounds = mapRef?.current?.getBounds();
-    if (exists(bounds) && isMapReady && !dequal(bounds.getNorthEast(), bounds.getSouthWest())) {
-      setBounds(bounds);
-    }
-  }, [isMapReady, setBounds]);
+  const mapMachineProcessFlyTo = mapMachine.processFlyTo;
+  const mapMachineProcessCenterTo = mapMachine.processCenterTo;
 
   useEffect(() => {
     if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
@@ -159,11 +152,19 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         mapRef?.current?.flyTo(requestedFlyTo.location, MAP_MAX_ZOOM, {
           animate: false,
         });
+        mapRef?.current?.panTo(requestedFlyTo.location);
       }
 
       mapMachineProcessFlyTo();
     }
   }, [isMapReady, hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
+
+  useEffect(() => {
+    if (hasPendingCenterTo && isMapReady && requestedCenterTo.location) {
+      mapRef.current?.setView(requestedCenterTo.location);
+    }
+    mapMachineProcessCenterTo();
+  }, [hasPendingCenterTo, isMapReady, mapMachineProcessCenterTo, requestedCenterTo.location]);
 
   useEffect(() => {
     mapRef.current?.invalidateSize();
@@ -183,31 +184,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     });
   }, []);
 
-  useEffect(() => {
-    activeFeatureLayer?.clearLayers();
-    if (
-      mapMachine.mapFeatureData.fullyAttributedFeatures.features.length === 1 &&
-      mapMachine.mapFeatureData.pimsLocationFeatures.features.length === 0 &&
-      mapMachine.mapFeatureData.pimsBoundaryFeatures.features.length === 0
-    ) {
-      const searchFeature = mapMachine.mapFeatureData.fullyAttributedFeatures.features[0];
-      if (activeFeatureLayer && searchFeature?.geometry?.type === 'Polygon') {
-        activeFeatureLayer?.addData(searchFeature);
-        const bounds = activeFeatureLayer.getBounds();
-        mapRef?.current?.flyToBounds(bounds, { animate: false });
-        mapMachineProcessFlyTo();
-      }
-    }
-  }, [
-    activeFeatureLayer,
-    mapLocationFeatureDataset?.parcelFeature,
-    mapMachine.mapFeatureData.fullyAttributedFeatures.features,
-    mapMachine.mapFeatureData.fullyAttributedFeatures.features.length,
-    mapMachine.mapFeatureData.pimsBoundaryFeatures.features.length,
-    mapMachine.mapFeatureData.pimsLocationFeatures.features.length,
-    mapMachineProcessFlyTo,
-  ]);
-
   const handleMapReady = () => {
     mapMachine.setDefaultMapLayers(layers);
   };
@@ -222,7 +198,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const handleBounds = (event: LeafletEvent) => {
     const boundsData: LatLngBounds = event.target.getBounds();
     if (!isEqual(boundsData.getNorthEast(), boundsData.getSouthWest())) {
-      setBounds(boundsData);
+      mapMachine.setCurrentMapBounds(boundsData);
     }
   };
 
@@ -271,7 +247,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           active={mapMachine.isFiltering}
         />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
-        <InventoryLayer zoom={zoom} bounds={bounds} maxZoom={MAP_MAX_ZOOM}></InventoryLayer>
+        <InventoryLayer
+          zoom={zoom}
+          maxZoom={MAP_MAX_ZOOM}
+          bounds={mapMachine.currentMapBounds ?? defaultBounds}
+        ></InventoryLayer>
         <LeafletLayerListener />
       </ReactLeafletMap>
     </Styled.MapContainer>
