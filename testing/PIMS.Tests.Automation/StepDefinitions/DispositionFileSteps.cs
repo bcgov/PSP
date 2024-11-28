@@ -367,7 +367,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property
             PopulateDispositionFile(rowNumber);
-            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+            searchProperties.SearchPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -392,7 +392,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(0, dispositionFileDetails.IsCreateDispositionFileFormVisible());
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+            searchProperties.SearchPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -414,7 +414,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             dispositionFileDetails.CancelDispositionFile();
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(dispositionFile.DispositionSearchProperties.PID);
+            searchProperties.SearchPropertyByPID(dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();

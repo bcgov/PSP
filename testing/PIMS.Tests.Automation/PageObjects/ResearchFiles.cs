@@ -21,7 +21,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By researchFileHelpNameTooltip = By.XPath("//div[contains(text(),'Help with choosing a name')]");
 
         //Research File Tabs and File Summary Elements
-        private readonly By researchFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] button[title='File Details']");
+        private readonly By researchFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div button[title='File Details']");
+        private readonly By researchFileSummaryBttnPlaceholder = By.CssSelector("div[data-testid='menu-item-row-0'] div span[title='File Details']");
         private readonly By researchFileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
         private readonly By researchFileDocumentsTab = By.CssSelector("a[data-rb-event-key='documents']");
         private readonly By researchFileNotesTab = By.CssSelector("a[data-rb-event-key='notes']");
@@ -571,14 +572,14 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify Edit Research File Init Form
         public void VerifyResearchFileEditInitForm(ResearchFile researchFile, string user)
         {
-            WaitUntilVisible(researchFileSummaryBttn);
+            WaitUntilVisible(researchFileSummaryBttnPlaceholder);
 
             //Header
             VerifyResearchFileHeader(researchFile, user);
             AssertTrueContentEquals(researchFileHeaderStatusContent,GetUppercaseString(researchFile.Status));
 
             //Left Bar Elements
-            AssertTrueIsDisplayed(researchFileSummaryBttn);
+            AssertTrueIsDisplayed(researchFileSummaryBttnPlaceholder);
             AssertTrueIsDisplayed(researchFilePropertiesLeftSection);
             AssertTrueIsDisplayed(researchEditPropertiesBttn);
 

@@ -214,10 +214,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearMultiSelectInput(managementPropertyPurposeInput);
                 foreach (string purpose in managementProperty.ManagementPropertyPurpose)
                 {
+                    Wait();
                     webDriver.FindElement(managementPropertyPurposeLabel).Click();
                     FocusAndClick(managementPropertyPurposeInput);
 
-                    WaitUntilClickable(managementPropertyPurposeOptions);
                     ChooseMultiSelectSpecificOption(managementPropertyPurposeOptions, purpose);
                     webDriver.FindElement(managementPropertyPurposeLabel).Click();
                 }
