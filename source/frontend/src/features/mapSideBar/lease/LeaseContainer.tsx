@@ -59,6 +59,7 @@ export interface LeasePageProps<T> {
   onEdit?: (isEditing: boolean) => void;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onSuccess: () => void;
+  refreshLease?: () => void;
   componentView: React.FunctionComponent<React.PropsWithChildren<T>>;
 }
 
@@ -266,7 +267,12 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   }, [leaseId, getLastUpdatedBy, setLastUpdatedBy]);
 
   useEffect(() => {
-    if (activeTab === LeaseFileTabNames.deposit || activeTab === LeaseFileTabNames.payments) {
+    if (
+      activeTab === LeaseFileTabNames.deposit ||
+      activeTab === LeaseFileTabNames.payments ||
+      activeTab === LeaseFileTabNames.notes ||
+      activeTab === LeaseFileTabNames.documents
+    ) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);

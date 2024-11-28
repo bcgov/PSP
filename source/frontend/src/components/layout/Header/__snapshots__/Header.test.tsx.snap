@@ -111,11 +111,6 @@ exports[`App Header > renders correctly 1`] = `
   padding: 0;
 }
 
-.c0 .other:hover {
-  color: red;
-  cursor: pointer;
-}
-
 .c0 .modal-content .label {
   font-weight: 700;
 }
@@ -135,7 +130,8 @@ exports[`App Header > renders correctly 1`] = `
 }
 
 .c6 .dropdown-item {
-  border-top: 0.2rem solid _accentColor_6badca;
+  background-color: #053662;
+  border-top: 0.2rem solid;
 }
 
 .c5 {
@@ -282,9 +278,8 @@ exports[`App Header > renders correctly 1`] = `
       </a>
     </div>
     <div
-      class="other navbar-nav"
+      class="other"
     />
-    <div />
   </nav>
 </DocumentFragment>
 `;

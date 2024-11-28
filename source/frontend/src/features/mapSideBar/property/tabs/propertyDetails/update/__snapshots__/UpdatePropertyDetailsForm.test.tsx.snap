@@ -6,7 +6,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c5.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,53 +35,121 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn .Button__value {
+.c6.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c5.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
-  outline-width: 0.4rem;
+.c6.btn:focus {
+  outline-width: 2px;
   outline-style: solid;
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
-.c5.btn.btn-secondary {
-  background: none;
+.c6.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-primary:hover,
+.c6.btn.btn-primary:active,
+.c6.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c6.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c6.btn.btn-secondary:hover,
+.c6.btn.btn-secondary:active,
+.c6.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c6.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-light:hover,
+.c6.btn.btn-light:active,
+.c6.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c6.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-dark:hover,
+.c6.btn.btn-dark:active,
+.c6.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c6.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c6.btn.btn-danger:hover,
+.c6.btn.btn-danger:active,
+.c6.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c6.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c6.btn.btn-warning:hover,
+.c6.btn.btn-warning:active,
+.c6.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +182,17 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -126,35 +200,34 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6.c6.btn {
+.c7.c7.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c6.c6.btn .text {
+.c7.c7.btn .text {
   display: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:active,
-.c6.c6.btn:focus {
+.c7.c7.btn:hover,
+.c7.c7.btn:active,
+.c7.c7.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -168,19 +241,28 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c6.c6.btn:hover .text,
-.c6.c6.btn:active .text,
-.c6.c6.btn:focus .text {
+.c7.c7.btn:hover .text,
+.c7.c7.btn:active .text,
+.c7.c7.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c7 {
+.c9 {
   margin-left: 0.5rem;
   cursor: pointer;
+  fill: #474543;
 }
 
-.c12 {
+.c9:hover {
+  fill: #CE3E39;
+}
+
+.c8 {
+  color: #474543;
+}
+
+.c14 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -190,7 +272,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c11.form-group {
+.c13.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -198,7 +280,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   margin-bottom: 0;
 }
 
-.c11.form-group .radio-group {
+.c13.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -211,7 +293,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   column-gap: 0.4rem;
 }
 
-.c11.form-group .radio-group .form-check {
+.c13.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -226,25 +308,26 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   justify-content: center;
 }
 
-.c11.form-group .radio-group .form-check .form-check-input {
+.c13.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c11.form-group .radio-group .form-check-label {
+.c13.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c11 .form-label {
+.c13 .form-label {
   margin-bottom: unset;
 }
 
-.c1 {
+.c2 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c0 {
+.c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -252,54 +335,62 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
+.c5.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
-}
-
-.c8 {
-  max-width: 25rem;
-  padding: 1rem;
-  border: 1px solid;
-  border-radius: 0.5rem;
 }
 
 .c10 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #42814A;
   border-radius: 0.5rem;
 }
 
-.c13 {
+.c12 {
   max-width: 25rem;
   padding: 1rem;
-  border: 1px solid;
+  background-color: #f2f2f2;
+  border: 1px solid #053662;
   border-radius: 0.5rem;
 }
 
-.c9 {
+.c15 {
+  max-width: 25rem;
+  padding: 1rem;
+  background-color: #d9eaf7;
+  border: 1px solid #053662;
+  border-radius: 0.5rem;
+}
+
+.c11 {
   max-width: 9rem;
 }
 
-.c2 {
+.c0 {
+  background-color: #f2f2f2;
+}
+
+.c3 {
+  color: #9F9D9C;
   text-align: left;
 }
 
 <div
-    class=""
+    class="c0"
   >
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -315,7 +406,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <p
-          class="c2"
+          class="c3"
         >
           This is the address stored in PIMS application for this property and will be used wherever this property's address is needed.
         </p>
@@ -326,13 +417,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Address (line 1):
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="row"
@@ -362,13 +453,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Address (line 2):
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="row"
@@ -401,13 +492,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Address (line 3):
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="row"
@@ -431,7 +522,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 class="pl-0 col-3"
               >
                 <button
-                  class="c5 Button c6 btn btn-link"
+                  class="c6 Button c7 btn btn-link"
                   type="button"
                 >
                   <div
@@ -477,13 +568,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               City:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="input form-group"
@@ -505,13 +596,514 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
+            >
+              Province:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-address.provinceStateId"
+                name="address.provinceStateId"
+              >
+                <option
+                  value=""
+                >
+                  Please Select
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-1"
+                  value="1"
+                >
+                  British Columbia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-2"
+                  value="2"
+                >
+                  Alberta
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-3"
+                  value="3"
+                >
+                  Manitoba
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-4"
+                  value="4"
+                >
+                  Newfoundland
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-5"
+                  value="5"
+                >
+                  New Brunswick
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-6"
+                  value="6"
+                >
+                  Nova Scotia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-7"
+                  value="7"
+                >
+                  North West Territories
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-8"
+                  value="8"
+                >
+                  Nunavut
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-9"
+                  value="9"
+                >
+                  Ontario
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-10"
+                  value="10"
+                >
+                  Prince Edward Island
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-11"
+                  value="11"
+                >
+                  Quebec
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-12"
+                  value="12"
+                >
+                  Saskatchewan
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-13"
+                  value="13"
+                >
+                  Yukon Territory
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-14"
+                  value="14"
+                >
+                  Alaska
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-15"
+                  value="15"
+                >
+                  Alabama
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-16"
+                  value="16"
+                >
+                  Arkansas
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-17"
+                  value="17"
+                >
+                  Arizona
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-18"
+                  value="18"
+                >
+                  California
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-19"
+                  value="19"
+                >
+                  Colorado
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-20"
+                  value="20"
+                >
+                  Connecticut
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-21"
+                  value="21"
+                >
+                  District Of Columbia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-22"
+                  value="22"
+                >
+                  Delaware
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-23"
+                  value="23"
+                >
+                  Florida
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-24"
+                  value="24"
+                >
+                  Georgia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-25"
+                  value="25"
+                >
+                  Hawaii
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-26"
+                  value="26"
+                >
+                  Iowa
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-27"
+                  value="27"
+                >
+                  Idaho
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-28"
+                  value="28"
+                >
+                  Illinois
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-29"
+                  value="29"
+                >
+                  Indiana
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-30"
+                  value="30"
+                >
+                  Kansas
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-31"
+                  value="31"
+                >
+                  Kentucky
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-32"
+                  value="32"
+                >
+                  Louisiana
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-33"
+                  value="33"
+                >
+                  Massachusetts
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-34"
+                  value="34"
+                >
+                  Maryland
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-35"
+                  value="35"
+                >
+                  Maine
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-36"
+                  value="36"
+                >
+                  Michigan
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-37"
+                  value="37"
+                >
+                  Minnesota
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-38"
+                  value="38"
+                >
+                  Missouri
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-39"
+                  value="39"
+                >
+                  Mississippi
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-40"
+                  value="40"
+                >
+                  Montana
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-41"
+                  value="41"
+                >
+                  North Carolina
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-42"
+                  value="42"
+                >
+                  North Dakota
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-43"
+                  value="43"
+                >
+                  Nebraska
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-44"
+                  value="44"
+                >
+                  New Hampshire
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-45"
+                  value="45"
+                >
+                  New Jersey
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-46"
+                  value="46"
+                >
+                  New Mexico
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-47"
+                  value="47"
+                >
+                  Nevada
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-48"
+                  value="48"
+                >
+                  New York
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-49"
+                  value="49"
+                >
+                  Ohio
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-50"
+                  value="50"
+                >
+                  Oklahoma
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-51"
+                  value="51"
+                >
+                  Oregon
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-52"
+                  value="52"
+                >
+                  Pennsylvania
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-53"
+                  value="53"
+                >
+                  Rhode Island
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-54"
+                  value="54"
+                >
+                  South Carolina
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-55"
+                  value="55"
+                >
+                  South Dakota
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-56"
+                  value="56"
+                >
+                  Tennessee
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-57"
+                  value="57"
+                >
+                  Texas
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-58"
+                  value="58"
+                >
+                  Utah
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-59"
+                  value="59"
+                >
+                  Virginia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-60"
+                  value="60"
+                >
+                  Vermont
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-61"
+                  value="61"
+                >
+                  Washington
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-62"
+                  value="62"
+                >
+                  Wisconsin
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-63"
+                  value="63"
+                >
+                  West Virginia
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-64"
+                  value="64"
+                >
+                  Wyoming
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-65"
+                  value="65"
+                >
+                  Mexico
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-78"
+                  value="78"
+                >
+                  Other
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-79"
+                  value="79"
+                >
+                  Unknown
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
             >
               Postal code:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="input form-group"
@@ -533,13 +1125,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               General location:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="input form-group"
@@ -556,10 +1148,10 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -581,16 +1173,16 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
-              Historical File #:
+              Historical file #:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <button
-              class="c5 Button btn btn-link"
+              class="c6 Button btn btn-link"
               data-testid="add-historical-number"
               type="button"
             >
@@ -609,13 +1201,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
-              Legal Description:
+              Legal description:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="textarea input form-group"
@@ -635,13 +1227,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               MOTI region:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-group"
@@ -695,13 +1287,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Highways district:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-group"
@@ -811,16 +1403,16 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Electoral district:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <span
-              class=""
+              class="c8"
             />
           </div>
         </div>
@@ -831,16 +1423,16 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
-              Agricultural Land Reserve:
+              Agricultural land reserve:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <span
-              class=""
+              class="c8"
             >
               No
             </span>
@@ -853,19 +1445,19 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Railway belt / Dominion patent:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-group"
             >
               <select
-                class="form-control"
+                class="form-select form-control"
                 id="input-isRwyBeltDomPatent"
                 name="isRwyBeltDomPatent"
               >
@@ -895,13 +1487,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Land parcel type:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-group"
@@ -992,13 +1584,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Municipal zoning:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="input form-group"
@@ -1020,13 +1612,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Anomalies:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-group"
@@ -1050,7 +1642,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c7"
+                          class="c9"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -1074,7 +1666,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c7"
+                          class="c9"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -1170,10 +1762,10 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -1195,13 +1787,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Tenure status:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-group"
@@ -1225,7 +1817,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c7"
+                          class="c9"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -1249,7 +1841,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c7"
+                          class="c9"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -1379,13 +1971,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
-              Provincial Public Hwy:
+              Provincial public hwy:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-group"
@@ -1461,13 +2053,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-4"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Highway / Road Details:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="form-group"
@@ -1491,7 +2083,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c7"
+                          class="c9"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -1515,7 +2107,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         class="custom-close"
                       >
                         <svg
-                          class="c7"
+                          class="c9"
                           fill="currentColor"
                           height="16"
                           stroke="currentColor"
@@ -1636,10 +2228,10 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -1661,13 +2253,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-2"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Area:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="row"
@@ -1676,7 +2268,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="c8"
+                  class="c10"
                 >
                   <div
                     class="pb-2 row"
@@ -1686,7 +2278,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     >
                       <input
                         aria-label="square metres"
-                        class="c9"
+                        class="c11"
                         name="area-sq-meters"
                         step=".01"
                         type="number"
@@ -1707,7 +2299,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     >
                       <input
                         aria-label="hectares"
-                        class="c9"
+                        class="c11"
                         name="area-hectares"
                         step=".01"
                         type="number"
@@ -1726,7 +2318,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="c10"
+                  class="c12"
                 >
                   <div
                     class="pb-2 row"
@@ -1736,7 +2328,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     >
                       <input
                         aria-label="square feet"
-                        class="c9"
+                        class="c11"
                         name="area-sq-feet"
                         step=".01"
                         type="number"
@@ -1757,7 +2349,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     >
                       <input
                         aria-label="acres"
-                        class="c9"
+                        class="c11"
                         name="area-acres"
                         step=".01"
                         type="number"
@@ -1782,22 +2374,22 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-auto"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Is this a volumetric parcel?:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
-              class="c11 form-group"
+              class="c13 form-group"
             >
               <div
                 class="radio-group"
               >
                 <div
-                  class="c12 pb-3"
+                  class="c14 pb-3"
                 >
                   <div
                     class="form-check"
@@ -1820,7 +2412,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                   </label>
                 </div>
                 <div
-                  class="c12 pb-3"
+                  class="c14 pb-3"
                 >
                   <div
                     class="form-check"
@@ -1852,13 +2444,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             class="pr-0 text-left col-2"
           >
             <label
-              class="c3"
+              class="c4"
             >
               Volume:
             </label>
           </div>
           <div
-            class="c4 text-left col"
+            class="c5 text-left col"
           >
             <div
               class="row"
@@ -1873,7 +2465,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     class="col"
                   >
                     <div
-                      class="c13"
+                      class="c15"
                     >
                       <div
                         class="pb-2 row"
@@ -1883,7 +2475,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         >
                           <input
                             aria-label="cubic metres"
-                            class="c9"
+                            class="c11"
                             name="volume-cubic-meters"
                             step=".01"
                             type="number"
@@ -1909,7 +2501,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                         >
                           <input
                             aria-label="cubic feet"
-                            class="c9"
+                            class="c11"
                             name="volume-cubic-feet"
                             step=".01"
                             type="number"
@@ -1941,13 +2533,13 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     class="pr-0 text-left col-3"
                   >
                     <label
-                      class="c3"
+                      class="c4"
                     >
                       Type:
                     </label>
                   </div>
                   <div
-                    class="c4 text-left col-auto"
+                    class="c5 text-left col-auto"
                   >
                     <div
                       class="form-group"
@@ -1982,10 +2574,10 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c0 form-section"
+      class="c1 form-section"
     >
       <h2
-        class="c1"
+        class="c2"
       >
         <div
           class="no-gutters row"
@@ -1993,7 +2585,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
           <div
             class="col"
           >
-            Notes
+            Comments
           </div>
         </div>
       </h2>

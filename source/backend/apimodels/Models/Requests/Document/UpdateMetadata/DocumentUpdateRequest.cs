@@ -21,6 +21,11 @@ namespace Pims.Api.Models.Requests.Document.UpdateMetadata
         public long MayanDocumentId { get; set; }
 
         /// <summary>
+        /// get/set - The type for the document to be uploaded.
+        /// </summary>
+        public long DocumentTypeId { get; set; }
+
+        /// <summary>
         /// get/set - Status code of the document.
         /// </summary>
         public string DocumentStatusCode { get; set; }

@@ -1,66 +1,86 @@
 import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
+import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-interface BaseContactResult {
-  id: string;
-  leaseStakeholderId?: number;
-  isDisabled?: boolean;
-  summary?: string;
-  email?: string;
-  mailingAddress?: string;
-  municipalityName?: string;
-  provinceState?: string;
-  provinceStateId?: number;
-  note?: string;
-  landline?: string;
-  mobile?: string;
-  stakeholderType?: string;
-}
-
-interface PersonContactResult extends BaseContactResult {
-  personId?: number;
-  person?: ApiGen_Concepts_Person;
-
-  surname?: string;
-  firstName?: string;
-  middleNames?: string;
-
-  organizationName?: string;
+interface PersonContactSummary
+  extends Omit<
+    ApiGen_Concepts_ContactSummary,
+    'organizationId' | 'organization' | 'primaryOrgContact' | 'primaryOrgContactId'
+  > {
   organizationId?: never;
   organization?: never;
   primaryOrgContact?: never;
   primaryOrgContactId?: never;
 }
 
-interface OrganizationContactResult extends BaseContactResult {
+interface OrganizationContactSummary
+  extends Omit<
+    ApiGen_Concepts_ContactSummary,
+    'personId' | 'person' | 'surname' | 'firstName' | 'middleNames'
+  > {
   personId?: never;
   person?: never;
   surname?: never;
   firstName?: never;
   middleNames?: never;
-
-  organizationId?: number;
-  organization?: ApiGen_Concepts_Organization;
-  primaryOrgContact?: ApiGen_Concepts_Person;
-  primaryOrgContactId?: number;
-  organizationName?: string;
 }
 
-export function isPersonResult(
-  contactResult: IContactSearchResult,
-): contactResult is PersonContactResult {
+export function isPersonResult(contactResult: ApiGen_Concepts_ContactSummary): boolean {
   return contactResult.id.startsWith('P') && contactResult.personId !== undefined;
 }
 
-export function isOrganizationResult(
-  contactResult: IContactSearchResult,
-): contactResult is OrganizationContactResult {
+export function isOrganizationResult(contactResult: ApiGen_Concepts_ContactSummary): boolean {
   return contactResult.id.startsWith('O');
 }
 
-export type IContactSearchResult = PersonContactResult | OrganizationContactResult;
+export function isPersonSummary(
+  contactResult: IContactSearchResult,
+): contactResult is PersonContactSummary {
+  return contactResult.id.startsWith('P') && contactResult.personId !== undefined;
+}
+
+export function isOrganizationSummary(
+  contactResult: IContactSearchResult,
+): contactResult is OrganizationContactSummary {
+  return contactResult.id.startsWith('O');
+}
+
+export type IContactSearchResult = PersonContactSummary | OrganizationContactSummary;
+
+export function fromContactSummary(
+  baseModel: ApiGen_Concepts_ContactSummary,
+): IContactSearchResult {
+  //NOTE: this will display a person's org if they have one, it will not display an org's person as there may be many.
+  const common = {
+    id: baseModel.id,
+    isDisabled: baseModel.isDisabled,
+    summary: baseModel.summary,
+    email: baseModel.email,
+    mailingAddress: baseModel.mailingAddress,
+    municipalityName: baseModel.municipalityName,
+    provinceState: baseModel.provinceState,
+    organizationName: baseModel.organizationName,
+  };
+
+  if (baseModel?.id?.startsWith('P') === true) {
+    return {
+      ...common,
+      person: baseModel.person,
+      personId: baseModel.personId,
+      surname: baseModel.surname,
+      firstName: baseModel.firstName,
+      middleNames: baseModel.middleNames,
+    };
+  } else {
+    return {
+      ...common,
+      organization: baseModel.organization,
+      organizationId: baseModel.organizationId,
+    };
+  }
+}
 
 export function fromContact(baseModel: ApiGen_Concepts_Contact): IContactSearchResult {
   //NOTE: this will display a person's org if they have one, it will not display an org's person as there may be many.
@@ -78,7 +98,6 @@ export function fromContact(baseModel: ApiGen_Concepts_Contact): IContactSearchR
       mailingAddress: '',
       municipalityName: '',
       provinceState: '',
-      provinceStateId: 0,
       organizationName: baseModel.organization?.name ?? undefined,
     };
   } else {
@@ -93,7 +112,6 @@ export function fromContact(baseModel: ApiGen_Concepts_Contact): IContactSearchR
       mailingAddress: '',
       municipalityName: '',
       provinceState: '',
-      provinceStateId: 0,
     };
   }
 }
@@ -113,7 +131,6 @@ export function fromApiPerson(baseModel: ApiGen_Concepts_Person): IContactSearch
     mailingAddress: '',
     municipalityName: '',
     provinceState: '',
-    provinceStateId: 0,
     organizationName:
       personOrganizations && personOrganizations.length > 0
         ? personOrganizations[0]?.organization?.name ?? undefined
@@ -133,12 +150,11 @@ export function fromApiOrganization(baseModel: ApiGen_Concepts_Organization): IC
     mailingAddress: '',
     municipalityName: '',
     provinceState: '',
-    provinceStateId: 0,
   };
 }
 
 export function toContact(baseModel: IContactSearchResult): ApiGen_Concepts_Contact {
-  if (isPersonResult(baseModel)) {
+  if (isPersonSummary(baseModel)) {
     return {
       id: baseModel.id,
       person: baseModel.personId !== undefined ? toPerson(baseModel) ?? null : null,
@@ -155,7 +171,7 @@ export function toContact(baseModel: IContactSearchResult): ApiGen_Concepts_Cont
 }
 
 export function toPerson(baseModel?: IContactSearchResult): ApiGen_Concepts_Person | undefined {
-  if (baseModel === undefined || !isPersonResult(baseModel)) {
+  if (baseModel === undefined || !isPersonSummary(baseModel)) {
     return undefined;
   }
   return {
@@ -181,7 +197,7 @@ export function toPerson(baseModel?: IContactSearchResult): ApiGen_Concepts_Pers
 export function toOrganization(
   baseModel?: IContactSearchResult,
 ): ApiGen_Concepts_Organization | undefined {
-  if (baseModel === undefined || isPersonResult(baseModel)) {
+  if (baseModel === undefined || isPersonSummary(baseModel)) {
     return undefined;
   }
 

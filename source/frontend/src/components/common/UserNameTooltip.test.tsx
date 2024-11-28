@@ -1,11 +1,10 @@
-import { screen } from '@testing-library/react';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+import { render, RenderOptions, waitFor, screen } from '@/utils/test-utils';
 
 import { IUserNameTooltipProps, UserNameTooltip } from './UserNameTooltip';
 

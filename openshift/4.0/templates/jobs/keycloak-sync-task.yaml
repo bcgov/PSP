@@ -1,0 +1,52 @@
+#Note that this is a not a standalone task - it should always be run with the keycloak-sync pipeline.
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: keycloak-sync
+  namespace: 3cd915-dev
+spec:
+  params:
+    - name: KEYCLOAK_CONTEXT_DIR
+      type: string
+    - name: KEYCLOAK_SECRET_NAME
+      type: string
+    - name: KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME
+      type: string
+    - name: ASPNETCORE_ENVIRONMENT
+      type: string
+    - name: API_URL
+      type: string
+  steps:
+    - env:
+        - name: Auth__Keycloak__Secret
+          valueFrom:
+            secretKeyRef:
+              key: KEYCLOAK_SECRET
+              name: $(params.KEYCLOAK_SECRET_NAME)
+        - name: Auth__Keycloak__ServiceAccount__Secret
+          valueFrom:
+            secretKeyRef:
+              key: KEYCLOAK_SERVICE_ACCOUNT_SECRET
+              name: $(params.KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME)
+        - name: Api__Uri
+          value: $(params.API_URL)
+        - name: ASPNETCORE_ENVIRONMENT
+          value: $(params.ASPNETCORE_ENVIRONMENT)
+      image: >-
+        image-registry.openshift-image-registry.svc:5000/3cd915-tools/dotnet-80:8.0
+      name: keycloak-sync
+      resources:
+        limits:
+          cpu: 750m
+          memory: 1500Mi
+        requests:
+          cpu: 200m
+          memory: 500Mi
+      script: |
+        cd $(workspaces.psp.path)/$(params.KEYCLOAK_CONTEXT_DIR)
+        dotnet restore
+        dotnet build
+        dotnet run
+  workspaces:
+    - description: 'The PSP repository, checked out by a prior task'
+      name: psp

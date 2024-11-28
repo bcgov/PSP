@@ -12,6 +12,7 @@ exports[`PaymentForm component > renders as expected 1`] = `
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
@@ -63,6 +64,7 @@ exports[`PaymentForm component > renders as expected 1`] = `
 
 .c0 .check-field label {
   width: 100%;
+  color: #474543;
 }
 
 .c0 .form-group {
@@ -99,6 +101,7 @@ exports[`PaymentForm component > renders as expected 1`] = `
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   border-radius: 0.5rem;
+  background-color: #f2f2f2;
 }
 
 .c4 input {
@@ -395,6 +398,7 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
@@ -446,6 +450,7 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
 
 .c0 .check-field label {
   width: 100%;
+  color: #474543;
 }
 
 .c0 .form-group {
@@ -482,6 +487,7 @@ exports[`PaymentForm component > renders with data as expected 1`] = `
   -ms-flex-wrap: wrap;
   flex-wrap: wrap;
   border-radius: 0.5rem;
+  background-color: #f2f2f2;
 }
 
 .c4 input {

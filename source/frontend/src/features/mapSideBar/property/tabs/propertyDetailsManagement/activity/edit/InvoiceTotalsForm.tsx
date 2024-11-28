@@ -1,19 +1,24 @@
 import { FormikProps, useFormikContext } from 'formik';
 import React, { useEffect } from 'react';
+import { FaPlus } from 'react-icons/fa';
 
 import { FastCurrencyInput } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
+import { StyledSectionAddButton } from '@/components/common/styles';
 
 import { PropertyActivityFormModel } from './models';
 
 export interface IInvoiceTotalsForm {
   formikProps: FormikProps<PropertyActivityFormModel>;
+  onAdd: () => void;
 }
 
-export const InvoiceTotalsForm: React.FunctionComponent<
-  React.PropsWithChildren<IInvoiceTotalsForm>
-> = ({ formikProps }) => {
+export const InvoiceTotalsForm: React.FunctionComponent<IInvoiceTotalsForm> = ({
+  formikProps,
+  onAdd,
+}) => {
   const { values, setFieldValue } = useFormikContext<PropertyActivityFormModel>();
 
   useEffect(() => {
@@ -39,7 +44,16 @@ export const InvoiceTotalsForm: React.FunctionComponent<
   }, [setFieldValue, values.invoices, values.totalAmount]);
 
   return (
-    <Section header="Invoices Total">
+    <Section
+      header={
+        <SimpleSectionHeader title="Invoices Total">
+          <StyledSectionAddButton onClick={onAdd}>
+            <FaPlus size="2rem" />
+            &nbsp;{'Add an Invoice'}
+          </StyledSectionAddButton>
+        </SimpleSectionHeader>
+      }
+    >
       <SectionField label="Total (before tax)" contentWidth="7">
         <FastCurrencyInput field="pretaxAmount" formikProps={formikProps} disabled />
       </SectionField>

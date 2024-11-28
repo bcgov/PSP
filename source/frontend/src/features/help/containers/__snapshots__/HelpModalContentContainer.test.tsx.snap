@@ -7,6 +7,7 @@ exports[`HelpModalContentContainer component > renders correctly 1`] = `
   />
   <div />
   .c0 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
   border-bottom: solid 0.2rem;

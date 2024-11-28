@@ -13,6 +13,7 @@ import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { exists } from '@/utils';
+import { stringToNumber } from '@/utils/formUtils';
 
 export interface ComposedDocument {
   mayanMetadata?: ApiGen_Mayan_DocumentMetadata[];
@@ -216,14 +217,17 @@ export class DocumentUpdateFormData {
     const documentTypeLabel = composedDocument.pimsDocumentRelationship?.document?.documentType?.id;
 
     model.documentTypeId = documentTypeLabel?.toString() || '';
+
     return model;
   }
 
-  public toRequestApi(): ApiGen_Requests_DocumentUpdateRequest {
+  public static toRequestApi(
+    formData: DocumentUpdateFormData,
+  ): ApiGen_Requests_DocumentUpdateRequest {
     const metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
 
-    for (const key in this.documentMetadata) {
-      const value = this.documentMetadata[key];
+    for (const key in formData.documentMetadata) {
+      const value = formData.documentMetadata[key];
       const metadataTypeId = Number(key);
       metadata.push({
         value: value,
@@ -233,9 +237,10 @@ export class DocumentUpdateFormData {
     }
 
     return {
-      documentId: this.documentId,
-      mayanDocumentId: this.mayanDocumentId,
-      documentStatusCode: this.documentStatusCode,
+      documentId: formData.documentId,
+      mayanDocumentId: formData.mayanDocumentId,
+      documentTypeId: stringToNumber(formData.documentTypeId),
+      documentStatusCode: formData.documentStatusCode,
       documentMetadata: metadata,
     };
   }
@@ -243,6 +248,7 @@ export class DocumentUpdateFormData {
   private constructor() {
     this.documentId = -1;
     this.mayanDocumentId = -1;
+    this.documentTypeId = '';
     this.documentStatusCode = '';
     this.documentMetadata = {};
   }

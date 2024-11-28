@@ -85,16 +85,16 @@ const StyledButton = styled(BootstrapButton)`
     }
 
     &:focus {
-      outline-width: 0.4rem;
+      outline-width: ${({ theme }) => theme.bcTokens.layoutBorderWidthMedium};
       outline-style: solid;
-      outline-color: ${({ theme }) => theme.css.linkHoverColor};
-      outline-offset: 1px;
+      outline-color: ${({ theme }) => theme.bcTokens.surfaceColorBorderActive};
+      outline-offset: ${({ theme }) => theme.bcTokens.layoutMarginHair};
       box-shadow: none;
     }
 
     // PRIMARY buttons
     &.btn-primary {
-      color: ${({ theme }) => theme.bcTokens.surfaceColorFormsDefault};
+      color: ${({ theme }) => theme.bcTokens.typographyColorPrimaryInvert};
       background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
       &:hover,
       &:active,
@@ -197,6 +197,7 @@ const StyledButton = styled(BootstrapButton)`
       letter-spacing: unset;
       text-align: left;
       padding: 0;
+      text-decoration: underline;
       &:hover,
       &:active,
       &:focus {
@@ -219,11 +220,12 @@ const StyledButton = styled(BootstrapButton)`
     // DISABLED buttons -- applies to all buttons (primary, secondary, etc)
     &:disabled,
     &:disabled:hover {
+      color: ${({ theme }) => theme.bcTokens.typographyColorDisabled};
+      background-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDisabled};
       box-shadow: none;
       user-select: none;
       pointer-events: none;
       cursor: not-allowed;
-      opacity: 0.65;
     }
   }
 

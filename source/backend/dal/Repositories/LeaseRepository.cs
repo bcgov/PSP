@@ -121,6 +121,9 @@ namespace Pims.Dal.Repositories
 
             IEnumerable<PimsLease> leases = this.Context.PimsLeases.AsSplitQuery().AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
+                    .ThenInclude(p => p.Property)
+                    .ThenInclude(p => p.PimsHistoricalFileNumbers)
+                    .ThenInclude(h => h.HistoricalFileNumberTypeCodeNavigation)
                 .Include(l => l.RegionCodeNavigation)
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.LeasePayRvblTypeCodeNavigation)
@@ -131,6 +134,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.LeasePurposeTypeCodeNavigation)
                 .Include(l => l.LeaseStatusTypeCodeNavigation)
                 .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.Person)
                 .Include(t => t.PimsPropertyImprovements)
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)

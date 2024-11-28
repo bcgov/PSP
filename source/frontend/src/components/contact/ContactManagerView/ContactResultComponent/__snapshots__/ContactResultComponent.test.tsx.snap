@@ -6,7 +6,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,53 +35,121 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c6.btn .Button__value {
+.c7.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c6.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
-  outline-width: 0.4rem;
+.c7.btn:focus {
+  outline-width: 2px;
   outline-style: solid;
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
-.c6.btn.btn-secondary {
-  background: none;
+.c7.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c6.btn.btn-info {
+.c7.btn.btn-primary:hover,
+.c7.btn.btn-primary:active,
+.c7.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c7.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c7.btn.btn-secondary:hover,
+.c7.btn.btn-secondary:active,
+.c7.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c7.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c6.btn.btn-light {
+.c7.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c6.btn.btn-dark {
+.c7.btn.btn-light:hover,
+.c7.btn.btn-light:active,
+.c7.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c7.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c6.btn.btn-link {
+.c7.btn.btn-dark:hover,
+.c7.btn.btn-dark:active,
+.c7.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c7.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-danger:hover,
+.c7.btn.btn-danger:active,
+.c7.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c7.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c7.btn.btn-warning:hover,
+.c7.btn.btn-warning:active,
+.c7.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -111,14 +182,17 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -126,45 +200,68 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
-.c6.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c7.c7.btn {
+.c8.c8.btn {
   background-color: unset;
   border: none;
 }
 
-.c7.c7.btn:hover,
-.c7.c7.btn:focus,
-.c7.c7.btn:active {
+.c8.c8.btn:hover,
+.c8.c8.btn:focus,
+.c8.c8.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c7.c7.btn svg {
+.c8.c8.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c7.c7.btn svg:hover {
+.c8.c8.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c4 {
+.c8.c8.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c8.c8.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c8.c8.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c8.c8.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c8.c8.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c8.c8.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
+}
+
+.c5 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -203,7 +300,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c5 {
+.c6 {
   -webkit-box-pack: space-around;
   -webkit-justify-content: space-around;
   -ms-flex-pack: space-around;
@@ -211,9 +308,17 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   width: 100%;
 }
 
-.c3 a {
+.c3 {
+  color: #606060;
+}
+
+.c3.active {
+  color: #42814A;
+}
+
+.c4 a {
   font-weight: bold;
-  color: !important;
+  color: #428bca !important;
 }
 
 <div
@@ -584,7 +689,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="active"
+              class="c3 active"
             >
               <svg
                 class="mr-2"
@@ -609,7 +714,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="active"
+              class="c3 active"
             >
               <svg
                 fill="currentColor"
@@ -633,7 +738,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3"
+              class="c4"
             >
               <a
                 href="/contact/1"
@@ -703,10 +808,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c4 c5"
+              class="c5 c6"
             >
               <button
-                class="c6 Button c7 btn btn-light"
+                class="c7 Button c8 btn btn-light"
                 title="View Contact"
                 type="button"
               >
@@ -771,7 +876,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="active"
+              class="c3 active"
             >
               <svg
                 class="mr-2"
@@ -796,7 +901,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="active"
+              class="c3 active"
             >
               <svg
                 fill="currentColor"
@@ -820,7 +925,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3"
+              class="c4"
             >
               <a
                 href="/contact/2"
@@ -890,10 +995,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c4 c5"
+              class="c5 c6"
             >
               <button
-                class="c6 Button c7 btn btn-light"
+                class="c7 Button c8 btn btn-light"
                 title="View Contact"
                 type="button"
               >
@@ -958,7 +1063,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="inactive"
+              class="c3 inactive"
             >
               <svg
                 class="mr-2"
@@ -983,7 +1088,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="inactive"
+              class="c3 inactive"
             >
               <svg
                 fill="currentColor"
@@ -1007,7 +1112,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3"
+              class="c4"
             >
               <a
                 href="/contact/3"
@@ -1077,10 +1182,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c4 c5"
+              class="c5 c6"
             >
               <button
-                class="c6 Button c7 btn btn-light"
+                class="c7 Button c8 btn btn-light"
                 title="View Contact"
                 type="button"
               >
@@ -1118,6 +1223,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   </div>
   .c0 {
   font-size: 1.4rem;
+  color: #42814A;
 }
 
 .c1 {

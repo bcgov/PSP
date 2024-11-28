@@ -35,10 +35,26 @@ exports[`Document Results Table > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c4 .btn.btn-primary {
+.c5 [id^='document-view'] {
+  color: #428bca;
+}
+
+.c5 [id^='document-delete'] {
+  color: #428bca;
+}
+
+.c5 [id^='document-delete']:hover {
+  color: #CE3E39;
+}
+
+.c5 .btn.btn-primary {
   background-color: transparent;
   padding: 0;
   margin-left: 0.5rem;
+}
+
+.c4 .tooltip-icon {
+  color: #9F9D9C;
 }
 
 .c3 {
@@ -320,7 +336,7 @@ exports[`Document Results Table > matches snapshot 1`] = `
                 class="col-auto"
               >
                 <span
-                  class=""
+                  class="c4"
                 >
                   <span
                     class="tooltip-icon"
@@ -360,7 +376,7 @@ exports[`Document Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c4 no-gutters row"
+              class="c5 no-gutters row"
             />
           </div>
         </div>
@@ -379,7 +395,7 @@ exports[`Document Results Table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            MOTIPLAN
+            MOTI Plan
           </div>
           <div
             class="td"
@@ -415,7 +431,7 @@ exports[`Document Results Table > matches snapshot 1`] = `
                 class="col-auto"
               >
                 <span
-                  class=""
+                  class="c4"
                 >
                   <span
                     class="tooltip-icon"
@@ -455,7 +471,7 @@ exports[`Document Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c4 no-gutters row"
+              class="c5 no-gutters row"
             />
           </div>
         </div>

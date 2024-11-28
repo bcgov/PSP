@@ -18,7 +18,7 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
 }
 
 .c0 {
-  border: solid 0.2rem;
+  border: solid 0.2rem var(--theme-blue-90);
   padding: 1.5rem;
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
@@ -40,11 +40,12 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
-  border-bottom: solid 0.2rem;
+  border-bottom: solid 0.2rem var(--theme-blue-90);
   margin-bottom: 2rem;
 }
 
 .c1 label {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 1.75rem;
   width: 100%;
@@ -187,7 +188,7 @@ exports[`Disposition Offer Detail View component > renders as expected 1`] = `
         <label
           class="c2"
         >
-          Notes:
+          Comments:
           <span>
             <span
               class="tooltip-icon"

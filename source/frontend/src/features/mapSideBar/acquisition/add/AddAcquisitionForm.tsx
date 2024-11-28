@@ -22,10 +22,11 @@ import { useOrganizationRepository } from '@/features/contacts/repositories/useO
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import { ApiGen_CodeTypes_SubfileInterestTypes } from '@/models/api/generated/ApiGen_CodeTypes_SubfileInterestTypes';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { isValidId, isValidString } from '@/utils';
+import { exists, isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PropertyForm } from '../../shared/models';
@@ -36,6 +37,8 @@ import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionFormProps {
+  /** The parent acquisition file id - only applies to sub-files */
+  parentId?: number;
   /** Initial values of the form */
   initialValues: AcquisitionForm;
   /** A Yup Schema or a function that returns a Yup schema */
@@ -53,7 +56,7 @@ export const AddAcquisitionForm = React.forwardRef<
   FormikProps<AcquisitionForm>,
   IAddAcquisitionFormProps
 >((props, ref) => {
-  const { initialValues, validationSchema, onSubmit, confirmBeforeAdd } = props;
+  const { parentId, initialValues, validationSchema, onSubmit, confirmBeforeAdd } = props;
   const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] =
     React.useState<boolean>(false);
 
@@ -80,11 +83,15 @@ export const AddAcquisitionForm = React.forwardRef<
       innerRef={ref}
       initialValues={initialValues}
       validationSchema={validationSchema}
+      validateOnChange={false}
+      validateOnBlur={true}
       onSubmit={handleSubmit}
+      enableReinitialize
     >
       {formikProps => {
         return (
           <AddAcquisitionDetailSubForm
+            parentId={parentId}
             formikProps={formikProps}
             onSubmit={onSubmit}
             showDiffMinistryRegionModal={showDiffMinistryRegionModal}
@@ -98,6 +105,7 @@ export const AddAcquisitionForm = React.forwardRef<
 });
 
 const AddAcquisitionDetailSubForm: React.FC<{
+  parentId?: number;
   formikProps: FormikProps<AcquisitionForm>;
   onSubmit: (
     values: AcquisitionForm,
@@ -108,6 +116,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
   setShowDiffMinistryRegionModal: React.Dispatch<React.SetStateAction<boolean>>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }> = ({
+  parentId,
   formikProps,
   onSubmit,
   showDiffMinistryRegionModal,
@@ -127,6 +136,22 @@ const AddAcquisitionDetailSubForm: React.FC<{
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
+  const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTEREST_TYPES);
+
+  const isSubFile = exists(parentId) && isValidId(parentId);
+
+  const {
+    getOrganizationDetail: { execute: fetchOrganization, response: organization },
+  } = useOrganizationRepository();
+
+  const orgPersons = organization?.organizationPersons;
+  const primaryContacts: SelectOption[] =
+    orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
+      return {
+        label: `${formatApiPersonNames(orgPerson.person)}`,
+        value: orgPerson.personId ?? ' ',
+      };
+    }) ?? [];
 
   const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
     if (param.length > 0) {
@@ -141,18 +166,6 @@ const AddAcquisitionDetailSubForm: React.FC<{
     }
   };
 
-  const {
-    getOrganizationDetail: { execute: fetchOrganization, response: organization },
-  } = useOrganizationRepository();
-
-  React.useEffect(() => {
-    if (ownerSolicitorContact?.organizationId) {
-      fetchOrganization(ownerSolicitorContact?.organizationId);
-    }
-  }, [ownerSolicitorContact?.organizationId, fetchOrganization]);
-
-  const orgPersons = organization?.organizationPersons;
-
   React.useEffect(() => {
     if (orgPersons?.length === 0) {
       setFieldValue('ownerSolicitor.primaryContactId', null);
@@ -162,39 +175,56 @@ const AddAcquisitionDetailSubForm: React.FC<{
     }
   }, [orgPersons, setFieldValue]);
 
-  const primaryContacts: SelectOption[] =
-    orgPersons?.map((orgPerson: ApiGen_Concepts_PersonOrganization) => {
-      return {
-        label: `${formatApiPersonNames(orgPerson.person)}`,
-        value: orgPerson.personId ?? ' ',
-      };
-    }) ?? [];
+  React.useEffect(() => {
+    if (ownerSolicitorContact?.organizationId) {
+      fetchOrganization(ownerSolicitorContact?.organizationId);
+    }
+  }, [ownerSolicitorContact?.organizationId, fetchOrganization]);
 
   return (
     <>
       <Container>
         <Section header="Project">
-          <SectionField label="Ministry project">
-            <ProjectSelector
-              field="project"
-              onChange={(vals: IAutocompletePrediction[]) => {
-                onMinistryProjectSelected(vals);
-                if (vals.length === 0) {
-                  formikProps.setFieldValue('product', 0);
-                }
-              }}
-            />
-          </SectionField>
-          {projectProducts !== undefined && (
-            <SectionField label="Product">
-              <Select
-                field="product"
-                options={projectProducts.map<SelectOption>(x => {
-                  return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
-                })}
-                placeholder="Select..."
-              />
-            </SectionField>
+          {isSubFile ? (
+            <>
+              <SectionField
+                label="Ministry project"
+                tooltip="Sub-file has the same project as the main file and it can only be updated from the main file"
+              >
+                {values?.formattedProject ?? ''}
+              </SectionField>
+              <SectionField
+                label="Product"
+                tooltip="Sub-file has the same product as the main file and it can only be updated from the main file"
+              >
+                {values?.formattedProduct ?? ''}
+              </SectionField>
+            </>
+          ) : (
+            <>
+              <SectionField label="Ministry project">
+                <ProjectSelector
+                  field="project"
+                  onChange={(vals: IAutocompletePrediction[]) => {
+                    onMinistryProjectSelected(vals);
+                    if (vals.length === 0) {
+                      formikProps.setFieldValue('product', 0);
+                    }
+                  }}
+                />
+              </SectionField>
+              {projectProducts !== undefined && (
+                <SectionField label="Product">
+                  <Select
+                    field="product"
+                    options={projectProducts.map<SelectOption>(x => {
+                      return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
+                    })}
+                    placeholder="Select..."
+                  />
+                </SectionField>
+              )}
+            </>
           )}
           <SectionField label="Funding">
             <Select
@@ -206,12 +236,12 @@ const AddAcquisitionDetailSubForm: React.FC<{
                   .call(e.target.selectedOptions)
                   .map((option: HTMLOptionElement & number) => option.value)[0];
                 if (isValidString(selectedValue) && selectedValue !== 'OTHER') {
-                  formikProps.setFieldValue('fundingTypeOtherDescription', '');
+                  setFieldValue('fundingTypeOtherDescription', '');
                 }
               }}
             />
           </SectionField>
-          {formikProps.values?.fundingTypeCode === 'OTHER' && (
+          {values?.fundingTypeCode === 'OTHER' && (
             <SectionField label="Other funding">
               <LargeInput field="fundingTypeOtherDescription" />
             </SectionField>
@@ -222,11 +252,30 @@ const AddAcquisitionDetailSubForm: React.FC<{
           <SectionField label="Assigned date">
             <FastDatePicker field="assignedDate" formikProps={formikProps} />
           </SectionField>
-          <SectionField label="Delivery date">
+          <SectionField
+            label="Delivery date"
+            tooltip="Date for delivery of the property to the project"
+          >
             <FastDatePicker field="deliveryDate" formikProps={formikProps} />
           </SectionField>
+          <SectionField
+            label="Estimated date"
+            tooltip="Estimated date by which the acquisition would be completed"
+          >
+            <FastDatePicker field="estimatedCompletionDate" formikProps={formikProps} />
+          </SectionField>
+          <SectionField label="Possession date">
+            <FastDatePicker field="possessionDate" formikProps={formikProps} />
+          </SectionField>
         </Section>
-        <Section header="Properties to include in this file:">
+
+        <Section
+          header={
+            isSubFile
+              ? 'Properties to include in this sub-file:'
+              : 'Properties to include in this file:'
+          }
+        >
           <AcquisitionPropertiesSubForm
             formikProps={formikProps}
             confirmBeforeAdd={confirmBeforeAdd}
@@ -258,6 +307,42 @@ const AddAcquisitionDetailSubForm: React.FC<{
               required
             />
           </SectionField>
+
+          {isSubFile && (
+            <SectionField label="Sub-file interest" required>
+              <Select
+                field="subfileInterestTypeCode"
+                options={subfileInterestTypes}
+                placeholder="Select..."
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                  const selectedValue = [].slice
+                    .call(e.target.selectedOptions)
+                    .map((option: HTMLOptionElement & number) => option.value)[0];
+                  if (
+                    !!selectedValue &&
+                    selectedValue !== ApiGen_CodeTypes_SubfileInterestTypes.OTHER
+                  ) {
+                    formikProps.setFieldValue('otherSubfileInterestType', null);
+                  } else {
+                    formikProps.setFieldValue('otherSubfileInterestType', '');
+                  }
+                }}
+                required
+                data-testid="subfileInterestTypeCode"
+              />
+            </SectionField>
+          )}
+          {isSubFile &&
+            values?.subfileInterestTypeCode === ApiGen_CodeTypes_SubfileInterestTypes.OTHER && (
+              <SectionField label="" required>
+                <LargeInput
+                  field="otherSubfileInterestType"
+                  placeholder="Describe other"
+                  required
+                />
+              </SectionField>
+            )}
+
           <SectionField label="Ministry region" required>
             <UserRegionSelectContainer field="region" placeholder="Select region..." required />
           </SectionField>
@@ -271,12 +356,23 @@ const AddAcquisitionDetailSubForm: React.FC<{
             </div>
           )}
         </Section>
-        <Section header="Owners">
-          <StyledSectionParagraph>
-            Each property in this file should be owned by the owner(s) in this section
-          </StyledSectionParagraph>
-          <UpdateAcquisitionOwnersSubForm />
-          <SectionField label="Owner solicitor" className="mt-4">
+
+        <Section header={isSubFile ? 'Sub-Interest' : 'Owners'}>
+          {isSubFile ? (
+            <StyledSectionParagraph>
+              Each property in this sub-file should be impacted by the sub-interest(s) in this
+              section
+            </StyledSectionParagraph>
+          ) : (
+            <StyledSectionParagraph>
+              Each property in this file should be owned by the owner(s) in this section
+            </StyledSectionParagraph>
+          )}
+          <UpdateAcquisitionOwnersSubForm isSubFile={isSubFile} />
+          <SectionField
+            label={isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}
+            className="mt-4"
+          >
             <ContactInputContainer
               field="ownerSolicitor.contact"
               View={ContactInputView}
@@ -297,7 +393,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
               )}
             </SectionField>
           )}
-          <SectionField label="Owner representative">
+          <SectionField label={isSubFile ? 'Sub-interest representative' : 'Owner representative'}>
             <ContactInputContainer
               field="ownerRepresentative.contact"
               View={ContactInputView}

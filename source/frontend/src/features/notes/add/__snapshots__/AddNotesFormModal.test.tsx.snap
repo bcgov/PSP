@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`AddNotesFormModal component > renders as expected 1`] = `
-.c3.btn {
+.c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,53 +30,121 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c3.btn .Button__value {
+.c4.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c3.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c3.btn:focus {
-  outline-width: 0.4rem;
+.c4.btn:focus {
+  outline-width: 2px;
   outline-style: solid;
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
-.c3.btn.btn-secondary {
-  background: none;
+.c4.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c3.btn.btn-info {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c4.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c3.btn.btn-info:hover,
-.c3.btn.btn-info:active,
-.c3.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c3.btn.btn-light {
+.c4.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c3.btn.btn-dark {
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c4.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c3.btn.btn-link {
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c4.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -93,11 +161,14 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
-.c3.btn.btn-link:hover,
-.c3.btn.btn-link:active,
-.c3.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -106,14 +177,17 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
   outline: none;
 }
 
-.c3.btn.btn-link:disabled,
-.c3.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c3.btn:disabled,
-.c3.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -121,23 +195,22 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
-.c3.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c3.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c3.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c4 {
-  width: 2.4rem;
+.c3 {
+  min-width: 2.4rem;
 }
 
 .c2 {
@@ -159,6 +232,8 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
+  color: #FFFFFF;
+  background-color: #053662;
   cursor: default;
 }
 
@@ -207,6 +282,14 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c0 .modal-footer .button-wrap .Button {
@@ -234,15 +317,33 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
   max-width: 40rem;
 }
 
+.c0.info-variant .modal-header {
+  color: #053662;
+  background-color: #d9eaf7;
+}
+
 .c0.info-variant .modal-close-btn {
+  color: #474543;
   cursor: pointer;
+}
+
+.c0.error-variant .modal-header {
+  color: #CE3E39;
+  background-color: #f2dede;
 }
 
 .c0.error-variant .modal-close-btn {
+  color: #474543;
   cursor: pointer;
 }
 
+.c0.warning-variant .modal-header {
+  color: #6c4a00;
+  background-color: #fef1d8;
+}
+
 .c0.warning-variant .modal-close-btn {
+  color: #474543;
   cursor: pointer;
 }
 
@@ -263,6 +364,7 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
 .c1 .form-group label {
   font-family: BcSans-Bold;
   line-height: 2rem;
+  color: #474543;
 }
 
 <body
@@ -353,8 +455,11 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
           <div
             class="button-wrap"
           >
+            <span
+              class="c3"
+            />
             <button
-              class="c3 Button btn btn-secondary"
+              class="c4 Button btn btn-secondary"
               data-testid="cancel-modal-button"
               title="cancel-modal"
               type="button"
@@ -366,10 +471,10 @@ exports[`AddNotesFormModal component > renders as expected 1`] = `
               </div>
             </button>
             <span
-              class="c4"
+              class="c3"
             />
             <button
-              class="c3 Button btn btn-primary"
+              class="c4 Button btn btn-primary"
               data-testid="ok-modal-button"
               title="ok-modal"
               type="button"

@@ -14,6 +14,8 @@ export class ConsultationFormModel {
   public consultationTypeCode: string;
   public consultationTypeDescription: string;
   public consultationStatusTypeDescription: string;
+  public consultationOutcomeTypeCode: string;
+  public consultationOutcomeTypeCodeDescription: string;
   public otherDescription: string;
   public requestedOn: string;
   public isResponseReceived: boolean;
@@ -27,6 +29,8 @@ export class ConsultationFormModel {
     this.consultationTypeCode = '';
     this.consultationTypeDescription = '';
     this.consultationStatusTypeDescription = '';
+    this.consultationOutcomeTypeCode = 'INPROGRESS';
+    this.consultationOutcomeTypeCodeDescription = '';
     this.otherDescription = '';
     this.requestedOn = '';
     this.isResponseReceived = false;
@@ -43,9 +47,12 @@ export class ConsultationFormModel {
     const consultation = new ConsultationFormModel(apiModel.leaseId);
     consultation.id = apiModel.id;
     consultation.consultationTypeCode = apiModel.consultationTypeCode?.id ?? '';
+    consultation.consultationOutcomeTypeCode = apiModel.consultationOutcomeTypeCode?.id ?? '';
     consultation.consultationTypeDescription = apiModel.consultationTypeCode?.description ?? '';
     consultation.consultationStatusTypeDescription =
       apiModel.consultationStatusTypeCode?.description ?? '';
+    consultation.consultationOutcomeTypeCodeDescription =
+      apiModel.consultationOutcomeTypeCode?.description ?? '';
     consultation.otherDescription = apiModel.otherDescription ?? '';
     consultation.requestedOn = apiModel.requestedOn ?? '';
     consultation.isResponseReceived = apiModel.isResponseReceived ?? false;
@@ -78,6 +85,7 @@ export class ConsultationFormModel {
       primaryContactId: toNullableId(this.primaryContactId),
       consultationTypeCode: toTypeCodeNullable(this.consultationTypeCode),
       consultationStatusTypeCode: toTypeCodeNullable('UNKNOWN'),
+      consultationOutcomeTypeCode: toTypeCodeNullable(this.consultationOutcomeTypeCode),
       otherDescription: emptyStringtoNullable(this.otherDescription),
       requestedOn: emptyStringtoNullable(this.requestedOn),
       isResponseReceived: this.isResponseReceived,

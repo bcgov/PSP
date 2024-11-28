@@ -9,17 +9,20 @@ exports[`Operation section view > matches snapshot 1`] = `
   .c6 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
 .c3 {
   font-size: 1.0em;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -428,17 +431,20 @@ exports[`Operation section view > matches snapshot 1`] = `
   .c6 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
 .c3 {
   font-size: 1.0em;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 

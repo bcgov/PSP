@@ -59,6 +59,7 @@ export const CONTACT_METHOD_TYPES = 'PimsContactMethodType';
 export const COUNTRY_TYPES = 'PimsCountry';
 export const CONSULTATION_TYPES = 'PimsConsultationType';
 export const CONSULTATION_STATUS_TYPES = 'PimsConsultationStatusType';
+export const CONSULTATION_OUTCOME_TYPES = 'PimsConsultationOutcomeType';
 export const INSURANCE_TYPES = 'PimsInsuranceType';
 export const LEASE_CATEGORY_TYPES = 'PimsLeaseCategoryType';
 export const LEASE_INITIATOR_TYPES = 'PimsLeaseInitiatorType';
@@ -133,6 +134,7 @@ export const HISTORICAL_NUMBER_TYPES = 'PimsHistoricalFileNumberType';
 export const LEASE_CHECKLIST_SECTION_TYPES = 'PimsLeaseChklstSectionType';
 export const LEASE_CHECKLIST_ITEM_STATUS_TYPES = 'PimsChklstItemStatusType';
 export const LEASE_PAYMENT_CATEGORY_TYPES = 'PimsLeasePaymentCategoryType';
+export const SUBFILE_INTEREST_TYPES = 'PimsSubfileInterestType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

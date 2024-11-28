@@ -148,7 +148,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditAppraisalAndAssessmentButton()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(dispositionAppraisalEditButton).Click();
         }
 

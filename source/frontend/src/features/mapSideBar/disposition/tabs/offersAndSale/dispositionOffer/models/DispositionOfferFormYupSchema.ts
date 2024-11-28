@@ -11,5 +11,8 @@ export const DispositionOfferFormYupSchema = yup.object().shape({
   offerDate: yup.string().nullable().required('Offer Date is required'),
   offerExpiryDate: yup.string().nullable(),
   offerAmount: yup.string().nullable().required('Offer Price is required'),
-  offerNote: yup.string().nullable().max(2000, 'Offer Price must be at most ${max} characters'),
+  offerNote: yup
+    .string()
+    .nullable()
+    .max(2000, 'Offer Price comments must be at most ${max} characters'),
 });

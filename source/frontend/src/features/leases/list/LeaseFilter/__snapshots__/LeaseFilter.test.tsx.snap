@@ -48,17 +48,39 @@ exports[`Lease Filter > matches snapshot 1`] = `
 }
 
 .c8.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
+.c8.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:active,
+.c8.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c8.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c8.btn.btn-secondary:hover,
+.c8.btn.btn-secondary:active,
+.c8.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c8.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`Lease Filter > matches snapshot 1`] = `
 .c8.btn.btn-info:hover,
 .c8.btn.btn-info:active,
 .c8.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c8.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c8.btn.btn-light:hover,
+.c8.btn.btn-light:active,
+.c8.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c8.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c8.btn.btn-dark:hover,
+.c8.btn.btn-dark:active,
+.c8.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c8.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c8.btn.btn-danger:hover,
+.c8.btn.btn-danger:active,
+.c8.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c8.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c8.btn.btn-warning:hover,
+.c8.btn.btn-warning:active,
+.c8.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`Lease Filter > matches snapshot 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c8.btn.btn-link:hover,
 .c8.btn.btn-link:active,
 .c8.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,12 +184,15 @@ exports[`Lease Filter > matches snapshot 1`] = `
 
 .c8.btn.btn-link:disabled,
 .c8.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
 .c8.btn:disabled,
 .c8.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -126,7 +200,6 @@ exports[`Lease Filter > matches snapshot 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c8.Button .Button__icon {
@@ -147,6 +220,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
   margin-top: 0.5rem;
   margin-right: 1.2rem;
   right: 0;
+  fill: var(--surface-color-primary-button-default);
   pointer-events: none;
 }
 
@@ -185,6 +259,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
 }
 
 .c0 {
+  background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
 

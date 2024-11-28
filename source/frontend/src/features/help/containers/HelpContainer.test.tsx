@@ -43,6 +43,10 @@ describe('HelpContainer component', () => {
     expect(link).toBeInTheDocument();
     await act(async () => userEvent.click(link));
     expect(getByText('Get started with PIMS')).toBeVisible();
+
+    const pimsTraining = getByText(/PIMS Training Materials/i);
+    expect(pimsTraining).toBeVisible();
+    expect(pimsTraining).toHaveProperty('target', '_blank');
   });
 
   it(`dismisses the help modal dialog when "Cancel" is clicked`, async () => {

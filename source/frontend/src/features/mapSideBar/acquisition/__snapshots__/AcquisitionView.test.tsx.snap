@@ -48,17 +48,39 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c3.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
+.c3.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c3.btn.btn-primary:hover,
+.c3.btn.btn-primary:active,
+.c3.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c3.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c3.btn.btn-secondary:hover,
+.c3.btn.btn-secondary:active,
+.c3.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c3.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 .c3.btn.btn-info:hover,
 .c3.btn.btn-info:active,
 .c3.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c3.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c3.btn.btn-light:hover,
+.c3.btn.btn-light:active,
+.c3.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c3.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c3.btn.btn-dark:hover,
+.c3.btn.btn-dark:active,
+.c3.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c3.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-danger:hover,
+.c3.btn.btn-danger:active,
+.c3.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c3.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c3.btn.btn-warning:hover,
+.c3.btn.btn-warning:active,
+.c3.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c3.btn.btn-link:hover,
 .c3.btn.btn-link:active,
 .c3.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,12 +184,15 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c3.btn.btn-link:disabled,
 .c3.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
 .c3.btn:disabled,
 .c3.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -126,7 +200,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c3.Button .Button__icon {
@@ -148,6 +221,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 .c27 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
+  background-color: #f2f2f2;
 }
 
 .c27 .tab-content .tab-pane {
@@ -156,6 +230,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c28 {
   background-color: white;
+  color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
@@ -165,19 +240,29 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c28 .nav-item {
+  color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c28 .nav-item:hover {
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c28 .nav-item.active {
-  font-family: 'BCSans-Bold';
+  border-radius: 0.4rem;
+  color: #f2f2f2;
+  background-color: #053662;
   border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c18 {
@@ -207,22 +292,35 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c1 {
+  color: #474543;
   font-family: 'BCSans-Bold';
   font-size: 3.2rem;
-  border-bottom: solid 0.5rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
   width: 100%;
   text-align: left;
   margin-bottom: 2.4rem;
 }
 
+.c36 {
+  color: #474543;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
 .c5 {
-  border-left: 0.1rem solid;
+  border-left: 0.1rem solid #ECEAE8;
   width: 0.1rem;
   height: 80%;
   margin: auto;
 }
 
-.c36 {
+.c7 {
+  width: 100%;
+  border-bottom: solid 0.5rem #3470B1;
+}
+
+.c37 {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -248,15 +346,22 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   justify-content: center;
 }
 
+.c6 {
+  font-size: 2.4rem;
+  cursor: pointer;
+}
+
 .c4.btn.btn-light.Button {
   padding: 0;
-  border: 0.1rem solid;
+  border: 0.1rem solid #9F9D9C;
   background-color: white;
+  color: #474543;
 }
 
 .c4.btn.btn-light.Button:focus,
 .c4.btn.btn-light.Button:active {
   background-color: white;
+  color: #474543;
 }
 
 .c4.btn,
@@ -271,6 +376,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c0 {
   padding: 1.6rem;
+  color: #474543;
 }
 
 .c0.expanded {
@@ -314,16 +420,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   position: relative;
 }
 
-.c7 {
-  width: 100%;
-  border-bottom: solid 0.5rem;
-}
-
-.c6 {
-  font-size: 2.4rem;
-  cursor: pointer;
-}
-
 .c26 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -342,6 +438,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c29 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
@@ -351,7 +448,8 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c32 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -399,8 +497,8 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   padding: 0.2rem 0.5rem;
   margin-left: 0.4rem;
   gap: 0.5rem;
-  color: undefined;
-  background-color: undefined;
+  color: #2e8540;
+  background-color: #dff0d8;
 }
 
 .c14 {
@@ -433,9 +531,11 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   padding: 0px;
   margin: 0px;
   width: 100%;
+  color: var(--surface-color-primary-button-default);
 }
 
 .c21 {
+  font-size: 1.4rem;
   font-weight: normal;
   cursor: pointer;
   padding-bottom: 0.5rem;
@@ -446,7 +546,12 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   cursor: default;
 }
 
+.c21 div.Button__value {
+  font-size: 1.4rem;
+}
+
 .c24 {
+  background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
   opacity: 0.8;
@@ -467,6 +572,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   align-items: center;
 }
 
+.c24.selected {
+  background-color: #FCBA19;
+}
+
 .c22 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -481,11 +590,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   -ms-flex-align: flex-end;
   align-items: flex-end;
   width: 100%;
-  border-bottom: 1px solid;
+  border-bottom: 1px solid #606060;
 }
 
 .c23 {
-  font-size: 1.4rem;
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #474543;
   line-height: 2.2rem;
 }
 
@@ -517,10 +628,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
           >
             <svg
               fill="currentColor"
-              height="2.6rem"
+              height="2.8rem"
               title="Acquisition file Icon"
               viewBox="0 0 24 24"
-              width="2.6rem"
+              width="2.8rem"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
@@ -798,26 +909,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                 data-testid="menu-item-row-0"
               >
                 <div
-                  class="col-1"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 192 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M0 384.662V127.338c0-17.818 21.543-26.741 34.142-14.142l128.662 128.662c7.81 7.81 7.81 20.474 0 28.284L34.142 398.804C21.543 411.404 0 402.48 0 384.662z"
-                    />
-                  </svg>
-                </div>
-                <div
                   class="col"
                 >
-                  File Summary
+                  <span
+                    title="File Details"
+                  >
+                    File Summary
+                  </span>
                 </div>
                 <div
                   class="c22"
@@ -848,7 +946,17 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                 <div
                   class="col"
                 >
-                  023-214-937
+                  <button
+                    class="c3 Button btn btn-link"
+                    title="View"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      023-214-937
+                    </div>
+                  </button>
                 </div>
               </div>
               <div
@@ -870,7 +978,17 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                 <div
                   class="col"
                 >
-                  024-996-777
+                  <button
+                    class="c3 Button btn btn-link"
+                    title="View"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      024-996-777
+                    </div>
+                  </button>
                 </div>
               </div>
             </div>
@@ -914,6 +1032,15 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                     role="tab"
                   >
                     Stakeholders
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="subFiles"
+                    href="#"
+                    role="tab"
+                  >
+                    Sub-Files
                   </a>
                 </nav>
                 <div
@@ -1078,6 +1205,64 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="c34 text-left col"
                             >
                               Jul 29, 2022
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c33"
+                              >
+                                Estimated date:
+                                <span>
+                                  <span
+                                    class="tooltip-icon"
+                                    data-testid="tooltip-icon-section-field-tooltip"
+                                    id="section-field-tooltip"
+                                  >
+                                    <svg
+                                      class="tooltip-icon"
+                                      fill="currentColor"
+                                      height="1em"
+                                      stroke="currentColor"
+                                      stroke-width="0"
+                                      viewBox="0 0 512 512"
+                                      width="1em"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                                      />
+                                    </svg>
+                                  </span>
+                                </span>
+                              </label>
+                            </div>
+                            <div
+                              class="c34 text-left col"
+                            >
+                              Jul 10, 2024
+                            </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c33"
+                              >
+                                Possession date:
+                              </label>
+                            </div>
+                            <div
+                              class="c34 text-left col"
+                            >
+                              Jul 10, 2025
                             </div>
                           </div>
                         </div>
@@ -1335,8 +1520,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                         <div
                           class="collapse show"
                         >
-                          <div
+                          <p
                             class="c36"
+                          >
+                            Each property in this file should be owned by the owner(s) in this section
+                          </p>
+                          <div
+                            class="c37"
                           >
                             <div
                               class="spinner-border text-warning"

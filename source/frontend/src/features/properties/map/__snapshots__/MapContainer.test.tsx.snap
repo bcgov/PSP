@@ -48,17 +48,39 @@ exports[`MapContainer > Renders the map 1`] = `
 }
 
 .c4.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
+.c4.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c4.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c4.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`MapContainer > Renders the map 1`] = `
 .c4.btn.btn-info:hover,
 .c4.btn.btn-info:active,
 .c4.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c4.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c4.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c4.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`MapContainer > Renders the map 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c4.btn.btn-link:hover,
 .c4.btn.btn-link:active,
 .c4.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,12 +184,15 @@ exports[`MapContainer > Renders the map 1`] = `
 
 .c4.btn.btn-link:disabled,
 .c4.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
 .c4.btn:disabled,
 .c4.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -126,7 +200,6 @@ exports[`MapContainer > Renders the map 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c4.Button .Button__icon {
@@ -145,6 +218,7 @@ exports[`MapContainer > Renders the map 1`] = `
   border-radius: 1rem;
   width: 100%;
   padding: 2.5rem;
+  background-color: #f2f2f2;
 }
 
 .c16 {
@@ -164,7 +238,6 @@ exports[`MapContainer > Renders the map 1`] = `
 
 .c16 .form-group .form-check label {
   font-weight: bold;
-  color: _textColor_6badca;
   font-size: 1.6rem;
 }
 
@@ -272,7 +345,7 @@ exports[`MapContainer > Renders the map 1`] = `
 .c2 {
   width: 100%;
   display: grid;
-  grid-template-rows: 1fr;
+  grid-template-rows: 6rem 1fr;
   grid-template-columns: min-content 1fr;
   grid-template-areas: 'filter filter' 'map map';
   -webkit-transition: margin 1s,width 1s;
@@ -289,7 +362,9 @@ exports[`MapContainer > Renders the map 1`] = `
 .c7.btn {
   width: 5.2rem;
   height: 5.2rem;
-  background-color: #fff;
+  background-color: #FFFFFF;
+  color: #013366;
+  border-color: #013366;
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
   -webkit-transition: 1s;
   transition: 1s;
@@ -309,11 +384,14 @@ exports[`MapContainer > Renders the map 1`] = `
   height: 5.2rem;
   margin-left: -5.1rem;
   background-color: #fff;
+  color: #013366;
+  border-color: #013366;
   box-shadow: -0.2rem 0.1rem 0.4rem rgba(0,0,0,0.2);
 }
 
 .c5.c5.btn {
   background-color: #ffffff;
+  color: #474543;
   width: 4rem;
   height: 4rem;
   display: -webkit-box;
@@ -326,10 +404,19 @@ exports[`MapContainer > Renders the map 1`] = `
   align-items: center;
 }
 
+.c5.c5.btn:hover {
+  color: white;
+}
+
 .c6.c6.btn {
   background-color: #ffffff;
+  color: #474543;
   width: 4rem;
   height: 4rem;
+}
+
+.c6.c6.btn:hover {
+  color: white;
 }
 
 .c1 {
@@ -370,6 +457,7 @@ exports[`MapContainer > Renders the map 1`] = `
   max-width: 0;
   width: 0;
   margin-left: 0;
+  background-color: #FFFFFF;
   visibility: hidden;
   opacity: 0;
   border-radius: 0.4rem;
@@ -395,6 +483,7 @@ exports[`MapContainer > Renders the map 1`] = `
   width: 100%;
   height: 5.2rem;
   background-color: #003366;
+  color: #FFFFFF;
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
@@ -405,6 +494,7 @@ exports[`MapContainer > Renders the map 1`] = `
 
 .c12 {
   font-size: 1.8rem;
+  color: #FFFFFF;
   -webkit-text-decoration: none solid rgb(255,255,255);
   text-decoration: none solid rgb(255,255,255);
   line-height: 1.8rem;
@@ -416,6 +506,7 @@ exports[`MapContainer > Renders the map 1`] = `
   position: absolute;
   top: 0.6rem;
   right: 0.8rem;
+  color: #FFFFFF;
   font-size: 22px;
   cursor: pointer;
 }
@@ -508,6 +599,20 @@ exports[`MapContainer > Renders the map 1`] = `
                     alt=""
                     class="leaflet-tile"
                     src="https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?&service=WMS&request=GetMap&layers=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&styles=&format=image%2Fpng&transparent=true&version=1.1.1&key=parcelBoundaries&label=Parcel%20Boundaries&on=true&url=https%3A%2F%2Fopenmaps.gov.bc.ca%2Fgeo%2Fpub%2FWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW%2Fows%3F&id=parcelLayer&color=%23E9AD34&width=256&height=256&srs=EPSG%3A3857&bbox=-14401959.121379772,6887893.492833805,-13775786.985667607,7514065.628545967"
+                    style="width: 256px; height: 256px; left: -214px; top: -231px;"
+                  />
+                </div>
+              </div>
+              <div
+                class="leaflet-layer "
+                style="z-index: 5000;"
+              >
+                <div
+                  class="leaflet-tile-container leaflet-zoom-animated"
+                  style="z-index: 20; left: 0px; top: 0px;"
+                >
+                  <img
+                    class="leaflet-tile leaflet-tile-loaded"
                     style="width: 256px; height: 256px; left: -214px; top: -231px;"
                   />
                 </div>
@@ -823,7 +928,7 @@ exports[`MapContainer > Renders the map 1`] = `
             tabindex="0"
           >
             <div
-              class="c15 bg-white"
+              class="c15 bg-white p-3"
             >
               <div
                 class="list-group"
@@ -1070,6 +1175,47 @@ exports[`MapContainer > Renders the map 1`] = `
                         title=""
                       >
                         Federal/BC Parks
+                      </label>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="c16 list-group-item"
+                  id="pims_property_boundary"
+                >
+                  <svg
+                    class="c17"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="m10 17 5-5-5-5v10z"
+                    />
+                    <path
+                      d="M0 24V0h24v24H0z"
+                      fill="none"
+                    />
+                  </svg>
+                  <div
+                    class="c18 form-group"
+                  >
+                    <div
+                      class="form-check"
+                    >
+                      <input
+                        class="form-check-input"
+                        type="checkbox"
+                      />
+                      <label
+                        class="form-check-label"
+                        title=""
+                      >
+                        Pims
                       </label>
                     </div>
                   </div>

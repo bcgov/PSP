@@ -26,7 +26,8 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -92,7 +93,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
             class="c4 form-group"
           >
             <select
-              class="form-control"
+              class="form-select form-control"
               id="input-isPublicBenefit"
               name="isPublicBenefit"
             >
@@ -134,7 +135,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
             class="c4 form-group"
           >
             <select
-              class="form-control"
+              class="form-select form-control"
               id="input-isFinancialGain"
               name="isFinancialGain"
             >
@@ -213,7 +214,7 @@ exports[`LeaseFeeDeterminationSubForm component > renders as expected 1`] = `
           <label
             class="c2"
           >
-            Notes:
+            Comments:
             <span>
               <span
                 class="tooltip-icon"

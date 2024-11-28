@@ -13,7 +13,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { IContactSearchResult, isPersonResult } from '@/interfaces';
+import { IContactSearchResult, isPersonSummary } from '@/interfaces';
 
 import { ResearchFileNameGuide } from '../../../common/ResearchFileNameGuide';
 import { UpdateProjectsSubForm } from '../../../common/updateProjects/UpdateProjectsSubForm';
@@ -164,7 +164,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
           />
         </SectionField>
         {values.requestor &&
-          isPersonResult(values.requestor) &&
+          isPersonSummary(values.requestor) &&
           values.requestor.person?.personOrganizations?.length !== undefined && (
             <SectionField label="Organization" className="pb-4">
               {values.requestor.person?.personOrganizations[0]?.organization?.name ?? 'none'}
@@ -199,7 +199,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
             ]}
           />
         </SectionField>
-        <SectionField label="Expropriation notes" />
+        <SectionField label="Expropriation comments" />
         <TextArea field="expropriationNotes" required />
       </Section>
       <ContactManagerModal

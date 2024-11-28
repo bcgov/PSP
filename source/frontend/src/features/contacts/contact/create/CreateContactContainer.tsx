@@ -32,16 +32,11 @@ export const CreateContactContainer: React.FunctionComponent<
       <FormTitleBar
         showCloseButton
         title="Add Contact"
-        icon={<MdContactMail className="mr-2 mb-2" size={32} />}
+        icon={<MdContactMail className="mr-2 mb-2" size={28} />}
         onClose={onClose}
-      ></FormTitleBar>
-
+      />
       <StyledFormWrapper>
-        <ContactTypeSelector
-          contactType={contactType}
-          setContactType={onSelectorChange}
-        ></ContactTypeSelector>
-
+        <ContactTypeSelector contactType={contactType} setContactType={onSelectorChange} />
         <ContactRouter />
       </StyledFormWrapper>
     </HalfWidthLayout>

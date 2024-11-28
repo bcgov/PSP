@@ -1,4 +1,4 @@
-import { GeoJsonProperties } from 'geojson';
+import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import L, { DivIcon, GeoJSON, LatLngExpression, Layer, Map, Marker } from 'leaflet';
 import ReactDOMServer from 'react-dom/server';
 import Supercluster from 'supercluster';
@@ -169,7 +169,9 @@ export function pointToLayer<P extends MarkerFeature, C extends Supercluster.Clu
  * 5. Disposed (only if advanced filter is open)
  */
 export function getMarkerIcon(
-  feature: Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>,
+  feature:
+    | Supercluster.PointFeature<PIMS_Property_Location_View | PIMS_Property_Boundary_View>
+    | Feature<Geometry, PIMS_Property_Location_View>,
   selected: boolean,
   showDisposed = false,
   showRetired = false,
@@ -263,13 +265,13 @@ export const isPimsFeature = (
 export const isPimsLocation = (
   feature: Supercluster.PointFeature<MarkerFeature>,
 ): feature is Supercluster.PointFeature<PIMS_Property_Location_View> => {
-  return feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_VW') ?? false;
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_LOCATION_') ?? false;
 };
 
 export const isPimsBoundary = (
   feature: Supercluster.PointFeature<MarkerFeature>,
 ): feature is Supercluster.PointFeature<PIMS_Property_Boundary_View> => {
-  return feature.id?.toString().startsWith('PIMS_PROPERTY_BOUNDARY_VW') ?? false;
+  return feature.id?.toString().startsWith('PIMS_PROPERTY_BOUNDARY_') ?? false;
 };
 
 export const isFaParcelMap = (

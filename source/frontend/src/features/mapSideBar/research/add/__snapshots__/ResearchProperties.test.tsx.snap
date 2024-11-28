@@ -48,17 +48,39 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 }
 
 .c14.btn:focus {
-  outline-width: 0.4rem;
+  outline-width: 2px;
   outline-style: solid;
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
+.c14.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c14.btn.btn-primary:hover,
+.c14.btn.btn-primary:active,
+.c14.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
 .c14.btn.btn-secondary {
+  color: #013366;
   background: none;
+  border-color: #013366;
+}
+
+.c14.btn.btn-secondary:hover,
+.c14.btn.btn-secondary:active,
+.c14.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
 .c14.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
@@ -68,20 +90,66 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 .c14.btn.btn-info:hover,
 .c14.btn.btn-info:active,
 .c14.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
 .c14.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
+.c14.btn.btn-light:hover,
+.c14.btn.btn-light:active,
+.c14.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
 .c14.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
+}
+
+.c14.btn.btn-dark:hover,
+.c14.btn.btn-dark:active,
+.c14.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c14.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c14.btn.btn-danger:hover,
+.c14.btn.btn-danger:active,
+.c14.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c14.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c14.btn.btn-warning:hover,
+.c14.btn.btn-warning:active,
+.c14.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
 }
 
 .c14.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -98,11 +166,14 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c14.btn.btn-link:hover,
 .c14.btn.btn-link:active,
 .c14.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -113,12 +184,15 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c14.btn.btn-link:disabled,
 .c14.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
 .c14.btn:disabled,
 .c14.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -126,7 +200,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c14.Button .Button__icon {
@@ -162,6 +235,30 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 .c21.c21.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
+}
+
+.c21.c21.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c21.c21.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c21.c21.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c21.c21.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c21.c21.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c21.c21.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
 }
 
 .c22.c22.btn {
@@ -237,9 +334,11 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c15 {
   font-size: 1.4rem;
+  color: #42814A;
 }
 
 .c5 {
+  color: var(--theme-blue-100);
   font-family: 'BCSans-Bold';
   font-size: 2.2rem;
   border-bottom: solid 0.2rem;
@@ -250,7 +349,8 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c1 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -291,9 +391,11 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c6.c6.c6 .form-label {
   font-weight: bold;
+  color: #474543;
 }
 
 .c8 {
+  color: var(--theme-blue-100);
   font-family: 'BcSans-Bold';
   margin-bottom: 1rem;
 }
@@ -305,6 +407,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 .c2 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
+  background-color: #f2f2f2;
 }
 
 .c2 .tab-content .tab-pane {
@@ -313,6 +416,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c4 {
   background-color: white;
+  color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
@@ -322,19 +426,29 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 }
 
 .c4 .nav-item {
+  color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c4 .nav-item:hover {
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c4 .nav-item.active {
-  font-family: 'BCSans-Bold';
+  border-radius: 0.4rem;
+  color: #f2f2f2;
+  background-color: #053662;
   border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c3 {
@@ -346,6 +460,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 }
 
 .c11 {
+  background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
 
@@ -360,7 +475,8 @@ exports[`ResearchProperties component > renders as expected when provided no pro
 
 .c16 {
   font-size: 1.6rem;
-  border-bottom: 0.2rem solid;
+  color: #9F9D9C;
+  border-bottom: 0.2rem solid #606060;
   margin-bottom: 0.9rem;
   padding-bottom: 0.25rem;
   font-family: 'BcSans-Bold';

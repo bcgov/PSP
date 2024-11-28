@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { dequal } from 'dequal';
 import { Feature, GeoJsonProperties, Geometry } from 'geojson';
 import {
   geoJSON,
@@ -14,6 +15,7 @@ import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-le
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
+import { exists } from '@/utils';
 
 import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
 import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
@@ -81,16 +83,27 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const mapMachinePendingRefresh = mapMachine.pendingFitBounds;
   const mapMachineProcessFitBounds = mapMachine.processFitBounds;
   const mapMachineRequestedFitBounds = mapMachine.requestedFitBounds;
+
+  const hasPendingFlyTo = mapMachine.pendingFlyTo;
+  const requestedFlyTo = mapMachine.requestedFlyTo;
+  const mapMachineProcessFlyTo = mapMachine.processFlyTo;
+
+  // Set the bounds when the map is ready. Not called from existing handleMapCreated as that function is called every time a state change occurs.
   useEffect(() => {
-    if (
-      isMapReady &&
-      mapMachinePendingRefresh &&
-      mapRef.current !== null &&
-      mapMachineRequestedFitBounds
-    ) {
-      mapRef.current.fitBounds(mapMachineRequestedFitBounds, {
-        maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM,
-      });
+    const bounds = mapRef?.current?.getBounds();
+    if (exists(bounds) && isMapReady && !dequal(bounds.getNorthEast(), bounds.getSouthWest())) {
+      setBounds(bounds);
+    }
+  }, [isMapReady, setBounds]);
+
+  useEffect(() => {
+    if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
+      // PSP-9347 it is possible that a fit bounds request will be made with an empty array of selected properties. In that case, we do not want to change the screen bounds, so cancel the request with no changes to the map.
+      if (exists(mapMachineRequestedFitBounds)) {
+        mapRef.current.fitBounds(mapMachineRequestedFitBounds, {
+          maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM,
+        });
+      }
       mapMachineProcessFitBounds();
     }
   }, [
@@ -137,9 +150,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     }
   }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeatureDataset]);
 
-  const hasPendingFlyTo = mapMachine.pendingFlyTo;
-  const requestedFlyTo = mapMachine.requestedFlyTo;
-  const mapMachineProcessFlyTo = mapMachine.processFlyTo;
   useEffect(() => {
     if (hasPendingFlyTo && isMapReady) {
       if (requestedFlyTo.bounds !== null) {
@@ -172,6 +182,31 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       setActiveBasemap(result.data?.basemaps?.[0]);
     });
   }, []);
+
+  useEffect(() => {
+    activeFeatureLayer?.clearLayers();
+    if (
+      mapMachine.mapFeatureData.fullyAttributedFeatures.features.length === 1 &&
+      mapMachine.mapFeatureData.pimsLocationFeatures.features.length === 0 &&
+      mapMachine.mapFeatureData.pimsBoundaryFeatures.features.length === 0
+    ) {
+      const searchFeature = mapMachine.mapFeatureData.fullyAttributedFeatures.features[0];
+      if (activeFeatureLayer && searchFeature?.geometry?.type === 'Polygon') {
+        activeFeatureLayer?.addData(searchFeature);
+        const bounds = activeFeatureLayer.getBounds();
+        mapRef?.current?.flyToBounds(bounds, { animate: false });
+        mapMachineProcessFlyTo();
+      }
+    }
+  }, [
+    activeFeatureLayer,
+    mapLocationFeatureDataset?.parcelFeature,
+    mapMachine.mapFeatureData.fullyAttributedFeatures.features,
+    mapMachine.mapFeatureData.fullyAttributedFeatures.features.length,
+    mapMachine.mapFeatureData.pimsBoundaryFeatures.features.length,
+    mapMachine.mapFeatureData.pimsLocationFeatures.features.length,
+    mapMachineProcessFlyTo,
+  ]);
 
   const handleMapReady = () => {
     mapMachine.setDefaultMapLayers(layers);
@@ -231,7 +266,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
         <LegendControl />
         <ZoomOutButton />
-        <AdvancedFilterButton onToggle={mapMachine.toggleMapFilter} />
+        <AdvancedFilterButton
+          onToggle={mapMachine.toggleMapFilterDisplay}
+          active={mapMachine.isFiltering}
+        />
         <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
         <InventoryLayer zoom={zoom} bounds={bounds} maxZoom={MAP_MAX_ZOOM}></InventoryLayer>
         <LeafletLayerListener />

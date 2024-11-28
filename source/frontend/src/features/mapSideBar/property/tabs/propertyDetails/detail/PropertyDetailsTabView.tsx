@@ -140,9 +140,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Coordinates" labelWidth="2">{`${getPrettyLatLng(
-          property?.location,
-        )}`}</SectionField>
+        <SectionField label="Coordinates">{`${getPrettyLatLng(property?.location)}`}</SectionField>
       </Section>
 
       <Section header="Tenure Status">
@@ -231,7 +229,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         )}
       </Section>
 
-      <Section header="Notes">
+      <Section header="Comments">
         <p>{property?.notes}</p>
       </Section>
 

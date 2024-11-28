@@ -13,6 +13,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 .c0 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
+  background-color: #f2f2f2;
 }
 
 .c0 .tab-content .tab-pane {
@@ -21,6 +22,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 
 .c1 {
   background-color: white;
+  color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
@@ -30,22 +32,33 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 }
 
 .c1 .nav-item {
+  color: var(--surface-color-primary-button-default);
   min-width: 5rem;
-  padding: 0.1rem 1.2rem;
+  padding: 0.1rem 1.3rem;
+  margin-bottom: 0.1rem;
+  margin-left: 0.1rem;
 }
 
 .c1 .nav-item:hover {
+  color: #f2f2f2;
+  background-color: #1e5189;
   border-color: transparent;
   -webkit-text-decoration: underline;
   text-decoration: underline;
+  border-radius: 0.4rem;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c1 .nav-item.active {
-  font-family: 'BCSans-Bold';
+  border-radius: 0.4rem;
+  color: #f2f2f2;
+  background-color: #053662;
   border-color: transparent;
+  text-shadow: 0.1rem 0 0 currentColor;
 }
 
 .c2 {
+  background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
@@ -55,7 +68,8 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 
 .c5 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -68,6 +82,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 }
 
 .c9 {
+  color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -123,20 +138,29 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
       <a
         aria-selected="false"
         class="nav-item nav-link"
-        data-rb-event-key="documents"
-        href="#"
-        role="tab"
-      >
-        Documents
-      </a>
-      <a
-        aria-selected="false"
-        class="nav-item nav-link"
         data-rb-event-key="stakeholders"
         href="#"
         role="tab"
       >
         Stakeholders
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="subFiles"
+        href="#"
+        role="tab"
+      >
+        Sub-Files
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="documents"
+        href="#"
+        role="tab"
+      >
+        Documents
       </a>
     </nav>
     <div
@@ -301,6 +325,64 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 >
                   Jul 29, 2022
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Estimated date:
+                    <span>
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-section-field-tooltip"
+                        id="section-field-tooltip"
+                      >
+                        <svg
+                          class="tooltip-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                >
+                  Jul 10, 2024
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Possession date:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                >
+                  Jul 10, 2025
                 </div>
               </div>
             </div>

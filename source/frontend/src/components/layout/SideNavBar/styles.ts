@@ -1,12 +1,12 @@
+import { Col } from 'react-bootstrap';
 import { FaDownload, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
-export const TrayHeader = styled.h3`
-  font-size: 3rem;
-  padding-bottom: 0.8rem;
-  border-bottom: 0.4rem solid ${props => props.theme.css.headerBorderColor};
-  margin-bottom: 3.2rem;
-  max-width: 28rem;
+import { H1 } from '@/components/common/styles';
+
+export const TrayHeader = styled(H1)`
+  border-bottom: 0;
+  margin-bottom: 0.2rem;
 `;
 
 export const SideNavBar = styled.div`
@@ -63,6 +63,7 @@ export const CloseButton = styled(FaWindowClose)`
   &#close-tray {
     float: right;
     cursor: pointer;
+    margin-top: 0.5rem;
     fill: ${props => props.theme.bcTokens.typographyColorSecondary};
     &:hover {
       fill: ${props => props.theme.css.activeActionColor};
@@ -118,4 +119,17 @@ export const ClickableDownload = styled(FaDownload)`
   }
   align-self: center;
   color: ${({ theme }) => theme.css.activeActionColor};
+`;
+
+export const Content = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 2.4rem;
+`;
+
+export const ButtonBar = styled(Col)`
+  gap: 1.5rem;
+  align-items: center;
 `;

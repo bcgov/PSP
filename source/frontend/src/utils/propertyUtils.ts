@@ -1,4 +1,3 @@
-import { IAddress } from '@/interfaces';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
@@ -72,22 +71,6 @@ export const formatSplitAddress = (
 ) => {
   const values = [streetAddress1, streetAddress2, streetAddress3, municipality, provinceCode];
   return values.filter(text => text !== '').join(' ') + (postal ? ', ' + (postal ?? '') : '');
-};
-
-/**
- * Provides a formatted street address as a string.
- * Combines streetAddress1, streetAddress2 and streetAddress3 into a single string.
- *
- * @param address Address object from property.
- * @returns Civic address string value.
- */
-export const formatStreetAddress = (address?: IAddress) => {
-  const values = [
-    address?.streetAddress1 ?? '',
-    address?.streetAddress2 ?? '',
-    address?.streetAddress3 ?? '',
-  ];
-  return values.filter(text => text !== '').join(' ');
 };
 
 /**

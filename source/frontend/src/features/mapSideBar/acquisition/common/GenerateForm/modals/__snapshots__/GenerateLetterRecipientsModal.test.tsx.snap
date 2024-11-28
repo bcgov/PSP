@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
-.c5.btn {
+.c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,53 +30,121 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c5.btn .Button__value {
+.c6.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c5.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
-  outline-width: 0.4rem;
+.c6.btn:focus {
+  outline-width: 2px;
   outline-style: solid;
-  outline-offset: 1px;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
   box-shadow: none;
 }
 
-.c5.btn.btn-secondary {
-  background: none;
+.c6.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-primary:hover,
+.c6.btn.btn-primary:active,
+.c6.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c6.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c6.btn.btn-secondary:hover,
+.c6.btn.btn-secondary:active,
+.c6.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c6.btn.btn-info {
+  color: #9F9D9C;
   border: none;
   background: none;
   padding-left: 0.6rem;
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
   border: none;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-light:hover,
+.c6.btn.btn-light:active,
+.c6.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c6.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
   border: none;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-dark:hover,
+.c6.btn.btn-dark:active,
+.c6.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c6.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c6.btn.btn-danger:hover,
+.c6.btn.btn-danger:active,
+.c6.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c6.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c6.btn.btn-warning:hover,
+.c6.btn.btn-warning:active,
+.c6.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
+  color: var(--surface-color-primary-button-default);
   background: none;
   border: none;
   -webkit-text-decoration: none;
@@ -93,11 +161,14 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
   border: none;
@@ -106,14 +177,17 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
+  color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
   box-shadow: none;
   -webkit-user-select: none;
   -moz-user-select: none;
@@ -121,18 +195,17 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -140,8 +213,8 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   width: 0.8rem;
 }
 
-.c6 {
-  width: 2.4rem;
+.c5 {
+  min-width: 2.4rem;
 }
 
 .c4 {
@@ -163,6 +236,8 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
+  color: #FFFFFF;
+  background-color: #053662;
   cursor: default;
 }
 
@@ -211,6 +286,14 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   display: -webkit-inline-flex;
   display: -ms-inline-flexbox;
   display: inline-flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c0 .modal-footer .button-wrap .Button {
@@ -238,15 +321,33 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   max-width: 40rem;
 }
 
+.c0.info-variant .modal-header {
+  color: #053662;
+  background-color: #d9eaf7;
+}
+
 .c0.info-variant .modal-close-btn {
+  color: #474543;
   cursor: pointer;
+}
+
+.c0.error-variant .modal-header {
+  color: #CE3E39;
+  background-color: #f2dede;
 }
 
 .c0.error-variant .modal-close-btn {
+  color: #474543;
   cursor: pointer;
 }
 
+.c0.warning-variant .modal-header {
+  color: #6c4a00;
+  background-color: #fef1d8;
+}
+
 .c0.warning-variant .modal-close-btn {
+  color: #474543;
   cursor: pointer;
 }
 
@@ -265,7 +366,7 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
 }
 
 .c3 {
-  border: 0.1rem solid;
+  border: 0.1rem solid #606060;
   border-radius: 0.5rem;
   max-height: 180px;
   overflow-y: auto;
@@ -280,6 +381,7 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
 .c3 .form-group label {
   font-family: BcSans-Bold;
   line-height: 1.5rem;
+  color: #474543;
 }
 
 .c3 .form-group label span.type {
@@ -395,8 +497,11 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
           <div
             class="button-wrap"
           >
+            <span
+              class="c5"
+            />
             <button
-              class="c5 Button btn btn-secondary"
+              class="c6 Button btn btn-secondary"
               data-testid="cancel-modal-button"
               title="cancel-modal"
               type="button"
@@ -408,10 +513,10 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
               </div>
             </button>
             <span
-              class="c6"
+              class="c5"
             />
             <button
-              class="c5 Button btn btn-primary"
+              class="c6 Button btn btn-primary"
               data-testid="ok-modal-button"
               title="ok-modal"
               type="button"

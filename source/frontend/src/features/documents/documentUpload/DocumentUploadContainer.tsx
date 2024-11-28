@@ -6,7 +6,6 @@ import * as API from '@/constants/API';
 import { DocumentStatusType } from '@/constants/documentStatusType';
 import { DocumentTypeName } from '@/constants/documentType';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { Dictionary } from '@/interfaces/Dictionary';
 import { IApiError } from '@/interfaces/IApiError';
@@ -20,48 +19,33 @@ import { exists } from '@/utils';
 import { BatchUploadFormModel, BatchUploadResponseModel } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
-import DocumentUploadForm from './DocumentUploadForm';
+import { IDocumentUploadFormProps } from './DocumentUploadForm';
 
 export interface IDocumentUploadContainerProps {
-  ref: React.RefObject<
-    React.FunctionComponent<React.PropsWithChildren<IDocumentUploadContainerProps>>
-  >;
   parentId: string;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   onUploadSuccess: (results: BatchUploadResponseModel[]) => void;
   onCancel: () => void;
   setCanUpload: (canUpload: boolean) => void;
   maxDocumentCount: number;
+  View: React.FunctionComponent<IDocumentUploadFormProps>;
 }
 
 export interface IDocumentUploadContainerRef {
+  isDirty: () => boolean;
   uploadDocument: () => void;
 }
 
-const DocumentUploadContainer = forwardRef<
+export const DocumentUploadContainer = forwardRef<
   IDocumentUploadContainerRef,
   IDocumentUploadContainerProps
 >((props, ref) => {
-  const deleteModalProps = getCancelModalProps();
+  const { View } = props;
 
   const { getOptionsByType } = useLookupCodeHelpers();
-
-  const { setDisplayModal } = useModalContext({
-    ...deleteModalProps,
-    handleOk: () => {
-      handleCancelConfirm();
-    },
-  });
-
   const formikRef = useRef<FormikProps<BatchUploadFormModel>>(null);
-
-  const handleCancelConfirm = () => {
-    setDisplayModal(false);
-    formikRef.current?.resetForm();
-    props.onCancel();
-  };
-
   const isMounted = useIsMounted();
+
   const { retrieveDocumentTypeMetadata, getDocumentRelationshipTypes, getDocumentTypes } =
     useDocumentProvider();
 
@@ -110,7 +94,6 @@ const DocumentUploadContainer = forwardRef<
         const response = await getDocumentTypes();
         if (exists(response) && isMounted()) {
           setDocumentTypes(response.filter(x => x.documentType === DocumentTypeName.CDOGS));
-          //getDocumentMetadata(response.find(x => x.documentType === DocumentTypeName.CDOGS));
           setDocumentStatusOptions(
             retrievedDocumentStatusTypes.filter(x => x.value === DocumentStatusType.Final),
           );
@@ -131,7 +114,6 @@ const DocumentUploadContainer = forwardRef<
     getDocumentRelationshipTypes,
     isMounted,
     getOptionsByType,
-    getDocumentMetadata,
   ]);
 
   const onUploadDocument = async (batchRequest: BatchUploadFormModel) => {
@@ -152,6 +134,9 @@ const DocumentUploadContainer = forwardRef<
   };
 
   useImperativeHandle(ref, () => ({
+    isDirty() {
+      return formikRef.current?.dirty ?? false;
+    },
     uploadDocument() {
       formikRef.current?.submitForm();
     },
@@ -166,7 +151,7 @@ const DocumentUploadContainer = forwardRef<
   };
 
   return (
-    <DocumentUploadForm
+    <View
       formikRef={formikRef}
       isLoading={isUploading}
       initialDocumentType={''}

@@ -1,17 +1,18 @@
 import { FormikProps } from 'formik/dist/types';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 
 import { ModalProps } from '@/components/common/GenericModal';
+import { DocumentTypeName } from '@/constants/documentType';
 import { ModalContext } from '@/contexts/modalContext';
-import { useApiDocuments } from '@/hooks/pims-api/useApiDocuments';
 import { getCancelModalProps } from '@/hooks/useModalContext';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
-import { exists } from '@/utils/utils';
+import { exists, isValidId } from '@/utils/utils';
 
 import { ComposedDocument, DocumentRow, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
@@ -34,6 +35,8 @@ export const DocumentDetailContainer: React.FunctionComponent<
     ApiGen_Mayan_DocumentTypeMetadataType[]
   >([]);
   const [isEditable, setIsEditable] = useState<boolean>(false);
+  const [documentTypeUpdated, setDocumentTypeUpdated] = useState<boolean>(false);
+  const [documentTypes, setDocumentTypes] = useState<ApiGen_Concepts_DocumentType[]>([]);
 
   const {
     retrieveDocumentMetadata,
@@ -42,8 +45,10 @@ export const DocumentDetailContainer: React.FunctionComponent<
     updateDocumentLoading,
     retrieveDocumentDetail,
     retrieveDocumentDetailLoading,
+    getDocumentTypes,
+    getDocumentRelationshipTypes,
+    retrieveDocumentTypeMetadata,
   } = useDocumentProvider();
-  const { getDocumentTypeMetadataApiCall } = useApiDocuments();
 
   const formikRef = useRef<FormikProps<DocumentUpdateFormData>>(null);
 
@@ -78,6 +83,77 @@ export const DocumentDetailContainer: React.FunctionComponent<
     }
   };
 
+  const onUpdateDocument = async (updateRequest: ApiGen_Requests_DocumentUpdateRequest) => {
+    if (props.pimsDocument.id) {
+      const result = await updateDocument(props.pimsDocument.id, updateRequest);
+      if (exists(result)) {
+        props.onUpdateSuccess && props.onUpdateSuccess();
+      }
+    }
+  };
+
+  // callback to fetch available document types for a given context (i.e. Acquisition File, Research File, etc)
+  const fetchDocumentTypes = useCallback(async () => {
+    if (props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates) {
+      const response = await getDocumentTypes();
+      if (exists(response) && isMounted()) {
+        setDocumentTypes(response.filter(x => x.documentType === DocumentTypeName.CDOGS));
+      }
+    } else {
+      const axiosResponse = await getDocumentRelationshipTypes(props.relationshipType);
+      if (axiosResponse && isMounted()) {
+        setDocumentTypes(axiosResponse.filter(x => x.isDisabled !== true));
+      }
+    }
+  }, [getDocumentRelationshipTypes, getDocumentTypes, isMounted, props.relationshipType]);
+
+  // callback to fetch document type metadata from mayan API endpoints
+  const getDocumentMetadata = useCallback(
+    async (documentType?: ApiGen_Concepts_DocumentType) => {
+      if (
+        !exists(documentType) ||
+        props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates
+      ) {
+        return;
+      }
+
+      if (isValidId(documentType.mayanId)) {
+        const retrievedMetadata = await retrieveDocumentTypeMetadata(documentType.mayanId);
+        if (
+          retrievedMetadata?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
+          isMounted()
+        ) {
+          setDocumentTypeMetadataTypes(retrievedMetadata?.payload?.results ?? []);
+        }
+      } else {
+        console.error('Document type does not have a mayan id type');
+      }
+    },
+    [isMounted, props.relationshipType, retrieveDocumentTypeMetadata],
+  );
+
+  // refresh document type metadata fields whenever a new document type is selected
+  const onDocumentTypeChange = useCallback(
+    async (changeEvent: ChangeEvent<HTMLInputElement>) => {
+      if (exists(changeEvent.target.value)) {
+        const documentTypeId = Number(changeEvent.target.value);
+        await getDocumentMetadata(documentTypes.find(x => x.id === documentTypeId));
+
+        if (documentTypeId !== props.pimsDocument.documentType.id) {
+          setDocumentTypeUpdated(true);
+          formikRef?.current?.setValues({ ...formikRef?.current?.values, documentMetadata: {} });
+        } else {
+          setDocumentTypeUpdated(false);
+        }
+      } else {
+        formikRef.current?.setFieldValue('documentTypeId', null);
+        setDocumentTypeUpdated(false);
+      }
+    },
+    [documentTypes, props.pimsDocument.documentType.id, getDocumentMetadata],
+  );
+
+  // fetch additional document child entities (like metadata and document details) upon rendering this component
   useEffect(() => {
     const fetch = async () => {
       if (props.pimsDocument.mayanDocumentId !== undefined) {
@@ -87,6 +163,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
           metadataPromise,
           detailPromise,
         ]);
+
         if (
           metadataResponse?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
           detailResponse?.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
@@ -117,38 +194,50 @@ export const DocumentDetailContainer: React.FunctionComponent<
     retrieveDocumentDetail,
   ]);
 
+  // fetch document type metadata upon rendering this component
   useEffect(() => {
     const fetch = async () => {
+      if (props.relationshipType === ApiGen_CodeTypes_DocumentRelationType.Templates) {
+        return;
+      }
+
       if (props.pimsDocument.mayanDocumentId !== undefined) {
-        const mayanDocumentTypeId = props.pimsDocument.documentType?.mayanId;
-        if (mayanDocumentTypeId) {
-          const axiosResponse = await getDocumentTypeMetadataApiCall(mayanDocumentTypeId);
-          if (
-            axiosResponse?.data.status === ApiGen_CodeTypes_ExternalResponseStatus.Success &&
-            isMounted()
-          ) {
-            const results = axiosResponse?.data.payload?.results;
-            setDocumentTypeMetadataTypes(results || []);
-          }
-        }
+        await getDocumentMetadata(props.pimsDocument.documentType);
       }
     };
     fetch();
   }, [
+    getDocumentMetadata,
+    props.pimsDocument.documentType,
     props.pimsDocument.mayanDocumentId,
-    props.pimsDocument.documentType?.mayanId,
-    getDocumentTypeMetadataApiCall,
-    isMounted,
+    props.relationshipType,
   ]);
 
-  const onUpdateDocument = async (updateRequest: ApiGen_Requests_DocumentUpdateRequest) => {
-    if (props.pimsDocument.id) {
-      const result = await updateDocument(props.pimsDocument.id, updateRequest);
-      result && props.onUpdateSuccess();
+  // fetch document types upon entering in Edit mode
+  useEffect(() => {
+    if (isEditable) {
+      fetchDocumentTypes();
     }
-  };
+  }, [fetchDocumentTypes, isEditable]);
 
-  if (isEditable === false) {
+  if (isEditable) {
+    return (
+      <DocumentDetailForm
+        formikRef={formikRef}
+        document={document}
+        mayanMetadataTypes={documentTypeMetadataTypes}
+        documentTypes={documentTypes}
+        isLoading={
+          retrieveDocumentMetadataLoading || updateDocumentLoading || retrieveDocumentDetailLoading
+        }
+        relationshipType={props.relationshipType}
+        documentTypeUpdated={documentTypeUpdated}
+        onUpdate={onUpdateDocument}
+        onCancel={onCancelClick}
+        onDocumentTypeChange={onDocumentTypeChange}
+      />
+    );
+  } else {
     return (
       <DocumentDetailView
         document={document}
@@ -158,18 +247,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
         setIsEditable={setIsEditable}
       />
     );
-  } else {
-    return (
-      <DocumentDetailForm
-        formikRef={formikRef}
-        document={document}
-        isLoading={
-          retrieveDocumentMetadataLoading || updateDocumentLoading || retrieveDocumentDetailLoading
-        }
-        onUpdate={onUpdateDocument}
-        onCancel={onCancelClick}
-        mayanMetadataTypes={documentTypeMetadataTypes}
-      />
-    );
   }
 };
+
+export default DocumentDetailContainer;

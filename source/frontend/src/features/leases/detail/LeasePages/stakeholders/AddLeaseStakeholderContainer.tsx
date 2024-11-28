@@ -1,6 +1,8 @@
+import axios, { AxiosError } from 'axios';
 import { FormikProps } from 'formik/dist/types';
 import { filter, find, orderBy, some } from 'lodash';
 import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
@@ -9,6 +11,7 @@ import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IContactSearchResult } from '@/interfaces';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
@@ -26,6 +29,7 @@ interface IAddLeaseStakeholderContainerProps {
   onEdit?: (isEditing: boolean) => void;
   stakeholders: FormStakeholder[];
   onSuccess: () => void;
+  refreshLease: () => void;
   View: React.FunctionComponent<
     React.PropsWithChildren<IAddLeaseStakeholderFormProps & IPrimaryContactWarningModalProps>
   >;
@@ -41,6 +45,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
   View,
   stakeholders: initialStakeholders,
   onSuccess,
+  refreshLease,
   isPayableLease,
 }) => {
   const { lease } = useContext(LeaseStateContext);
@@ -52,7 +57,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
   const [handleSubmit, setHandleSubmit] = useState<(() => void) | undefined>(undefined);
 
   const { getPersonConcept } = useApiContacts();
-  const { execute } = useApiRequestWrapper({
+  const { execute: executeGetPerson } = useApiRequestWrapper({
     requestFunction: getPersonConcept,
     requestName: 'get person by id',
   });
@@ -114,7 +119,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
     );
 
     // fetch any person ids that we do not have person information for.
-    const personQueries = unprocessedPersons.map(person => execute(person.personId));
+    const personQueries = unprocessedPersons.map(person => executeGetPerson(person.personId));
     const personResponses = await Promise.all(personQueries);
     const allPersons = personResponses.concat(processedPersons);
 
@@ -127,14 +132,13 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
             op.person = matchingPerson;
           }
         });
-        stakeholder.stakeholderType = stakeholder?.stakeholderType
-          ? stakeholder.stakeholderType
-          : isPayableLease
-          ? 'OWNER'
-          : 'TEN';
         return stakeholder;
       }) ?? [];
-    const formTenants = tenantsWithPersons?.map(t => new FormStakeholder(undefined, t)) ?? [];
+    const stakeholderType = isPayableLease ? 'OWNER' : 'TEN';
+    const formTenants =
+      tenantsWithPersons?.map(
+        t => new FormStakeholder(undefined, { contact: t, stakeholderType }),
+      ) ?? [];
     setStakeholders([...formTenants, ...matchingExistingTenants]);
   };
 
@@ -153,7 +157,26 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
             }),
           });
           onEdit && onEdit(false);
+          refreshLease && refreshLease();
           onSuccess();
+        }
+      } catch (e) {
+        if (axios.isAxiosError(e)) {
+          const axiosError = e as AxiosError<IApiError>;
+          if (axiosError?.response?.status === 409) {
+            toast.error(axiosError?.response.data.error);
+            formikRef?.current?.resetForm();
+            setStakeholders(initialStakeholders ?? []);
+            setSelectedContacts(
+              initialStakeholders?.map(t => FormStakeholder.toContactSearchResult(t)) ?? [],
+            );
+          } else {
+            if (axiosError.response?.status === 400) {
+              toast.error(axiosError.response.data.error);
+            } else {
+              toast.error('Unable to save. Please try again.');
+            }
+          }
         }
       } finally {
         formikRef?.current?.setSubmitting(false);

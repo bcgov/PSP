@@ -35,6 +35,11 @@ const PaymentFormContent: React.FunctionComponent<
   const { getSystemConstant } = useSystemConstants();
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) : undefined;
+  const parentPeriod = periods.find(t => t.id === formikProps.values.leasePeriodId);
+  const isOutOfDateRange =
+    formikProps.values.receivedDate &&
+    (formikProps.values.receivedDate < parentPeriod?.startDate ||
+      formikProps.values.receivedDate > parentPeriod?.expiryDate);
 
   if (formikProps?.initialValues?.leasePeriodId) {
     isGstEligible = isActualGstEligible(
@@ -56,6 +61,11 @@ const PaymentFormContent: React.FunctionComponent<
             field="receivedDate"
             formikProps={formikProps}
           />
+          {isOutOfDateRange && (
+            <Form.Control.Feedback type="invalid">
+              Warning - payment date is not within the duration of the selected pay period.
+            </Form.Control.Feedback>
+          )}
         </Col>
       </Row>
       <Row>

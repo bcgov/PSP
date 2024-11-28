@@ -1,8 +1,10 @@
 import { useInterpret, useSelector } from '@xstate/react';
+import { dequal } from 'dequal';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IGeoSearchParams } from '@/constants/API';
 import { IMapSideBarViewState } from '@/features/mapSideBar/MapSideBar';
@@ -40,11 +42,15 @@ export interface IMapStateMachineContext {
   isRepositioning: boolean;
   selectingComponentId: string | null;
   isFiltering: boolean;
+  isShowingMapFilter: boolean;
   isShowingMapLayers: boolean;
   activePimsPropertyIds: number[];
   showDisposed: boolean;
   showRetired: boolean;
   activeLayers: ILayerItem[];
+  mapLayersToRefresh: ILayerItem[];
+  advancedSearchCriteria: PropertyFilterFormModel;
+  isMapVisible: boolean;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestFlyToBounds: (bounds: LatLngBounds) => void;
@@ -69,16 +75,19 @@ export interface IMapStateMachineContext {
     selectingComponentId?: string,
   ) => void;
   finishReposition: () => void;
-  toggleMapFilter: () => void;
+  toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
   setFilePropertyLocations: (locations: LatLngLiteral[]) => void;
   setMapLayers: (layers: ILayerItem[]) => void;
+  setMapLayersToRefresh: (layers: ILayerItem[]) => void;
   setDefaultMapLayers: (layers: ILayerItem[]) => void;
 
   setVisiblePimsProperties: (propertyIds: number[]) => void;
   setShowDisposed: (show: boolean) => void;
   setShowRetired: (show: boolean) => void;
   setFullWidthSideBar: (fullWidth: boolean) => void;
+  resetMapFilter: () => void;
+  setAdvancedSearchCriteria: (advancedSearchCriteria: PropertyFilterFormModel) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -120,11 +129,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
         );
         if (event.type === 'MAP_MARKER_CLICK') {
-          // In the case of the map marker being clicked, always used the clicked marker instead of the search result.
-          // TODO: refactor loadLocationDetails method to allow for optional loading of various feature types.
+          // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data. However, use the coordinates of the clicked marker.
           result.then(data => {
             data.pimsFeature = {
-              properties: event.featureSelected?.pimsLocationFeature,
+              properties: { ...data.pimsFeature.properties },
               type: 'Feature',
               geometry: {
                 type: 'Point',
@@ -157,7 +165,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
         } else {
-          return mapSearch.searchMany(geoFilter);
+          return mapSearch.loadMapProperties();
         }
       },
     },
@@ -249,6 +257,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setAdvancedSearchCriteria = useCallback(
+    (advancedSearchCriteria: PropertyFilterFormModel) => {
+      serviceSend({ type: 'SET_ADVANCED_SEARCH_CRITERIA', advancedSearchCriteria });
+    },
+    [serviceSend],
+  );
+
   const prepareForCreation = useCallback(() => {
     serviceSend({ type: 'PREPARE_FOR_CREATION' });
   }, [serviceSend]);
@@ -298,6 +313,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setMapLayersToRefresh = useCallback(
+    (refreshLayers: ILayerItem[]) => {
+      serviceSend({ type: 'SET_REFRESH_MAP_LAYERS', refreshLayers });
+    },
+    [serviceSend],
+  );
+
   const setDefaultMapLayers = useCallback(
     (activeLayers: ILayerItem[]) => {
       serviceSend({ type: 'DEFAULT_MAP_LAYERS', activeLayers });
@@ -337,8 +359,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     serviceSend({ type: 'TOGGLE_SIDEBAR_SIZE' });
   }, [serviceSend]);
 
-  const toggleMapFilter = useCallback(() => {
+  const toggleMapFilterDisplay = useCallback(() => {
     serviceSend({ type: 'TOGGLE_FILTER' });
+  }, [serviceSend]);
+
+  const resetMapFilter = useCallback(() => {
+    serviceSend({ type: 'RESET_FILTER' });
   }, [serviceSend]);
 
   const toggleMapLayerControl = useCallback(() => {
@@ -354,8 +380,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     return state.context.mapLocationFeatureDataset !== null && !isRepositioning;
   }, [isRepositioning, state.context.mapLocationFeatureDataset]);
 
-  const isFiltering = useMemo(() => {
-    return state.matches({ mapVisible: { advancedFilterSideBar: 'filtering' } });
+  const isShowingMapFilter = useMemo(() => {
+    return state.matches({ mapVisible: { advancedFilterSideBar: 'mapFilterOpened' } });
   }, [state]);
 
   const isShowingMapLayers = useMemo(() => {
@@ -366,7 +392,12 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     <MapStateMachineContext.Provider
       value={{
         mapSideBarViewState: state.context.mapSideBarState,
-        isShowingSearchBar: !state.context.mapSideBarState.isOpen && !isFiltering,
+        isShowingSearchBar:
+          !state.context.mapSideBarState.isOpen &&
+          !(
+            isShowingMapFilter ||
+            !dequal(state.context.advancedSearchCriteria, new PropertyFilterFormModel())
+          ),
         pendingFlyTo: state.matches({ mapVisible: { mapRequest: 'pendingFlyTo' } }),
         requestedFlyTo: state.context.requestedFlyTo,
         mapFeatureSelected: state.context.mapFeatureSelected,
@@ -378,6 +409,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         showPopup: showPopup,
         isLoading: state.context.isLoading,
         mapSearchCriteria: state.context.searchCriteria,
+        advancedSearchCriteria: state.context.advancedSearchCriteria,
         mapFeatureData: state.context.mapFeatureData,
         filePropertyLocations: state.context.filePropertyLocations,
         pendingFitBounds: state.matches({ mapVisible: { mapRequest: 'pendingFitBounds' } }),
@@ -385,12 +417,15 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
         isRepositioning: isRepositioning,
         selectingComponentId: state.context.selectingComponentId,
-        isFiltering: isFiltering,
+        isFiltering: !dequal(state.context.advancedSearchCriteria, new PropertyFilterFormModel()),
+        isShowingMapFilter: isShowingMapFilter,
         isShowingMapLayers: isShowingMapLayers,
         activeLayers: state.context.activeLayers,
         activePimsPropertyIds: state.context.activePimsPropertyIds,
         showDisposed: state.context.showDisposed,
         showRetired: state.context.showRetired,
+        mapLayersToRefresh: state.context.mapLayersToRefresh,
+        isMapVisible: state.matches({ mapVisible: {} }),
 
         setMapSearchCriteria,
         refreshMapProperties,
@@ -408,7 +443,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         finishSelection,
         startReposition,
         finishReposition,
-        toggleMapFilter,
+        toggleMapFilterDisplay,
         toggleMapLayerControl,
         toggleSidebarDisplay,
         setFilePropertyLocations,
@@ -416,8 +451,11 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setShowDisposed,
         setShowRetired,
         setMapLayers,
+        setMapLayersToRefresh,
         setDefaultMapLayers,
         setFullWidthSideBar,
+        resetMapFilter,
+        setAdvancedSearchCriteria,
       }}
     >
       {children}

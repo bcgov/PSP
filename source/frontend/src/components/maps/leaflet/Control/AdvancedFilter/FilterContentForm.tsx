@@ -1,6 +1,6 @@
 import { Form, Formik, useFormikContext } from 'formik';
 import noop from 'lodash/noop';
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Row from 'react-bootstrap/Row';
@@ -11,6 +11,7 @@ import PropertyOfInterestPng from '@/assets/images/pins/land-poi.png';
 import CoreInventoryPng from '@/assets/images/pins/land-reg.png';
 import OtherInterestPng from '@/assets/images/pins/other-interest.png';
 import RetiredPng from '@/assets/images/pins/retired.png';
+import { ResetButton } from '@/components/common/buttons';
 import { Check, Select, SelectOption } from '@/components/common/form';
 import { Multiselect } from '@/components/common/form/Multiselect';
 import { ProjectSelector } from '@/components/common/form/ProjectSelector/ProjectSelector';
@@ -36,25 +37,18 @@ const FormObserver: React.FC<IFormObserverProps> = ({ onChange }) => {
 };
 
 export interface IFilterContentFormProps {
+  existingFilter: PropertyFilterFormModel;
   onChange: (model: PropertyFilterFormModel) => void;
+  onReset: () => void;
   isLoading: boolean;
 }
 
 export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentFormProps>> = ({
+  existingFilter,
   onChange,
+  onReset,
   isLoading,
 }) => {
-  const initialFilter = useMemo(() => {
-    return new PropertyFilterFormModel();
-  }, []);
-
-  useEffect(() => {
-    const firstLoad = () => {
-      onChange(initialFilter);
-    };
-    firstLoad();
-  }, [initialFilter, onChange]);
-
   const { getByType } = useLookupCodeHelpers();
 
   // Property options
@@ -98,10 +92,17 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
   leasePaymentRcvblOptions.push({ value: 'all', label: 'Payable and Receivable' });
 
   return (
-    <Formik<PropertyFilterFormModel> initialValues={initialFilter} onSubmit={noop}>
+    <Formik<PropertyFilterFormModel>
+      initialValues={existingFilter ?? new PropertyFilterFormModel()}
+      onSubmit={noop}
+    >
       <Form>
         <FormObserver onChange={onChange} />
         <LoadingBackdrop show={isLoading} parentScreen />
+        <StyledResetContainer>
+          <StyledResetButton onClick={onReset} />
+          <span>Reset to Default</span>
+        </StyledResetContainer>
         <Section header="Show Ownership" isCollapsable initiallyExpanded>
           <SectionField label={null} contentWidth="12">
             <Row>
@@ -252,4 +253,25 @@ export const FilterContentForm: React.FC<React.PropsWithChildren<IFilterContentF
 
 const StyledSpan = styled.span`
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
+`;
+
+const StyledResetContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 6.5rem;
+  margin: 0;
+  padding: 0 3.2rem;
+  box-sizing: border-box;
+  background-color: ${props => props.theme.css.pimsWhite};
+`;
+
+const StyledResetButton = styled(ResetButton)`
+  &&.btn {
+    &.btn-info {
+      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    }
+  }
 `;

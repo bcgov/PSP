@@ -126,7 +126,8 @@ namespace Pims.Api.Areas.Reports.Controllers
             var reportFinancials = financials.Select(financial => new CompensationFinancialReportModel(financial, totals, _user))
                     .OrderByDescending(f => f.MinistryProject)
                     .ThenByDescending(f => f.Product)
-                    .ThenByDescending(f => f.AcquisitionNumberAndName)
+                    .ThenBy(f => f.FileType)
+                    .ThenByDescending(f => f.FileNumberAndName)
                     .ThenByDescending(f => f.RequisitionNumber)
                     .ThenByDescending(f => f.FinancialActivityName);
 

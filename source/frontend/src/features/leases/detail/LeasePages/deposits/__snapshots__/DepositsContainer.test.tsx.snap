@@ -9,11 +9,13 @@ exports[`DepositsContainer > renders as expected 1`] = `
   .c4 {
   float: right;
   cursor: pointer;
+  font-size: 3.2rem;
 }
 
 .c2 {
   font-weight: bold;
-  border-bottom: 0.2rem solid;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
@@ -344,7 +346,7 @@ exports[`DepositsContainer > renders as expected 1`] = `
             class="col"
           >
             <span>
-              Deposit Notes
+              Deposit Comments
             </span>
           </div>
           <div

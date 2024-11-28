@@ -43,9 +43,7 @@ exports[`login > login renders correctly 1`] = `
 }
 
 .c1.btn:focus {
-  outline-width: 0.4rem;
   outline-style: solid;
-  outline-offset: 1px;
   box-shadow: none;
 }
 
@@ -93,6 +91,8 @@ exports[`login > login renders correctly 1`] = `
   letter-spacing: unset;
   text-align: left;
   padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
 }
 
 .c1.btn.btn-link:hover,
@@ -121,7 +121,6 @@ exports[`login > login renders correctly 1`] = `
   user-select: none;
   pointer-events: none;
   cursor: not-allowed;
-  opacity: 0.65;
 }
 
 .c1.Button .Button__icon {

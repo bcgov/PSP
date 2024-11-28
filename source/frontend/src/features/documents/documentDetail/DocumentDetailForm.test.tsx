@@ -1,7 +1,9 @@
+import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
+import { createRef } from 'react';
 
 import { Claims } from '@/constants/claims';
-import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
+import { mockDocumentTypesAcquisition } from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
@@ -12,8 +14,8 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
-import { ComposedDocument } from '../ComposedDocument';
-import { DocumentDetailForm } from './DocumentDetailForm';
+import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
+import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
 
 // mock auth library
 
@@ -109,7 +111,21 @@ const mockDocument: ComposedDocument = {
     id: 1,
     document: {
       mayanDocumentId: 15,
-      documentType: mockDocumentTypesResponse()[0],
+      documentType: {
+        id: 36,
+        documentType: 'AFFISERV',
+        documentTypeDescription: 'Affidavit of service',
+        mayanId: 272,
+        isDisabled: false,
+        appCreateTimestamp: '2024-10-15T19:44:11.713',
+        appLastUpdateTimestamp: '2024-10-15T19:46:55.25',
+        appLastUpdateUserid: 'EHERRERA',
+        appCreateUserid: 'EHERRERA',
+        appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+        appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+        rowVersion: 2,
+        documentTypePurpose: 'Test document purpouse',
+      },
       statusTypeCode: {
         id: 'AMEND',
         description: 'Amended',
@@ -138,17 +154,34 @@ const mockDocument: ComposedDocument = {
   },
   mayanFileId: 2,
 };
+
+const onUpdate = vi.fn();
+const onCancel = vi.fn();
+const onDocumentTypeChange = vi.fn();
+
 describe('DocumentDetailForm component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions) => {
+  const setup = async (
+    renderOptions: RenderOptions & { props?: Partial<IDocumentDetailFormProps> },
+  ) => {
+    const formikRef = createRef<FormikProps<DocumentUpdateFormData>>();
+
     const utils = render(
       <DocumentDetailForm
-        onUpdate={vi.fn()}
-        document={mockDocument}
-        isLoading={false}
-        mayanMetadataTypes={documentTypeMetadataType}
-        onCancel={vi.fn()}
-        formikRef={{ current: { submitForm: vi.fn() } } as any}
+        {...renderOptions.props}
+        formikRef={formikRef}
+        document={renderOptions.props?.document ?? mockDocument}
+        mayanMetadataTypes={renderOptions.props?.mayanMetadataTypes ?? documentTypeMetadataType}
+        documentTypes={renderOptions.props?.documentTypes ?? mockDocumentTypesAcquisition()}
+        isLoading={renderOptions.props?.isLoading ?? false}
+        relationshipType={
+          renderOptions.props?.relationshipType ??
+          ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles
+        }
+        documentTypeUpdated={renderOptions.props?.documentTypeUpdated ?? false}
+        onUpdate={onUpdate}
+        onCancel={onCancel}
+        onDocumentTypeChange={onDocumentTypeChange}
       />,
       {
         ...renderOptions,
@@ -161,7 +194,11 @@ describe('DocumentDetailForm component', () => {
 
     return {
       ...utils,
+      formikRef,
       useMockAuthentication: true,
+      getDocumentTypeSelect: () => {
+        return utils.container.querySelector(`#input-documentTypeId`) as HTMLElement;
+      },
     };
   };
 
@@ -178,24 +215,44 @@ describe('DocumentDetailForm component', () => {
     expect(document.body).toMatchSnapshot();
   });
 
-  it('renders the file name', () => {
-    const { getAllByText } = setup({});
+  it('renders the file name', async () => {
+    const { getAllByText } = await setup({});
     const textarea = getAllByText('NewFile.doc')[0];
 
     expect(textarea).toBeVisible();
   });
 
-  it('renders the document type', () => {
-    const { getAllByText } = setup({});
-    const textarea = getAllByText('Survey')[0];
+  it('renders the document type', async () => {
+    const { getAllByText } = await setup({});
+    const textarea = getAllByText('Affidavit of service')[0];
 
     expect(textarea).toBeVisible();
   });
 
   it('displays field for metadata types', async () => {
-    const { getAllByDisplayValue } = setup({});
+    const { getAllByDisplayValue } = await setup({});
     const textarea = getAllByDisplayValue('Tag1234')[0];
 
     expect(textarea).toBeVisible();
+  });
+
+  it('disables document type select for templates', async () => {
+    const { getDocumentTypeSelect } = await setup({
+      props: { relationshipType: ApiGen_CodeTypes_DocumentRelationType.Templates },
+    });
+
+    const select = getDocumentTypeSelect();
+    expect(select).toBeDisabled();
+  });
+
+  it('displays a warning legend when the document type has changed.', async () => {
+    const { getByText } = await setup({
+      props: { documentTypeUpdated: true },
+    });
+
+    const warningLegend = getByText(
+      'Some associated metadata may be lost if the document type is changed.',
+    );
+    expect(warningLegend).toBeInTheDocument();
   });
 });

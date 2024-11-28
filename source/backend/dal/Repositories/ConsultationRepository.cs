@@ -38,6 +38,7 @@ namespace Pims.Dal.Repositories
             return Context.PimsLeaseConsultations
                 .Where(lc => lc.LeaseId == leaseId)
                 .Include(lc => lc.ConsultationTypeCodeNavigation)
+                .Include(lc => lc.ConsultationOutcomeTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
         }
@@ -58,6 +59,7 @@ namespace Pims.Dal.Repositories
             return Context.PimsLeaseConsultations.Where(x => x.LeaseConsultationId == consultationId)
                 .AsNoTracking()
                 .Include(x => x.ConsultationTypeCodeNavigation)
+                .Include(x => x.ConsultationOutcomeTypeCodeNavigation)
                 .FirstOrDefault() ?? throw new KeyNotFoundException();
         }
 

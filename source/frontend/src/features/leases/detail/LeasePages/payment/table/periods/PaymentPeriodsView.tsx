@@ -22,7 +22,7 @@ export interface IPeriodPaymentsViewProps {
   onDelete: (values: FormLeasePeriod) => void;
   onDeletePayment: (values: FormLeasePayment) => void;
   onSavePayment: (values: FormLeasePayment) => void;
-  onGenerate: () => void;
+
   isReceivable?: boolean;
   lease?: LeaseFormModel;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
@@ -30,25 +30,14 @@ export interface IPeriodPaymentsViewProps {
 
 export const PeriodPaymentsView: React.FunctionComponent<
   React.PropsWithChildren<IPeriodPaymentsViewProps>
-> = ({
-  onEdit,
-  onEditPayment,
-  onDelete,
-  onDeletePayment,
-  onSavePayment,
-  onGenerate,
-  isReceivable,
-  lease,
-}) => {
+> = ({ onEdit, onEditPayment, onDelete, onDeletePayment, onSavePayment, isReceivable, lease }) => {
   const columns = useMemo(
     () =>
       getLeasePeriodColumns({
         onEdit,
         onDelete: onDelete,
-        onGenerate,
-        leaseTypeCode: lease?.leaseTypeCode,
       }),
-    [onEdit, onDelete, onGenerate, lease?.leaseTypeCode],
+    [onEdit, onDelete],
   );
   const leaseForm = { ...new LeaseFormModel(), ...lease };
 
