@@ -54,6 +54,7 @@ export interface IMapStateMachineContext {
   mapLayersToRefresh: ILayerItem[];
   advancedSearchCriteria: PropertyFilterFormModel;
   isMapVisible: boolean;
+  currentMapBounds: LatLngBounds;
 
   requestFlyToLocation: (latlng: LatLngLiteral) => void;
   requestCenterToLocation: (latlng: LatLngLiteral) => void;
@@ -93,6 +94,7 @@ export interface IMapStateMachineContext {
   setFullWidthSideBar: (fullWidth: boolean) => void;
   resetMapFilter: () => void;
   setAdvancedSearchCriteria: (advancedSearchCriteria: PropertyFilterFormModel) => void;
+  setCurrentMapBounds: (bounds: LatLngBounds) => void;
 }
 
 const MapStateMachineContext = React.createContext<IMapStateMachineContext>(
@@ -378,6 +380,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const setCurrentMapBounds = useCallback(
+    (currentMapBounds: LatLngBounds) => {
+      serviceSend({ type: 'SET_CURRENT_MAP_BOUNDS', currentMapBounds });
+    },
+    [serviceSend],
+  );
+
   const toggleSidebarDisplay = useCallback(() => {
     serviceSend({ type: 'TOGGLE_SIDEBAR_SIZE' });
   }, [serviceSend]);
@@ -451,6 +460,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         showRetired: state.context.showRetired,
         mapLayersToRefresh: state.context.mapLayersToRefresh,
         isMapVisible: state.matches({ mapVisible: {} }),
+        currentMapBounds: state.context.currentMapBounds,
 
         setMapSearchCriteria,
         refreshMapProperties,
@@ -483,6 +493,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setFullWidthSideBar,
         resetMapFilter,
         setAdvancedSearchCriteria,
+        setCurrentMapBounds,
       }}
     >
       {children}
@@ -503,6 +514,6 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     HISTORICAL_FILE_NUMBER_STR: filter.historical,
     latitude: filter.latitude,
     longitude: filter.longitude,
-    forceExactMatch: true,
+    forceExactMatch: pidValue.length === 9,
   };
 };

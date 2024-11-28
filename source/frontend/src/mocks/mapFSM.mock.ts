@@ -58,6 +58,7 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   mapLayersToRefresh: [],
   advancedSearchCriteria: new PropertyFilterFormModel(),
   isMapVisible: true,
+  currentMapBounds: defaultBounds,
 
   requestFlyToLocation: vi.fn(),
   requestCenterToLocation: vi.fn(),
@@ -89,4 +90,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   resetMapFilter: vi.fn(),
   setMapLayersToRefresh: vi.fn(),
   setAdvancedSearchCriteria: vi.fn(),
+  setCurrentMapBounds: vi.fn(),
 };

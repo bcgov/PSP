@@ -50,4 +50,5 @@ export type MachineContext = {
   isFiltering: boolean;
   showDisposed: boolean;
   showRetired: boolean;
+  currentMapBounds: LatLngBounds | null;
 };
