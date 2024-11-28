@@ -1,5 +1,6 @@
 export interface ILeaseFilter {
-  pinOrPid: string;
+  pid: string;
+  pin: string;
   lFileNo: string;
   searchBy: string;
   leaseStatusTypes: string[];
@@ -12,7 +13,8 @@ export interface ILeaseFilter {
 }
 
 export interface ILeaseSearchBy {
-  pinOrPid: string;
+  pin: string;
+  pid: string;
   address: string;
   lFileNo: string;
   historical: string;

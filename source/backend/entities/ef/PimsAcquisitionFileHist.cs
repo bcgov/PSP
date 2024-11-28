@@ -65,6 +65,9 @@ public partial class PimsAcquisitionFileHist
     [Column("FILE_NO")]
     public int FileNo { get; set; }
 
+    [Column("FILE_NO_SUFFIX")]
+    public short FileNoSuffix { get; set; }
+
     [Required]
     [Column("FILE_NUMBER")]
     [StringLength(18)]

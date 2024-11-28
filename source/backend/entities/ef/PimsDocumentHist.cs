@@ -37,7 +37,7 @@ public partial class PimsDocumentHist
     public string FileName { get; set; }
 
     [Column("MAYAN_ID")]
-    public long MayanId { get; set; }
+    public long? MayanId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

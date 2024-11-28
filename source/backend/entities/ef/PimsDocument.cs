@@ -38,7 +38,7 @@ public partial class PimsDocument
     /// Mayan-generated document number used for retrieval from Mayan EDMS.
     /// </summary>
     [Column("MAYAN_ID")]
-    public long MayanId { get; set; }
+    public long? MayanId { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

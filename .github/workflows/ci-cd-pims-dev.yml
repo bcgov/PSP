@@ -24,6 +24,8 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
+  DEPLOYMENT_NAMESPACE: "3cd915-dev"
+
 on:
   pull_request_target:
     branches: [dev]
@@ -83,7 +85,7 @@ jobs:
           ./openshift/4.0/player.sh build proxy -apply
 
   deploy:
-    name: Deploy frontend and api to OpenShift
+    name: Deploy to OpenShift
     needs: [build-frontend, build-api]
     runs-on: ubuntu-latest
     steps:
@@ -96,11 +98,27 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: call scripts to deploy api and frontend
+      - name: Deploy PIMS frontend
+        shell: bash
         run: |
-          ./openshift/4.0/player.sh deploy api $DESTINATION -apply
-          ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
-          ./openshift/4.0/player.sh deploy app $DESTINATION -apply
+          oc tag pims-app:latest-$DESTINATION pims-app:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
+      - name: Deploy PIMS api
+        shell: bash
+        run: |
+          oc tag pims-api:latest-$DESTINATION pims-api:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
+      - name: Deploy geoserver proxy microservice
+        shell: bash
+        run: |
+          oc tag pims-proxy:latest-$DESTINATION pims-proxy:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+      - name: Deploy mayan
+        shell: bash
+        run: |
           oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
 
   # the command:
