@@ -72,9 +72,10 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Generating document");
 
             var formTypeCode = _formDocumentService.GetFormDocumentTypes(templateType.ToString()).LastOrDefault();
-            if (formTypeCode?.Document?.MayanId != null)
+            var mayanId = formTypeCode?.Document?.MayanId;
+            if (mayanId.HasValue)
             {
-                ExternalResponse<FileDownloadResponse> templateFileResult = await _documentService.DownloadFileLatestAsync(formTypeCode.Document.MayanId);
+                ExternalResponse<FileDownloadResponse> templateFileResult = await _documentService.DownloadFileLatestAsync(mayanId.Value);
                 if (templateFileResult.Status == ExternalResponseStatus.Success)
                 {
                     FileDownloadResponse templateFile = templateFileResult.Payload;

@@ -72,7 +72,6 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.parcelFeature;
           layersData.push(parcelData);
         }
-
         if (featureSet.crownLandLeasesFeature !== null) {
           const parcelData: LayerData = {
             title: 'Crown Land Leases',
@@ -148,12 +147,6 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.crownLandInclusionsFeature;
           layersData.push(parcelData);
         }
-
-        setLayerPopup({
-          latlng: mapMachine.mapLocationFeatureDataset.location,
-          layers: layersData,
-        });
-
         if (featureSet.municipalityFeature !== null) {
           const parcelData: LayerData = {
             title: 'Municipality Information',
@@ -169,7 +162,6 @@ export const LayerPopupContainer = React.forwardRef<LeafletPopup, React.PropsWit
           parcelData.feature = featureSet.municipalityFeature;
           layersData.push(parcelData);
         }
-
         if (featureSet.highwayFeature !== null) {
           const parcelData: LayerData = {
             title: 'Highway Research',
