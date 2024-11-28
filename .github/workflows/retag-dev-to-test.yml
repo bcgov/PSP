@@ -13,7 +13,6 @@ env:
   ## variables for scripts under git\openshift\4.0\scripts\oc-*.sh
   APP_PORT: 8080
   DESTINATION: "test"
-  OC_JOB_NAME: "test"
   GIT_URL: "${{github.server_url}}/${{github.repository}}"
   GIT_BRANCH: "${{github.ref}}"
   APP_NAME: "pims"
@@ -28,6 +27,7 @@ env:
   INSTANCE: "-test"
   NAMESPACE_OVERRIDE: "3cd915-dev"
   RELEASE_TAG: "dev"
+  DEPLOYMENT_NAMESPACE: "3cd915-dev"
 
 on: workflow_dispatch
 
@@ -46,7 +46,7 @@ jobs:
           timezone: America/Los_Angeles
 
   deploy:
-    name: Retag/Deploy frontend and api to OpenShift
+    name: Retag/Deploy to OpenShift
     needs: ci-cd-start-notification
     runs-on: ubuntu-latest
     steps:
@@ -59,12 +59,28 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: call scripts to deploy api and frontend
+      - name: Deploy PIMS frontend
+        shell: bash
         run: |
-          ./openshift/4.0/player.sh deploy api $DESTINATION -apply
-          ./openshift/4.0/player.sh deploy app $DESTINATION -apply
-          oc tag pims-proxy:dev pims-proxy:$DESTINATION
-          oc tag mayan-bcgov:dev mayan-bcgov:$DESTINATION
+          oc tag pims-app:$RELEASE_TAG pims-app:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
+      - name: Deploy PIMS api
+        shell: bash
+        run: |
+          oc tag pims-api:$RELEASE_TAG pims-api:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
+      - name: Deploy geoserver proxy microservice
+        shell: bash
+        run: |
+          oc tag pims-proxy:$RELEASE_TAG pims-proxy:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+      - name: Deploy mayan
+        shell: bash
+        run: |
+          oc tag mayan-bcgov:$RELEASE_TAG mayan-bcgov:$DESTINATION
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
