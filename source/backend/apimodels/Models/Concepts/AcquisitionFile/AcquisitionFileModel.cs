@@ -26,7 +26,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - The File number Suffix.
         /// </summary>
-        public string FileNumberSuffix { get; set; }
+        public short FileNumberSuffix { get; set; }
 
         /// <summary>
         /// get/set - A historical reference number of this file in a legacy system (likely PAIMS).

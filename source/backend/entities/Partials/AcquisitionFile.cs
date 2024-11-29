@@ -11,9 +11,12 @@ namespace Pims.Dal.Entities
         [NotMapped]
         public override long Internal_Id { get => this.AcquisitionFileId; set => this.AcquisitionFileId = value; }
 
-        // FIXME: add the suffix when available
+        /// <summary>
+        /// Formatted file number assigned to the acquisition file.
+        /// Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number.
+        /// </summary>
         [NotMapped]
-        public string FileNumberFormatted { get => GenerateAcquisitionFileNumber(this.RegionCode, this.FileNo /*, this.FileNoSuffix */); }
+        public string FileNumberFormatted { get => GenerateAcquisitionFileNumber(this.RegionCode, this.FileNo, this.FileNoSuffix); }
         #endregion
 
         /// <summary>
