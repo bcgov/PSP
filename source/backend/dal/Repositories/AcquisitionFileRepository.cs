@@ -677,7 +677,7 @@ namespace Pims.Dal.Repositories
                 // generate file number for "main" files
                 int nextFileNo = GetNextAcquisitionFileNumberSequenceValue();
                 acquisitionFile.FileNo = nextFileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, nextFileNo, 1);
+                acquisitionFile.FileNoSuffix = 1;
             }
             else
             {
@@ -685,9 +685,9 @@ namespace Pims.Dal.Repositories
                 var parentFile = Context.PimsAcquisitionFiles.AsNoTracking()
                     .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.PrntAcquisitionFileId) ?? throw new KeyNotFoundException();
 
-                int nextSuffix = GetNextSubFileSuffixValue(parentFile.Internal_Id);
+                var nextSuffix = GetNextSubFileSuffixValue(parentFile.Internal_Id);
                 acquisitionFile.FileNo = parentFile.FileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, parentFile.FileNo, nextSuffix);
+                acquisitionFile.FileNoSuffix = nextSuffix;
             }
 
             Context.PimsAcquisitionFiles.Add(acquisitionFile);
@@ -707,23 +707,9 @@ namespace Pims.Dal.Repositories
             var existingAcqFile = Context.PimsAcquisitionFiles
                 .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.Internal_Id) ?? throw new KeyNotFoundException();
 
-            // PSP-4413 Changing the MOTI region triggers an update to the ACQ File Number
-            if (existingAcqFile.RegionCode != acquisitionFile.RegionCode)
-            {
-                int suffix = existingAcqFile.GetAcquisitionNumberSuffix();
-                if (suffix < 0)
-                {
-                    throw new BusinessRuleViolationException("Cannot parse Acquisition File Number suffix.");
-                }
-                acquisitionFile.FileNo = existingAcqFile.FileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, acquisitionFile.FileNo, suffix);
-            }
-            else
-            {
-                // Make sure the frontend cannot override these auto-generated fields
-                acquisitionFile.FileNo = existingAcqFile.FileNo;
-                acquisitionFile.FileNumber = existingAcqFile.FileNumber;
-            }
+            // Make sure the frontend cannot override these auto-generated fields
+            acquisitionFile.FileNo = existingAcqFile.FileNo;
+            acquisitionFile.FileNoSuffix = existingAcqFile.FileNoSuffix;
 
             // PSP-9268 Changes to Project/Product on the main file need to be propagated to all sub-files
             if (existingAcqFile.ProjectId != acquisitionFile.ProjectId || existingAcqFile.ProductId != acquisitionFile.ProductId)
@@ -817,8 +803,6 @@ namespace Pims.Dal.Repositories
                 .Where(predicate).OrderBy(x => x.FileNumber).ToList();
         }
 
-
-
         /// <summary>
         /// Get the next available value from PIMS_ACQUISITION_FILE_NO_SEQ.
         /// </summary>
@@ -828,7 +812,7 @@ namespace Pims.Dal.Repositories
             return (int)_sequenceRepository.GetNextSequenceValue("dbo.PIMS_ACQUISITION_FILE_NO_SEQ");
         }
 
-        private int GetNextSubFileSuffixValue(long parentAcquisitionFileId)
+        private short GetNextSubFileSuffixValue(long parentAcquisitionFileId)
         {
             // To determine the next suffix number we need to grab all sub-files (regardless of any region restriction)
             var allRegions = Context.PimsRegions.AsNoTracking().Select(r => r.RegionCode).ToHashSet();
@@ -841,8 +825,8 @@ namespace Pims.Dal.Repositories
             }
             else
             {
-                int latestSuffix = existingSubFiles.Select(x => x.GetAcquisitionNumberSuffix()).Max();
-                return latestSuffix + 1;
+                short maxSuffix = existingSubFiles.Select(x => x.FileNoSuffix).Max();
+                return (short)(maxSuffix + 1);
             }
         }
 
@@ -885,7 +869,13 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
             {
-                predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+                var fileNumberBuilder = PredicateBuilder.New<PimsAcquisitionFile>(acq => false);
+                fileNumberBuilder = fileNumberBuilder.Or(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%"));
+                fileNumberBuilder = fileNumberBuilder.Or(r => EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+                fileNumberBuilder = fileNumberBuilder.Or(r => (r.RegionCode.ToString() + "-" + r.FileNo.ToString() + "-" + r.FileNoSuffix.ToString()).Contains(filter.AcquisitionFileNameOrNumber));
+
+                predicate = predicate.And(fileNumberBuilder);
+                // predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
