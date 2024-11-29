@@ -870,12 +870,11 @@ namespace Pims.Dal.Repositories
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
             {
                 var fileNumberBuilder = PredicateBuilder.New<PimsAcquisitionFile>(acq => false);
+                fileNumberBuilder = fileNumberBuilder.Or(r => EF.Functions.Like((r.RegionCode < 10 ? "0" : string.Empty) + r.RegionCode.ToString() + "-" + r.FileNo.ToString() + "-" + (r.FileNoSuffix < 10 ? "0" : string.Empty) + r.FileNoSuffix.ToString(), $"%{filter.AcquisitionFileNameOrNumber}%"));
                 fileNumberBuilder = fileNumberBuilder.Or(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%"));
                 fileNumberBuilder = fileNumberBuilder.Or(r => EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
-                fileNumberBuilder = fileNumberBuilder.Or(r => (r.RegionCode.ToString() + "-" + r.FileNo.ToString() + "-" + r.FileNoSuffix.ToString()).Contains(filter.AcquisitionFileNameOrNumber));
 
                 predicate = predicate.And(fileNumberBuilder);
-                // predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))

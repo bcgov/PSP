@@ -208,15 +208,59 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100);
             property.Internal_Id = 1;
-            property.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { AcquisitionFile = new PimsAcquisitionFile() {
-                AcquisitionTypeCode = "TYPE", FileName = "ACQFILE", FileNumber = "1234", AcquisitionFileStatusTypeCodeNavigation = new PimsAcquisitionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
-            property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { ResearchFile = new PimsResearchFile() {
-                Name = "Research", RfileNumber = "1234", ResearchFileStatusTypeCodeNavigation = new PimsResearchFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
-            property.PimsPropertyLeases = new List<PimsPropertyLease>() { new PimsPropertyLease() { Lease = new PimsLease() {
-                LeaseLicenseTypeCode = "TYPE", LeasePayRvblTypeCode = "RCVBL", LeaseProgramTypeCode = "PROGRAM", //LeasePurposeTypeCode = "PURPOSE",
-                LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType () { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
-            property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = new PimsDispositionFile() {
-                DispositionStatusTypeCode = "DRAFT", DispositionTypeCode = "TYPE", DispositionFileStatusTypeCodeNavigation = new PimsDispositionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
+            property.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>()
+            {
+                new PimsPropertyAcquisitionFile()
+                {
+                    AcquisitionFile = new PimsAcquisitionFile()
+                    {
+                        AcquisitionTypeCode = "TYPE",
+                        FileName = "ACQFILE",
+                        RegionCode = 1,
+                        FileNo = 1234,
+                        FileNoSuffix = 1,
+                        AcquisitionFileStatusTypeCodeNavigation = new PimsAcquisitionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
+                    }
+                }
+            };
+            property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
+            {
+                new PimsPropertyResearchFile()
+                {
+                    ResearchFile = new PimsResearchFile()
+                    {
+                        Name = "Research",
+                        RfileNumber = "1234",
+                        ResearchFileStatusTypeCodeNavigation = new PimsResearchFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
+                    }
+                }
+            };
+            property.PimsPropertyLeases = new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    Lease = new PimsLease()
+                    {
+                        LeaseLicenseTypeCode = "TYPE",
+                        LeasePayRvblTypeCode = "RCVBL",
+                        LeaseProgramTypeCode = "PROGRAM",
+                        LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType () { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
+                    }
+                }
+            };
+            property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>()
+            {
+                new PimsDispositionFileProperty()
+                {
+                    DispositionFile = new PimsDispositionFile()
+                    {
+                        DispositionStatusTypeCode = "DRAFT",
+                        DispositionTypeCode = "TYPE",
+                        DispositionFileStatusTypeCodeNavigation = new PimsDispositionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
+                    }
+                }
+            };
+
             _helper.AddAndSaveChanges(property);
 
             // Act
