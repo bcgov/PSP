@@ -62,14 +62,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
+            searchProperties.SearchPropertyByPIN(searchProperty.PIN);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
 
             //Search for a valid PID in Inventory
             searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPINPID(searchProperty.PID);
+            searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesMapFoundCount() == 1);
@@ -85,7 +85,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for an invalid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByPINPID(searchProperty.PID);
+            searchProperties.SearchPropertyByPID(searchProperty.PID);
         }
 
         [StepDefinition(@"I review a Property's Information from row number (.*)")]
@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.NavigatePropertyListView();
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(property.PID);
+            searchProperties.SearchPropertyByPID(property.PID);
 
             //Select the first property from the list
             searchProperties.ChooseFirstPropertyFromList();
@@ -194,14 +194,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a valid PIN in Inventory
             searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPINPID(searchProperty.PIN);
+            searchProperties.SearchPropertyByPIN(searchProperty.PIN);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesListFoundCount() == 1);
 
             //Search for a valid PID in Inventory
             searchProperties.SearchPropertyReset();
-            searchProperties.SearchPropertyByPINPID(searchProperty.PID);
+            searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesListFoundCount() == 1);
@@ -241,7 +241,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a non-inventory property
             PopulateSearchProperty(rowNumber);
-            searchProperties.SearchPropertyByPINPID(searchProperty.PID);
+            searchProperties.SearchPropertyByPID(searchProperty.PID);
 
             //Click on the found property
             searchProperties.SelectFoundPin();

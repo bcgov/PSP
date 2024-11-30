@@ -190,6 +190,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
             AssertTrueIsDisplayed(stakeholderInterestTable);
 
+            Wait();
             var lastStakeholder = webDriver.FindElements(stakeholderInterestTotalCount).Count();
             AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[1]/a"), interest.InterestHolder);
             AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[2]"), interest.PrimaryContact);

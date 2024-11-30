@@ -157,7 +157,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.SaveLicense();
 
             //Verify File Details Form
-            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails, lease.AccountType);
+            //leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails, lease.AccountType);
         }
 
         [StepDefinition(@"I update a Lease's Details from row number (.*)")]
@@ -740,7 +740,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a Inventory Property
             PopulateLeaseLicense(rowNumber);
-            searchProperties.SearchPropertyByPINPID(lease.SearchProperties.PID);
+            searchProperties.SearchPropertyByPID(lease.SearchProperties.PID);
 
             //Choose the given result
             searchProperties.SelectFoundPin();

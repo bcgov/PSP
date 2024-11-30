@@ -94,7 +94,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateTakesTab()
         {
-            WaitUntilClickable(takesTabLink);
+            Wait();
             webDriver.FindElement(takesTabLink).Click();
         }
 

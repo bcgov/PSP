@@ -138,7 +138,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentOtherTypePINInput = By.CssSelector("input[data-testid='metadata-input-PIN']");
         private readonly By documentOtherTypePropIdLabel = By.XPath("//input[@data-testid='metadata-input-PROPERTY_IDENTIFIER']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Property identifier')]");
         private readonly By documentRoadNameInput = By.CssSelector("input[data-testid='metadata-input-ROAD_NAME']");
-        private readonly By documentShortDescriptorLabel = By.XPath("//label[contains(text(),'Short descriptor')]");
+        private readonly By documentShortDescriptorLabel = By.XPath("//input[@data-testid='metadata-input-SHORT_DESCRIPTOR']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Short descriptor')]");
 
         //Upload PA plans Fields
         private readonly By documentPAPlanNbrLabel = By.XPath("//label[contains(text(),'Plan #')]");
