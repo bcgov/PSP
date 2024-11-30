@@ -22,6 +22,7 @@ export class UpdateAcquisitionSummaryFormModel
   id?: number;
   parentAcquisitionFileId: number | null = null;
   fileNo?: number;
+  fileNumberSuffix?: number;
   fileNumber?: string;
   fileName?: string = '';
   legacyFileNumber?: string = '';
@@ -67,7 +68,7 @@ export class UpdateAcquisitionSummaryFormModel
         : null,
       fileNo: this.fileNo ?? 0,
       fileNumber: this.fileNumber ?? null,
-      fileNumberSuffix: null,
+      fileNumberSuffix: this.fileNumberSuffix ?? 0,
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileName: this.fileName ?? null,
       assignedDate: isValidIsoDateTime(this.assignedDate) ? this.assignedDate : null,
@@ -114,6 +115,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.id = model.id;
     newForm.parentAcquisitionFileId = model.parentAcquisitionFileId;
     newForm.fileNo = model.fileNo;
+    newForm.fileNumberSuffix = model.fileNumberSuffix;
     newForm.fileNumber = model.fileNumber ?? undefined;
     newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;
     newForm.fileName = model.fileName || '';
