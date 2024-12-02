@@ -21,7 +21,7 @@ export const mockAcquisitionFileResponse = (
   parentAcquisitionFileId: null,
   rowVersion,
   fileNo: 12345,
-  fileNumber: null,
+  fileNumber: '01-12345-01',
   fileNumberSuffix: 1,
   fileName: name,
   project: {

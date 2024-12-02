@@ -157,7 +157,7 @@ describe('AcquisitionView component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = await setup();
-    await screen.findByText('1-12345-01 - Test ACQ File');
+    await screen.findByText('01-12345-01 - Test ACQ File');
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -168,7 +168,7 @@ describe('AcquisitionView component', () => {
 
     expect(getByText('Acquisition File')).toBeVisible();
 
-    expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
+    expect(getByText('01-12345-01 - Test ACQ File')).toBeVisible();
     expect(
       getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
     ).toBeVisible();
@@ -184,7 +184,7 @@ describe('AcquisitionView component', () => {
     expect(getByText('Acquisition File')).toBeVisible();
     await waitFor(() => userEvent.click(getCloseButton()));
 
-    expect(onClose).toBeCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 
   it('should display the Edit Properties button if the user has permissions', async () => {

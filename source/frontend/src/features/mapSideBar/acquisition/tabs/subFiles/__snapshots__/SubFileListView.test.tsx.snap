@@ -113,7 +113,7 @@ exports[`SubFileListView component > renders as expected 1`] = `
             class="c5 text-left col"
             data-testid="linked-files-header"
           >
-            1
+            12345
           </div>
         </div>
         <div
