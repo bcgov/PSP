@@ -219,6 +219,7 @@ namespace Pims.Dal.Test.Repositories
                         RegionCode = 1,
                         FileNo = 1234,
                         FileNoSuffix = 1,
+                        FileNumber = PimsAcquisitionFile.GenerateAcquisitionFileNumber(1, 1234, 1), // TODO: Remove this once FILE_NUMBER column is removed from schema
                         AcquisitionFileStatusTypeCodeNavigation = new PimsAcquisitionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
                     }
                 }

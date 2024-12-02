@@ -30,6 +30,7 @@ namespace Pims.Core.Test
             acquisitionFile.AcquisitionTypeCodeNavigation = acquisitionType ?? new Entity.PimsAcquisitionType() { Id = "SECTN3", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" };
             acquisitionFile.RegionCodeNavigation = region ?? new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test" };
             acquisitionFile.RegionCode = acquisitionFile.RegionCodeNavigation.RegionCode;
+            acquisitionFile.FileNumber = acquisitionFile.FileNumberFormatted;  // TODO: Remove this once FILE_NUMBER column is removed from schema
 
             return acquisitionFile;
         }
