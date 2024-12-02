@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { ColumnWithProps } from '@/components/Table';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { exists } from '@/utils';
 import { stringToFragment } from '@/utils/columnUtils';
 
 export function createSubFilesTableColumns(currentAcquisitionId: number, routeURL: string) {
@@ -17,7 +18,7 @@ export function createSubFilesTableColumns(currentAcquisitionId: number, routeUR
       maxWidth: 15,
       Cell: (cellProps: CellProps<ApiGen_Concepts_AcquisitionFile>) => {
         if (currentAcquisitionId === cellProps.row.original.id) {
-          return stringToFragment(cellProps.row.original.fileNumberSuffix);
+          return stringToFragment(formatFileSuffix(cellProps.row.original.fileNumberSuffix));
         } else {
           return (
             <StyledLink
@@ -26,7 +27,7 @@ export function createSubFilesTableColumns(currentAcquisitionId: number, routeUR
               to={`${routeURL}/${cellProps.row.original.id}`}
               data-testid={`sub-file-link-${cellProps.row.original.id}`}
             >
-              <span>{cellProps.row.original.fileNumberSuffix}</span>
+              <span>{formatFileSuffix(cellProps.row.original.fileNumberSuffix)}</span>
               <FaExternalLinkAlt className="ml-2" size="1rem" />
             </StyledLink>
           );
@@ -62,3 +63,7 @@ const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
 `;
+
+function formatFileSuffix(suffix: number): string {
+  return exists(suffix) ? suffix.toString().padStart(2, '0') : '';
+}
