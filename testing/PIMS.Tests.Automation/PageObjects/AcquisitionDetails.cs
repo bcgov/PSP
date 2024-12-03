@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class AcquisitionDetails : PageObjectBase
     {
         //Acquisition Files Menu Elements
-        private readonly By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
+        private readonly By menuAcquisitionButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-acquisition']/a");
         private readonly By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
         private readonly By acquisitionFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div button[title='File Details']");
@@ -42,6 +42,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
         private By acquisitionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
         private By acquisitionFileProjectProductSelect = By.Id("input-product");
+        private By acquicistionFileProjectProductOptions = By.CssSelector("select[id='input-product'] option");
         private By acquisitionFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
         private By acquisitionFileProjectFundingLabel = By.XPath("//label[contains(text(),'Funding')]");
         private By acquisitionFileProjectFundingInput = By.Id("input-fundingTypeCode");
@@ -140,8 +141,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToFileSummary()
         {
-            WaitUntilVisible(acquisitionFileSummaryBttn);
-            FocusAndClick(acquisitionFileSummaryBttn);
+            Wait();
+            if (webDriver.FindElements(acquisitionFileSummaryBttn).Count() > 0)
+                FocusAndClick(acquisitionFileSummaryBttn);
         }
 
         public void NavigateToFileDetailsTab()
@@ -193,6 +195,8 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 WaitUntilClickable(acquisitionFileProjectProductSelect);
                 webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
+
+                Wait(2000);
                 ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProductCode + " " + acquisition.AcquisitionProjProduct);
             }
 
