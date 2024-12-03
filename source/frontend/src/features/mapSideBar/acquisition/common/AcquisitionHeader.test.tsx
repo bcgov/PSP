@@ -53,7 +53,7 @@ describe('AcquisitionHeader component', () => {
     });
     await act(async () => {});
 
-    expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
+    expect(getByText('01-12345-01 - Test ACQ File')).toBeVisible();
     expect(
       getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
     ).toBeVisible();
@@ -71,7 +71,7 @@ describe('AcquisitionHeader component', () => {
     await act(async () => {});
 
     expect(getAllByText('File:')[0]).toBeVisible();
-    expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
+    expect(getByText('01-12345-01 - Test ACQ File')).toBeVisible();
   });
 
   it('renders the file Project Number and name concatenated', async () => {
@@ -128,7 +128,7 @@ describe('AcquisitionHeader component', () => {
     });
     await act(async () => {});
 
-    expect(getByText('1-12345-01 - Test ACQ File')).toBeVisible();
+    expect(getByText('01-12345-01 - Test ACQ File')).toBeVisible();
     expect(
       getByText(new RegExp(prettyFormatUTCDate(testAcquisitionFile.appCreateTimestamp))),
     ).toBeVisible();

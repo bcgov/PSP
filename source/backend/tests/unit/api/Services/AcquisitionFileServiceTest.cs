@@ -2894,7 +2894,9 @@ namespace Pims.Api.Test.Services
 
             var filter = new AcquisitionFilter();
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-            acquisitionFile.FileNumber = "10-25-2023";
+            acquisitionFile.FileNo = 2023;
+            acquisitionFile.RegionCode = 1;
+            acquisitionFile.FileNoSuffix = 1;
             acquisitionFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>()
             {
                 new PimsPropertyAcquisitionFile()
@@ -2934,8 +2936,8 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(2, result.Count());
-            Assert.Equal("10-25-2023", result[0].FileNumber);
-            Assert.Equal("10-25-2023", result[1].FileNumber);
+            Assert.Equal("01-2023-01", result[0].FileNumber);
+            Assert.Equal("01-2023-01", result[1].FileNumber);
             Assert.Equal("8000", result[0].Pid);
             Assert.Equal("9000", result[1].Pid);
             acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
