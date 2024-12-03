@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
-/* Script generated with: DeZign for Databases 14.5.1                     */
+/* Script generated with: DeZign for Databases 14.6.0                     */
 /* Target DBMS:           MS SQL Server 2019                              */
-/* Project file:          PIMS S94.00.dez                                 */
-/* Project name:          PIMS S94.00                                     */
+/* Project file:          PIMS S95.00.dez                                 */
+/* Project name:          PIMS S95.00                                     */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2024-11-27 09:47                                */
+/* Created on:            2024-12-02 15:19                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -4328,11 +4328,87 @@ ALTER TABLE [dbo].[PIMS_EXPROPRIATION_PAYMENT] DROP CONSTRAINT [FORM8_PERSON_ORG
 GO
 
 
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'EXPROPRIATION_PAYMENT_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'ACQUISITION_FILE_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'ACQUISITION_OWNER_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'INTEREST_HOLDER_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'EXPROPRIATING_AUTHORITY'
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'DESCRIPTION'
 GO
 
 
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'ADV_PMT_SERVED_DT'
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'APP_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'APP_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'APP_CREATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'APP_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_EXPROPRIATION_PAYMENT', 'COLUMN', N'DB_LAST_UPDATE_USERID'
 GO
 
 
@@ -4514,11 +4590,39 @@ ALTER TABLE [dbo].[PIMS_COMPENSATION_REQUISITION] DROP CONSTRAINT [CMPREQ_PK]
 GO
 
 
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'COMPENSATION_REQUISITION_ID'
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'ACQUISITION_FILE_ID'
 GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'LEASE_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'ACQUISITION_OWNER_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'INTEREST_HOLDER_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'ACQUISITION_FILE_TEAM_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'CHART_OF_ACCOUNTS_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'RESPONSIBILITY_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'YEARLY_FINANCIAL_ID'
 GO
 
 
@@ -4566,10 +4670,6 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'ADV_PMT_SERVED_DT'
-GO
-
-
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'SPECIAL_INSTRUCTION'
 GO
 
@@ -4579,6 +4679,58 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'APP_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'APP_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'APP_CREATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'APP_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_COMPENSATION_REQUISITION', 'COLUMN', N'DB_LAST_UPDATE_USERID'
 GO
 
 
@@ -8221,10 +8373,6 @@ GO
 
 
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'FILE_NO_SUFFIX'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'FILE_NUMBER'
 GO
 
 
