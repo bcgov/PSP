@@ -1,5 +1,4 @@
 using System.Collections.Immutable;
-using System.Linq;
 using Mapster;
 using Pims.Api.Models.Base;
 using Pims.Core.Extensions;
@@ -17,8 +16,8 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.Id, src => src.AcquisitionFileId)
                 .Map(dest => dest.ParentAcquisitionFileId, src => src.PrntAcquisitionFileId)
                 .Map(dest => dest.FileNo, src => src.FileNo)
-                .Map(dest => dest.FileNumber, src => src.FileNumber)
-                .Map(dest => dest.FileNumberSuffix, src => src.FileNumber.Split('-', System.StringSplitOptions.TrimEntries).Last())
+                .Map(dest => dest.FileNumber, src => src.FileNumberFormatted)
+                .Map(dest => dest.FileNumberSuffix, src => src.FileNoSuffix)
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.LegacyFileNumber, src => src.LegacyFileNumber)
                 .Map(dest => dest.Project, src => src.Project)
@@ -52,7 +51,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AcquisitionFileId, src => src.Id)
                 .Map(dest => dest.PrntAcquisitionFileId, src => src.ParentAcquisitionFileId)
                 .Map(dest => dest.FileNo, src => src.FileNo)
-                .Map(dest => dest.FileNumber, src => src.FileNumber)
+                .Map(dest => dest.FileNoSuffix, src => src.FileNumberSuffix)
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.LegacyFileNumber, src => src.LegacyFileNumber)
                 .Map(dest => dest.ProjectId, src => src.ProjectId)
