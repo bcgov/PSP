@@ -81,7 +81,7 @@ namespace Pims.Api.Test
             {
                 CompensationRequisition = new PimsCompensationRequisition()
                 {
-                    AcquisitionFile = new PimsAcquisitionFile() { FileNumber = "9999", FileName = "test" },
+                    AcquisitionFile = new PimsAcquisitionFile() { RegionCode = 1, FileNo = 9999, FileNoSuffix = 1, FileName = "test" },
                 },
             };
 
@@ -89,7 +89,7 @@ namespace Pims.Api.Test
             var model = new CompensationFinancialReportModel(testFinancial, new CompensationFinancialReportTotalsModel(new List<PimsCompReqFinancial>()), new System.Security.Claims.ClaimsPrincipal());
 
             // Assert
-            model.FileNumberAndName.Should().Be("9999 - test");
+            model.FileNumberAndName.Should().Be("01-9999-01 - test");
         }
 
         [Fact]

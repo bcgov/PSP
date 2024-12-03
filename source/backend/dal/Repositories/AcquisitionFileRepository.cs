@@ -677,7 +677,7 @@ namespace Pims.Dal.Repositories
                 // generate file number for "main" files
                 int nextFileNo = GetNextAcquisitionFileNumberSequenceValue();
                 acquisitionFile.FileNo = nextFileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, nextFileNo, 1);
+                acquisitionFile.FileNoSuffix = 1;
             }
             else
             {
@@ -685,10 +685,13 @@ namespace Pims.Dal.Repositories
                 var parentFile = Context.PimsAcquisitionFiles.AsNoTracking()
                     .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.PrntAcquisitionFileId) ?? throw new KeyNotFoundException();
 
-                int nextSuffix = GetNextSubFileSuffixValue(parentFile.Internal_Id);
+                var nextSuffix = GetNextSubFileSuffixValue(parentFile.Internal_Id);
                 acquisitionFile.FileNo = parentFile.FileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, parentFile.FileNo, nextSuffix);
+                acquisitionFile.FileNoSuffix = nextSuffix;
             }
+
+            // TODO: Remove this once the FILE_NUMBER column gets removed. We need this here because it is not nullable
+            acquisitionFile.FileNumber = string.Empty;
 
             Context.PimsAcquisitionFiles.Add(acquisitionFile);
             return acquisitionFile;
@@ -707,23 +710,10 @@ namespace Pims.Dal.Repositories
             var existingAcqFile = Context.PimsAcquisitionFiles
                 .FirstOrDefault(x => x.AcquisitionFileId == acquisitionFile.Internal_Id) ?? throw new KeyNotFoundException();
 
-            // PSP-4413 Changing the MOTI region triggers an update to the ACQ File Number
-            if (existingAcqFile.RegionCode != acquisitionFile.RegionCode)
-            {
-                int suffix = existingAcqFile.GetAcquisitionNumberSuffix();
-                if (suffix < 0)
-                {
-                    throw new BusinessRuleViolationException("Cannot parse Acquisition File Number suffix.");
-                }
-                acquisitionFile.FileNo = existingAcqFile.FileNo;
-                acquisitionFile.FileNumber = GenerateAcquisitionNumber(acquisitionFile.RegionCode, acquisitionFile.FileNo, suffix);
-            }
-            else
-            {
-                // Make sure the frontend cannot override these auto-generated fields
-                acquisitionFile.FileNo = existingAcqFile.FileNo;
-                acquisitionFile.FileNumber = existingAcqFile.FileNumber;
-            }
+            // Make sure the frontend cannot override these auto-generated fields
+            acquisitionFile.FileNo = existingAcqFile.FileNo;
+            acquisitionFile.FileNoSuffix = existingAcqFile.FileNoSuffix;
+            acquisitionFile.FileNumber = existingAcqFile.FileNumber; // TODO: Remove this once the FILE_NUMBER column gets removed. We need this here because it is not nullable
 
             // PSP-9268 Changes to Project/Product on the main file need to be propagated to all sub-files
             if (existingAcqFile.ProjectId != acquisitionFile.ProjectId || existingAcqFile.ProductId != acquisitionFile.ProductId)
@@ -818,32 +808,6 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
-        /// Generates a new Acquisition Number in the following format.
-        /// </summary>
-        /// <remarks>
-        /// <list type="bullet">
-        /// <item>
-        /// Format: YY-XXXXXXXXXXXX-ZZ
-        /// </item>
-        /// <item>
-        /// Prefix - (YY above) The prefix numbers for an Acquisition file correspond with the MoTI region
-        /// </item>
-        /// <item>
-        /// File # - (XXXXX... above) Acquisition File number is created and each file number should increase in increments of 1.
-        /// The digit base number is unique to the file. Do not pad the number with zeros.
-        /// </item>
-        /// <item>
-        /// Suffix - (ZZ above) The suffix numbers for an Acquisition file defaults to 01 for "Main Files".
-        /// </item>
-        /// </list>
-        /// </remarks>
-        /// <returns>The formatted Acquisition File Number.</returns>
-        private static string GenerateAcquisitionNumber(short prefix, long fileNumber, int suffix = 1)
-        {
-            return $"{prefix:00}-{fileNumber}-{suffix:00}";
-        }
-
-        /// <summary>
         /// Get the next available value from PIMS_ACQUISITION_FILE_NO_SEQ.
         /// </summary>
         /// <returns>The next value for the sequence.</returns>
@@ -852,7 +816,7 @@ namespace Pims.Dal.Repositories
             return (int)_sequenceRepository.GetNextSequenceValue("dbo.PIMS_ACQUISITION_FILE_NO_SEQ");
         }
 
-        private int GetNextSubFileSuffixValue(long parentAcquisitionFileId)
+        private short GetNextSubFileSuffixValue(long parentAcquisitionFileId)
         {
             // To determine the next suffix number we need to grab all sub-files (regardless of any region restriction)
             var allRegions = Context.PimsRegions.AsNoTracking().Select(r => r.RegionCode).ToHashSet();
@@ -865,8 +829,8 @@ namespace Pims.Dal.Repositories
             }
             else
             {
-                int latestSuffix = existingSubFiles.Select(x => x.GetAcquisitionNumberSuffix()).Max();
-                return latestSuffix + 1;
+                short maxSuffix = existingSubFiles.Select(x => x.FileNoSuffix).Max();
+                return (short)(maxSuffix + 1);
             }
         }
 
@@ -909,7 +873,12 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionFileNameOrNumber))
             {
-                predicate = predicate.And(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.FileNumber, $"%{filter.AcquisitionFileNameOrNumber}%") || EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+                var fileNumberBuilder = PredicateBuilder.New<PimsAcquisitionFile>(acq => false);
+                fileNumberBuilder = fileNumberBuilder.Or(r => EF.Functions.Like((r.RegionCode < 10 ? "0" : string.Empty) + r.RegionCode.ToString() + "-" + r.FileNo.ToString() + "-" + (r.FileNoSuffix < 10 ? "0" : string.Empty) + r.FileNoSuffix.ToString(), $"%{filter.AcquisitionFileNameOrNumber}%"));
+                fileNumberBuilder = fileNumberBuilder.Or(r => EF.Functions.Like(r.FileName, $"%{filter.AcquisitionFileNameOrNumber}%"));
+                fileNumberBuilder = fileNumberBuilder.Or(r => EF.Functions.Like(r.LegacyFileNumber, $"%{filter.AcquisitionFileNameOrNumber}%"));
+
+                predicate = predicate.And(fileNumberBuilder);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
