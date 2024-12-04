@@ -514,6 +514,6 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     HISTORICAL_FILE_NUMBER_STR: filter.historical,
     latitude: filter.latitude,
     longitude: filter.longitude,
-    forceExactMatch: pidValue.length === 9,
+    forceExactMatch: pidValue?.length === 9,
   };
 };
