@@ -185,12 +185,18 @@ const mapRequestStates = {
                   any
                 >;
                 const filteredBounds = geoJSON(featureCollection).getBounds();
+                const validBounds = filteredBounds.isValid() ? filteredBounds : defaultBounds;
 
                 // if the current map bounds contain the bounds of the filtered properties, use the current map bounds.
-                if (context.currentMapBounds && context.currentMapBounds.contains(filteredBounds)) {
+                if (
+                  context.currentMapBounds &&
+                  context.currentMapBounds.isValid() &&
+                  context.currentMapBounds.contains(validBounds)
+                ) {
                   return context.currentMapBounds;
                 }
-                return filteredBounds;
+
+                return validBounds;
               }
             },
           }),

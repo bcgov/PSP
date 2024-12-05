@@ -92,7 +92,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   useEffect(() => {
     if (isMapReady && mapMachinePendingRefresh && mapRef.current !== null) {
       // PSP-9347 it is possible that a fit bounds request will be made with an empty array of selected properties. In that case, we do not want to change the screen bounds, so cancel the request with no changes to the map.
-      if (exists(mapMachineRequestedFitBounds)) {
+      if (exists(mapMachineRequestedFitBounds) && mapMachineRequestedFitBounds.isValid()) {
         mapRef.current.fitBounds(mapMachineRequestedFitBounds, {
           maxZoom: zoom > MAX_ZOOM ? zoom : MAX_ZOOM,
         });
