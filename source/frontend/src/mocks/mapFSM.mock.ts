@@ -24,10 +24,14 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   },
   isShowingSearchBar: false,
   pendingFlyTo: false,
+  pendingCenterTo: false,
   pendingFitBounds: false,
   requestedFlyTo: {
     location: null,
     bounds: null,
+  },
+  requestedCenterTo: {
+    location: null,
   },
   requestedFitBounds: defaultBounds,
   mapFeatureSelected: null,
@@ -54,10 +58,12 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   mapLayersToRefresh: [],
   advancedSearchCriteria: new PropertyFilterFormModel(),
   isMapVisible: true,
+  currentMapBounds: defaultBounds,
 
   requestFlyToLocation: vi.fn(),
-
+  requestCenterToLocation: vi.fn(),
   processFlyTo: vi.fn(),
+  processCenterTo: vi.fn(),
   processFitBounds: vi.fn(),
   openSidebar: vi.fn(),
   closeSidebar: vi.fn(),
@@ -74,7 +80,6 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setFilePropertyLocations: vi.fn(),
   setVisiblePimsProperties: vi.fn(),
   toggleMapFilterDisplay: vi.fn(),
-
   toggleMapLayerControl: vi.fn(),
   setShowDisposed: vi.fn(),
   setShowRetired: vi.fn(),
@@ -85,4 +90,5 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   resetMapFilter: vi.fn(),
   setMapLayersToRefresh: vi.fn(),
   setAdvancedSearchCriteria: vi.fn(),
+  setCurrentMapBounds: vi.fn(),
 };

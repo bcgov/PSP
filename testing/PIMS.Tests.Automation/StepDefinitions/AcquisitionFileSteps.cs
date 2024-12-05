@@ -787,7 +787,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property
             PopulateAcquisitionFile(rowNumber);
-            searchProperties.SearchPropertyByPINPID(acquisitionFile.AcquisitionSearchProperties.PID);
+            searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -812,7 +812,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             Assert.Equal(0, acquisitionFilesDetails.IsCreateAcquisitionFileFormVisible());
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(acquisitionFile.AcquisitionSearchProperties.PID);
+            searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();
@@ -834,7 +834,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.CancelAcquisitionFile();
 
             //Search for a property
-            searchProperties.SearchPropertyByPINPID(acquisitionFile.AcquisitionSearchProperties.PID);
+            searchProperties.SearchPropertyByPID(acquisitionFile.AcquisitionSearchProperties.PID);
 
             //Select Found Pin on map
             searchProperties.SelectFoundPin();

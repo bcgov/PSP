@@ -81,7 +81,7 @@ namespace Pims.Api.Areas.Reports.Models.Agreement
         {
             MinistryProject = GetMinistryProjectName(agreement.AcquisitionFile?.Project);
             Product = GetMinistryProductName(agreement.AcquisitionFile?.Product);
-            AcquisitionNumberAndName = $"{agreement.AcquisitionFile?.FileNumber} - {agreement.AcquisitionFile?.FileName}";
+            AcquisitionNumberAndName = $"{agreement.AcquisitionFile?.FileNumberFormatted} - {agreement.AcquisitionFile?.FileName}";
             FileCreatedDate = GetNullableDate(agreement.AcquisitionFile?.AppCreateTimestamp);
             FileStatus = agreement.AcquisitionFile?.AcquisitionFileStatusTypeCodeNavigation?.Description;
 

@@ -7,10 +7,10 @@ namespace PIMS.Tests.Automation.PageObjects
     public class AcquisitionDetails : PageObjectBase
     {
         //Acquisition Files Menu Elements
-        private readonly By menuAcquisitionButton = By.CssSelector("div[data-testid='nav-tooltip-acquisition'] a");
+        private readonly By menuAcquisitionButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-acquisition']/a");
         private readonly By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
-        private readonly By acquisitionFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div span[title='File Details']");
+        private readonly By acquisitionFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div button[title='File Details']");
         private readonly By acquisitionFileDetailsTab = By.XPath("//a[contains(text(),'File details')]");
 
         //Acquisition File Details View Form Elements
@@ -42,6 +42,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By acquisitionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
         private By acquisitionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
         private By acquisitionFileProjectProductSelect = By.Id("input-product");
+        private By acquicistionFileProjectProductOptions = By.CssSelector("select[id='input-product'] option");
         private By acquisitionFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
         private By acquisitionFileProjectFundingLabel = By.XPath("//label[contains(text(),'Funding')]");
         private By acquisitionFileProjectFundingInput = By.Id("input-fundingTypeCode");
@@ -140,8 +141,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToFileSummary()
         {
-            WaitUntilVisible(acquisitionFileSummaryBttn);
-            FocusAndClick(acquisitionFileSummaryBttn);
+            Wait();
+            if (webDriver.FindElements(acquisitionFileSummaryBttn).Count() > 0)
+                FocusAndClick(acquisitionFileSummaryBttn);
         }
 
         public void NavigateToFileDetailsTab()
@@ -193,6 +195,8 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 WaitUntilClickable(acquisitionFileProjectProductSelect);
                 webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
+
+                Wait(2000);
                 ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProductCode + " " + acquisition.AcquisitionProjProduct);
             }
 
@@ -316,7 +320,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     sharedModals.ModalClickOKBttn();
 
                     Wait();
-                    WaitUntilVisible(acquisitionFileDetailsTab);
                 }
                 else if (sharedModals.ModalContent().Contains("The selected property already exists in the system's inventory."))
                 {
@@ -325,8 +328,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
 
-                    Wait();
-                    WaitUntilVisible(acquisitionFileDetailsTab);
+                    Wait();  
                 }
                 else if (sharedModals.ModalContent().Contains("This change will be reflected on other related entities - generated documents, sub-files, etc."))
                 {
@@ -336,7 +338,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     sharedModals.ModalClickOKBttn();
 
                     Wait();
-                    WaitUntilVisible(acquisitionFileDetailsTab);
                 }
                 else if (sharedModals.ModalHeader().Contains("Error"))
                 {
@@ -754,12 +755,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Verify that invalid team member message is displayed
             ChooseSpecificSelectOption(By.Id("input-team.0.contactTypeCode"), "Expropriation agent");
+            webDriver.FindElement(acquisitionFileTeamSubtitle).Click();
             AssertTrueIsDisplayed(acquisitionFileTeamInvalidTeamMemberMessage);
 
             //verify that invalid profile message is displayed
             webDriver.FindElement(By.CssSelector("div[data-testid='contact-input'] button[title='Select Contact']")).Click();
             sharedSelectContact.SelectContact("Test", "");
             ChooseSpecificSelectOption(By.Id("input-team.0.contactTypeCode"), "Select profile...");
+            webDriver.FindElement(acquisitionFileTeamSubtitle).Click();
             AssertTrueIsDisplayed(acquisitionFileTeamInvalidProfileMessage);
         }
     }

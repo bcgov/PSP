@@ -158,7 +158,7 @@ namespace Pims.Api.Services
                         .Or<System.Text.Json.JsonException>()
                         .WaitAndRetryAsync(_config.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
                     var detail = await retryPolicy.ExecuteAsync(async () => await GetStorageDocumentDetail(externalDocument.Id));
-                    if(detail?.Payload?.FileLatest == null)
+                    if (detail?.Payload?.FileLatest == null)
                     {
                         response.DocumentExternalResponse.Status = ExternalResponseStatus.Error;
                         response.DocumentExternalResponse.Message = "Timed out waiting for Mayan to process document";
@@ -317,9 +317,18 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Deleting document {documentId}", document.Internal_Id);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            // If the storage deletion was successful or the id was not found on the storage (already deleted) delete the pims reference.
-            ExternalResponse<string> result = await documentStorageRepository.TryDeleteDocument(document.MayanId);
-            if (result.Status == ExternalResponseStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            if (document.MayanId.HasValue)
+            {
+                result = await documentStorageRepository.TryDeleteDocument(document.MayanId.Value);
+            }
+            else
+            {
+                result.Message = "Mayan ID not found in pims";
+            }
+
+            // If the storage deletion was successful or the id was not found on the storage (already deleted) on in pims (no mayan link) delete the pims reference.
+            if (result.Status == ExternalResponseStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound || !document.MayanId.HasValue)
             {
                 documentRepository.Delete(document);
                 documentRepository.CommitTransaction();
@@ -328,7 +337,6 @@ namespace Pims.Api.Services
             {
                 throw GetMayanResponseError(result.Message);
             }
-
             return result;
         }
 

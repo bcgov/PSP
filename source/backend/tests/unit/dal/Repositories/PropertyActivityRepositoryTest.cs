@@ -18,18 +18,6 @@ namespace Pims.Dal.Test.Repositories
     {
         private TestHelper _helper;
 
-        #region Data
-        public static IEnumerable<object[]> AllPropertyFilters =>
-            new List<object[]>
-            {
-                new object[] { new PropertyFilter() { PinOrPid = "111-111-111" }, 1 },
-                new object[] { new PropertyFilter() { PinOrPid = "111" }, 2 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street" }, 5 },
-                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 }, 6 },
-                new object[] { new PropertyFilter(), 6 },
-            };
-        #endregion
-
         public PropertyActivityRepositoryTest()
         {
             _helper = new TestHelper();

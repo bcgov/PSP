@@ -1,7 +1,7 @@
-import { render } from '@testing-library/react';
 import { FormikContextType, useFormikContext } from 'formik';
 
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import { render } from '@/utils/test-utils';
 
 import { SelectInput } from './SelectInput';
 
@@ -16,15 +16,17 @@ describe('SelectInput tests', () => {
     const { asFragment } = render(
       <SelectInput<
         {
-          pinOrPid: string;
+          pid: string;
+          pin: string;
           address: string;
         },
         IPropertyFilter
       >
         field="searchBy"
-        defaultKey="pinOrPid"
+        defaultKey="pid"
         selectOptions={[
-          { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
+          { label: 'PID', key: 'pid', placeholder: 'Enter a PID' },
+          { label: 'PIN', key: 'pin', placeholder: 'Enter a PIN' },
           { label: 'Address', key: 'address', placeholder: 'Enter an address' },
         ]}
         className="idir-input-group"
@@ -37,15 +39,17 @@ describe('SelectInput tests', () => {
     const { container } = render(
       <SelectInput<
         {
-          pinOrPid: string;
+          pid: string;
+          pin: string;
           address: string;
         },
         IPropertyFilter
       >
         field="searchBy"
-        defaultKey="pinOrPid"
+        defaultKey="pid"
         selectOptions={[
-          { label: 'PID/PIN', key: 'pinOrPid', placeholder: 'Enter a PID or PIN' },
+          { label: 'PID', key: 'pid', placeholder: 'Enter a PID' },
+          { label: 'PIN', key: 'pin', placeholder: 'Enter a PIN' },
           { label: 'Address', key: 'address', placeholder: 'Enter an address' },
         ]}
         className="idir-input-group"

@@ -36,7 +36,7 @@ namespace Pims.Api.Models.Concepts.Property
 
             config.NewConfig<Entity.PimsPropertyAcquisitionFile, AssociationModel>()
                .Map(dest => dest.Id, src => src.AcquisitionFileId)
-               .Map(dest => dest.FileNumber, src => src.AcquisitionFile.FileNumber)
+               .Map(dest => dest.FileNumber, src => src.AcquisitionFile.FileNumberFormatted)
                .Map(dest => dest.FileName, src => src.AcquisitionFile.FileName)
                .Map(dest => dest.CreatedBy, src => src.AcquisitionFile.AppCreateUserid)
                .Map(dest => dest.CreatedByGuid, src => src.AcquisitionFile.AppCreateUserGuid)

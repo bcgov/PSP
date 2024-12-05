@@ -226,7 +226,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Search for a property
             PopulateResearchFile(rowNumber);
-            searchProperties.SearchPropertyByPINPID(researchFile.SearchProperties.PID);
+            searchProperties.SearchPropertyByPID(researchFile.SearchProperties.PID);
 
             //Select found property on Map
             searchProperties.SelectFoundPin();

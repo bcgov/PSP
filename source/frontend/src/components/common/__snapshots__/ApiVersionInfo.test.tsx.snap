@@ -3,10 +3,41 @@
 exports[`ApiVersionInfo suite > Displays version component 1`] = `
 <DocumentFragment>
   <div
-    class="version"
-    data-testid="version"
+    class="Toastify"
+  />
+  <div />
+  .c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 10px;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+<div
+    class="c0"
   >
-    v11.1.1-1.999
+    <div
+      class="version"
+      data-testid="version-tag"
+    >
+      v11.1.1-93.999
+    </div>
   </div>
 </DocumentFragment>
 `;

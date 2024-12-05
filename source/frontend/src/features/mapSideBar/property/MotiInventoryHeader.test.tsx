@@ -1,10 +1,15 @@
+import { Feature, Geometry } from 'geojson';
+
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { getMockPimsLocationViewLayerResponse } from '@/mocks/data.mock';
+import { mockFAParcelLayerResponse } from '@/mocks/faParcelLayerResponse.mock';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyProperty } from '@/models/defaultInitializers';
+import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import { act, render, RenderOptions, RenderResult, userEvent } from '@/utils/test-utils';
 
 import { ComposedProperty } from './ComposedProperty';
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
-import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 
 const defaultComposedProperty: ComposedProperty = {
   pid: undefined,
@@ -110,7 +115,7 @@ describe('MotiInventoryHeader component', () => {
     expect(result.getByText(testProperty?.propertyType?.description as string)).toBeVisible();
   });
 
-  it(`shows "retired" indicator for retired properties`, async () => {
+  it('displays RETIRED indicator for retired properties', async () => {
     const testProperty: ApiGen_Concepts_Property = {
       ...getEmptyProperty(),
       isRetired: true,
@@ -122,17 +127,49 @@ describe('MotiInventoryHeader component', () => {
       },
       isLoading: false,
     });
-    // "retired" indicator is shown
+    // RETIRED indicator is shown
     expect(result.getByText(/retired/i)).toBeVisible();
   });
 
-  it('allows the active property to be zoomed in', async () => {
+  it('displays DISPOSED indicator for retired properties', async () => {
+    const testProperty: Feature<Geometry, PIMS_Property_Location_View> =
+      getMockPimsLocationViewLayerResponse().features[0];
+    testProperty.properties = { ...testProperty.properties, IS_DISPOSED: true };
+
+    const result = await setup({
+      composedProperty: {
+        ...defaultComposedProperty,
+        geoserverFeatureCollection: {
+          type: 'FeatureCollection',
+          features: [testProperty],
+        },
+      },
+      isLoading: false,
+    });
+    // DISPOSED indicator is shown
+    expect(result.getByText(/disposed/i)).toBeVisible();
+  });
+
+  it('allows zooming in to the active PIMS property', async () => {
     const testProperty: ApiGen_Concepts_Property = { latitude: 1, longitude: 1 } as any;
 
     const { getByTitle } = await setup({
       composedProperty: {
         ...defaultComposedProperty,
         pimsProperty: testProperty,
+      },
+      isLoading: false,
+    });
+    const zoomButton = getByTitle('Zoom Map');
+    await act(async () => userEvent.click(zoomButton));
+    expect(onZoom).toHaveBeenCalled();
+  });
+
+  it('allows zooming in to the active PMBC parcel feature', async () => {
+    const { getByTitle } = await setup({
+      composedProperty: {
+        ...defaultComposedProperty,
+        parcelMapFeatureCollection: mockFAParcelLayerResponse,
       },
       isLoading: false,
     });
@@ -163,7 +200,7 @@ describe('MotiInventoryHeader component', () => {
       },
       isLoading: false,
     });
-    // PID is shown
+    // PIN is shown
     expect(result.getByText(testPin)).toBeVisible();
   });
 });

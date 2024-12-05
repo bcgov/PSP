@@ -168,7 +168,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteFirstReturn()
         {
-            WaitUntilClickable(licenseDepositReturn1stRowDeleteBttn);
+            Wait();
             FocusAndClick(licenseDepositReturn1stRowDeleteBttn);
 
             WaitUntilVisible(licenseDepositModal);

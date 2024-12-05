@@ -198,7 +198,7 @@ namespace Pims.Api.Areas.Reports.Models.Acquisition
         {
             if (compensationRequisition?.AcquisitionFile is not null)
             {
-                return $"{compensationRequisition.AcquisitionFile.FileNumber} - {compensationRequisition.AcquisitionFile.FileName}";
+                return $"{compensationRequisition.AcquisitionFile.FileNumberFormatted} - {compensationRequisition.AcquisitionFile.FileName}";
             }
             else if (compensationRequisition?.Lease is not null)
             {

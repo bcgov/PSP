@@ -93,8 +93,8 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
               </StyledConsultationHeader>
             }
             noPadding
-            isCollapsable={!group.hasItems}
-            initiallyExpanded={group.hasItems}
+            isCollapsable={true}
+            initiallyExpanded={false}
           >
             {group.consultations.map((consultation, index) => (
               <StyledBorder key={`consultation-section-${index}`}>

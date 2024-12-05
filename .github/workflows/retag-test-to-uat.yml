@@ -28,6 +28,7 @@ env:
   INSTANCE: "-uat"
   NAMESPACE_OVERRIDE: "3cd915-test"
   RELEASE_TAG: "test"
+  DEPLOYMENT_NAMESPACE: "3cd915-test"
 
 on: workflow_dispatch
 
@@ -66,6 +67,13 @@ jobs:
           ./openshift/4.0/player.sh deploy scheduler $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
           oc tag mayan-bcgov:test mayan-bcgov:$DESTINATION
+      # the proxy can only be deployed via DEPLOYMENTS (ArgoCD way)
+      - name: Deploy geoserver proxy microservice
+        shell: bash
+        run: |
+          oc tag pims-proxy:$RELEASE_TAG pims-proxy:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.

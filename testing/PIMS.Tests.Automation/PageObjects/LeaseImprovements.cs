@@ -58,7 +58,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Edit Improvements section
         public void EditImprovements()
         {
-            WaitUntilClickable(improvementEditIcon);
+            Wait();
             webDriver.FindElement(improvementEditIcon).Click();
 
             WaitUntilSpinnerDisappear();

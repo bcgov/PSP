@@ -490,6 +490,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string status in property.TenureStatus)
                 {
+                    Wait(2000);
                     webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
                     FocusAndClick(propertyDetailsTenureStatusInput);
 
