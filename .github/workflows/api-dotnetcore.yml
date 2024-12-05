@@ -28,7 +28,7 @@ jobs:
     if: ${{ needs.check-changes.outputs.backend == 'true' }}
     strategy:
       matrix:
-        services: [{directory: ./source/backend/api, solution: 'Pims.sln'}, {directory: ./source/backend/proxy, solution: 'Proxy.sln'}]
+        services: [{directory: ./source/backend/api, solution: 'Pims.sln'}, {directory: ./source/backend/proxy, solution: 'Proxy.sln'}, {directory: ./source/backend/scheduler, solution: 'Scheduler.sln'}]
     env:
       working-directory: ${{ matrix.services.directory }}
       solution-name: ${{ matrix.services.solution }}

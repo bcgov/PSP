@@ -81,6 +81,7 @@ jobs:
         run: |
           ./openshift/4.0/player.sh build api -apply
           ./openshift/4.0/player.sh build proxy -apply
+          ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
     name: Deploy frontend and api to OpenShift
@@ -100,6 +101,7 @@ jobs:
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy scheduler $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
 
   # the command:
@@ -188,6 +190,8 @@ jobs:
           VERSION=$(make version)
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
+          oc tag pims-api:uat pims-proxy:v${VERSION}-master
+          oc tag pims-api:uat pims-scheduler:v${VERSION}-master
 
   ci-cd-end-notification:
     if: always()

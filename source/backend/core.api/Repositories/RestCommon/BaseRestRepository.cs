@@ -14,7 +14,7 @@ using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
 
-namespace Pims.Api.Repositories.Rest
+namespace Pims.Core.Api.Repositories.Rest
 {
     /// <summary>
     /// BaseRestRepository provides common methods to interact with Rest-ful external interfaces.

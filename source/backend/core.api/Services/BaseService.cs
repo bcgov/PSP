@@ -1,7 +1,7 @@
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 
-namespace Pims.Api.Services
+namespace Pims.Core.Api.Services
 {
     /// <summary>
     /// BaseService abstract class, provides a generic service layer to perform business logic.

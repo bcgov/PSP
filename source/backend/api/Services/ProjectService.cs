@@ -4,14 +4,14 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {

@@ -3,7 +3,7 @@ using System.Net.Http.Headers;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Config;
-using Pims.Api.Repositories.Rest;
+using Pims.Core.Api.Repositories.Rest;
 
 namespace Pims.Api.Repositories.Cdogs
 {

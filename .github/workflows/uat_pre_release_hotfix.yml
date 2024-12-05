@@ -107,6 +107,7 @@ jobs:
         run: |
           OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh build api -apply
           OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh build proxy -apply
+          OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
     name: Deploy frontend and api to OpenShift
@@ -126,6 +127,7 @@ jobs:
         run: |
           RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy api $DESTINATION -apply
           RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
+          RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy scheduler $DESTINATION -apply
           RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh deploy app $DESTINATION -apply
 
   # the command:
@@ -214,7 +216,8 @@ jobs:
           VERSION=$(make version)
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
-          oc tag pims-proxy:uat pims-api:v${VERSION}-master
+          oc tag pims-proxy:uat pims-proxy:v${VERSION}-master
+          oc tag pims-scheduler:uat pims-scheduler:v${VERSION}-master
 
   ci-cd-end-notification:
     if: always()

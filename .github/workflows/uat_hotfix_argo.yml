@@ -82,6 +82,7 @@ jobs:
         run: |
           ./openshift/4.0/player.sh build api -apply
           ./openshift/4.0/player.sh build proxy -apply
+          ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
     name: Deploy to OpenShift
@@ -115,6 +116,12 @@ jobs:
           oc tag pims-proxy:latest-$DESTINATION pims-proxy:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+      - name: Deploy scheduler microservice
+        shell: bash
+        run: |
+          oc tag pims-scheduler:latest-$DESTINATION pims-scheduler:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
@@ -203,6 +210,7 @@ jobs:
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
           oc tag pims-proxy:uat pims-proxy:v${VERSION}-master
+          oc tag pims-scheduler:uat pims-scheduler:v${VERSION}-master
           oc tag mayan-bcgov:uat mayan-bcgov:v${VERSION}-master
 
   ci-cd-end-notification:
