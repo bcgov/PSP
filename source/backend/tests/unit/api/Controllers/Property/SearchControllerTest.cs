@@ -11,7 +11,7 @@ using Pims.Api.Models.Concepts.Property;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 using Pims.Api.Areas.Property.Models.Search;
@@ -29,7 +29,7 @@ namespace Pims.Api.Test.Controllers.Property
         {
             new object [] { new PropertyFilterModel() },
             new object [] { new PropertyFilterModel() { Address = "Address" } },
-            new object [] { new PropertyFilterModel() { PinOrPid = "999999" } },
+            new object [] { new PropertyFilterModel() { Pid = "999999" } },
         };
 
         public readonly static IEnumerable<object[]> PropertyQueryFilters = new List<object[]>()

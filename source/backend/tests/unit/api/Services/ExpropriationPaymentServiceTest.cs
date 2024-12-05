@@ -4,8 +4,9 @@ using FluentAssertions;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
+using Pims.Core.Exceptions;
 
 namespace Pims.Api.Test.Services
 {

@@ -5,7 +5,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Dal.Helpers.Extensions
 {

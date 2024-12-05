@@ -1,4 +1,6 @@
+using Pims.Core.Security;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 
 namespace Pims.Core.Extensions
@@ -46,6 +48,20 @@ namespace Pims.Core.Extensions
         {
             return Enum.TryParse(typeof(T_Destination), value.ToString(), out object result) ? (T_Destination)result : default;
         }
-        #endregion
-    }
+
+        /// <summary>
+        /// Get the Keycloak name value of the specified permission.
+        /// </summary>
+        /// <param name="permission"></param>
+        /// <returns></returns>
+        public static string GetName(this Permissions permission)
+        {
+            var enumType = typeof(Permissions);
+            var memberInfos = enumType.GetMember(permission.ToString());
+            var enumValueMemberInfo = memberInfos.FirstOrDefault(m => m.DeclaringType == enumType);
+            var attribute = (DisplayAttribute)enumValueMemberInfo.GetCustomAttributes(typeof(DisplayAttribute), false).FirstOrDefault();
+            return attribute.Name;
+        }
+    #endregion
+}
 }

@@ -6,7 +6,8 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Search Bar Elements
         private By searchPropertyTypeSelect = By.Id("input-searchBy");
-        private By searchPropertyByPIDPINInput = By.Id("input-pinOrPid");
+        private By searchPropertyByPIDInput = By.Id("input-pid");
+        private By searchPropertyByPINInput = By.Id("input-pin");
         private By searchPropertyByAddressInput = By.Id("input-address");
         private By searchPropertyByPlanInput = By.Id("input-planNumber");
         private By searchPropertyAddressSuggestionsGroup = By.CssSelector("ul[class='suggestionList']");
@@ -52,14 +53,27 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals = new SharedModals(webDriver);
         }
 
-        public void SearchPropertyByPINPID(string PID)
+        public void SearchPropertyByPID(string PID)
         {
             Wait();
 
             WaitUntilClickable(searchPropertyTypeSelect);
-            ChooseSpecificSelectOption(searchPropertyTypeSelect, "PID/PIN");
-            ClearInput(searchPropertyByPIDPINInput);
-            webDriver.FindElement(searchPropertyByPIDPINInput).SendKeys(PID);
+            ChooseSpecificSelectOption(searchPropertyTypeSelect, "PID");
+            ClearInput(searchPropertyByPIDInput);
+            webDriver.FindElement(searchPropertyByPIDInput).SendKeys(PID);
+            FocusAndClick(searchPropertySearchBttn);
+
+            WaitUntilSpinnerDisappear();
+        }
+
+        public void SearchPropertyByPIN(string PIN)
+        {
+            Wait();
+
+            WaitUntilClickable(searchPropertyTypeSelect);
+            ChooseSpecificSelectOption(searchPropertyTypeSelect, "PIN");
+            ClearInput(searchPropertyByPINInput);
+            webDriver.FindElement(searchPropertyByPINInput).SendKeys(PIN);
             FocusAndClick(searchPropertySearchBttn);
 
             WaitUntilSpinnerDisappear();

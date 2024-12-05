@@ -20,8 +20,9 @@ export const mockAcquisitionFileResponse = (
   id,
   parentAcquisitionFileId: null,
   rowVersion,
-  fileNumber: '1-12345-01',
-  fileNumberSuffix: '01',
+  fileNo: 12345,
+  fileNumber: '01-12345-01',
+  fileNumberSuffix: 1,
   fileName: name,
   project: {
     id: 1,
@@ -365,7 +366,6 @@ export const mockAcquisitionFileResponse = (
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   acquisitionPhysFileStatusTypeCode: null,
   compensationRequisitions: null,
-  fileNo: 1,
   fundingOther: null,
   fundingTypeCode: null,
 });
@@ -1419,7 +1419,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
   {
     parentAcquisitionFileId: 64,
     fileNo: 51,
-    fileNumberSuffix: '01',
+    fileNumberSuffix: 1,
     legacyFileNumber: '',
     assignedDate: '2024-10-17T21:44:15.107',
     deliveryDate: null,
@@ -1443,7 +1443,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
     fileChecklistItems: [],
     id: 64,
     fileName: 'ACQ-200-01',
-    fileNumber: '01-51-01',
+    fileNumber: null,
     totalAllowableCompensation: null,
     fileStatusTypeCode: {
       id: 'ACTIVE',
@@ -1469,7 +1469,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
   {
     parentAcquisitionFileId: 64,
     fileNo: 52,
-    fileNumberSuffix: '02',
+    fileNumberSuffix: 2,
     legacyFileNumber: '',
     assignedDate: '2024-10-17T21:45:36.29',
     deliveryDate: null,
@@ -1493,7 +1493,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
     fileChecklistItems: [],
     id: 65,
     fileName: 'ACQ-200-02',
-    fileNumber: '01-51-02',
+    fileNumber: null,
     totalAllowableCompensation: null,
     fileStatusTypeCode: {
       id: 'ACTIVE',

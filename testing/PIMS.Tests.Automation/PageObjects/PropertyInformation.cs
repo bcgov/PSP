@@ -147,8 +147,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsAttrHighwayDiv = By.XPath("//label[contains(text(),'Highways district')]/parent::div/following-sibling::div");
         private readonly By propertyDetailsAttrElectoralLabel = By.XPath("//label[contains(text(),'Electoral district')]");
         private readonly By propertyDetailsAttrElectoralDiv = By.XPath("//label[contains(text(),'Electoral district')]/parent::div/following-sibling::div");
-        private readonly By propertyDetailsAttrAgriLandLabel = By.XPath("//label[contains(text(),'Agricultural Land Reserve')]");
-        private readonly By propertyDetailsAttrAgriLandDiv = By.XPath("//label[contains(text(),'Agricultural Land Reserve')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrAgriLandLabel = By.XPath("//label[contains(text(),'Agricultural land reserve')]");
+        private readonly By propertyDetailsAttrAgriLandDiv = By.XPath("//label[contains(text(),'Agricultural land reserve')]/parent::div/following-sibling::div");
         private readonly By propertyDetailsAttrRailwayLabel = By.XPath("//label[contains(text(),'Railway belt / Dominion patent')]");
         private readonly By propertyDetailsAttrRailwayDiv = By.XPath("//label[contains(text(),'Railway belt / Dominion patent')]/parent::div/following-sibling::div");
         private readonly By propertyDetailsAttrLandParcelLabel = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Land parcel type')]");
@@ -163,8 +163,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsTenureTitle = By.XPath("//div[contains(text(),'Tenure Status')]");
         private readonly By propertyDetailsTenureStatusLabel = By.XPath("//label[contains(text(),'Tenure status')]");
         private readonly By propertyDetailsTenureStatusDiv = By.XPath("//label[contains(text(),'Tenure status')]/parent::div/following-sibling::div/div/div/div");
-        private readonly By propertyDetailsPublicHwyLabel = By.XPath("//label[contains(text(),'Provincial Public Hwy')]");
-        private readonly By propertyDetailsPublicHwyDiv = By.XPath("//label[contains(text(),'Provincial Public Hwy')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsPublicHwyLabel = By.XPath("//label[contains(text(),'Provincial public hwy')]");
+        private readonly By propertyDetailsPublicHwyDiv = By.XPath("//label[contains(text(),'Provincial public hwy')]/parent::div/following-sibling::div");
         private readonly By propertyDetailsHighwayRoadEstablishLabel = By.XPath("//label[contains(text(),'Highway / Road established by')]");
         private readonly By propertyDetailsHighwayRoadEstablishDiv = By.XPath("//label[contains(text(),'Highway / Road established by')]/parent::div/following-sibling::div");
 
@@ -193,8 +193,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsMeasurementTypeContent = By.XPath("//label[contains(text(),'Type')]/parent::div/following-sibling::div");
 
         private readonly By propertyDetailsViewNotesTitle = By.XPath("//div[contains(text(),'Measurements')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
-        private readonly By propertyDetailsEditNotesTitle = By.XPath("//h2/div/div[contains(text(),'Notes')]");
-        private readonly By propertyDetailsViewNotesContent = By.XPath("//div[contains(text(),'Notes')]/parent::div/parent::h2/following-sibling::div/p");
+        private readonly By propertyDetailsEditNotesTitle = By.XPath("//h2/div/div[contains(text(),'Comments')]");
+        private readonly By propertyDetailsViewNotesContent = By.XPath("//div[contains(text(),'Comments')]/parent::div/parent::h2/following-sibling::div/p");
 
         private readonly By propertyDetailsSubdivisionTitle = By.XPath("//div[contains(text(),'Subdivision History')]");
         private readonly By propertyDetailsSubdivisionNoneContent = By.XPath("//div[contains(text(),'This property is not part of a subdivision')]");
@@ -490,6 +490,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string status in property.TenureStatus)
                 {
+                    Wait(2000);
                     webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
                     FocusAndClick(propertyDetailsTenureStatusInput);
 

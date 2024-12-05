@@ -22,7 +22,7 @@ interface HistoricalGroup {
 export const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = ({
   historicalNumbers,
 }) => {
-  const uniqueNumbers = useMemo(() => {
+  const historicalNumberGroup = useMemo(() => {
     const flatNumberDictionary: Dictionary<HistoricalGroup> = historicalNumbers
       .filter(exists)
       .reduce((accumulator, h) => {
@@ -53,35 +53,48 @@ export const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = 
 
   return (
     <ExpandableTextList<HistoricalGroup>
-      items={uniqueNumbers}
-      keyFunction={(p, index: number) =>
-        `historical-group-${p.historicalType.id}-${p.propertyKey}-${index}`
-      }
-      renderFunction={p => (
-        <>
-          <StyledLabel key={`historical-group-${p.historicalType.id}`} className="pr-2">
-            {p.historicalType.id === ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER
-              ? p.otherDescription
-              : p.historicalType.description}
+      moreText="more categories..."
+      hideText="hide categories"
+      items={Object.values(historicalNumberGroup)}
+      keyFunction={p => `historical-number-group-${p?.historicalType?.id}-${p.otherDescription}`}
+      renderFunction={group => (
+        <GroupWrapper
+          key={`historical-group-${group.historicalType.id}-${group.otherDescription ?? ''}`}
+          data-testid={`historical-group-${group.historicalType.id}-${
+            group.otherDescription ?? ''
+          }`}
+        >
+          <StyledLabel className="pr-2">
+            {group.historicalType.id === ApiGen_CodeTypes_HistoricalFileNumberTypes.OTHER
+              ? group.otherDescription
+              : group.historicalType.description}
             :
           </StyledLabel>
-
-          {Object.values(p.historicalValues).map((historicalValue, index) => {
-            return (
-              <span key={index}>
-                {historicalValue.historicalFileNumber}
-                {index + 1 < Object.values(p.historicalValues).length && <span>, </span>}
-              </span>
-            );
-          })}
-        </>
+          <ExpandableTextList<ApiGen_Concepts_HistoricalFileNumber>
+            items={Object.values(group.historicalValues)}
+            keyFunction={p => `historical-number-${p.id}`}
+            renderFunction={p => <>{p.historicalFileNumber}</>}
+            delimiter={'; '}
+            maxCollapsedLength={3}
+            className="d-flex flex-wrap"
+          />
+        </GroupWrapper>
       )}
-      delimiter={'; '}
       maxCollapsedLength={2}
-    />
+      className="d-flex flex-wrap"
+    ></ExpandableTextList>
   );
 };
 
 export const StyledLabel = styled.label`
   font-weight: bold;
+  margin-bottom: 0;
+  min-width: fit-content;
+`;
+
+export const GroupWrapper = styled.div`
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  flex-wrap: wrap;
 `;

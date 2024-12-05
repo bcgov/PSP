@@ -4,18 +4,18 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
@@ -107,7 +107,7 @@ namespace Pims.Api.Services
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                 .Select(fileProperty => new AcquisitionFileExportModel
                 {
-                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
+                    FileNumber = fileProperty.file.FileNumberFormatted ?? string.Empty,
                     LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
                     FileName = fileProperty.file.FileName ?? string.Empty,
                     MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,

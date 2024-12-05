@@ -429,10 +429,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-8 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -467,10 +492,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-8 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -505,10 +555,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-8 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -543,10 +618,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-8 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -1136,10 +1236,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-8 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -1174,10 +1299,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-8 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"

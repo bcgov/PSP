@@ -46,9 +46,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionOfferExpiryDateInput = By.Id("datepicker-offerExpiryDate");
         private By dispositionOfferPriceLabel = By.XPath("//label[contains(text(),'Offer price ($)')]");
         private By dispositionOfferPriceInput = By.Id("input-offerAmount");
-        private By dispositionOfferNotesLabel = By.XPath("//label[contains(text(),'Notes')]");
+        private By dispositionOfferNotesLabel = By.XPath("//label[contains(text(),'Comments')]");
         private By dispositionOfferNotesInput = By.Id("input-offerNote");
-        private By dispositionOfferNotesTooltip = By.XPath("//label[contains(text(),'Notes')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
+        private By dispositionOfferNotesTooltip = By.XPath("//label[contains(text(),'Comments')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
 
         //Sales Details section view elements
         private By offersAndSaleSalesDetailsSubtitle = By.XPath("//label[contains(text(), 'Sales Details')]");
@@ -585,7 +585,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Offer price ($)')]"));
             AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].offerPrice']"), TransformCurrencyFormat(offer.OfferPrice));
 
-            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Notes')]"));
+            AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Comments')]"));
             if(offer.OfferNotes != "")
                 AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].notes']"), offer.OfferNotes);
 

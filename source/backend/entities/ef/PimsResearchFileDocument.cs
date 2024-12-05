@@ -79,6 +79,9 @@ public partial class PimsResearchFileDocument
     [InverseProperty("PimsResearchFileDocuments")]
     public virtual PimsDocument Document { get; set; }
 
+    [InverseProperty("ResearchFileDocument")]
+    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
+
     [ForeignKey("ResearchFileId")]
     [InverseProperty("PimsResearchFileDocuments")]
     public virtual PimsResearchFile ResearchFile { get; set; }

@@ -7,6 +7,8 @@ import eslint from 'vite-plugin-eslint';
 import svgr from 'vite-plugin-svgr';
 import viteTsconfigPaths from 'vite-tsconfig-paths';
 
+import packageJson from './package.json';
+
 // https://vitejs.dev/config/
 export default defineConfig({
   test: {
@@ -94,7 +96,7 @@ export default defineConfig({
         cookieDomainRewrite: '',
       },
       '/ogs-internal': {
-        target: 'http://localhost:5000/api/geoserver',
+        target: 'http://localhost:5002/proxy/geoserver',
         changeOrigin: true,
         rewrite: (path: string) => path.replace(/^\/ogs-internal/, '/'),
         xfwd: true,
@@ -117,4 +119,7 @@ export default defineConfig({
       filter: /\.(js|mjs|css|html)$/i,
     }),
   ],
+  define: {
+    'import.meta.env.VITE_PACKAGE_VERSION': JSON.stringify(packageJson.version),
+  },
 });

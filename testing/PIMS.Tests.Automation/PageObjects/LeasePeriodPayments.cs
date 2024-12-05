@@ -80,7 +80,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licensePaymentsTotalTooltip = By.Id("receivedTotalTooltip");
         private readonly By licensePaymentsPaymentStatusColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Payment status')]");
         private readonly By licensePaymentsPaymentStatusTooltip = By.Id("paymentStatusTooltip");
-        private readonly By licensePaymentsNotesColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Notes')]");
+        private readonly By licensePaymentsNotesColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Comments')]");
         private readonly By licensePaymentsActionsColumn = By.XPath("//div[@data-testid='paymentsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
 
         //Payments Modal Element
@@ -200,7 +200,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Payments Section
         public void NavigateToPaymentSection()
         {
-            WaitUntilClickable(licensePaymentsLink);
+            Wait();
             webDriver.FindElement(licensePaymentsLink).Click();
         }
 
@@ -661,7 +661,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[6]"),TransformCurrencyFormat(payment.PaymentTotalReceived));
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[7]"), payment.PaymentStatus);
-            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[8]/button[@title='notes']"));
+            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[8]/button[@title='Payment comments']"));
             AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[9]/div/button[@title='edit actual']"));
             AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[9]/div/button[@title='delete actual']"));
         }

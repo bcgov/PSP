@@ -21,7 +21,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By researchFileHelpNameTooltip = By.XPath("//div[contains(text(),'Help with choosing a name')]");
 
         //Research File Tabs and File Summary Elements
-        private readonly By researchFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
+        private readonly By researchFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div button[title='File Details']");
+        private readonly By researchFileSummaryBttnPlaceholder = By.CssSelector("div[data-testid='menu-item-row-0'] div span[title='File Details']");
         private readonly By researchFileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
         private readonly By researchFileDocumentsTab = By.CssSelector("a[data-rb-event-key='documents']");
         private readonly By researchFileNotesTab = By.CssSelector("a[data-rb-event-key='notes']");
@@ -102,7 +103,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By researchFileDetailsExpropriationSubtitle = By.XPath("//div[@class='no-gutters row']/div[contains(text(),'Expropriation')]");
         private readonly By researchFileDetailsExpropriationLabel = By.XPath("//label[contains(text(),'Expropriation?')]");
         private readonly By researchFileDetailsExpropriationInput = By.XPath("//label[contains(text(),'Expropriation?')]/parent::div/following-sibling::div");
-        private readonly By researchFileDetailsExpropriationNotesLabel = By.XPath("//label[contains(text(),'Expropriation notes')]");
+        private readonly By researchFileDetailsExpropriationNotesLabel = By.XPath("//label[contains(text(),'Expropriation comments')]");
 
         private readonly By selectContactButton = By.CssSelector("div[class='pl-0 col-auto'] button");
 
@@ -138,8 +139,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By researchPropertyDocRefInput = By.XPath("//label[contains(text(),'Document reference')]/parent::div/following-sibling::div");
 
         private readonly By researchPropertySummaryLabel = By.XPath("//div[contains(text(),'Research Summary')]");
-        private readonly By researchPropertyNotesLabel = By.XPath("//label[contains(text(),'Summary notes')]");
-        private readonly By researchPropertyNotesViewInput = By.XPath("//label[contains(text(),'Summary notes')]/parent::div/following-sibling::div");
+        private readonly By researchPropertyNotesLabel = By.XPath("//label[contains(text(),'Summary comments')]");
+        private readonly By researchPropertyNotesViewInput = By.XPath("//label[contains(text(),'Summary comments')]/parent::div/parent::div/parent::div");
 
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
@@ -571,14 +572,14 @@ namespace PIMS.Tests.Automation.PageObjects
         //Verify Edit Research File Init Form
         public void VerifyResearchFileEditInitForm(ResearchFile researchFile, string user)
         {
-            WaitUntilVisible(researchFileSummaryBttn);
+            WaitUntilVisible(researchFileSummaryBttnPlaceholder);
 
             //Header
             VerifyResearchFileHeader(researchFile, user);
             AssertTrueContentEquals(researchFileHeaderStatusContent,GetUppercaseString(researchFile.Status));
 
             //Left Bar Elements
-            AssertTrueIsDisplayed(researchFileSummaryBttn);
+            AssertTrueIsDisplayed(researchFileSummaryBttnPlaceholder);
             AssertTrueIsDisplayed(researchFilePropertiesLeftSection);
             AssertTrueIsDisplayed(researchEditPropertiesBttn);
 
@@ -711,6 +712,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(researchPropertyDocRefInput, propertyResearch.DocumentReference);
             AssertTrueIsDisplayed(researchPropertySummaryLabel);
             AssertTrueIsDisplayed(researchPropertyNotesLabel);
+            AssertTrueElementContains(researchPropertyNotesViewInput, propertyResearch.SummaryNotes);
         }
 
         private void VerifyResearchFileHeader(ResearchFile researchFile, string user)

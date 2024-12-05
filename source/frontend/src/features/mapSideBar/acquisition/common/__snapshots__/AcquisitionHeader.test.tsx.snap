@@ -106,9 +106,7 @@ exports[`AcquisitionHeader component > renders as expected when no data is provi
         </div>
         <div
           class="pl-1 text-left col-9"
-        >
-          <div />
-        </div>
+        />
       </div>
     </div>
     <div

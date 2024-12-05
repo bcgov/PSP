@@ -729,7 +729,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
               <div
                 class="pl-1 text-left col-9"
               >
-                1-12345-01 - Test ACQ File
+                01-12345-01 - Test ACQ File
               </div>
             </div>
             <div
@@ -783,9 +783,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
               </div>
               <div
                 class="pl-1 text-left col-9"
-              >
-                <div />
-              </div>
+              />
             </div>
           </div>
           <div

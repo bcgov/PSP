@@ -11,7 +11,10 @@ export const createMockHeader = () => ({
 
 export const ERROR = { message: 'Errors', status: 400, data: { details: 'error' } };
 
-export const mockWfsGetPropertyById: FeatureCollection<Geometry, PIMS_Property_Location_View> = {
+export const getMockPimsLocationViewLayerResponse: () => FeatureCollection<
+  Geometry,
+  PIMS_Property_Location_View
+> = () => ({
   type: 'FeatureCollection',
   features: [
     {
@@ -63,4 +66,4 @@ export const mockWfsGetPropertyById: FeatureCollection<Geometry, PIMS_Property_L
     },
   ],
   bbox: [-124.0658, 48.8281, -124.0658, 48.8281],
-};
+});

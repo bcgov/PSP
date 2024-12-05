@@ -7,7 +7,7 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.AccessRequest;
 using Pims.Api.Models.Concepts.Role;
 using Pims.Api.Controllers;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Repositories;
 using Xunit;
