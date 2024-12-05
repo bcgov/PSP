@@ -1,12 +1,13 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using System.ComponentModel;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class ResearchFiles : PageObjectBase
     {
         //Research File Menu options
-        private readonly By menuResearchButton = By.CssSelector("div[data-testid='nav-tooltip-research'] a");
+        private readonly By menuResearchButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-research']/a");
         private readonly By createResearchFileButton = By.XPath("//a[contains(text(),'Create a Research File')]");
 
         //File Details Tab Element
