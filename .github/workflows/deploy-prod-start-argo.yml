@@ -135,7 +135,7 @@ jobs:
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
 
-## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
+  ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
@@ -153,5 +153,4 @@ jobs:
       - name: call scripts to sync keycloak
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=3cd915-prod -p BRANCH=$DESTINATION -p API_URL=http://pims-api:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
-
+          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=3cd915-prod -p BRANCH=$DESTINATION -p API_URL=http://pims-api-prod:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
