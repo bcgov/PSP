@@ -14,9 +14,9 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Av;
+using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {
@@ -72,9 +72,10 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Generating document");
 
             var formTypeCode = _formDocumentService.GetFormDocumentTypes(templateType.ToString()).LastOrDefault();
-            if (formTypeCode?.Document?.MayanId != null)
+            var mayanId = formTypeCode?.Document?.MayanId;
+            if (mayanId.HasValue)
             {
-                ExternalResponse<FileDownloadResponse> templateFileResult = await _documentService.DownloadFileLatestAsync(formTypeCode.Document.MayanId);
+                ExternalResponse<FileDownloadResponse> templateFileResult = await _documentService.DownloadFileLatestAsync(mayanId.Value);
                 if (templateFileResult.Status == ExternalResponseStatus.Success)
                 {
                     FileDownloadResponse templateFile = templateFileResult.Payload;

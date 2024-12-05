@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using FluentAssertions.Equivalency.Steps;
+using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -23,173 +24,168 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Update Documents General Elements
         private readonly By documentsGeneralUpdateDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Document type')]");
-        private readonly By documentGeneralUpdateDocumentSelect = By.Id("input-documentTypeId");
+        private readonly By documentGeneralUpdateDocumentSelect = By.CssSelector("div[class='modal-content'] select[id='input-documentTypeId']");
         private readonly By documentGeneralUpdateStatusLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Status')]");
         private readonly By documentUploadStatusSelect = By.Id("input-documentStatusCode");
         private readonly By documentUpdateDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
-        
 
-        //Upload Documents Other Type Fields
-        private readonly By documentOtherTypePINLabel = By.XPath("//div[@class='pb-2 row'][3]/div/label[contains(text(),'PIN')]");
-        private readonly By documentOtherTypePINInput = By.Id("input-documentMetadata.71");
-        private readonly By documentOtherTypePropIdLabel = By.XPath("//div[@class='pb-2 row'][4]/div/label[contains(text(),'Property identifier')]");
-        private readonly By documentRoadNameInput = By.Id("input-documentMetadata.75");
-        private readonly By documentShortDescriptorLabel = By.XPath("//label[contains(text(),'Short descriptor')]");
-
-        //Upload Documents Field Notes Type Fields
-        private readonly By documentFieldNotesTypeDistrictLotLabel = By.XPath("//label[contains(text(),'District lot')]");
-        private readonly By documentFieldNotesTypeDistrictLotInput = By.Id("input-documentMetadata.101");
-        private readonly By documentFieldNotesTypeYearLabel = By.XPath("//label[contains(text(),'Field book #/Year')]");
-        private readonly By documentFieldNotesTypeYearInput = By.Id("input-documentMetadata.104");
-        private readonly By documentFieldNotesTypeLandDistrictLabel = By.XPath("//label[contains(text(),'Land district')]");
-        private readonly By documentFieldNotesTypeLandDistrictInput = By.Id("input-documentMetadata.99");
-
-        //Upload Documents District Road Register Fields
-        private readonly By documentDistrictRoadRegisterTypeElectoralDistrictLabel = By.XPath("//label[contains(text(),'Electoral district')]");
-        private readonly By documentDistrictRoadRegisterTypeElectoralDistrictInput = By.Id("input-documentMetadata.102");
-        private readonly By documentDistrictRoadRegisterTypeHighwayDistrictLabel = By.XPath("//label[contains(text(),'Highway district')]");
-        private readonly By documentDistrictRoadRegisterTypeHighwayDistrictInput = By.Id("input-documentMetadata.103");
+        //Upload Documents Agricultural Land Comission
+        private readonly By documentALCTypeAppNumberLabel = By.XPath("//label[contains(text(),'Application #')]");
+        private readonly By documentALCTypeAppNumberInput = By.CssSelector("input[data-testid='metadata-input-APPLICATION_NUMBER']");
 
         //Upload BC Assessment Search Type Fields
         private readonly By documentCivicAddressLabel = By.XPath("//label[contains(text(),'Civic address')]");
-        private readonly By documentBCAssessmentTypeAddressMandatory = By.XPath("//div[contains(text(),'Civic address is required')]");
         private readonly By documentBCAssessmentTypeJurisdictionLabel = By.XPath("//label[contains(text(),'Jurisdiction')]");
-        private readonly By documentBCAssessmentTypeJurisdictionInput = By.Id("input-documentMetadata.67");
-        private readonly By documentBCAssessmentTypeJurisdictionMandatory = By.XPath("//div[contains(text(),'Jurisdiction is required')]");
+        private readonly By documentBCAssessmentTypeJurisdictionInput = By.CssSelector("input[data-testid='metadata-input-JURISDICTION']");
         private readonly By documentBCAssessmentTypeRollLabel = By.XPath("//label[contains(text(),'Roll')]");
-        private readonly By documentBCAssessmentTypeRollInput = By.Id("input-documentMetadata.63");
-        private readonly By documentBCAssessmentTypeYearMandatory = By.XPath("//div[contains(text(),'Year is required')]");
-
-        //Upload Transfer of Administration Type Fields
-        private readonly By documentDateSignedLabel = By.XPath("//label[contains(text(),'Date signed')]");
-        private readonly By documentDateSignedInput = By.Id("input-documentMetadata.73");
-        private readonly By documentMOTIFileLabel = By.XPath("//label[contains(text(),'MoTI file #')]");
-        private readonly By documentTransferAdmTypeMOTIFileMandatory = By.XPath("//div[contains(text(),'MoTI file # is required')]");
-        private readonly By documentTransferAdmTypeProIdLabel = By.XPath("//label[contains(text(),'Property identifier')]");
-        private readonly By documentTransferAdmTypeRoadNameMandatory = By.XPath("//div[contains(text(),'Road name is required')]");
-        private readonly By documentTransferAdmTypeTransferLabel = By.XPath("//label[contains(text(),'Transfer')]");
-        private readonly By documentTransferAdmTypeTransferInput = By.Id("input-documentMetadata.66");
-        private readonly By documentTransferAdmTypeTransferMandatory = By.XPath("//div[contains(text(),'Transfer # is required')]");
-
-        //Upload Ministerial Order Type Fields
-        private readonly By documentMinisterialOrderTypeMOLabel = By.XPath("//label[contains(text(),'MO #')]");
-        private readonly By documentMinisterialOrderTypeMOInput = By.Id("input-documentMetadata.70");
-        private readonly By documentTypeMotiFileInput = By.Id("input-documentMetadata.87");
-        private readonly By documentPropertyIdentifierLabel = By.XPath("//label[contains(text(),'Property identifier')]");
-        private readonly By documentTypePropIdInput = By.Id("input-documentMetadata.100");
+        private readonly By documentBCAssessmentTypeRollInput = By.CssSelector("input[data-testid='metadata-input-ROLL_NUMBER']");
 
         //Upload Canada Lands Survey Fields
         private readonly By documentCanLandSurveyTypeCanLandSurveyLabel = By.XPath("//label[contains(text(),'Canada land survey')]");
-        private readonly By documentCanLandSurveyTypeCanLandSurveyInput = By.Id("input-documentMetadata.97");
-        private readonly By documentCanLandSurveyTypeCanLandSurveyMandatory = By.XPath("//div[contains(text(),'Canada land survey # is required')]");
+        private readonly By documentCanLandSurveyTypeCanLandSurveyInput = By.CssSelector("input[data-testid='metadata-input-CANADA_LAND_SURVEY_NUMBER']");
         private readonly By documentCanLandSurveyTypeIndianReserveLabel = By.XPath("//label[contains(text(),'Indian reserve')]");
-        private readonly By documentCanLandSurveyTypeIndianReserveInput = By.Id("input-documentMetadata.98");
-        private readonly By documentCanLandSurveyTypeIndianReserveMandatory = By.XPath("//div[contains(text(),'Indian reserve or national park is required')]");
+        private readonly By documentCanLandSurveyTypeIndianReserveInput = By.CssSelector("input[data-testid='metadata-input-INDIAN_RESERVE_OR_NATIONAL_PARK']");
+
+        //Upload Crown Grant Fields
+        private readonly By documentCrownGrantTypeCrownLabel = By.XPath("//label[contains(text(),'Crown grant #')]");
+        private readonly By documentCrownGrantTypeCrownInput = By.CssSelector("input[data-testid='metadata-input-CROWN_GRANT_NUMBER']");
+
+        //Upload District Road Register Fields
+        private readonly By documentDistrictRoadRegisterTypeElectoralDistrictLabel = By.XPath("//label[contains(text(),'Electoral district')]");
+        private readonly By documentDistrictRoadRegisterTypeElectoralDistrictInput = By.CssSelector("input[data-testid='metadata-input-ELECTORAL_DISTRICT']");
+        private readonly By documentDistrictRoadRegisterTypeHighwayDistrictLabel = By.XPath("//label[contains(text(),'Highway district')]");
+        private readonly By documentDistrictRoadRegisterTypeHighwayDistrictInput = By.CssSelector("input[data-testid='metadata-input-HIGHWAY_DISTRICT']");
+
+        //Upload Field Notes Type Fields
+        private readonly By documentFieldNotesTypeDistrictLotLabel = By.XPath("//label[contains(text(),'District lot')]");
+        private readonly By documentFieldNotesTypeDistrictLotInput = By.CssSelector("input[data-testid='metadata-input-DISTRICT_LOT_NUMBER']");
+        private readonly By documentFieldNotesTypeYearLabel = By.XPath("//label[contains(text(),'Field book #/Year')]");
+        private readonly By documentFieldNotesTypeYearInput = By.CssSelector("input[data-testid='metadata-input-FIELD_BOOK_NUMBER_YEAR']");
+        private readonly By documentFieldNotesTypeLandDistrictLabel = By.XPath("//label[contains(text(),'Land district')]");
+        private readonly By documentFieldNotesTypeLandDistrictInput = By.CssSelector("input[data-testid='metadata-input-LAND_DISTRICT']");
+
+        //Upload Gazette Fields
+        private readonly By documentGazetteDateLabel = By.XPath("//label[contains(text(),'Gazette date')]");
+        private readonly By documentGazetteDateInput = By.CssSelector("input[data-testid='metadata-input-GAZETTE_DATE']");
+        private readonly By documentGazettePageLabel = By.XPath("//label[contains(text(),'Gazette page #')]");
+        private readonly By documentGazettePageInput = By.CssSelector("input[data-testid='metadata-input-GAZETTE_PAGE_NUMBER']");
+        private readonly By documentGazettePublishedDateLabel = By.XPath("//label[contains(text(),'Gazette published date')]");
+        private readonly By documentGazettePublishedDateInput = By.CssSelector("input[data-testid='metadata-input-GAZETTE_PUBLISHED_DATE']");
+        private readonly By documentGazettePublishedTypeLabel = By.XPath("//label[contains(text(),'Gazette type')]");
+        private readonly By documentGazettePublishedTypeInput = By.CssSelector("input[data-testid='metadata-input-GAZETTE_TYPE']");
+        private readonly By documentGazetteLegalSurveyPlanLabel = By.XPath("//label[contains(text(),'Legal survey plan #')]");
+        private readonly By documentGazetteLTSALabel = By.XPath("//label[contains(text(),'LTSA schedule filing')]");
+        private readonly By documentGazetteLTSAInput = By.CssSelector("input[data-testid='metadata-input-LTSA_SCHEDULE_FILING_NUMBER']");
+        private readonly By documentGazetteLegalSurveyMotiPlanLabel = By.XPath("//label[contains(text(),'MoTI plan #')]");
+        private readonly By documentRoadNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Road name')]");
+
+        //Upload Historical File Fields
+        private readonly By documentHistoricFileTypeEndDateLabel = By.XPath("//label[contains(text(),'End date')]");
+        private readonly By documentHistoricFileTypeEndDateInput = By.CssSelector("input[data-testid='metadata-input-END_DATE']");
+        private readonly By documentHistoricFileTypeFileLabel = By.XPath("//div[@class='pr-0 text-left col-4']/label[contains(text(),'File #')]");
+        private readonly By documentHistoricFileTypeFileInput = By.CssSelector("input[data-testid='metadata-input-FILE_NUMBER']");
+        private readonly By documentHistoricFileTypePhyLocationLabel = By.XPath("//label[contains(text(),'Physical location')]");
+        private readonly By documentHistoricFileTypePhyLocationInput = By.CssSelector("input[data-testid='metadata-input-PHYSICAL_LOCATION']");
+        private readonly By documentHistoricFileTypeSectionLabel = By.XPath("//label[contains(text(),'Section')]");
+        private readonly By documentHistoricFileTypeSectionInput = By.CssSelector("input[data-testid='metadata-input-SECTION_NUMBER']");
+        private readonly By documentHistoricFileTypeStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
+        private readonly By documentHistoricFileTypeStartDateInput = By.CssSelector("input[data-testid='metadata-input-START_DATE']");
+
+        //Upload Land Act Tenure Fields
+        private readonly By documentLandActTypeReferenceAgencyLabel = By.XPath("//label[contains(text(),'Reference/Agency Document #')]");
+        private readonly By documentLandActTypeReferenceAgencyInput = By.CssSelector("input[data-testid='metadata-input-REFAG_DOC_NUMBER']");
+        private readonly By documentLandActTypeReferenceLandsLabel = By.XPath("//label[contains(text(),'Reference/Agency Lands file #')]");
+        private readonly By documentLandActTypeReferenceLandsInput = By.CssSelector("input[data-testid='metadata-input-REFAG_LANDFILE_NUMBER']");
+
+
+        //Upload Legal Survey Plans Fields
+        private readonly By documentLegalSurveyNbrLabel = By.XPath("//label[contains(text(),'Legal survey plan #')]");
+        private readonly By documentLegalSurveyInput = By.CssSelector("input[data-testid='metadata-input-LEGAL_SURVEY_PLAN_NUMBER']");
+        private readonly By documentMOTIPlanLabel = By.XPath("//label[contains(text(),'MoTI plan #')]");
+        private readonly By documentMOTIPlanInput = By.CssSelector("input[data-testid='metadata-input-MOTI_PLAN_NUMBER']");
+        private readonly By documentLegalSurveyPlanTypeLabel = By.XPath("//label[contains(text(),'Plan type')]");
+        private readonly By documentLegalSurveyPlanTypeInput = By.CssSelector("input[data-testid='metadata-input-PLAN_TYPE']");
+
+        //Upload Ministerial Order Type Fields
+        private readonly By documentMinisterialOrderTypeMOLabel = By.XPath("//label[contains(text(),'MO #')]");
+        private readonly By documentMinisterialOrderTypeMOInput = By.CssSelector("input[data-testid='metadata-input-MO_NUMBER']");
+        private readonly By documentTypeMotiFileInput = By.CssSelector("input[data-testid='metadata-input-MOTI_FILE_NUMBER']");
+        private readonly By documentPropertyIdentifierLabel = By.XPath("//label[contains(text(),'Property identifier')]");
+        private readonly By documentTypePropIdInput = By.CssSelector("input[data-testid='metadata-input-PROPERTY_IDENTIFIER']");
+
+        //Upload Miscellaneous notes (LTSA) Fields
+        private readonly By documentMiscNotesTypePIDLabel = By.XPath("//input[@data-testid='metadata-input-PID']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
+        private readonly By documentMiscNotesTypePIDInput = By.CssSelector("input[data-testid='metadata-input-PID']");
+
+        //Upload MoTI Plan Fields
+        private readonly By documentMoTIPlanLegalSurveyPublishDateLabel = By.XPath("//label[contains(text(),'Published date')]");
+        private readonly By documentMoTIPlanLegalSurveyPublishDateInput = By.CssSelector("input[data-testid='metadata-input-PUBLISHED_DATE']");
+        private readonly By documentMoTIPlanLegalSurveyRelatedGazetteLabel = By.XPath("//label[contains(text(),'Related gazette')]");
+        private readonly By documentMoTIPlanLegalSurveyRelatedGazetteInput = By.CssSelector("input[data-testid='metadata-input-RELATED_GAZETTE']");
+
+        //Upload OIC Fields
+        private readonly By documentOICTypeOICLabel = By.XPath("//label[contains(text(),'OIC #')]");
+        private readonly By documentOICTypeInput = By.CssSelector("input[data-testid='metadata-input-OIC_NUMBER']");
+        private readonly By documentOICTypeOICRouteLabel = By.XPath("//label[contains(text(),'OIC route #')]");
+        private readonly By documentOICTypeOICRouteInput = By.CssSelector("input[data-testid='metadata-input-OIC_ROUTE_NUMBER']");
+        private readonly By documentOICTypeOICTypeLabel = By.XPath("//label[contains(text(),'OIC type')]");
+        private readonly By documentOICTypeOICTypeInput = By.CssSelector("input[data-testid='metadata-input-OIC_TYPE']");
+        private readonly By documentYearLabel = By.XPath("//label[contains(text(),'Year')]");
+        private readonly By documentYearInput = By.CssSelector("input[data-testid='metadata-input-YEAR']");
+
+        //Upload Other Type Fields
+        private readonly By documentOtherTypePINLabel = By.XPath("//input[@data-testid='metadata-input-PIN']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PIN')]");
+        private readonly By documentOtherTypePINInput = By.CssSelector("input[data-testid='metadata-input-PIN']");
+        private readonly By documentOtherTypePropIdLabel = By.XPath("//input[@data-testid='metadata-input-PROPERTY_IDENTIFIER']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Property identifier')]");
+        private readonly By documentRoadNameInput = By.CssSelector("input[data-testid='metadata-input-ROAD_NAME']");
+        private readonly By documentShortDescriptorLabel = By.XPath("//input[@data-testid='metadata-input-SHORT_DESCRIPTOR']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Short descriptor')]");
+
+        //Upload PA plans Fields
+        private readonly By documentPAPlanNbrLabel = By.XPath("//label[contains(text(),'Plan #')]");
+        private readonly By documentPAPlanNbrInput = By.CssSelector("input[data-testid='metadata-input-PLAN_NUMBER']");
+        private readonly By documentPAPlanRevisionLabel = By.XPath("//label[contains(text(),'Plan revision')]");
+        private readonly By documentPAPlanRevisionInput = By.CssSelector("input[data-testid='metadata-input-PLAN_REVISION']");
+        private readonly By documentPAPlanProjectLabel = By.XPath("//label[contains(text(),'Project #')]");
+        private readonly By documentPAPlanProjectInput = By.CssSelector("input[data-testid='metadata-input-PROJECT_NUMBER']");
+        private readonly By documentPAPlanProjectNameLabel = By.XPath("//input[@data-testid='metadata-input-PROJECT_NAME']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Project name')]");
+        private readonly By documentPAPlanProjectNameInput = By.CssSelector("input[data-testid='metadata-input-PROJECT_NAME']");
 
         //Upload Photos/Images/Video and Correspondence Fields
         private readonly By documentCivicAddressInput = By.CssSelector("input[data-testid='metadata-input-CIVIC_ADDRESS']");
         private readonly By documentPhotosCorrespondenceTypeDateLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Date')]");
-        private readonly By documentPhotosCorrespondenceTypeDateInput = By.Id("input-documentMetadata.57");
+        private readonly By documentPhotosCorrespondenceTypeDateInput = By.CssSelector("input[data-testid='metadata-input-DATE']");
         private readonly By documentOwnerLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Owner')]");
-        private readonly By documentTypeOwnerInput = By.Id("input-documentMetadata.51");
+        private readonly By documentTypeOwnerInput = By.CssSelector("input[data-testid='metadata-input-OWNER']");
         private readonly By documentPhotosCorrespondenceTypePropIdLabel = By.XPath("//label[contains(text(),'Property identifier')]");
-        private readonly By documentTypePropertyIdentifierInput = By.Id("input-documentMetadata.94");
-
-        private By documentShortDescriptorInput = By.Id("input-documentMetadata.55");
-
-        //Upload Miscellaneous notes (LTSA) Fields
-        private readonly By documentMiscNotesTypePIDLabel = By.XPath("//input[@id='input-documentMetadata.62']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
-        private readonly By documentMiscNotesTypePIDInput = By.Id("input-documentMetadata.62");
-
-        //Upload Title search/ Historical title Fields
-        private readonly By documentTitleSearchTypePIDLabel = By.XPath("//input[@id='input-documentMetadata.62']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
-        private readonly By documentTitleSearchTypePIDInput = By.Id("input-documentMetadata.62");
-        private readonly By documentTitleSearchTypeTitleLabel = By.XPath("//input[@id='input-documentMetadata.58']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Title')]");
-        private readonly By documentTitleSearchTypeTitleInput = By.Id("input-documentMetadata.58");
-
-        //Upload Historical File Fields
-        private readonly By documentHistoricFileTypeEndDateLabel = By.XPath("//label[contains(text(),'End date')]");
-        private readonly By documentHistoricFileTypeEndDateInput = By.Id("input-documentMetadata.93");
-        private readonly By documentHistoricFileTypeFileLabel = By.XPath("//div[@class='pr-0 text-left col-4']/label[contains(text(),'File #')]");
-        private readonly By documentHistoricFileTypeFileInput = By.Id("input-documentMetadata.42");
-        private readonly By documentHistoricFileTypeFileMandatory = By.XPath("//div[contains(text(),'File # is required')]");
-        private readonly By documentHistoricFileTypePhyLocationLabel = By.XPath("//label[contains(text(),'Physical location')]");
-        private readonly By documentHistoricFileTypePhyLocationInput = By.Id("input-documentMetadata.95");
-        private readonly By documentHistoricFileTypeSectionLabel = By.XPath("//label[contains(text(),'Section')]");
-        private readonly By documentHistoricFileTypeSectionInput = By.Id("input-documentMetadata.47");
-        private readonly By documentHistoricFileTypeStartDateLabel = By.XPath("//label[contains(text(),'Start date')]");
-        private readonly By documentHistoricFileTypeStartDateInput = By.Id("input-documentMetadata.91");
-
-        //Upload Crown Grant Fields
-        private readonly By documentCrownGrantTypeCrownLabel = By.XPath("//label[contains(text(),'Crown grant #')]");
-        private readonly By documentCrownGrantTypeCrownInput = By.Id("input-documentMetadata.56");
-        private readonly By documentCrownGrantTypeCrownMandatory = By.XPath("//div[contains(text(),'Crown grant # is required')]");
+        private readonly By documentTypePropertyIdentifierInput = By.CssSelector("input[data-testid='metadata-input-PROPERTY_IDENTIFIER']");
 
         //Upload Privy Council Fields
         private readonly By documentPrivyCouncilTypePrivyLabel = By.XPath("//label[contains(text(),'Year - privy council #')]");
-        private readonly By documentPrivyCouncilTypePrivyInput = By.Id("input-documentMetadata.92");
-        private readonly By documentPrivyCounciltTypePrivyMandatory = By.XPath("//div[contains(text(),'Year - privy council # is required')]");
+        private readonly By documentPrivyCouncilTypePrivyInput = By.CssSelector("input[data-testid='metadata-input-YEAR_PRIVY_COUNCIL_NUMBER']");
 
-        //Upload OIC Fields
-        private readonly By documentOICTypeOICLabel = By.XPath("//label[contains(text(),'OIC #')]");
-        private readonly By documentOICTypeInput = By.Id("input-documentMetadata.43");
-        private readonly By documentOICTypeOICRouteLabel = By.XPath("//label[contains(text(),'OIC route #')]");
-        private readonly By documentOICTypeOICRouteInput = By.Id("input-documentMetadata.90");
-        private readonly By documentOICTypeOICTypeLabel = By.XPath("//label[contains(text(),'OIC type')]");
-        private readonly By documentOICTypeOICTypeInput = By.Id("input-documentMetadata.89");
-        private readonly By documentYearLabel = By.XPath("//label[contains(text(),'Year')]");
-        private readonly By documentYearInput = By.Id("input-documentMetadata.48");
+        //Upload Short Descriptor Field
+        private readonly By documentShortDescriptorInput = By.CssSelector("input[data-testid='metadata-input-SHORT_DESCRIPTOR']");
 
-        //Upload Legal Survey Plans Fields
-        private readonly By documentLegalSurveyNbrLabel = By.XPath("//label[contains(text(),'Legal survey plan #')]");
-        private readonly By documentLegalSurveyInput = By.Id("input-documentMetadata.84");
-        private readonly By documentMOTIPlanLabel = By.XPath("//label[contains(text(),'MoTI plan #')]");
-        private readonly By documentMOTIPlanInput = By.Id("input-documentMetadata.83");
-        private readonly By documentLegalSurveyPlanTypeLabel = By.XPath("//label[contains(text(),'Plan type')]");
-        private readonly By documentLegalSurveyPlanTypeInput = By.Id("input-documentMetadata.88");
+        //Upload Title search/ Historical title Fields
+        private readonly By documentTitleSearchTypePIDLabel = By.XPath("//input[@data-testid='metadata-input-PID']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
+        private readonly By documentTitleSearchTypeTitleLabel = By.XPath("//input[@data-testid='metadata-input-TITLE_NUMBER']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Title')]");
+        private readonly By documentTitleSearchTypeTitleInput = By.CssSelector("input[data-testid='metadata-input-TITLE_NUMBER']");
 
-        //Upload MoTI Plan Fields
-        private readonly By documentMoTIPlanLegalSurveyPublishDateLabel = By.XPath("//label[contains(text(),'Published date')]");
-        private readonly By documentMoTIPlanLegalSurveyPublishDateInput = By.Id("input-documentMetadata.86");
-        private readonly By documentMoTIPlanLegalSurveyRelatedGazetteLabel = By.XPath("//label[contains(text(),'Related gazette')]");
-        private readonly By documentMoTIPlanLegalSurveyRelatedGazetteInput = By.Id("input-documentMetadata.85");
+        //Upload Transfer of Administration Type Fields
+        private readonly By documentDateSignedLabel = By.XPath("//label[contains(text(),'Date signed')]");
+        private readonly By documentDateSignedInput = By.CssSelector("input[data-testid='metadata-input-DATE_SIGNED']");
+        private readonly By documentMOTIFileLabel = By.XPath("//label[contains(text(),'MoTI file #')]");
+        private readonly By documentTransferAdmTypeProIdLabel = By.XPath("//label[contains(text(),'Property identifier')]");
+        private readonly By documentTransferAdmTypeTransferLabel = By.XPath("//label[contains(text(),'Transfer')]");
+        private readonly By documentTransferAdmTypeTransferInput = By.CssSelector("input[data-testid='metadata-input-TRANSFER_NUMBER']");
 
-        //Upload Gazette Fields
-        private readonly By documentGazetteDateLabel = By.XPath("//label[contains(text(),'Gazette date')]");
-        private readonly By documentGazetteDateInput = By.Id("input-documentMetadata.81");
-        private readonly By documentGazettePageLabel = By.XPath("//label[contains(text(),'Gazette page #')]");
-        private readonly By documentGazettePageInput = By.Id("input-documentMetadata.80");
-        private readonly By documentGazettePublishedDateLabel = By.XPath("//label[contains(text(),'Gazette published date')]");
-        private readonly By documentGazettePublishedDateInput = By.Id("input-documentMetadata.78");
-        private readonly By documentGazettePublishedDateMandatory = By.XPath("//div[contains(text(),'Gazette published date is required')]");
-        private readonly By documentGazettePublishedTypeLabel = By.XPath("//label[contains(text(),'Gazette type')]");
-        private readonly By documentGazettePublishedTypeInput = By.Id("input-documentMetadata.82");
-        private readonly By documentGazettePublishedTypeMandatory = By.XPath("//div[contains(text(),'Gazette type is required')]");
-        private readonly By documentGazetteLegalSurveyPlanLabel = By.XPath("//label[contains(text(),'Legal survey plan #')]");
-        private readonly By documentGazetteLTSALabel = By.XPath("//label[contains(text(),'LTSA schedule filing')]");
-        private readonly By documentGazetteLTSAInput = By.Id("input-documentMetadata.39");
-        private readonly By documentGazetteLegalSurveyMotiPlanLabel = By.XPath("//label[contains(text(),'MoTI plan #')]");
-        private readonly By documentRoadNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Road name')]");
-        private readonly By documentGazetteRoadNameMandatory = By.XPath("//div[contains(text(),'Road name is required')]");
 
-        //Upload PA plans Fields
-        private readonly By documentPAPlanNbrLabel = By.XPath("//label[contains(text(),'Plan #')]");
-        private readonly By documentPAPlanNbrInput = By.Id("input-documentMetadata.28");
-        private readonly By documentPAPlanNbrMandatory = By.XPath("//div[contains(text(),'Plan # is required')]");
-        private readonly By documentPAPlanRevisionLabel = By.XPath("//label[contains(text(),'Plan revision')]");
-        private readonly By documentPAPlanRevisionInput = By.Id("input-documentMetadata.79");
-        private readonly By documentPAPlanProjectLabel = By.XPath("//label[contains(text(),'Project #')]");
-        private readonly By documentPAPlanProjectInput = By.Id("input-documentMetadata.31");
-        private readonly By documentPAPlanProjectNameLabel = By.XPath("//input[@id='input-documentMetadata.77']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Project name')]");
-        private readonly By documentPAPlanProjectNameInput = By.Id("input-documentMetadata.77");
-        private readonly By documentPAPlanProjectNameMandatory = By.XPath("//div[contains(text(),'Project name is required')]");
 
         //View Document Details Elements
         private readonly By documentViewDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]");
         private readonly By documentViewDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
         private readonly By documenyViewDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]");
         private readonly By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
-        private readonly By documentViewDownloadButton = By.CssSelector("button[data-testid='document-download-button']");
         private readonly By documentViewInfoSubtitle = By.XPath("//div[contains(text(),'Document Information')]");
         private readonly By documentViewDocumentInfoTooltip = By.CssSelector("span[data-testid='tooltip-icon-documentInfoToolTip']");
         private readonly By documentViewStatusLabel = By.XPath("//div[contains(text(),'Document Information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
@@ -197,6 +193,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By documentViewDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
 
+        private readonly By documentViewApplicationNbrContent = By.XPath("//label[contains(text(),'Application #')]/parent::div/following-sibling::div");
         private readonly By documentViewCanadaLandSurveyContent = By.XPath("//label[contains(text(),'Canada land survey')]/parent::div/following-sibling::div");
         private readonly By documentViewCivicAddressContent = By.XPath("//label[contains(text(),'Civic address')]/parent::div/following-sibling::div");
         private readonly By documentViewCrownGrantContent = By.XPath("//label[contains(text(),'Crown grant #')]/parent::div/following-sibling::div");
@@ -237,6 +234,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentViewPropertyIdentifierLabel = By.XPath("/label[contains(text(),'Property identifier')]");
         private readonly By documentViewPropertyIdentifierContent = By.XPath("/label[contains(text(),'Property identifier')]/parent::div/following-sibling::div");
         private readonly By documentViewPublishedDateContent = By.XPath("//label[contains(text(),'Published date')]/parent::div/following-sibling::div");
+        private readonly By documentViewReferenceAgencyContent = By.XPath("//label[contains(text(),'Reference/Agency Document #')]/parent::div/following-sibling::div");
+        private readonly By documentViewReferenceLandsContent = By.XPath("//label[contains(text(),'Reference/Agency Lands file #')]/parent::div/following-sibling::div");
         private readonly By documentViewRelatedGazetteContent = By.XPath("//label[contains(text(),'Related gazette')]/parent::div/following-sibling::div");
         private readonly By documentViewRoadNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Road name')]/parent::div/following-sibling::div");
         private readonly By documentViewRollContent = By.XPath("//label[contains(text(),'Roll')]/parent::div/following-sibling::div");
@@ -253,6 +252,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div/div/div/button");
         private readonly By documentCancelEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'No')]/parent::button");
         private readonly By documentSaveEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'Yes')]/parent::button");
+        private readonly By documentCancelEmbbedWarning = By.XPath("//div[@class='modal-footer']/div[@class='button-wrap']/p");
 
         //Document Confirmation Modal Elements
         private readonly By documentConfirmationModal = By.XPath("//div[contains(text(),'Confirm Changes')]/parent::div/parent::div");
@@ -276,7 +276,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Document List Sortable Columns Elements
         private readonly By documentDocumentTypeSortBttn = By.CssSelector("div[data-testid='sort-column-documentType']");
         private readonly By documentDocumentNameSortBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
-        private readonly By documentDocumentUploadedDateSortBttn = By.CssSelector("div[data-testid='sort-column-appCreateTimestamp']");
         private readonly By documentDocumentStatusSortBttn = By.CssSelector("div[data-testid='sort-column-statusTypeCode']");
 
         //Documents Tab List Results
@@ -309,7 +308,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentPreiewZoomOutBttn = By.CssSelector("button[aria-label='Zoom out']");
         private readonly By documentPreiewEnterScreenBttn = By.CssSelector("button[aria-label='Enter Fullscreen']");
         private readonly By documentPreiewCloseBttn = By.CssSelector("button[aria-label='Close']");
-
 
         private SharedModals sharedModals;
 
@@ -351,23 +349,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             switch (documentType)
             {
+                case "Agricultural Land Commission (ALC)":
+                    VerifyALCFields();
+                    break;
                 case "BC assessment search":
                     VerifyBCAssessmentFields();
-                    break;
-                case "Other":
-                    VerifyOtherTypeFields();
-                    break;
-                case "Field notes":
-                    VerifyFieldNotesFields();
-                    break;
-                case "District road register":
-                    VerifyDistrictRoadRegisterFields();
-                    break;
-                case "Transfer of administration":
-                    VerifyTransferAdministrationFields();
-                    break;
-                case "Ministerial order":
-                    VerifyMinisterialOrderFields();
                     break;
                 case "Canada lands survey":
                     VerifyCanadaLandsSurveyFields();
@@ -375,38 +361,59 @@ namespace PIMS.Tests.Automation.PageObjects
                 case "Correspondence":
                     VerifyPhotosCorrespondenceFields();
                     break;
-                case "Photos / Images/ Video":
-                    VerifyPhotosCorrespondenceFields();
-                    break;
-                case "Miscellaneous notes (LTSA)":
-                    VerifyMiscellaneousNotesFields();
-                    break;
-                case "Title search / Historical title":
-                    VerifyTitleSearchFields();
-                    break;
-                case "Historical file":
-                    VerifyHistoricalFileFields();
-                    break;
                 case "Crown grant":
                     VerifyCrownGrantFields();
                     break;
-                case "Privy council":
-                    VerifyPrivyCouncilFields();
+                case "District road register":
+                    VerifyDistrictRoadRegisterFields();
                     break;
-                case "Order in Council (OIC)":
-                    VerifyOICFields();
+                case "Field notes":
+                    VerifyFieldNotesFields();
                     break;
-                case "Legal survey plan":
-                    VerifyLegalSurveyFields();
-                    break;
-                case "MoTI plan":
-                    VerifyMOTIPlanFields();
+                case "Form 12":
+                    VerifyForm12Fields();
                     break;
                 case "Gazette":
                     VerifyGazetteFields();
                     break;
+                case "Historical file":
+                    VerifyHistoricalFileFields();
+                    break;
+                case "Land Act Tenure/Reserves":
+                    VerifyLandActTenureFields();
+                    break;
+                case "Legal survey plan":
+                    VerifyLegalSurveyFields();
+                    break;
+                case "Ministerial order":
+                    VerifyMinisterialOrderFields();
+                    break;
+                case "Miscellaneous notes (LTSA)":
+                    VerifyMiscellaneousNotesFields();
+                    break;
+                case "MoTI plan":
+                    VerifyMOTIPlanFields();
+                    break;
+                case "Order in Council (OIC)":
+                    VerifyOICFields();
+                    break;
+                case "Other":
+                    VerifyOtherTypeFields();
+                    break;
                 case "PA plans / Design drawings":
                     VerifyPAPlansFields();
+                    break;
+                case "Photos / Images/ Video":
+                    VerifyPhotosCorrespondenceFields();
+                    break;
+                case "Privy council":
+                    VerifyPrivyCouncilFields();
+                    break;
+                case "Title search / Historical title":
+                    VerifyTitleSearchFields();
+                    break;
+                case "Transfer of administration":
+                    VerifyTransferAdministrationFields();
                     break;
                 default:
                     VerifyShortDescriptorField();
@@ -567,6 +574,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 webDriver.FindElement(documentConfirmModalOkBttn).Click();
             }
+            else
+            {
+                WaitUntilVisible(documentCancelEmbbedWarning);
+                AssertTrueElementContains(documentCancelEmbbedWarning, "Unsaved updates will be lost. Click");
+                AssertTrueElementContains(documentCancelEmbbedWarning, "again to proceed without saving, or");
+                AssertTrueElementContains(documentCancelEmbbedWarning, "to save the changes.");
+                sharedModals.ModalClickCancelBttn();
+            }
         }
 
         public void CancelEditDigitalDocument()
@@ -645,6 +660,9 @@ namespace PIMS.Tests.Automation.PageObjects
         public void InsertDocumentTypeDetails(DigitalDocument document)
         {
             Wait();
+
+            if (document.ApplicationNumber != "" && webDriver.FindElements(documentALCTypeAppNumberInput).Count > 0)
+                webDriver.FindElement(documentALCTypeAppNumberInput).SendKeys(document.ApplicationNumber);
 
             if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyInput).Count > 0)
                 webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).SendKeys(document.CanadaLandSurvey);
@@ -727,8 +745,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (document.Owner != "" && webDriver.FindElements(documentTypeOwnerInput).Count > 0)
                 webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.Owner);
 
-            if (document.PhysicalLocation != "" && webDriver.FindElements(documentTypeOwnerInput).Count > 0)
-                webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.PhysicalLocation);
+            if (document.PhysicalLocation != "" && webDriver.FindElements(documentHistoricFileTypePhyLocationInput).Count > 0)
+                webDriver.FindElement(documentHistoricFileTypePhyLocationInput).SendKeys(document.PhysicalLocation);
 
             if (document.PIDNumber != "" && webDriver.FindElements(documentTypePropIdInput).Count > 0)
                 webDriver.FindElement(documentTypePropIdInput).SendKeys(document.PIDNumber);
@@ -756,6 +774,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (document.PublishedDate != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyPublishDateInput).Count > 0)
                 webDriver.FindElement(documentMoTIPlanLegalSurveyPublishDateInput).SendKeys(document.PublishedDate);
+
+            if (document.ReferenceAgencyDocumentNbr!= "" && webDriver.FindElements(documentLandActTypeReferenceAgencyInput).Count > 0)
+                webDriver.FindElement(documentLandActTypeReferenceAgencyInput).SendKeys(document.ReferenceAgencyDocumentNbr);
+
+            if (document.ReferenceAgencyLandsFileNbr!= "" && webDriver.FindElements(documentLandActTypeReferenceLandsInput).Count > 0)
+                webDriver.FindElement(documentLandActTypeReferenceLandsInput).SendKeys(document.ReferenceAgencyLandsFileNbr);
 
             if (document.RelatedGazette != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyRelatedGazetteInput).Count > 0)
                 webDriver.FindElement(documentMoTIPlanLegalSurveyRelatedGazetteInput).SendKeys(document.RelatedGazette);
@@ -1055,6 +1079,9 @@ namespace PIMS.Tests.Automation.PageObjects
             //Document Details
             AssertTrueIsDisplayed(documentViewDetailsSubtitle);
 
+            if (document.ApplicationNumber != "" && webDriver.FindElements(documentALCTypeAppNumberLabel).Count > 0)
+                AssertTrueContentEquals(documentViewApplicationNbrContent, document.ApplicationNumber);
+
             if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyLabel).Count > 0)
                 AssertTrueContentEquals(documentViewCanadaLandSurveyContent, document.CanadaLandSurvey);
         
@@ -1165,7 +1192,13 @@ namespace PIMS.Tests.Automation.PageObjects
             
             if (document.PublishedDate != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyPublishDateLabel).Count > 0)
                 AssertTrueContentEquals(documentViewPublishedDateContent, TranformFormatDateDocument(document.PublishedDate));
-            
+
+            if (document.ReferenceAgencyDocumentNbr != "" && webDriver.FindElements(documentLandActTypeReferenceAgencyLabel).Count > 0)
+                AssertTrueContentEquals(documentViewReferenceAgencyContent, document.ReferenceAgencyDocumentNbr);
+
+            if (document.ReferenceAgencyLandsFileNbr != "" && webDriver.FindElements(documentLandActTypeReferenceLandsLabel).Count > 0)
+                AssertTrueContentEquals(documentViewReferenceLandsContent, document.ReferenceAgencyLandsFileNbr);
+
             if (document.RelatedGazette != "" && webDriver.FindElements(documentMoTIPlanLegalSurveyRelatedGazetteLabel).Count > 0)
                 AssertTrueContentEquals(documentViewRelatedGazetteContent, document.RelatedGazette);
             
@@ -1224,42 +1257,15 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentUpdateDetailsSubtitle);
         }
 
-        private void VerifyOtherTypeFields()
+        private void VerifyALCFields()
         {
-            WaitUntilVisible(documentOtherTypePINLabel);
+            WaitUntilVisible(documentALCTypeAppNumberLabel);
 
-            AssertTrueIsDisplayed(documentOtherTypePINLabel);
-            AssertTrueIsDisplayed(documentOtherTypePINInput);
-            AssertTrueIsDisplayed(documentOtherTypePropIdLabel);
-            AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
-            AssertTrueIsDisplayed(documentRoadNameLabel);
-            AssertTrueIsDisplayed(documentRoadNameInput);
+            AssertTrueIsDisplayed(documentALCTypeAppNumberLabel);
+            AssertTrueIsDisplayed(documentALCTypeAppNumberInput);
+
             AssertTrueIsDisplayed(documentShortDescriptorLabel);
             AssertTrueIsDisplayed(documentShortDescriptorInput);
-        }
-
-        private void VerifyFieldNotesFields()
-        {
-            WaitUntilVisible(documentFieldNotesTypeDistrictLotLabel);
-
-            AssertTrueIsDisplayed(documentFieldNotesTypeDistrictLotLabel);
-            AssertTrueIsDisplayed(documentFieldNotesTypeDistrictLotInput);
-            AssertTrueIsDisplayed(documentFieldNotesTypeYearLabel);
-            AssertTrueIsDisplayed(documentFieldNotesTypeYearInput);
-            AssertTrueIsDisplayed(documentFieldNotesTypeLandDistrictLabel);
-            AssertTrueIsDisplayed(documentFieldNotesTypeLandDistrictInput); 
-        }
-
-        private void VerifyDistrictRoadRegisterFields()
-        {
-            WaitUntilVisible(documentDistrictRoadRegisterTypeElectoralDistrictLabel);
-
-            AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeElectoralDistrictLabel);
-            AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeElectoralDistrictInput);
-            AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeHighwayDistrictLabel);
-            AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeHighwayDistrictInput);
-            AssertTrueIsDisplayed(documentRoadNameLabel);
-            AssertTrueIsDisplayed(documentRoadNameInput);
         }
 
         private void VerifyBCAssessmentFields()
@@ -1268,69 +1274,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentCivicAddressLabel);
             AssertTrueIsDisplayed(documentCivicAddressInput);
-            //webDriver.FindElement(documentCivicAddressInput).Click();
-            //webDriver.FindElement(documentCivicAddressLabel).Click();
-            //AssertTrueIsDisplayed(documentBCAssessmentTypeAddressMandatory);
 
             AssertTrueIsDisplayed(documentBCAssessmentTypeJurisdictionLabel);
             AssertTrueIsDisplayed(documentBCAssessmentTypeJurisdictionInput);
-            //webDriver.FindElement(documentBCAssessmentTypeJurisdictionInput).Click();
-            //webDriver.FindElement(documentBCAssessmentTypeJurisdictionLabel).Click();
-            //AssertTrueIsDisplayed(documentBCAssessmentTypeJurisdictionMandatory);
 
             AssertTrueIsDisplayed(documentBCAssessmentTypeRollLabel);
             AssertTrueIsDisplayed(documentBCAssessmentTypeRollInput);
 
             AssertTrueIsDisplayed(documentYearLabel);
             AssertTrueIsDisplayed(documentYearInput);
-            //webDriver.FindElement(documentYearInput).Click();
-            //webDriver.FindElement(documentYearLabel).Click();
-            //AssertTrueIsDisplayed(documentBCAssessmentTypeYearMandatory);
-        }
-
-        private void VerifyTransferAdministrationFields()
-        {
-            WaitUntilVisible(documentDateSignedLabel);
-
-            AssertTrueIsDisplayed(documentDateSignedLabel);
-            AssertTrueIsDisplayed(documentDateSignedInput);
-
-            AssertTrueIsDisplayed(documentMOTIFileLabel);
-            AssertTrueIsDisplayed(documentTypeMotiFileInput);
-            //webDriver.FindElement(documentTypeMotiFileInput).Click();
-            //webDriver.FindElement(documentMOTIFileLabel).Click();
-            //AssertTrueIsDisplayed(documentTransferAdmTypeMOTIFileMandatory);
-
-            AssertTrueIsDisplayed(documentTransferAdmTypeProIdLabel);
-            AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
-
-            AssertTrueIsDisplayed(documentRoadNameLabel);
-            AssertTrueIsDisplayed(documentRoadNameInput);
-            //webDriver.FindElement(documentRoadNameInput).Click();
-            //webDriver.FindElement(documentRoadNameLabel).Click();
-            //AssertTrueIsDisplayed(documentTransferAdmTypeRoadNameMandatory);
-
-            AssertTrueIsDisplayed(documentTransferAdmTypeTransferLabel);
-            AssertTrueIsDisplayed(documentTransferAdmTypeTransferInput);
-            //webDriver.FindElement(documentTransferAdmTypeTransferInput).Click();
-            //webDriver.FindElement(documentTransferAdmTypeTransferLabel).Click();
-            //AssertTrueIsDisplayed(documentTransferAdmTypeTransferMandatory);
-        }
-
-        private void VerifyMinisterialOrderFields()
-        {
-            WaitUntilVisible(documentDateSignedLabel);
-
-            AssertTrueIsDisplayed(documentDateSignedLabel);
-            AssertTrueIsDisplayed(documentDateSignedInput);
-            AssertTrueIsDisplayed(documentMinisterialOrderTypeMOLabel);
-            AssertTrueIsDisplayed(documentMinisterialOrderTypeMOInput);
-            AssertTrueIsDisplayed(documentMOTIFileLabel);
-            AssertTrueIsDisplayed(documentTypeMotiFileInput);
-            AssertTrueIsDisplayed(documentPropertyIdentifierLabel);
-            AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
-            AssertTrueIsDisplayed(documentRoadNameLabel);
-            AssertTrueIsDisplayed(documentRoadNameInput);
         }
 
         private void VerifyCanadaLandsSurveyFields()
@@ -1339,51 +1291,91 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyLabel);
             AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyInput);
-            //webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyInput).Click();
-            //webDriver.FindElement(documentCanLandSurveyTypeCanLandSurveyLabel).Click();
-            //AssertTrueIsDisplayed(documentCanLandSurveyTypeCanLandSurveyMandatory);
 
             AssertTrueIsDisplayed(documentCanLandSurveyTypeIndianReserveLabel);
             AssertTrueIsDisplayed(documentCanLandSurveyTypeIndianReserveInput);
-            //webDriver.FindElement(documentCanLandSurveyTypeIndianReserveInput).Click();
-            //webDriver.FindElement(documentCanLandSurveyTypeIndianReserveLabel).Click();
-            //AssertTrueIsDisplayed(documentCanLandSurveyTypeIndianReserveMandatory);
         }
 
-        private void VerifyPhotosCorrespondenceFields()
+        private void VerifyCrownGrantFields()
         {
-            WaitUntilVisible(documentCivicAddressLabel);
+            WaitUntilVisible(documentCrownGrantTypeCrownLabel);
 
-            AssertTrueIsDisplayed(documentCivicAddressLabel);
-            AssertTrueIsDisplayed(documentCivicAddressInput);
-            AssertTrueIsDisplayed(documentPhotosCorrespondenceTypeDateLabel);
-            AssertTrueIsDisplayed(documentPhotosCorrespondenceTypeDateInput);
-            AssertTrueIsDisplayed(documentOwnerLabel);
-            AssertTrueIsDisplayed(documentTypeOwnerInput);
-            AssertTrueIsDisplayed(documentPhotosCorrespondenceTypePropIdLabel);
-            AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
+            AssertTrueIsDisplayed(documentCrownGrantTypeCrownLabel);
+            AssertTrueIsDisplayed(documentCrownGrantTypeCrownInput);
+        }
+
+        private void VerifyDistrictRoadRegisterFields()
+        {
+            WaitUntilVisible(documentDistrictRoadRegisterTypeElectoralDistrictLabel);
+
+            AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeElectoralDistrictLabel);
+            AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeElectoralDistrictInput);
+
+            AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeHighwayDistrictLabel);
+            AssertTrueIsDisplayed(documentDistrictRoadRegisterTypeHighwayDistrictInput);
+
+            AssertTrueIsDisplayed(documentRoadNameLabel);
+            AssertTrueIsDisplayed(documentRoadNameInput);
+        }
+
+        private void VerifyFieldNotesFields()
+        {
+            WaitUntilVisible(documentFieldNotesTypeDistrictLotLabel);
+
+            AssertTrueIsDisplayed(documentFieldNotesTypeDistrictLotLabel);
+            AssertTrueIsDisplayed(documentFieldNotesTypeDistrictLotInput);
+
+            AssertTrueIsDisplayed(documentFieldNotesTypeYearLabel);
+            AssertTrueIsDisplayed(documentFieldNotesTypeYearInput);
+
+            AssertTrueIsDisplayed(documentFieldNotesTypeLandDistrictLabel);
+            AssertTrueIsDisplayed(documentFieldNotesTypeLandDistrictInput); 
+        }
+
+        private void VerifyForm12Fields()
+        {
+            WaitUntilVisible(documentGazetteDateLabel);
+
+            AssertTrueIsDisplayed(documentGazetteDateLabel);
+            AssertTrueIsDisplayed(documentGazetteDateInput);
+
+            AssertTrueIsDisplayed(documentGazetteLegalSurveyPlanLabel);
+            AssertTrueIsDisplayed(documentLegalSurveyInput);
+
+            AssertTrueIsDisplayed(documentMOTIPlanLabel);
+            AssertTrueIsDisplayed(documentMOTIPlanInput);
+
             AssertTrueIsDisplayed(documentShortDescriptorLabel);
             AssertTrueIsDisplayed(documentShortDescriptorInput);
         }
 
-        private void VerifyMiscellaneousNotesFields()
+        private void VerifyGazetteFields()
         {
-            WaitUntilVisible(documentMiscNotesTypePIDLabel);
+            WaitUntilVisible(documentGazetteDateLabel);
 
-            AssertTrueIsDisplayed(documentMiscNotesTypePIDLabel);
-            AssertTrueIsDisplayed(documentMiscNotesTypePIDInput);
-        }
+            AssertTrueIsDisplayed(documentGazetteDateLabel);
+            AssertTrueIsDisplayed(documentGazetteDateInput);
 
-        private void VerifyTitleSearchFields()
-        {
-            WaitUntilVisible(documentOwnerLabel);
+            AssertTrueIsDisplayed(documentGazettePageLabel);
+            AssertTrueIsDisplayed(documentGazettePageInput);
 
-            AssertTrueIsDisplayed(documentOwnerLabel);
-            AssertTrueIsDisplayed(documentTypeOwnerInput);
-            AssertTrueIsDisplayed(documentTitleSearchTypePIDLabel);
-            AssertTrueIsDisplayed(documentTitleSearchTypePIDInput);
-            AssertTrueIsDisplayed(documentTitleSearchTypeTitleLabel);
-            AssertTrueIsDisplayed(documentTitleSearchTypeTitleInput);
+            AssertTrueIsDisplayed(documentGazettePublishedDateLabel);
+            AssertTrueIsDisplayed(documentGazettePublishedDateInput);
+
+            AssertTrueIsDisplayed(documentGazettePublishedTypeLabel);
+            AssertTrueIsDisplayed(documentGazettePublishedTypeInput);
+
+            AssertTrueIsDisplayed(documentGazetteLegalSurveyPlanLabel);
+            AssertTrueIsDisplayed(documentLegalSurveyInput);
+
+            AssertTrueIsDisplayed(documentGazetteLTSALabel);
+            AssertTrueIsDisplayed(documentGazetteLTSAInput);
+
+            AssertTrueIsDisplayed(documentGazetteLegalSurveyMotiPlanLabel);
+            AssertTrueIsDisplayed(documentMOTIPlanInput);
+
+            AssertTrueIsDisplayed(documentRoadNameLabel);
+            AssertTrueIsDisplayed(documentRoadNameInput);
         }
 
         private void VerifyHistoricalFileFields()
@@ -1395,38 +1387,89 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentHistoricFileTypeFileLabel);
             AssertTrueIsDisplayed(documentHistoricFileTypeFileInput);
-            //webDriver.FindElement(documentHistoricFileTypeFileInput).Click();
-            //webDriver.FindElement(documentHistoricFileTypeFileLabel).Click();
-            //AssertTrueIsDisplayed(documentHistoricFileTypeFileMandatory);
 
             AssertTrueIsDisplayed(documentHistoricFileTypePhyLocationLabel);
             AssertTrueIsDisplayed(documentHistoricFileTypePhyLocationInput);
+
             AssertTrueIsDisplayed(documentHistoricFileTypeSectionLabel);
             AssertTrueIsDisplayed(documentHistoricFileTypeSectionInput);
+
             AssertTrueIsDisplayed(documentHistoricFileTypeStartDateLabel);
             AssertTrueIsDisplayed(documentHistoricFileTypeStartDateInput);
         }
 
-        private void VerifyCrownGrantFields()
+        private void VerifyLandActTenureFields()
         {
-            WaitUntilVisible(documentCrownGrantTypeCrownLabel);
+            WaitUntilVisible(documentLandActTypeReferenceAgencyLabel);
 
-            AssertTrueIsDisplayed(documentCrownGrantTypeCrownLabel);
-            AssertTrueIsDisplayed(documentCrownGrantTypeCrownInput);
-            //webDriver.FindElement(documentCrownGrantTypeCrownInput).Click();
-            //webDriver.FindElement(documentCrownGrantTypeCrownLabel).Click();
-            //AssertTrueIsDisplayed(documentCrownGrantTypeCrownMandatory);
+            AssertTrueIsDisplayed(documentLandActTypeReferenceAgencyLabel);
+            AssertTrueIsDisplayed(documentLandActTypeReferenceAgencyInput);
+
+            AssertTrueIsDisplayed(documentLandActTypeReferenceLandsLabel);
+            AssertTrueIsDisplayed(documentLandActTypeReferenceLandsInput);
+
+            AssertTrueIsDisplayed(documentShortDescriptorLabel);
+            AssertTrueIsDisplayed(documentShortDescriptorInput);
         }
 
-        private void VerifyPrivyCouncilFields()
+        private void VerifyLegalSurveyFields()
         {
-            WaitUntilVisible(documentPrivyCouncilTypePrivyLabel);
+            WaitUntilVisible(documentLegalSurveyNbrLabel);
 
-            AssertTrueIsDisplayed(documentPrivyCouncilTypePrivyLabel);
-            AssertTrueIsDisplayed(documentPrivyCouncilTypePrivyInput);
-            //webDriver.FindElement(documentPrivyCouncilTypePrivyInput).Click();
-            //webDriver.FindElement(documentPrivyCouncilTypePrivyLabel).Click();
-            //AssertTrueIsDisplayed(documentPrivyCounciltTypePrivyMandatory);
+            AssertTrueIsDisplayed(documentLegalSurveyNbrLabel);
+            AssertTrueIsDisplayed(documentLegalSurveyInput);
+            AssertTrueIsDisplayed(documentMOTIPlanLabel);
+            AssertTrueIsDisplayed(documentMOTIPlanInput);
+            AssertTrueIsDisplayed(documentLegalSurveyPlanTypeLabel);
+            AssertTrueIsDisplayed(documentLegalSurveyPlanTypeInput);
+        }
+
+        private void VerifyMinisterialOrderFields()
+        {
+            WaitUntilVisible(documentDateSignedLabel);
+
+            AssertTrueIsDisplayed(documentDateSignedLabel);
+            AssertTrueIsDisplayed(documentDateSignedInput);
+
+            AssertTrueIsDisplayed(documentMinisterialOrderTypeMOLabel);
+            AssertTrueIsDisplayed(documentMinisterialOrderTypeMOInput);
+
+            AssertTrueIsDisplayed(documentMOTIFileLabel);
+            AssertTrueIsDisplayed(documentTypeMotiFileInput);
+
+            AssertTrueIsDisplayed(documentPropertyIdentifierLabel);
+            AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
+
+            AssertTrueIsDisplayed(documentRoadNameLabel);
+            AssertTrueIsDisplayed(documentRoadNameInput);
+        }
+
+        private void VerifyMiscellaneousNotesFields()
+        {
+            WaitUntilVisible(documentMiscNotesTypePIDLabel);
+
+            AssertTrueIsDisplayed(documentMiscNotesTypePIDLabel);
+            AssertTrueIsDisplayed(documentMiscNotesTypePIDInput);
+        }
+
+        private void VerifyMOTIPlanFields()
+        {
+            WaitUntilVisible(documentLegalSurveyNbrLabel);
+
+            AssertTrueIsDisplayed(documentLegalSurveyNbrLabel);
+            AssertTrueIsDisplayed(documentLegalSurveyInput);
+
+            AssertTrueIsDisplayed(documentMOTIFileLabel);
+            AssertTrueIsDisplayed(documentTypeMotiFileInput);
+
+            AssertTrueIsDisplayed(documentMOTIPlanLabel);
+            AssertTrueIsDisplayed(documentMOTIPlanInput);
+
+            AssertTrueIsDisplayed(documentMoTIPlanLegalSurveyPublishDateLabel);
+            AssertTrueIsDisplayed(documentMoTIPlanLegalSurveyPublishDateInput);
+
+            AssertTrueIsDisplayed(documentMoTIPlanLegalSurveyRelatedGazetteLabel);
+            AssertTrueIsDisplayed(documentMoTIPlanLegalSurveyRelatedGazetteInput);
         }
 
         private void VerifyOICFields()
@@ -1445,67 +1488,18 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentYearInput);
         }
 
-        private void VerifyLegalSurveyFields()
+        private void VerifyOtherTypeFields()
         {
-            WaitUntilVisible(documentLegalSurveyNbrLabel);
+            WaitUntilVisible(documentOtherTypePINLabel);
 
-            AssertTrueIsDisplayed(documentLegalSurveyNbrLabel);
-            AssertTrueIsDisplayed(documentLegalSurveyInput);
-            AssertTrueIsDisplayed(documentMOTIPlanLabel);
-            AssertTrueIsDisplayed(documentMOTIPlanInput);
-            AssertTrueIsDisplayed(documentLegalSurveyPlanTypeLabel);
-            AssertTrueIsDisplayed(documentLegalSurveyPlanTypeInput);
-        }
-
-        private void VerifyMOTIPlanFields()
-        {
-            WaitUntilVisible(documentLegalSurveyNbrLabel);
-
-            AssertTrueIsDisplayed(documentLegalSurveyNbrLabel);
-            AssertTrueIsDisplayed(documentLegalSurveyInput);
-            AssertTrueIsDisplayed(documentMOTIFileLabel);
-            AssertTrueIsDisplayed(documentTypeMotiFileInput);
-            AssertTrueIsDisplayed(documentMOTIPlanLabel);
-            AssertTrueIsDisplayed(documentMOTIPlanInput);
-            AssertTrueIsDisplayed(documentMoTIPlanLegalSurveyPublishDateLabel);
-            AssertTrueIsDisplayed(documentMoTIPlanLegalSurveyPublishDateInput);
-            AssertTrueIsDisplayed(documentMoTIPlanLegalSurveyRelatedGazetteLabel);
-            AssertTrueIsDisplayed(documentMoTIPlanLegalSurveyRelatedGazetteInput);
-        }
-
-        private void VerifyGazetteFields()
-        {
-            WaitUntilVisible(documentGazetteDateLabel);
-
-            AssertTrueIsDisplayed(documentGazetteDateLabel);
-            AssertTrueIsDisplayed(documentGazetteDateInput);
-            AssertTrueIsDisplayed(documentGazettePageLabel);
-            AssertTrueIsDisplayed(documentGazettePageInput);
-
-            AssertTrueIsDisplayed(documentGazettePublishedDateLabel);
-            AssertTrueIsDisplayed(documentGazettePublishedDateInput);
-            //webDriver.FindElement(documentGazettePublishedDateInput).Click();
-            //webDriver.FindElement(documentGazettePublishedDateLabel).Click();
-            //AssertTrueIsDisplayed(documentGazettePublishedDateMandatory);
-
-            AssertTrueIsDisplayed(documentGazettePublishedTypeLabel);
-            AssertTrueIsDisplayed(documentGazettePublishedTypeInput);
-            //webDriver.FindElement(documentGazettePublishedTypeInput).Click();
-            //webDriver.FindElement(documentGazettePublishedTypeLabel).Click();
-            //AssertTrueIsDisplayed(documentGazettePublishedTypeMandatory);
-
-            AssertTrueIsDisplayed(documentGazetteLegalSurveyPlanLabel);
-            AssertTrueIsDisplayed(documentLegalSurveyInput);
-            AssertTrueIsDisplayed(documentGazetteLTSALabel);
-            AssertTrueIsDisplayed(documentGazetteLTSAInput);
-            AssertTrueIsDisplayed(documentGazetteLegalSurveyMotiPlanLabel);
-            AssertTrueIsDisplayed(documentMOTIPlanInput);
-
+            AssertTrueIsDisplayed(documentOtherTypePINLabel);
+            AssertTrueIsDisplayed(documentOtherTypePINInput);
+            AssertTrueIsDisplayed(documentOtherTypePropIdLabel);
+            AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
             AssertTrueIsDisplayed(documentRoadNameLabel);
             AssertTrueIsDisplayed(documentRoadNameInput);
-            //webDriver.FindElement(documentRoadNameInput).Click();
-            //webDriver.FindElement(documentRoadNameLabel).Click();
-            //AssertTrueIsDisplayed(documentGazetteRoadNameMandatory);
+            AssertTrueIsDisplayed(documentShortDescriptorLabel);
+            AssertTrueIsDisplayed(documentShortDescriptorInput);
         }
 
         private void VerifyPAPlansFields()
@@ -1514,9 +1508,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentPAPlanNbrLabel);
             AssertTrueIsDisplayed(documentPAPlanNbrInput);
-            //webDriver.FindElement(documentPAPlanNbrInput).Click();
-            //webDriver.FindElement(documentPAPlanNbrLabel).Click();
-            //AssertTrueIsDisplayed(documentPAPlanNbrMandatory);
 
             AssertTrueIsDisplayed(documentPAPlanRevisionLabel);
             AssertTrueIsDisplayed(documentPAPlanRevisionInput);
@@ -1525,9 +1516,34 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentPAPlanProjectNameLabel);
             AssertTrueIsDisplayed(documentPAPlanProjectNameInput);
-            //webDriver.FindElement(documentPAPlanProjectNameInput).Click();
-            //webDriver.FindElement(documentPAPlanProjectNameLabel).Click();
-            //AssertTrueIsDisplayed(documentPAPlanProjectNameMandatory);
+        }
+
+        private void VerifyPhotosCorrespondenceFields()
+        {
+            WaitUntilVisible(documentCivicAddressLabel);
+
+            AssertTrueIsDisplayed(documentCivicAddressLabel);
+            AssertTrueIsDisplayed(documentCivicAddressInput);
+
+            AssertTrueIsDisplayed(documentPhotosCorrespondenceTypeDateLabel);
+            AssertTrueIsDisplayed(documentPhotosCorrespondenceTypeDateInput);
+
+            AssertTrueIsDisplayed(documentOwnerLabel);
+            AssertTrueIsDisplayed(documentTypeOwnerInput);
+
+            AssertTrueIsDisplayed(documentPhotosCorrespondenceTypePropIdLabel);
+            AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
+
+            AssertTrueIsDisplayed(documentShortDescriptorLabel);
+            AssertTrueIsDisplayed(documentShortDescriptorInput);
+        }
+
+        private void VerifyPrivyCouncilFields()
+        {
+            WaitUntilVisible(documentPrivyCouncilTypePrivyLabel);
+
+            AssertTrueIsDisplayed(documentPrivyCouncilTypePrivyLabel);
+            AssertTrueIsDisplayed(documentPrivyCouncilTypePrivyInput);
         }
 
         private void VerifyShortDescriptorField()
@@ -1536,6 +1552,38 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(documentShortDescriptorLabel);
             AssertTrueIsDisplayed(documentShortDescriptorInput);
+        }
+
+        private void VerifyTitleSearchFields()
+        {
+            WaitUntilVisible(documentOwnerLabel);
+
+            AssertTrueIsDisplayed(documentOwnerLabel);
+            AssertTrueIsDisplayed(documentTypeOwnerInput);
+            AssertTrueIsDisplayed(documentTitleSearchTypePIDLabel);
+            AssertTrueIsDisplayed(documentMiscNotesTypePIDInput);
+            AssertTrueIsDisplayed(documentTitleSearchTypeTitleLabel);
+            AssertTrueIsDisplayed(documentTitleSearchTypeTitleInput);
+        }
+
+        private void VerifyTransferAdministrationFields()
+        {
+            WaitUntilVisible(documentDateSignedLabel);
+
+            AssertTrueIsDisplayed(documentDateSignedLabel);
+            AssertTrueIsDisplayed(documentDateSignedInput);
+
+            AssertTrueIsDisplayed(documentMOTIFileLabel);
+            AssertTrueIsDisplayed(documentTypeMotiFileInput);
+
+            AssertTrueIsDisplayed(documentTransferAdmTypeProIdLabel);
+            AssertTrueIsDisplayed(documentTypePropertyIdentifierInput);
+
+            AssertTrueIsDisplayed(documentRoadNameLabel);
+            AssertTrueIsDisplayed(documentRoadNameInput);
+
+            AssertTrueIsDisplayed(documentTransferAdmTypeTransferLabel);
+            AssertTrueIsDisplayed(documentTransferAdmTypeTransferInput);
         }
 
         private string TranformFormatDateDocument(string date)

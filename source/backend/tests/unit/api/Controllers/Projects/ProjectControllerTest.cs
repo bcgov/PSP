@@ -7,13 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Moq;
 using Pims.Api.Areas.Projects.Controllers;
 using Pims.Api.Models.Concepts.Project;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Controllers

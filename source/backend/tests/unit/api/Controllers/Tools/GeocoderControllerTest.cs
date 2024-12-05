@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 using Moq;
 using Pims.Api.Areas.Tools.Controllers;
 using Pims.Core.Test;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Pims.Geocoder;
 using Pims.Geocoder.Models;
 using Pims.Geocoder.Parameters;

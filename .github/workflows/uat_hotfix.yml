@@ -80,6 +80,7 @@ jobs:
       - name: Call script to build backend (pims-api)
         run: |
           ./openshift/4.0/player.sh build api -apply
+          ./openshift/4.0/player.sh build proxy -apply
 
   deploy:
     name: Deploy frontend and api to OpenShift
@@ -98,6 +99,7 @@ jobs:
       - name: call scripts to deploy api and frontend
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
 
   # the command:

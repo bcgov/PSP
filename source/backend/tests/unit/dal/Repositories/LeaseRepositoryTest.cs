@@ -13,7 +13,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -34,8 +34,8 @@ namespace Pims.Dal.Test.Repositories
                 new object[] { new LeaseFilter() { TenantName = "fake" }, 0 },
                 new object[] { new LeaseFilter() { LFileNo = "123" }, 1 },
                 new object[] { new LeaseFilter() { LFileNo = "fake" }, 0 },
-                new object[] { new LeaseFilter() { PinOrPid = "456" }, 1 },
-                new object[] { new LeaseFilter() { PinOrPid = "789" }, 0 },
+                new object[] { new LeaseFilter() { Pid = "456" }, 1 },
+                new object[] { new LeaseFilter() { Pin = "789" }, 1 },
                 new object[] { new LeaseFilter() { Historical = "111" }, 1 },
                 new object[] { new LeaseFilter() { Historical = "222" }, 0 },
                 new object[] { new LeaseFilter() { Address = "1234 St" }, 1 },
@@ -61,7 +61,8 @@ namespace Pims.Dal.Test.Repositories
                 new object[] { new LeaseFilter() { NotInStatus = new List<string>() { "someOtherValue" } }, 1 },
                 new object[] { new LeaseFilter() { IsReceivable = true }, 0 },
                     new object[] { new LeaseFilter() { IsReceivable = false }, 1 },
-                new object[] { new LeaseFilter() { PinOrPid = "789" }, 0 },
+                new object[] { new LeaseFilter() { Pin = "999" }, 0 },
+                new object[] { new LeaseFilter() { Pid = "999" }, 0 },
                 new object[] { new LeaseFilter(), 1 },
                 new object[] { new LeaseFilter() { Sort = new string[] {"ExpiryDate"} }, 1 },
             };
@@ -94,7 +95,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true);
+            var elease = EntityHelper.CreateLease(456, 789, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);
@@ -154,7 +155,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true);
+            var elease = EntityHelper.CreateLease(456, 789, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
             elease.OrigStartDate = new DateTime(2000, 1, 1);

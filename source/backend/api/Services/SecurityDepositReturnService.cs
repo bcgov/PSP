@@ -1,8 +1,8 @@
 using System.Security.Claims;
+using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {

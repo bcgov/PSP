@@ -334,7 +334,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifySubdivisionHistory(PropertySubdivision subdivision)
         {
-            WaitUntilVisible(propertyInformationTitle);
+            Wait();
            
             AssertTrueIsDisplayed(subdivisionHistorySubtitle);
 

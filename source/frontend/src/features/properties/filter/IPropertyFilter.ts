@@ -8,8 +8,10 @@ export interface IPropertyFilter {
   page: string | undefined;
   /** The quantity to return in a single request for paging. */
   quantity: string | undefined;
-  /** The pin or pid property identifiers. */
-  pinOrPid: string;
+  /** The pid property identifier. */
+  pid: string;
+  /** The pin property identifier. */
+  pin: string;
   /** The historical file number property identifiers. */
   historical: string;
   /** The address of the property. */
@@ -23,8 +25,9 @@ export interface IPropertyFilter {
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
-  searchBy: 'pinOrPid',
-  pinOrPid: '',
+  searchBy: 'pid',
+  pid: '',
+  pin: '',
   address: '',
   planNumber: '',
   latitude: '',

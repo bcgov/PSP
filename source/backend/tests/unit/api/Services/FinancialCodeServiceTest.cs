@@ -12,7 +12,7 @@ using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Services

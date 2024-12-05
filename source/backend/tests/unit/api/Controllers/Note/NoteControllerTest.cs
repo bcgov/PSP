@@ -6,7 +6,7 @@ using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Constants;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Controllers.Note

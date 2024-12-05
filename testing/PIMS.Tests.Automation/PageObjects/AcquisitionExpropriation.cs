@@ -142,14 +142,6 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Cancel");
 
-            //if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-            //{
-            //    Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
-            //    Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
-            //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
-
-            //    sharedModals.ModalClickOKBttn();
-            //}
             sharedModals.CancelActionModal();
         }
 

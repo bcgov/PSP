@@ -9,7 +9,7 @@ import {
   InventoryTabNames,
 } from '@/features/mapSideBar/property/InventoryTabs';
 import { getMockCrownTenuresLayerResponse } from '@/mocks/crownTenuresLayerResponse.mock';
-import { mockLtsaResponse, mockWfsGetPropertyById } from '@/mocks/index.mock';
+import { mockLtsaResponse, getMockPimsLocationViewLayerResponse } from '@/mocks/index.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { getEmptyProperty } from '@/models/defaultInitializers';
@@ -65,7 +65,9 @@ describe('PropertyFileContainer component', () => {
     mockAxios
       .onGet('properties/495')
       .reply(200, (getMockResearchFile().fileProperties ?? [])[0].property);
-    mockAxios.onGet(new RegExp('ogs-internal/ows.*')).reply(200, mockWfsGetPropertyById);
+    mockAxios
+      .onGet(new RegExp('ogs-internal/ows.*'))
+      .reply(200, getMockPimsLocationViewLayerResponse());
     mockAxios
       .onGet(
         new RegExp(

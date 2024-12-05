@@ -10,7 +10,7 @@ using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -56,8 +56,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.FileNumber = "fileNumber";
-            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileNumber" };
+            acqFile.FileNo = 12345;
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "12345" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
 
@@ -202,8 +202,10 @@ namespace Pims.Dal.Test.Repositories
             result.Should().BeAssignableTo<PimsAcquisitionFile>();
             result.FileName.Should().Be("Test Acquisition File");
             result.AcquisitionFileId.Should().Be(1);
+            result.RegionCode.Should().Be(1);
             result.FileNo.Should().Be(888999);
-            result.FileNumber.Should().Be("01-888999-01");
+            result.FileNoSuffix.Should().Be(1);
+            result.FileNumberFormatted.Should().Be("01-888999-01");
         }
 
         [Fact]
@@ -222,7 +224,7 @@ namespace Pims.Dal.Test.Repositories
                 acquisitionType: acqMainFile.AcquisitionTypeCodeNavigation,
                 region: acqMainFile.RegionCodeNavigation);
             acqSubFile.FileNo = 888999;
-            acqSubFile.FileNumber = "01-888999-02";
+            acqSubFile.FileNoSuffix = 2;
             acqSubFile.PrntAcquisitionFileId = 1;
             acqSubFile.PrntAcquisitionFile = acqMainFile;
 
@@ -250,8 +252,10 @@ namespace Pims.Dal.Test.Repositories
             result.Should().BeAssignableTo<PimsAcquisitionFile>();
             result.FileName.Should().Be("Test sub-file");
             result.AcquisitionFileId.Should().Be(99);
+            result.RegionCode.Should().Be(1);
             result.FileNo.Should().Be(888999);
-            result.FileNumber.Should().Be("01-888999-03");
+            result.FileNoSuffix.Should().Be(3);
+            result.FileNumberFormatted.Should().Be("01-888999-03");
         }
 
         [Fact]
@@ -587,8 +591,8 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.FileNumber = "fileNumber";
-            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "fileNumber" };
+            acqFile.FileNo = 12345;
+            var filter = new AcquisitionFilter() { AcquisitionFileNameOrNumber = "12345" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
 
