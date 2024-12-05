@@ -948,7 +948,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             </div>
             <div
               class="c5 text-left col"
-            />
+            >
+              FERRIES
+            </div>
           </div>
           <div
             class="pb-2 row"
@@ -964,7 +966,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             </div>
             <div
               class="c5 text-left col"
-            />
+            >
+              SURVEY
+            </div>
           </div>
           <div
             class="pb-2 row"
@@ -980,7 +984,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             </div>
             <div
               class="c5 text-left col"
-            />
+            >
+              HWY PLAN
+            </div>
           </div>
           <div
             class="pb-2 row"
