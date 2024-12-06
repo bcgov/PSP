@@ -816,7 +816,9 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c10 text-left col"
-          />
+          >
+            FERRIES
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -832,7 +834,9 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c10 text-left col"
-          />
+          >
+            SURVEY
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -848,7 +852,9 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c10 text-left col"
-          />
+          >
+            HWY PLAN
+          </div>
         </div>
         <div
           class="pb-2 row"
