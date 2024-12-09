@@ -20,7 +20,9 @@ interface IProps {
 export const UsersFilterBar: React.FC<React.PropsWithChildren<IProps>> = ({ values, onChange }) => {
   const { getOptionsByType } = useLookupCodeHelpers();
   const roles = getOptionsByType(API.ROLE_TYPES);
-  const regions = getOptionsByType(API.REGION_TYPES);
+  const regions = getOptionsByType(API.REGION_TYPES).filter(
+    region => region.label !== 'Cannot determine',
+  );
 
   return (
     <Formik<IUsersFilter>
