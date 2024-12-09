@@ -178,6 +178,7 @@ jobs:
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
           oc tag pims-proxy:uat pims-proxy:v${VERSION}-master
+          oc tag pims-scheduler:uat pims-scheduler:v${VERSION}-master
           oc tag mayan-bcgov:uat mayan-bcgov:v${VERSION}-master
 
   ci-cd-end-notification:

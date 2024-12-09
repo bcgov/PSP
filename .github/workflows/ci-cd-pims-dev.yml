@@ -115,11 +115,11 @@ jobs:
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
       - name: Deploy scheduler microservice
-          shell: bash
-          run: |
-            oc tag pims-scheduler:latest-$DESTINATION pims-scheduler:$DESTINATION
-            oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
-            oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
+        shell: bash
+        run: |
+          oc tag pims-scheduler:latest-$DESTINATION pims-scheduler:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
       - name: Deploy mayan
         shell: bash
         run: |
