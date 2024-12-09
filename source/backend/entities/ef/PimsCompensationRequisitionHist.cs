@@ -83,9 +83,6 @@ public partial class PimsCompensationRequisitionHist
     [Column("FINALIZED_DATE")]
     public DateOnly? FinalizedDate { get; set; }
 
-    [Column("ADV_PMT_SERVED_DT")]
-    public DateOnly? AdvPmtServedDt { get; set; }
-
     [Column("SPECIAL_INSTRUCTION")]
     [StringLength(2000)]
     public string SpecialInstruction { get; set; }
@@ -147,4 +144,7 @@ public partial class PimsCompensationRequisitionHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("ADV_PMT_SERVED_DT")]
+    public DateOnly? AdvPmtServedDt { get; set; }
 }
