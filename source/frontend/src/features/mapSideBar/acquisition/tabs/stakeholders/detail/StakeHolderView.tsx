@@ -43,21 +43,17 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
     <>
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
-
+        <StyledEditWrapper className="mr-3 my-1">
+          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditStakeholders() ? (
+            <EditButton title="Edit Interests" onClick={onEdit} />
+          ) : null}
+        </StyledEditWrapper>
         <Section
           isCollapsable
           initiallyExpanded
           header={
             <Row>
-              <Col md="10">Interests</Col>
-              <Col md="2" className="d-flex align-items-center justify-content-end pr-0">
-                <StyledEditWrapper>
-                  {keycloak.hasClaim(Claims.ACQUISITION_EDIT) &&
-                  statusSolver.canEditStakeholders() ? (
-                    <EditButton title="Edit Interests" onClick={onEdit} />
-                  ) : null}
-                </StyledEditWrapper>
-              </Col>
+              <Col>Interests</Col>
             </Row>
           }
         >
@@ -100,14 +96,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
           initiallyExpanded
           header={
             <Row>
-              <Col md="10">Non-interest Payees</Col>
-              <Col md="2" className="d-flex align-items-center justify-content-end pr-0">
-                <StyledEditWrapper>
-                  {keycloak.hasClaim(Claims.ACQUISITION_EDIT) ? (
-                    <EditButton title="Edit Non-interest payees" onClick={onEdit} />
-                  ) : null}
-                </StyledEditWrapper>
-              </Col>
+              <Col>Non-interest Payees</Col>
             </Row>
           }
         >

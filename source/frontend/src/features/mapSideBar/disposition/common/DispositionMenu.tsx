@@ -50,9 +50,9 @@ const DispositionMenu: React.FunctionComponent<
                 className={cx('no-gutters', { selected: props.selectedIndex === index })}
               >
                 {activeIndex ? (
-                  <Col>
+                  <StyledMenuCol>
                     <span title="File Details">{label}</span>
-                  </Col>
+                  </StyledMenuCol>
                 ) : (
                   <Col>
                     <LinkButton title="File Details" onClick={() => handleClick(index)}>
@@ -93,9 +93,9 @@ const DispositionMenu: React.FunctionComponent<
                   </StyledIconWrapper>
                 </Col>
                 {activeIndex ? (
-                  <Col>
+                  <StyledMenuCol>
                     <span title="View">{label}</span>
-                  </Col>
+                  </StyledMenuCol>
                 ) : (
                   <Col>
                     <LinkButton title="View">{label}</LinkButton>
@@ -118,6 +118,11 @@ const StyledMenuWrapper = styled.div`
   margin: 0px;
   width: 100%;
   color: ${props => props.theme.css.linkColor};
+`;
+
+const StyledMenuCol = styled(Col)`
+  min-height: 2.5rem;
+  line-height: 3rem;
 `;
 
 const StyledRow = styled(Row)`
