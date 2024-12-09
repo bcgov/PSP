@@ -266,7 +266,6 @@ exports[`SideNavbar display and logic > renders 1`] = `
 }
 
 .c1 .nav-item svg {
-  fill: white;
   min-width: 2.4rem;
 }
 
@@ -328,12 +327,6 @@ exports[`SideNavbar display and logic > renders 1`] = `
   fill: #f2f2f2;
 }
 
-.c2 svg {
-  min-width: -webkit-max-content;
-  min-width: -moz-max-content;
-  min-width: max-content;
-}
-
 .c2:hover label {
   color: #8ec6ff;
 }
@@ -354,6 +347,17 @@ exports[`SideNavbar display and logic > renders 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.c3 svg {
+  fill: white;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.c3.active svg {
+  fill: #FDB913;
 }
 
 @media (max-width:1225px) {
