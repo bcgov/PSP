@@ -119,7 +119,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
 export default LeaseHeader;
 
 const HistoricalRow = styled(Row)`
-  margin-right: 1rem;
+  margin-right: -1.25rem;
 `;
 
 const Container = styled.div`
