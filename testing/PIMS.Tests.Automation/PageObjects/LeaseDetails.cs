@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class LeaseDetails : PageObjectBase
     {
         //Main Menu links Elements
-        private readonly By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licences'] a");
+        private readonly By menuManagementButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-leases&licences']/a");
         private readonly By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/Licence File')]");
 
         //File Details Edit Icon
@@ -273,6 +273,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string purpose in lease.LeasePurpose)
                 {
+                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();
                     FocusAndClick(licenseDetailsPurposeMultiselector);
 
                     Wait(5000);

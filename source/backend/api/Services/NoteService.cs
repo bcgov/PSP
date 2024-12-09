@@ -5,13 +5,13 @@ using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.Concepts.Note;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Services;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Repositories;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
 {

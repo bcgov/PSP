@@ -108,6 +108,7 @@ jobs:
         run: |
           OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh build api -apply
           OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh build proxy -apply
+          OC_JOB_NAME=${{github.event.inputs.HOTFIX_BRANCH}} && ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
     name: Deploy to OpenShift
@@ -144,6 +145,13 @@ jobs:
           oc tag pims-proxy:$RELEASE_TAG pims-proxy:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+      - name: Deploy scheduler microservice
+        shell: bash
+        run: |
+          export RELEASE_TAG=latest-${{github.event.inputs.HOTFIX_BRANCH}}
+          oc tag pims-scheduler:$RELEASE_TAG pims-scheduler:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
@@ -231,7 +239,8 @@ jobs:
           VERSION=$(make version)
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
-          oc tag pims-proxy:uat pims-api:v${VERSION}-master
+          oc tag pims-proxy:uat pims-proxy:v${VERSION}-master
+          oc tag pims-scheduler:uat pims-scheduler:v${VERSION}-master
 
   ci-cd-end-notification:
     if: always()

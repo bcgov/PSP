@@ -12,6 +12,7 @@ using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.PimsSync;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Mayan;
+using Pims.Core.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Security;

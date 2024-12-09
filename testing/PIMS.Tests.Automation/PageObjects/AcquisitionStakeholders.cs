@@ -186,6 +186,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInterestStakeholderViewForm(AcquisitionStakeholder interest)
         {
+            Wait();
             AssertTrueIsDisplayed(stakeholderInterestsSubtitle);
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
             AssertTrueIsDisplayed(stakeholderInterestTable);

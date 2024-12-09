@@ -1,0 +1,72 @@
+# Editor configuration, see https://editorconfig.org
+root = true
+
+[*]
+end_of_line = lf
+charset = utf-8
+indent_style = space
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+[*.ts]
+indent_size = 2
+
+[*.md]
+max_line_length = off
+trim_trailing_whitespace = false
+
+[*.env]
+insert_final_newline = false
+
+[{Makefile,**.mk}]
+# Use tabs for indentation (Makefiles require tabs)
+indent_style = tab
+
+[*.cs]
+indent_size = 4
+
+
+# Test files
+# SA1515 Single-line comment should be preceded by blank line
+dotnet_diagnostic.SA1515.severity = none
+# SA1513: Closing brace should be followed by blank line
+dotnet_diagnostic.SA1513.severity = none
+# SA1633 The file header is missing or not located at the top of the file
+dotnet_diagnostic.SA1633.severity = none
+# SA1200 Using directive should appear within a namespace declaration
+dotnet_diagnostic.SA1200.severity = none
+# SA1124 Do not use regions
+dotnet_diagnostic.SA1124.severity = none
+# SA1201 A constructor should not follow a property
+dotnet_diagnostic.SA1201.severity = none
+# SA1309 Field 'X' should not begin with an underscore
+dotnet_diagnostic.SA1309.severity = none
+# SA1117 The parameters should all be placed on the same line or each parameter should be placed on its own line.
+dotnet_diagnostic.SA1117.severity = none
+
+# -- Set to 'error' before running formatter
+# dotnet format --severity error --exclude entities/ef/** --exclude entities/PimsBaseContext.cs
+# SA1208: Using directive for X should appear before directive for Y
+dotnet_diagnostic.SA1208.severity = warning
+# SA1121 Use built-in type alias 
+dotnet_diagnostic.SA1121.severity = warning
+# SA1413 Use trailing comma in multi-line initializers.
+dotnet_diagnostic.SA1413.severity = warning
+# SA1122 Use string.Empty for empty strings
+dotnet_diagnostic.SA1122.severity = warning
+# SA1518 Code should not contain blank lines at the end of the file.
+dotnet_diagnostic.SA1518.severity = warning
+# SA1101 Prefix local calls with this
+dotnet_diagnostic.SA1101.severity = warning
+# SA1507 Code should not contain multiple blank lines in a row
+dotnet_diagnostic.SA1507.severity = warning
+# SA1127 Generic type constraints should be on their own line
+dotnet_diagnostic.SA1127.severity = warning
+# SA1002 Semicolons should be followed by a space.
+dotnet_diagnostic.SA1002.severity = warning
+# SA1009 Closing parenthesis should not be preceded by a space.
+dotnet_diagnostic.SA1009.severity = warning
+# SA1508 A closing brace should not be preceded by a blank line
+dotnet_diagnostic.SA1508.severity = warning
+# SA1005 Single line comment should begin with a space.
+dotnet_diagnostic.SA1005.severity = warning

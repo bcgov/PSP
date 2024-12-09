@@ -78,6 +78,12 @@ jobs:
           oc tag pims-proxy:$RELEASE_TAG pims-proxy:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+      - name: Deploy scheduler microservice
+        shell: bash
+        run: |
+          oc tag pims-scheduler:$RELEASE_TAG pims-scheduler:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
       - name: Deploy mayan
         shell: bash
         run: |
@@ -172,6 +178,7 @@ jobs:
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
           oc tag pims-proxy:uat pims-proxy:v${VERSION}-master
+          oc tag pims-scheduler:uat pims-scheduler:v${VERSION}-master
           oc tag mayan-bcgov:uat mayan-bcgov:v${VERSION}-master
 
   ci-cd-end-notification:

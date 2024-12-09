@@ -22,6 +22,7 @@
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\apimodels\Pims.Api.Models.csproj" />
     <ProjectReference Include="..\core\Pims.Core.csproj" />
     <ProjectReference Include="..\keycloak\Pims.Keycloak.csproj" />
   </ItemGroup>
