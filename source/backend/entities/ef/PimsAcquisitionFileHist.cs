@@ -68,11 +68,6 @@ public partial class PimsAcquisitionFileHist
     [Column("FILE_NO_SUFFIX")]
     public short FileNoSuffix { get; set; }
 
-    [Required]
-    [Column("FILE_NUMBER")]
-    [StringLength(18)]
-    public string FileNumber { get; set; }
-
     [Column("LEGACY_FILE_NUMBER")]
     [StringLength(18)]
     public string LegacyFileNumber { get; set; }
@@ -160,4 +155,8 @@ public partial class PimsAcquisitionFileHist
 
     [Column("COMPLETION_DATE", TypeName = "datetime")]
     public DateTime? CompletionDate { get; set; }
+
+    [Column("FILE_NUMBER")]
+    [StringLength(18)]
+    public string FileNumber { get; set; }
 }
