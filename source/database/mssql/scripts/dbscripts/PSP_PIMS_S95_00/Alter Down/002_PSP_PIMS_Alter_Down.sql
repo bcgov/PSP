@@ -451,7 +451,7 @@ EXEC sp_addextendedproperty
 	@level2type = N'Column', @level2name = N'ADV_PMT_SERVED_DT'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
-GO 0 SET NOEXEC ON
+GO
 --GO
 
 -- Alter table dbo.PIMS_ACQUISITION_FILE_HIST
