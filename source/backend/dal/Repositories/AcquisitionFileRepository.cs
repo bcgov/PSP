@@ -690,9 +690,6 @@ namespace Pims.Dal.Repositories
                 acquisitionFile.FileNoSuffix = nextSuffix;
             }
 
-            // TODO: Remove this once the FILE_NUMBER column gets removed. We need this here because it is not nullable
-            acquisitionFile.FileNumber = string.Empty;
-
             Context.PimsAcquisitionFiles.Add(acquisitionFile);
             return acquisitionFile;
         }
@@ -713,7 +710,6 @@ namespace Pims.Dal.Repositories
             // Make sure the frontend cannot override these auto-generated fields
             acquisitionFile.FileNo = existingAcqFile.FileNo;
             acquisitionFile.FileNoSuffix = existingAcqFile.FileNoSuffix;
-            acquisitionFile.FileNumber = existingAcqFile.FileNumber; // TODO: Remove this once the FILE_NUMBER column gets removed. We need this here because it is not nullable
 
             // PSP-9268 Changes to Project/Product on the main file need to be propagated to all sub-files
             if (existingAcqFile.ProjectId != acquisitionFile.ProjectId || existingAcqFile.ProductId != acquisitionFile.ProductId)
@@ -804,7 +800,7 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
-                .Where(predicate).OrderBy(x => x.FileNumber).ToList();
+                .Where(predicate).OrderBy(x => x.FileNoSuffix).ToList();
         }
 
         /// <summary>
