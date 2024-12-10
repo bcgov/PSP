@@ -1,4 +1,4 @@
-import { FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaFileContract, FaPlus, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -69,12 +69,13 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     {exists(agreement.agreementType) && (
                       <StyledButtonContainer>
                         <StyledAddButton
+                          title="Download File"
                           onClick={() => {
                             onGenerate(agreement);
                           }}
                         >
-                          <FaMailBulk className="mr-2" />
-                          Generate
+                          <FaFileContract size={28} className="mr-2" />
+                          {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                         </StyledAddButton>
 
                         {!statusUpdateSolver.canEditOrDeleteAgreement(
@@ -199,6 +200,21 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
 };
 
 export default AgreementView;
+
+function getAgreementFormName(agreementType: string | null): string {
+  switch (agreementType) {
+    case ApiGen_CodeTypes_AgreementTypes.H179A:
+      return 'H-179A';
+    case ApiGen_CodeTypes_AgreementTypes.H179P:
+      return 'H-179P';
+    case ApiGen_CodeTypes_AgreementTypes.H179T:
+      return 'H-179T';
+    case ApiGen_CodeTypes_AgreementTypes.H0074:
+      return 'H-0074';
+    default:
+      return '';
+  }
+}
 
 export const StyledButtonContainer = styled.div`
   display: flex;
