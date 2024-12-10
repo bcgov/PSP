@@ -40,9 +40,9 @@ const ResearchMenu: React.FunctionComponent<
                 </StyledIconWrapper>
               </Col>
               {props.selectedIndex === index ? (
-                <Col>
+                <StyledMenuCol>
                   <span title="View">{label}</span>
-                </Col>
+                </StyledMenuCol>
               ) : (
                 <Col>
                   <LinkButton title="View" onClick={() => handleClick(index)}>
@@ -56,9 +56,9 @@ const ResearchMenu: React.FunctionComponent<
           {index === 0 && (
             <>
               {props.selectedIndex === index ? (
-                <Col>
+                <StyledMenuCol>
                   <span title="File Details">{label}</span>
-                </Col>
+                </StyledMenuCol>
               ) : (
                 <Col>
                   <LinkButton title="File Details" onClick={() => handleClick(index)}>
@@ -94,6 +94,11 @@ const StyledMenuWrapper = styled.div`
   margin: 0px;
   width: 100%;
   color: ${({ theme }) => theme.css.linkColor};
+`;
+
+const StyledMenuCol = styled(Col)`
+  min-height: 2.5rem;
+  line-height: 3rem;
 `;
 
 const StyledRow = styled(Row)`

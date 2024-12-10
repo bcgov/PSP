@@ -6,7 +6,7 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c5.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c5.btn .Button__value {
+.c6.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c5.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c6.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c6.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c5.btn.btn-primary:hover,
-.c5.btn.btn-primary:active,
-.c5.btn.btn-primary:focus {
+.c6.btn.btn-primary:hover,
+.c6.btn.btn-primary:active,
+.c6.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c5.btn.btn-secondary {
+.c6.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c5.btn.btn-secondary:hover,
-.c5.btn.btn-secondary:active,
-.c5.btn.btn-secondary:focus {
+.c6.btn.btn-secondary:hover,
+.c6.btn.btn-secondary:active,
+.c6.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c5.btn.btn-info {
+.c6.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c5.btn.btn-light {
+.c6.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c5.btn.btn-light:hover,
-.c5.btn.btn-light:active,
-.c5.btn.btn-light:focus {
+.c6.btn.btn-light:hover,
+.c6.btn.btn-light:active,
+.c6.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c5.btn.btn-dark {
+.c6.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c5.btn.btn-dark:hover,
-.c5.btn.btn-dark:active,
-.c5.btn.btn-dark:focus {
+.c6.btn.btn-dark:hover,
+.c6.btn.btn-dark:active,
+.c6.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c5.btn.btn-danger {
+.c6.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c5.btn.btn-danger:hover,
-.c5.btn.btn-danger:active,
-.c5.btn.btn-danger:focus {
+.c6.btn.btn-danger:hover,
+.c6.btn.btn-danger:active,
+.c6.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c5.btn.btn-warning {
+.c6.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c5.btn.btn-warning:hover,
-.c5.btn.btn-warning:active,
-.c5.btn.btn-warning:focus {
+.c6.btn.btn-warning:hover,
+.c6.btn.btn-warning:active,
+.c6.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c5.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,15 +202,15 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c5.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -220,6 +220,11 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   margin: 0px;
   width: 100%;
   color: var(--surface-color-primary-button-default);
+}
+
+.c2 {
+  min-height: 2.5rem;
+  line-height: 3rem;
 }
 
 .c1 {
@@ -238,7 +243,7 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   font-size: 1.4rem;
 }
 
-.c4 {
+.c5 {
   background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
@@ -260,11 +265,11 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c4.selected {
+.c5.selected {
   background-color: #FCBA19;
 }
 
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -281,7 +286,7 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
   border-bottom: 1px solid #606060;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
   font-size: 1.6rem;
   color: #474543;
@@ -296,7 +301,7 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
       data-testid="menu-item-row-0"
     >
       <div
-        class="col"
+        class="c2 col"
       >
         <span
           title="File Details"
@@ -305,10 +310,10 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
         </span>
       </div>
       <div
-        class="c2"
+        class="c3"
       >
         <span
-          class="c3"
+          class="c4"
         >
           Properties
         </span>
@@ -325,7 +330,7 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
         class="pr-2 col-auto"
       >
         <div
-          class="c4"
+          class="c5"
         >
           1
         </div>
@@ -334,7 +339,7 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
         class="col"
       >
         <button
-          class="c5 Button btn btn-link"
+          class="c6 Button btn btn-link"
           title="View"
           type="button"
         >
@@ -357,7 +362,7 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
         class="pr-2 col-auto"
       >
         <div
-          class="c4"
+          class="c5"
         >
           2
         </div>
@@ -366,7 +371,7 @@ exports[`DispositionMenu component > matches snapshot 1`] = `
         class="col"
       >
         <button
-          class="c5 Button btn btn-link"
+          class="c6 Button btn btn-link"
           title="View"
           type="button"
         >
