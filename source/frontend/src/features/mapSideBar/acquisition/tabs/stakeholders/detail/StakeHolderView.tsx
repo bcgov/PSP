@@ -1,5 +1,3 @@
-import { Col, Row } from 'react-bootstrap';
-
 import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -48,15 +46,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
             <EditButton title="Edit Interests" onClick={onEdit} />
           ) : null}
         </StyledEditWrapper>
-        <Section
-          isCollapsable
-          initiallyExpanded
-          header={
-            <Row>
-              <Col>Interests</Col>
-            </Row>
-          }
-        >
+        <Section isCollapsable initiallyExpanded header="Interests">
           {groupedInterestProperties.length === 0 && legacyStakeHolders.length === 0 && (
             <StyledNoData>
               <p>There are no interest holders associated with this file.</p>
@@ -91,15 +81,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
         </Section>
       </StyledSummarySection>
       <StyledSummarySection>
-        <Section
-          isCollapsable
-          initiallyExpanded
-          header={
-            <Row>
-              <Col>Non-interest Payees</Col>
-            </Row>
-          }
-        >
+        <Section isCollapsable initiallyExpanded header="Non-interest Payees">
           {groupedNonInterestProperties.length === 0 && (
             <StyledNoData>
               <p>There are no non-interest payees associated with this file.</p>

@@ -54,15 +54,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
           <div
             class="col"
           >
-            <div
-              class="row"
-            >
-              <div
-                class="col"
-              >
-                Interests
-              </div>
-            </div>
+            Interests
           </div>
           <div
             class="pl-8 d-flex align-items-end col-auto"
@@ -366,15 +358,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
           <div
             class="col"
           >
-            <div
-              class="row"
-            >
-              <div
-                class="col"
-              >
-                Non-interest Payees
-              </div>
-            </div>
+            Non-interest Payees
           </div>
           <div
             class="pl-8 d-flex align-items-end col-auto"
