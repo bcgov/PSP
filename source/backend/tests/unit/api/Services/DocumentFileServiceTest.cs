@@ -310,6 +310,12 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                     },
+                    DocumentExternalResponse = new()
+                    {
+                        Message = "Mayan test error",
+                        Status = ExternalResponseStatus.Success,
+                        Payload = new Models.Mayan.Document.DocumentDetailModel() { Id = 1 },
+                    }
                 });
 
             // Act
@@ -319,6 +325,7 @@ namespace Pims.Api.Test.Services
                 DocumentTypeId = 4,
                 File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
+                DocumentId = 1,
             };
 
             await service.UploadProjectDocumentAsync(1, uploadRequest);
@@ -406,6 +413,12 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                     },
+                    DocumentExternalResponse = new()
+                    {
+                        Message = "Mayan test error",
+                        Status = ExternalResponseStatus.Success,
+                        Payload = new Models.Mayan.Document.DocumentDetailModel() { Id = 1 },
+                    }
                 });
 
             // Act
@@ -415,6 +428,7 @@ namespace Pims.Api.Test.Services
                 DocumentTypeId = 4,
                 File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
+                DocumentId = 1,
             };
 
             await service.UploadAcquisitionDocumentAsync(1, uploadRequest);
@@ -502,6 +516,12 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                     },
+                    DocumentExternalResponse = new()
+                    {
+                        Message = "Mayan test error",
+                        Status = ExternalResponseStatus.Success,
+                        Payload = new Models.Mayan.Document.DocumentDetailModel() { Id = 1 },
+                    }
                 });
 
             // Act
@@ -511,6 +531,7 @@ namespace Pims.Api.Test.Services
                 DocumentTypeId = 4,
                 File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
+                DocumentId = 1,
             };
 
             await service.UploadResearchDocumentAsync(1, uploadRequest);
@@ -598,6 +619,13 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                     },
+                    DocumentExternalResponse = new()
+                    {
+                        Message = "Mayan test error",
+                        Status = ExternalResponseStatus.Success,
+                        Payload = new Models.Mayan.Document.DocumentDetailModel() { Id = 1 },
+                        
+                    }
                 });
 
             // Act
@@ -607,6 +635,7 @@ namespace Pims.Api.Test.Services
                 DocumentTypeId = 4,
                 File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
+                DocumentId = 1,
             };
 
             await service.UploadLeaseDocumentAsync(1, uploadRequest);
@@ -694,6 +723,12 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                     },
+                    DocumentExternalResponse = new()
+                    {
+                        Message = "Mayan test error",
+                        Status = ExternalResponseStatus.Success,
+                        Payload = new Models.Mayan.Document.DocumentDetailModel() { Id = 1 },
+                    }
                 });
 
             // Act
@@ -703,6 +738,7 @@ namespace Pims.Api.Test.Services
                 DocumentTypeId = 4,
                 File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
+                DocumentId = 1,
             };
 
             await service.UploadPropertyActivityDocumentAsync(1, uploadRequest);
@@ -790,6 +826,12 @@ namespace Pims.Api.Test.Services
                     {
                         Id = 1,
                     },
+                    DocumentExternalResponse = new()
+                    {
+                        Message = "Mayan test error",
+                        Status = ExternalResponseStatus.Success,
+                        Payload = new Models.Mayan.Document.DocumentDetailModel() { Id = 1 },
+                    }
                 });
 
             dispositionFileDocumentRepository.Setup(x => x.AddDispositionDocument(It.IsAny<PimsDispositionFileDocument>()))
@@ -802,6 +844,7 @@ namespace Pims.Api.Test.Services
                 DocumentTypeId = 4,
                 File = this._helper.GetFormFile("Lorem Ipsum"),
                 DocumentStatusCode = "DocumentStatus",
+                DocumentId = 1,
             };
 
             var result = await service.UploadDispositionDocumentAsync(100, uploadRequest);

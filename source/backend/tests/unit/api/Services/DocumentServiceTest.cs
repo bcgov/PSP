@@ -198,7 +198,6 @@ namespace Pims.Api.Test.Services
             // Assert
             avService.Verify(x => x.ScanAsync(It.IsAny<IFormFile>()), Times.Once);
             documentStorageRepository.Verify(x => x.TryUploadDocumentAsync(It.IsAny<long>(), It.IsAny<IFormFile>()), Times.Once);
-            documentStorageRepository.Verify(x => x.TryCreateDocumentMetadataAsync(It.IsAny<long>(), It.IsAny<long>(), It.IsAny<string>()), Times.Once);
         }
 
         [Fact]

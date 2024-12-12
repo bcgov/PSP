@@ -39,7 +39,7 @@ using Pims.Core.Security;
 using Pims.Keycloak.Configuration;
 using Pims.Scheduler.Http.Configuration;
 using Pims.Scheduler.Policies;
-using Pims.Scheduler.Repositories.Pims;
+using Pims.Scheduler.Repositories;
 using Pims.Scheduler.Rescheduler;
 using Pims.Scheduler.Services;
 using Prometheus;
@@ -91,7 +91,7 @@ namespace Pims.Scheduler
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
             services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
             services.AddSingleton<JwtSecurityTokenHandler>();
-            services.AddSingleton<IPimsDocumentQueueRepository, PimsDocumentQueueRepository>();
+            services.AddScoped<IPimsDocumentQueueRepository, PimsDocumentQueueRepository>();
             services.AddSingleton<IJobRescheduler, JobRescheduler>();
 
             services.AddSerilogging(this.Configuration);
@@ -110,6 +110,8 @@ namespace Pims.Scheduler
             services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
             services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<PimsOptions>(this.Configuration.GetSection("Pims:Environment"));
+            services.Configure<UploadQueuedDocumentsJobOptions>(this.Configuration.GetSection("UploadQueuedDocumentsOptions"));
+            services.Configure<QueryProcessingDocumentsJobOptions>(this.Configuration.GetSection("QueryProcessingDocumentsOptions"));
             services.AddOptions();
             services.AddApiVersioning(options =>
             {
@@ -322,7 +324,9 @@ namespace Pims.Scheduler
         private void ScheduleHangfireJobs(IServiceProvider services)
         {
             // provide default definition of all jobs.
-            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.UploadQueuedDocuments), x => x.UploadQueuedDocuments(), Cron.Hourly);
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.UploadQueuedDocuments), x => x.UploadQueuedDocuments(), Cron.Minutely);
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.RetryQueuedDocuments), x => x.RetryQueuedDocuments(), "0 0 * * *");
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.QueryProcessingDocuments), x => x.QueryProcessingDocuments(), Cron.Minutely);
 
             // override scheduled jobs with configuration.
             JobScheduleOptions jobOptions = this.Configuration.GetSection("JobOptions").Get<JobScheduleOptions>();

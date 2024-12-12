@@ -80,16 +80,16 @@ namespace Pims.Api.Services
                 }
             }
 
-            DocumentUploadResponse uploadResult = await _documentService.UploadDocumentAsync(uploadRequest);
+            DocumentUploadResponse uploadResult = await _documentService.UploadDocumentSync(uploadRequest);
 
             DocumentUploadRelationshipResponse relationshipResponse = new DocumentUploadRelationshipResponse()
             {
                 UploadResponse = uploadResult,
             };
 
-            if (uploadResult.DocumentExternalResponse.Status == ExternalResponseStatus.Success && uploadResult.Document != null && uploadResult.Document.Id != 0)
+            if (uploadResult.DocumentExternalResponse.Status == ExternalResponseStatus.Success)
             {
-                currentFormType.DocumentId = uploadResult.Document.Id;
+                currentFormType.DocumentId = uploadRequest.DocumentId;
                 var updatedFormType = _formTypeRepository.SetFormTypeDocument(currentFormType);
                 _formTypeRepository.CommitTransaction();
 

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -33,13 +34,34 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
+        /// Attempts to find a queued document via the documentQueueId. Returns null if not found;
+        /// </summary>
+        /// <param name="documentQueueId"></param>
+        /// <returns></returns>
+        public PimsDocumentQueue TryGetById(long documentQueueId)
+        {
+
+            return Context.PimsDocumentQueues
+                .AsNoTracking()
+                .FirstOrDefault(dq => dq.DocumentQueueId == documentQueueId);
+        }
+
+        /// <summary>
         /// Updates the queued document in the database.
         /// </summary>
         /// <param name="queuedDocument"></param>
         /// <returns></returns>
-        public PimsDocumentQueue Update(PimsDocumentQueue queuedDocument)
+        public PimsDocumentQueue Update(PimsDocumentQueue queuedDocument, bool removeDocument = false)
         {
             queuedDocument.ThrowIfNull(nameof(queuedDocument));
+            var existingQueuedDocument = TryGetById(queuedDocument.DocumentQueueId);
+
+            if (!removeDocument)
+            {
+                queuedDocument.Document = existingQueuedDocument.Document;
+            }
+
+            Context.Entry(existingQueuedDocument).CurrentValues.SetValues(queuedDocument);
 
             queuedDocument = Context.Update(queuedDocument).Entity;
             return queuedDocument;
@@ -65,25 +87,62 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public IEnumerable<PimsDocumentQueue> GetAllByFilter(DocumentQueueFilter filter)
         {
-            var query = Context.PimsDocumentQueues.Where(q => true);
+            var query = Context.PimsDocumentQueues
+                .Include(dq => dq.DocumentNavigation)
+                .ThenInclude(d => d.DocumentType)
+                .Include(dq => dq.DocumentQueueStatusTypeCodeNavigation)
+                .Where(q => true);
 
             if (filter.DataSourceTypeCode != null)
             {
-                query.Where(d => d.DataSourceTypeCode == filter.DataSourceTypeCode);
+                query = query.Where(d => d.DataSourceTypeCode == filter.DataSourceTypeCode);
             }
-            if (filter.DocumentQueueStatusTypeCode != null)
+            if (filter.DocumentQueueStatusTypeCodes != null && filter.DocumentQueueStatusTypeCodes.Length > 0)
             {
-                query.Where(d => d.DocumentQueueStatusTypeCode == filter.DocumentQueueStatusTypeCode);
+                query = query.Where(d => filter.DocumentQueueStatusTypeCodes.Any(filterStatus => d.DocumentQueueStatusTypeCode == filterStatus));
             }
             if (filter.DocProcessStartDate != null)
             {
-                query.Where(d => d.DocProcessStartDt >= filter.DocProcessStartDate);
+                query = query.Where(d => d.DocProcessStartDt >= filter.DocProcessStartDate);
             }
             if (filter.DocProcessEndDate != null)
             {
-                query.Where(d => d.DocProcessEndDt <= filter.DocProcessEndDate);
+                query = query.Where(d => d.DocProcessEndDt <= filter.DocProcessEndDate);
             }
-            return query.ToList();
+            if (filter.MaxDocProcessRetries != null)
+            {
+                query = query.Where(d => d.DocProcessRetries == null || d.DocProcessRetries < filter.MaxDocProcessRetries);
+            }
+
+            // Return the PimsDocumentQueue search results without the file contents - to avoid memory issues.
+            return query.Take(filter.Quantity).Select(dq => new PimsDocumentQueue()
+            {
+                DocumentQueueId = dq.DocumentQueueId,
+                DocumentId = dq.DocumentId,
+                DocumentQueueStatusTypeCode = dq.DocumentQueueStatusTypeCode,
+                DocumentQueueStatusTypeCodeNavigation = dq.DocumentQueueStatusTypeCodeNavigation,
+                DataSourceTypeCode = dq.DataSourceTypeCode,
+                DataSourceTypeCodeNavigation = dq.DataSourceTypeCodeNavigation,
+                DocumentExternalId = dq.DocumentExternalId,
+                DocProcessStartDt = dq.DocProcessStartDt,
+                DocProcessEndDt = dq.DocProcessEndDt,
+                DocProcessRetries = dq.DocProcessRetries,
+                MayanError = dq.MayanError,
+                FileName = dq.FileName,
+                AppCreateTimestamp = dq.AppCreateTimestamp,
+                AppCreateUserDirectory = dq.AppCreateUserDirectory,
+                AppCreateUserGuid = dq.AppCreateUserGuid,
+                AppCreateUserid = dq.AppCreateUserid,
+                AppLastUpdateTimestamp = dq.AppLastUpdateTimestamp,
+                AppLastUpdateUserDirectory = dq.AppLastUpdateUserDirectory,
+                AppLastUpdateUserGuid = dq.AppLastUpdateUserGuid,
+                AppLastUpdateUserid = dq.AppLastUpdateUserid,
+                DbCreateTimestamp = dq.DbCreateTimestamp,
+                DbCreateUserid = dq.DbCreateUserid,
+                DbLastUpdateTimestamp = dq.DbLastUpdateTimestamp,
+                DbLastUpdateUserid = dq.DbLastUpdateUserid,
+                ConcurrencyControlNumber = dq.ConcurrencyControlNumber,
+            }).ToList();
         }
 
         public int DocumentQueueCount(PimsDocumentQueueStatusType pimsDocumentQueueStatusType)

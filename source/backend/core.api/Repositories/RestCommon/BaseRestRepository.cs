@@ -10,6 +10,7 @@ using System.Net.Mime;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
@@ -23,6 +24,7 @@ namespace Pims.Core.Api.Repositories.Rest
     {
         protected readonly IHttpClientFactory _httpClientFactory;
         protected readonly ILogger _logger;
+        protected readonly IOptions<JsonSerializerOptions> _jsonOptions;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BaseRestRepository"/> class.
@@ -31,10 +33,13 @@ namespace Pims.Core.Api.Repositories.Rest
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         protected BaseRestRepository(
             ILogger logger,
-            IHttpClientFactory httpClientFactory)
+            IHttpClientFactory httpClientFactory,
+            IOptions<JsonSerializerOptions> jsonOptions
+            )
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;
+            _jsonOptions = jsonOptions;
         }
 
         public abstract void AddAuthentication(HttpClient client, string authenticationToken = null);
@@ -305,7 +310,7 @@ namespace Pims.Core.Api.Repositories.Rest
             };
 
             _logger.LogTrace("Response: {response}", response);
-            string payload = await response.Content.ReadAsStringAsync().ConfigureAwait(true);
+            var payload = await response.Content.ReadAsStreamAsync().ConfigureAwait(true);
             result.HttpStatusCode = response.StatusCode;
 
             switch (response.StatusCode)
@@ -321,7 +326,7 @@ namespace Pims.Core.Api.Repositories.Rest
                             result.Payload = (T)Convert.ChangeType(payload, typeof(T), CultureInfo.InvariantCulture);
                             break;
                         default:
-                            T requestTokenResult = JsonSerializer.Deserialize<T>(payload);
+                            T requestTokenResult = JsonSerializer.Deserialize<T>(payload, _jsonOptions.Value);
                             result.Payload = requestTokenResult;
                             break;
                     }
@@ -342,7 +347,7 @@ namespace Pims.Core.Api.Repositories.Rest
                 case HttpStatusCode.BadRequest:
                 case HttpStatusCode.MethodNotAllowed:
                     result.Status = ExternalResponseStatus.Error;
-                    result.Message = payload;
+                    result.Message = await response.Content.ReadAsStringAsync();
                     break;
                 default:
                     result.Status = ExternalResponseStatus.Error;

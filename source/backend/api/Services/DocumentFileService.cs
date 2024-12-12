@@ -104,16 +104,15 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
             ValidateDocumentUploadResponse(uploadResult);
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
+            if (uploadRequest.DocumentId != 0)
             {
                 // Create the pims document research file relationship
                 PimsResearchFileDocument newResearchFileDocument = new PimsResearchFileDocument()
                 {
                     ResearchFileId = researchFileId,
-                    DocumentId = uploadResult.Document.Id,
+                    DocumentId = uploadRequest.DocumentId,
                 };
                 newResearchFileDocument = researchFileDocumentRepository.AddResearch(newResearchFileDocument);
                 researchFileDocumentRepository.CommitTransaction();
@@ -139,16 +138,15 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
             ValidateDocumentUploadResponse(uploadResult);
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
+            if (uploadRequest.DocumentId != 0)
             {
                 // Create the pims document acquisition file relationship
                 PimsAcquisitionFileDocument newAcquisitionDocument = new PimsAcquisitionFileDocument()
                 {
                     AcquisitionFileId = acquisitionFileId,
-                    DocumentId = uploadResult.Document.Id,
+                    DocumentId = uploadRequest.DocumentId,
                 };
                 newAcquisitionDocument = acquisitionFileDocumentRepository.AddAcquisition(newAcquisitionDocument);
                 acquisitionFileDocumentRepository.CommitTransaction();
@@ -174,15 +172,14 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
             ValidateDocumentUploadResponse(uploadResult);
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
+            if (uploadRequest.DocumentId != 0)
             {
                 PimsProjectDocument newProjectDocument = new()
                 {
                     ProjectId = projectId,
-                    DocumentId = uploadResult.Document.Id,
+                    DocumentId = uploadRequest.DocumentId,
                 };
                 newProjectDocument = _projectRepository.AddProjectDocument(newProjectDocument);
                 _projectRepository.CommitTransaction();
@@ -208,15 +205,14 @@ namespace Pims.Api.Services
                 UploadResponse = uploadResult,
             };
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
             ValidateDocumentUploadResponse(uploadResult);
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
+            if (uploadRequest.DocumentId != 0)
             {
                 PimsLeaseDocument newDocument = new()
                 {
                     LeaseId = leaseId,
-                    DocumentId = uploadResult.Document.Id,
+                    DocumentId = uploadRequest.DocumentId,
                 };
                 newDocument = _leaseRepository.AddLeaseDocument(newDocument);
                 _leaseRepository.CommitTransaction();
@@ -245,12 +241,12 @@ namespace Pims.Api.Services
             // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
             ValidateDocumentUploadResponse(uploadResult);
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
+            if (uploadRequest.DocumentId != 0)
             {
                 PimsPropertyActivityDocument newDocument = new()
                 {
                     PimsPropertyActivityId = propertyActivityId,
-                    DocumentId = uploadResult.Document.Id,
+                    DocumentId = uploadRequest.DocumentId,
                 };
                 newDocument = _propertyActivityDocumentRepository.AddPropertyActivityDocument(newDocument);
                 _propertyActivityDocumentRepository.CommitTransaction();
@@ -279,12 +275,12 @@ namespace Pims.Api.Services
             // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
             ValidateDocumentUploadResponse(uploadResult);
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
+            if (uploadRequest.DocumentId != 0)
             {
                 PimsDispositionFileDocument newDocument = new()
                 {
                     DispositionFileId = dispositionFileId,
-                    DocumentId = uploadResult.Document.Id,
+                    DocumentId = uploadRequest.DocumentId,
                 };
                 newDocument = _dispositionFileDocumentRepository.AddDispositionDocument(newDocument);
                 _dispositionFileDocumentRepository.CommitTransaction();
@@ -413,9 +409,9 @@ namespace Pims.Api.Services
 
         private static void ValidateDocumentUploadResponse(DocumentUploadResponse uploadResult)
         {
-            if (uploadResult.Document is null)
+            if (uploadResult?.DocumentExternalResponse?.Payload?.Id is null)
             {
-                throw new BadRequestException("Unexpected exception uploading file", new System.Exception(uploadResult.DocumentExternalResponse.Message));
+                throw new BadRequestException("Unexpected exception uploading file", new BadRequestException(uploadResult?.DocumentExternalResponse?.Message));
             }
         }
     }

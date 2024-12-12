@@ -130,7 +130,7 @@ namespace Pims.Api.Test.Services
             var result = service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
 
             // Assert
-            documentService.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Once);
+            documentService.Verify(x => x.UploadDocumentSync(testUploadRequest), Times.Once);
         }
 
         [Fact]
@@ -178,7 +178,7 @@ namespace Pims.Api.Test.Services
             // Assert
             documentRepositoryMock.Verify(x => x.DocumentRelationshipCount(testDocumentId), Times.Once);
             documentServiceMock.Verify(x => x.DeleteDocumentAsync(testExistingDocument), Times.Once);
-            documentServiceMock.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Once);
+            documentServiceMock.Verify(x => x.UploadDocumentSync(testUploadRequest), Times.Once);
         }
 
         [Fact]

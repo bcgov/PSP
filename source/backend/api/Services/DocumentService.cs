@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Azure;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -136,9 +137,9 @@ namespace Pims.Api.Services
             return documentTypeRepository.GetByCategory(categoryType);
         }
 
-        public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest)
+        public async Task<DocumentUploadResponse> UploadDocumentSync(DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document");
+            this.Logger.LogInformation("Uploading document and waiting for mayan upload.");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             ExternalResponse<DocumentDetailModel> externalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
@@ -207,6 +208,47 @@ namespace Pims.Api.Services
                 throw GetMayanResponseError(externalResponse.Message);
             }
             return response;
+        }
+
+        public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest)
+        {
+            this.Logger.LogInformation("Uploading document, do not wait for mayan processing.");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
+
+            ExternalResponse<DocumentDetailModel> externalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
+            DocumentUploadResponse response = new DocumentUploadResponse()
+            {
+                DocumentExternalResponse = externalResponse,
+                MetadataExternalResponse = new List<ExternalResponse<DocumentMetadataModel>>(),
+            };
+
+            PimsDocument databaseDocument = documentRepository.TryGet(uploadRequest.DocumentId);
+            response.Document = databaseDocument != null ? mapper.Map<DocumentModel>(databaseDocument) : null;
+
+            if (response?.DocumentExternalResponse?.Payload?.Id != null && response?.DocumentExternalResponse?.Payload?.Id > 0 && databaseDocument != null)
+            {
+                databaseDocument.MayanId = response.DocumentExternalResponse.Payload.Id;
+                documentRepository.Update(databaseDocument);
+                documentRepository.CommitTransaction();
+            }
+            else
+            {
+                this.Logger.LogError("Failed to update associated PIMS document with uploaded Mayan Id.");
+            }
+
+            return response;
+        }
+
+        public PimsDocument AddDocument(PimsDocument newPimsDocument)
+        {
+            this.Logger.LogInformation("Adding document uploaded asynchronously.");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
+            newPimsDocument.ThrowIfNull(nameof(newPimsDocument));
+
+            documentRepository.Add(newPimsDocument);
+            documentRepository.CommitTransaction();
+
+            return newPimsDocument;
         }
 
         public async Task<DocumentUpdateResponse> UpdateDocumentAsync(DocumentUpdateRequest updateRequest)

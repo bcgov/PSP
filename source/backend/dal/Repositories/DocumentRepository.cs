@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Core.Security;
 
 namespace Pims.Dal.Repositories
@@ -42,6 +41,23 @@ namespace Pims.Dal.Repositories
         public PimsDocument TryGet(long documentId)
         {
             return this.Context.PimsDocuments.AsNoTracking().FirstOrDefault(x => x.DocumentId == documentId);
+        }
+
+        public PimsDocument TryGetDocumentRelationships(long documentId)
+        {
+            var documentRelationships = Context.PimsDocuments.AsNoTracking()
+                .Include(d => d.PimsResearchFileDocuments)
+                .Include(d => d.PimsAcquisitionFileDocuments)
+                .Include(d => d.PimsProjectDocuments)
+                .Include(d => d.PimsFormTypes)
+                .Include(d => d.PimsLeaseDocuments)
+                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsDispositionFileDocuments)
+                .Where(d => d.DocumentId == documentId)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+            return documentRelationships;
         }
 
         /// <summary>
