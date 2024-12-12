@@ -57,7 +57,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentDistrictRoadRegisterTypeHighwayDistrictInput = By.CssSelector("input[data-testid='metadata-input-HIGHWAY_DISTRICT']");
 
         //Upload Field Notes Type Fields
-        private readonly By documentFieldNotesTypeDistrictLotLabel = By.XPath("//label[contains(text(),'District lot')]");
+        private readonly By documentFieldNotesTypeDistrictLotLabel = By.XPath("//input[@data-testid='metadata-input-DISTRICT_LOT_NUMBER']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'District lot')]");
         private readonly By documentFieldNotesTypeDistrictLotInput = By.CssSelector("input[data-testid='metadata-input-DISTRICT_LOT_NUMBER']");
         private readonly By documentFieldNotesTypeYearLabel = By.XPath("//label[contains(text(),'Field book #/Year')]");
         private readonly By documentFieldNotesTypeYearInput = By.CssSelector("input[data-testid='metadata-input-FIELD_BOOK_NUMBER_YEAR']");

@@ -492,7 +492,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     else
                     {
                         //Click on edit the Interest Stakeholder button
-                        stakeholders.EditStakeholderNonInterestsButton();
+                        stakeholders.EditStakeholderInterestsButton();
 
                         //Add new Interest Stakeholder to the Acquisition File
                         stakeholders.AddNonInterestStakeholderButton();

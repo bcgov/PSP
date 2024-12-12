@@ -137,7 +137,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedPagination.ResetSearch();
 
             //Verify Filters
-            manageUsers.FilterUsers("TRANPSP1", "Cannot determine");
+            manageUsers.FilterUsers("TRANPSP3", "South Coast Region");
             Assert.Equal(0, manageUsers.TotalUsersResult());
 
             manageUsers.FilterUsers("TRANPSP1", "");
