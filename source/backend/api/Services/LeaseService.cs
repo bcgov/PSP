@@ -256,6 +256,11 @@ namespace Pims.Api.Services
             // Update marker locations in the context of this file
             foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
             {
+                var matchingProperty = currentFileProperties.FirstOrDefault(c => c.PropertyId == incomingLeaseProperty.PropertyId);
+                if (matchingProperty is not null && incomingLeaseProperty.Internal_Id == 0)
+                {
+                    incomingLeaseProperty.Internal_Id = matchingProperty.Internal_Id;
+                }
                 // If the property is not new, check if the marker location has been updated.
                 if (incomingLeaseProperty.Internal_Id != 0)
                 {
