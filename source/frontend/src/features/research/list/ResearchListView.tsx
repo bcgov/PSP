@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
+import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import Claims from '@/constants/claims';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
@@ -64,7 +65,7 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Research Files</Styled.PageHeader>
+        <CommonStyled.H1>Research Files</CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

@@ -343,6 +343,16 @@ exports[`Contact List View > matches snapshot 1`] = `
   flex-wrap: nowrap;
 }
 
+.c3 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
 .c5.form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -478,10 +488,6 @@ exports[`Contact List View > matches snapshot 1`] = `
   width: 100%;
 }
 
-.c3 {
-  text-align: left;
-}
-
 @media only screen and (max-width:1199px) {
   .c4 {
     max-width: 50%;
@@ -494,11 +500,11 @@ exports[`Contact List View > matches snapshot 1`] = `
     <div
       class="c1 c2"
     >
-      <h3
+      <h1
         class="c3"
       >
         Contacts
-      </h3>
+      </h1>
       <div>
         <div
           class="row"

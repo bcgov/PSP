@@ -334,6 +334,16 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
+.c3 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
 .c5 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
@@ -385,10 +395,6 @@ exports[`Lease and License List View > matches snapshot 1`] = `
   width: 100%;
 }
 
-.c3 {
-  text-align: left;
-}
-
 .c4 {
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -404,11 +410,11 @@ exports[`Lease and License List View > matches snapshot 1`] = `
     <div
       class="c1 c2"
     >
-      <h3
+      <h1
         class="c3"
       >
         Leases & Licences
-      </h3>
+      </h1>
       <div
         class="c4"
       >

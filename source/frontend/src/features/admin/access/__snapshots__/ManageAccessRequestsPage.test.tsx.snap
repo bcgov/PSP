@@ -231,6 +231,16 @@ exports[`Manage access requests > Snapshot matches 1`] = `
   background: white;
 }
 
+.c2 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
 .c0 {
   padding: 1.6rem 3.2rem;
   -webkit-box-flex: 1;
@@ -251,18 +261,14 @@ exports[`Manage access requests > Snapshot matches 1`] = `
   height: 100%;
 }
 
-.c2 {
-  text-align: left;
-}
-
 <div
     class="c0 c1"
   >
-    <h3
+    <h1
       class="c2"
     >
       PIMS User Access Requests
-    </h3>
+    </h1>
     <form
       class="c3 p-3"
     >

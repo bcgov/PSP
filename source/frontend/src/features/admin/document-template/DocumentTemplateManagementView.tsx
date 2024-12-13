@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
+import * as CommonStyled from '@/components/common/styles';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_FormDocumentType } from '@/models/api/generated/ApiGen_Concepts_FormDocumentType';
@@ -29,7 +30,7 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
       <Scrollable>
         <LoadingBackdrop show={props.isLoading} />
 
-        <StyledPageHeader>PIMS Document Template Management</StyledPageHeader>
+        <CommonStyled.H1>PIMS Document Template Management</CommonStyled.H1>
         <Section>
           <Row>
             <Col xs="auto">Form Type:</Col>

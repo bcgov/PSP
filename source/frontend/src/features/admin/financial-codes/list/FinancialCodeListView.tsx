@@ -4,6 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 
+import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import { TableSort } from '@/components/Table/TableSort';
 import { Roles } from '@/constants/roles';
@@ -97,7 +98,7 @@ export const FinancialCodeListView: React.FC = () => {
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Financial Codes</Styled.PageHeader>
+        <CommonStyled.H1>Financial Codes</CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

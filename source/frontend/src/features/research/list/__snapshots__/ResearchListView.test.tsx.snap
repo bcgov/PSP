@@ -287,6 +287,16 @@ exports[`Research List View > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
+.c3 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
 .c8 .input-group-prepend select {
   width: 16rem;
 }
@@ -345,10 +355,6 @@ exports[`Research List View > matches snapshot 1`] = `
   width: 100%;
 }
 
-.c3 {
-  text-align: left;
-}
-
 .c4 {
   -webkit-align-items: center;
   -webkit-box-align: center;
@@ -364,11 +370,11 @@ exports[`Research List View > matches snapshot 1`] = `
     <div
       class="c1 c2"
     >
-      <h3
+      <h1
         class="c3"
       >
         Research Files
-      </h3>
+      </h1>
       <div
         class="c4"
       >

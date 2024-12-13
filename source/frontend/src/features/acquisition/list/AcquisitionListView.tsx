@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 
 import { StyledIconButton } from '@/components/common/buttons/IconButton';
 import { StyledAddButton } from '@/components/common/styles';
+import * as CommonStyled from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
@@ -95,7 +96,7 @@ export const AcquisitionListView: React.FunctionComponent<
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Acquisition Files</Styled.PageHeader>
+        <CommonStyled.H1>Acquistion Files</CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

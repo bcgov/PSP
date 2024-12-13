@@ -6,7 +6,17 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
     class="Toastify"
   />
   <div />
-  .c1 {
+  .c3 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
+.c1 {
   width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -21,10 +31,6 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
-}
-
-.c3 {
-  text-align: left;
 }
 
 .c0 {
@@ -55,11 +61,11 @@ exports[`DocumentTemplateManagementContainer component > matches snapshot 1`] = 
     <div
       class="c1 c2"
     >
-      <h3
+      <h1
         class="c3"
       >
         PIMS Document Template Management
-      </h3>
+      </h1>
       <div
         class="c4 form-section"
       >

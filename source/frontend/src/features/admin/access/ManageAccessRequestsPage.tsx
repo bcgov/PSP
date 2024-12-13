@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import * as CommonStyled from '@/components/common/styles';
 import { Table } from '@/components/Table';
 import { useApiAccessRequests } from '@/hooks/pims-api/useApiAccessRequests';
 import { useSearch } from '@/hooks/useSearch';
@@ -48,7 +49,7 @@ const ManageAccessRequestsPage = () => {
 
   return (
     <StyledContainer>
-      <StyledPageHeader>PIMS User Access Requests</StyledPageHeader>
+      <CommonStyled.H1>PIMS User Access Requests</CommonStyled.H1>
       <AccessRequestFilter
         initialValues={filter}
         applyFilter={accessRequestfilter => setFilter(accessRequestfilter)}

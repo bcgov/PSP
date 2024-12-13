@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 import { StyledIconButton } from '@/components/common/buttons';
+import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Claims } from '@/constants';
@@ -115,7 +116,7 @@ export const DispositionListView: React.FC<unknown> = () => {
   return (
     <S.ListPage>
       <S.Scrollable>
-        <S.PageHeader>Disposition Files</S.PageHeader>
+        <CommonStyled.H1>Disposition Files</CommonStyled.H1>
         <S.PageToolbar>
           <Row>
             <Col>

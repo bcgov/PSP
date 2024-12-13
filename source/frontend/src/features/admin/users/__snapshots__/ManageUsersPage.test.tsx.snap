@@ -307,6 +307,16 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   background: white;
 }
 
+.c2 {
+  color: #474543;
+  font-family: 'BCSans-Bold';
+  font-size: 3.2rem;
+  border-bottom: solid 0.5rem var(--theme-blue-90);
+  width: 100%;
+  text-align: left;
+  margin-bottom: 2.4rem;
+}
+
 .c3 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
@@ -346,18 +356,14 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   padding: 1rem 2rem;
 }
 
-.c2 {
-  text-align: left;
-}
-
 <div
     class="c0 c1 users-management-page container-fluid"
   >
-    <h3
+    <h1
       class="c2"
     >
       User Management
-    </h3>
+    </h1>
     <div
       class="row"
     >

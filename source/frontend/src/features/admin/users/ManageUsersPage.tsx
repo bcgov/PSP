@@ -6,6 +6,7 @@ import { FaFileExcel } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
+import * as CommonStyled from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Table } from '@/components/Table';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
@@ -75,7 +76,7 @@ export const ManageUsersPage = () => {
 
   return (
     <StyledPage fluid className="users-management-page">
-      <StyledPageHeader>User Management</StyledPageHeader>
+      <CommonStyled.H1>User Management</CommonStyled.H1>
       <Row>
         <Col md={8}>
           <UsersFilterBar values={filter} onChange={setFilter} />

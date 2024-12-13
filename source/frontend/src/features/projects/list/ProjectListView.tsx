@@ -3,6 +3,7 @@ import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
+import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants/claims';
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
@@ -54,7 +55,7 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Projects</Styled.PageHeader>
+        <CommonStyled.H1>Projects</CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

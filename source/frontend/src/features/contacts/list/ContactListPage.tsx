@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import { Scrollable as ScrollableBase } from '@/components/common/Scrollable/Scrollable';
+import * as CommonStyled from '@/components/common/styles';
 import ContactManagerView from '@/components/contact/ContactManagerView/ContactManagerView';
 
 /**
@@ -10,7 +11,7 @@ export const ContactListPage = () => {
   return (
     <StyledListPage>
       <StyledScrollable>
-        <StyledPageHeader>Contacts</StyledPageHeader>
+        <CommonStyled.H1>Contacts</CommonStyled.H1>
         <ContactManagerView showActiveSelector showAddButton />
       </StyledScrollable>
     </StyledListPage>
