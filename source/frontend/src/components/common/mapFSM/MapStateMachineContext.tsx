@@ -3,6 +3,7 @@ import { dequal } from 'dequal';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AnyEventObject } from 'xstate';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
@@ -131,24 +132,33 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       },
     },
     services: {
-      loadLocationData: (context: MachineContext, event: any) => {
-        const result = locationLoader.loadLocationDetails(
-          event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
-        );
+      loadLocationData: async (
+        context: MachineContext,
+        event:
+          | (AnyEventObject & { type: 'MAP_CLICK'; latlng: LatLngLiteral })
+          | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: FeatureSelected }),
+      ) => {
+        let result: LocationFeatureDataset | undefined = undefined;
 
-        if (event.type === 'MAP_MARKER_CLICK') {
+        if (event.type === 'MAP_CLICK') {
+          result = await locationLoader.loadLocationDetails({ latLng: event.latlng });
+        } else if (event.type === 'MAP_MARKER_CLICK') {
+          result = await locationLoader.loadLocationDetails({
+            latLng: event.featureSelected.latlng,
+            pimsPropertyId: event.featureSelected.pimsLocationFeature?.PROPERTY_ID ?? null,
+          });
           // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data.
           // However, use the coordinates of the clicked marker.
-          result.then(data => {
-            data.pimsFeature = {
-              properties: { ...data.pimsFeature.properties },
+          if (exists(result.pimsFeature)) {
+            result.pimsFeature = {
+              properties: { ...result.pimsFeature?.properties },
               type: 'Feature',
               geometry: {
                 type: 'Point',
                 coordinates: [event.featureSelected.latlng.lng, event.featureSelected.latlng.lat],
               },
             };
-          });
+          }
         }
 
         return result;

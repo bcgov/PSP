@@ -39,6 +39,7 @@ export interface IPaginateProperties extends IPaginateParams {
 }
 
 export interface IGeoSearchParams {
+  PROPERTY_ID?: number;
   STREET_ADDRESS_1?: string;
   PID?: string;
   PID_PADDED?: string;
