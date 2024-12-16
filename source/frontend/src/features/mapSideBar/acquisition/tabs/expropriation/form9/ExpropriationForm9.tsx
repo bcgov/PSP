@@ -1,6 +1,7 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { FaFileContract } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
@@ -98,7 +99,10 @@ export const ExpropriationForm9: React.FC<IExpropriationForm9Props> = ({
               </Button>
             </Col>
             <Col xs="auto">
-              <Button onClick={() => onGenerateClick(formikProps)}>Generate</Button>
+              <Button title="Download File" onClick={() => onGenerateClick(formikProps)}>
+                <FaFileContract size={28} className="mr-2" />
+                Generate Form 9
+              </Button>
             </Col>
           </RightFlexRow>
         </React.Fragment>
