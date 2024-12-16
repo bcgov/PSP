@@ -1,5 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
-import { FaExternalLinkAlt, FaMoneyCheck, FaTrash } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaFileContract, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -51,11 +51,12 @@ export const ExpropriationForm8Details: React.FunctionComponent<
       <Section isCollapsable initiallyExpanded>
         <StyledSubHeader>
           <StyledSectionAddButton
+            title="Download File"
             data-testid={`form8[${form8Index}].generate-form8`}
             onClick={() => onGenerate(form8.id as number, acquisitionFileNumber)}
           >
-            <FaMoneyCheck className="mr-2" />
-            Generate
+            <FaFileContract size={28} className="mr-2" />
+            Generate Form 8
           </StyledSectionAddButton>
 
           {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
