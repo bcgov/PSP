@@ -1,7 +1,6 @@
-import { useEffect, useState } from 'react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaExternalLinkAlt, FaMoneyCheck } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaFileContract } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -253,12 +252,13 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
                 />
               )}
               <StyledAddButton
+                title="Download File"
                 onClick={() => {
                   onGenerate(fileType, compensation);
                 }}
               >
-                <FaMoneyCheck className="mr-2" />
-                Generate H120
+                <FaFileContract size={28} className="mr-2" />
+                Generate H-120
               </StyledAddButton>
             </RightFlexDiv>
           </FlexDiv>
