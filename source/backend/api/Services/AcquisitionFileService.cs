@@ -315,6 +315,11 @@ namespace Pims.Api.Services
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
+                var matchingProperty = currentFileProperties.FirstOrDefault(c => c.PropertyId == incomingAcquisitionProperty.PropertyId);
+                if (matchingProperty is not null && incomingAcquisitionProperty.Internal_Id == 0)
+                {
+                    incomingAcquisitionProperty.Internal_Id = matchingProperty.Internal_Id;
+                }
                 // If the property is not new, check if the name has been updated.
                 if (incomingAcquisitionProperty.Internal_Id != 0)
                 {

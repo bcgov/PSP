@@ -524,6 +524,41 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void UpdateProperties_MatchProperties_Success_NoInternalId()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+
+            var property = EntityHelper.CreateProperty(1, regionCode: 1);
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var propertyLeases = new List<PimsPropertyLease>() {new PimsPropertyLease()
+            {
+                Property = property,
+                PropertyId = 1,
+                Lease = lease,
+                Internal_Id = 1,
+            } };
+
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(propertyLeases);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()));
+
+            // Act
+            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+
+            // Assert
+            var updatedProperty = updatedLease.PimsPropertyLeases.FirstOrDefault().Internal_Id.Should().Be(1);
+        }
+
+        [Fact]
         public void UpdateProperties_MatchProperties_NewProperty_Success()
         {
             // Arrange
