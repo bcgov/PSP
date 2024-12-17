@@ -11,7 +11,7 @@ on:
 jobs:
   maintenance-page:
     name: Hide the maintenance page
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
 
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: maintenance-page
     steps:
       - name: check workflow status
