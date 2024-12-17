@@ -17,6 +17,7 @@ import PropertyRouter from './PropertyRouter';
 export interface IMotiInventoryContainerProps {
   id?: number;
   pid?: string;
+  pin?: string;
   onClose: () => void;
 }
 
@@ -42,7 +43,13 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const composedPropertyState = useComposedProperties({
     id: props.id,
     pid:
-      props?.pid === undefined || props?.pid === '' || isNaN(+props.pid) ? undefined : +props.pid,
+      props?.pid === undefined || props?.pid === '' || isNaN(Number(props.pid))
+        ? undefined
+        : Number(props.pid),
+    pin:
+      props?.pin === undefined || props?.pin === '' || isNaN(Number(props.pin))
+        ? undefined
+        : Number(props.pin),
     latLng: selectedFeatureData?.location ?? undefined,
     propertyTypes: [
       PROPERTY_TYPES.ASSOCIATIONS,
