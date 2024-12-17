@@ -133,11 +133,11 @@ describe('LeaseDetailView component', () => {
   });
 
   it.each([
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H1005(a)'],
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H1005'],
+    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H-1005(a)'],
+    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H-1005'],
   ])(
     'does not render generation button if missing permissions - %s',
-    async (leaseTypeCode: string, buttonTitle: string) => {
+    async (leaseTypeCode: string, buttonText: string) => {
       setup({
         props: {
           lease: {
@@ -156,7 +156,7 @@ describe('LeaseDetailView component', () => {
         claims: [],
       });
 
-      expect(screen.queryByText(buttonTitle)).toBeNull();
+      expect(screen.queryByText(buttonText)).toBeNull();
     },
   );
 
@@ -178,15 +178,15 @@ describe('LeaseDetailView component', () => {
       },
     });
 
-    expect(screen.queryByText(/Generate H1005/i)).toBeNull();
+    expect(screen.queryByText(/Generate H-1005/i)).toBeNull();
   });
 
   it.each([
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H1005(a)'],
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H1005'],
+    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H-1005(a)'],
+    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H-1005'],
   ])(
     'only renders generation button for specific lease types - %s',
-    async (leaseTypeCode: string, buttonTitle: string) => {
+    async (leaseTypeCode: string, buttonText: string) => {
       setup({
         props: {
           lease: {
@@ -204,13 +204,13 @@ describe('LeaseDetailView component', () => {
         },
       });
 
-      expect(await screen.findByTitle(buttonTitle)).toBeInTheDocument();
+      expect(await screen.findByText(buttonText)).toBeInTheDocument();
     },
   );
 
   it.each([
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H1005(a)'],
-    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H1005'],
+    [ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA, 'Generate H-1005(a)'],
+    [ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY, 'Generate H-1005'],
   ])(
     'calls onGenerate when generation button is clicked - %s',
     async (leaseTypeCode: string, buttonTitle: string) => {
@@ -231,7 +231,7 @@ describe('LeaseDetailView component', () => {
         },
       });
 
-      const generateButton = await screen.findByTitle(buttonTitle);
+      const generateButton = await screen.findByText(buttonTitle);
       expect(generateButton).toBeInTheDocument();
 
       await act(async () => userEvent.click(generateButton));

@@ -66,6 +66,10 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
             label=""
             field={withNameSpace(nameSpace, 'name')}
             displayErrorTooltips={true}
+            errorKeys={[
+              withNameSpace(nameSpace, 'property.isRetired'),
+              withNameSpace(nameSpace, 'property.isDisposed'),
+            ]}
           />
         </Col>
         <Col md={1} className="pl-3">
