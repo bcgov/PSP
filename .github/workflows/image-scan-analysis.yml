@@ -12,7 +12,7 @@ jobs:
   nodejs-base-image:
     name: nodejs-base-image
     if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -75,7 +75,7 @@ jobs:
     # this action will leave a comment in response to vulnerability scans performed on cotnainer image
     if: always() && needs.nodejs-base-image.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: nodejs-base-image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       working-directory: ./source/frontend
       image-name: nodejs-14-ubi8
@@ -145,7 +145,7 @@ jobs:
   nginx-base-image:
     name: nginx-base-image
     if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -205,7 +205,7 @@ jobs:
     # this action will leave a comment in response to vulnerability scans performed on cotnainer image
     if: always() && needs.nginx-base-image.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: nginx-base-image
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       working-directory: ./source/frontend
       image-name: nginx-base
@@ -276,7 +276,7 @@ jobs:
     if: always() && github.event.pull_request.head.repo.full_name == github.repository
     needs: [nodejs-base-image, nginx-base-image]
     name: pims-frontend
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -338,7 +338,7 @@ jobs:
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.build_frontend.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: build_frontend
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       working-directory: ./source/frontend
       image-name: pims-app
@@ -408,7 +408,7 @@ jobs:
   aspnet-runtime:
     name: aspnet-runtime
     if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -468,7 +468,7 @@ jobs:
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.aspnet-runtime.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: aspnet-runtime
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       working-directory: ./openshift/4.0/templates/base-images/dotnet50
       image-name: dotnet-aspnet
@@ -538,7 +538,7 @@ jobs:
   dotnet-sdk:
     name: dotnet5-sdk
     if: github.event.pull_request.head.repo.full_name == github.repository
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -598,7 +598,7 @@ jobs:
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.dotnet-sdk.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: dotnet-sdk
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       working-directory: ./openshift/4.0/templates/base-images/dotnet50
       image-name: dotnet-sdk
@@ -669,7 +669,7 @@ jobs:
     if: always() && github.event.pull_request.head.repo.full_name == github.repository
     needs: [aspnet-runtime, dotnet-sdk]
     name: pims-backend
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -729,7 +729,7 @@ jobs:
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.build_backend.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: build_backend
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       working-directory: ./source/backend
       image-name: pims-api
@@ -800,7 +800,7 @@ jobs:
     if: always() && github.event.pull_request.head.repo.full_name == github.repository
     needs: [build_frontend, build_backend]
     name: logging
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -861,7 +861,7 @@ jobs:
     # this action will leave a comment in response to Image scans performed on pull requests
     if: always() && needs.pims_logging.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: pims_logging
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
       image-name: pims-logging
@@ -930,7 +930,7 @@ jobs:
   jenkins-agent-dotnet:
     if: github.event.pull_request.head.repo.full_name == github.repository
     name: jenkins-agent-dotnet
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     permissions:
       actions: read
       contents: read
@@ -992,7 +992,7 @@ jobs:
     # this action will leave a comment in response to credential scans performed on pull requests
     if: always() && needs.jenkins-agent-dotnet.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
     needs: jenkins-agent-dotnet
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     env:
       working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
       image-name: jenkins-agent-dotnet

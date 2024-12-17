@@ -6,7 +6,7 @@ on:
 
 jobs:
   zap_scan:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     name: Scan the web application
     env:
       ZAP_REPORT: zap-report.xml
