@@ -35,7 +35,7 @@ on:
 jobs:
   ci-cd-start-notification:
     name: CI-CD Start Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Start notification to Teams Channel
         uses: dragos-cojocari/ms-teams-notification@v1.0.2
@@ -48,7 +48,7 @@ jobs:
 
   deploy:
     name: Deploy frontend and api to OpenShift
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: ci-cd-start-notification
     steps:
       - name: Checkout Source Code
@@ -94,7 +94,7 @@ jobs:
   database-upgrade:
     name: Upgrade database
     needs: [deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -117,7 +117,7 @@ jobs:
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -139,7 +139,7 @@ jobs:
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
