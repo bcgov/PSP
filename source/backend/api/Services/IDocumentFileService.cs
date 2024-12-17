@@ -15,17 +15,17 @@ namespace Pims.Api.Services
         public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
             where T : PimsFileDocument;
 
-        Task<DocumentUploadRelationshipResponse> UploadResearchDocumentAsync(long researchFileId, DocumentUploadRequest uploadRequest);
+        Task UploadAcquisitionDocument(long acquisitionFileId, DocumentUploadRequest uploadRequest);
 
-        Task<DocumentUploadRelationshipResponse> UploadAcquisitionDocumentAsync(long acquisitionFileId, DocumentUploadRequest uploadRequest);
+        Task UploadResearchDocument(long researchFileId, DocumentUploadRequest uploadRequest);
 
-        Task<DocumentUploadRelationshipResponse> UploadLeaseDocumentAsync(long leaseId, DocumentUploadRequest uploadRequest);
+        Task UploadProjectDocument(long projectId, DocumentUploadRequest uploadRequest);
 
-        Task<DocumentUploadRelationshipResponse> UploadProjectDocumentAsync(long projectId, DocumentUploadRequest uploadRequest);
+        Task UploadLeaseDocument(long leaseId, DocumentUploadRequest uploadRequest);
 
-        Task<DocumentUploadRelationshipResponse> UploadPropertyActivityDocumentAsync(long propertyActivityId, DocumentUploadRequest uploadRequest);
+        Task UploadPropertyActivityDocument(long propertyActivityId, DocumentUploadRequest uploadRequest);
 
-        Task<DocumentUploadRelationshipResponse> UploadDispositionDocumentAsync(long dispositionFileId, DocumentUploadRequest uploadRequest);
+        Task UploadDispositionDocument(long dispositionFileId, DocumentUploadRequest uploadRequest);
 
         Task<ExternalResponse<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument);
 

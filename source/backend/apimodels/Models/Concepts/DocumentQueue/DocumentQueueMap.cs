@@ -18,6 +18,7 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocumentProcessEndTimestamp, src => src.DocProcessEndDt)
                 .Map(dest => dest.DocumentProcessRetries, src => src.DocProcessRetries)
                 .Map(dest => dest.Document, src => src.Document)
+                .Map(dest => dest.DocumentQueueStatusTypeCode, src => src.DocumentQueueStatusTypeCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<DocumentQueueModel, Entity.PimsDocumentQueue>()

@@ -13,4 +13,5 @@ export interface ApiGen_Concepts_Document extends ApiGen_Base_BaseAudit {
   documentType: ApiGen_Concepts_DocumentType | null;
   statusTypeCode: ApiGen_Base_CodeType<string> | null;
   fileName: string | null;
+  documentQueueStatusTypeCode: ApiGen_Base_CodeType<string> | null;
 }

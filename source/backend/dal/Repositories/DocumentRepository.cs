@@ -35,7 +35,7 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Get the document from the database based on document id.
+        /// Get the document from the database based on document id.z
         /// </summary>
         /// <param name="documentId"></param>
         /// <returns></returns>
@@ -72,9 +72,10 @@ namespace Pims.Dal.Repositories
         public PimsDocument Update(PimsDocument document, bool commitTransaction = true)
         {
             document.ThrowIfNull(nameof(document));
+            User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
 
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
             document = Context.Update(document).Entity;
+
             return document;
         }
 
@@ -83,7 +84,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
-        public bool Delete(PimsDocument document)
+        public bool Delete(PimsDocument document, bool commitTransaction = true)
         {
             document.ThrowIfNull(nameof(document));
 
@@ -137,9 +138,27 @@ namespace Pims.Dal.Repositories
                 Context.Entry(pimsFormTypeDocument).Property(x => x.DocumentId).IsModified = true;
             }
 
-            Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+            if (commitTransaction)
+            {
+                Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+            }
 
             Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
+
+            return true;
+        }
+
+        /// <summary>
+        /// Deletes the passed document from the database.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public bool DeleteDocument(PimsDocument document)
+        {
+            document.ThrowIfNull(nameof(document));
+
+            Context.PimsDocuments.Remove(document);
+
             return true;
         }
 

@@ -125,7 +125,7 @@ export const DocumentUploadContainer = forwardRef<
       await Promise.all(uploadDocumentTasks);
     setIsUploading(false);
     if (tasksResult !== undefined) {
-      const batchResults = tasksResult.map<BatchUploadResponseModel>((r, index) => {
+      const batchResults = tasksResult.map((r, index) => {
         const fileName = batchRequest.documents[index].file.name;
         return new BatchUploadResponseModel(fileName, r);
       });

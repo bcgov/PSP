@@ -289,9 +289,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               label="Advanced payment served date"
               labelWidth="4"
               valueTestId="advanced-payment-served-date"
-            >
-              {prettyFormatDate(compensation.advancedPaymentServedDate)}
-            </SectionField>
+            ></SectionField>
           </>
         )}
 
