@@ -329,7 +329,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
             Show Ownership
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-3 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -614,7 +614,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
             Project
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-3 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -726,7 +726,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
             Tenure
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-3 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -1116,7 +1116,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
             Lease / Licence
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-3 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -1688,7 +1688,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
             Anomaly
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-3 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"

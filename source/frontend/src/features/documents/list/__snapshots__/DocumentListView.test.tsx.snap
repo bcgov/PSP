@@ -921,7 +921,8 @@ exports[`Document List View > renders as expected 1`] = `
                   class="c12"
                 >
                   <span
-                    data-testid="document-view-filename-text"
+                    data-testid="document-view-filename-text-20"
+                    id="document-view-filename-text-20"
                   >
                     DocTest.docx
                   </span>
@@ -1016,7 +1017,8 @@ exports[`Document List View > renders as expected 1`] = `
                   class="c12"
                 >
                   <span
-                    data-testid="document-view-filename-text"
+                    data-testid="document-view-filename-text-21"
+                    id="document-view-filename-text-21"
                   >
                     moti_plan.txt
                   </span>
@@ -1111,7 +1113,8 @@ exports[`Document List View > renders as expected 1`] = `
                   class="c12"
                 >
                   <span
-                    data-testid="document-view-filename-text"
+                    data-testid="document-view-filename-text-3"
+                    id="document-view-filename-text-3"
                   >
                     H120 Template-original-20240910-152332.PDF
                   </span>
@@ -1225,7 +1228,8 @@ exports[`Document List View > renders as expected 1`] = `
                   class="c12"
                 >
                   <span
-                    data-testid="document-view-filename-text"
+                    data-testid="document-view-filename-text-7"
+                    id="document-view-filename-text-7"
                   >
                     H120 Template-original-20240902-183943.PDF
                   </span>
@@ -1338,7 +1342,8 @@ exports[`Document List View > renders as expected 1`] = `
                   class="c12"
                 >
                   <span
-                    data-testid="document-view-filename-text"
+                    data-testid="document-view-filename-text-8"
+                    id="document-view-filename-text-8"
                   >
                     H120 Template-original-20240902-190248.PDF
                   </span>

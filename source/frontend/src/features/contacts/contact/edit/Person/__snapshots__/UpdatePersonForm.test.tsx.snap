@@ -979,7 +979,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="pl-8 d-flex align-items-end col-auto"
+                class="pl-3 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c13"
@@ -1233,7 +1233,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 Property Address
               </div>
               <div
-                class="pl-8 d-flex align-items-end col-auto"
+                class="pl-3 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c13"
@@ -1487,7 +1487,7 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
                 Billing Address
               </div>
               <div
-                class="pl-8 d-flex align-items-end col-auto"
+                class="pl-3 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c13"

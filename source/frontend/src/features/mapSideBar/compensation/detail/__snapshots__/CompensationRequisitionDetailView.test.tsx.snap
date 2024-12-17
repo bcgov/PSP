@@ -754,7 +754,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Financial Coding
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-3 d-flex align-items-end col-auto"
           >
             <svg
               class="c11"
@@ -937,7 +937,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Payment
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-3 d-flex align-items-end col-auto"
           >
             <svg
               class="c11"
@@ -1059,7 +1059,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Financial Activities
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-3 d-flex align-items-end col-auto"
           >
             <svg
               class="c11"
