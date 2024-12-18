@@ -64,7 +64,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
 
   useEffect(() => {
     push({ search: '' });
-  }, [props.pid, push]);
+  }, [props.pid, props.pin, push]);
 
   const onSuccess = () => {
     props.id && composedPropertyState.apiWrapper?.execute(props.id);

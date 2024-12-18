@@ -202,7 +202,7 @@ export const useComposedProperties = ({
     () => ({
       id: id,
       pid: pid?.toString() ?? retrievedPid,
-      pin: retrievedPin,
+      pin: pin?.toString() ?? retrievedPin,
       composedProperty: composedProperty,
       ltsaWrapper: getLtsaWrapper,
       apiWrapper: getPropertyWrapper,
@@ -223,6 +223,7 @@ export const useComposedProperties = ({
       id,
       pid,
       retrievedPid,
+      pin,
       retrievedPin,
       composedProperty,
       getLtsaWrapper,

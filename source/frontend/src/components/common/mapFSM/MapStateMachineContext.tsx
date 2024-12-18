@@ -14,7 +14,7 @@ import {
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
 import { exists } from '@/utils';
-import { pidParser } from '@/utils/propertyUtils';
+import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { MachineContext, SideBarType } from './machineDefinition/types';
@@ -125,9 +125,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           const pimsFeature = selectedFeatureData.pimsFeature;
           history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
         } else if (exists(selectedFeatureData?.parcelFeature?.properties?.PID)) {
-          const parcelFeature = selectedFeatureData.parcelFeature;
+          const parcelFeature = selectedFeatureData?.parcelFeature;
           const parsedPid = pidParser(parcelFeature.properties.PID);
           history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}`);
+        } else if (exists(selectedFeatureData?.parcelFeature?.properties?.PIN)) {
+          const parcelFeature = selectedFeatureData?.parcelFeature;
+          const parsedPin = pinParser(parcelFeature.properties.PIN);
+          history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
         }
       },
     },
@@ -145,7 +149,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         } else if (event.type === 'MAP_MARKER_CLICK') {
           result = await locationLoader.loadLocationDetails({
             latLng: event.featureSelected.latlng,
-            pimsPropertyId: event.featureSelected.pimsLocationFeature?.PROPERTY_ID ?? null,
+            pimsPropertyId: event.featureSelected?.pimsLocationFeature?.PROPERTY_ID ?? null,
           });
           // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data.
           // However, use the coordinates of the clicked marker.
