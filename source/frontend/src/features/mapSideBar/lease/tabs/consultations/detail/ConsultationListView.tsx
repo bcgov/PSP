@@ -1,11 +1,11 @@
 import { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaCheckCircle, FaExclamationCircle, FaPlus, FaTimesCircle, FaTrash } from 'react-icons/fa';
+import { FaCheckCircle, FaExclamationCircle, FaPlus, FaTimesCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
+import EditButton from '@/components/common/buttons/EditButton';
+import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import ContactFieldContainer from '@/components/common/ContactFieldContainer';
-import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -106,11 +106,10 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                         {keycloak.hasClaim(Claims.LEASE_EDIT) && (
                           <>
                             <Col xs="auto" className="px-1">
-                              <StyledRemoveLinkButton
+                              <RemoveIconButton
                                 title="Delete Consultation"
                                 data-testid={`consultations[${index}].delete-btn`}
-                                variant="light"
-                                onClick={() => {
+                                onRemove={() => {
                                   setModalContent({
                                     ...getDeleteModalProps(),
                                     variant: 'error',
@@ -129,16 +128,16 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                                   });
                                   setDisplayModal(true);
                                 }}
-                              >
-                                <FaTrash size="2rem" />
-                              </StyledRemoveLinkButton>
+                              />
                             </Col>
                             <Col xs="auto" className="px-2">
-                              <EditButton
-                                title="Edit Consultation"
-                                dataTestId={`consultations[${index}].edit-btn`}
-                                onClick={() => onEdit(consultation.id)}
-                              />
+                              <StyledButtonContainer>
+                                <EditButton
+                                  title="Edit Consultation"
+                                  dataTestId={`consultations[${index}].edit-btn`}
+                                  onClick={() => onEdit(consultation.id)}
+                                />
+                              </StyledButtonContainer>
                             </Col>
                           </>
                         )}

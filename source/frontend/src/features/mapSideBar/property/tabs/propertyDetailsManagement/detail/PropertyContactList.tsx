@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaEdit, FaTrash } from 'react-icons/fa';
+import { FaEdit } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 
 import { LinkButton } from '@/components/common/buttons/LinkButton';
-import { StyledRemoveIconButton } from '@/components/common/buttons/RemoveButton';
+import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import { ColumnWithProps, Table } from '@/components/Table';
 import Claims from '@/constants/claims';
@@ -114,14 +114,12 @@ export function createContactTableColumns(
               </Col>
             )}
             {hasClaim(Claims.PROPERTY_EDIT) && (
-              <StyledRemoveIconButton
+              <RemoveIconButton
                 id={`contact-delete-${cellProps.row.id}`}
                 data-testid={`contact-delete-${cellProps.row.id}`}
-                onClick={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
+                onRemove={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
                 title="Delete contact"
-              >
-                <FaTrash size="2rem" />
-              </StyledRemoveIconButton>
+              />
             )}
           </Row>
         );

@@ -1,9 +1,9 @@
-import { FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
+import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -97,12 +97,13 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                                 onClick={() =>
                                   history.push(`${match.url}/${agreement.agreementId}/update`)
                                 }
+                                icon={<FaEdit size={'2rem'} />}
                               />
-                              <StyledRemoveLinkButton
+                              <RemoveIconButton
                                 title="Delete Agreement"
                                 data-testid={`agreements[${index}].delete-btn`}
-                                variant="light"
-                                onClick={() => {
+                                icon={<FaTrash size={'1.75rem'} />}
+                                onRemove={() => {
                                   setModalContent({
                                     ...getDeleteModalProps(),
                                     variant: 'error',
@@ -121,9 +122,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                                   });
                                   setDisplayModal(true);
                                 }}
-                              >
-                                <FaTrash size="2rem" />
-                              </StyledRemoveLinkButton>
+                              />
                             </>
                           )}
                       </StyledButtonContainer>

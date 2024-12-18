@@ -2,10 +2,11 @@ import React from 'react';
 import { Button, Form, Spinner } from 'react-bootstrap';
 import { FaCheck } from 'react-icons/fa';
 import NumberFormat from 'react-number-format';
+import styled from 'styled-components';
 
 import { formatMoney } from '@/utils';
 
-import EditButton from '../../EditButton';
+import EditButton from '../../buttons/EditButton';
 
 /**
  * Non formik form that allows a user to toggle between a value and an input and save the input.
@@ -65,9 +66,20 @@ export const ToggleSaveInputView: React.FC<IToggleSaveInputViewProps> = ({
   } else {
     return (
       <>
-        {asCurrency ? formatMoney(Number(value)) : value}
-        <EditButton onClick={() => setIsEditing(true)} />
+        <StyledCompensationContainer>
+          {asCurrency ? formatMoney(Number(value)) : value}
+          <EditButton onClick={() => setIsEditing(true)} />
+        </StyledCompensationContainer>
       </>
     );
   }
 };
+
+export const StyledCompensationContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  align-items: center;
+`;

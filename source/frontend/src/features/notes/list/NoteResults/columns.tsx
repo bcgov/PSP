@@ -1,10 +1,9 @@
-import { FaTrash } from 'react-icons/fa';
-import { ImFileText2 } from 'react-icons/im';
+import { Col, Row } from 'react-bootstrap';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { StyledIconButton, StyledRemoveLinkButton } from '@/components/common/buttons';
-import { InlineFlexDiv } from '@/components/common/styles';
+import { RemoveIconButton } from '@/components/common/buttons';
+import ViewButton from '@/components/common/buttons/ViewButton';
 import { ColumnWithProps, DateCell } from '@/components/Table';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
@@ -52,26 +51,24 @@ export function createTableColumns(
 
         return (
           <StyledDiv>
-            {hasClaim(Claims.NOTE_VIEW) && (
-              <StyledIconButton
-                title="View Note"
-                variant="light"
-                onClick={() => onShowDetails(cellProps.row.original)}
-                className="pl-0"
-              >
-                <ImFileText2 size="2rem" />
-              </StyledIconButton>
-            )}
-
-            {hasClaim(Claims.NOTE_DELETE) && !cellProps.row.original.isSystemGenerated && (
-              <StyledRemoveLinkButton
-                title="Delete Note"
-                variant="light"
-                onClick={() => onDelete(cellProps.row.original)}
-              >
-                <FaTrash size="2rem" />
-              </StyledRemoveLinkButton>
-            )}
+            <Col xs={1} className="p-0">
+              {' '}
+              {hasClaim(Claims.NOTE_VIEW) && (
+                <ViewButton
+                  onClick={() => onShowDetails(cellProps.row.original)}
+                  title="View Note"
+                />
+              )}
+            </Col>
+            <Col xs={1} className="p-0">
+              {hasClaim(Claims.NOTE_DELETE) && !cellProps.row.original.isSystemGenerated && (
+                <RemoveIconButton
+                  title="Delete Note"
+                  variant="primary"
+                  onRemove={() => onDelete(cellProps.row.original)}
+                />
+              )}
+            </Col>
           </StyledDiv>
         );
       },
@@ -81,7 +78,7 @@ export function createTableColumns(
   return columns;
 }
 
-const StyledDiv = styled(InlineFlexDiv)`
-  justify-content: space-around;
+const StyledDiv = styled(Row)`
+  justify-content: space-evenly;
   width: 100%;
 `;

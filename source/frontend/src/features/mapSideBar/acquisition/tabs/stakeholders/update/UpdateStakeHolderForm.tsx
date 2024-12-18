@@ -1,9 +1,8 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps, getIn } from 'formik';
 import { Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
 
-import { Button, StyledRemoveLinkButton } from '@/components/common/buttons';
+import { Button, RemoveIconButton } from '@/components/common/buttons';
 import { DisplayError } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
@@ -153,15 +152,12 @@ export const UpdateStakeHolderForm: React.FunctionComponent<IUpdateStakeHolderFo
                               ></ContactInputContainer>
                             </Col>
                             <Col xs="auto">
-                              <StyledRemoveLinkButton
+                              <RemoveIconButton
                                 title="Remove Interest"
-                                variant="light"
-                                onClick={() => {
+                                onRemove={() => {
                                   arrayHelpers.remove(index);
                                 }}
-                              >
-                                <FaTrash size="2rem" />
-                              </StyledRemoveLinkButton>
+                              />
                             </Col>
                             {getIn(errors, `nonInterestPayees.${index}.contact`) && (
                               <DisplayError field={`nonInterestPayees.${index}.contact`} />

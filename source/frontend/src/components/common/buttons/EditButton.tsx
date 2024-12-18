@@ -1,11 +1,14 @@
-import { Button } from 'react-bootstrap';
 import { FaEdit } from 'react-icons/fa';
+import { CSSProperties } from 'styled-components';
+
+import { StyledIconButton } from './IconButton';
 
 interface IEditButtonProps {
   onClick: () => void;
   title?: string;
   icon?: React.ReactNode;
   dataTestId?: string | null;
+  style?: CSSProperties | null;
 }
 
 export const EditButton: React.FunctionComponent<React.PropsWithChildren<IEditButtonProps>> = ({
@@ -13,16 +16,18 @@ export const EditButton: React.FunctionComponent<React.PropsWithChildren<IEditBu
   title,
   icon,
   dataTestId,
+  style,
 }) => {
   return (
-    <Button
-      variant="link"
+    <StyledIconButton
+      variant="primary"
       title={title ?? 'edit'}
       onClick={onClick}
       data-testid={dataTestId ?? 'edit-button'}
+      style={style}
     >
-      {icon ?? <FaEdit size={'2rem'} />}
-    </Button>
+      {icon ?? <FaEdit size={22} />}
+    </StyledIconButton>
   );
 };
 

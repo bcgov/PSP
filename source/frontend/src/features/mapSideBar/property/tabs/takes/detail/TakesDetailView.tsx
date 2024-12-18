@@ -1,13 +1,13 @@
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus, FaTrash } from 'react-icons/fa';
+import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons';
-import EditButton from '@/components/common/EditButton';
+import { RemoveIconButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/buttons/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { H2 } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
@@ -123,22 +123,20 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                 <Row>
                   <Col md="10">Take {index + 1}</Col>
                   <Col md="2" className="d-flex align-items-center justify-content-end">
-                    <StyledEditWrapper>
-                      {onEdit !== undefined && canEditTakes(take) ? (
-                        <EditButton title="Edit take" onClick={() => onEdit(take.id)} />
-                      ) : null}
-                      {!canEditTakes(take) && (
-                        <TooltipIcon
-                          toolTipId={`${fileProperty?.fileId || 0}-summary-cannot-edit-tooltip`}
-                          toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion"
-                        />
-                      )}
-                    </StyledEditWrapper>
+                    {onEdit !== undefined && canEditTakes(take) ? (
+                      <EditButton title="Edit take" onClick={() => onEdit(take.id)} />
+                    ) : null}
+                    {!canEditTakes(take) && (
+                      <TooltipIcon
+                        toolTipId={`${fileProperty?.fileId || 0}-summary-cannot-edit-tooltip`}
+                        toolTip="Retired records are referenced for historical purposes only and cannot be edited or deleted. If the take has been added in error, contact your system administrator to re-open the file, which will allow take deletion"
+                      />
+                    )}
+
                     {canEditTakes(take) && (
-                      <StyledRemoveLinkButton
+                      <RemoveIconButton
                         title="Remove take"
-                        variant="light"
-                        onClick={() => {
+                        onRemove={() => {
                           setModalContent({
                             ...getDeleteModalProps(),
                             handleOk: () => {
@@ -148,9 +146,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                           });
                           setDisplayModal(true);
                         }}
-                      >
-                        <FaTrash size="2rem" />
-                      </StyledRemoveLinkButton>
+                      />
                     )}
                   </Col>
                 </Row>

@@ -1,12 +1,11 @@
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
 import { FaCircle } from 'react-icons/fa';
-import { FaEdit } from 'react-icons/fa';
-import { MdContactMail } from 'react-icons/md';
 import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { StyledIconButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/buttons/EditButton';
+import ViewButton from '@/components/common/buttons/ViewButton';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
@@ -131,23 +130,17 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
       return (
         <StyledDiv>
           {hasClaim(Claims.CONTACT_EDIT) && (
-            <StyledIconButton
+            <EditButton
               title="Edit Contact"
-              variant="light"
               onClick={() => history.push(`/contact/${props.row.original.id}/edit`)}
-            >
-              <FaEdit size={22} />
-            </StyledIconButton>
+            />
           )}
 
           {hasClaim(Claims.CONTACT_VIEW) && (
-            <StyledIconButton
+            <ViewButton
               title="View Contact"
-              variant="light"
               onClick={() => history.push(`/contact/${props.row.original.id}`)}
-            >
-              <MdContactMail size={22} />
-            </StyledIconButton>
+            />
           )}
         </StyledDiv>
       );

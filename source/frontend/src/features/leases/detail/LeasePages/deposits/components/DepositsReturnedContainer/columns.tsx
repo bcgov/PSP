@@ -1,10 +1,9 @@
-import { FaTrash } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons';
-import EditButton from '@/components/common/EditButton';
+import { RemoveIconButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/buttons/EditButton';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps, renderDate, renderMoney } from '@/components/Table';
 import Claims from '@/constants/claims';
@@ -77,10 +76,10 @@ function depositActions(onEdit: (id: number) => void, onDelete: (id: number) => 
           <EditButton title="edit deposit return" onClick={() => onEdit(original.id)} />
         )}
         {hasClaim(Claims.LEASE_EDIT) && (
-          <StyledRemoveLinkButton
+          <RemoveIconButton
             title="delete deposit return"
-            icon={<FaTrash size={20} id={`delete-deposit-${index}`} title="document deposit" />}
-            onClick={() => original?.id && onDelete(original.id)}
+            id={`delete-deposit-${index}`}
+            onRemove={() => original?.id && onDelete(original.id)}
           />
         )}
       </StyledIcons>
@@ -173,6 +172,5 @@ const StyledIcons = styled(InlineFlexDiv)`
   }
   .btn.btn-primary {
     background-color: transparent;
-    padding: 0;
   }
 `;

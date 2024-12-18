@@ -3,7 +3,7 @@ import { FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';

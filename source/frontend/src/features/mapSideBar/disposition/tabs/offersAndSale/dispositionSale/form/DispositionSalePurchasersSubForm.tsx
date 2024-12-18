@@ -1,9 +1,8 @@
 import { FieldArray, useFormikContext } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
 
-import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
+import { LinkButton, RemoveIconButton } from '@/components/common/buttons';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
@@ -41,11 +40,10 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
                     ></ContactInputContainer>
                   </Col>
                   <Col xs="auto" xl="2" className="pl-3 mt-2">
-                    <StyledRemoveLinkButton
+                    <RemoveIconButton
                       title="Remove Purchaser"
                       data-testid={`dispositionPurchasers.${index}.remove-button`}
-                      variant="light"
-                      onClick={() => {
+                      onRemove={() => {
                         setModalContent({
                           ...getDeleteModalProps(),
                           title: 'Remove Purchaser',
@@ -62,9 +60,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
                         });
                         setDisplayModal(true);
                       }}
-                    >
-                      <FaTrash size="2rem" />
-                    </StyledRemoveLinkButton>
+                    />
                   </Col>
                 </Row>
 

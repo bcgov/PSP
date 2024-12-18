@@ -1,9 +1,8 @@
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import { useState } from 'react';
-import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
+import { LinkButton, RemoveIconButton } from '@/components/common/buttons';
 import { FastCurrencyInput } from '@/components/common/form';
 import { Select, SelectOption } from '@/components/common/form/Select';
 import { TypeaheadSelect } from '@/components/common/form/TypeaheadSelect';
@@ -88,17 +87,14 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                 <>
                   <StyledSubHeader>
                     <label>Activity {index + 1}</label>
-                    <StyledRemoveLinkButton
-                      title="Delete financial activity"
+                    <RemoveIconButton
+                      title="Delete Financial Activity"
                       data-testid={`activity[${index}].delete-button`}
-                      variant="light"
-                      onClick={() => {
+                      onRemove={() => {
                         setRowToDelete(index);
                         setShowModal(true);
                       }}
-                    >
-                      <FaTrash size="2rem" />
-                    </StyledRemoveLinkButton>
+                    />
                   </StyledSubHeader>
 
                   <SectionField label="Code & Description" labelWidth="4" required>
