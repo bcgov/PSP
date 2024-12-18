@@ -188,7 +188,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
       <>
         <StyledRow className="no-gutters">
           <Col xs="auto" className="px-2 my-1">
-            <span>Documents</span>
+            <span>{title ?? 'Documents'}</span>
           </Col>
           <Col xs="auto" className="my-1">
             <ListHeaderActionsDiv>
