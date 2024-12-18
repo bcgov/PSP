@@ -5,6 +5,7 @@ import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
+import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import { StyledIconButton } from '@/components/common/buttons/IconButton';
 import { StyledAddButton } from '@/components/common/styles';
 import * as CommonStyled from '@/components/common/styles';
@@ -96,7 +97,10 @@ export const AcquisitionListView: React.FunctionComponent<
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <CommonStyled.H1>Acquistion Files</CommonStyled.H1>
+        <CommonStyled.H1>
+          <AcquisitionFileIcon title="Acquisition file icon" fill="currentColor" />
+          <span className="ml-2">Acquistion Files</span>
+        </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

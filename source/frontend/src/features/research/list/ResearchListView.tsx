@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
+import { MdTopic } from 'react-icons/md';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
@@ -65,7 +66,10 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <CommonStyled.H1>Research Files</CommonStyled.H1>
+        <CommonStyled.H1>
+          <MdTopic title="Research file icon" />
+          <span className="ml-2">Research Files</span>
+        </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

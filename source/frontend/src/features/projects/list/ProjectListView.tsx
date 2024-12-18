@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa';
+import { FaBriefcase, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
 import * as CommonStyled from '@/components/common/styles';
@@ -55,7 +55,10 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <CommonStyled.H1>Projects</CommonStyled.H1>
+        <CommonStyled.H1>
+          <FaBriefcase title="Project icon" fill="currentColor" className={'pb-1'} />
+          <span className="ml-2">Projects</span>
+        </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>
