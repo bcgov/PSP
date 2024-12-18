@@ -1,4 +1,4 @@
-import { FaFileContract, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaFileContract, FaPlus, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
