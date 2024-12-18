@@ -57,7 +57,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
       history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
     } else {
       console.warn('Invalid marker when trying to see property information');
-      toast.warn('A map parcel must have a PID in order to view detailed information');
+      toast.warn('A map parcel must have a PID or PIN in order to view detailed information');
     }
   };
 
