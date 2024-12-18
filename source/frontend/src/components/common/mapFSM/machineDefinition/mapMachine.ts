@@ -185,7 +185,10 @@ const mapRequestStates = {
                   any
                 >;
                 const filteredBounds = geoJSON(featureCollection).getBounds();
-                const validBounds = filteredBounds.isValid() ? filteredBounds : defaultBounds;
+                const validBounds =
+                  filteredBounds.isValid() && defaultBounds.contains(filteredBounds) // we should not be automatically setting the bounds outside the default bounds of british columbia.
+                    ? filteredBounds
+                    : defaultBounds;
 
                 // if the current map bounds contain the bounds of the filtered properties, use the current map bounds.
                 if (

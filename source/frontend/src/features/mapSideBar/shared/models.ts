@@ -92,6 +92,7 @@ export class PropertyForm {
   public landArea?: number;
   public areaUnit?: AreaUnitTypes;
   public isRetired?: boolean;
+  public isDisposed?: boolean;
 
   public constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
@@ -152,6 +153,7 @@ export class PropertyForm {
         ? enumFromValue(model?.pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
         : AreaUnitTypes.SquareMeters,
       isRetired: model?.pimsFeature?.properties?.IS_RETIRED ?? false,
+      isDisposed: model?.pimsFeature?.properties?.IS_DISPOSED ?? false,
       legalDescription:
         model?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
         model?.parcelFeature?.properties?.LEGAL_DESCRIPTION ??
