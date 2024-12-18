@@ -501,6 +501,11 @@ namespace Pims.Api.Services
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
             {
+                var matchingProperty = currentFileProperties.FirstOrDefault(c => c.PropertyId == incomingDispositionProperty.PropertyId);
+                if (matchingProperty is not null && incomingDispositionProperty.Internal_Id == 0)
+                {
+                    incomingDispositionProperty.Internal_Id = matchingProperty.Internal_Id;
+                }
                 // If the property is not new, check if the name has been updated.
                 if (incomingDispositionProperty.Internal_Id != 0)
                 {
