@@ -180,6 +180,7 @@ const paymentActions = (
           original.statusTypeCode?.id !== LeasePeriodStatusTypes.EXERCISED && (
             <RemoveIconButton
               title="delete period"
+              id={`edit-period-${index}`}
               onRemove={() => original.id && onDelete(original)}
             />
           )}
