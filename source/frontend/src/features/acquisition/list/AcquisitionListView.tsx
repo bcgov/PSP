@@ -99,7 +99,7 @@ export const AcquisitionListView: React.FunctionComponent<
       <Styled.Scrollable>
         <CommonStyled.H1>
           <AcquisitionFileIcon title="Acquisition file icon" fill="currentColor" />
-          <span className="ml-2">Acquistion Files</span>
+          <span className="ml-2">Acquisition Files</span>
         </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
