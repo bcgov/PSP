@@ -78,7 +78,7 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
                   <label>Payment Item {index + 1}</label>
                   <RemoveIconButton
                     title="Delete Payment Item"
-                    data-testid={`paymentItems[${index}].delete-button`}
+                    dataTestId={`paymentItems[${index}].delete-button`}
                     onRemove={() => {
                       setModalContent({
                         ...getDeleteModalProps(),

@@ -108,7 +108,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                             <Col xs="auto" className="px-1">
                               <RemoveIconButton
                                 title="Delete Consultation"
-                                data-testid={`consultations[${index}].delete-btn`}
+                                dataTestId={`consultations[${index}].delete-btn`}
                                 onRemove={() => {
                                   setModalContent({
                                     ...getDeleteModalProps(),

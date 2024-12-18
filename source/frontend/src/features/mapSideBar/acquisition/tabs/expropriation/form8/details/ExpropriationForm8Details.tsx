@@ -68,7 +68,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
               />
               <RemoveIconButton
                 title="Delete Form 8"
-                data-testid={`form8[${form8Index}].delete-form8`}
+                dataTestId={`form8[${form8Index}].delete-form8`}
                 onRemove={() => {
                   setModalContent({
                     ...getDeleteModalProps(),

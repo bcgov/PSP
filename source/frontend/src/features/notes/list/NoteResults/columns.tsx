@@ -64,7 +64,6 @@ export function createTableColumns(
               {hasClaim(Claims.NOTE_DELETE) && !cellProps.row.original.isSystemGenerated && (
                 <RemoveIconButton
                   title="Delete Note"
-                  variant="primary"
                   onRemove={() => onDelete(cellProps.row.original)}
                 />
               )}

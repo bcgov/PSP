@@ -56,7 +56,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
             />
             <RemoveIconButton
               title="Delete Offer"
-              data-testid={`Offer[${index}].delete-btn`}
+              dataTestId={`Offer[${index}].delete-btn`}
               onRemove={() => {
                 setModalContent({
                   ...getDeleteModalProps(),

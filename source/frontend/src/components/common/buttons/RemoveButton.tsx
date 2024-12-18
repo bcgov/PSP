@@ -39,7 +39,7 @@ export const RemoveIconButton: React.FunctionComponent<
       variant="primary"
       title={title ?? 'edit'}
       onClick={onRemove}
-      data-testid={dataTestId ?? 'edit-button'}
+      data-testid={dataTestId ?? 'remove-button'}
       style={style}
     >
       {icon ?? <FaTrash size={22} />}

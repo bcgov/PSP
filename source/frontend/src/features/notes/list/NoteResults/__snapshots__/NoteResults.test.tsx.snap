@@ -6,7 +6,7 @@ exports[`Note Results Table > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c5.btn {
+  .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Note Results Table > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c5.btn .Button__value {
+.c4.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c5.btn:hover {
+.c4.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c5.btn:focus {
+.c4.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Note Results Table > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c5.btn.btn-primary {
+.c4.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c5.btn.btn-primary:hover,
-.c5.btn.btn-primary:active,
-.c5.btn.btn-primary:focus {
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c5.btn.btn-secondary {
+.c4.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c5.btn.btn-secondary:hover,
-.c5.btn.btn-secondary:active,
-.c5.btn.btn-secondary:focus {
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c5.btn.btn-info {
+.c4.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Note Results Table > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c5.btn.btn-info:hover,
-.c5.btn.btn-info:active,
-.c5.btn.btn-info:focus {
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c5.btn.btn-light {
+.c4.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c5.btn.btn-light:hover,
-.c5.btn.btn-light:active,
-.c5.btn.btn-light:focus {
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c5.btn.btn-dark {
+.c4.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c5.btn.btn-dark:hover,
-.c5.btn.btn-dark:active,
-.c5.btn.btn-dark:focus {
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c5.btn.btn-danger {
+.c4.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c5.btn.btn-danger:hover,
-.c5.btn.btn-danger:active,
-.c5.btn.btn-danger:focus {
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c5.btn.btn-warning {
+.c4.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c5.btn.btn-warning:hover,
-.c5.btn.btn-warning:active,
-.c5.btn.btn-warning:focus {
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c5.btn.btn-link {
+.c4.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Note Results Table > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c5.btn.btn-link:hover,
-.c5.btn.btn-link:active,
-.c5.btn.btn-link:focus {
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Note Results Table > matches snapshot 1`] = `
   outline: none;
 }
 
-.c5.btn.btn-link:disabled,
-.c5.btn.btn-link.disabled {
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c5.btn:disabled,
-.c5.btn:disabled:hover {
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,60 +202,96 @@ exports[`Note Results Table > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c5.Button .Button__icon {
+.c4.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c5.Button--icon-only:focus {
+.c4.Button--icon-only:focus {
   outline: none;
 }
 
-.c5.Button--icon-only .Button__icon {
+.c4.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6.c6.btn {
-  color: #aaaaaa;
+.c5.c5.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c5.c5.btn:hover,
+.c5.c5.btn:focus,
+.c5.c5.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c5.c5.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c5.c5.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c5.c5.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c5.c5.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c5.c5.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c5.c5.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c5.c5.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c5.c5.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
+}
+
+.c6.c6.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c6.c6.btn .text {
+.c6.c6.btn.btn-primary svg {
+  color: #aaaaaa !important;
+}
+
+.c6.c6.btn.btn-primary .text {
   display: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:active,
-.c6.c6.btn:focus {
-  color: #d8292f;
+.c6.c6.btn.btn-primary svg:hover,
+.c6.c6.btn.btn-primary svg:active,
+.c6.c6.btn.btn-primary svg:focus {
+  color: #d8292f !important;
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
 }
 
-.c6.c6.btn:hover .text,
-.c6.c6.btn:active .text,
-.c6.c6.btn:focus .text {
+.c6.c6.btn.btn-primary svg:hover .text,
+.c6.c6.btn.btn-primary svg:active .text,
+.c6.c6.btn.btn-primary svg:focus .text {
   display: inline;
   line-height: 2rem;
-}
-
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
 }
 
 .c0 {
@@ -287,11 +323,11 @@ exports[`Note Results Table > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c4 {
-  -webkit-box-pack: space-around;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: space-around;
-  justify-content: space-around;
+.c3 {
+  -webkit-box-pack: space-evenly;
+  -webkit-justify-content: space-evenly;
+  -ms-flex-pack: space-evenly;
+  justify-content: space-evenly;
   width: 100%;
 }
 
@@ -469,31 +505,41 @@ exports[`Note Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 c4"
+              class="c3 row"
             >
-              <button
-                class="c5 Button c6 btn btn-link"
-                title="Delete Note"
-                type="button"
+              <div
+                class="p-0 col-1"
               >
-                <div
-                  class="Button__value"
+                 
+              </div>
+              <div
+                class="p-0 col-1"
+              >
+                <button
+                  class="c4 Button c5 c6 btn btn-primary"
+                  data-testid="remove-button"
+                  title="Delete Note"
+                  type="button"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="2rem"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="2rem"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    class="Button__value"
                   >
-                    <path
-                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
-                    />
-                  </svg>
-                </div>
-              </button>
+                    <svg
+                      fill="currentColor"
+                      height="22"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="22"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -537,31 +583,41 @@ exports[`Note Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 c4"
+              class="c3 row"
             >
-              <button
-                class="c5 Button c6 btn btn-link"
-                title="Delete Note"
-                type="button"
+              <div
+                class="p-0 col-1"
               >
-                <div
-                  class="Button__value"
+                 
+              </div>
+              <div
+                class="p-0 col-1"
+              >
+                <button
+                  class="c4 Button c5 c6 btn btn-primary"
+                  data-testid="remove-button"
+                  title="Delete Note"
+                  type="button"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="2rem"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="2rem"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    class="Button__value"
                   >
-                    <path
-                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
-                    />
-                  </svg>
-                </div>
-              </button>
+                    <svg
+                      fill="currentColor"
+                      height="22"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="22"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -605,31 +661,41 @@ exports[`Note Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 c4"
+              class="c3 row"
             >
-              <button
-                class="c5 Button c6 btn btn-link"
-                title="Delete Note"
-                type="button"
+              <div
+                class="p-0 col-1"
               >
-                <div
-                  class="Button__value"
+                 
+              </div>
+              <div
+                class="p-0 col-1"
+              >
+                <button
+                  class="c4 Button c5 c6 btn btn-primary"
+                  data-testid="remove-button"
+                  title="Delete Note"
+                  type="button"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="2rem"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="2rem"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    class="Button__value"
                   >
-                    <path
-                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
-                    />
-                  </svg>
-                </div>
-              </button>
+                    <svg
+                      fill="currentColor"
+                      height="22"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="22"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -673,31 +739,41 @@ exports[`Note Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 c4"
+              class="c3 row"
             >
-              <button
-                class="c5 Button c6 btn btn-link"
-                title="Delete Note"
-                type="button"
+              <div
+                class="p-0 col-1"
               >
-                <div
-                  class="Button__value"
+                 
+              </div>
+              <div
+                class="p-0 col-1"
+              >
+                <button
+                  class="c4 Button c5 c6 btn btn-primary"
+                  data-testid="remove-button"
+                  title="Delete Note"
+                  type="button"
                 >
-                  <svg
-                    fill="currentColor"
-                    height="2rem"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="2rem"
-                    xmlns="http://www.w3.org/2000/svg"
+                  <div
+                    class="Button__value"
                   >
-                    <path
-                      d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
-                    />
-                  </svg>
-                </div>
-              </button>
+                    <svg
+                      fill="currentColor"
+                      height="22"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 448 512"
+                      width="22"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
         </div>

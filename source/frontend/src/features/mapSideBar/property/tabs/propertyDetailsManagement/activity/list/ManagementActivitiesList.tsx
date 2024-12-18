@@ -89,7 +89,7 @@ export function createTableColumns(
           <StyledDiv>
             {hasClaim(Claims.MANAGEMENT_VIEW) && (
               <ViewButton
-                data-testid={`activity-view-${activityRow.id}`}
+                dataTestId={`activity-view-${activityRow.id}`}
                 onClick={() => activityRow?.id && onView(activityRow.activityId)}
                 id={`activity-view-${cellProps.row.id}`}
                 title="property-activity view details"
@@ -100,7 +100,7 @@ export function createTableColumns(
               PropertyManagementActivityStatusTypes.NOTSTARTED ? (
               <RemoveIconButton
                 id={`activity-delete-${cellProps.row.id}`}
-                data-testid={`activity-delete-${activityRow.id}`}
+                dataTestId={`activity-delete-${activityRow.id}`}
                 onRemove={() => activityRow.id && onDelete(activityRow.id)}
                 title="Delete"
               />

@@ -108,7 +108,7 @@ export function createCompensationTableColumns(
               canEditDetails(cellProps.row.original.isDraft) && (
                 <RemoveIconButton
                   id={`compensation-delete-${cellProps.row.id}`}
-                  data-testid={`compensation-delete-${cellProps.row.id}`}
+                  dataTestId={`compensation-delete-${cellProps.row.id}`}
                   onRemove={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
                   title="Delete Compensation"
                 />

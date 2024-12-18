@@ -444,6 +444,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 
 .c31 {
   text-align: right;
+  overflow: hidden;
 }
 
 .c33 {

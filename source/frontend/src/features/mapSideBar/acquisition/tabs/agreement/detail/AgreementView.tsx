@@ -101,7 +101,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               />
                               <RemoveIconButton
                                 title="Delete Agreement"
-                                data-testid={`agreements[${index}].delete-btn`}
+                                dataTestId={`agreements[${index}].delete-btn`}
                                 icon={<FaTrash size={'1.75rem'} />}
                                 onRemove={() => {
                                   setModalContent({

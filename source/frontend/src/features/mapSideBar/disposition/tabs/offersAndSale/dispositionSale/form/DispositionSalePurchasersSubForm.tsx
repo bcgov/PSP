@@ -42,7 +42,7 @@ const DispositionSalePurchaserSubForm: React.FunctionComponent<
                   <Col xs="auto" xl="2" className="pl-3 mt-2">
                     <RemoveIconButton
                       title="Remove Purchaser"
-                      data-testid={`dispositionPurchasers.${index}.remove-button`}
+                      dataTestId={`dispositionPurchasers.${index}.remove-button`}
                       onRemove={() => {
                         setModalContent({
                           ...getDeleteModalProps(),
