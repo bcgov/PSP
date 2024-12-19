@@ -1,11 +1,11 @@
 /* ---------------------------------------------------------------------- */
 /* Script generated with: DeZign for Databases 14.6.0                     */
 /* Target DBMS:           MS SQL Server 2019                              */
-/* Project file:          PIMS S95.00.dez                                 */
-/* Project name:          PIMS S95.00                                     */
+/* Project file:          PIMS S96.00.dez                                 */
+/* Project name:          PIMS S96.00                                     */
 /* Author:                Doug Filteau                                    */
 /* Script type:           Database drop script                            */
-/* Created on:            2024-12-02 15:19                                */
+/* Created on:            2024-12-16 10:37                                */
 /* ---------------------------------------------------------------------- */
 
 
@@ -155,6 +155,14 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_PROPERTY_RESEARCH_FILE] DROP CONSTRAINT [PIM_RESRCH_PIM_PRSCRC_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [PIM_ACQNFL_PIM_AQFATT_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [PIM_AFTKTY_PIM_AQFATT_FK]
 GO
 
 
@@ -446,11 +454,11 @@ ALTER TABLE [dbo].[PIMS_RESEARCH_FILE_DOCUMENT] DROP CONSTRAINT [PIM_RESRCH_PIM_
 GO
 
 
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [PIM_DSPDOC_PIM_DOCQUE_FK]
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [PIM_ACQNFL_PIM_AQFFLP_FK]
 GO
 
 
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [PIM_RFLDOC_PIM_DOCQUE_FK]
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [PIM_AFRPGT_PIM_AQFFLP_FK]
 GO
 
 
@@ -462,19 +470,7 @@ ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [PIM_DOCMNT_PIM_DOCQUE_F
 GO
 
 
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [PIM_ACQDOC_PIM_DOCQUE_FK]
-GO
-
-
 ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [PIM_PIDSRT_PIM_DOCQUE_FK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [PIM_LESDOC_PIM_DOCQUE_FK]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [PIM_PRACDO_PIM_DOCQUE_FK]
 GO
 
 
@@ -911,6 +907,18 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [PIM_ACQNFL_PIM_ACQNFL_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [PIM_AFEXRT_PIM_ACQNFL_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [PIM_AFLSVT_PIM_ACQNFL_FK]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE] DROP CONSTRAINT [PIM_AFAPPRT_PIM_ACQNFL_FK]
 GO
 
 
@@ -3499,195 +3507,6 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
-/* Drop table "dbo.PIMS_DOCUMENT_QUEUE"                                   */
-/* ---------------------------------------------------------------------- */
-
-GO
-
-
-/* Drop constraints */
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DOCUMENT_QUEUE_ID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_CONCURRENCY_CONTROL_NUMBER_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_CREATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_CREATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_CREATE_USER_DIRECTORY_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_LAST_UPDATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_LAST_UPDATE_USER_DIRECTORY_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DB_CREATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DB_CREATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DB_LAST_UPDATE_TIMESTAMP_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DB_LAST_UPDATE_USERID_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_PK]
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_QUEUE_ID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_ID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_QUEUE_STATUS_TYPE_CODE'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DATA_SOURCE_TYPE_CODE'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'PROPERTY_ACTIVITY_DOCUMENT_ID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'ACQUISITION_FILE_DOCUMENT_ID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'RESEARCH_FILE_DOCUMENT_ID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'LEASE_DOCUMENT_ID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DISPOSITION_FILE_DOCUMENT_ID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'FILE_NAME'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_EXTERNAL_ID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_METADATA'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOC_PROCESS_START_DT'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOC_PROCESS_END_DT'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOC_PROCESS_RETRIES'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'MAYAN_ERROR'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_CREATE_TIMESTAMP'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_CREATE_USERID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_CREATE_USER_GUID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_LAST_UPDATE_USERID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DB_CREATE_USERID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
-GO
-
-
-EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', NULL, NULL
-GO
-
-
-DROP TABLE [dbo].[PIMS_DOCUMENT_QUEUE]
-GO
-
-
-/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_DISPOSITION_PURCHASER"                            */
 /* ---------------------------------------------------------------------- */
 
@@ -5520,6 +5339,300 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_DOCUMENT_QUEUE"                                   */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DOCUMENT_QUEUE_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_CREATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_APP_LAST_UPDATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT [DOCQUE_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_QUEUE_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_QUEUE_STATUS_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DATA_SOURCE_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_EXTERNAL_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT_METADATA'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOC_PROCESS_START_DT'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOC_PROCESS_END_DT'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOC_PROCESS_RETRIES'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'MAYAN_ERROR'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DOCUMENT'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_CREATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_DOCUMENT_QUEUE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_DOCUMENT_QUEUE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_ACQ_FILE_ACQ_PROGRESS"                            */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_ACQ_FILE_ACQ_PROGRESS_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_APP_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_APP_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_APP_CREATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_APP_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_APP_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_APP_LAST_UPDATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS] DROP CONSTRAINT [AQFFLP_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'ACQ_FILE_ACQ_PROGRESS_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'ACQUISITION_FILE_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'ACQ_FILE_PROGESS_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'APP_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'APP_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'APP_CREATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'APP_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_PROGRESS', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+DROP TABLE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS]
+GO
+
+
+/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_RESEARCH_FILE_DOCUMENT"                           */
 /* ---------------------------------------------------------------------- */
 
@@ -6691,6 +6804,135 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_PROPERTY_ACTIVITY]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP"                         */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_ACQ_FILE_ACQ_FL_TAKE_TYPE_ID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_APP_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_APP_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_APP_CREATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_APP_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_APP_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_APP_LAST_UPDATE_USER_DIRECTORY_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP] DROP CONSTRAINT [AQFATT_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'ACQ_FILE_ACQ_FL_TAKE_TYPE_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'ACQUISITION_FILE_ID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'ACQ_FILE_TAKE_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'APP_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'APP_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'APP_CREATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'APP_CREATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'APP_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'APP_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'APP_LAST_UPDATE_USER_GUID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'APP_LAST_UPDATE_USER_DIRECTORY'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+DROP TABLE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP]
 GO
 
 
@@ -8364,6 +8606,18 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'ACQ_FILE_APPRAISAL_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'ACQ_FILE_LGL_SRVY_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'ACQ_FILE_EXPROP_RISK_TYPE_CODE'
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQUISITION_FILE', 'COLUMN', N'FILE_NAME'
 GO
 
@@ -8494,10 +8748,6 @@ GO
 
 
 ALTER TABLE [dbo].[PIMS_DOCUMENT] DROP CONSTRAINT [DOCMNT_FILE_NAME_DEF]
-GO
-
-
-ALTER TABLE [dbo].[PIMS_DOCUMENT] DROP CONSTRAINT [DOCMNT_MAYAN_ID_DEF]
 GO
 
 
@@ -12208,6 +12458,26 @@ EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'
 GO
 
 
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_CHKLST_SECTION_TYPE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_CHKLST_SECTION_TYPE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_CHKLST_SECTION_TYPE', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_CHKLST_SECTION_TYPE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_CHKLST_SECTION_TYPE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
 EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_CHKLST_SECTION_TYPE', NULL, NULL
 GO
 
@@ -14730,6 +15000,168 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_ACQ_FILE_TAKE_TYPE"                               */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_TAKE_TYPE] DROP CONSTRAINT [AFTKTY_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_TAKE_TYPE] DROP CONSTRAINT [AFTKTY_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_TAKE_TYPE] DROP CONSTRAINT [AFTKTY_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_TAKE_TYPE] DROP CONSTRAINT [AFTKTY_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_TAKE_TYPE] DROP CONSTRAINT [AFTKTY_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_TAKE_TYPE] DROP CONSTRAINT [AFTKTY_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_TAKE_TYPE] DROP CONSTRAINT [AFTKTY_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'ACQ_FILE_TAKE_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_TAKE_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_ACQ_FILE_TAKE_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_ACQ_FILE_LGL_SRVY_TYPE"                           */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_LGL_SRVY_TYPE] DROP CONSTRAINT [AFLSVT_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_LGL_SRVY_TYPE] DROP CONSTRAINT [AFLSVT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_LGL_SRVY_TYPE] DROP CONSTRAINT [AFLSVT_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_LGL_SRVY_TYPE] DROP CONSTRAINT [AFLSVT_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_LGL_SRVY_TYPE] DROP CONSTRAINT [AFLSVT_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_LGL_SRVY_TYPE] DROP CONSTRAINT [AFLSVT_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_LGL_SRVY_TYPE] DROP CONSTRAINT [AFLSVT_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'ACQ_FILE_LGL_SRVY_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_LGL_SRVY_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_ACQ_FILE_LGL_SRVY_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_CONSULTATION_OUTCOME_TYPE"                        */
 /* ---------------------------------------------------------------------- */
 
@@ -14807,6 +15239,87 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_CONSULTATION_OUTCOME_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_ACQ_FILE_EXPROP_RISK_TYPE"                        */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_EXPROP_RISK_TYPE] DROP CONSTRAINT [AFEXRT_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_EXPROP_RISK_TYPE] DROP CONSTRAINT [AFEXRT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_EXPROP_RISK_TYPE] DROP CONSTRAINT [AFEXRT_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_EXPROP_RISK_TYPE] DROP CONSTRAINT [AFEXRT_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_EXPROP_RISK_TYPE] DROP CONSTRAINT [AFEXRT_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_EXPROP_RISK_TYPE] DROP CONSTRAINT [AFEXRT_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_EXPROP_RISK_TYPE] DROP CONSTRAINT [AFEXRT_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'ACQ_FILE_EXPROP_RISK_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_EXPROP_RISK_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_ACQ_FILE_EXPROP_RISK_TYPE]
 GO
 
 
@@ -16585,6 +17098,87 @@ GO
 
 
 DROP TABLE [dbo].[PIMS_DSP_INITIATING_BRANCH_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_ACQ_FILE_PROGESS_TYPE"                            */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_PROGESS_TYPE] DROP CONSTRAINT [AFRPGT_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_PROGESS_TYPE] DROP CONSTRAINT [AFRPGT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_PROGESS_TYPE] DROP CONSTRAINT [AFRPGT_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_PROGESS_TYPE] DROP CONSTRAINT [AFRPGT_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_PROGESS_TYPE] DROP CONSTRAINT [AFRPGT_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_PROGESS_TYPE] DROP CONSTRAINT [AFRPGT_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_PROGESS_TYPE] DROP CONSTRAINT [AFRPGT_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'ACQ_FILE_PROGESS_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_PROGESS_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_ACQ_FILE_PROGESS_TYPE]
 GO
 
 
@@ -18584,6 +19178,87 @@ GO
 
 
 /* ---------------------------------------------------------------------- */
+/* Drop table "dbo.PIMS_ACQ_FILE_APPRAISAL_TYPE"                          */
+/* ---------------------------------------------------------------------- */
+
+GO
+
+
+/* Drop constraints */
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_APPRAISAL_TYPE] DROP CONSTRAINT [AFAPPRT_IS_DISABLED_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_APPRAISAL_TYPE] DROP CONSTRAINT [AFAPPRT_CONCURRENCY_CONTROL_NUMBER_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_APPRAISAL_TYPE] DROP CONSTRAINT [AFAPPRT_DB_CREATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_APPRAISAL_TYPE] DROP CONSTRAINT [AFAPPRT_DB_CREATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_APPRAISAL_TYPE] DROP CONSTRAINT [AFAPPRT_DB_LAST_UPDATE_TIMESTAMP_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_APPRAISAL_TYPE] DROP CONSTRAINT [AFAPPRT_DB_LAST_UPDATE_USERID_DEF]
+GO
+
+
+ALTER TABLE [dbo].[PIMS_ACQ_FILE_APPRAISAL_TYPE] DROP CONSTRAINT [AFAPPRT_PK]
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'ACQ_FILE_APPRAISAL_TYPE_CODE'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'DESCRIPTION'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'IS_DISABLED'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'DISPLAY_ORDER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'CONCURRENCY_CONTROL_NUMBER'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'DB_CREATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'DB_CREATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'DB_LAST_UPDATE_TIMESTAMP'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', 'COLUMN', N'DB_LAST_UPDATE_USERID'
+GO
+
+
+EXECUTE sp_dropextendedproperty N'MS_Description', 'SCHEMA', N'dbo', 'TABLE', N'PIMS_ACQ_FILE_APPRAISAL_TYPE', NULL, NULL
+GO
+
+
+DROP TABLE [dbo].[PIMS_ACQ_FILE_APPRAISAL_TYPE]
+GO
+
+
+/* ---------------------------------------------------------------------- */
 /* Drop table "dbo.PIMS_SUBFILE_INTEREST_TYPE"                            */
 /* ---------------------------------------------------------------------- */
 
@@ -19364,5 +20039,13 @@ GO
 
 
 DROP SEQUENCE [dbo].[PIMS_PROPERTY_SERVICE_FILE_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_ACQ_FILE_ACQ_PROGRESS_ID_SEQ]
+GO
+
+
+DROP SEQUENCE [dbo].[PIMS_ACQ_FILE_ACQ_FL_TAKE_TYPE_ID_SEQ]
 GO
 
