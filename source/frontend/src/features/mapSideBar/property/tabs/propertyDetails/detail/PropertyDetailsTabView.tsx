@@ -124,7 +124,10 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         <SectionField label="Agricultural land reserve">
           {property?.isALR ? 'Yes' : 'No'}
         </SectionField>
-        <SectionField label="Railway belt / Dominion patent">
+        <SectionField
+          label="Railway belt / Dominion patent"
+          tooltip="A parcel that was previously part of a railway belt or a Dominion patent."
+        >
           {booleanToYesNoUnknownString(property?.isRwyBeltDomPatent)}
         </SectionField>
         <SectionField label="Land parcel type">{property?.propertyType?.description}</SectionField>
@@ -155,7 +158,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Provincial Public Hwy">
+        <SectionField label="Provincial public hwy">
           {pphStatusTypeCodeDesc ?? 'Unknown'}
         </SectionField>
         {isHighwayRoad && (

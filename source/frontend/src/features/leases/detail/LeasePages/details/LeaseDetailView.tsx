@@ -44,28 +44,18 @@ export const LeaseDetailView: React.FunctionComponent<
           {hasClaim(Claims.LEASE_VIEW) &&
             exists(leaseTypeCode) &&
             leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LOOBCTFA && (
-              <StyledAddButton onClick={() => onGenerate(lease)}>
-                <FaFileContract
-                  size={28}
-                  id={`generate-h1005-a`}
-                  title="Generate H1005(a)"
-                  className="mr-2"
-                />
-                Generate H1005(a)
+              <StyledAddButton title="Download File" onClick={() => onGenerate(lease)}>
+                <FaFileContract size={28} id={`generate-h1005-a`} className="mr-2" />
+                Generate H-1005(a)
               </StyledAddButton>
             )}
 
           {hasClaim(Claims.LEASE_VIEW) &&
             exists(leaseTypeCode) &&
             leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.LIPPUBHWY && (
-              <StyledAddButton onClick={() => onGenerate(lease)}>
-                <FaFileContract
-                  size={24}
-                  id={`generate-h1005`}
-                  title="Generate H1005"
-                  className="mr-2"
-                />
-                Generate H1005
+              <StyledAddButton title="Download File" onClick={() => onGenerate(lease)}>
+                <FaFileContract size={28} id={`generate-h1005`} className="mr-2" />
+                Generate H-1005
               </StyledAddButton>
             )}
         </SimpleSectionHeader>

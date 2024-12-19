@@ -2,9 +2,11 @@ import React, { useEffect } from 'react';
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
+import { MdTopic } from 'react-icons/md';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
+import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import Claims from '@/constants/claims';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
@@ -64,7 +66,10 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Research Files</Styled.PageHeader>
+        <CommonStyled.H1>
+          <MdTopic title="Research file icon" />
+          <span className="ml-2">Research Files</span>
+        </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

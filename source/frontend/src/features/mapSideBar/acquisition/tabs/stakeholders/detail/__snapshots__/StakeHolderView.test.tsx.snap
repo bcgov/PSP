@@ -17,18 +17,18 @@ exports[`StakeHolderView component > renders as expected 1`] = `
   padding-top: 1rem;
 }
 
-.c3 {
+.c1 {
   text-align: right;
 }
 
-.c2 {
+.c3 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c1 {
+.c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -40,10 +40,13 @@ exports[`StakeHolderView component > renders as expected 1`] = `
     class="c0"
   >
     <div
-      class="c1 form-section"
+      class="c1 mr-3 my-1"
+    />
+    <div
+      class="c2 form-section"
     >
       <h2
-        class="c2"
+        class="c3"
       >
         <div
           class="no-gutters row"
@@ -51,22 +54,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
           <div
             class="col"
           >
-            <div
-              class="row"
-            >
-              <div
-                class="col-md-10"
-              >
-                Interests
-              </div>
-              <div
-                class="d-flex align-items-center justify-content-end pr-0 col-md-2"
-              >
-                <div
-                  class="c3"
-                />
-              </div>
-            </div>
+            Interests
           </div>
           <div
             class="pl-8 d-flex align-items-end col-auto"
@@ -329,7 +317,7 @@ exports[`StakeHolderView component > renders as expected 1`] = `
       </div>
     </div>
   </div>
-  .c4 {
+  .c3 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -338,10 +326,6 @@ exports[`StakeHolderView component > renders as expected 1`] = `
 .c0 {
   background-color: #f2f2f2;
   padding-top: 1rem;
-}
-
-.c3 {
-  text-align: right;
 }
 
 .c2 {
@@ -374,28 +358,13 @@ exports[`StakeHolderView component > renders as expected 1`] = `
           <div
             class="col"
           >
-            <div
-              class="row"
-            >
-              <div
-                class="col-md-10"
-              >
-                Non-interest Payees
-              </div>
-              <div
-                class="d-flex align-items-center justify-content-end pr-0 col-md-2"
-              >
-                <div
-                  class="c3"
-                />
-              </div>
-            </div>
+            Non-interest Payees
           </div>
           <div
             class="pl-8 d-flex align-items-end col-auto"
           >
             <svg
-              class="c4"
+              class="c3"
               fill="currentColor"
               height="1em"
               stroke="currentColor"

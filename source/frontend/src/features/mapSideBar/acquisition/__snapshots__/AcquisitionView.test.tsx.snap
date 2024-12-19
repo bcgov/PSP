@@ -214,32 +214,32 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c27 {
+.c28 {
   height: 100%;
 }
 
-.c27 .tab-content {
+.c28 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c27 .tab-content .tab-pane {
+.c28 .tab-content .tab-pane {
   position: relative;
 }
 
-.c28 {
+.c29 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c28 .nav-tabs {
+.c29 .nav-tabs {
   height: auto;
 }
 
-.c28 .nav-item {
+.c29 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -247,7 +247,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c28 .nav-item:hover {
+.c29 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -257,7 +257,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c28 .nav-item.active {
+.c29 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -275,7 +275,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   width: 100%;
 }
 
-.c25 {
+.c26 {
   overflow: auto;
   height: 100%;
   width: 100%;
@@ -301,7 +301,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c36 {
+.c37 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
@@ -320,7 +320,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c37 {
+.c38 {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -420,7 +420,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   position: relative;
 }
 
-.c26 {
+.c27 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -437,23 +437,23 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c29 {
+.c30 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
-.c30 {
+.c31 {
   text-align: right;
 }
 
-.c32 {
+.c33 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c31 {
+.c32 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -461,14 +461,14 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c34.required::before {
+.c35.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c33 {
+.c34 {
   font-weight: bold;
 }
 
@@ -534,6 +534,11 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   color: var(--surface-color-primary-button-default);
 }
 
+.c22 {
+  min-height: 2.5rem;
+  line-height: 3rem;
+}
+
 .c21 {
   font-size: 1.4rem;
   font-weight: normal;
@@ -550,7 +555,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   font-size: 1.4rem;
 }
 
-.c24 {
+.c25 {
   background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
@@ -572,11 +577,11 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c24.selected {
+.c25.selected {
   background-color: #FCBA19;
 }
 
-.c22 {
+.c23 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -593,14 +598,14 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   border-bottom: 1px solid #606060;
 }
 
-.c23 {
+.c24 {
   font-weight: bold;
   font-size: 1.6rem;
   color: #474543;
   line-height: 2.2rem;
 }
 
-.c35 {
+.c36 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -907,7 +912,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                 data-testid="menu-item-row-0"
               >
                 <div
-                  class="col"
+                  class="c22 col"
                 >
                   <span
                     title="File Details"
@@ -916,10 +921,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   </span>
                 </div>
                 <div
-                  class="c22"
+                  class="c23"
                 >
                   <span
-                    class="c23"
+                    class="c24"
                   >
                     Properties
                   </span>
@@ -936,7 +941,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   class="pr-2 col-auto"
                 >
                   <div
-                    class="c24"
+                    class="c25"
                   >
                     1
                   </div>
@@ -968,7 +973,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   class="pr-2 col-auto"
                 >
                   <div
-                    class="c24"
+                    class="c25"
                   >
                     2
                   </div>
@@ -992,16 +997,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c25 col-9"
+            class="c26 col-9"
           >
             <div
-              class="c26"
+              class="c27"
             >
               <div
-                class="c27"
+                class="c28"
               >
                 <nav
-                  class="c28 nav nav-tabs"
+                  class="c29 nav nav-tabs"
                   role="tablist"
                 >
                   <a
@@ -1050,16 +1055,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                     role="tabpanel"
                   >
                     <div
-                      class="c29"
+                      class="c30"
                     >
                       <div
-                        class="c30 mr-3 my-1"
+                        class="c31 mr-3 my-1"
                       />
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c32"
+                          class="c33"
                         >
                           <div
                             class="no-gutters row"
@@ -1081,13 +1086,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Ministry project:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               001 - Hwy 14 Expansion - Vancouver Island but it's really long so it can wrap around if it has to
                             </div>
@@ -1099,13 +1104,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Product:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               00048 MISCELLANEOUS CLAIMS
                             </div>
@@ -1117,22 +1122,22 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Funding:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             />
                           </div>
                         </div>
                       </div>
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c32"
+                          class="c33"
                         >
                           <div
                             class="no-gutters row"
@@ -1154,15 +1159,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Assigned date:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
+                              data-testid="assigned-date"
                             >
-                              Jun 27, 2022
+                              Dec 17, 2024
                             </div>
                           </div>
                           <div
@@ -1172,7 +1178,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Delivery date:
                                 <span>
@@ -1200,7 +1206,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               Jul 29, 2022
                             </div>
@@ -1212,7 +1218,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Estimated date:
                                 <span>
@@ -1240,7 +1246,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               Jul 10, 2024
                             </div>
@@ -1252,13 +1258,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Possession date:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               Jul 10, 2025
                             </div>
@@ -1266,10 +1272,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c32"
+                          class="c33"
                         >
                           <div
                             class="no-gutters row"
@@ -1291,13 +1297,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Acquisition file name:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               Test ACQ File
                             </div>
@@ -1309,7 +1315,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Historical file number:
                                 <span>
@@ -1337,7 +1343,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               legacy file number
                             </div>
@@ -1349,13 +1355,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Physical file status:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             />
                           </div>
                           <div
@@ -1365,13 +1371,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Acquisition type:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               Consensual Agreement
                             </div>
@@ -1383,13 +1389,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Ministry region:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               South Coast Region
                             </div>
@@ -1397,10 +1403,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c32"
+                          class="c33"
                         >
                           <div
                             class="no-gutters row"
@@ -1422,16 +1428,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Negotiation agent:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               <a
-                                class="c35"
+                                class="c36"
                                 href="/contact/P1"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1463,16 +1469,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Negotiation agent:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               <a
-                                class="c35"
+                                class="c36"
                                 href="/contact/P3"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1500,10 +1506,10 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c32"
+                          class="c33"
                         >
                           <div
                             class="no-gutters row"
@@ -1519,12 +1525,12 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           class="collapse show"
                         >
                           <p
-                            class="c36"
+                            class="c37"
                           >
                             Each property in this file should be owned by the owner(s) in this section
                           </p>
                           <div
-                            class="c37"
+                            class="c38"
                           >
                             <div
                               class="spinner-border text-warning"
@@ -1538,16 +1544,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Owner solicitor:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               <a
-                                class="c35"
+                                class="c36"
                                 href="/contact/O1"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1579,16 +1585,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Primary contact:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               <a
-                                class="c35"
+                                class="c36"
                                 href="/contact/P1"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1618,16 +1624,16 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Owner representative:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               <a
-                                class="c35"
+                                class="c36"
                                 href="/contact/P2"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1659,13 +1665,13 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-4"
                             >
                               <label
-                                class="c33"
+                                class="c34"
                               >
                                 Comment:
                               </label>
                             </div>
                             <div
-                              class="c34 text-left col"
+                              class="c35 text-left col"
                             >
                               test representative comment
                             </div>

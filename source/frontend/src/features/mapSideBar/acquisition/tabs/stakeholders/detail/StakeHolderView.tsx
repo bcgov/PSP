@@ -1,5 +1,3 @@
-import { Col, Row } from 'react-bootstrap';
-
 import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -43,24 +41,12 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
     <>
       <StyledSummarySection>
         <LoadingBackdrop show={loading} parentScreen={true} />
-
-        <Section
-          isCollapsable
-          initiallyExpanded
-          header={
-            <Row>
-              <Col md="10">Interests</Col>
-              <Col md="2" className="d-flex align-items-center justify-content-end pr-0">
-                <StyledEditWrapper>
-                  {keycloak.hasClaim(Claims.ACQUISITION_EDIT) &&
-                  statusSolver.canEditStakeholders() ? (
-                    <EditButton title="Edit Interests" onClick={onEdit} />
-                  ) : null}
-                </StyledEditWrapper>
-              </Col>
-            </Row>
-          }
-        >
+        <StyledEditWrapper className="mr-3 my-1">
+          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditStakeholders() ? (
+            <EditButton title="Edit Interests" onClick={onEdit} />
+          ) : null}
+        </StyledEditWrapper>
+        <Section isCollapsable initiallyExpanded header="Interests">
           {groupedInterestProperties.length === 0 && legacyStakeHolders.length === 0 && (
             <StyledNoData>
               <p>There are no interest holders associated with this file.</p>
@@ -95,22 +81,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
         </Section>
       </StyledSummarySection>
       <StyledSummarySection>
-        <Section
-          isCollapsable
-          initiallyExpanded
-          header={
-            <Row>
-              <Col md="10">Non-interest Payees</Col>
-              <Col md="2" className="d-flex align-items-center justify-content-end pr-0">
-                <StyledEditWrapper>
-                  {keycloak.hasClaim(Claims.ACQUISITION_EDIT) ? (
-                    <EditButton title="Edit Non-interest payees" onClick={onEdit} />
-                  ) : null}
-                </StyledEditWrapper>
-              </Col>
-            </Row>
-          }
-        >
+        <Section isCollapsable initiallyExpanded header="Non-interest Payees">
           {groupedNonInterestProperties.length === 0 && (
             <StyledNoData>
               <p>There are no non-interest payees associated with this file.</p>
