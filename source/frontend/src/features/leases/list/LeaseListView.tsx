@@ -5,7 +5,9 @@ import { FaFileAlt, FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
+import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import { StyledIconButton } from '@/components/common/buttons';
+import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
@@ -80,7 +82,10 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Leases &amp; Licences</Styled.PageHeader>
+        <CommonStyled.H1>
+          <LeaseIcon title="Lease and Licence icon" fill="currentColor" />
+          <span className="ml-2">Leases &amp; Licences</span>
+        </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

@@ -194,7 +194,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()));
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
 
             // Act
@@ -202,7 +202,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
-            propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once);
+            propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()), Times.Once);
         }
 
@@ -230,7 +230,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
-            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()));
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
 
             // Act
@@ -238,7 +238,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
-            propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()), Times.Once);
+            propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()), Times.Once);
         }
 

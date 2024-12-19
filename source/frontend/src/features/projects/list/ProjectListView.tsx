@@ -1,8 +1,9 @@
 import { useCallback } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa';
+import { FaBriefcase, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 
+import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants/claims';
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
@@ -54,7 +55,10 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Projects</Styled.PageHeader>
+        <CommonStyled.H1>
+          <FaBriefcase title="Project icon" fill="currentColor" className={'pb-1'} />
+          <span className="ml-2">Projects</span>
+        </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>
