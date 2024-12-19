@@ -40,14 +40,14 @@ namespace Pims.Scheduler.Services
         [DisableConcurrentExecution(timeoutInSeconds: 10 * 30)]
         public async Task<ScheduledTaskResponseModel> UploadQueuedDocuments()
         {
-            var filter = new DocumentQueueFilter() { Quantity = _uploadQueuedDocumentsJobOptions.CurrentValue.BatchSize ?? 50, DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PENDING.ToString() } };
+            var filter = new DocumentQueueFilter() { Quantity = _uploadQueuedDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50, DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PENDING.ToString() } };
             var searchResponse = await SearchQueuedDocuments(filter);
-            if (searchResponse.ScheduledTaskResponseModel != null)
+            if (searchResponse?.ScheduledTaskResponseModel != null)
             {
-                return searchResponse.ScheduledTaskResponseModel;
+                return searchResponse?.ScheduledTaskResponseModel;
             }
 
-            IEnumerable<Task<DocumentQueueResponseModel>> responses = searchResponse.SearchResults.Payload.Select(qd =>
+            IEnumerable<Task<DocumentQueueResponseModel>> responses = searchResponse?.SearchResults?.Payload?.Select(qd =>
             {
                 _logger.LogInformation("Uploading Queued document {documentQueueId}", qd.Id);
                 _logger.LogDebug("document contents {document}", qd.Serialize());
@@ -63,16 +63,16 @@ namespace Pims.Scheduler.Services
         {
             var filter = new DocumentQueueFilter()
             {
-                Quantity = _uploadQueuedDocumentsJobOptions.CurrentValue.BatchSize ?? 50,
+                Quantity = _uploadQueuedDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50,
                 DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PIMS_ERROR.ToString(), DocumentQueueStatusTypes.MAYAN_ERROR.ToString() },
                 MaxDocProcessRetries = 3,
             };
             var searchResponse = await SearchQueuedDocuments(filter);
-            if (searchResponse.ScheduledTaskResponseModel != null)
+            if (searchResponse?.ScheduledTaskResponseModel != null)
             {
-                return searchResponse.ScheduledTaskResponseModel;
+                return searchResponse?.ScheduledTaskResponseModel;
             }
-            IEnumerable<Task<DocumentQueueResponseModel>> responses = searchResponse.SearchResults.Payload.Select(qd =>
+            IEnumerable<Task<DocumentQueueResponseModel>> responses = searchResponse?.SearchResults?.Payload?.Select(qd =>
             {
                 _logger.LogInformation("Uploading Queued document {documentQueueId}", qd.Id);
                 _logger.LogDebug("document contents {document}", qd.Serialize());
@@ -87,16 +87,16 @@ namespace Pims.Scheduler.Services
         {
             var filter = new Dal.Entities.Models.DocumentQueueFilter()
             {
-                Quantity = _queryProcessingDocumentsJobOptions.CurrentValue.BatchSize ?? 50,
+                Quantity = _queryProcessingDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50,
                 DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PROCESSING.ToString() },
             };
             var searchResponse = await SearchQueuedDocuments(filter);
-            if (searchResponse.ScheduledTaskResponseModel != null)
+            if (searchResponse?.ScheduledTaskResponseModel != null)
             {
-                return searchResponse.ScheduledTaskResponseModel;
+                return searchResponse?.ScheduledTaskResponseModel;
             }
 
-            IEnumerable<Task<DocumentQueueResponseModel>> responses = searchResponse.SearchResults.Payload.Select(qd =>
+            IEnumerable<Task<DocumentQueueResponseModel>> responses = searchResponse?.SearchResults?.Payload.Select(qd =>
             {
                 _logger.LogInformation("Querying for queued document {documentQueueId}", qd.Id);
                 _logger.LogDebug("document contents {document}", qd.Serialize());
@@ -138,12 +138,12 @@ namespace Pims.Scheduler.Services
             ScheduledTaskResponseModel scheduledTaskResponseModel = null;
             var queuedDocuments = await _pimsDocumentQueueRepository.SearchQueuedDocumentsAsync(filter);
 
-            if (queuedDocuments.Status != ExternalResponseStatus.Success)
+            if (queuedDocuments?.Status != ExternalResponseStatus.Success)
             {
                 _logger.LogError("Received error status from pims document queue search service, aborting. {status} {message}", queuedDocuments.Status, queuedDocuments.Message);
                 scheduledTaskResponseModel = new ScheduledTaskResponseModel() { Status = TaskResponseStatusTypes.ERROR, Message = "Received error status from pims document queue service, aborting." };
             }
-            if (queuedDocuments.Payload.Count == 0)
+            if (queuedDocuments?.Payload?.Count == 0)
             {
                 _logger.LogInformation("No documents to process, skipping execution.");
                 scheduledTaskResponseModel = new ScheduledTaskResponseModel() { Status = TaskResponseStatusTypes.SKIPPED, Message = "No documents to process, skipping execution." };
@@ -153,8 +153,8 @@ namespace Pims.Scheduler.Services
 
         private DocumentQueueResponseModel HandleDocumentQueueResponse(string httpMethodName, DocumentQueueModel qd, Task<ExternalResponse<DocumentQueueModel>> response)
         {
-            var responseObject = response.Result;
-            if (responseObject.Status == ExternalResponseStatus.Success && (responseObject?.Payload?.DocumentQueueStatusType?.Id == DocumentQueueStatusTypes.PROCESSING.ToString() || responseObject?.Payload?.DocumentQueueStatusType?.Id == DocumentQueueStatusTypes.SUCCESS.ToString()))
+            var responseObject = response?.Result;
+            if (responseObject?.Status == ExternalResponseStatus.Success && (responseObject?.Payload?.DocumentQueueStatusType?.Id == DocumentQueueStatusTypes.PROCESSING.ToString() || responseObject?.Payload?.DocumentQueueStatusType?.Id == DocumentQueueStatusTypes.SUCCESS.ToString()))
             {
                 _logger.LogInformation("Received response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, qd.Id, response?.Result?.Status, response?.Result?.Message);
                 return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.SUCCESS };
