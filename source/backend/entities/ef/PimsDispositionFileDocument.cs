@@ -122,7 +122,4 @@ public partial class PimsDispositionFileDocument
     [ForeignKey("DocumentId")]
     [InverseProperty("PimsDispositionFileDocuments")]
     public virtual PimsDocument Document { get; set; }
-
-    [InverseProperty("DispositionFileDocument")]
-    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
 }
