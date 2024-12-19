@@ -70,10 +70,6 @@ export const DocumentTemplateManagementView: React.FunctionComponent<
 
 export default DocumentTemplateManagementView;
 
-const StyledPageHeader = styled.h3`
-  text-align: left;
-`;
-
 export const ListPage = styled.div`
   display: flex;
   flex-direction: column;

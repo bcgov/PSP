@@ -122,7 +122,4 @@ const StyledPage = styled(Styled.ListView)`
   padding: 1rem 2rem;
 `;
 
-const StyledPageHeader = styled.h3`
-  text-align: left;
-`;
 export default ManageUsersPage;

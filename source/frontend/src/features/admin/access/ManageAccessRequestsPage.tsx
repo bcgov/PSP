@@ -86,8 +86,4 @@ const StyledContainer = styled(ScrollXYContainer)`
   height: 100%;
 `;
 
-const StyledPageHeader = styled.h3`
-  text-align: left;
-`;
-
 export default ManageAccessRequestsPage;
