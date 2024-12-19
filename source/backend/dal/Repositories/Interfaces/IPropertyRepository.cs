@@ -27,7 +27,7 @@ namespace Pims.Dal.Repositories
 
         long GetAllAssociationsCountById(long id);
 
-        PimsProperty Update(PimsProperty property, bool overrideLocation = false);
+        PimsProperty Update(PimsProperty property, bool overrideLocation = false, bool allowRetired = false);
 
         PimsProperty UpdatePropertyManagement(PimsProperty property);
 
