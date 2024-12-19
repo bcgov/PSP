@@ -32,7 +32,6 @@ export const SideNavBar = styled.div`
     width: 16rem;
   }
   .nav-item svg {
-    fill: white;
     min-width: 2.4rem;
   }
   .to-bottom {

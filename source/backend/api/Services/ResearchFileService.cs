@@ -115,6 +115,11 @@ namespace Pims.Api.Services
             // Check if the property is new or if it is being updated
             foreach (var incomingResearchProperty in researchFile.PimsPropertyResearchFiles)
             {
+                var matchingProperty = currentFileProperties.FirstOrDefault(c => c.PropertyId == incomingResearchProperty.PropertyId);
+                if (matchingProperty is not null && incomingResearchProperty.Internal_Id == 0)
+                {
+                    incomingResearchProperty.Internal_Id = matchingProperty.Internal_Id;
+                }
                 // If the property is not new, check if the name has been updated.
                 if (incomingResearchProperty.Internal_Id != 0)
                 {
@@ -204,7 +209,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
-                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes, allowRetired: true);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -220,7 +225,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
-                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes, allowRetired: true);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)

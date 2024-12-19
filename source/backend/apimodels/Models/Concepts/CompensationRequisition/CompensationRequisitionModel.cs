@@ -42,8 +42,6 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public DateOnly? ExpropriationVestingDate { get; set; }
 
-        public DateOnly? AdvancedPaymentServedDate { get; set; }
-
         public DateOnly? GenerationDate { get; set; }
 
         public List<CompensationFinancialModel> Financials { get; set; }

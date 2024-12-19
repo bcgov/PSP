@@ -27,15 +27,12 @@ env:
   DEPLOYMENT_NAMESPACE: "3cd915-dev"
 
 on:
-  pull_request_target:
-    branches: [dev]
-    types: [closed]
+  workflow_dispatch:
 
 jobs:
   ci-cd-start-notification:
-    if: github.event.pull_request.merged == true
     name: CI-CD Start Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Start notification to Teams Channel
         uses: dragos-cojocari/ms-teams-notification@v1.0.2
@@ -49,7 +46,7 @@ jobs:
   build-frontend:
     name: Build frontend
     needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -68,7 +65,7 @@ jobs:
   build-api:
     name: Build api
     needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -83,11 +80,12 @@ jobs:
         run: |
           ./openshift/4.0/player.sh build api -apply
           ./openshift/4.0/player.sh build proxy -apply
+          ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
     name: Deploy to OpenShift
     needs: [build-frontend, build-api]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -116,6 +114,12 @@ jobs:
           oc tag pims-proxy:latest-$DESTINATION pims-proxy:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+      - name: Deploy scheduler microservice
+        shell: bash
+        run: |
+          oc tag pims-scheduler:latest-$DESTINATION pims-scheduler:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
       - name: Deploy mayan
         shell: bash
         run: |
@@ -128,7 +132,7 @@ jobs:
   database-upgrade:
     name: Upgrade database
     needs: [deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -151,7 +155,7 @@ jobs:
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -173,7 +177,7 @@ jobs:
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -191,9 +195,8 @@ jobs:
 
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: keycloak-sync
-    if: ${{ always() && github.event.pull_request.merged == true }}
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@v4

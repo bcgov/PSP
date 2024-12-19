@@ -8,6 +8,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
+using Pims.Core.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;

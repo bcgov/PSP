@@ -949,7 +949,6 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.FileNoSuffix)
                 .HasDefaultValue((short)1)
                 .HasComment("Acquisition file number suffix");
-            entity.Property(e => e.FileNumber).HasComment("Formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01')");
             entity.Property(e => e.FundingOther).HasComment("Description of other funding type.");
             entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
             entity.Property(e => e.LegacyStakeholder).HasComment("Legacy stakeholders imported from PAIMS.");
@@ -1691,22 +1690,50 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_CMPREQ_I_S_U_TR");
                 });
 
-            entity.Property(e => e.CompensationRequisitionId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMPENSATION_REQUISITION_ID_SEQ])");
+            entity.Property(e => e.CompensationRequisitionId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMPENSATION_REQUISITION_ID_SEQ])")
+                .HasComment("Generated surrogate primary key.");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
-            entity.Property(e => e.AdvPmtServedDt).HasComment("Date that the advanced payment was made.");
+            entity.Property(e => e.AcquisitionFileTeamId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE_TEAM table.");
+            entity.Property(e => e.AcquisitionOwnerId).HasComment("Foreign key to the PIMS_ACQUISITION_OWNER table.");
             entity.Property(e => e.AgreementDt).HasComment("Agreement date.");
             entity.Property(e => e.AlternateProjectId).HasComment("Link a file to an \"Alternate Project\", so the user can make alternate payments that may be due after the original file's project closes.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user updated the record.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that updated the record.");
+            entity.Property(e => e.ChartOfAccountsId).HasComment("Foreign key to the PIMS_CHART_OF_ACCOUNTS table.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DetailedRemarks).HasComment("Detailed remarks for the compensation requisition.");
             entity.Property(e => e.ExpropNoticeServedDt).HasComment("Expropriation notice served date.");
             entity.Property(e => e.ExpropVestingDt).HasComment("Expropriation vesting date.");
@@ -1714,6 +1741,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.FiscalYear).HasComment("Fiscal year of the compensation requisition.");
             entity.Property(e => e.GenerationDt).HasComment("Document generation date.");
             entity.Property(e => e.GstNumber).HasComment("GST number of the organization receiving the payment.");
+            entity.Property(e => e.InterestHolderId).HasComment("Foreign key to the PIMS_INTEREST_HOLDER table.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if the requisition is inactive.");
@@ -1725,7 +1753,9 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("Indicates if the payment was made in trust.");
             entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
             entity.Property(e => e.LegacyPayee).HasComment("Payee where only the name is known from the PAIMS system,");
+            entity.Property(e => e.ResponsibilityId).HasComment("Foreign key to the PIMS_RESPONSIBILITY table.");
             entity.Property(e => e.SpecialInstruction).HasComment("Special instructions for the compensation requisition.");
+            entity.Property(e => e.YearlyFinancialId).HasComment("Foreign key to the PIMS_YEARLY_FINANCIAL table.");
 
             entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsCompensationRequisitions).HasConstraintName("PIM_ACQNFL_PIM_CMPREQ_FK");
 
@@ -3668,19 +3698,50 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_EXPPMT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ExpropriationPaymentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROPRIATION_PAYMENT_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ExpropriationPaymentId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROPRIATION_PAYMENT_ID_SEQ])")
+                .HasComment("Unique auto-generated surrogate primary key");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key of the acquisition file.");
+            entity.Property(e => e.AcquisitionOwnerId).HasComment("Foreign key of the acquisition owner.");
+            entity.Property(e => e.AdvPmtServedDt).HasComment("Date that the advanced payment was made.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user updated the record.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The directory of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user account that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Form 8 description field.  There are lawyer remarks pending.  This field could be used for: - providing remarks particular to an expropriation form, and /or - for any ETL descriptive fields as well as - a place-holder forfields that do not have a mapping");
+            entity.Property(e => e.ExpropriatingAuthority).HasComment("Foreign key of the expropriating authoritry.");
+            entity.Property(e => e.InterestHolderId).HasComment("Foreign key of the acquisition interest holder.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if the Form 8 payment is inactive.");

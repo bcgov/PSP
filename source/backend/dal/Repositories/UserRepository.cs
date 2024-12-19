@@ -458,9 +458,6 @@ namespace Pims.Dal.Repositories
                 user.IssueDate = DateTime.UtcNow;
             }
 
-            user.ConcurrencyControlNumber = update.ConcurrencyControlNumber;
-            this.Context.SetOriginalConcurrencyControlNumber(user);
-
             var addRoles = update.PimsUserRoles.Except(user.PimsUserRoles, new UserRoleRoleIdComparer());
             addRoles.ForEach(r => user.PimsUserRoles.Add(new PimsUserRole() { UserId = user.UserId, RoleId = r.RoleId }));
             var removeRoles = user.PimsUserRoles.Except(update.PimsUserRoles, new UserRoleRoleIdComparer());
@@ -511,7 +508,6 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(u => u.UserId == delete.UserId) ?? throw new KeyNotFoundException();
 
             user.ConcurrencyControlNumber = delete.ConcurrencyControlNumber;
-            this.Context.SetOriginalConcurrencyControlNumber(user);
 
             user.PimsUserRoles.ForEach(ur => this.Context.Remove(ur));
             user.PimsUserRoles.Clear();

@@ -18,6 +18,7 @@ describe('GenerateFile tests', () => {
     expect(file.file_name).toBe('');
     expect(file.file_number).toBe('');
   });
+
   it('Can generate a file with no primary owner', () => {
     const acqFile = mockAcquisitionFileResponse(1, 'test', 1);
     acqFile.acquisitionFileOwners = acqFile?.acquisitionFileOwners
@@ -28,6 +29,18 @@ describe('GenerateFile tests', () => {
       interestHolders: [],
     });
     expect(file.primary_owner?.owner_string).toBe('');
+  });
+
+  it('Can generate a file with a project', () => {
+    const acqFile = mockAcquisitionFileResponse(1, 'test', 1);
+    const file = new Api_GenerateAcquisitionFile({
+      file: acqFile,
+      interestHolders: [],
+    });
+    expect(file.project).not.toBeNull();
+    expect(file.project.cost_type).toBe('HWY PLAN');
+    expect(file.project.business_function).toBe('FERRIES');
+    expect(file.project.work_activity).toBe('SURVEY');
   });
 
   it('Can generate a file with a primary owner', () => {

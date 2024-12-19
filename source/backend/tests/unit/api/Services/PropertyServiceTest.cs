@@ -119,7 +119,7 @@ namespace Pims.Api.Test.Services
 
             var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
+            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false)).Returns(property);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
@@ -133,7 +133,7 @@ namespace Pims.Api.Test.Services
             var updatedProperty = service.Update(newValues);
 
             // Assert
-            repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>()), Times.Once);
+            repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false), Times.Once);
             coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
         }
 
@@ -145,7 +145,7 @@ namespace Pims.Api.Test.Services
 
             var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
+            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false)).Returns(property);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(property);
 
             var projected = new Coordinate(14000, 9200);
@@ -162,7 +162,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()));
-            repository.Verify(x => x.Update(It.Is<PimsProperty>(p => p.Location.Coordinate.Equals(projected)), It.IsAny<bool>()), Times.Once);
+            repository.Verify(x => x.Update(It.Is<PimsProperty>(p => p.Location.Coordinate.Equals(projected)), It.IsAny<bool>(), false), Times.Once);
         }
 
         [Fact]
@@ -175,7 +175,7 @@ namespace Pims.Api.Test.Services
             var property = EntityHelper.CreateProperty(1);
 
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.Update(property, It.IsAny<bool>())).Throws<KeyNotFoundException>();
+            repository.Setup(x => x.Update(property, It.IsAny<bool>(), false)).Throws<KeyNotFoundException>();
             repository.Setup(x => x.GetById(It.IsAny<long>())).Throws<KeyNotFoundException>();
 
             // Assert
@@ -193,7 +193,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             Assert.Throws<NotAuthorizedException>(() => service.Update(property));
-            repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>()), Times.Never);
+            repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false), Times.Never);
         }
 
         #endregion
@@ -208,7 +208,7 @@ namespace Pims.Api.Test.Services
 
             var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
+            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false)).Returns(property);
 
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>())).Returns(new Coordinate(14000, 9200));
@@ -225,7 +225,7 @@ namespace Pims.Api.Test.Services
             ex.Which.UserOverride.Should().Be(UserOverrideCode.AddLocationToProperty);
 
             coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Never);
-            repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>()), Times.Never);
+            repository.Verify(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false), Times.Never);
         }
 
         [Fact]
@@ -237,7 +237,7 @@ namespace Pims.Api.Test.Services
 
             var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
+            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false)).Returns(property);
 
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
@@ -252,7 +252,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
-            repository.Verify(x => x.Update(It.Is<PimsProperty>(p => p.Location.Coordinate.Equals(new Coordinate(14000, 9200))), It.IsAny<bool>()), Times.Once);
+            repository.Verify(x => x.Update(It.Is<PimsProperty>(p => p.Location.Coordinate.Equals(new Coordinate(14000, 9200))), It.IsAny<bool>(), false), Times.Once);
         }
 
         [Fact]
@@ -265,7 +265,7 @@ namespace Pims.Api.Test.Services
 
             var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
             var repository = this._helper.GetService<Mock<IPropertyRepository>>();
-            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>())).Returns(property);
+            repository.Setup(x => x.Update(It.IsAny<PimsProperty>(), It.IsAny<bool>(), false)).Returns(property);
 
             var coordinateService = this._helper.GetService<Mock<ICoordinateTransformService>>();
             coordinateService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
@@ -291,7 +291,7 @@ namespace Pims.Api.Test.Services
             // Assert
             coordinateService.Verify(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()), Times.Once);
             coordinateService.Verify(x => x.TransformGeometry(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Geometry>()), Times.Once);
-            repository.Verify(x => x.Update(property, true), Times.Once);
+            repository.Verify(x => x.Update(property, true, false), Times.Once);
             property.Location.Coordinate.Should().Be(new Coordinate(14000, 9200));
             property.Boundary.Should().BeOfType<Polygon>();
             var updatedBoundary = property.Boundary as Polygon;
