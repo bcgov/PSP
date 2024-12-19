@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROJECT_PERSON_HIST")]
-[Index("ProjectPersonHistId", "EndDateHist", Name = "PIMS_PRJPER_H_UK", IsUnique = true)]
-public partial class PimsProjectPersonHist
+[Table("PIMS_ACQ_FILE_ACQ_PROGRESS_HIST")]
+[Index("AcqFileAcqProgressHistId", "EndDateHist", Name = "PIMS_AQFFLP_H_UK", IsUnique = true)]
+public partial class PimsAcqFileAcqProgressHist
 {
     [Key]
-    [Column("_PROJECT_PERSON_HIST_ID")]
-    public long ProjectPersonHistId { get; set; }
+    [Column("_ACQ_FILE_ACQ_PROGRESS_HIST_ID")]
+    public long AcqFileAcqProgressHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,21 +20,15 @@ public partial class PimsProjectPersonHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PROJECT_PERSON_ID")]
-    public long ProjectPersonId { get; set; }
+    [Column("ACQ_FILE_ACQ_PROGRESS_ID")]
+    public long AcqFileAcqProgressId { get; set; }
 
-    [Column("PROJECT_ID")]
-    public long ProjectId { get; set; }
+    [Column("ACQUISITION_FILE_ID")]
+    public long? AcquisitionFileId { get; set; }
 
-    [Column("PERSON_ID")]
-    public long PersonId { get; set; }
-
-    [Column("PROJECT_PERSON_ROLE_TYPE_CODE")]
+    [Column("ACQ_FILE_PROGESS_TYPE_CODE")]
     [StringLength(20)]
-    public string ProjectPersonRoleTypeCode { get; set; }
-
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    public string AcqFileProgessTypeCode { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

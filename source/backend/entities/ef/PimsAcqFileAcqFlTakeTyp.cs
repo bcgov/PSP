@@ -6,88 +6,30 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Table providing progress tracking of document inclusion into the MAYAN EDMS.
-/// </summary>
-[Table("PIMS_DOCUMENT_QUEUE")]
-[Index("DataSourceTypeCode", Name = "DOCQUE_DATA_SOURCE_TYPE_CODE_IDX")]
-[Index("DocumentId", Name = "DOCQUE_DOCUMENT_ID_IDX")]
-[Index("DocumentQueueStatusTypeCode", Name = "DOCQUE_DOCUMENT_QUEUE_STATUS_TYPE_CODE_IDX")]
-public partial class PimsDocumentQueue
+[Table("PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP")]
+[Index("AcquisitionFileId", Name = "AQFATT_ACQUISITION_FILE_ID_IDX")]
+[Index("AcqFileTakeTypeCode", Name = "AQFATT_ACQ_FILE_TAKE_TYPE_CODE_IDX")]
+public partial class PimsAcqFileAcqFlTakeTyp
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("DOCUMENT_QUEUE_ID")]
-    public long DocumentQueueId { get; set; }
+    [Column("ACQ_FILE_ACQ_FL_TAKE_TYPE_ID")]
+    public long AcqFileAcqFlTakeTypeId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_DOCUMENT table.
+    /// Foreign key to the PIMS_ACQUISITION_FILE table.
     /// </summary>
-    [Column("DOCUMENT_ID")]
-    public long? DocumentId { get; set; }
+    [Column("ACQUISITION_FILE_ID")]
+    public long? AcquisitionFileId { get; set; }
 
     /// <summary>
-    /// Code value that represents the current status of the document as it is processed by PIMS/MAYAN
+    /// Foreign key to the PIMS_ACQ_FILE_TAKE_TYPE table.
     /// </summary>
-    [Required]
-    [Column("DOCUMENT_QUEUE_STATUS_TYPE_CODE")]
+    [Column("ACQ_FILE_TAKE_TYPE_CODE")]
     [StringLength(20)]
-    public string DocumentQueueStatusTypeCode { get; set; }
-
-    /// <summary>
-    /// Code value that refers to the source system the document originated in.
-    /// </summary>
-    [Required]
-    [Column("DATA_SOURCE_TYPE_CODE")]
-    [StringLength(20)]
-    public string DataSourceTypeCode { get; set; }
-
-    /// <summary>
-    /// Fluid key used to uniquely identify document in external system.
-    /// </summary>
-    [Column("DOCUMENT_EXTERNAL_ID")]
-    [StringLength(1000)]
-    public string DocumentExternalId { get; set; }
-
-    /// <summary>
-    /// Used to store JSON-encoded metadata that needs to be added to the document during upload.
-    /// </summary>
-    [Column("DOCUMENT_METADATA")]
-    [StringLength(4000)]
-    public string DocumentMetadata { get; set; }
-
-    /// <summary>
-    /// When the document is sent to the backend for processing, this will be populated.
-    /// </summary>
-    [Column("DOC_PROCESS_START_DT", TypeName = "datetime")]
-    public DateTime? DocProcessStartDt { get; set; }
-
-    /// <summary>
-    /// When the document?s processing finishes, this will be populated
-    /// </summary>
-    [Column("DOC_PROCESS_END_DT", TypeName = "datetime")]
-    public DateTime? DocProcessEndDt { get; set; }
-
-    /// <summary>
-    /// The number of times that this document has been queued for upload.
-    /// </summary>
-    [Column("DOC_PROCESS_RETRIES")]
-    public int? DocProcessRetries { get; set; }
-
-    /// <summary>
-    /// If the upload process fails, the error corresponding to the failure will be displayed here.
-    /// </summary>
-    [Column("MAYAN_ERROR")]
-    [StringLength(4000)]
-    public string MayanError { get; set; }
-
-    /// <summary>
-    /// The actual document blob, stored temporarily until after processing completes.
-    /// </summary>
-    [Column("DOCUMENT")]
-    public byte[] Document { get; set; }
+    public string AcqFileTakeTypeCode { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -179,15 +121,11 @@ public partial class PimsDocumentQueue
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("DataSourceTypeCode")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsDataSourceType DataSourceTypeCodeNavigation { get; set; }
+    [ForeignKey("AcqFileTakeTypeCode")]
+    [InverseProperty("PimsAcqFileAcqFlTakeTyps")]
+    public virtual PimsAcqFileTakeType AcqFileTakeTypeCodeNavigation { get; set; }
 
-    [ForeignKey("DocumentId")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsDocument DocumentNavigation { get; set; }
-
-    [ForeignKey("DocumentQueueStatusTypeCode")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsDocumentQueueStatusType DocumentQueueStatusTypeCodeNavigation { get; set; }
+    [ForeignKey("AcquisitionFileId")]
+    [InverseProperty("PimsAcqFileAcqFlTakeTyps")]
+    public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
 }

@@ -7,21 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table that contains the checklist sctions that are presented to the user through dynamically building the input form.
+/// Codified values for the acquisition file expropriation risk type.
 /// </summary>
-[Table("PIMS_ACQ_CHKLST_SECTION_TYPE")]
-public partial class PimsAcqChklstSectionType
+[Table("PIMS_ACQ_FILE_EXPROP_RISK_TYPE")]
+public partial class PimsAcqFileExpropRiskType
 {
     /// <summary>
-    /// Checklist section code value.
+    /// Code value of the acquisition file expropriation risk type.
     /// </summary>
     [Key]
-    [Column("ACQ_CHKLST_SECTION_TYPE_CODE")]
+    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
     [StringLength(20)]
-    public string AcqChklstSectionTypeCode { get; set; }
+    public string AcqFileExpropRiskTypeCode { get; set; }
 
     /// <summary>
-    /// Checklist section descriptive text presented to the user.
+    /// Description of the acquisition file expropriation risk type.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,22 +29,16 @@ public partial class PimsAcqChklstSectionType
     public string Description { get; set; }
 
     /// <summary>
-    /// Specifies the order that the checklist sections are presented to the user.
+    /// Indicates if the code value is inactive.
+    /// </summary>
+    [Column("IS_DISABLED")]
+    public bool IsDisabled { get; set; }
+
+    /// <summary>
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
-
-    /// <summary>
-    /// Date the checklist section is able to be presented to the user via the input form.
-    /// </summary>
-    [Column("EFFECTIVE_DATE")]
-    public DateOnly EffectiveDate { get; set; }
-
-    /// <summary>
-    /// Date the checklist section is removed from the input form.
-    /// </summary>
-    [Column("EXPIRY_DATE")]
-    public DateOnly? ExpiryDate { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -80,6 +74,6 @@ public partial class PimsAcqChklstSectionType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [InverseProperty("AcqChklstSectionTypeCodeNavigation")]
-    public virtual ICollection<PimsAcqChklstItemType> PimsAcqChklstItemTypes { get; set; } = new List<PimsAcqChklstItemType>();
+    [InverseProperty("AcqFileExpropRiskTypeCodeNavigation")]
+    public virtual ICollection<PimsAcquisitionFile> PimsAcquisitionFiles { get; set; } = new List<PimsAcquisitionFile>();
 }
