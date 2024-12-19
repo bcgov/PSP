@@ -866,6 +866,7 @@ namespace Pims.Api.Test.Services
             repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Once);
         }
 
+
         [Fact]
         public void Update_Success_FinalButAdmin()
         {
@@ -998,6 +999,44 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
             propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateProperties_MatchProperties_Success_NoInternalId()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var dspFile = EntityHelper.CreateDispositionFile();
+            dspFile.ConcurrencyControlNumber = 1;
+
+            var property = EntityHelper.CreateProperty(1, regionCode: 1);
+            dspFile.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Internal_Id = 0, Property = property, PropertyId = 1 } };
+            var dispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Internal_Id = 1, Property = property, PropertyId = 1 } };
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
+            propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(dispositionFileProperties);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>()));
+            propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()));
+
+            // Act
+            var updatedDispositionFile = service.UpdateProperties(dspFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+
+            // Assert
+            var updatedProperty = updatedDispositionFile.PimsDispositionFileProperties.FirstOrDefault().Internal_Id.Should().Be(1);
         }
 
         [Fact]

@@ -107,7 +107,7 @@ namespace Pims.Api.Services
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
-            if (geom.SRID != SpatialReference.BCALBERS)
+            if (geom != null && geom.SRID != SpatialReference.BCALBERS)
             {
                 var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                 property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
@@ -371,7 +371,7 @@ namespace Pims.Api.Services
 
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
             var geom = property.Location;
-            if (geom.SRID != SpatialReference.BCALBERS)
+            if (geom != null && geom.SRID != SpatialReference.BCALBERS)
             {
                 var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                 property.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
@@ -397,7 +397,7 @@ namespace Pims.Api.Services
 
                     // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
                     var geom = incomingProperty.Location;
-                    if (geom.SRID != SpatialReference.BCALBERS)
+                    if (geom != null && geom.SRID != SpatialReference.BCALBERS)
                     {
                         var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                         propertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
