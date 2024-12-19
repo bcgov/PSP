@@ -860,7 +860,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
                     name="assignedDate"
                     placeholder="MMM DD, YYYY"
                     type="text"
-                    value="Jun 27, 2022"
+                    value="Dec 17, 2024"
                   />
                 </div>
               </div>
@@ -4554,7 +4554,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                     name="assignedDate"
                     placeholder="MMM DD, YYYY"
                     type="text"
-                    value="Jun 27, 2022"
+                    value="Dec 17, 2024"
                   />
                 </div>
               </div>
