@@ -1,8 +1,8 @@
 import React from 'react';
+import { FaListUl } from 'react-icons/fa';
+import { FaRegMap } from 'react-icons/fa6';
 import styled from 'styled-components';
 
-import MapSvg from '@/assets/images/icon-map.svg?react';
-import TableSvg from '@/assets/images/icon-table.svg?react';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 export enum SearchToggleOption {
@@ -32,7 +32,8 @@ export const PropertySearchToggle: React.FunctionComponent<
       <StyledNav>
         <StyledLink>
           <TooltipWrapper tooltipId={`${toolId}-map`} tooltip="Map View">
-            <MapSvg
+            <FaRegMap
+              size={25}
               title="map-view"
               onClick={() => {
                 if (toggle !== SearchToggleOption.Map) {
@@ -46,7 +47,8 @@ export const PropertySearchToggle: React.FunctionComponent<
       <StyledNav>
         <StyledLink>
           <TooltipWrapper tooltipId={`${toolId}-list`} tooltip="List View">
-            <TableSvg
+            <FaListUl
+              size={21}
               title="list-view"
               onClick={() => {
                 if (toggle !== SearchToggleOption.List) {
@@ -97,6 +99,8 @@ const StyledLink = styled('div')`
   flex-shrink: 0;
   flex-direction: row;
   align-items: center;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
   svg {
     min-width: max-content;
   }

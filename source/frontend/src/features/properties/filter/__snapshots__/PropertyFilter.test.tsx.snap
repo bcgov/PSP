@@ -259,6 +259,8 @@ exports[`MapFilterBar > renders correctly 1`] = `
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
 }
 
 .c6 svg {
@@ -441,19 +443,19 @@ exports[`MapFilterBar > renders correctly 1`] = `
               class="c6"
             >
               <svg
-                fill="#000000"
-                height="24px"
-                title="map-view"
-                viewBox="0 0 24 24"
-                width="24px"
+                fill="currentColor"
+                height="25"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 576 512"
+                width="25"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                <title>
+                  map-view
+                </title>
                 <path
-                  d="M0 0h24v24H0V0z"
-                  fill="none"
-                />
-                <path
-                  d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM10 5.47l4 1.4v11.66l-4-1.4V5.47zm-5 .99l3-1.01v11.7l-3 1.16V6.46zm14 11.08l-3 1.01V6.86l3-1.16v11.84z"
+                  d="M565.6 36.2C572.1 40.7 576 48.1 576 56V392c0 10-6.2 18.9-15.5 22.4l-168 64c-5.2 2-10.9 2.1-16.1 .3L192.5 417.5l-160 61c-7.4 2.8-15.7 1.8-22.2-2.7S0 463.9 0 456V120c0-10 6.1-18.9 15.5-22.4l168-64c5.2-2 10.9-2.1 16.1-.3L383.5 94.5l160-61c7.4-2.8 15.7-1.8 22.2 2.7zM48 136.5V421.2l120-45.7V90.8L48 136.5zM360 422.7V137.3l-144-48V374.7l144 48zm48-1.5l120-45.7V90.8L408 136.5V421.2z"
                 />
               </svg>
             </div>
@@ -465,19 +467,19 @@ exports[`MapFilterBar > renders correctly 1`] = `
               class="c6"
             >
               <svg
-                fill="#000000"
-                height="24px"
-                title="list-view"
-                viewBox="0 0 24 24"
-                width="24px"
+                fill="currentColor"
+                height="21"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="21"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                <title>
+                  list-view
+                </title>
                 <path
-                  d="M0 0h24v24H0V0z"
-                  fill="none"
-                />
-                <path
-                  d="M20 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h15c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 2v3H5V5h15zm-5 14h-5v-9h5v9zM5 10h3v9H5v-9zm12 9v-9h3v9h-3z"
+                  d="M48 48a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm0 160a48 48 0 1 0 48 48 48 48 0 0 0-48-48zm448 16H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16zm0-320H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16V80a16 16 0 0 0-16-16zm0 160H176a16 16 0 0 0-16 16v32a16 16 0 0 0 16 16h320a16 16 0 0 0 16-16v-32a16 16 0 0 0-16-16z"
                 />
               </svg>
             </div>
