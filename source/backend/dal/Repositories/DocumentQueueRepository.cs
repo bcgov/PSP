@@ -128,7 +128,6 @@ namespace Pims.Dal.Repositories
                 DocProcessEndDt = dq.DocProcessEndDt,
                 DocProcessRetries = dq.DocProcessRetries,
                 MayanError = dq.MayanError,
-                FileName = dq.FileName,
                 AppCreateTimestamp = dq.AppCreateTimestamp,
                 AppCreateUserDirectory = dq.AppCreateUserDirectory,
                 AppCreateUserGuid = dq.AppCreateUserGuid,

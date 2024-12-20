@@ -57,11 +57,6 @@ namespace Pims.Api.Models.Concepts.Document
         public string MayanError { get; set; }
 
         /// <summary>
-        /// get/set - The file name of the document file.
-        /// </summary>
-        public string FileName { get; set; }
-
-        /// <summary>
         /// get/set - The actual document, represented as a byte[].
         /// </summary>
         public byte[] Document { get; set; }

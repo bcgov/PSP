@@ -21,7 +21,6 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.PimsDocument, src => src.DocumentNavigation)
                 .Map(dest => dest.MayanError, src => src.MayanError)
-                .Map(dest => dest.FileName, src => src.FileName)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<DocumentQueueModel, Entity.PimsDocumentQueue>()
@@ -36,7 +35,6 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.DocumentNavigation, src => src.PimsDocument)
                 .Map(dest => dest.MayanError, src => src.MayanError)
-                .Map(dest => dest.FileName, src => src.FileName)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }
