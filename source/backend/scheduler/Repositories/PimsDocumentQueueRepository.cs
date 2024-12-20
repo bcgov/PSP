@@ -63,7 +63,7 @@ namespace Pims.Scheduler.Repositories
             using var content = new StringContent(serializedFilter, Encoding.UTF8, "application/json");
 
             var response = await PostAsync<DocumentQueueModel>(endpoint, content, authenticationToken);
-            _logger.LogDebug("queued document poll for document with id {documentId} complete with status: {status} message: {message}", document.Id, response.Status, response.Message);
+            _logger.LogDebug("queued document poll for document with id {documentId} complete with status: {response}", document.Id, response.Serialize());
 
             return response;
         }
@@ -85,7 +85,7 @@ namespace Pims.Scheduler.Repositories
             using var content = new StringContent(serializedFilter, Encoding.UTF8, "application/json");
 
             var response = await PostAsync<DocumentQueueModel>(endpoint, content, authenticationToken);
-            _logger.LogDebug("queued document upload for document with id {documentId} complete with status: {status} message: {message}", document.Id, response.Status, response.Message);
+            _logger.LogDebug("queued document upload for document with id {documentId} complete with status: {response}", document.Id, response.Serialize());
 
             return response;
         }
@@ -108,7 +108,7 @@ namespace Pims.Scheduler.Repositories
             using var content = new StringContent(serializedFilter, Encoding.UTF8, "application/json");
 
             var response = await PutAsync<DocumentQueueModel>(endpoint, content, authenticationToken);
-            _logger.LogDebug("queued document update for document with id {documentId} complete with status: {status} message: {message}", documentQueueId, response.Status, response.Message);
+            _logger.LogDebug("queued document update for document with id {documentId} complete with {response}", documentQueueId, response.Serialize());
 
             return response;
         }
@@ -130,7 +130,7 @@ namespace Pims.Scheduler.Repositories
             using var content = new StringContent(serializedFilter, Encoding.UTF8, "application/json");
 
             var response = await PostAsync<List<DocumentQueueModel>>(endpoint, content, authenticationToken);
-            _logger.LogDebug($"Retrieved list of queued documents based on {filter} ", filter.Serialize());
+            _logger.LogDebug("Retrieved list of queued documents based on {filter}, {response} ", filter.Serialize(), response.Serialize());
 
             return response;
         }
