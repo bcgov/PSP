@@ -99,7 +99,7 @@ export const mockAcquisitionFileResponse = (
   },
   productId: null,
   legacyFileNumber: 'legacy file number',
-  assignedDate: '2022-06-27T00:00:00',
+  assignedDate: '2024-12-18T02:04:53.18',
   deliveryDate: '2022-07-29T00:00:00',
   estimatedCompletionDate: '2024-07-10T00:00:00',
   possessionDate: '2025-07-10T00:00:00',

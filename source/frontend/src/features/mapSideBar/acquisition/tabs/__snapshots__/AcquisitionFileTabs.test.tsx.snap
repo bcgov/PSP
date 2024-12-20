@@ -284,8 +284,9 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
+                  data-testid="assigned-date"
                 >
-                  Jun 27, 2022
+                  Dec 17, 2024
                 </div>
               </div>
               <div

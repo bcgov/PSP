@@ -57,6 +57,18 @@ public partial class PimsAcquisitionFileHist
     [StringLength(20)]
     public string SubfileInterestTypeCode { get; set; }
 
+    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileAppraisalTypeCode { get; set; }
+
+    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileLglSrvyTypeCode { get; set; }
+
+    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileExpropRiskTypeCode { get; set; }
+
     [Required]
     [Column("FILE_NAME")]
     [StringLength(500)]

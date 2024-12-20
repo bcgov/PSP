@@ -6,17 +6,17 @@ using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Property;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {
@@ -387,7 +387,7 @@ namespace Pims.Api.Services
             return property;
         }
 
-        public void UpdateLocation(PimsProperty incomingProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes)
+        public void UpdateLocation(PimsProperty incomingProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes, bool allowRetired = false)
         {
             if (propertyToUpdate.Location == null || propertyToUpdate.Boundary == null)
             {
@@ -415,7 +415,7 @@ namespace Pims.Api.Services
 
                     if (needsUpdate)
                     {
-                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true);
+                        _propertyRepository.Update(propertyToUpdate, overrideLocation: true, allowRetired: allowRetired);
                     }
                 }
                 else
