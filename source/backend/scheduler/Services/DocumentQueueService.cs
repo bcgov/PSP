@@ -104,6 +104,7 @@ namespace Pims.Scheduler.Services
                 {
                     _logger.LogError("Document processing for document {documentQueueId} has exceeded maximum processing time of {maxProcessingMinutes}", qd.Id, _queryProcessingDocumentsJobOptions?.CurrentValue?.MaxProcessingMinutes);
                     qd.DocumentQueueStatusType.Id = DocumentQueueStatusTypes.MAYAN_ERROR.ToString();
+                    qd.MayanError = "Document processing has exceeded maximum processing time.";
                     qd.DocumentProcessEndTimestamp = DateTime.UtcNow;
                     _ = _pimsDocumentQueueRepository.UpdateQueuedDocument(qd.Id, qd).ContinueWith(response =>
                     {
@@ -140,7 +141,7 @@ namespace Pims.Scheduler.Services
 
             if (queuedDocuments?.Status != ExternalResponseStatus.Success)
             {
-                _logger.LogError("Received error status from pims document queue search service, aborting. {status} {message}", queuedDocuments.Status, queuedDocuments.Message);
+                _logger.LogError("Received error status from pims document queue search service, aborting. {status} {message}", queuedDocuments?.Status, queuedDocuments?.Message);
                 scheduledTaskResponseModel = new ScheduledTaskResponseModel() { Status = TaskResponseStatusTypes.ERROR, Message = "Received error status from pims document queue service, aborting." };
             }
             if (queuedDocuments?.Payload?.Count == 0)
@@ -156,17 +157,18 @@ namespace Pims.Scheduler.Services
             var responseObject = response?.Result;
             if (responseObject?.Status == ExternalResponseStatus.Success && (responseObject?.Payload?.DocumentQueueStatusType?.Id == DocumentQueueStatusTypes.PROCESSING.ToString() || responseObject?.Payload?.DocumentQueueStatusType?.Id == DocumentQueueStatusTypes.SUCCESS.ToString()))
             {
-                _logger.LogInformation("Received response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, qd.Id, response?.Result?.Status, response?.Result?.Message);
+                _logger.LogInformation("Received response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, qd?.Id, response?.Result?.Status, response?.Result?.Message);
                 return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.SUCCESS };
             }
             else if (responseObject?.Payload?.DocumentQueueStatusType?.Id != DocumentQueueStatusTypes.PIMS_ERROR.ToString() && responseObject?.Payload?.DocumentQueueStatusType?.Id != DocumentQueueStatusTypes.MAYAN_ERROR.ToString())
             {
                 // If the poll failed, but the document is not in an error state, update the document to an error state.
-                _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, qd.Id, response?.Result?.Status, response?.Result?.Message);
+                _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, qd?.Id, response?.Result?.Status, response?.Result?.Message);
                 qd.DocumentQueueStatusType.Id = DocumentQueueStatusTypes.PIMS_ERROR.ToString();
+                qd.MayanError = $"Document polling failed: {response?.Result?.Message}";
                 qd.RowVersion = responseObject?.Payload?.RowVersion ?? qd.RowVersion;
                 _ = _pimsDocumentQueueRepository.UpdateQueuedDocument(qd.Id, qd);
-                return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.PIMS_ERROR, Message = $"Received error response from {httpMethodName} for queued document {qd.Id} status {response?.Result?.Status} message: {response?.Result?.Message}" };
+                return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.PIMS_ERROR, Message = $"Received error response from {httpMethodName} for queued document {qd?.Id} status {response?.Result?.Status} message: {response?.Result?.Message}" };
             }
             return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.PIMS_ERROR };
         }

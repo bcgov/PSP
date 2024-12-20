@@ -122,6 +122,7 @@ namespace Pims.Api.Services
             if (relatedDocument?.MayanId == null || relatedDocument?.MayanId < 0)
             {
                 this.Logger.LogError("Queued Document {documentQueueId} has no mayan id and is invalid.", documentQueue.DocumentQueueId);
+                databaseDocumentQueue.MayanError = "Document does not have a valid MayanId.";
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
                 return databaseDocumentQueue;
             }
@@ -131,6 +132,7 @@ namespace Pims.Api.Services
             if (documentDetailsResponse.Status != ExternalResponseStatus.Success || documentDetailsResponse?.Payload == null)
             {
                 this.Logger.LogError("Polling for queued document {documentQueueId} failed with status {documentDetailsResponseStatus}", documentQueue.DocumentQueueId, documentDetailsResponse.Status);
+                databaseDocumentQueue.MayanError = "Document Polling failed.";
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
                 return databaseDocumentQueue;
             }
@@ -164,7 +166,7 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.SystemAdmin, this._keycloakOptions);
 
             var databaseDocumentQueue = _documentQueueRepository.TryGetById(documentQueue.DocumentQueueId);
-            if(databaseDocumentQueue == null)
+            if (databaseDocumentQueue == null)
             {
                 this.Logger.LogError("Unable to find document queue with {id}", documentQueue.DocumentQueueId);
                 throw new KeyNotFoundException($"Unable to find document queue with matching id: {documentQueue.DocumentQueueId}");
@@ -174,6 +176,7 @@ namespace Pims.Api.Services
             // if the document queued for upload is already in an error state, update the retries.
             if (databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PIMS_ERROR.ToString() || databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.MAYAN_ERROR.ToString())
             {
+                this.Logger.LogDebug("Document Queue {documentQueueId}, previously errored, retrying", documentQueue.DocumentQueueId);
                 databaseDocumentQueue.DocProcessRetries += 1;
                 databaseDocumentQueue.DocProcessEndDt = null;
             }
@@ -181,17 +184,21 @@ namespace Pims.Api.Services
             bool isValid = ValidateQueuedDocument(databaseDocumentQueue, documentQueue);
             if (!isValid)
             {
+                this.Logger.LogDebug("Document Queue {documentQueueId}, invalid, aborting upload.", documentQueue.DocumentQueueId);
+                databaseDocumentQueue.MayanError = "Document is invalid.";
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
                 return databaseDocumentQueue;
             }
+            this.Logger.LogDebug("Document Queue {documentQueueId}, beginning upload.", documentQueue.DocumentQueueId);
             UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PROCESSING);
 
             PimsDocument relatedDocument = null;
             relatedDocument = _documentRepository.TryGetDocumentRelationships(databaseDocumentQueue.DocumentId.Value);
             if (relatedDocument?.DocumentTypeId == null)
             {
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
+                databaseDocumentQueue.MayanError = "Document does not have a valid DocumentType.";
                 this.Logger.LogError("Queued document {documentQueueId} does not have a related PIMS_DOCUMENT {documentId} with valid DocumentType, aborting.", databaseDocumentQueue.DocumentQueueId, relatedDocument?.DocumentId);
+                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
                 return databaseDocumentQueue;
             }
             else if (relatedDocument?.MayanId != null && relatedDocument?.MayanId > 0)
@@ -228,6 +235,7 @@ namespace Pims.Api.Services
                         databaseDocumentQueue.DocumentQueueStatusTypeCode,
                         response.DocumentExternalResponse.Status);
 
+                    databaseDocumentQueue.MayanError = $"Failed to upload document, mayan error: {response.DocumentExternalResponse.Message}";
                     UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.MAYAN_ERROR);
                     return databaseDocumentQueue;
                 }
@@ -242,6 +250,7 @@ namespace Pims.Api.Services
             catch (Exception ex) when (ex is BadRequestException || ex is KeyNotFoundException || ex is InvalidDataException || ex is JsonException)
             {
                 this.Logger.LogError($"Error: {ex.Message}");
+                databaseDocumentQueue.MayanError = ex.Message;
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
             }
             return databaseDocumentQueue;
