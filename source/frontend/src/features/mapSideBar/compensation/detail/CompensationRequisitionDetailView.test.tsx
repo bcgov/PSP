@@ -128,14 +128,14 @@ describe('Compensation Detail View Component', () => {
   });
 
   it('Edit Compensation Button not displayed without claims when is in "Draft" status', async () => {
-    const acquistionFile = mockAcquisitionFileResponse();
+    const acquisition = mockAcquisitionFileResponse();
     const mockFinalCompensation = getMockApiDefaultCompensation();
 
     const { queryByTitle } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_VIEW],
       props: {
         file: {
-          ...acquistionFile,
+          ...acquisition,
           fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
         },
         compensation: { ...mockFinalCompensation, isDraft: true },
@@ -165,13 +165,13 @@ describe('Compensation Detail View Component', () => {
   });
 
   it('User does not have the option to Edit Compensation when is in "FINAL" status', async () => {
-    const acquistionFile = mockAcquisitionFileResponse();
+    const acquisition = mockAcquisitionFileResponse();
     const mockFinalCompensation = getMockApiDefaultCompensation();
     const { queryByTitle, getByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_EDIT],
       props: {
         file: {
-          ...acquistionFile,
+          ...acquisition,
           fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT),
         },
         compensation: { ...mockFinalCompensation, isDraft: false },

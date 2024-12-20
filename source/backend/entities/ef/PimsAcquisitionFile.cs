@@ -13,6 +13,9 @@ namespace Pims.Dal.Entities;
 [Index("AcquisitionFileStatusTypeCode", Name = "ACQNFL_ACQUISITION_FILE_STATUS_TYPE_CODE_IDX")]
 [Index("AcquisitionFundingTypeCode", Name = "ACQNFL_ACQUISITION_FUNDING_TYPE_CODE_IDX")]
 [Index("AcquisitionTypeCode", Name = "ACQNFL_ACQUISITION_TYPE_CODE_IDX")]
+[Index("AcqFileAppraisalTypeCode", Name = "ACQNFL_ACQ_FILE_APPRAISAL_TYPE_CODE_IDX")]
+[Index("AcqFileExpropRiskTypeCode", Name = "ACQNFL_ACQ_FILE_EXPROP_RISK_TYPE_CODE_IDX")]
+[Index("AcqFileLglSrvyTypeCode", Name = "ACQNFL_ACQ_FILE_LGL_SRVY_TYPE_CODE_IDX")]
 [Index("AcqPhysFileStatusTypeCode", Name = "ACQNFL_ACQ_PHYS_FILE_STATUS_TYPE_CODE_IDX")]
 [Index("FileNo", Name = "ACQNFL_FILE_NO_IDX")]
 [Index("LegacyFileNumber", Name = "ACQNFL_LEGACY_FILE_NUMBER_IDX")]
@@ -90,6 +93,27 @@ public partial class PimsAcquisitionFile
     [Column("SUBFILE_INTEREST_TYPE_CODE")]
     [StringLength(20)]
     public string SubfileInterestTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileAppraisalTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileLglSrvyTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_ACQ_FILE_EXPROP_RISK_TYPE table.
+    /// </summary>
+    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileExpropRiskTypeCode { get; set; }
 
     /// <summary>
     /// Descriptive name given to the acquisition file.
@@ -265,6 +289,18 @@ public partial class PimsAcquisitionFile
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    [ForeignKey("AcqFileAppraisalTypeCode")]
+    [InverseProperty("PimsAcquisitionFiles")]
+    public virtual PimsAcqFileAppraisalType AcqFileAppraisalTypeCodeNavigation { get; set; }
+
+    [ForeignKey("AcqFileExpropRiskTypeCode")]
+    [InverseProperty("PimsAcquisitionFiles")]
+    public virtual PimsAcqFileExpropRiskType AcqFileExpropRiskTypeCodeNavigation { get; set; }
+
+    [ForeignKey("AcqFileLglSrvyTypeCode")]
+    [InverseProperty("PimsAcquisitionFiles")]
+    public virtual PimsAcqFileLglSrvyType AcqFileLglSrvyTypeCodeNavigation { get; set; }
+
     [ForeignKey("AcqPhysFileStatusTypeCode")]
     [InverseProperty("PimsAcquisitionFiles")]
     public virtual PimsAcqPhysFileStatusType AcqPhysFileStatusTypeCodeNavigation { get; set; }
@@ -283,6 +319,12 @@ public partial class PimsAcquisitionFile
 
     [InverseProperty("PrntAcquisitionFile")]
     public virtual ICollection<PimsAcquisitionFile> InversePrntAcquisitionFile { get; set; } = new List<PimsAcquisitionFile>();
+
+    [InverseProperty("AcquisitionFile")]
+    public virtual ICollection<PimsAcqFileAcqFlTakeTyp> PimsAcqFileAcqFlTakeTyps { get; set; } = new List<PimsAcqFileAcqFlTakeTyp>();
+
+    [InverseProperty("AcquisitionFile")]
+    public virtual ICollection<PimsAcqFileAcqProgress> PimsAcqFileAcqProgresses { get; set; } = new List<PimsAcqFileAcqProgress>();
 
     [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsAcquisitionChecklistItem> PimsAcquisitionChecklistItems { get; set; } = new List<PimsAcquisitionChecklistItem>();
