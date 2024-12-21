@@ -6,7 +6,6 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Azure;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
@@ -210,12 +209,12 @@ namespace Pims.Api.Services
             return response;
         }
 
-        public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest)
+        public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest, bool skipExtensionCheck = false)
         {
             this.Logger.LogInformation("Uploading document, do not wait for mayan processing.");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
-            ExternalResponse<DocumentDetailModel> externalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
+            ExternalResponse<DocumentDetailModel> externalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File, skipExtensionCheck);
             DocumentUploadResponse response = new DocumentUploadResponse()
             {
                 DocumentExternalResponse = externalResponse,
@@ -633,13 +632,13 @@ namespace Pims.Api.Services
             }
         }
 
-        private async Task<ExternalResponse<DocumentDetailModel>> UploadDocumentAsync(long documentType, IFormFile fileRaw)
+        private async Task<ExternalResponse<DocumentDetailModel>> UploadDocumentAsync(long documentType, IFormFile fileRaw, bool skipExtensionCheck = false)
         {
             this.Logger.LogInformation("Uploading storage document {documentType}", documentType);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             await this.avService.ScanAsync(fileRaw);
-            if (IsValidDocumentExtension(fileRaw.FileName))
+            if (skipExtensionCheck || IsValidDocumentExtension(fileRaw.FileName))
             {
                 ExternalResponse<DocumentDetailModel> result = await documentStorageRepository.TryUploadDocumentAsync(documentType, fileRaw);
                 return result;

@@ -38,7 +38,7 @@ namespace Pims.Api.Services
 
         IList<PimsDocumentTyp> GetPimsDocumentTypes(DocumentRelationType relationshipType);
 
-        Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest);
+        Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest, bool skipExtensionCheck = false);
 
         Task<DocumentUploadResponse> UploadDocumentSync(DocumentUploadRequest uploadRequest);
 

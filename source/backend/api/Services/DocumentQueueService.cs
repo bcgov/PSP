@@ -224,7 +224,7 @@ namespace Pims.Api.Services
                     DocumentMetadata = databaseDocumentQueue.DocumentMetadata != null ? JsonSerializer.Deserialize<List<DocumentMetadataUpdateModel>>(databaseDocumentQueue.DocumentMetadata) : null,
                 };
                 this.Logger.LogDebug("Document Queue {documentQueueId}, beginning upload.", documentQueue.DocumentQueueId);
-                DocumentUploadResponse response = await _documentService.UploadDocumentAsync(request);
+                DocumentUploadResponse response = await _documentService.UploadDocumentAsync(request, true);
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PROCESSING); // Set the status to processing, as the document is now being uploaded. Must be set after the mayan id is set, so that the poll logic functions correctly.
 
                 if (response.DocumentExternalResponse.Status != ExternalResponseStatus.Success || response?.DocumentExternalResponse?.Payload == null)
