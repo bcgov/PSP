@@ -165,7 +165,7 @@ namespace Pims.Scheduler.Services
                 // If the poll failed, but the document is not in an error state, update the document to an error state.
                 _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, qd?.Id, response?.Result?.Status, response?.Result?.Message);
                 qd.DocumentQueueStatusType.Id = DocumentQueueStatusTypes.PIMS_ERROR.ToString();
-                qd.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}";
+                qd.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}"[..4000];
                 qd.RowVersion = responseObject?.Payload?.RowVersion ?? qd.RowVersion;
                 _ = _pimsDocumentQueueRepository.UpdateQueuedDocument(qd.Id, qd);
                 return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.PIMS_ERROR, Message = $"Received error response from {httpMethodName} for queued document {qd?.Id} status {response?.Result?.Status} message: {response?.Result?.Message}" };

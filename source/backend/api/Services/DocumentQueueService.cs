@@ -235,7 +235,7 @@ namespace Pims.Api.Services
                         databaseDocumentQueue.DocumentQueueStatusTypeCode,
                         response.DocumentExternalResponse.Status);
 
-                    databaseDocumentQueue.MayanError = $"Failed to upload document, mayan error: {response.DocumentExternalResponse.Message}";
+                    databaseDocumentQueue.MayanError = $"Failed to upload document, mayan error: {response.DocumentExternalResponse.Message}"[..4000];
                     UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.MAYAN_ERROR);
                     return databaseDocumentQueue;
                 }
@@ -250,7 +250,7 @@ namespace Pims.Api.Services
             catch (Exception ex) when (ex is BadRequestException || ex is KeyNotFoundException || ex is InvalidDataException || ex is JsonException)
             {
                 this.Logger.LogError($"Error: {ex.Message}");
-                databaseDocumentQueue.MayanError = ex.Message;
+                databaseDocumentQueue.MayanError = ex.Message[..4000];
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
             }
             return databaseDocumentQueue;
