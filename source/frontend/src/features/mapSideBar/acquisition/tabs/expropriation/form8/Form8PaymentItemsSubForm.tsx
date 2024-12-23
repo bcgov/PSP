@@ -1,8 +1,7 @@
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
-import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
+import { LinkButton, RemoveIconButton } from '@/components/common/buttons';
 import { FastCurrencyInput, Select } from '@/components/common/form';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -77,11 +76,10 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
               <div key={index} data-testid={`paymentItems[${index}]`}>
                 <StyledSubHeader>
                   <label>Payment Item {index + 1}</label>
-                  <StyledRemoveLinkButton
+                  <RemoveIconButton
                     title="Delete Payment Item"
-                    data-testid={`paymentItems[${index}].delete-button`}
-                    variant="light"
-                    onClick={() => {
+                    data-testId={`paymentItems[${index}].delete-button`}
+                    onRemove={() => {
                       setModalContent({
                         ...getDeleteModalProps(),
                         title: 'Remove Payment Item',
@@ -97,9 +95,7 @@ export const Form8PaymentItemsSubForm: React.FunctionComponent<IForm8PaymentItem
                       });
                       setDisplayModal(true);
                     }}
-                  >
-                    <FaTrash size="2rem" />
-                  </StyledRemoveLinkButton>
+                  />
                 </StyledSubHeader>
 
                 <SectionField label="Item" labelWidth="4" required>

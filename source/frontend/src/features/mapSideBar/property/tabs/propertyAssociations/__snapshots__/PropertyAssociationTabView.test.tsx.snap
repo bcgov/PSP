@@ -130,7 +130,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
             </div>
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -364,7 +364,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
             </div>
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -598,7 +598,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
             </div>
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"
@@ -830,7 +830,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
             </div>
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c5"

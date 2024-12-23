@@ -1,10 +1,11 @@
 import React from 'react';
-import { FaEye, FaInfoCircle, FaTrash } from 'react-icons/fa';
+import { FaInfoCircle } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { LinkButton } from '@/components/common/buttons';
-import { StyledRemoveIconButton } from '@/components/common/buttons/RemoveButton';
+import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
+import ViewButton from '@/components/common/buttons/ViewButton';
+import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { ColumnWithProps, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
@@ -87,29 +88,22 @@ export function createTableColumns(
         return (
           <StyledDiv>
             {hasClaim(Claims.MANAGEMENT_VIEW) && (
-              <LinkButton
-                data-testid={`activity-view-${activityRow.id}`}
-                icon={
-                  <FaEye
-                    size="2rem"
-                    id={`activity-view-${cellProps.row.id}`}
-                    title="property-activity view details"
-                  />
-                }
+              <ViewButton
+                data-testId={`activity-view-${activityRow.id}`}
                 onClick={() => activityRow?.id && onView(activityRow.activityId)}
+                id={`activity-view-${cellProps.row.id}`}
+                title="property-activity view details"
               />
             )}
             {hasClaim(Claims.MANAGEMENT_DELETE) &&
             activityRow?.activityStatusType?.id ===
               PropertyManagementActivityStatusTypes.NOTSTARTED ? (
-              <StyledRemoveIconButton
+              <RemoveIconButton
                 id={`activity-delete-${cellProps.row.id}`}
-                data-testid={`activity-delete-${activityRow.id}`}
-                onClick={() => activityRow.id && onDelete(activityRow.id)}
+                data-testId={`activity-delete-${activityRow.id}`}
+                onRemove={() => activityRow.id && onDelete(activityRow.id)}
                 title="Delete"
-              >
-                <FaTrash size="2rem" />
-              </StyledRemoveIconButton>
+              />
             ) : (
               <TooltipWrapper
                 tooltipId={`activity-delete-tooltip-${activityRow.id}`}
@@ -155,11 +149,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
 
 export default ManagementActivitiesList;
 
-const StyledDiv = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 0.25rem;
+const StyledDiv = styled(InlineFlexDiv)`
+  justify-content: center;
   width: 80%;
 `;

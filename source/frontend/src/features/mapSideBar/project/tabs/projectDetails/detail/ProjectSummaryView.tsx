@@ -1,4 +1,4 @@
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -22,7 +22,7 @@ const ProjectSummaryView: React.FunctionComponent<
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
         {keycloak.hasClaim(Claims.PROJECT_EDIT) && project !== undefined ? (
-          <EditButton title="Edit project" onClick={onEdit} />
+          <EditButton title="Edit project" onClick={onEdit} style={{ float: 'right' }} />
         ) : null}
       </StyledEditWrapper>
       <Section header="Project Details" isCollapsable initiallyExpanded>
