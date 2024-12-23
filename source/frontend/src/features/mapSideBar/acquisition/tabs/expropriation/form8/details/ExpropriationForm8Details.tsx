@@ -1,10 +1,10 @@
 import { Col, Row } from 'react-bootstrap';
-import { FaExternalLinkAlt, FaFileContract, FaTrash } from 'react-icons/fa';
+import { FaExternalLinkAlt, FaFileContract } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons';
-import EditButton from '@/components/common/EditButton';
+import { RemoveIconButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { H3, StyledSectionAddButton } from '@/components/common/styles';
@@ -63,14 +63,14 @@ export const ExpropriationForm8Details: React.FunctionComponent<
             <>
               <EditButton
                 title="Edit form 8"
-                dataTestId={`form8[${form8Index}].edit-form8`}
+                data-testId={`form8[${form8Index}].edit-form8`}
                 onClick={() => history.push(`${match.url}/${form8.id}`)}
+                style={{ float: 'right' }}
               />
-              <StyledRemoveLinkButton
+              <RemoveIconButton
                 title="Delete Form 8"
-                data-testid={`form8[${form8Index}].delete-form8`}
-                variant="light"
-                onClick={() => {
+                data-testId={`form8[${form8Index}].delete-form8`}
+                onRemove={() => {
                   setModalContent({
                     ...getDeleteModalProps(),
                     title: 'Remove Form 8',
@@ -86,9 +86,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
                   });
                   setDisplayModal(true);
                 }}
-              >
-                <FaTrash size="2rem" />
-              </StyledRemoveLinkButton>
+              />
             </>
           )}
         </StyledSubHeader>

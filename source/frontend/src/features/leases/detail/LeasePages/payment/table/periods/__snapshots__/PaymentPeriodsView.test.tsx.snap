@@ -822,6 +822,86 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   margin-right: 0;
 }
 
+.c8.c8.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c8.c8.btn:hover,
+.c8.c8.btn:focus,
+.c8.c8.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c8.c8.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c8.c8.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c8.c8.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c8.c8.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c8.c8.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c8.c8.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c8.c8.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c8.c8.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
+}
+
+.c9.c9.btn.btn-primary {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c9.c9.btn.btn-primary svg {
+  color: #aaaaaa !important;
+}
+
+.c9.c9.btn.btn-primary .text {
+  display: none;
+}
+
+.c9.c9.btn.btn-primary svg:hover,
+.c9.c9.btn.btn-primary svg:active,
+.c9.c9.btn.btn-primary svg:focus {
+  color: #d8292f !important;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c9.c9.btn.btn-primary svg:hover .text,
+.c9.c9.btn.btn-primary svg:active .text,
+.c9.c9.btn.btn-primary svg:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
 .c1 {
   font-weight: bold;
   color: var(--theme-blue-100);
@@ -1370,57 +1450,47 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
                   class="c6 c7"
                 >
                   <button
-                    class="c3 Button Button--icon-only btn btn-primary"
+                    class="c3 Button c8 btn btn-primary"
+                    data-testid="edit-button"
                     title="edit period"
                     type="button"
                   >
                     <div
-                      class="Button__icon"
+                      class="Button__value"
                     >
                       <svg
                         fill="currentColor"
-                        height="24"
-                        id="edit-period-0"
+                        height="22"
                         stroke="currentColor"
                         stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="24"
+                        viewBox="0 0 576 512"
+                        width="22"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <title>
-                          edit period
-                        </title>
                         <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                          d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
                         />
                       </svg>
                     </div>
                   </button>
                   <button
-                    class="c3 Button Button--icon-only btn btn-primary"
+                    class="c3 Button c8 c9 btn btn-primary"
+                    data-testid="remove-button"
                     title="delete period"
                     type="button"
                   >
                     <div
-                      class="Button__icon"
+                      class="Button__value"
                     >
                       <svg
                         fill="currentColor"
-                        height="24"
-                        id="delete-period-0"
+                        height="22"
                         stroke="currentColor"
                         stroke-width="0"
                         viewBox="0 0 448 512"
-                        width="24"
+                        width="22"
                         xmlns="http://www.w3.org/2000/svg"
                       >
-                        <title>
-                          delete period
-                        </title>
                         <path
                           d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
                         />

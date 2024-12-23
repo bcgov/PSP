@@ -86,7 +86,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                 </Col>
                 <Col xs="2" className="pt-2">
                   <RemoveButton
-                    dataTestId={`renewal.${index}.remove-button`}
+                    data-testId={`renewal.${index}.remove-button`}
                     onRemove={() => {
                       setModalContent({
                         ...getDeleteModalProps(),

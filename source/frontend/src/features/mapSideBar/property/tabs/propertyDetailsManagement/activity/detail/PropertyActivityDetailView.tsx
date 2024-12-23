@@ -4,8 +4,8 @@ import { MdClose } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
+import EditButton from '@/components/common/buttons/EditButton';
 import ContactLink from '@/components/common/ContactLink';
-import EditButton from '@/components/common/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -85,6 +85,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                           `/mapview/sidebar/property/${props.propertyId}/management/activity/${props.activity?.id}/edit`,
                         );
                       }}
+                      style={{ float: 'right' }}
                     />
                   )}
                 </StyledEditWrapper>

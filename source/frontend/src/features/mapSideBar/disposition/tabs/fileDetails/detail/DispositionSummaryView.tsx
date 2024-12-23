@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -48,7 +48,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
         {keycloak.hasClaim(Claims.DISPOSITION_EDIT) &&
         dispositionFile !== undefined &&
         canEditDetails() ? (
-          <EditButton title="Edit disposition file" onClick={onEdit} />
+          <EditButton title="Edit disposition file" onClick={onEdit} style={{ float: 'right' }} />
         ) : null}
         {keycloak.hasClaim(Claims.DISPOSITION_EDIT) &&
         dispositionFile !== undefined &&
