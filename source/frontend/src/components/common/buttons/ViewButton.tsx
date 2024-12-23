@@ -12,21 +12,17 @@ interface IViewButtonProps extends ButtonProps {
   style?: CSSProperties | null;
 }
 
-export const ViewButton: React.FunctionComponent<React.PropsWithChildren<IViewButtonProps>> = ({
-  onClick,
-  title,
-  icon,
-  dataTestId,
-  style,
-}) => (
+export const ViewButton: React.FunctionComponent<
+  React.PropsWithChildren<IViewButtonProps>
+> = props => (
   <StyledIconButton
     variant="primary"
-    title={title ?? 'edit'}
-    onClick={onClick}
-    data-testid={dataTestId ?? 'view-button'}
-    style={style}
+    title={props.title ?? 'view'}
+    onClick={props.onClick}
+    data-testid={props['data-testId'] ?? 'view-button'}
+    style={props.style}
   >
-    {icon ?? <FaEye size={22} />}
+    {props.icon ?? <FaEye size={22} />}
   </StyledIconButton>
 );
 

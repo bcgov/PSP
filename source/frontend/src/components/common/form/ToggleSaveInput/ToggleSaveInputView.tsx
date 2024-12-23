@@ -66,16 +66,16 @@ export const ToggleSaveInputView: React.FC<IToggleSaveInputViewProps> = ({
   } else {
     return (
       <>
-        <StyledCompensationContainer>
+        <StyledToggleContainer>
           {asCurrency ? formatMoney(Number(value)) : value}
           <EditButton onClick={() => setIsEditing(true)} />
-        </StyledCompensationContainer>
+        </StyledToggleContainer>
       </>
     );
   }
 };
 
-export const StyledCompensationContainer = styled.div`
+export const StyledToggleContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-end;

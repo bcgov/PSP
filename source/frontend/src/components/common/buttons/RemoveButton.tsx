@@ -10,39 +10,36 @@ import { LinkButton } from './LinkButton';
 interface IRemoveButtonProps extends ButtonProps {
   label?: string;
   title?: string;
-  dataTestId?: string | null;
+  'data-testId'?: string;
   fontSize?: string;
   icon?: React.ReactNode;
   style?: CSSProperties | null;
   onRemove: () => void;
 }
 
-export const RemoveButton: React.FunctionComponent<React.PropsWithChildren<IRemoveButtonProps>> = ({
-  label,
-  dataTestId,
-  fontSize,
-  onRemove,
-}) => {
+export const RemoveButton: React.FunctionComponent<
+  React.PropsWithChildren<IRemoveButtonProps>
+> = props => {
   return (
-    <StyledRemoveLinkButton $fontSize={fontSize} onClick={onRemove}>
-      <MdClose data-testid={dataTestId ?? 'remove-button'} size="2rem" title="remove" />{' '}
-      <span className="text">{label ?? 'Remove'}</span>
+    <StyledRemoveLinkButton $fontSize={props.fontSize} onClick={props.onRemove}>
+      <MdClose data-testid={props['data-testId'] ?? 'remove-button'} size="2rem" title="remove" />{' '}
+      <span className="text">{props.label ?? 'Remove'}</span>
     </StyledRemoveLinkButton>
   );
 };
 
 export const RemoveIconButton: React.FunctionComponent<
   React.PropsWithChildren<IRemoveButtonProps>
-> = ({ onRemove, title, icon, dataTestId, style }) => {
+> = props => {
   return (
     <StyledRemoveIconButton
       variant="primary"
-      title={title ?? 'edit'}
-      onClick={onRemove}
-      data-testid={dataTestId ?? 'remove-button'}
-      style={style}
+      title={props.title ?? 'remove'}
+      onClick={props.onRemove}
+      data-testid={props['data-testId'] ?? 'remove-button'}
+      style={props.style}
     >
-      {icon ?? <FaTrash size={22} />}
+      {props.icon ?? <FaTrash size={22} />}
     </StyledRemoveIconButton>
   );
 };

@@ -52,7 +52,6 @@ export function createTableColumns(
         return (
           <StyledDiv>
             <Col xs={1} className="p-0">
-              {' '}
               {hasClaim(Claims.NOTE_VIEW) && (
                 <ViewButton
                   onClick={() => onShowDetails(cellProps.row.original)}
