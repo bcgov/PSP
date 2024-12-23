@@ -1,9 +1,9 @@
-import { FaTrash } from 'react-icons/fa';
-import { MdEdit, MdReceipt } from 'react-icons/md';
+import { MdReceipt } from 'react-icons/md';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
+import { RemoveIconButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/buttons/EditButton';
 import NotesModal from '@/components/common/form/NotesModal';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
@@ -27,18 +27,14 @@ const actualsActions = (
     return (
       <StyledIcons>
         {hasClaim(Claims.LEASE_EDIT) && (
-          <Button
-            title="edit actual"
-            icon={<MdEdit size={24} id={`edit-actual-${index}`} title="edit actual" />}
-            onClick={() => onEdit(original)}
-          ></Button>
+          <EditButton title="edit payment" onClick={() => onEdit(original)} />
         )}
         {hasClaim(Claims.LEASE_EDIT) && (
-          <Button
-            title="delete actual"
-            icon={<FaTrash size={24} id={`delete-actual-${index}`} title="delete actual" />}
-            onClick={() => original.id && onDelete(original)}
-          ></Button>
+          <RemoveIconButton
+            title="delete payment"
+            id={`delete-actual-${index}`}
+            onRemove={() => original.id && onDelete(original)}
+          />
         )}
       </StyledIcons>
     );

@@ -42,7 +42,7 @@ export const Section: React.FC<
           <Row className="no-gutters">
             <Col>{header}</Col>
             {isCollapsable && (
-              <Col xs="auto" className="pl-8 d-flex align-items-end">
+              <Col xs="auto" className="pl-2 d-flex align-items-end">
                 {isCollapsed && (
                   <ArrowDropDownIcon
                     title={`expand-${title ?? 'section'}`}

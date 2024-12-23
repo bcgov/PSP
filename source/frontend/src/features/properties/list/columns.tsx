@@ -179,10 +179,10 @@ export const columns = ({
             <StyledIconButton
               data-testid="view-prop-tab"
               title="View Property Info"
-              variant="light"
+              variant="primary"
             >
               <Link to={`/mapview/sidebar/property/${property.id}?pid=${property.pid}`}>
-                <FaEye />
+                <FaEye size={22} />
               </Link>
             </StyledIconButton>
           )}

@@ -73,7 +73,7 @@ exports[`LeasePropertiesInformation component > renders as expected 1`] = `
           Property Information
         </div>
         <div
-          class="pl-8 d-flex align-items-end col-auto"
+          class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"

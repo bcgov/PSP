@@ -64,6 +64,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
 
 .c3 {
   text-align: right;
+  overflow: hidden;
 }
 
 .c7 {
