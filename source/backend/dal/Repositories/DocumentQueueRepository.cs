@@ -61,6 +61,7 @@ namespace Pims.Dal.Repositories
                 queuedDocument.Document = existingQueuedDocument.Document;
             }
 
+            queuedDocument.MayanError = queuedDocument.MayanError?.Truncate(4000);
             Context.Entry(existingQueuedDocument).CurrentValues.SetValues(queuedDocument);
 
             queuedDocument = Context.Update(queuedDocument).Entity;
