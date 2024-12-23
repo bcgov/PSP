@@ -59,11 +59,6 @@ namespace Pims.Api.Models.Concepts.Document
         /// <summary>
         /// get/set - The actual document, represented as a byte[].
         /// </summary>
-        public byte[] Document { get; set; }
-
-        /// <summary>
-        /// get/set - The actual document, represented as a byte[].
-        /// </summary>
         public DocumentModel PimsDocument { get; set; }
 
     #endregion

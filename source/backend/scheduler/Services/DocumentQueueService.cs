@@ -173,7 +173,7 @@ namespace Pims.Scheduler.Services
                     var currentDocumentQueue = currentDocumentResponse.Result.Payload;
                     _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, currentDocumentQueue?.Id, response?.Result?.Status, response?.Result?.Message);
                     currentDocumentQueue.DocumentQueueStatusType.Id = DocumentQueueStatusTypes.PIMS_ERROR.ToString();
-                    currentDocumentQueue.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}".Truncate(4000);
+                    currentDocumentQueue.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}";
                     _ = _pimsDocumentQueueRepository.UpdateQueuedDocument(currentDocumentQueue.Id, currentDocumentQueue);
                 });
                 return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.PIMS_ERROR, Message = $"Received error response from {httpMethodName} for queued document {qd?.Id} status {response?.Result?.Status} message: {response?.Result?.Message}" };

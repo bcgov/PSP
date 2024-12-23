@@ -211,7 +211,7 @@ namespace Pims.Api.Services
 
         public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest, bool skipExtensionCheck = false)
         {
-            this.Logger.LogInformation("Uploading document, do not wait for mayan processing.");
+            this.Logger.LogInformation("Uploading document, do not wait for mayan processing. documentId: {documentId}", uploadRequest.DocumentId);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             ExternalResponse<DocumentDetailModel> externalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File, skipExtensionCheck);
@@ -232,7 +232,8 @@ namespace Pims.Api.Services
             }
             else
             {
-                this.Logger.LogError("Failed to update associated PIMS document with uploaded Mayan Id.");
+                this.Logger.LogError("Failed to update associated PIMS document with uploaded Mayan Id. documentId: {documentId}", uploadRequest.DocumentId);
+                this.Logger.LogDebug("Mayan response: {response}", response.Serialize());
             }
 
             return response;
