@@ -20,7 +20,7 @@ VALUES
   (N'MORTGAGE',   'Mortgage Interest'),
   (N'XINGPERMIT', 'Crossing Permit'),
   (N'LIEN',       'Lis Pendens / Lien'),
-  (N'OTHER',      'Other ');
+  (N'OTHER',      'Other');
 GO
 
 -- --------------------------------------------------------------

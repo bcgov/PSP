@@ -14,7 +14,7 @@ import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { exists, prettyFormatDate } from '@/utils';
+import { exists, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { cannotEditMessage } from '../../../common/constants';
@@ -93,7 +93,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         )}
       </Section>
       <Section header="Schedule">
-        <SectionField label="Assigned date">{prettyFormatDate(detail.assignedDate)}</SectionField>
+        <SectionField label="Assigned date" valueTestId="assigned-date">
+          {prettyFormatUTCDate(detail.assignedDate)}
+        </SectionField>
         <SectionField
           label="Delivery date"
           tooltip="Date for delivery of the property to the project"

@@ -2,6 +2,8 @@ import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import AdminIcon from '@/assets/images/admin-icon.svg?react';
+import * as CommonStyled from '@/components/common/styles';
 import { Table } from '@/components/Table';
 import { useApiAccessRequests } from '@/hooks/pims-api/useApiAccessRequests';
 import { useSearch } from '@/hooks/useSearch';
@@ -48,7 +50,10 @@ const ManageAccessRequestsPage = () => {
 
   return (
     <StyledContainer>
-      <StyledPageHeader>PIMS User Access Requests</StyledPageHeader>
+      <CommonStyled.H1>
+        <AdminIcon title="Admin Tools icon" width="2.6rem" height="2.6rem" fill="currentColor" />
+        <span className="ml-2">PIMS User Access Requests</span>
+      </CommonStyled.H1>
       <AccessRequestFilter
         initialValues={filter}
         applyFilter={accessRequestfilter => setFilter(accessRequestfilter)}
@@ -79,10 +84,6 @@ export const defaultFilter: IAccessRequestsFilterData = {
 const StyledContainer = styled(ScrollXYContainer)`
   width: 100%;
   height: 100%;
-`;
-
-const StyledPageHeader = styled.h3`
-  text-align: left;
 `;
 
 export default ManageAccessRequestsPage;
