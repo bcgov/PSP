@@ -18,7 +18,6 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocumentProcessStartTimestamp, src => src.DocProcessStartDt)
                 .Map(dest => dest.DocumentProcessEndTimestamp, src => src.DocProcessEndDt)
                 .Map(dest => dest.DocumentProcessRetries, src => src.DocProcessRetries)
-                .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.PimsDocument, src => src.DocumentNavigation)
                 .Map(dest => dest.MayanError, src => src.MayanError)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -32,7 +31,6 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocProcessStartDt, src => src.DocumentProcessStartTimestamp)
                 .Map(dest => dest.DocProcessEndDt, src => src.DocumentProcessEndTimestamp)
                 .Map(dest => dest.DocProcessRetries, src => src.DocumentProcessRetries)
-                .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.DocumentNavigation, src => src.PimsDocument)
                 .Map(dest => dest.MayanError, src => src.MayanError)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
