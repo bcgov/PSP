@@ -12,8 +12,6 @@ namespace Pims.Api.Services
 
         IList<PimsFormType> GetFormDocumentTypes(string formTypeCode);
 
-        Task UploadFormDocumentTemplate(string formTypeCode, DocumentUploadRequest uploadRequest);
-
         Task<DocumentUploadRelationshipResponse> UploadFormDocumentTemplateAsync(string formTypeCode, DocumentUploadRequest uploadRequest);
 
         Task<ExternalResponse<string>> DeleteFormDocumentTemplateAsync(PimsFormType formType);

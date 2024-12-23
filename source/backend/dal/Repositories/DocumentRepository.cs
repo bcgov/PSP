@@ -4,9 +4,8 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
@@ -35,7 +34,7 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Get the document from the database based on document id.z
+        /// Get the document from the database based on document id.
         /// </summary>
         /// <param name="documentId"></param>
         /// <returns></returns>

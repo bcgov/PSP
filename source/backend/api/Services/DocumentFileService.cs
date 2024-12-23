@@ -99,11 +99,9 @@ namespace Pims.Api.Services
 
             using var transaction = _documentQueueRepository.BeginTransaction();
 
-            // Step 1 - Save the pimsDocument
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // Step 2 - Create the File Document
             PimsAcquisitionFileDocument newAcquisitionDocument = new()
             {
                 AcquisitionFileId = acquisitionFileId,
@@ -112,19 +110,9 @@ namespace Pims.Api.Services
             _acquisitionFileDocumentRepository.AddAcquisition(newAcquisitionDocument);
             _documentQueueRepository.SaveChanges();
 
-            // Step 3 - Queue the Document for processing
-            PimsDocumentQueue queueDocument = new()
-            {
-                DocumentId = pimsDocument.DocumentId,
-                AcquisitionFileDocumentId = newAcquisitionDocument.AcquisitionFileDocumentId,
-                Document = await uploadRequest.File.GetBytes(),
-                DocumentMetadata = JsonSerializer.Serialize(uploadRequest.DocumentMetadata),
-                FileName = uploadRequest.File.FileName,
-            };
-            _documentQueueRepository.Add(queueDocument);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // All good here.
             transaction.Commit();
 
             return;
@@ -138,11 +126,9 @@ namespace Pims.Api.Services
 
             using var transaction = _documentQueueRepository.BeginTransaction();
 
-            // Step 1 - Save the pimsDocument
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // Step 2 - Create the File Document
             PimsResearchFileDocument newFileDocument = new()
             {
                 ResearchFileId = researchFileId,
@@ -152,18 +138,9 @@ namespace Pims.Api.Services
             _documentQueueRepository.SaveChanges();
 
             // Step 3 - Queue the Document for processing
-            PimsDocumentQueue queueDocument = new()
-            {
-                DocumentId = pimsDocument.DocumentId,
-                ResearchFileDocumentId = newFileDocument.ResearchFileDocumentId,
-                Document = await uploadRequest.File.GetBytes(),
-                FileName = uploadRequest.File.FileName,
-                DocumentMetadata = JsonSerializer.Serialize(uploadRequest.DocumentMetadata),
-            };
-            _documentQueueRepository.Add(queueDocument);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // All good here.
             transaction.Commit();
 
             return;
@@ -177,11 +154,9 @@ namespace Pims.Api.Services
 
             using var transaction = _documentQueueRepository.BeginTransaction();
 
-            // Step 1 - Save the pimsDocument
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // Step 2 - Create the File Document
             PimsProjectDocument newFileDocument = new()
             {
                 ProjectId = projectId,
@@ -190,22 +165,9 @@ namespace Pims.Api.Services
             _projectRepository.AddProjectDocument(newFileDocument);
             _documentQueueRepository.SaveChanges();
 
-            throw new NotImplementedException();
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
+            _documentQueueRepository.SaveChanges();
 
-            // Step 3 - Queue the Document for processing
-            //PimsDocumentQueue queueDocument = new()
-            //{
-            //    DocumentId = pimsDocument.DocumentId,
-            //     = newFileDocument.ProjectDocumentId,  // MISSING!!!
-            //    Document = await uploadRequest.File.GetBytes(),
-            //    FileName = uploadRequest.File.FileName,
-            //    DocumentMetadata = JsonSerializer.Serialize(uploadRequest.DocumentMetadata),
-            //};
-
-            //_documentQueueRepository.Add(queueDocument);
-            //_documentQueueRepository.SaveChanges();
-
-            // All good here.
             transaction.Commit();
 
             return;
@@ -219,11 +181,9 @@ namespace Pims.Api.Services
 
             using var transaction = _documentQueueRepository.BeginTransaction();
 
-            // Step 1 - Save the pimsDocument
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // Step 2 - Create the File Document
             PimsLeaseDocument newFileDocument = new()
             {
                 LeaseId = leaseId,
@@ -232,20 +192,9 @@ namespace Pims.Api.Services
             _leaseRepository.AddLeaseDocument(newFileDocument);
             _documentQueueRepository.SaveChanges();
 
-            // Step 3 - Queue the Document for processing
-            PimsDocumentQueue queueDocument = new()
-            {
-                DocumentId = pimsDocument.DocumentId,
-                LeaseDocumentId = newFileDocument.LeaseDocumentId,
-                Document = await uploadRequest.File.GetBytes(),
-                FileName = uploadRequest.File.FileName,
-                DocumentMetadata = JsonSerializer.Serialize(uploadRequest.DocumentMetadata),
-            };
-
-            _documentQueueRepository.Add(queueDocument);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // All good here.
             transaction.Commit();
 
             return;
@@ -259,11 +208,9 @@ namespace Pims.Api.Services
 
             using var transaction = _documentQueueRepository.BeginTransaction();
 
-            // Step 1 - Save the pimsDocument
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // Step 2 - Create the File Document
             PimsPropertyActivityDocument newFileDocument = new()
             {
                 PimsPropertyActivityId = propertyActivityId,
@@ -272,20 +219,9 @@ namespace Pims.Api.Services
             _propertyActivityDocumentRepository.AddPropertyActivityDocument(newFileDocument);
             _documentQueueRepository.SaveChanges();
 
-            // Step 3 - Queue the Document for processing
-            PimsDocumentQueue queueDocument = new()
-            {
-                DocumentId = pimsDocument.DocumentId,
-                PropertyActivityDocumentId = newFileDocument.PropertyActivityDocumentId,
-                Document = await uploadRequest.File.GetBytes(),
-                FileName = uploadRequest.File.FileName,
-                DocumentMetadata = JsonSerializer.Serialize(uploadRequest.DocumentMetadata),
-            };
-
-            _documentQueueRepository.Add(queueDocument);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // All good here.
             transaction.Commit();
 
             return;
@@ -299,11 +235,9 @@ namespace Pims.Api.Services
 
             using var transaction = _documentQueueRepository.BeginTransaction();
 
-            // Step 1 - Save the pimsDocument
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // Step 2 - Create the File Document
             PimsDispositionFileDocument newFileDocument = new()
             {
                 DispositionFileId = dispositionFileId,
@@ -312,20 +246,9 @@ namespace Pims.Api.Services
             _dispositionFileDocumentRepository.AddDispositionDocument(newFileDocument);
             _documentQueueRepository.SaveChanges();
 
-            // Step 3 - Queue the Document for processing
-            PimsDocumentQueue queueDocument = new()
-            {
-                DocumentId = pimsDocument.DocumentId,
-                DispositionFileDocumentId = newFileDocument.DispositionFileDocumentId,
-                Document = await uploadRequest.File.GetBytes(),
-                FileName = uploadRequest.File.FileName,
-                DocumentMetadata = JsonSerializer.Serialize(uploadRequest.DocumentMetadata),
-            };
-
-            _documentQueueRepository.Add(queueDocument);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
             _documentQueueRepository.SaveChanges();
 
-            // All good here.
             transaction.Commit();
 
             return;
@@ -552,6 +475,17 @@ namespace Pims.Api.Services
             return newPimsDocument;
         }
 
+        private async Task GenerateQueuedDocumentItem(long documentId, DocumentUploadRequest uploadRequest)
+        {
+            PimsDocumentQueue queueDocument = new()
+            {
+                DocumentId = documentId,
+                Document = await uploadRequest.File.GetBytes(),
+                DocumentMetadata = uploadRequest.DocumentMetadata != null ? JsonSerializer.Serialize(uploadRequest.DocumentMetadata) : null,
+            };
+            _documentQueueRepository.Add(queueDocument);
+        }
+
         private async Task<ExternalResponse<string>> DeleteMayanDocument(long mayanDocumentId)
         {
             var result = await _documentService.DeleteMayanStorageDocumentAsync(mayanDocumentId);
@@ -565,7 +499,6 @@ namespace Pims.Api.Services
 
         private PimsDocument RemoveDocumentMayanID(PimsDocument doc)
         {
-            // Update the Mayan ID from PIMS, this will leave a trace
             doc.MayanId = null;
             return _documentRepository.Update(doc, false);
         }

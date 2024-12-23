@@ -60,47 +60,6 @@ namespace Pims.Api.Services
             return new List<PimsFormType>() { _formTypeRepository.GetByFormTypeCode(formTypeCode) };
         }
 
-        public async Task UploadFormDocumentTemplate(string formTypeCode, DocumentUploadRequest uploadRequest)
-        {
-            throw new NotImplementedException();
-
-            //Logger.LogInformation("Uploading template for document form type");
-            //User.ThrowIfNotAuthorized(Permissions.DocumentAdmin);
-            //uploadRequest.ThrowInvalidFileSize();
-
-            //using var transaction = _documentQueueRepository.BeginTransaction();
-
-            //// Step 1 - Save the pimsDocument
-            //PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
-            //_documentQueueRepository.SaveChanges();
-
-            //// Step 2 - Create the File Document
-            //PimsDispositionFileDocument newFileDocument = new()
-            //{
-            //    DispositionFileId = dispositionFileId,
-            //    DocumentId = pimsDocument.DocumentId,
-            //};
-            //_dispositionFileDocumentRepository.AddDispositionDocument(newFileDocument);
-            //_documentQueueRepository.SaveChanges();
-
-            //// Step 3 - Queue the Document for processing
-            //PimsDocumentQueue queueDocument = new()
-            //{
-            //    DocumentId = pimsDocument.DocumentId,
-            //    DispositionFileDocumentId = newFileDocument.DispositionFileDocumentId,
-            //    Document = await uploadRequest.File.GetBytes(),
-            //    FileName = uploadRequest.File.FileName,
-            //};
-
-            //_documentQueueRepository.Add(queueDocument);
-            //_documentQueueRepository.SaveChanges();
-
-            //// All good here.
-            //transaction.Commit();
-
-            //return;
-        }
-
         public async Task<DocumentUploadRelationshipResponse> UploadFormDocumentTemplateAsync(string formTypeCode, DocumentUploadRequest uploadRequest)
         {
             this.Logger.LogInformation("Uploading template for document form type");
@@ -179,7 +138,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsAcquisitionFileForm> GetAcquisitionForms(long acquisitionFileId)
         {
-            _logger.LogInformation("Getting acquisition forms by acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Getting acquisition forms by acquisition file id {acquisitionFileId}", acquisitionFileId);
             this.User.ThrowIfNotAuthorized(Permissions.FormView, Permissions.AcquisitionFileView);
 
             var fileForms = _acquisitionFileFormRepository.GetAllByAcquisitionFileId(acquisitionFileId);
@@ -188,7 +147,7 @@ namespace Pims.Api.Services
 
         public PimsAcquisitionFileForm GetAcquisitionForm(long fileFormId)
         {
-            _logger.LogInformation("Getting acquisition form by form file id ...", fileFormId);
+            _logger.LogInformation("Getting acquisition form by form file id {fileFormId}", fileFormId);
             this.User.ThrowIfNotAuthorized(Permissions.FormView, Permissions.AcquisitionFileView);
 
             var fileForm = _acquisitionFileFormRepository.GetByAcquisitionFileFormId(fileFormId);
@@ -197,7 +156,7 @@ namespace Pims.Api.Services
 
         public bool DeleteAcquisitionFileForm(long fileFormId)
         {
-            _logger.LogInformation("Deleting acquisition file form id ...", fileFormId);
+            _logger.LogInformation("Deleting acquisition file form id {fileFormId}", fileFormId);
             this.User.ThrowIfNotAuthorized(Permissions.FormDelete, Permissions.AcquisitionFileEdit);
 
             var fileFormToDelete = _acquisitionFileFormRepository.TryDelete(fileFormId);

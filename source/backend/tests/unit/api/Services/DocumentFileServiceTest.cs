@@ -421,9 +421,7 @@ namespace Pims.Api.Test.Services
             documentQueueRepository.Setup(x => x.Add(It.IsAny<PimsDocumentQueue>())).Returns(new PimsDocumentQueue()
             {
                 DocumentId = 100,
-                AcquisitionFileDocumentId = 101,
                 Document = new byte[1] { 1 },
-                FileName = "NewFile.docx",
                 DocumentMetadata = null,
             });
 
