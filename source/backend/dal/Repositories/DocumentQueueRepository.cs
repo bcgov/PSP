@@ -62,6 +62,7 @@ namespace Pims.Dal.Repositories
             }
 
             queuedDocument.MayanError = queuedDocument.MayanError?.Truncate(4000);
+            queuedDocument.DataSourceTypeCode = existingQueuedDocument.DataSourceTypeCode; // Do not allow the data source to be updated.
             Context.Entry(existingQueuedDocument).CurrentValues.SetValues(queuedDocument);
 
             queuedDocument = Context.Update(queuedDocument).Entity;
@@ -92,6 +93,7 @@ namespace Pims.Dal.Repositories
                 .Include(dq => dq.DocumentNavigation)
                 .ThenInclude(d => d.DocumentType)
                 .Include(dq => dq.DocumentQueueStatusTypeCodeNavigation)
+                .Include(dq => dq.DataSourceTypeCodeNavigation)
                 .Where(q => true);
 
             if (filter.DataSourceTypeCode != null)
