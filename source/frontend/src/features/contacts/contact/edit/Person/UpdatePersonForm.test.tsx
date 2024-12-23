@@ -13,7 +13,15 @@ import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Concepts_PersonAddress } from '@/models/api/generated/ApiGen_Concepts_PersonAddress';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, findByText, queryByText, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  findByText,
+  queryByText,
+  render,
+  RenderOptions,
+  userEvent,
+} from '@/utils/test-utils';
 
 import UpdatePersonForm from './UpdatePersonForm';
 import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
@@ -367,6 +375,5 @@ describe('UpdatePersonForm', () => {
 
       expect(updatePerson).toHaveBeenCalledWith(newValues);
     });
-
   });
 });

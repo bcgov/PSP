@@ -210,15 +210,14 @@ describe('UpdateOrganizationForm', () => {
         isDisabled: true,
       };
 
-       const { getSaveButton, container } = setup({ id: 1 });
+      const { getSaveButton, container } = setup({ id: 1 });
       await act(async () => {
-        await fillInput(container, 'isDisabled', "Inactive");
+        await fillInput(container, 'isDisabled', 'Inactive');
       });
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
 
       expect(updateOrganization).toHaveBeenCalledWith(newValues);
-
     });
   });
 });
