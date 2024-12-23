@@ -51,12 +51,12 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
           <>
             <EditButton
               title="Edit Offer"
-              dataTestId={`Offer[${index}].edit-btn`}
+              data-testId={`Offer[${index}].edit-btn`}
               onClick={() => history.push(`${match.url}/offers/${dispositionOffer.id}/update`)}
             />
             <RemoveIconButton
               title="Delete Offer"
-              dataTestId={`Offer[${index}].delete-btn`}
+              data-testId={`Offer[${index}].delete-btn`}
               onRemove={() => {
                 setModalContent({
                   ...getDeleteModalProps(),

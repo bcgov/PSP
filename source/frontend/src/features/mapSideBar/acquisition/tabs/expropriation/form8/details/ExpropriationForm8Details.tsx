@@ -63,13 +63,13 @@ export const ExpropriationForm8Details: React.FunctionComponent<
             <>
               <EditButton
                 title="Edit form 8"
-                dataTestId={`form8[${form8Index}].edit-form8`}
+                data-testId={`form8[${form8Index}].edit-form8`}
                 onClick={() => history.push(`${match.url}/${form8.id}`)}
                 style={{ float: 'right' }}
               />
               <RemoveIconButton
                 title="Delete Form 8"
-                dataTestId={`form8[${form8Index}].delete-form8`}
+                data-testId={`form8[${form8Index}].delete-form8`}
                 onRemove={() => {
                   setModalContent({
                     ...getDeleteModalProps(),

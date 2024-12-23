@@ -108,7 +108,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                             <Col xs="auto" className="px-1">
                               <RemoveIconButton
                                 title="Delete Consultation"
-                                dataTestId={`consultations[${index}].delete-btn`}
+                                data-testId={`consultations[${index}].delete-btn`}
                                 onRemove={() => {
                                   setModalContent({
                                     ...getDeleteModalProps(),
@@ -134,7 +134,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                               <StyledButtonContainer>
                                 <EditButton
                                   title="Edit Consultation"
-                                  dataTestId={`consultations[${index}].edit-btn`}
+                                  data-testId={`consultations[${index}].edit-btn`}
                                   onClick={() => onEdit(consultation.id)}
                                 />
                               </StyledButtonContainer>

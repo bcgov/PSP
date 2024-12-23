@@ -7,26 +7,22 @@ interface IEditButtonProps {
   onClick: () => void;
   title?: string;
   icon?: React.ReactNode;
-  dataTestId?: string | null;
+  'data-testId'?: string;
   style?: CSSProperties | null;
 }
 
-export const EditButton: React.FunctionComponent<React.PropsWithChildren<IEditButtonProps>> = ({
-  onClick,
-  title,
-  icon,
-  dataTestId,
-  style,
-}) => {
+export const EditButton: React.FunctionComponent<
+  React.PropsWithChildren<IEditButtonProps>
+> = props => {
   return (
     <StyledIconButton
       variant="primary"
-      title={title ?? 'edit'}
-      onClick={onClick}
-      data-testid={dataTestId ?? 'edit-button'}
-      style={style}
+      title={props.title ?? 'edit'}
+      onClick={props.onClick}
+      data-testid={props['data-testId'] ?? 'edit-button'}
+      style={props.style}
     >
-      {icon ?? <FaEdit size={22} />}
+      {props.icon ?? <FaEdit size={22} />}
     </StyledIconButton>
   );
 };

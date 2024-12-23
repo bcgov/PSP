@@ -98,7 +98,7 @@ export function createCompensationTableColumns(
           <StyledDiv className="no-gutters">
             {hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) && (
               <ViewButton
-                dataTestId={`compensation-view-${cellProps.row.id}`}
+                data-testId={`compensation-view-${cellProps.row.id}`}
                 title="Compensation view details"
                 id={`compensation-view-${cellProps.row.id}`}
                 onClick={() => cellProps.row.original.id && onShow(cellProps.row.original.id)}
@@ -108,7 +108,7 @@ export function createCompensationTableColumns(
               canEditDetails(cellProps.row.original.isDraft) && (
                 <RemoveIconButton
                   id={`compensation-delete-${cellProps.row.id}`}
-                  dataTestId={`compensation-delete-${cellProps.row.id}`}
+                  data-testId={`compensation-delete-${cellProps.row.id}`}
                   onRemove={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
                   title="Delete Compensation"
                 />

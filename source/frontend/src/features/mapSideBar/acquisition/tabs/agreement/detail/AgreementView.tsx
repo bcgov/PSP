@@ -94,7 +94,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                             <>
                               <EditButton
                                 title="Edit Agreement"
-                                dataTestId={`agreements[${index}].edit-btn`}
+                                data-testId={`agreements[${index}].edit-btn`}
                                 onClick={() =>
                                   history.push(`${match.url}/${agreement.agreementId}/update`)
                                 }
@@ -102,7 +102,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                               />
                               <RemoveIconButton
                                 title="Delete Agreement"
-                                dataTestId={`agreements[${index}].delete-btn`}
+                                data-testId={`agreements[${index}].delete-btn`}
                                 icon={<FaTrash size={'1.75rem'} />}
                                 onRemove={() => {
                                   setModalContent({

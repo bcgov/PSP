@@ -71,7 +71,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
               <EditButton
                 title="Edit Appraisal"
-                dataTestId={`appraisal-edit-btn`}
+                data-testId={`appraisal-edit-btn`}
                 onClick={() => {
                   history.push(`${match.url}/appraisal/update`);
                 }}
@@ -166,7 +166,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
               <EditButton
                 title="Edit Sale"
-                dataTestId={`sale-edit-btn`}
+                data-testId={`sale-edit-btn`}
                 onClick={() => {
                   history.push(`${match.url}/sale/update`);
                 }}

@@ -8,7 +8,7 @@ interface IViewButtonProps extends ButtonProps {
   onClick: () => void;
   title?: string;
   icon?: React.ReactNode;
-  dataTestId?: string | null;
+  'data-testId'?: string;
   style?: CSSProperties | null;
 }
 

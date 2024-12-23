@@ -116,7 +116,7 @@ export function createContactTableColumns(
             {hasClaim(Claims.PROPERTY_EDIT) && (
               <RemoveIconButton
                 id={`contact-delete-${cellProps.row.id}`}
-                dataTestId={`contact-delete-${cellProps.row.id}`}
+                data-testId={`contact-delete-${cellProps.row.id}`}
                 onRemove={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
                 title="Delete contact"
               />

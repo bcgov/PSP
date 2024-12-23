@@ -89,7 +89,7 @@ export const FinancialActivitiesSubForm: React.FunctionComponent<
                     <label>Activity {index + 1}</label>
                     <RemoveIconButton
                       title="Delete Financial Activity"
-                      dataTestId={`activity[${index}].delete-button`}
+                      data-testId={`activity[${index}].delete-button`}
                       onRemove={() => {
                         setRowToDelete(index);
                         setShowModal(true);
