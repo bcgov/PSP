@@ -124,7 +124,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetByFormTypeCode(testTypeCode)).Returns(new PimsFormType());
 
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
-            documentService.Setup(x => x.UploadDocumentAsync(testUploadRequest));
+            documentService.Setup(x => x.UploadDocumentAsync(testUploadRequest, true));
 
             // Act
             var result = service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
@@ -142,14 +142,14 @@ namespace Pims.Api.Test.Services
             DocumentUploadRequest testUploadRequest = new DocumentUploadRequest();
 
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
-            documentService.Setup(x => x.UploadDocumentAsync(testUploadRequest));
+            documentService.Setup(x => x.UploadDocumentAsync(testUploadRequest, true));
 
             // Act
             Func<Task> act = () => service.UploadFormDocumentTemplateAsync(testTypeCode, testUploadRequest);
 
             // Assert
             act.Should().ThrowAsync<NotAuthorizedException>();
-            documentService.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(testUploadRequest, true), Times.Never);
         }
 
         [Fact]
@@ -166,7 +166,7 @@ namespace Pims.Api.Test.Services
             formTypeRepositoryMock.Setup(x => x.GetByFormTypeCode(testTypeCode)).Returns(new PimsFormType() { DocumentId = testDocumentId, Document = testExistingDocument });
 
             var documentServiceMock = this._helper.GetService<Mock<IDocumentService>>();
-            documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest));
+            documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest, true));
 
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(1);
@@ -195,7 +195,7 @@ namespace Pims.Api.Test.Services
             formTypeRepositoryMock.Setup(x => x.GetByFormTypeCode(testTypeCode)).Returns(new PimsFormType() { DocumentId = testDocumentId, Document = testExistingDocument });
 
             var documentServiceMock = this._helper.GetService<Mock<IDocumentService>>();
-            documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest));
+            documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest, true));
 
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(1);
@@ -208,7 +208,7 @@ namespace Pims.Api.Test.Services
             act.Should().ThrowAsync<InvalidOperationException>();
             documentRepositoryMock.Verify(x => x.DocumentRelationshipCount(testDocumentId), Times.Once);
             documentServiceMock.Verify(x => x.DeleteDocumentAsync(testExistingDocument), Times.Once);
-            documentServiceMock.Verify(x => x.UploadDocumentAsync(testUploadRequest), Times.Never);
+            documentServiceMock.Verify(x => x.UploadDocumentAsync(testUploadRequest, true), Times.Never);
         }
 
         #endregion
@@ -226,7 +226,7 @@ namespace Pims.Api.Test.Services
             DocumentUploadRequest testUploadRequest = new DocumentUploadRequest();
 
             var documentServiceMock = this._helper.GetService<Mock<IDocumentService>>();
-            documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest));
+            documentServiceMock.Setup(x => x.UploadDocumentAsync(testUploadRequest, true));
 
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             documentRepositoryMock.Setup(x => x.DocumentRelationshipCount(testDocumentId)).Returns(1);

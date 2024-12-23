@@ -10,6 +10,8 @@ namespace Pims.Api.Services
     /// </summary>
     public interface IDocumentQueueService
     {
+        public PimsDocumentQueue GetById(long documentQueueId);
+
         public IEnumerable<PimsDocumentQueue> SearchDocumentQueue(DocumentQueueFilter filter);
 
         public PimsDocumentQueue Update(PimsDocumentQueue documentQueue);

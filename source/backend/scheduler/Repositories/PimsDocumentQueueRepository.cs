@@ -114,6 +114,25 @@ namespace Pims.Scheduler.Repositories
         }
 
         /// <summary>
+        /// Updates an existing queued document.
+        /// </summary>
+        /// <param name="documentQueueId">The ID of the document to update.</param>
+        /// <returns>The result of the update operation.</returns>
+        public async Task<ExternalResponse<DocumentQueueModel>> GetById(long documentQueueId)
+        {
+            _logger.LogDebug("getting queued document with id {documentId}", documentQueueId);
+
+            string authenticationToken = await _authRepository.RequestAccessToken();
+
+            Uri endpoint = new($"{_configuration.CurrentValue.Uri}/documents/queue/{documentQueueId}");
+
+            var response = await GetAsync<DocumentQueueModel>(endpoint, authenticationToken);
+            _logger.LogDebug("queued document retrieval for document with id {documentId} complete with {response}", documentQueueId, response.Serialize());
+
+            return response;
+        }
+
+        /// <summary>
         /// Searches for queued documents based on the provided filter.
         /// </summary>
         /// <param name="filter">The filter to apply to the search.</param>

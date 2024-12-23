@@ -83,5 +83,23 @@ namespace Pims.Scheduler.Test.Repositories
             result.Status.Should().Be(ExternalResponseStatus.Success);
             repositoryMock.Verify(x => x.SearchQueuedDocumentsAsync(filter), Times.Once);
         }
+
+        [Fact]
+        public async Task GetById_ValidDocumentQueueId_ReturnsExternalResponse()
+        {
+            // Arrange
+            var documentQueueId = 1;
+            var expectedResponse = new ExternalResponse<DocumentQueueModel> { Status = ExternalResponseStatus.Success };
+            var repositoryMock = new Mock<IPimsDocumentQueueRepository>();
+            repositoryMock.Setup(x => x.GetById(documentQueueId)).ReturnsAsync(expectedResponse);
+
+            // Act
+            var result = await repositoryMock.Object.GetById(documentQueueId);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Status.Should().Be(ExternalResponseStatus.Success);
+            repositoryMock.Verify(x => x.GetById(documentQueueId), Times.Once);
+        }
     }
 }

@@ -270,7 +270,6 @@ namespace Pims.Api.Test.Services
                 DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PENDING.ToString(),
                 Document = new byte[] { 1, 2, 3 },
                 DocProcessRetries = 0,
-                AcquisitionFileDocumentId = 1
             };
 
             var relatedDocument = new PimsDocument
@@ -312,7 +311,7 @@ namespace Pims.Api.Test.Services
             documentQueueRepositoryMock.Setup(x => x.TryGetById(It.IsAny<long>())).Returns(documentQueue);
             documentRepositoryMock.Setup(x => x.TryGetDocumentRelationships(It.IsAny<long>())).Returns(relatedDocument);
             documentTypeRepositoryMock.Setup(x => x.GetById(It.IsAny<long>())).Returns(documentType);
-            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>())).ReturnsAsync(documentUploadResponse);
+            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true)).ReturnsAsync(documentUploadResponse);
 
             // Act
             var result = await service.Upload(documentQueue);
@@ -322,7 +321,7 @@ namespace Pims.Api.Test.Services
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
-            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
+            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
         [Fact]
@@ -337,7 +336,6 @@ namespace Pims.Api.Test.Services
                 DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PIMS_ERROR.ToString(),
                 Document = new byte[] { 1, 2, 3 },
                 DocProcessRetries = 0,
-                AcquisitionFileDocumentId = 1
             };
 
             var relatedDocument = new PimsDocument
@@ -379,7 +377,7 @@ namespace Pims.Api.Test.Services
             documentQueueRepositoryMock.Setup(x => x.TryGetById(It.IsAny<long>())).Returns(documentQueue);
             documentRepositoryMock.Setup(x => x.TryGetDocumentRelationships(It.IsAny<long>())).Returns(relatedDocument);
             documentTypeRepositoryMock.Setup(x => x.GetById(It.IsAny<long>())).Returns(documentType);
-            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>())).ReturnsAsync(documentUploadResponse);
+            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true)).ReturnsAsync(documentUploadResponse);
 
             // Act
             var result = await service.Upload(documentQueue);
@@ -390,7 +388,7 @@ namespace Pims.Api.Test.Services
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
-            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
+            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
         [Fact]
@@ -405,7 +403,6 @@ namespace Pims.Api.Test.Services
                 DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PENDING.ToString(),
                 Document = null,
                 DocProcessRetries = 0,
-                AcquisitionFileDocumentId = 1
             };
 
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
@@ -422,7 +419,7 @@ namespace Pims.Api.Test.Services
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.PIMS_ERROR.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
-            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Never);
         }
 
         [Fact]
@@ -566,7 +563,7 @@ namespace Pims.Api.Test.Services
             documentQueueRepositoryMock.Setup(x => x.TryGetById(It.IsAny<long>())).Returns(documentQueue);
             documentRepositoryMock.Setup(x => x.TryGetDocumentRelationships(It.IsAny<long>())).Returns(relatedDocument);
             documentTypeRepositoryMock.Setup(x => x.GetById(It.IsAny<long>())).Throws<KeyNotFoundException>();
-            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>())).ThrowsAsync(new JsonException("test error"));
+            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true)).ThrowsAsync(new JsonException("test error"));
 
             // Act
             var response = await service.Upload(documentQueue);
@@ -590,7 +587,6 @@ namespace Pims.Api.Test.Services
                 DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PENDING.ToString(),
                 Document = new byte[] { 1, 2, 3 },
                 DocProcessRetries = 0,
-                AcquisitionFileDocumentId = 1
             };
 
             var relatedDocument = new PimsDocument
@@ -630,7 +626,6 @@ namespace Pims.Api.Test.Services
                 DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PENDING.ToString(),
                 Document = new byte[] { 1, 2, 3 },
                 DocProcessRetries = 0,
-                AcquisitionFileDocumentId = 1
             };
 
             var relatedDocument = new PimsDocument
@@ -665,7 +660,7 @@ namespace Pims.Api.Test.Services
             documentQueueRepositoryMock.Setup(x => x.TryGetById(It.IsAny<long>())).Returns(documentQueue);
             documentRepositoryMock.Setup(x => x.TryGetDocumentRelationships(It.IsAny<long>())).Returns(relatedDocument);
             documentTypeRepositoryMock.Setup(x => x.GetById(It.IsAny<long>())).Returns(documentType);
-            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>())).ReturnsAsync(documentUploadResponse);
+            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true)).ReturnsAsync(documentUploadResponse);
 
             // Act
             var result = await service.Upload(documentQueue);
@@ -675,7 +670,46 @@ namespace Pims.Api.Test.Services
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.MAYAN_ERROR.ToString());
             documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
-            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
+            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
+        }
+
+        [Fact]
+        public void GetById_ValidDocumentQueueId_ReturnsDocumentQueue()
+        {
+            // Arrange
+            var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
+
+            var documentQueueId = 1;
+            var expectedDocumentQueue = new PimsDocumentQueue { DocumentQueueId = documentQueueId };
+
+            var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
+            documentQueueRepositoryMock.Setup(x => x.TryGetById(documentQueueId)).Returns(expectedDocumentQueue);
+
+            // Act
+            var result = service.GetById(documentQueueId);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.DocumentQueueId.Should().Be(documentQueueId);
+            documentQueueRepositoryMock.Verify(x => x.TryGetById(documentQueueId), Times.Once);
+        }
+
+        [Fact]
+        public void GetById_InvalidDocumentQueueId_ReturnsNull()
+        {
+            // Arrange
+            var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
+
+            var documentQueueId = 1;
+
+            var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
+            documentQueueRepositoryMock.Setup(x => x.TryGetById(documentQueueId)).Returns((PimsDocumentQueue)null);
+
+            // Act
+            Action act = () => service.GetById(documentQueueId);
+
+            // Assert
+            act.Should().Throw<KeyNotFoundException>();
         }
     }
 }

@@ -100,6 +100,36 @@ namespace Pims.Scheduler.Test.Services
         }
 
         [Fact]
+        public async Task UploadQueuedDocuments_SingleDocumentError_ReturnsError_UpdatesQueue()
+        {
+            // Arrange
+            var document = new DocumentQueueModel { Id = 1, DocumentQueueStatusType = new CodeTypeModel<string>() { Id = DocumentQueueStatusTypes.PROCESSING.ToString() } };
+            var searchResponse = new ExternalResponse<List<DocumentQueueModel>>
+            {
+                Status = ExternalResponseStatus.Success,
+                Payload = new List<DocumentQueueModel> { document },
+            };
+            _documentQueueRepositoryMock.Setup(x => x.SearchQueuedDocumentsAsync(It.IsAny<DocumentQueueFilter>())).ReturnsAsync(searchResponse);
+            _documentQueueRepositoryMock.Setup(x => x.GetById(It.IsAny<long>())).ReturnsAsync(new ExternalResponse<DocumentQueueModel>
+            {
+                Status = ExternalResponseStatus.Success,
+                Payload = document,
+            });
+            _documentQueueRepositoryMock.Setup(x => x.UploadQueuedDocument(document)).ReturnsAsync(new ExternalResponse<DocumentQueueModel>
+            {
+                Status = ExternalResponseStatus.Error,
+                Message = "Error uploading document.",
+            });
+
+            // Act
+            var result = await _service.UploadQueuedDocuments();
+
+            // Assert
+            result.Status.Should().Be(TaskResponseStatusTypes.ERROR);
+            result.DocumentQueueResponses.FirstOrDefault()?.Message.Should().Be("Received error response from UploadQueuedDocument for queued document 1 status Error message: Error uploading document.");
+        }
+
+        [Fact]
         public async Task UploadQueuedDocuments_SingleDocumentSuccess_ReturnsSuccess()
         {
             // Arrange

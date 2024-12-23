@@ -28,7 +28,6 @@ namespace Pims.Core.Test
                 DocumentId = id,
                 DocumentNavigation = CreateDocument(id: id),
                 Document = new byte[] { 1, 2, 3 },
-                FileName = $"test-{id}.pdf",
                 DataSourceTypeCode = "PIMS",
                 DataSourceTypeCodeNavigation = new Entity.PimsDataSourceType() { Id = dataSourceTypeCd ?? $"PIMS-{id}", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" },
                 DocumentQueueStatusTypeCodeNavigation = new Entity.PimsDocumentQueueStatusType() { Id = status ?? $"PENDING-{id}", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" },

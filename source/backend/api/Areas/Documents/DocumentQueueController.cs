@@ -167,6 +167,30 @@ namespace Pims.Api.Controllers
             return new JsonResult(documentQueueModels);
         }
 
+        /// <summary>
+        /// Get Document Queue item via id.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{documentQueueId:long}")]
+        [HasPermission(Permissions.SystemAdmin)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<DocumentTypeModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "document-types" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetQueuedDocument(long documentQueueId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DocumentQueueController),
+                nameof(GetQueuedDocument),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var queuedDocuments = _documentQueueService.GetById(documentQueueId);
+            var documentQueueModel = _mapper.Map<DocumentQueueModel>(queuedDocuments);
+            return new JsonResult(documentQueueModel);
+        }
+
         #endregion
     }
 }

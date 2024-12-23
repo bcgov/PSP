@@ -7,8 +7,6 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
-using DocumentFormat.OpenXml.InkML;
-using Humanizer;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -25,7 +23,6 @@ using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Serilog.Filters;
 
 namespace Pims.Api.Services
 {
@@ -57,6 +54,26 @@ namespace Pims.Api.Services
             this._keycloakOptions = options;
         }
 
+        /// <summary>
+        /// Get document in the document queue based on the specified id.
+        /// </summary>
+        /// <param name="documentQueueId">The id of the document in the queue</param>
+        /// <returns><see cref="PimsDocumentQueue"/> that match the id criteria.</returns>
+        /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authorized to perform this operation.</exception>
+        /// <exception cref="KeyNotFoundException">If the requested Id does not exist.</exception>
+        public PimsDocumentQueue GetById(long documentQueueId)
+        {
+            this.Logger.LogInformation("Retrieving queued PIMS document using id {documentQueueId}", documentQueueId);
+            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.SystemAdmin, this._keycloakOptions);
+
+            var documentQueue = _documentQueueRepository.TryGetById(documentQueueId);
+            if (documentQueue == null)
+            {
+                throw new KeyNotFoundException($"Unable to find queued document by id: ${documentQueueId}");
+            }
+
+            return documentQueue;
+        }
 
         /// <summary>
         /// Searches for documents in the document queue based on the specified filter.
@@ -235,7 +252,7 @@ namespace Pims.Api.Services
                         databaseDocumentQueue.DocumentQueueStatusTypeCode,
                         response.DocumentExternalResponse.Status);
 
-                    databaseDocumentQueue.MayanError = $"Failed to upload document, mayan error: {response.DocumentExternalResponse.Message}"[..4000];
+                    databaseDocumentQueue.MayanError = $"Failed to upload document, mayan error: {response.DocumentExternalResponse.Message}".Truncate(4000);
                     UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.MAYAN_ERROR);
                     return databaseDocumentQueue;
                 }
@@ -250,7 +267,7 @@ namespace Pims.Api.Services
             catch (Exception ex) when (ex is BadRequestException || ex is KeyNotFoundException || ex is InvalidDataException || ex is JsonException)
             {
                 this.Logger.LogError($"Error: {ex.Message}");
-                databaseDocumentQueue.MayanError = ex.Message[..4000];
+                databaseDocumentQueue.MayanError = ex.Message.Truncate(4000);
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
             }
             return databaseDocumentQueue;

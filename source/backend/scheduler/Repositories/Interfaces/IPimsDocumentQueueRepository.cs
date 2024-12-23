@@ -11,6 +11,8 @@ namespace Pims.Scheduler.Repositories
     /// </summary>
     public interface IPimsDocumentQueueRepository
     {
+        Task<ExternalResponse<DocumentQueueModel>> GetById(long documentQueueId);
+
         Task<ExternalResponse<DocumentQueueModel>> UploadQueuedDocument(DocumentQueueModel document);
 
         Task<ExternalResponse<DocumentQueueModel>> PollQueuedDocument(DocumentQueueModel document);

@@ -163,11 +163,19 @@ namespace Pims.Scheduler.Services
             else if (responseObject?.Payload?.DocumentQueueStatusType?.Id != DocumentQueueStatusTypes.PIMS_ERROR.ToString() && responseObject?.Payload?.DocumentQueueStatusType?.Id != DocumentQueueStatusTypes.MAYAN_ERROR.ToString())
             {
                 // If the poll failed, but the document is not in an error state, update the document to an error state.
-                _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, qd?.Id, response?.Result?.Status, response?.Result?.Message);
-                qd.DocumentQueueStatusType.Id = DocumentQueueStatusTypes.PIMS_ERROR.ToString();
-                qd.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}"[..4000];
-                qd.RowVersion = responseObject?.Payload?.RowVersion ?? qd.RowVersion;
-                _ = _pimsDocumentQueueRepository.UpdateQueuedDocument(qd.Id, qd);
+                _pimsDocumentQueueRepository.GetById(qd.Id).ContinueWith(currentDocumentResponse =>
+                {
+                    if (currentDocumentResponse?.Result == null || currentDocumentResponse?.Result.Status != ExternalResponseStatus.Success || currentDocumentResponse?.Result?.Payload == null)
+                    {
+                        _logger.LogError("Document {documentQueueId} not found in database. {response}", qd.Id, currentDocumentResponse.Serialize());
+                        throw new InvalidOperationException($"Document {qd.Id} not found in database.");
+                    }
+                    var currentDocumentQueue = currentDocumentResponse.Result.Payload;
+                    _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, currentDocumentQueue?.Id, response?.Result?.Status, response?.Result?.Message);
+                    currentDocumentQueue.DocumentQueueStatusType.Id = DocumentQueueStatusTypes.PIMS_ERROR.ToString();
+                    currentDocumentQueue.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}".Truncate(4000);
+                    _ = _pimsDocumentQueueRepository.UpdateQueuedDocument(currentDocumentQueue.Id, currentDocumentQueue);
+                });
                 return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.PIMS_ERROR, Message = $"Received error response from {httpMethodName} for queued document {qd?.Id} status {response?.Result?.Status} message: {response?.Result?.Message}" };
             }
             return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.PIMS_ERROR };
