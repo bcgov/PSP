@@ -4,7 +4,7 @@ import { TbRefresh } from 'react-icons/tb';
 import TooltipWrapper from '../TooltipWrapper';
 import { Button, ButtonProps } from './Button';
 
-interface IRegreshButtonProps extends ButtonProps {
+interface IRefreshButtonProps extends ButtonProps {
   /** set the text of the tooltip that appears on hover of the plus button */
   toolText: string;
   /** set the id of the tool tip use for on hover of the plus buttons */
@@ -21,7 +21,7 @@ interface IRegreshButtonProps extends ButtonProps {
  * Button displaying a refresh/recycle icon, used to reset form data.
  * @param param0
  */
-const RefreshButton: React.FC<React.PropsWithChildren<IRegreshButtonProps>> = ({
+const RefreshButton: React.FC<React.PropsWithChildren<IRefreshButtonProps>> = ({
   toolId,
   toolText,
   refreshButtonId,

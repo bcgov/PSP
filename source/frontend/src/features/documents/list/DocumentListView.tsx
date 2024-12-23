@@ -204,6 +204,8 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
               <RefreshButton
                 onClick={() => props.onRefresh && props.onRefresh()}
                 type="button"
+                toolText="Refresh"
+                toolId="btn-refresh-tooltip"
               ></RefreshButton>
             </ListHeaderActionsDiv>
           </Col>
