@@ -83,12 +83,16 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
 
   const organizationId = getIn(values, 'id');
   const persons = getIn(values, 'persons') as Partial<ApiGen_Concepts_Person>[];
+  const isOrganizationDisabled = getIn(values, 'isDisabled');
 
   const onCancel = () => {
     history.push(`/contact/O${organizationId}`);
   };
 
   const isContactMethodInvalid = useMemo(() => {
+    if (isOrganizationDisabled === true) {
+      return false;
+    }
     return (
       !!touched.phoneContactMethods &&
       !!touched.emailContactMethods &&
@@ -97,7 +101,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
         !!touched.billingAddress?.streetAddress1) &&
       getIn(errors, 'needsContactMethod')
     );
-  }, [touched, errors]);
+  }, [touched, errors, isOrganizationDisabled]);
 
   const checkState = useCallback(() => {
     return dirty && !isSubmitting;

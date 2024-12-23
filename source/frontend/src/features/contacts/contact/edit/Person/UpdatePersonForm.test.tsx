@@ -13,7 +13,7 @@ import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Concepts_PersonAddress } from '@/models/api/generated/ApiGen_Concepts_PersonAddress';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, fillInput, findByText, queryByText, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import UpdatePersonForm from './UpdatePersonForm';
 import { ApiGen_CodeTypes_AddressUsageTypes } from '@/models/api/generated/ApiGen_CodeTypes_AddressUsageTypes';
@@ -241,7 +241,7 @@ describe('UpdatePersonForm', () => {
 
       const expectedPerson = { ...mockPerson };
       expectedPerson!.personOrganizations![0].organization = null;
-      expect(updatePerson).toBeCalledWith(expectedPerson);
+      expect(updatePerson).toHaveBeenCalledWith(expectedPerson);
     });
 
     it('should save the form with updated values', async () => {
@@ -287,7 +287,7 @@ describe('UpdatePersonForm', () => {
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
 
-      expect(updatePerson).toBeCalledWith(newValues);
+      expect(updatePerson).toHaveBeenCalledWith(newValues);
     });
 
     it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
@@ -367,5 +367,6 @@ describe('UpdatePersonForm', () => {
 
       expect(updatePerson).toHaveBeenCalledWith(newValues);
     });
+
   });
 });
