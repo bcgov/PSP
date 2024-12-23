@@ -66,6 +66,62 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_Success_DefaultValues()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.AssignedDate = null;
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            var result = service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+            result.AssignedDate.Should().Be(DateTime.Today);
+            result.AcquisitionFileStatusTypeCode.Should().Be(AcquisitionStatusTypes.ACTIVE.ToString());
+        }
+
+        [Fact]
+        public void Add_Success_WithUserSuppliedAssignedDate()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            DateTime customDate = DateTime.Today.AddMonths(3);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.AssignedDate = customDate;
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            var result = service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+            result.AssignedDate.Should().Be(customDate);
+            result.AcquisitionFileStatusTypeCode.Should().Be(AcquisitionStatusTypes.ACTIVE.ToString());
+        }
+
+        [Fact]
         public void Add_CannotDetermineRegion_Error()
         {
             // Arrange

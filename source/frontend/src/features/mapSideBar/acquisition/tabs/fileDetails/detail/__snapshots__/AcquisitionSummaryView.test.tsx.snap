@@ -177,7 +177,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
             class="c5 text-left col"
             data-testid="assigned-date"
           >
-            Dec 17, 2024
+            Dec 18, 2024
           </div>
         </div>
         <div

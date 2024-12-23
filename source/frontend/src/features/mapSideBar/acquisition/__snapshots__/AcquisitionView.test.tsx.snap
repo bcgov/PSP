@@ -1168,7 +1168,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               class="c35 text-left col"
                               data-testid="assigned-date"
                             >
-                              Dec 17, 2024
+                              Dec 18, 2024
                             </div>
                           </div>
                           <div
