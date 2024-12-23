@@ -37,7 +37,6 @@ namespace Pims.Scheduler.Services
             _queryProcessingDocumentsJobOptions = queryProcessingDocumentsJobOptions;
         }
 
-        [DisableConcurrentExecution(timeoutInSeconds: 10 * 30)]
         public async Task<ScheduledTaskResponseModel> UploadQueuedDocuments()
         {
             var filter = new DocumentQueueFilter() { Quantity = _uploadQueuedDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50, DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PENDING.ToString() } };
@@ -58,7 +57,6 @@ namespace Pims.Scheduler.Services
             return new ScheduledTaskResponseModel() { Status = GetMergedStatus(results), DocumentQueueResponses = results };
         }
 
-        [DisableConcurrentExecution(timeoutInSeconds: 10 * 30)]
         public async Task<ScheduledTaskResponseModel> RetryQueuedDocuments()
         {
             var filter = new DocumentQueueFilter()
@@ -81,8 +79,7 @@ namespace Pims.Scheduler.Services
             var results = await Task.WhenAll(responses);
             return new ScheduledTaskResponseModel() { Status = GetMergedStatus(results), DocumentQueueResponses = results };
         }
-
-        [DisableConcurrentExecution(timeoutInSeconds: 10 * 30)]
+        
         public async Task<ScheduledTaskResponseModel> QueryProcessingDocuments()
         {
             var filter = new Dal.Entities.Models.DocumentQueueFilter()
@@ -173,7 +170,7 @@ namespace Pims.Scheduler.Services
                     var currentDocumentQueue = currentDocumentResponse.Result.Payload;
                     _logger.LogError("Received error response from {httpMethodName} for queued document {documentQueueId} status {Status} message: {Message}", httpMethodName, currentDocumentQueue?.Id, response?.Result?.Status, response?.Result?.Message);
                     currentDocumentQueue.DocumentQueueStatusType.Id = DocumentQueueStatusTypes.PIMS_ERROR.ToString();
-                    currentDocumentQueue.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}";
+                    currentDocumentQueue.MayanError = $"Document {httpMethodName} failed: {response?.Result?.Message}".Truncate(4000);
                     _ = _pimsDocumentQueueRepository.UpdateQueuedDocument(currentDocumentQueue.Id, currentDocumentQueue);
                 });
                 return new DocumentQueueResponseModel() { DocumentQueueStatus = DocumentQueueStatusTypes.PIMS_ERROR, Message = $"Received error response from {httpMethodName} for queued document {qd?.Id} status {response?.Result?.Status} message: {response?.Result?.Message}" };
