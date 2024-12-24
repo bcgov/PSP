@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -66,6 +67,48 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().BeEquivalentTo(documentQueues);
+            documentQueueRepositoryMock.Verify(m => m.GetAllByFilter(filter), Times.Once);
+        }
+
+        [Fact]
+        public void SearchDocumentQueue_Success_MaxFileSize()
+        {
+            // Arrange
+            var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
+            var filter = new DocumentQueueFilter();
+            filter.MaxFileSize = 4;
+            var documentQueues = new List<PimsDocumentQueue> { new PimsDocumentQueue() { Document = new byte[] {1, 2, 3 , 4 } }, new PimsDocumentQueue() { Document = new byte[] { 5, 6, 7, 8 } } };
+            var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
+
+            documentQueueRepositoryMock.Setup(m => m.GetAllByFilter(filter)).Returns(documentQueues);
+
+            // Act
+            var result = service.SearchDocumentQueue(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().Should().BeEquivalentTo(documentQueues.FirstOrDefault());
+            documentQueueRepositoryMock.Verify(m => m.GetAllByFilter(filter), Times.Once);
+        }
+
+        [Fact]
+        public void SearchDocumentQueue_Success_MaxFileSize_MinOne()
+        {
+            // Arrange
+            var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
+            var filter = new DocumentQueueFilter();
+            filter.MaxFileSize = 0;
+            var documentQueues = new List<PimsDocumentQueue> { new PimsDocumentQueue() { Document = new byte[] { 1, 2, 3, 4 } }, new PimsDocumentQueue() { Document = new byte[] { 5, 6, 7, 8 } } };
+            var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
+
+            documentQueueRepositoryMock.Setup(m => m.GetAllByFilter(filter)).Returns(documentQueues);
+
+            // Act
+            var result = service.SearchDocumentQueue(filter);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().Should().BeEquivalentTo(documentQueues.FirstOrDefault());
             documentQueueRepositoryMock.Verify(m => m.GetAllByFilter(filter), Times.Once);
         }
 

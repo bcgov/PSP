@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Hangfire;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Api.Models.CodeTypes;
@@ -39,7 +38,7 @@ namespace Pims.Scheduler.Services
 
         public async Task<ScheduledTaskResponseModel> UploadQueuedDocuments()
         {
-            var filter = new DocumentQueueFilter() { Quantity = _uploadQueuedDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50, DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PENDING.ToString() } };
+            var filter = new DocumentQueueFilter() { Quantity = _uploadQueuedDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50, DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PENDING.ToString() }, MaxFileSize = _uploadQueuedDocumentsJobOptions?.CurrentValue?.MaxFileSize };
             var searchResponse = await SearchQueuedDocuments(filter);
             if (searchResponse?.ScheduledTaskResponseModel != null)
             {
@@ -79,7 +78,7 @@ namespace Pims.Scheduler.Services
             var results = await Task.WhenAll(responses);
             return new ScheduledTaskResponseModel() { Status = GetMergedStatus(results), DocumentQueueResponses = results };
         }
-        
+
         public async Task<ScheduledTaskResponseModel> QueryProcessingDocuments()
         {
             var filter = new Dal.Entities.Models.DocumentQueueFilter()

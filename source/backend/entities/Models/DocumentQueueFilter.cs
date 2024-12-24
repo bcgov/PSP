@@ -31,6 +31,11 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public int? MaxDocProcessRetries { get; set; }
 
+        /// <summary>
+        /// get/set - The maximum file size to return from the filter.
+        /// </summary>
+        public int? MaxFileSize { get; set; }
+
         #endregion
 
         #region Constructors

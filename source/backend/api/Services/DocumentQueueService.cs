@@ -86,7 +86,26 @@ namespace Pims.Api.Services
             this.Logger.LogInformation("Retrieving queued PIMS documents using filter {filter}", filter);
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.SystemAdmin, this._keycloakOptions);
 
-            return _documentQueueRepository.GetAllByFilter(filter);
+            var queuedDocuments = _documentQueueRepository.GetAllByFilter(filter);
+
+            if (filter.MaxFileSize != null) {
+                List<PimsDocumentQueue> documentsBelowMaxFileSize = new List<PimsDocumentQueue>();
+                int currentFileSize = 0;
+                queuedDocuments.ForEach(currentDocument =>
+                {
+                    if (currentDocument.Document.Length + currentFileSize <= filter.MaxFileSize)
+                    {
+                        currentFileSize += currentDocument.Document.Length;
+                        documentsBelowMaxFileSize.Add(currentDocument);
+                    }
+                });
+                if(documentsBelowMaxFileSize.Count == 0 && queuedDocuments.Any())
+                {
+                    documentsBelowMaxFileSize.Add(queuedDocuments.FirstOrDefault());
+                }
+                return documentsBelowMaxFileSize;
+            }
+            return queuedDocuments;
         }
 
         /// <summary>

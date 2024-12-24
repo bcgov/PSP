@@ -13,9 +13,9 @@ namespace Pims.Scheduler.Http.Configuration
         public int? BatchSize { get; set; }
 
         /// <summary>
-        /// get/set - the file size, in mb, that will be processed in a single job run.
+        /// get/set - the file size, in bytes, that will be processed in a single job run.
         /// </summary>
-        public int? FileSize { get; set; }
+        public int? MaxFileSize { get; set; }
         #endregion
     }
 }
