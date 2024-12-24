@@ -226,6 +226,21 @@ namespace Pims.Api.Services
 
             if (response?.DocumentExternalResponse?.Payload?.Id != null && response?.DocumentExternalResponse?.Payload?.Id > 0 && databaseDocument != null)
             {
+                // Create metadata of document
+                if (uploadRequest.DocumentMetadata != null)
+                {
+                    List<DocumentMetadataUpdateModel> creates = new List<DocumentMetadataUpdateModel>();
+                    foreach (var metadata in uploadRequest.DocumentMetadata)
+                    {
+                        if (!string.IsNullOrEmpty(metadata.Value))
+                        {
+                            creates.Add(metadata);
+                        }
+                    }
+
+                    response.MetadataExternalResponse = await CreateMetadata(response.DocumentExternalResponse.Payload.Id, creates);
+                }
+
                 databaseDocument.MayanId = response.DocumentExternalResponse.Payload.Id;
                 documentRepository.Update(databaseDocument);
                 documentRepository.CommitTransaction();
