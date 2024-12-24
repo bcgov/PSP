@@ -14,6 +14,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
 
 .c2 {
   text-align: right;
+  overflow: hidden;
 }
 
 .c1 {

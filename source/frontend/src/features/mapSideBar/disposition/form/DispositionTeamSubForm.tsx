@@ -53,7 +53,7 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
                 </Col>
                 <Col xs="auto" xl="2" className="pl-0 mt-2">
                   <RemoveButton
-                    dataTestId={`team.${index}.remove-button`}
+                    data-testId={`team.${index}.remove-button`}
                     onRemove={() => {
                       setModalContent({
                         ...getDeleteModalProps(),

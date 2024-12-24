@@ -19,6 +19,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
 
 .c1 {
   text-align: right;
+  overflow: hidden;
 }
 
 .c3 {

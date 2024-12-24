@@ -268,32 +268,28 @@ exports[`PropertyContactListView component > renders as expected when provided v
 }
 
 .c9.c9.btn.btn-primary svg {
-  color: #9F9D9C;
+  color: #aaaaaa !important;
 }
 
 .c9.c9.btn.btn-primary .text {
   display: none;
 }
 
-.c9.c9.btn.btn-primary:hover,
-.c9.c9.btn.btn-primary:active,
-.c9.c9.btn.btn-primary:focus {
-  color: #d8292f;
+.c9.c9.btn.btn-primary svg:hover,
+.c9.c9.btn.btn-primary svg:active,
+.c9.c9.btn.btn-primary svg:focus {
+  color: #d8292f !important;
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
 }
 
-.c9.c9.btn.btn-primary:hover .text,
-.c9.c9.btn.btn-primary:active .text,
-.c9.c9.btn.btn-primary:focus .text {
+.c9.c9.btn.btn-primary svg:hover .text,
+.c9.c9.btn.btn-primary svg:active .text,
+.c9.c9.btn.btn-primary svg:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -597,7 +593,6 @@ exports[`PropertyContactListView component > renders as expected when provided v
                   <button
                     class="c3 Button c8 c9 btn btn-primary"
                     data-testid="contact-delete-0"
-                    id="contact-delete-0"
                     title="Delete contact"
                     type="button"
                   >
@@ -606,11 +601,11 @@ exports[`PropertyContactListView component > renders as expected when provided v
                     >
                       <svg
                         fill="currentColor"
-                        height="2rem"
+                        height="22"
                         stroke="currentColor"
                         stroke-width="0"
                         viewBox="0 0 448 512"
-                        width="2rem"
+                        width="22"
                         xmlns="http://www.w3.org/2000/svg"
                       >
                         <path

@@ -29,13 +29,13 @@ const PropertyAssociationTabView: React.FunctionComponent<
 > = props => {
   return (
     <StyledSummarySection>
-      <Section>This property is associated with the following files.</Section>
+      <Section>This property is associated with the following files:</Section>
 
       <Section
         header={
           <AssociationHeader
             icon={<MdTopic title="User Profile" size="2.5rem" />}
-            title="Research Files"
+            title="Research"
             count={props.associations?.researchAssociations?.length}
           />
         }
@@ -51,7 +51,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
         header={
           <AssociationHeader
             icon={<MdOutlineRealEstateAgent title="Acquisition-Files" size="2.5rem" />}
-            title="Acquisition Files"
+            title="Acquisition"
             count={props.associations?.acquisitionAssociations?.length}
           />
         }
@@ -86,7 +86,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
         header={
           <AssociationHeader
             icon={<MdOutlineCallMissedOutgoing title="Disposition-Files" size="2.5rem" />}
-            title="Disposition Files"
+            title="Disposition"
             count={props.associations?.dispositionAssociations?.length}
           />
         }

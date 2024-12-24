@@ -7,6 +7,10 @@ exports[`AssociationHeader component > renders as expected when provided valid d
   />
   <div />
   .c0 {
+  color: #474543;
+}
+
+.c1 {
   color: white;
   background-color: #428bca;
   font-size: 1.5rem;
@@ -29,25 +33,29 @@ exports[`AssociationHeader component > renders as expected when provided valid d
 }
 
 <div
-    class="no-gutters row"
+    class="c0"
   >
     <div
-      class="col-auto"
-    >
-      An Icon
-    </div>
-    <div
-      class="px-2 my-1 col-auto"
-    >
-      Test title
-    </div>
-    <div
-      class="my-1 col-auto"
+      class="no-gutters row"
     >
       <div
-        class="c0"
+        class="col-auto"
       >
-        3
+        An Icon
+      </div>
+      <div
+        class="px-2 my-1 col-auto"
+      >
+        Test title
+      </div>
+      <div
+        class="my-1 col-auto"
+      >
+        <div
+          class="c1"
+        >
+          3
+        </div>
       </div>
     </div>
   </div>

@@ -1,9 +1,8 @@
-import { FaEye, FaTrash } from 'react-icons/fa';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { LinkButton, StyledRemoveIconButton } from '@/components/common/buttons';
-import { Button } from '@/components/common/buttons/Button';
+import { LinkButton, RemoveIconButton } from '@/components/common/buttons';
+import ViewButton from '@/components/common/buttons/ViewButton';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
@@ -98,28 +97,21 @@ export function createCompensationTableColumns(
         return (
           <StyledDiv className="no-gutters">
             {hasClaim(Claims.COMPENSATION_REQUISITION_VIEW) && (
-              <Button
-                icon={
-                  <FaEye
-                    size={24}
-                    id={`compensation-view-${cellProps.row.id}`}
-                    data-testid={`compensation-view-${cellProps.row.id}`}
-                    title="Compensation view details"
-                  />
-                }
+              <ViewButton
+                data-testId={`compensation-view-${cellProps.row.id}`}
+                title="Compensation view details"
+                id={`compensation-view-${cellProps.row.id}`}
                 onClick={() => cellProps.row.original.id && onShow(cellProps.row.original.id)}
-              ></Button>
+              />
             )}
             {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
               canEditDetails(cellProps.row.original.isDraft) && (
-                <StyledRemoveIconButton
+                <RemoveIconButton
                   id={`compensation-delete-${cellProps.row.id}`}
-                  data-testid={`compensation-delete-${cellProps.row.id}`}
-                  onClick={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
+                  data-testId={`compensation-delete-${cellProps.row.id}`}
+                  onRemove={() => cellProps.row.original.id && onDelete(cellProps.row.original.id)}
                   title="Delete Compensation"
-                >
-                  <FaTrash size="2rem" />
-                </StyledRemoveIconButton>
+                />
               )}
             {hasClaim(Claims.COMPENSATION_REQUISITION_DELETE) &&
               !canEditDetails(cellProps.row.original.isDraft) && (
@@ -140,16 +132,6 @@ export function createCompensationTableColumns(
 const StyledDiv = styled(InlineFlexDiv)`
   justify-content: space-around;
   width: 100%;
-
-  [id^='compensation-view'] {
-    color: ${props => props.theme.css.activeActionColor};
-  }
-  [id^='compensation-delete'] {
-    color: ${props => props.theme.css.activeActionColor};
-    :hover {
-      color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryDangerButtonDefault};
-    }
-  }
 
   .btn.btn-primary {
     background-color: transparent;

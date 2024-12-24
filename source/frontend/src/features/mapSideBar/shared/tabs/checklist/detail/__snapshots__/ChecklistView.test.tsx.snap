@@ -19,6 +19,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
 
 .c1 {
   text-align: right;
+  overflow: hidden;
 }
 
 .c4 {
