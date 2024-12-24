@@ -99,6 +99,13 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.RegionCodeNavigation)
                 .Include(r => r.AcquisitionFundingTypeCodeNavigation)
                 .Include(r => r.SubfileInterestTypeCodeNavigation)
+                .Include(s => s.PimsAcqFileAcqProgresses)
+                    .ThenInclude(p => p.AcqFileProgessTypeCodeNavigation)
+                .Include(s => s.AcqFileAppraisalTypeCodeNavigation)
+                .Include(s => s.AcqFileLglSrvyTypeCodeNavigation)
+                .Include(s => s.PimsAcqFileAcqFlTakeTyps)
+                    .ThenInclude(t => t.AcqFileTakeTypeCodeNavigation)
+                .Include(s => s.AcqFileExpropRiskTypeCodeNavigation)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.WorkActivityCode)
                 .Include(r => r.Project)
@@ -730,6 +737,8 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFileTeam, long>(p => p.PimsAcquisitionFileTeams, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFileTeams.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFile.Internal_Id, acquisitionFile.PimsInterestHolders.ToArray());
             Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqProgress, long>(p => p.PimsAcqFileAcqProgresses, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqProgresses.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqFlTakeTyp, long>(p => p.PimsAcqFileAcqFlTakeTyps, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqFlTakeTyps.ToArray());
 
             return acquisitionFile;
         }

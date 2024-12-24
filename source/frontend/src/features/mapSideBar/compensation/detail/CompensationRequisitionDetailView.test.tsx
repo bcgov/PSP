@@ -232,7 +232,6 @@ describe('Compensation Detail View Component', () => {
         compensation: {
           ...mockCompensation,
           isDraft: true,
-          advancedPaymentServedDate: '2023-09-18T00:00:00',
         },
       },
     });

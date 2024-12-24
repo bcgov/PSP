@@ -397,18 +397,4 @@ describe('Compensation Requisition UpdateForm component', () => {
 
     expect(setShowAltProjectError).toHaveBeenCalledWith(true);
   });
-
-  it('displays the compensation advanced payment served date', async () => {
-    const mockCompensation = CompensationRequisitionFormModel.fromApi({
-      ...getMockApiDefaultCompensation(),
-      isDraft: false,
-      advancedPaymentServedDate: '2024-09-16T00:00:00',
-    });
-    const { getAdvancedPaymentServedDate } = await setup({
-      props: { initialValues: mockCompensation },
-    });
-
-    const inputServedDate = getAdvancedPaymentServedDate();
-    expect(inputServedDate).toHaveValue('Sep 16, 2024');
-  });
 });

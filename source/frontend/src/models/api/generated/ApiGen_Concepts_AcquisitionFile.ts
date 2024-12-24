@@ -7,7 +7,9 @@ import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 import { ApiGen_Concepts_AcquisitionFileOwner } from './ApiGen_Concepts_AcquisitionFileOwner';
+import { ApiGen_Concepts_AcquisitionFileProgressStatuses } from './ApiGen_Concepts_AcquisitionFileProgressStatuses';
 import { ApiGen_Concepts_AcquisitionFileProperty } from './ApiGen_Concepts_AcquisitionFileProperty';
+import { ApiGen_Concepts_AcquisitionFileTakingStatuses } from './ApiGen_Concepts_AcquisitionFileTakingStatuses';
 import { ApiGen_Concepts_AcquisitionFileTeam } from './ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationRequisition } from './ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileWithChecklist } from './ApiGen_Concepts_FileWithChecklist';
@@ -25,6 +27,11 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   deliveryDate: UtcIsoDate | null;
   estimatedCompletionDate: UtcIsoDate | null;
   possessionDate: UtcIsoDate | null;
+  acquisitionFileProgressStatuses: ApiGen_Concepts_AcquisitionFileProgressStatuses[] | null;
+  acquisitionFileAppraisalStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  acquisitionFileLegalSurveyStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  acquisitionFileTakingStatuses: ApiGen_Concepts_AcquisitionFileTakingStatuses[] | null;
+  acquisitionFileExpropiationRiskStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   acquisitionPhysFileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   acquisitionTypeCode: ApiGen_Base_CodeType<string> | null;
   productId: number | null;
