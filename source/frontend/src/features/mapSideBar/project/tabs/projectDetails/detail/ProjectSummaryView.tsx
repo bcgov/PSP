@@ -50,7 +50,7 @@ const ProjectSummaryView: React.FunctionComponent<
       <Section header="Project Management Team">
         {project?.projectPersons?.map((teamMember, index) => (
           <React.Fragment key={`project-team-${index}`}>
-            <SectionField label="Management Team Member">
+            <SectionField label="Management team member">
               <StyledLink
                 target="_blank"
                 rel="noopener noreferrer"
