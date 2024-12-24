@@ -82,6 +82,15 @@ namespace Pims.Dal.Repositories
             return true;
         }
 
+        public long GetFileLengthById(long documentQueueId)
+        {
+            return Context.PimsDocumentQueues
+                .AsNoTracking()
+                .Where(dq => dq.DocumentQueueId == documentQueueId)
+                .Select(dq => dq.Document.Length)
+                .FirstOrDefault();
+        }
+
         /// <summary>
         /// Return a list of documents, filtered by the specified arguments.
         /// </summary>

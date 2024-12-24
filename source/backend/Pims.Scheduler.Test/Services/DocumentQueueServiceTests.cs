@@ -33,7 +33,7 @@ namespace Pims.Scheduler.Test.Services
             _documentQueueRepositoryMock = new Mock<IPimsDocumentQueueRepository>();
             _uploadOptionsMock = new Mock<IOptionsMonitor<UploadQueuedDocumentsJobOptions>>();
             _queryOptionsMock = new Mock<IOptionsMonitor<QueryProcessingDocumentsJobOptions>>();
-            _uploadOptionsMock.Setup(x => x.CurrentValue).Returns(new UploadQueuedDocumentsJobOptions() { BatchSize = 10, FileSize = 100 });
+            _uploadOptionsMock.Setup(x => x.CurrentValue).Returns(new UploadQueuedDocumentsJobOptions() { BatchSize = 10, MaxFileSize = 100 });
             _queryOptionsMock.Setup(x => x.CurrentValue).Returns(new QueryProcessingDocumentsJobOptions() { BatchSize = 10, MaxProcessingMinutes = 100 });
 
             _service = new DocumentQueueService(

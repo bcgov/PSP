@@ -90,12 +90,13 @@ namespace Pims.Api.Services
 
             if (filter.MaxFileSize != null) {
                 List<PimsDocumentQueue> documentsBelowMaxFileSize = new List<PimsDocumentQueue>();
-                int currentFileSize = 0;
+                long totalFileSize = 0;
                 queuedDocuments.ForEach(currentDocument =>
                 {
-                    if (currentDocument.Document.Length + currentFileSize <= filter.MaxFileSize)
+                    long currentFileSize = _documentQueueRepository.GetFileLengthById(currentDocument.DocumentQueueId);
+                    if (currentFileSize + totalFileSize <= filter.MaxFileSize)
                     {
-                        currentFileSize += currentDocument.Document.Length;
+                        totalFileSize += currentFileSize;
                         documentsBelowMaxFileSize.Add(currentDocument);
                     }
                 });
