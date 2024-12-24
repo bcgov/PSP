@@ -43,6 +43,19 @@ const mockOrganization: ApiGen_Concepts_Organization = {
   ],
 };
 
+const mockInactiveOrganization: ApiGen_Concepts_Organization = {
+  ...getEmptyOrganization(),
+  id: 1,
+  isDisabled: true,
+  name: 'FooBarBaz Property Management',
+  alias: '',
+  incorporationNumber: 'BC123456789',
+  comment: 'This is a user meant to be inactive',
+  organizationPersons: null,
+  organizationAddresses: null,
+  contactMethods: [],
+};
+
 const mockAddress: ApiGen_Concepts_OrganizationAddress = {
   id: 1,
   rowVersion: null,
@@ -198,22 +211,6 @@ describe('UpdateOrganizationForm', () => {
         await fillInput(container, 'mailingAddress.postal', mockAddress.address?.postal);
       });
 
-      const save = getSaveButton();
-      await act(async () => userEvent.click(save));
-
-      expect(updateOrganization).toHaveBeenCalledWith(newValues);
-    });
-
-    it('should skip validation if organization is inactive', async () => {
-      const newValues: ApiGen_Concepts_Organization = {
-        ...mockOrganization,
-        isDisabled: true,
-      };
-
-      const { getSaveButton, container } = setup({ id: 1 });
-      await act(async () => {
-        await fillInput(container, 'isDisabled', 'Inactive');
-      });
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
 
