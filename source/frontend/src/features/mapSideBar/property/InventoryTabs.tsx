@@ -36,6 +36,8 @@ export const InventoryTabs: React.FunctionComponent<
   const history = useHistory();
   const match = useRouteMatch<{
     propertyId: string;
+    pid: string;
+    pin: string;
     menuIndex: string;
     id: string;
     researchId: string;
@@ -63,6 +65,8 @@ export const InventoryTabs: React.FunctionComponent<
         } else {
           const path = generatePath(match.path, {
             propertyId: match.params.propertyId,
+            pid: match.params.pid,
+            pin: match.params.pin,
             tab,
           });
           history.push(path);
