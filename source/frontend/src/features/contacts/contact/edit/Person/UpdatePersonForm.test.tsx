@@ -16,8 +16,6 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fillInput,
-  findByText,
-  queryByText,
   render,
   RenderOptions,
   userEvent,
