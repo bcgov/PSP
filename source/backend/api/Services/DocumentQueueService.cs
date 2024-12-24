@@ -83,12 +83,13 @@ namespace Pims.Api.Services
         /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authorized to perform this operation.</exception>
         public IEnumerable<PimsDocumentQueue> SearchDocumentQueue(DocumentQueueFilter filter)
         {
-            this.Logger.LogInformation("Retrieving queued PIMS documents using filter {filter}", filter);
+            this.Logger.LogInformation("Retrieving queued PIMS documents using filter {filter}", filter.Serialize());
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.SystemAdmin, this._keycloakOptions);
 
             var queuedDocuments = _documentQueueRepository.GetAllByFilter(filter);
 
-            if (filter.MaxFileSize != null) {
+            if (filter.MaxFileSize != null)
+            {
                 List<PimsDocumentQueue> documentsBelowMaxFileSize = new List<PimsDocumentQueue>();
                 long totalFileSize = 0;
                 queuedDocuments.ForEach(currentDocument =>
@@ -104,6 +105,7 @@ namespace Pims.Api.Services
                 {
                     documentsBelowMaxFileSize.Add(queuedDocuments.FirstOrDefault());
                 }
+                this.Logger.LogDebug("returning {length} documents below file size", documentsBelowMaxFileSize.Count);
                 return documentsBelowMaxFileSize;
             }
             return queuedDocuments;
