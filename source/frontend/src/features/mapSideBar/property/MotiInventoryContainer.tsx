@@ -8,6 +8,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { pinParser } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
@@ -46,10 +47,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
       props?.pid === undefined || props?.pid === '' || isNaN(Number(props.pid))
         ? undefined
         : Number(props.pid),
-    pin:
-      props?.pin === undefined || props?.pin === '' || isNaN(Number(props.pin))
-        ? undefined
-        : Number(props.pin),
+    pin: pinParser(props?.pin),
     latLng: selectedFeatureData?.location ?? undefined,
     propertyTypes: [
       PROPERTY_TYPES.ASSOCIATIONS,
