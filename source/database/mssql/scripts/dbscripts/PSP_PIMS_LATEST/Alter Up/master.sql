@@ -35,6 +35,9 @@ PRINT '     == DB TRANSACTION START ========'
    PRINT '- Executing PSP_PIMS_S96_00/Alter Up/163_DML_PIMS_ACQ_FILE_EXPROP_RISK_TYPE.sql '
    :setvar filepath "PSP_PIMS_S96_00/Alter Up/163_DML_PIMS_ACQ_FILE_EXPROP_RISK_TYPE.sql"
    :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S96_00/Alter Up/164_DML_PIMS_ROLE_NAME.sql '
+   :setvar filepath "PSP_PIMS_S96_00/Alter Up/164_DML_PIMS_ROLE_NAME.sql"
+   :r $(filepath)
 
    --End script section
 
