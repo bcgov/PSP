@@ -2,7 +2,7 @@ import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 
-import { isValidString } from './utils';
+import { isNumber, isValidString } from './utils';
 
 /**
  * The pidFormatter is used to format the specified PID value
@@ -37,6 +37,20 @@ export const pidParser = (pid?: string | number | null): number | undefined => {
     } else {
       return parseInt(pid);
     }
+  }
+  return undefined;
+};
+
+/**
+ * The pinParser is used to return a numeric pin value from a formatted pin.
+ * @param {string} pin This is the target PIN to be parsed
+ */
+export const pinParser = (pin?: string | number | null): number | undefined => {
+  if (isNumber(pin)) {
+    return pin;
+  }
+  if (isValidString(pin)) {
+    return parseInt(pin);
   }
   return undefined;
 };

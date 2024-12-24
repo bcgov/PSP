@@ -21,6 +21,7 @@ export const useMapProperties = () => {
         PID_PADDED: params?.PID?.replace(/[-\s]/g, ''),
         PIN: params?.PIN,
         HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
+        PROPERTY_ID: params?.PROPERTY_ID,
       };
       const url = `${propertiesUrl}${
         geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''

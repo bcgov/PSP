@@ -8,6 +8,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { pinParser } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
@@ -17,6 +18,7 @@ import PropertyRouter from './PropertyRouter';
 export interface IMotiInventoryContainerProps {
   id?: number;
   pid?: string;
+  pin?: string;
   onClose: () => void;
 }
 
@@ -42,7 +44,10 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const composedPropertyState = useComposedProperties({
     id: props.id,
     pid:
-      props?.pid === undefined || props?.pid === '' || isNaN(+props.pid) ? undefined : +props.pid,
+      props?.pid === undefined || props?.pid === '' || isNaN(Number(props.pid))
+        ? undefined
+        : Number(props.pid),
+    pin: pinParser(props?.pin),
     latLng: selectedFeatureData?.location ?? undefined,
     propertyTypes: [
       PROPERTY_TYPES.ASSOCIATIONS,
@@ -57,7 +62,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
 
   useEffect(() => {
     push({ search: '' });
-  }, [props.pid, push]);
+  }, [props.pid, props.pin, push]);
 
   const onSuccess = () => {
     props.id && composedPropertyState.apiWrapper?.execute(props.id);
