@@ -80,7 +80,10 @@ const renderFileName = (onViewDetails: (values: ApiGen_Concepts_DocumentRelation
   return function (cell: CellProps<DocumentRow, string | undefined>) {
     const { hasClaim } = useKeycloakWrapper();
     const documentProcessed =
-      cell.row.original.mayanDocumentId && cell.row.original.mayanDocumentId > 0;
+      (cell.row.original.mayanDocumentId &&
+        cell.row.original.queueStatusTypeCode?.id ===
+          ApiGen_CodeTypes_DocumentQueueStatusTypes.SUCCESS) ||
+      (cell.row.original.mayanDocumentId && cell.row.original.queueStatusTypeCode === null);
 
     return (
       <StyledCellOverflow>
@@ -134,19 +137,21 @@ const renderActions = (
     const { hasClaim } = useKeycloakWrapper();
 
     const documentInError =
-      original.mayanDocumentId === null &&
-      (original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PIMS_ERROR ||
-        original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.MAYAN_ERROR);
+      original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PIMS_ERROR ||
+      original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.MAYAN_ERROR;
 
     const documentProcessing =
-      original.mayanDocumentId === null &&
-      (original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PENDING ||
+      (original.mayanDocumentId === null &&
+        original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PENDING) ||
+      (original.mayanDocumentId &&
         original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PROCESSING);
 
     const canViewDocument =
       (original.mayanDocumentId && original.queueStatusTypeCode === null) ||
       (original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.SUCCESS &&
         original.mayanDocumentId);
+
+    const canDeleteDocument = documentInError || !documentProcessing;
 
     if (documentProcessing) {
       return (
@@ -191,7 +196,7 @@ const renderActions = (
           ></Button>
         )}
 
-        {hasClaim(Claims.DOCUMENT_DELETE) && (
+        {hasClaim(Claims.DOCUMENT_DELETE) && canDeleteDocument && (
           <StyledRemoveLinkButton
             data-testid="document-delete-button"
             icon={<FaTrash size={21} id={`document-delete-${index}`} title="document delete" />}

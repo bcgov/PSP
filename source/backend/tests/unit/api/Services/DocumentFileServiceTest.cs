@@ -297,38 +297,54 @@ namespace Pims.Api.Test.Services
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
         }
 
-        //[Fact]
-        //public async void UploadDocument_Project_Success()
-        //{
-        //    // Arrange
-        //    var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ProjectEdit);
-        //    var documentService = this._helper.GetService<Mock<IDocumentService>>();
-        //    var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
+        [Fact]
+        public async void UploadDocument_Project_Success()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ProjectEdit);
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var documentQueueRepository = this._helper.GetService<Mock<IDocumentQueueRepository>>();
+            var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
 
-        //    documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
-        //        .ReturnsAsync(new DocumentUploadResponse()
-        //        {
-        //            Document = new DocumentModel()
-        //            {
-        //                Id = 1,
-        //            },
-        //        });
+            documentQueueRepository.Setup(x => x.BeginTransaction()).Returns(new Mock<IDbContextTransaction>().Object);
+            documentRepository.Setup(x => x.Add(It.IsAny<PimsDocument>())).Returns(new PimsDocument()
+            {
+                DocumentId = 100,
+                DocumentTypeId = 4,
+                MayanId = null,
+                FileName = "NewFile.docx",
+            });
 
-        //    // Act
-        //    DocumentUploadRequest uploadRequest = new()
-        //    {
-        //        DocumentTypeMayanId = 3,
-        //        DocumentTypeId = 4,
-        //        File = this._helper.GetFormFile("Lorem Ipsum"),
-        //        DocumentStatusCode = "DocumentStatus",
-        //    };
+            projectRepository.Setup(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>())).Returns(new PimsProjectDocument()
+            {
+                ProjectDocumentId = 101,
+                ProjectId = 1,
+                DocumentId = 100,
+            });
 
-        //    await service.UploadProjectDocument(1, uploadRequest);
+            documentQueueRepository.Setup(x => x.Add(It.IsAny<PimsDocumentQueue>())).Returns(new PimsDocumentQueue()
+            {
+                DocumentId = 100,
+                Document = new byte[1] { 1 },
+                DocumentMetadata = null,
+            });
 
-        //    // Assert
-        //    documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-        //    projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()), Times.Once);
-        //}
+            // Act
+            DocumentUploadRequest uploadRequest = new()
+            {
+                DocumentTypeMayanId = 3,
+                DocumentTypeId = 4,
+                File = this._helper.GetFormFile("Lorem Ipsum"),
+                DocumentStatusCode = "DocumentStatus",
+            };
+
+            await service.UploadProjectDocument(1, uploadRequest);
+
+            // Assert
+            documentRepository.Verify(x => x.Add(It.IsAny<PimsDocument>()), Times.Once);
+            projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()), Times.Once);
+            documentQueueRepository.Verify(x => x.Add(It.IsAny<PimsDocumentQueue>()), Times.Once);
+        }
 
         [Fact]
         public async void UploadDocument_Project_Fail_EmptyFile()
@@ -357,41 +373,6 @@ namespace Pims.Api.Test.Services
             documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
             projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()), Times.Never);
         }
-
-        //[Fact]
-        //public async void UploadDocumentAsync_Project_Fail_GenericError()
-        //{
-        //    // Arrange
-        //    var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ProjectEdit);
-        //    var documentService = this._helper.GetService<Mock<IDocumentService>>();
-        //    var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
-
-        //    documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()))
-        //        .ReturnsAsync(new DocumentUploadResponse()
-        //        {
-        //            Document = null,
-        //            DocumentExternalResponse = new() { Message = "Mayan test error", Status = ExternalResponseStatus.Error }
-        //        });
-
-        //    // Act
-        //    DocumentUploadRequest uploadRequest = new()
-        //    {
-        //        DocumentTypeMayanId = 3,
-        //        DocumentTypeId = 4,
-        //        File = this._helper.GetFormFile("Lorem Ipsum"),
-        //        DocumentStatusCode = "DocumentStatus",
-        //    };
-
-        //    Func<Task> act = async () => await service.UploadProjectDocumentAsync(1, uploadRequest);
-
-        //    // Assert
-        //    var ex = await act.Should().ThrowAsync<BadRequestException>();
-        //    ex.Which.Message.Should().Be("Unexpected exception uploading file");
-        //    ex.Which.InnerException.Message.Should().Be("Mayan test error");
-
-        //    documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Once);
-        //    projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()), Times.Never);
-        //}
 
         [Fact]
         public async void UploadDocument_Acquisition_Success()

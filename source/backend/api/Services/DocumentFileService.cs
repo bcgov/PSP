@@ -97,8 +97,6 @@ namespace Pims.Api.Services
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
             uploadRequest.ThrowInvalidFileSize();
 
-            using var transaction = _documentQueueRepository.BeginTransaction();
-
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
@@ -108,12 +106,9 @@ namespace Pims.Api.Services
                 DocumentId = pimsDocument.DocumentId,
             };
             _acquisitionFileDocumentRepository.AddAcquisition(newAcquisitionDocument);
-            _documentQueueRepository.SaveChanges();
 
             await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
-            _documentQueueRepository.SaveChanges();
-
-            transaction.Commit();
+            _acquisitionFileDocumentRepository.CommitTransaction();
 
             return;
         }
@@ -124,8 +119,6 @@ namespace Pims.Api.Services
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
             uploadRequest.ThrowInvalidFileSize();
 
-            using var transaction = _documentQueueRepository.BeginTransaction();
-
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
@@ -135,13 +128,9 @@ namespace Pims.Api.Services
                 DocumentId = pimsDocument.DocumentId,
             };
             _researchFileDocumentRepository.AddResearch(newFileDocument);
-            _documentQueueRepository.SaveChanges();
 
-            // Step 3 - Queue the Document for processing
             await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
-            _documentQueueRepository.SaveChanges();
-
-            transaction.Commit();
+            _documentQueueRepository.CommitTransaction();
 
             return;
         }
@@ -152,8 +141,6 @@ namespace Pims.Api.Services
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ProjectEdit);
             uploadRequest.ThrowInvalidFileSize();
 
-            using var transaction = _documentQueueRepository.BeginTransaction();
-
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
@@ -163,12 +150,9 @@ namespace Pims.Api.Services
                 DocumentId = pimsDocument.DocumentId,
             };
             _projectRepository.AddProjectDocument(newFileDocument);
-            _documentQueueRepository.SaveChanges();
 
             await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
-            _documentQueueRepository.SaveChanges();
-
-            transaction.Commit();
+            _documentQueueRepository.CommitTransaction();
 
             return;
         }
@@ -179,8 +163,6 @@ namespace Pims.Api.Services
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.LeaseEdit);
             uploadRequest.ThrowInvalidFileSize();
 
-            using var transaction = _documentQueueRepository.BeginTransaction();
-
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
@@ -190,12 +172,9 @@ namespace Pims.Api.Services
                 DocumentId = pimsDocument.DocumentId,
             };
             _leaseRepository.AddLeaseDocument(newFileDocument);
-            _documentQueueRepository.SaveChanges();
 
             await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
-            _documentQueueRepository.SaveChanges();
-
-            transaction.Commit();
+            _documentQueueRepository.CommitTransaction();
 
             return;
         }
@@ -206,8 +185,6 @@ namespace Pims.Api.Services
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
             uploadRequest.ThrowInvalidFileSize();
 
-            using var transaction = _documentQueueRepository.BeginTransaction();
-
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
@@ -217,12 +194,9 @@ namespace Pims.Api.Services
                 DocumentId = pimsDocument.DocumentId,
             };
             _propertyActivityDocumentRepository.AddPropertyActivityDocument(newFileDocument);
-            _documentQueueRepository.SaveChanges();
 
             await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
-            _documentQueueRepository.SaveChanges();
-
-            transaction.Commit();
+            _documentQueueRepository.CommitTransaction();
 
             return;
         }
@@ -233,8 +207,6 @@ namespace Pims.Api.Services
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.DispositionEdit);
             uploadRequest.ThrowInvalidFileSize();
 
-            using var transaction = _documentQueueRepository.BeginTransaction();
-
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
 
@@ -244,12 +216,9 @@ namespace Pims.Api.Services
                 DocumentId = pimsDocument.DocumentId,
             };
             _dispositionFileDocumentRepository.AddDispositionDocument(newFileDocument);
-            _documentQueueRepository.SaveChanges();
 
             await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
-            _documentQueueRepository.SaveChanges();
-
-            transaction.Commit();
+            _documentQueueRepository.CommitTransaction();
 
             return;
         }
@@ -262,7 +231,6 @@ namespace Pims.Api.Services
             var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             PimsDocument currentDocument = _documentRepository.Find(researchFileDocument.Document.DocumentId);
 
-            // 1 - Delete Mayan first.
             if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
                 result = await DeleteMayanDocument((long)currentDocument.MayanId);

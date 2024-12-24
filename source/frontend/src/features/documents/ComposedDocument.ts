@@ -24,7 +24,7 @@ export interface ComposedDocument {
 
 export class DocumentRow {
   id?: number;
-  mayanDocumentId: number | undefined;
+  mayanDocumentId: number | null;
   documentType: ApiGen_Concepts_DocumentType | undefined;
   statusTypeCode: ApiGen_Base_CodeType<string> | undefined;
   queueStatusTypeCode: ApiGen_Base_CodeType<string> | null;
@@ -40,7 +40,7 @@ export class DocumentRow {
     const row: DocumentRow = new DocumentRow();
     row.id = relationship.document?.id;
     row.documentType = relationship.document?.documentType ?? undefined;
-    row.mayanDocumentId = relationship.document?.mayanDocumentId ?? undefined;
+    row.mayanDocumentId = relationship.document?.mayanDocumentId;
     row.queueStatusTypeCode = relationship.document?.documentQueueStatusTypeCode;
     row.statusTypeCode = relationship.document?.statusTypeCode ?? undefined;
     row.fileName = relationship.document?.fileName ?? undefined;

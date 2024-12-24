@@ -47,11 +47,11 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
     getDocumentFileNameText: (documentId: number) =>
       utils.container.querySelector(`span#document-view-filename-text-${documentId}`) as HTMLElement,
     getDocumentProcessingIcon: (rowNumber: number) =>
-      utils.container.querySelector(`svg#document-processing-${rowNumber}`) as HTMLElement,
+      utils.container.querySelector(`svg#document-processing-${rowNumber}`) as SVGElement,
     getDocumentProcessingErrorIcon: (rowNumber: number) =>
-      utils.container.querySelector(`svg#document-error-${rowNumber}`) as HTMLElement,
+      utils.container.querySelector(`svg#document-error-${rowNumber}`) as SVGElement,
     getDocumenDeleteIcon: (rowNumber: number) =>
-      utils.container.querySelector(`svg#document-delete-${rowNumber}`) as HTMLElement,
+      utils.container.querySelector(`svg#document-delete-${rowNumber}`) as SVGElement,
   };
 };
 
@@ -115,6 +115,34 @@ describe('Document Results Table', () => {
 
     expect(getDocumentFileNameLink(20)).toBeNull();
   });
+
+  it('displays document processing icon', async () => {
+    const { getDocumentProcessingIcon } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    });
+
+    expect(getDocumentProcessingIcon(2)).toBeVisible();
+  });
+
+  it('displays document PIMS ERROR processing icon', async () => {
+    const { getDocumentProcessingErrorIcon } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    });
+
+    expect(getDocumentProcessingErrorIcon(3)).toBeVisible();
+  });
+
+  it('displays document MAYAN ERROR processing icon', async () => {
+    const { getDocumentProcessingErrorIcon } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    });
+
+    expect(getDocumentProcessingErrorIcon(4)).toBeVisible();
+  });
+
 
   it('displays document delete button', async () => {
     const { getAllByTestId } = setup({

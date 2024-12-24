@@ -66,11 +66,8 @@ export const mockDocumentsResponse = (): ApiGen_Concepts_DocumentRelationship[] 
         mayanId: 0,
         documentType: 'Gazette',
         documentTypeDescription: 'GAZE',
-
         isDisabled: false,
-
         rowVersion: 1,
-
         appCreateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateTimestamp: '2022-07-27T16:06:42.42',
         appLastUpdateUserid: 'service',
@@ -162,7 +159,7 @@ export const mockDocumentsResponse = (): ApiGen_Concepts_DocumentRelationship[] 
     parentId: '64',
     document: {
       id: 3,
-      mayanDocumentId: 0,
+      mayanDocumentId: null,
       documentType: {
         id: 28,
         documentType: 'COMPREQU',
@@ -264,7 +261,7 @@ export const mockDocumentsResponse = (): ApiGen_Concepts_DocumentRelationship[] 
     parentId: '64',
     document: {
       id: 8,
-      mayanDocumentId: -1,
+      mayanDocumentId: 10,
       documentType: {
         id: 28,
         documentType: 'COMPREQU',
