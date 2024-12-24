@@ -267,21 +267,15 @@ namespace Pims.Api.Services
             {
                 result = await DeleteMayanDocument((long)currentDocument.MayanId);
                 currentDocument = RemoveDocumentMayanID(currentDocument);
-                _documentRepository.CommitTransaction(); // leave trace when mayan document deleted.
+                _documentRepository.CommitTransaction();
             }
 
             using var transaction = _documentRepository.BeginTransaction();
 
-            // 2 - Delete Queue Item
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
-
-            // 3 - Delete FileDocument
             _researchFileDocumentRepository.DeleteResearch(researchFileDocument);
-
-            // 4 - Delete Document
             DeleteDocument(currentDocument);
 
-            // All good
             _documentRepository.SaveChanges();
             transaction.Commit();
 
@@ -296,26 +290,19 @@ namespace Pims.Api.Services
             var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             PimsDocument currentDocument = _documentRepository.Find(projectDocument.Document.DocumentId);
 
-            // 1 - Delete Mayan first.
             if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
                 result = await DeleteMayanDocument((long)currentDocument.MayanId);
                 currentDocument = RemoveDocumentMayanID(currentDocument);
-                _documentRepository.CommitTransaction(); // leave trace when mayan document deleted.
+                _documentRepository.CommitTransaction();
             }
 
             using var transaction = _documentRepository.BeginTransaction();
 
-            // 2 - Delete Queue Item
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
-
-            // 3 - Delete FileDocument
             _projectRepository.DeleteProjectDocument(projectDocument.ProjectDocumentId);
-
-            // 4 - Delete Document
             DeleteDocument(currentDocument);
 
-            // All good
             _documentRepository.SaveChanges();
             transaction.Commit();
 
@@ -330,26 +317,21 @@ namespace Pims.Api.Services
             var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             PimsDocument currentDocument = _documentRepository.Find(acquisitionFileDocument.Document.DocumentId);
 
-            // 1 - Delete Mayan first.
             if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
                 result = await DeleteMayanDocument((long)acquisitionFileDocument.Document.MayanId);
                 currentDocument = RemoveDocumentMayanID(currentDocument);
-                _documentRepository.CommitTransaction(); // leave trace when mayan document deleted.
+                _documentRepository.CommitTransaction();
             }
 
             using var transaction = _documentRepository.BeginTransaction();
 
-            // 2 - Delete Queue Item
             DeleteQueuedDocumentItem(acquisitionFileDocument.DocumentId);
 
-            // 3 - Delete FileDocument
             _acquisitionFileDocumentRepository.DeleteAcquisition(acquisitionFileDocument);
 
-            // 4 - Delete Document
             DeleteDocument(currentDocument);
 
-            // All good
             _documentRepository.SaveChanges();
             transaction.Commit();
 
@@ -369,21 +351,16 @@ namespace Pims.Api.Services
             {
                 result = await DeleteMayanDocument((long)currentDocument.MayanId);
                 currentDocument = RemoveDocumentMayanID(currentDocument);
-                _documentRepository.CommitTransaction(); // leave trace when mayan document deleted.
+                _documentRepository.CommitTransaction();
             }
 
             using var transaction = _documentRepository.BeginTransaction();
 
-            // 2 - Delete Queue Item
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
-
-            // 3 - Delete FileDocument
             _leaseRepository.DeleteLeaseDocument(leaseDocument.LeaseDocumentId);
 
-            // 4 - Delete Document
             DeleteDocument(currentDocument);
 
-            // All good
             _documentRepository.SaveChanges();
             transaction.Commit();
 
@@ -398,26 +375,20 @@ namespace Pims.Api.Services
             var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             PimsDocument currentDocument = _documentRepository.Find(propertyActivityDocument.Document.DocumentId);
 
-            // 1 - Delete Mayan first.
             if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
                 result = await DeleteMayanDocument((long)currentDocument.MayanId);
                 currentDocument = RemoveDocumentMayanID(currentDocument);
-                _documentRepository.CommitTransaction(); // leave trace when mayan document deleted.
+                _documentRepository.CommitTransaction();
             }
 
             using var transaction = _documentRepository.BeginTransaction();
 
-            // 2 - Delete Queue Item
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
 
-            // 3 - Delete FileDocument
             _propertyActivityDocumentRepository.DeletePropertyActivityDocument(propertyActivityDocument);
-
-            // 4 - Delete Document
             DeleteDocument(currentDocument);
 
-            // All good
             _documentRepository.SaveChanges();
             transaction.Commit();
 
@@ -432,7 +403,6 @@ namespace Pims.Api.Services
             var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             PimsDocument currentDocument = _documentRepository.Find(dispositionFileDocument.DocumentId);
 
-            // 1 - Delete Mayan first.
             if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
                 result = await DeleteMayanDocument((long)currentDocument.MayanId);
@@ -442,16 +412,12 @@ namespace Pims.Api.Services
 
             using var transaction = _documentRepository.BeginTransaction();
 
-            // 2 - Delete Queue Item
             DeleteQueuedDocumentItem(currentDocument.DocumentId);
 
-            // 3 - Delete FileDocument
             _dispositionFileDocumentRepository.DeleteDispositionDocument(dispositionFileDocument);
 
-            // 4 - Delete Document
             DeleteDocument(currentDocument);
 
-            // All good
             _documentRepository.SaveChanges();
             transaction.Commit();
 
