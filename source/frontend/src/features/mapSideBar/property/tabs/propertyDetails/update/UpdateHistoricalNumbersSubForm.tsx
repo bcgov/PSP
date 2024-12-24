@@ -54,7 +54,7 @@ export const UpdateHistoricalNumbersSubForm: React.FC<IUpdateHistoricalNumbersSu
                 </Col>
                 <Col xs="auto" xl="2" className="pl-0">
                   <RemoveButton
-                    dataTestId={`historical-number-remove-button-${index}`}
+                    data-testId={`historical-number-remove-button-${index}`}
                     onRemove={() => {
                       arrayHelpers.remove(index);
                     }}

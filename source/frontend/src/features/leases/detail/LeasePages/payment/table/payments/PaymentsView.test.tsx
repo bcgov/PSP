@@ -118,7 +118,7 @@ describe('PaymentsView component', () => {
         claims: [Claims.LEASE_DELETE],
       });
 
-      const editButton = await queryByTitle('edit actual');
+      const editButton = await queryByTitle('edit payment');
       expect(editButton).toBeNull();
     });
 
@@ -130,7 +130,7 @@ describe('PaymentsView component', () => {
         claims: [Claims.LEASE_EDIT],
       });
 
-      const editButton = await findAllByTitle('edit actual');
+      const editButton = await findAllByTitle('edit payment');
       expect(editButton[0]).toBeVisible();
     });
 
@@ -153,7 +153,7 @@ describe('PaymentsView component', () => {
         initialValues: getDefaultLeaseWithPeriodsPayments(),
         claims: [Claims.LEASE_EDIT],
       });
-      const deleteButton = await findAllByTitle('delete actual');
+      const deleteButton = await findAllByTitle('delete payment');
       expect(deleteButton[0]).toBeVisible();
     });
   });
@@ -276,7 +276,7 @@ describe('PaymentsView component', () => {
         initialValues: getDefaultLeaseWithPeriodsPayments(),
         isReceivable: false,
       });
-      const editButton = await findAllByTitle('edit actual');
+      const editButton = await findAllByTitle('edit payment');
       await act(async () => userEvent.click(editButton[0]));
       expect(onEdit).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });
@@ -289,7 +289,7 @@ describe('PaymentsView component', () => {
         isReceivable: false,
         claims: [Claims.LEASE_EDIT],
       });
-      const deleteButton = await findAllByTitle('delete actual');
+      const deleteButton = await findAllByTitle('delete payment');
       await act(async () => userEvent.click(deleteButton[0]));
       expect(onDelete).toHaveBeenCalledWith(defaultTestFormLeasePayment);
     });

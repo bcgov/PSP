@@ -1,8 +1,7 @@
 import difference from 'lodash/difference';
 import map from 'lodash/map';
-import { FaTrash } from 'react-icons/fa';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
+import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 
 import { ColumnWithProps } from '../components/Table/types';
 
@@ -24,16 +23,12 @@ export const getColumnsWithRemove = <T extends object>(
     accessor: 'id' as any,
     maxWidth: 35,
     Cell: (props: any) => (
-      <StyledRemoveLinkButton
+      <RemoveIconButton
         title="Click to remove"
-        style={{ cursor: 'pointer' }}
-        variant="light"
-        onClick={() => {
+        onRemove={() => {
           setRows(difference(map(props.rows, 'original'), [props.row.original]));
         }}
-      >
-        <FaTrash size="1.6rem" />
-      </StyledRemoveLinkButton>
+      />
     ),
   });
   return cols;

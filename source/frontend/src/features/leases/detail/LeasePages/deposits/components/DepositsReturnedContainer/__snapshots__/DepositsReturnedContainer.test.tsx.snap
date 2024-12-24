@@ -45,7 +45,6 @@ exports[`DepositsReturnedContainer component > renders as expected 1`] = `
 
 .c3 .btn.btn-primary {
   background-color: transparent;
-  padding: 0;
 }
 
 <div

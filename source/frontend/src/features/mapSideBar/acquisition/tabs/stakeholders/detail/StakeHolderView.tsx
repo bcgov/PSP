@@ -1,4 +1,4 @@
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -43,7 +43,7 @@ export const StakeHolderView: React.FunctionComponent<IStakeHolderViewProps> = (
         <LoadingBackdrop show={loading} parentScreen={true} />
         <StyledEditWrapper className="mr-3 my-1">
           {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && statusSolver.canEditStakeholders() ? (
-            <EditButton title="Edit Interests" onClick={onEdit} />
+            <EditButton title="Edit Interests" onClick={onEdit} style={{ float: 'right' }} />
           ) : null}
         </StyledEditWrapper>
         <Section isCollapsable initiallyExpanded header="Interests">

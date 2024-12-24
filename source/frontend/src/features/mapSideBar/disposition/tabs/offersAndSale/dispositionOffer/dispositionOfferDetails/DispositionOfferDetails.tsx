@@ -1,9 +1,8 @@
-import { FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
+import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
@@ -52,14 +51,13 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
           <>
             <EditButton
               title="Edit Offer"
-              dataTestId={`Offer[${index}].edit-btn`}
+              data-testId={`Offer[${index}].edit-btn`}
               onClick={() => history.push(`${match.url}/offers/${dispositionOffer.id}/update`)}
             />
-            <StyledRemoveLinkButton
+            <RemoveIconButton
               title="Delete Offer"
-              data-testid={`Offer[${index}].delete-btn`}
-              variant="light"
-              onClick={() => {
+              data-testId={`Offer[${index}].delete-btn`}
+              onRemove={() => {
                 setModalContent({
                   ...getDeleteModalProps(),
                   variant: 'error',
@@ -78,9 +76,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
                 });
                 setDisplayModal(true);
               }}
-            >
-              <FaTrash size="2rem" />
-            </StyledRemoveLinkButton>
+            />
           </>
         )}
         {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !canEditDetails() && (
