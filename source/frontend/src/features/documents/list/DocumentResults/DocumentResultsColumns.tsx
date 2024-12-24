@@ -134,25 +134,19 @@ const renderActions = (
     const { hasClaim } = useKeycloakWrapper();
 
     const documentInError =
-      (original.mayanDocumentId === null || original.mayanDocumentId === -1) &&
-      original.queueStatusTypeCode &&
-      (original.queueStatusTypeCode.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PIMS_ERROR ||
-        original.queueStatusTypeCode.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.MAYAN_ERROR);
+      original.mayanDocumentId === null &&
+      (original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PIMS_ERROR ||
+        original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.MAYAN_ERROR);
 
     const documentProcessing =
-      (original.mayanDocumentId === null || original.mayanDocumentId < 1) &&
-      original.queueStatusTypeCode &&
-      (original.queueStatusTypeCode.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PENDING ||
-        original.queueStatusTypeCode.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PROCESSING);
+      original.mayanDocumentId === null &&
+      (original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PENDING ||
+        original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PROCESSING);
 
     const canViewDocument =
-      (original.mayanDocumentId &&
-        original.mayanDocumentId > 0 &&
-        original.queueStatusTypeCode === null) ||
-      (original.queueStatusTypeCode &&
-        original.queueStatusTypeCode.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.SUCCESS &&
-        original.mayanDocumentId &&
-        original.mayanDocumentId > 0);
+      (original.mayanDocumentId && original.queueStatusTypeCode === null) ||
+      (original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.SUCCESS &&
+        original.mayanDocumentId);
 
     if (documentProcessing) {
       return (

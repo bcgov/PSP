@@ -878,7 +878,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                 Mailing Address
               </div>
               <div
-                class="pl-3 d-flex align-items-end col-auto"
+                class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c10"
@@ -1132,7 +1132,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                 Property Address
               </div>
               <div
-                class="pl-3 d-flex align-items-end col-auto"
+                class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c10"
@@ -1386,7 +1386,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                 Billing Address
               </div>
               <div
-                class="pl-3 d-flex align-items-end col-auto"
+                class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c10"

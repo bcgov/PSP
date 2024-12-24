@@ -102,7 +102,7 @@ exports[`Operation section view > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="pl-3 d-flex align-items-end col-auto"
+              class="pl-2 d-flex align-items-end col-auto"
             >
               <svg
                 class="c6"
@@ -524,7 +524,7 @@ exports[`Operation section view > matches snapshot 1`] = `
               </div>
             </div>
             <div
-              class="pl-3 d-flex align-items-end col-auto"
+              class="pl-2 d-flex align-items-end col-auto"
             >
               <svg
                 class="c6"

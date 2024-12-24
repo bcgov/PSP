@@ -177,7 +177,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
             Update Take
           </div>
           <div
-            class="pl-3 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c3"
