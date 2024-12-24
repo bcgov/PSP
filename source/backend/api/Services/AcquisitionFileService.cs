@@ -229,7 +229,10 @@ namespace Pims.Api.Services
                 _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
             }
 
+            // Set default values, according to business rules
             acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
+            acquisitionFile.AssignedDate ??= DateTime.Today;
+
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
 
