@@ -92,9 +92,10 @@ namespace Pims.Api.Services
             {
                 List<PimsDocumentQueue> documentsBelowMaxFileSize = new List<PimsDocumentQueue>();
                 long totalFileSize = 0;
+                var documentIdSizeDict = _documentQueueRepository.GetFileLengthsById(queuedDocuments.Select(qd => qd.DocumentQueueId));
                 queuedDocuments.ForEach(currentDocument =>
                 {
-                    long currentFileSize = _documentQueueRepository.GetFileLengthById(currentDocument.DocumentQueueId);
+                    long currentFileSize = documentIdSizeDict.GetValueOrDefault(currentDocument.DocumentQueueId, 0);
                     if (currentFileSize + totalFileSize <= filter.MaxFileSize)
                     {
                         totalFileSize += currentFileSize;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
@@ -82,13 +83,13 @@ namespace Pims.Dal.Repositories
             return true;
         }
 
-        public long GetFileLengthById(long documentQueueId)
+        public Dictionary<long, int> GetFileLengthsById(IEnumerable<long> documentQueueIds)
         {
             return Context.PimsDocumentQueues
                 .AsNoTracking()
-                .Where(dq => dq.DocumentQueueId == documentQueueId)
-                .Select(dq => dq.Document.Length)
-                .FirstOrDefault();
+                .Where(dq => documentQueueIds.Any(dqId => dqId == dq.DocumentQueueId))
+                .Select(dq => new { Key = dq.Internal_Id, Value = dq.Document.Length })
+                .ToDictionary(pair => pair.Key, pair => pair.Value);
         }
 
         /// <summary>
@@ -103,7 +104,7 @@ namespace Pims.Dal.Repositories
                 .ThenInclude(d => d.DocumentType)
                 .Include(dq => dq.DocumentQueueStatusTypeCodeNavigation)
                 .Include(dq => dq.DataSourceTypeCodeNavigation)
-                .Where(q => true);
+                .Where(q => true).AsNoTracking();
 
             if (filter.DataSourceTypeCode != null)
             {
