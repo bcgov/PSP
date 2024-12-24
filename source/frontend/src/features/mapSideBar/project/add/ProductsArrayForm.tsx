@@ -1,10 +1,9 @@
 import { FieldArray, FieldArrayRenderProps, FormikProps, useFormikContext } from 'formik';
 import React, { useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { LinkButton, StyledRemoveLinkButton } from '@/components/common/buttons';
+import { LinkButton, RemoveIconButton } from '@/components/common/buttons';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -75,13 +74,10 @@ export const ProductsArrayForm: React.FunctionComponent<IProductsArrayFormProps>
                     <Row className="align-items-end pb-4">
                       <Col />
                       <Col xs="auto">
-                        <StyledRemoveLinkButton
-                          title="Delete Project"
-                          variant="light"
-                          onClick={() => handleRemove(index)}
-                        >
-                          <FaTrash size="2rem" />
-                        </StyledRemoveLinkButton>
+                        <RemoveIconButton
+                          title="Delete Product"
+                          onRemove={() => handleRemove(index)}
+                        />
                       </Col>
                     </Row>
                     <ProductSubForm

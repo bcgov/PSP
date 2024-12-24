@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import { ReactNode } from 'react';
 import React from 'react';
-import { FaRegFileAlt } from 'react-icons/fa';
+import { FaEye } from 'react-icons/fa';
 import * as Yup from 'yup';
 
 import { StyledIconButton } from '@/components/common/buttons';
@@ -70,7 +70,7 @@ export const NotesModal = <T,>({
         setDisplayModal(true);
       }}
     >
-      <FaRegFileAlt />
+      <FaEye size={22} />
     </StyledIconButton>
   );
 };

@@ -3,8 +3,8 @@ import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { LinkButton } from '@/components/common/buttons';
+import { EditButton } from '@/components/common/buttons/EditButton';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
-import { EditButton } from '@/components/common/EditButton';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 

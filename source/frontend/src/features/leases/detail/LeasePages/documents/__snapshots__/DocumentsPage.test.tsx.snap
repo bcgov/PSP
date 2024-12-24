@@ -315,7 +315,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="pl-8 d-flex align-items-end col-auto"
+          class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
             class="c3"

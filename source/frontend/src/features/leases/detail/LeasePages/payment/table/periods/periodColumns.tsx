@@ -1,12 +1,11 @@
 import moment from 'moment';
-import { FaTrash } from 'react-icons/fa';
 import { IoMdRefreshCircle } from 'react-icons/io';
-import { MdEdit } from 'react-icons/md';
 import { TbArrowWaveRightUp } from 'react-icons/tb';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
+import { RemoveIconButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/buttons/EditButton';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -174,20 +173,16 @@ const paymentActions = (
     return (
       <StyledIcons>
         {hasClaim(Claims.LEASE_EDIT) && (
-          <Button
-            title="edit period"
-            icon={<MdEdit size={24} id={`edit-period-${index}`} title="edit period" />}
-            onClick={() => onEdit(original)}
-          ></Button>
+          <EditButton title="edit period" onClick={() => onEdit(original)} />
         )}
         {hasClaim(Claims.LEASE_EDIT) &&
           original.payments.length <= 0 &&
           original.statusTypeCode?.id !== LeasePeriodStatusTypes.EXERCISED && (
-            <Button
+            <RemoveIconButton
               title="delete period"
-              icon={<FaTrash size={24} id={`delete-period-${index}`} title="delete period" />}
-              onClick={() => original.id && onDelete(original)}
-            ></Button>
+              id={`edit-period-${index}`}
+              onRemove={() => original.id && onDelete(original)}
+            />
           )}
         {hasClaim(Claims.LEASE_EDIT) &&
           (original.payments.length > 0 ||

@@ -75,8 +75,8 @@ export const StyledSummarySection = styled.div`
 
 export const StyledEditWrapper = styled.div`
   color: ${props => props.theme.css.primary};
-
   text-align: right;
+  overflow: hidden;
 `;
 
 export const StyledSubtleText = styled.p`

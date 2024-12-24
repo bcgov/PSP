@@ -3,7 +3,7 @@ import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-import { EditButton } from '@/components/common/EditButton';
+import { EditButton } from '@/components/common/buttons/EditButton';
 import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -76,6 +76,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
               query.set('edit', 'true');
               history.push({ search: query.toString() });
             }}
+            style={{ float: 'right' }}
           />
         ) : null}
         {hasClaim(Claims.PROPERTY_EDIT) && propertyIsRetired ? (

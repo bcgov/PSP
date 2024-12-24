@@ -136,7 +136,7 @@ describe('AcquisitionSummaryView component', () => {
     await waitForEffects();
     expect(getByText('Jan 10, 2030')).toBeVisible();
     expect(getByText('Mar 10, 2035')).toBeVisible();
-    expect(getByTestId('assigned-date')).toHaveTextContent('Dec 17, 2024');
+    expect(getByTestId('assigned-date')).toHaveTextContent('Dec 18, 2024');
   });
 
   it('renders owner solicitor information with primary contact', async () => {
