@@ -415,7 +415,12 @@ export const mockAcquisitionFileResponse = (
   fundingOther: null,
   fundingTypeCode: null,
   acquisitionFileProgressStatuses: [],
-  acquisitionFileAppraisalStatusTypeCode: null,
+  acquisitionFileAppraisalStatusTypeCode: {
+    id: 'RECEIVED',
+    description: 'Received',
+    isDisabled: false,
+    displayOrder: 3,
+  },
   acquisitionFileLegalSurveyStatusTypeCode: null,
   acquisitionFileTakingStatuses: [],
   acquisitionFileExpropiationRiskStatusTypeCode: null,

@@ -119,8 +119,6 @@ describe('AddAcquisitionForm component', () => {
     expect(getSubfileInterestTypeDropdown()).not.toBeInTheDocument();
   });
 
-  
-
   it('displays existing values if they exist', async () => {
     initialValues.fileName = 'foo bar baz';
     const apiProject = mockProjects()[0];
