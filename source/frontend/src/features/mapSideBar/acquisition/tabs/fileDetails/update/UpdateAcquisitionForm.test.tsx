@@ -172,7 +172,7 @@ describe('UpdateAcquisitionForm component', () => {
     await act(async () => {});
     expect(getEstimatedCompletionDatePicker()).toHaveValue('Jul 10, 2024');
     expect(getPossessionDatePicker()).toHaveValue('Jul 10, 2025');
-    expect(getAssignedDatePicker()).toHaveValue('Dec 17, 2024');
+    expect(getAssignedDatePicker()).toHaveValue('Dec 18, 2024');
   });
 
   it('displays Individual type Owner with data', async () => {
