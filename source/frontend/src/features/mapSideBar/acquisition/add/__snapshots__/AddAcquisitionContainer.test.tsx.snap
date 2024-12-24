@@ -890,6 +890,461 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   <div
                     class="col"
                   >
+                    Progress Statuses
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      File progress:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div>
+                        <div
+                          class="multiselect-container multiSelectContainer  "
+                          id="multiselect-progressStatuses"
+                          style="width: auto; color: black;"
+                        >
+                          <div
+                            class="search-wrapper searchWrapper "
+                            style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="searchBox "
+                              id="multiselect-progressStatuses_input"
+                              name="search_name_input"
+                              placeholder=""
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <div
+                            class="optionListContainer displayNone"
+                          >
+                            <ul
+                              class="optionContainer"
+                            >
+                              <li
+                                class="option  highlightOption highlight  "
+                              >
+                                Not required
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                No longer required
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Acquired by others
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Preliminary design stage
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Approved for acquisition
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Owner contacted
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Waiting for PA plan
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                PA plan received
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Waiting for ancillary plan
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Waiting for appraisal / other report
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Negotiating
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Offer made
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Contract signed
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Out for conveyancing
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Possession for construction
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Ownership (tenure)
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Expropriated
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Settled
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                File complete (return to MoTT)
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Appraisal:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-appraisalStatusType"
+                        name="appraisalStatusType"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select appraisal
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQ"
+                          value="NOTREQ"
+                        >
+                          Not required
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-ORDERED"
+                          value="ORDERED"
+                        >
+                          Ordered
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-RECEIVED"
+                          value="RECEIVED"
+                        >
+                          Received
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-OWNERCOMM"
+                          value="OWNERCOMM"
+                        >
+                          Owner Commission
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Legal survey:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-legalSurveyStatusType"
+                        name="legalSurveyStatusType"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select legal survey
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQ"
+                          value="NOTREQ"
+                        >
+                          Not required
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-ORDERED"
+                          value="ORDERED"
+                        >
+                          Ordered
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-RECEIVED"
+                          value="RECEIVED"
+                        >
+                          Received
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-OUT4SIGN"
+                          value="OUT4SIGN"
+                        >
+                          Out for Signatures
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REGISTRD"
+                          value="REGISTRD"
+                        >
+                          Registered
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Type of taking:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div>
+                        <div
+                          class="multiselect-container multiSelectContainer  "
+                          id="multiselect-takingStatuses"
+                          style="width: auto; color: black;"
+                        >
+                          <div
+                            class="search-wrapper searchWrapper "
+                            style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="searchBox "
+                              id="multiselect-takingStatuses_input"
+                              name="search_name_input"
+                              placeholder=""
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <div
+                            class="optionListContainer displayNone"
+                          >
+                            <ul
+                              class="optionContainer"
+                            >
+                              <li
+                                class="option  highlightOption highlight  "
+                              >
+                                Unknown
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Not required
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Partial Acquisition
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Permanent SRW
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Temporary SRW
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Total Acquisition
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Lease
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Licence
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Access closure
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                By dedication
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Expropriation risk:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-expropiationRiskStatusType"
+                        name="expropiationRiskStatusType"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select expropiation risk
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NIL"
+                          value="NIL"
+                        >
+                          Nil
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-LOW"
+                          value="LOW"
+                        >
+                          Low
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MED"
+                          value="MED"
+                        >
+                          Medium
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-HIGH"
+                          value="HIGH"
+                        >
+                          High
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c12 form-section"
+            >
+              <h2
+                class="c13"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
                     Schedule
                   </div>
                 </div>
@@ -3265,6 +3720,461 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           value="TICORP"
                         >
                           TI Corp
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c12 form-section"
+            >
+              <h2
+                class="c13"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    Progress Statuses
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      File progress:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div>
+                        <div
+                          class="multiselect-container multiSelectContainer  "
+                          id="multiselect-progressStatuses"
+                          style="width: auto; color: black;"
+                        >
+                          <div
+                            class="search-wrapper searchWrapper "
+                            style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="searchBox "
+                              id="multiselect-progressStatuses_input"
+                              name="search_name_input"
+                              placeholder=""
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <div
+                            class="optionListContainer displayNone"
+                          >
+                            <ul
+                              class="optionContainer"
+                            >
+                              <li
+                                class="option  highlightOption highlight  "
+                              >
+                                Not required
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                No longer required
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Acquired by others
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Preliminary design stage
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Approved for acquisition
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Owner contacted
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Waiting for PA plan
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                PA plan received
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Waiting for ancillary plan
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Waiting for appraisal / other report
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Negotiating
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Offer made
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Contract signed
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Out for conveyancing
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Possession for construction
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Ownership (tenure)
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Expropriated
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Settled
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                File complete (return to MoTT)
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Appraisal:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-appraisalStatusType"
+                        name="appraisalStatusType"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select appraisal
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQ"
+                          value="NOTREQ"
+                        >
+                          Not required
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-ORDERED"
+                          value="ORDERED"
+                        >
+                          Ordered
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-RECEIVED"
+                          value="RECEIVED"
+                        >
+                          Received
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-OWNERCOMM"
+                          value="OWNERCOMM"
+                        >
+                          Owner Commission
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Legal survey:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-legalSurveyStatusType"
+                        name="legalSurveyStatusType"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select legal survey
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NOTREQ"
+                          value="NOTREQ"
+                        >
+                          Not required
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-ORDERED"
+                          value="ORDERED"
+                        >
+                          Ordered
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-RECEIVED"
+                          value="RECEIVED"
+                        >
+                          Received
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-OUT4SIGN"
+                          value="OUT4SIGN"
+                        >
+                          Out for Signatures
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-REGISTRD"
+                          value="REGISTRD"
+                        >
+                          Registered
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Type of taking:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div>
+                        <div
+                          class="multiselect-container multiSelectContainer  "
+                          id="multiselect-takingStatuses"
+                          style="width: auto; color: black;"
+                        >
+                          <div
+                            class="search-wrapper searchWrapper "
+                            style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="searchBox "
+                              id="multiselect-takingStatuses_input"
+                              name="search_name_input"
+                              placeholder=""
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <div
+                            class="optionListContainer displayNone"
+                          >
+                            <ul
+                              class="optionContainer"
+                            >
+                              <li
+                                class="option  highlightOption highlight  "
+                              >
+                                Unknown
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Not required
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Partial Acquisition
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Permanent SRW
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Temporary SRW
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Total Acquisition
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Lease
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Licence
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                Access closure
+                              </li>
+                              <li
+                                class="option    "
+                              >
+                                By dedication
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c14"
+                    >
+                      Expropriation risk:
+                    </label>
+                  </div>
+                  <div
+                    class="c15 text-left col"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <select
+                        class="form-select form-control"
+                        id="input-expropiationRiskStatusType"
+                        name="expropiationRiskStatusType"
+                      >
+                        <option
+                          value=""
+                        >
+                          Select expropiation risk
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-NIL"
+                          value="NIL"
+                        >
+                          Nil
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-LOW"
+                          value="LOW"
+                        >
+                          Low
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-MED"
+                          value="MED"
+                        >
+                          Medium
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-HIGH"
+                          value="HIGH"
+                        >
+                          High
                         </option>
                       </select>
                     </div>
