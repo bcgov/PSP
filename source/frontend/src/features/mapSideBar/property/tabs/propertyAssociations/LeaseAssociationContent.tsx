@@ -55,7 +55,7 @@ const getFormattedTenants = (stakeholders: ApiGen_Concepts_LeaseStakeholder[]) =
   const stakeholderTypeCode = sortedStakeholders[0]?.stakeholderTypeCode?.id;
 
   return sortedStakeholders
-    .filter(t => t.stakeholderTypeCode.id === stakeholderTypeCode)
+    .filter(t => t.stakeholderTypeCode?.id === stakeholderTypeCode)
     .map(t => (t.lessorType?.id === 'PER' ? formatApiPersonNames(t.person) : t.organization?.name))
     .join(', ');
 };
@@ -69,7 +69,7 @@ export const LeaseAssociationContent: React.FunctionComponent<
   }
   const tableData = orderBy(
     props.associations.map<IAssociationInfo>(x => {
-      const lease = find(props.leases, lease => x.id === lease.id);
+      const lease = find(props.leases, lease => x?.id === lease?.id);
       const leaseRenewals = props.renewals?.filter(renewal => x.id === renewal?.leaseId);
       const calculatedExpiry = getCalculatedExpiry(lease, leaseRenewals ?? []);
       return {

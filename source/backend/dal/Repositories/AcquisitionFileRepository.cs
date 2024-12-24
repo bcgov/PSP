@@ -105,6 +105,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.CostTypeCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.PimsProjectPeople)
                 .Include(r => r.Product)
                 .Include(r => r.PimsPropertyAcquisitionFiles)
                 .Include(r => r.PimsAcquisitionFileTeams)
@@ -887,7 +889,7 @@ namespace Pims.Dal.Repositories
 
             if (contractorPersonId is not null)
             {
-                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId));
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId) || (acq.Project != null && acq.Project.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId)));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberPersonId))
@@ -903,6 +905,7 @@ namespace Pims.Dal.Repositories
             var query = Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(r => r.RegionCodeNavigation)
                 .Include(p => p.Project)
+                    .ThenInclude(p => p.PimsProjectPeople)
                 .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
                 .Include(f => f.AcquisitionFundingTypeCodeNavigation)
                 .Include(ph => ph.AcqPhysFileStatusTypeCodeNavigation)

@@ -61,6 +61,11 @@ namespace Pims.Api.Models.Concepts.Project
         /// get/set - Project products.
         /// </summary>
         public List<ProjectProductModel> ProjectProducts { get; set; }
+
+        /// <summary>
+        /// get/set - Project persons.
+        /// </summary>
+        public List<ProjectPersonModel> ProjectPersons { get; set; }
         #endregion
     }
 }

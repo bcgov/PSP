@@ -75,7 +75,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       acquisitionTypeCode: toTypeCodeNullable(this.acquisitionType),
       regionCode: toTypeCodeNullable(Number(this.region)),
       projectId: isValidId(this.project?.id) ? this.project!.id : null,
-      productId: this.product !== '' ? Number(this.product) : null,
+      productId: isValidId(Number(this.product)) ? Number(this.product) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       subfileInterestTypeCode: toTypeCodeNullable(this.subfileInterestTypeCode),
