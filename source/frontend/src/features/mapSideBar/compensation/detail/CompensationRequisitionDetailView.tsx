@@ -4,7 +4,7 @@ import { FaExternalLinkAlt, FaFileContract } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
 import { HeaderField } from '@/components/common/HeaderField/HeaderField';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -190,6 +190,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       onClick={() => {
         setEditMode(true);
       }}
+      style={{ float: 'right' }}
     />
   );
 
@@ -289,9 +290,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
               label="Advanced payment served date"
               labelWidth="4"
               valueTestId="advanced-payment-served-date"
-            >
-              {prettyFormatDate(compensation.advancedPaymentServedDate)}
-            </SectionField>
+            ></SectionField>
           </>
         )}
 

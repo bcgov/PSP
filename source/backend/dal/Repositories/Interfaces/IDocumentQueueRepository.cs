@@ -12,6 +12,10 @@ namespace Pims.Dal.Repositories
 
         PimsDocumentQueue TryGetById(long documentQueueId);
 
+        PimsDocumentQueue Add(PimsDocumentQueue queuedDocument);
+
+        PimsDocumentQueue GetByDocumentId(long documentId);
+
         IEnumerable<PimsDocumentQueue> GetAllByFilter(DocumentQueueFilter filter);
 
         Dictionary<long, int> GetFileLengthsById(IEnumerable<long> documentQueueIds);

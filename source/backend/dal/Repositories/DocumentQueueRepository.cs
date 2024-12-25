@@ -1,9 +1,11 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -48,6 +50,35 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Add Document to Queue.
+        /// </summary>
+        /// <param name="queuedDocument"></param>
+        /// <returns></returns>
+        public PimsDocumentQueue Add(PimsDocumentQueue queuedDocument)
+        {
+            queuedDocument.ThrowIfNull(nameof(queuedDocument));
+
+            // Default values for new queue items.
+            queuedDocument.DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PENDING.ToString();
+            queuedDocument.DataSourceTypeCode = DataSourceTypes.PIMS.ToString();
+            queuedDocument.MayanError = null;
+            // Add
+            Context.PimsDocumentQueues.Add(queuedDocument);
+
+            return queuedDocument;
+        }
+
+        /// <summary>
+        /// Find Queue Item for a Document.
+        /// </summary>
+        /// <param name="documentId"></param>
+        /// <returns></returns>
+        public PimsDocumentQueue GetByDocumentId(long documentId)
+        {
+            return Context.PimsDocumentQueues.Where(x => x.DocumentId == documentId).FirstOrDefault();
+        }
+
+        /// <summary>
         /// Updates the queued document in the database.
         /// </summary>
         /// <param name="queuedDocument"></param>
@@ -65,8 +96,8 @@ namespace Pims.Dal.Repositories
             queuedDocument.MayanError = queuedDocument.MayanError?.Truncate(4000);
             queuedDocument.DataSourceTypeCode = existingQueuedDocument.DataSourceTypeCode; // Do not allow the data source to be updated.
             Context.Entry(existingQueuedDocument).CurrentValues.SetValues(queuedDocument);
-
             queuedDocument = Context.Update(queuedDocument).Entity;
+
             return queuedDocument;
         }
 
@@ -78,8 +109,8 @@ namespace Pims.Dal.Repositories
         public bool Delete(PimsDocumentQueue queuedDocument)
         {
             queuedDocument.ThrowIfNull(nameof(queuedDocument));
-
             Context.Remove(queuedDocument);
+
             return true;
         }
 
@@ -163,6 +194,7 @@ namespace Pims.Dal.Repositories
             {
                 Context.PimsDocumentQueues.Count();
             }
+
             return Context.PimsDocumentQueues.Count(d => d.DocumentQueueStatusTypeCode == pimsDocumentQueueStatusType.DocumentQueueStatusTypeCode);
         }
 

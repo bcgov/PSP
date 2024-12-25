@@ -477,7 +477,7 @@ describe('PeriodsPaymentsContainer component', () => {
 
       const expander = await findByTestId('table-row-expander-');
       await act(async () => userEvent.click(expander));
-      const editButton = await findAllByTitle('edit actual');
+      const editButton = await findAllByTitle('edit payment');
       await act(async () => {
         userEvent.click(editButton[0]);
       });
@@ -506,7 +506,7 @@ describe('PeriodsPaymentsContainer component', () => {
       const expander = getByTestId('table-row-expander-');
       await act(async () => userEvent.click(expander));
 
-      const deleteButton = (await findAllByTitle('delete actual'))[0];
+      const deleteButton = (await findAllByTitle('delete payment'))[0];
       await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a payment. Do you wish to continue?');
       expect(warning).toBeVisible();
@@ -529,7 +529,7 @@ describe('PeriodsPaymentsContainer component', () => {
       const expander = getByTestId('table-row-expander-');
       await act(async () => userEvent.click(expander));
 
-      const deleteButton = (await findAllByTitle('delete actual'))[0];
+      const deleteButton = (await findAllByTitle('delete payment'))[0];
       await act(async () => userEvent.click(deleteButton));
       const warning = getByText('You are about to delete a payment. Do you wish to continue?');
       expect(warning).toBeVisible();

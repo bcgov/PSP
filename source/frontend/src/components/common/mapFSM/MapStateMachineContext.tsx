@@ -3,6 +3,7 @@ import { dequal } from 'dequal';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
+import { AnyEventObject } from 'xstate';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
@@ -13,7 +14,7 @@ import {
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
 import { exists } from '@/utils';
-import { pidParser } from '@/utils/propertyUtils';
+import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { MachineContext, SideBarType } from './machineDefinition/types';
@@ -120,35 +121,48 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     actions: {
       navigateToProperty: context => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
-        if (selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID) {
+        if (exists(selectedFeatureData?.pimsFeature?.properties?.PROPERTY_ID)) {
           const pimsFeature = selectedFeatureData.pimsFeature;
           history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-        } else if (selectedFeatureData?.parcelFeature?.properties?.PID) {
-          const parcelFeature = selectedFeatureData.parcelFeature;
+        } else if (exists(selectedFeatureData?.parcelFeature?.properties?.PID)) {
+          const parcelFeature = selectedFeatureData?.parcelFeature;
           const parsedPid = pidParser(parcelFeature.properties.PID);
-          history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
+          history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}`);
+        } else if (exists(selectedFeatureData?.parcelFeature?.properties?.PIN)) {
+          const parcelFeature = selectedFeatureData?.parcelFeature;
+          const parsedPin = pinParser(parcelFeature.properties.PIN);
+          history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
         }
       },
     },
     services: {
-      loadLocationData: (context: MachineContext, event: any) => {
-        const result = locationLoader.loadLocationDetails(
-          event.type === 'MAP_CLICK' ? event.latlng : event.featureSelected.latlng,
-        );
+      loadLocationData: async (
+        context: MachineContext,
+        event:
+          | (AnyEventObject & { type: 'MAP_CLICK'; latlng: LatLngLiteral })
+          | (AnyEventObject & { type: 'MAP_MARKER_CLICK'; featureSelected: FeatureSelected }),
+      ) => {
+        let result: LocationFeatureDataset | undefined = undefined;
 
-        if (event.type === 'MAP_MARKER_CLICK') {
+        if (event.type === 'MAP_CLICK') {
+          result = await locationLoader.loadLocationDetails({ latLng: event.latlng });
+        } else if (event.type === 'MAP_MARKER_CLICK') {
+          result = await locationLoader.loadLocationDetails({
+            latLng: event.featureSelected.latlng,
+            pimsPropertyId: event.featureSelected?.pimsLocationFeature?.PROPERTY_ID ?? null,
+          });
           // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data.
           // However, use the coordinates of the clicked marker.
-          result.then(data => {
-            data.pimsFeature = {
-              properties: { ...data.pimsFeature.properties },
+          if (exists(result.pimsFeature)) {
+            result.pimsFeature = {
+              properties: { ...result.pimsFeature?.properties },
               type: 'Feature',
               geometry: {
                 type: 'Point',
                 coordinates: [event.featureSelected.latlng.lng, event.featureSelected.latlng.lat],
               },
             };
-          });
+          }
         }
 
         return result;

@@ -5,7 +5,6 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { formatUTCDateTime } from '@/utils';
 import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
@@ -121,7 +120,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;
     newForm.fileName = model.fileName || '';
     newForm.rowVersion = model.rowVersion ?? undefined;
-    newForm.assignedDate = model.assignedDate ? formatUTCDateTime(model.assignedDate) : '';
+    newForm.assignedDate = model.assignedDate ?? undefined;
     newForm.deliveryDate = model.deliveryDate ?? undefined;
     newForm.estimatedCompletionDate = model.estimatedCompletionDate ?? undefined;
     newForm.possessionDate = model.possessionDate ?? undefined;

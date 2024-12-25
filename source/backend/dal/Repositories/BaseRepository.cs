@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.Extensions.Logging;
 
 namespace Pims.Dal.Repositories
@@ -42,6 +43,23 @@ namespace Pims.Dal.Repositories
             this.Context = dbContext;
             this.User = user;
             this.Logger = logger;
+        }
+
+        /// <summary>
+        /// Begin a DB transaction.
+        /// </summary>
+        /// <returns></returns>
+        public IDbContextTransaction BeginTransaction()
+        {
+            return this.Context.Database.BeginTransaction();
+        }
+
+        /// <summary>
+        /// Save changes for a DB action.
+        /// </summary>
+        public void SaveChanges()
+        {
+            Context.SaveChanges();
         }
 
         /// <summary>

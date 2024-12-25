@@ -36,7 +36,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// The assigned date.
         /// </summary>
-        public DateTime? AssignedDate { get; set; }
+        public DateOnly? AssignedDate { get; set; }
 
         /// <summary>
         /// The date for delivery of the property to the project.

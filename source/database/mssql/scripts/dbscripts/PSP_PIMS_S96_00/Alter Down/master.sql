@@ -20,6 +20,9 @@ PRINT '     == DB TRANSACTION START ========'
    PRINT '- Executing PSP_PIMS_S96_00/Alter Down/010_DML_PIMS_STATIC_VARIABLE_VERSION.sql '
    :setvar filepath "PSP_PIMS_S96_00/Alter Down/010_DML_PIMS_STATIC_VARIABLE_VERSION.sql"
    :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S96_00/Alter Down/011_DML_PIMS_ROLE_NAME.sql '
+   :setvar filepath "PSP_PIMS_S96_00/Alter Down/011_DML_PIMS_ROLE_NAME.sql"
+   :r $(filepath)
 
    --End script section
 

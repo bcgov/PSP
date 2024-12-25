@@ -66,6 +66,10 @@ namespace Pims.Api.Models.Concepts.Document
         /// </summary>
         public byte[] Document { get; set; }
 
+        /// <summary>
+        /// get/set - The queue status type.
+        /// </summary>
+        public CodeTypeModel<string> DocumentQueueStatusTypeCode { get; set; }
     #endregion
 }
 }

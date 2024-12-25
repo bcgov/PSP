@@ -83,7 +83,8 @@ namespace Pims.Api.Services
             IDocumentTypeRepository documentTypeRepository,
             IAvService avService,
             IMapper mapper,
-            IOptionsMonitor<AuthClientOptions> options)
+            IOptionsMonitor<AuthClientOptions> options,
+            IDocumentQueueRepository queueRepository)
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
@@ -173,6 +174,7 @@ namespace Pims.Api.Services
                 {
                     _ = PrecacheDocumentPreviews(externalDocument.Id, externalDocument.FileLatest.Id);
                 }
+
                 // Create metadata of document
                 if (uploadRequest.DocumentMetadata != null)
                 {
@@ -371,8 +373,8 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeleteDocumentAsync(PimsDocument document)
         {
-            this.Logger.LogInformation("Deleting document {documentId}", document.Internal_Id);
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+            Logger.LogInformation("Deleting document {documentId}", document.Internal_Id);
+            User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
             var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
             if (document.MayanId.HasValue)
@@ -394,6 +396,26 @@ namespace Pims.Api.Services
             {
                 throw GetMayanResponseError(result.Message);
             }
+
+            return result;
+        }
+
+        public async Task<ExternalResponse<string>> DeleteMayanStorageDocumentAsync(long mayanDocumentId)
+        {
+            Logger.LogInformation("Deleting Mayan document {documentId}", mayanDocumentId);
+            User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+
+            ExternalResponse<string> result = await documentStorageRepository.TryDeleteDocument(mayanDocumentId);
+            if(result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.NotFound)
+            {
+                return result;
+            }
+
+            if (result.Status == ExternalResponseStatus.Error || result.Status == ExternalResponseStatus.NotExecuted)
+            {
+                throw GetMayanResponseError(result.Message);
+            }
+
             return result;
         }
 

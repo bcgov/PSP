@@ -20,6 +20,7 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocumentProcessRetries, src => src.DocProcessRetries)
                 .Map(dest => dest.PimsDocument, src => src.DocumentNavigation)
                 .Map(dest => dest.MayanError, src => src.MayanError)
+                .Map(dest => dest.DocumentQueueStatusTypeCode, src => src.DocumentQueueStatusTypeCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<DocumentQueueModel, Entity.PimsDocumentQueue>()

@@ -144,7 +144,6 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,
-      advancedPaymentServedDate: null,
       generationDate: null,
       specialInstruction: null,
       detailedRemarks: null,
