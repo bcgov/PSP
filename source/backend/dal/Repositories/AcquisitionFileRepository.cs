@@ -926,7 +926,18 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(fp => fp.AlternateProject)
                 .Where(predicate);
 
-            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
+            if (filter.Sort?.Length > 0 && filter.Sort[0].Contains("FileNumber"))
+            {
+                query = filter.Sort[0].Contains("asc") ? query.OrderBy(acq => acq.RegionCode)
+                    .ThenBy(acq => acq.FileNo)
+                    .ThenBy(acq => acq.FileNoSuffix) : query.OrderByDescending(acq => acq.RegionCode)
+                    .ThenByDescending(acq => acq.FileNo)
+                    .ThenByDescending(acq => acq.FileNoSuffix);
+            }
+            else
+            {
+                query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
+            }
 
             return query;
         }
