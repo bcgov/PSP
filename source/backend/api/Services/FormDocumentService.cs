@@ -89,7 +89,7 @@ namespace Pims.Api.Services
 
             if (uploadResult.DocumentExternalResponse.Status == ExternalResponseStatus.Success)
             {
-                currentFormType.DocumentId = uploadRequest.DocumentId;
+                currentFormType.DocumentId = uploadResult.Document.Id;
                 var updatedFormType = _formTypeRepository.SetFormTypeDocument(currentFormType);
                 _formTypeRepository.CommitTransaction();
 
