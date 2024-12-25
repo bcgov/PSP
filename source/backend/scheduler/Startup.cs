@@ -111,6 +111,7 @@ namespace Pims.Scheduler
             services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<PimsOptions>(this.Configuration.GetSection("Pims:Environment"));
             services.Configure<UploadQueuedDocumentsJobOptions>(this.Configuration.GetSection("UploadQueuedDocumentsOptions"));
+            services.Configure<RetryQueuedDocumentsJobOptions>(this.Configuration.GetSection("RetryQueuedDocumentsOptions"));
             services.Configure<QueryProcessingDocumentsJobOptions>(this.Configuration.GetSection("QueryProcessingDocumentsOptions"));
             services.AddOptions();
             services.AddApiVersioning(options =>

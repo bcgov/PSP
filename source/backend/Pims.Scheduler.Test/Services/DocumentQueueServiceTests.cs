@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using FluentAssertions;
-using FluentAssertions.Common;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Moq;
@@ -25,6 +21,7 @@ namespace Pims.Scheduler.Test.Services
         private readonly Mock<IPimsDocumentQueueRepository> _documentQueueRepositoryMock;
         private readonly Mock<IOptionsMonitor<UploadQueuedDocumentsJobOptions>> _uploadOptionsMock;
         private readonly Mock<IOptionsMonitor<QueryProcessingDocumentsJobOptions>> _queryOptionsMock;
+        private readonly Mock<IOptionsMonitor<RetryQueuedDocumentsJobOptions>> _retryOptionsMock;
         private readonly DocumentQueueService _service;
 
         public DocumentQueueServiceTests()
@@ -33,6 +30,7 @@ namespace Pims.Scheduler.Test.Services
             _documentQueueRepositoryMock = new Mock<IPimsDocumentQueueRepository>();
             _uploadOptionsMock = new Mock<IOptionsMonitor<UploadQueuedDocumentsJobOptions>>();
             _queryOptionsMock = new Mock<IOptionsMonitor<QueryProcessingDocumentsJobOptions>>();
+            _retryOptionsMock = new Mock<IOptionsMonitor<RetryQueuedDocumentsJobOptions>>();
             _uploadOptionsMock.Setup(x => x.CurrentValue).Returns(new UploadQueuedDocumentsJobOptions() { BatchSize = 10, MaxFileSize = 100 });
             _queryOptionsMock.Setup(x => x.CurrentValue).Returns(new QueryProcessingDocumentsJobOptions() { BatchSize = 10, MaxProcessingMinutes = 100 });
 
@@ -40,6 +38,7 @@ namespace Pims.Scheduler.Test.Services
                 _loggerMock.Object,
                 _uploadOptionsMock.Object,
                 _queryOptionsMock.Object,
+                _retryOptionsMock.Object,
                 _documentQueueRepositoryMock.Object
             );
         }

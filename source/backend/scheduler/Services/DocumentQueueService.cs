@@ -22,11 +22,13 @@ namespace Pims.Scheduler.Services
         private readonly IPimsDocumentQueueRepository _pimsDocumentQueueRepository;
         private readonly IOptionsMonitor<UploadQueuedDocumentsJobOptions> _uploadQueuedDocumentsJobOptions;
         private readonly IOptionsMonitor<QueryProcessingDocumentsJobOptions> _queryProcessingDocumentsJobOptions;
+        private readonly IOptionsMonitor<RetryQueuedDocumentsJobOptions> _retryProcessingDocumentsJobOptions;
 
         public DocumentQueueService(
             ILogger<DocumentQueueService> logger,
             IOptionsMonitor<UploadQueuedDocumentsJobOptions> uploadQueuedDocumentsJobOptions,
             IOptionsMonitor<QueryProcessingDocumentsJobOptions> queryProcessingDocumentsJobOptions,
+            IOptionsMonitor<RetryQueuedDocumentsJobOptions> retryProcessingDocumentsJobOptions,
             IPimsDocumentQueueRepository pimsDocumentQueueRepository)
             : base(null, logger)
         {
@@ -34,6 +36,7 @@ namespace Pims.Scheduler.Services
             _pimsDocumentQueueRepository = pimsDocumentQueueRepository;
             _uploadQueuedDocumentsJobOptions = uploadQueuedDocumentsJobOptions;
             _queryProcessingDocumentsJobOptions = queryProcessingDocumentsJobOptions;
+            _retryProcessingDocumentsJobOptions = retryProcessingDocumentsJobOptions;
         }
 
         public async Task<ScheduledTaskResponseModel> UploadQueuedDocuments()
@@ -60,8 +63,9 @@ namespace Pims.Scheduler.Services
         {
             var filter = new DocumentQueueFilter()
             {
-                Quantity = _uploadQueuedDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50,
+                Quantity = _retryProcessingDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50,
                 DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PIMS_ERROR.ToString(), DocumentQueueStatusTypes.MAYAN_ERROR.ToString() },
+                MaxFileSize = _retryProcessingDocumentsJobOptions?.CurrentValue?.MaxFileSize,
                 MaxDocProcessRetries = 3,
             };
             var searchResponse = await SearchQueuedDocuments(filter);
