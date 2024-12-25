@@ -34,8 +34,7 @@ namespace Pims.Core.Api.Repositories.Rest
         protected BaseRestRepository(
             ILogger logger,
             IHttpClientFactory httpClientFactory,
-            IOptions<JsonSerializerOptions> jsonOptions
-            )
+            IOptions<JsonSerializerOptions> jsonOptions)
         {
             _logger = logger;
             _httpClientFactory = httpClientFactory;

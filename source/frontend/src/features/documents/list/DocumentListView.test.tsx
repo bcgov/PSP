@@ -141,7 +141,6 @@ describe('Document List View', () => {
     expect(getByTestId('refresh-button')).toBeInTheDocument();
   });
 
-
   it('should not display the download icon on the listview', async () => {
     mockAxios.onGet().reply(200, []);
     const documentRows = mockDocumentRowResponse();

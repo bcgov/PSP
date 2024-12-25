@@ -43,9 +43,13 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
     sortButtons,
     // Finding elements
     getDocumentFileNameLink: (documentId: number) =>
-      utils.container.querySelector(`button#document-view-filename-link-${documentId}`) as HTMLElement,
+      utils.container.querySelector(
+        `button#document-view-filename-link-${documentId}`,
+      ) as HTMLElement,
     getDocumentFileNameText: (documentId: number) =>
-      utils.container.querySelector(`span#document-view-filename-text-${documentId}`) as HTMLElement,
+      utils.container.querySelector(
+        `span#document-view-filename-text-${documentId}`,
+      ) as HTMLElement,
     getDocumentProcessingIcon: (rowNumber: number) =>
       utils.container.querySelector(`svg#document-processing-${rowNumber}`) as SVGElement,
     getDocumentProcessingErrorIcon: (rowNumber: number) =>
@@ -142,7 +146,6 @@ describe('Document Results Table', () => {
 
     expect(getDocumentProcessingErrorIcon(4)).toBeVisible();
   });
-
 
   it('displays document delete button', async () => {
     const { getAllByTestId } = setup({

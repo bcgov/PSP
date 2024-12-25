@@ -1,7 +1,5 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Security.Claims;
@@ -57,7 +55,7 @@ namespace Pims.Api.Services
         /// <summary>
         /// Get document in the document queue based on the specified id.
         /// </summary>
-        /// <param name="documentQueueId">The id of the document in the queue</param>
+        /// <param name="documentQueueId">The id of the document in the queue.</param>
         /// <returns><see cref="PimsDocumentQueue"/> that match the id criteria.</returns>
         /// <exception cref="UnauthorizedAccessException">Thrown when the user is not authorized to perform this operation.</exception>
         /// <exception cref="KeyNotFoundException">If the requested Id does not exist.</exception>
@@ -130,7 +128,6 @@ namespace Pims.Api.Services
             return documentQueue;
         }
 
-
         /// <summary>
         /// Polls for the status of a document in mayan, and updates the queue based on the result.
         /// </summary>
@@ -189,7 +186,6 @@ namespace Pims.Api.Services
 
             return databaseDocumentQueue;
         }
-
 
         /// <summary>
         /// Uploads the specified document queue.
@@ -323,7 +319,6 @@ namespace Pims.Api.Services
             _documentQueueRepository.Update(documentQueue, removeDocument);
             _documentQueueRepository.CommitTransaction();
         }
-
 
         /// <summary>
         /// Validates the queued document against the database document queue.

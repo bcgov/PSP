@@ -322,6 +322,23 @@ namespace Pims.Scheduler
             ScheduleHangfireJobs(app.ApplicationServices);
         }
 
+        /// <summary>
+        /// Configures the app to to use content security policies.
+        /// </summary>
+        /// <param name="app">The application builder provider.</param>
+        private static void ConfigureSecureHeaders(IApplicationBuilder app)
+        {
+            app.Use(
+            async (context, next) =>
+            {
+                context.Response.Headers.Append("Strict-Transport-Security", "max-age=86400; includeSubDomains");
+                context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+                context.Response.Headers.Append("X-XSS-Protection", "1");
+                context.Response.Headers.Append("X-Frame-Options", " DENY");
+                await next().ConfigureAwait(true);
+            });
+        }
+
         private void ScheduleHangfireJobs(IServiceProvider services)
         {
             // provide default definition of all jobs.
@@ -332,23 +349,6 @@ namespace Pims.Scheduler
             // override scheduled jobs with configuration.
             JobScheduleOptions jobOptions = this.Configuration.GetSection("JobOptions").Get<JobScheduleOptions>();
             services.GetService<IJobRescheduler>().LoadSchedules(jobOptions);
-        }
-
-        /// <summary>
-        /// Configures the app to to use content security policies.
-        /// </summary>
-        /// <param name="app">The application builder provider.</param>
-        private static void ConfigureSecureHeaders(IApplicationBuilder app)
-        {
-            app.Use(
-            async (context, next) =>
-            {
-                context.Response.Headers.Add("Strict-Transport-Security", "max-age=86400; includeSubDomains");
-                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-                context.Response.Headers.Add("X-XSS-Protection", "1");
-                context.Response.Headers.Add("X-Frame-Options", " DENY");
-                await next().ConfigureAwait(true);
-            });
         }
         #endregion
     }

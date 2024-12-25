@@ -209,7 +209,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             sut.Should().ThrowAsync<NotAuthorizedException>();
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
         }
 
         [Fact]
@@ -226,7 +226,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             sut.Should().ThrowAsync<NotAuthorizedException>();
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
         }
 
         [Fact]
@@ -243,7 +243,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             sut.Should().ThrowAsync<NotAuthorizedException>();
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
         }
 
         [Fact]
@@ -260,7 +260,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             sut.Should().ThrowAsync<NotAuthorizedException>();
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
         }
 
         [Fact]
@@ -277,7 +277,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             sut.Should().ThrowAsync<NotAuthorizedException>();
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
         }
 
         [Fact]
@@ -294,7 +294,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             action.Should().ThrowExactlyAsync<NotAuthorizedException>();
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
         }
 
         [Fact]
@@ -353,7 +353,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ProjectEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
-            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
 
             // Act
             DocumentUploadRequest uploadRequest = new()
@@ -370,7 +370,7 @@ namespace Pims.Api.Test.Services
             var ex = await act.Should().ThrowAsync<BadRequestException>();
             ex.Which.Message.Should().Be("The submitted file is empty");
 
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
             projectRepository.Verify(x => x.AddProjectDocument(It.IsAny<PimsProjectDocument>()), Times.Never);
         }
 
@@ -430,7 +430,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var acquisitionFileDocumentRepository = this._helper.GetService<Mock<IAcquisitionFileDocumentRepository>>();
-            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
 
             // Act
             DocumentUploadRequest uploadRequest = new()
@@ -447,7 +447,7 @@ namespace Pims.Api.Test.Services
             var ex = await act.Should().ThrowAsync<BadRequestException>();
             ex.Which.Message.Should().Be("The submitted file is empty");
 
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
             acquisitionFileDocumentRepository.Verify(x => x.AddAcquisition(It.IsAny<PimsAcquisitionFileDocument>()), Times.Never);
         }
 
@@ -500,7 +500,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var researchFileDocumentRepository = this._helper.GetService<Mock<IResearchFileDocumentRepository>>();
-            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
 
             // Act
             DocumentUploadRequest uploadRequest = new()
@@ -517,7 +517,7 @@ namespace Pims.Api.Test.Services
             var ex = await act.Should().ThrowAsync<BadRequestException>();
             ex.Which.Message.Should().Be("The submitted file is empty");
 
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
             researchFileDocumentRepository.Verify(x => x.AddResearch(It.IsAny<PimsResearchFileDocument>()), Times.Never);
         }
 
@@ -570,7 +570,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.LeaseEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
 
             // Act
             DocumentUploadRequest uploadRequest = new()
@@ -587,7 +587,7 @@ namespace Pims.Api.Test.Services
             var ex = await act.Should().ThrowAsync<BadRequestException>();
             ex.Which.Message.Should().Be("The submitted file is empty");
 
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
             leaseRepository.Verify(x => x.AddLeaseDocument(It.IsAny<PimsLeaseDocument>()), Times.Never);
         }
 
@@ -640,7 +640,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.ManagementEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var propertyActivityDocumentRepository = this._helper.GetService<Mock<IPropertyActivityDocumentRepository>>();
-            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
 
             // Act
             DocumentUploadRequest uploadRequest = new()
@@ -657,7 +657,7 @@ namespace Pims.Api.Test.Services
             var ex = await act.Should().ThrowAsync<BadRequestException>();
             ex.Which.Message.Should().Be("The submitted file is empty");
 
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
             propertyActivityDocumentRepository.Verify(x => x.AddPropertyActivityDocument(It.IsAny<PimsPropertyActivityDocument>()), Times.Never);
         }
 
@@ -713,7 +713,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd, Permissions.DispositionEdit);
             var documentService = this._helper.GetService<Mock<IDocumentService>>();
             var dispositionFileDocumentRepository = this._helper.GetService<Mock<IDispositionFileDocumentRepository>>();
-            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()));
+            documentService.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false));
 
             // Act
             DocumentUploadRequest uploadRequest = new()
@@ -730,7 +730,7 @@ namespace Pims.Api.Test.Services
             var ex = await act.Should().ThrowAsync<BadRequestException>();
             ex.Which.Message.Should().Be("The submitted file is empty");
 
-            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>()), Times.Never);
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
             dispositionFileDocumentRepository.Verify(x => x.AddDispositionDocument(It.IsAny<PimsDispositionFileDocument>()), Times.Never);
         }
 

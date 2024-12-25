@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +36,7 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Attempts to find a queued document via the documentQueueId. Returns null if not found;
+        /// Attempts to find a queued document via the documentQueueId. Returns null if not found.
         /// </summary>
         /// <param name="documentQueueId"></param>
         /// <returns></returns>
@@ -62,6 +61,7 @@ namespace Pims.Dal.Repositories
             queuedDocument.DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PENDING.ToString();
             queuedDocument.DataSourceTypeCode = DataSourceTypes.PIMS.ToString();
             queuedDocument.MayanError = null;
+
             // Add
             Context.PimsDocumentQueues.Add(queuedDocument);
 
