@@ -138,7 +138,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsAcquisitionFileForm> GetAcquisitionForms(long acquisitionFileId)
         {
-            _logger.LogInformation("Getting acquisition forms by acquisition file id ...", acquisitionFileId);
+            _logger.LogInformation("Getting acquisition forms by acquisition file id {acquisitionFileId}", acquisitionFileId);
             this.User.ThrowIfNotAuthorized(Permissions.FormView, Permissions.AcquisitionFileView);
 
             var fileForms = _acquisitionFileFormRepository.GetAllByAcquisitionFileId(acquisitionFileId);
@@ -147,7 +147,7 @@ namespace Pims.Api.Services
 
         public PimsAcquisitionFileForm GetAcquisitionForm(long fileFormId)
         {
-            _logger.LogInformation("Getting acquisition form by form file id ...", fileFormId);
+            _logger.LogInformation("Getting acquisition form by form file id {fileFormId}", fileFormId);
             this.User.ThrowIfNotAuthorized(Permissions.FormView, Permissions.AcquisitionFileView);
 
             var fileForm = _acquisitionFileFormRepository.GetByAcquisitionFileFormId(fileFormId);
@@ -156,7 +156,7 @@ namespace Pims.Api.Services
 
         public bool DeleteAcquisitionFileForm(long fileFormId)
         {
-            _logger.LogInformation("Deleting acquisition file form id ...", fileFormId);
+            _logger.LogInformation("Deleting acquisition file form id {fileFormId}", fileFormId);
             this.User.ThrowIfNotAuthorized(Permissions.FormDelete, Permissions.AcquisitionFileEdit);
 
             var fileFormToDelete = _acquisitionFileFormRepository.TryDelete(fileFormId);

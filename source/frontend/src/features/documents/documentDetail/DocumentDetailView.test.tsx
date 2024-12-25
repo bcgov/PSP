@@ -90,6 +90,7 @@ const mockDocument: ComposedDocument = {
     document: {
       id: 1,
       mayanDocumentId: 15,
+      documentQueueStatusTypeCode: null,
       documentType: mockDocumentTypesResponse()[0],
       statusTypeCode: {
         id: 'AMEND',

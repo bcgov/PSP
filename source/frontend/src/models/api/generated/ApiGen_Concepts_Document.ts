@@ -9,8 +9,9 @@ import { ApiGen_Concepts_DocumentType } from './ApiGen_Concepts_DocumentType';
 // LINK: @backend/apimodels/Models/Concepts/Document/DocumentModel.cs
 export interface ApiGen_Concepts_Document extends ApiGen_Base_BaseAudit {
   id: number;
-  mayanDocumentId: number;
+  mayanDocumentId: number | null;
   documentType: ApiGen_Concepts_DocumentType | null;
   statusTypeCode: ApiGen_Base_CodeType<string> | null;
   fileName: string | null;
+  documentQueueStatusTypeCode: ApiGen_Base_CodeType<string> | null;
 }
