@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.IO;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Models.Concepts.Document;
 
@@ -20,6 +21,11 @@ namespace Pims.Api.Models.Requests.Document.Upload
         /// get/set - The type for the document to be uploaded.
         /// </summary>
         public long DocumentTypeId { get; set; }
+
+        /// <summary>
+        /// get/set - The id of the document to be uploaded (in PIMS).
+        /// </summary>
+        public long DocumentId { get; set; }
 
         /// <summary>
         /// get/set - Initial status code of the document.

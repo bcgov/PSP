@@ -6,6 +6,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Requests.Http;
@@ -26,11 +27,13 @@ namespace Pims.Api.Repositories.Mayan
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="configuration">The injected configuration provider.</param>
+        /// <param name="jsonOptions">The jsonOptions.</param>
         public MayanAuthRepository(
             ILogger<MayanDocumentRepository> logger,
             IHttpClientFactory httpClientFactory,
-            IConfiguration configuration)
-            : base(logger, httpClientFactory, configuration)
+            IConfiguration configuration,
+            IOptions<JsonSerializerOptions> jsonOptions)
+            : base(logger, httpClientFactory, configuration, jsonOptions)
         {
             _currentToken = string.Empty;
         }

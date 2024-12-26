@@ -526,6 +526,7 @@ namespace Pims.Api
             services.AddScoped<ITakeInteractionSolver, TakeInteractionSolver>();
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
             services.AddScoped<IEnvironmentService, EnvironmentService>();
+            services.AddScoped<IDocumentQueueService, DocumentQueueService>();
         }
 
         /// <summary>

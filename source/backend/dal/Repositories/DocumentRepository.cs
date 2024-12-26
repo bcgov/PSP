@@ -43,6 +43,23 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsDocuments.AsNoTracking().FirstOrDefault(x => x.DocumentId == documentId);
         }
 
+        public PimsDocument TryGetDocumentRelationships(long documentId)
+        {
+            var documentRelationships = Context.PimsDocuments.AsNoTracking()
+                .Include(d => d.PimsResearchFileDocuments)
+                .Include(d => d.PimsAcquisitionFileDocuments)
+                .Include(d => d.PimsProjectDocuments)
+                .Include(d => d.PimsFormTypes)
+                .Include(d => d.PimsLeaseDocuments)
+                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsDispositionFileDocuments)
+                .Where(d => d.DocumentId == documentId)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+            return documentRelationships;
+        }
+
         /// <summary>
         /// Adds the passed document to the database.
         /// </summary>

@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Core.Api.Repositories.Rest;
 
 namespace Pims.Scheduler.Repositories
@@ -14,10 +16,12 @@ namespace Pims.Scheduler.Repositories
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
+        /// <param name="jsonOptions">Injected app-wide json options.</param>
         protected PimsBaseRepository(
             ILogger logger,
-            IHttpClientFactory httpClientFactory)
-            : base(logger, httpClientFactory)
+            IHttpClientFactory httpClientFactory,
+            IOptions<JsonSerializerOptions> jsonOptions)
+            : base(logger, httpClientFactory, jsonOptions)
         {
         }
 
