@@ -6,7 +6,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.btn .Button__value {
+.c5.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c6.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c5.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c5.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-primary:hover,
-.c6.btn.btn-primary:active,
-.c6.btn.btn-primary:focus {
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:active,
+.c5.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c6.btn.btn-secondary {
+.c5.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c6.btn.btn-secondary:hover,
-.c6.btn.btn-secondary:active,
-.c6.btn.btn-secondary:focus {
+.c5.btn.btn-secondary:hover,
+.c5.btn.btn-secondary:active,
+.c5.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-info {
+.c5.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c6.btn.btn-light {
+.c5.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c6.btn.btn-light:hover,
-.c6.btn.btn-light:active,
-.c6.btn.btn-light:focus {
+.c5.btn.btn-light:hover,
+.c5.btn.btn-light:active,
+.c5.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c6.btn.btn-dark {
+.c5.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c6.btn.btn-dark:hover,
-.c6.btn.btn-dark:active,
-.c6.btn.btn-dark:focus {
+.c5.btn.btn-dark:hover,
+.c5.btn.btn-dark:active,
+.c5.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c6.btn.btn-danger {
+.c5.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-danger:hover,
-.c6.btn.btn-danger:active,
-.c6.btn.btn-danger:focus {
+.c5.btn.btn-danger:hover,
+.c5.btn.btn-danger:active,
+.c5.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-warning {
+.c5.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c6.btn.btn-warning:hover,
-.c6.btn.btn-warning:active,
-.c6.btn.btn-warning:focus {
+.c5.btn.btn-warning:hover,
+.c5.btn.btn-warning:active,
+.c5.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c6.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,19 +202,19 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c6.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c3 {
+.c6 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -235,7 +235,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c7 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -254,14 +254,33 @@ exports[`Lease Documents Page > renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c9 {
+.c11 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c8 {
+.c10 {
   width: 1.6rem;
   height: 1.6rem;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c7 {
+  background-color: #d9eaf7;
+  border-radius: 0.5rem 0.5rem 0rem 0rem;
+}
+
+.c8 {
+  border-left: 0.2rem solid white;
 }
 
 .c2 {
@@ -281,12 +300,11 @@ exports[`Lease Documents Page > renders as expected 1`] = `
 }
 
 .c4 {
-  background-color: #d9eaf7;
-  border-radius: 0.5rem 0.5rem 0rem 0rem;
-}
-
-.c5 {
-  border-left: 0.2rem solid white;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  gap: 0.5rem;
 }
 
 <div
@@ -307,18 +325,55 @@ exports[`Lease Documents Page > renders as expected 1`] = `
             <div
               class="px-2 my-1 col-auto"
             >
-              Documents
+              <span>
+                Documents
+              </span>
             </div>
             <div
               class="my-1 col-auto"
-            />
+            >
+              <div
+                class="c3 c4"
+              >
+                <button
+                  class="c5 Button Button--icon-only primary btn btn-primary"
+                  data-testid="refresh-button"
+                  id="refresh-button"
+                  title="refresh-button"
+                  type="button"
+                >
+                  <div
+                    class="Button__icon"
+                  >
+                    <svg
+                      fill="none"
+                      height="24"
+                      stroke="currentColor"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      viewBox="0 0 24 24"
+                      width="24"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"
+                      />
+                      <path
+                        d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"
+                      />
+                    </svg>
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
         <div
           class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
-            class="c3"
+            class="c6"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -345,7 +400,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
       class="collapse show"
     >
       <form
-        class="c4 p-3"
+        class="c7 p-3"
         novalidate=""
       >
         <div
@@ -427,13 +482,13 @@ exports[`Lease Documents Page > renders as expected 1`] = `
             class="col-lg-auto"
           >
             <div
-              class="c5 no-gutters pl-2 row"
+              class="c8 no-gutters pl-2 row"
             >
               <div
                 class="col"
               >
                 <button
-                  class="c6 Button Button--icon-only primary btn btn-primary"
+                  class="c5 Button Button--icon-only primary btn btn-primary"
                   data-testid="search"
                   id="search-button"
                   title="search"
@@ -462,7 +517,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                 class="col"
               >
                 <button
-                  class="c6 Button Button--icon-only btn btn-info"
+                  class="c5 Button Button--icon-only btn btn-info"
                   data-testid="reset-button"
                   id="reset-button"
                   title="reset-button"
@@ -508,18 +563,18 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Document type
                 <div
-                  class="c7"
+                  class="c9"
                   data-testid="sort-column-documentType"
                 >
                   <svg
-                    class="c8"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -534,7 +589,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c9"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -554,18 +609,18 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 File name
                 <div
-                  class="c7"
+                  class="c9"
                   data-testid="sort-column-fileName"
                 >
                   <svg
-                    class="c8"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -580,7 +635,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c9"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -600,18 +655,18 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Uploaded
                 <div
-                  class="c7"
+                  class="c9"
                   data-testid="sort-column-appCreateTimestamp"
                 >
                   <svg
-                    class="c8"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -626,7 +681,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c9"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -646,18 +701,18 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Status
                 <div
-                  class="c7"
+                  class="c9"
                   data-testid="sort-column-statusTypeCode"
                 >
                   <svg
-                    class="c8"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -672,7 +727,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c9"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -692,7 +747,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 90 0 auto; min-width: 30px; width: 90px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 10 0 auto; min-width: 30px; width: 10px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"

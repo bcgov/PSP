@@ -275,12 +275,21 @@ export const MapRouter: React.FunctionComponent = memo(() => {
         title={'Property Information'}
       />
       <AppRoute
-        path={`/mapview/sidebar/non-inventory-property/:propertyId`}
+        path={`/mapview/sidebar/non-inventory-property/pid/:pid`}
         customRender={({ match }) => (
-          <MotiInventoryContainer onClose={onClose} pid={match.params.propertyId} />
+          <MotiInventoryContainer onClose={onClose} pid={match.params.pid} />
         )}
         claim={Claims.PROPERTY_VIEW}
-        key={'PropertyNonInventory'}
+        key={'PropertyNonInventoryPid'}
+        title={'Property Information - Non Inventory'}
+      />
+      <AppRoute
+        path={`/mapview/sidebar/non-inventory-property/pin/:pin`}
+        customRender={({ match }) => (
+          <MotiInventoryContainer onClose={onClose} pin={match.params.pin} />
+        )}
+        claim={Claims.PROPERTY_VIEW}
+        key={'PropertyNonInventoryPin'}
         title={'Property Information - Non Inventory'}
       />
       <AppRoute

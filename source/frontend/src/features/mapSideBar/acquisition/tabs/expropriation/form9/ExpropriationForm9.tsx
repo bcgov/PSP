@@ -10,6 +10,7 @@ import { ContactInputContainer } from '@/components/common/form/ContactInput/Con
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import FormItem from '@/components/common/form/FormItem';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledAddButton } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -99,10 +100,10 @@ export const ExpropriationForm9: React.FC<IExpropriationForm9Props> = ({
               </Button>
             </Col>
             <Col xs="auto">
-              <Button title="Download File" onClick={() => onGenerateClick(formikProps)}>
+              <StyledAddButton title="Download File" onClick={() => onGenerateClick(formikProps)}>
                 <FaFileContract size={28} className="mr-2" />
                 Generate Form 9
-              </Button>
+              </StyledAddButton>
             </Col>
           </RightFlexRow>
         </React.Fragment>

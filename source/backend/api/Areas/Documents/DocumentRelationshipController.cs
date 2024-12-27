@@ -4,15 +4,15 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Constants;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Requests.Document.Upload;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Json;
-using Pims.Dal.Entities;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers
@@ -142,19 +142,27 @@ namespace Pims.Api.Controllers
             string parentId,
             [FromForm] DocumentUploadRequest uploadRequest)
         {
-            var response = relationshipType switch
+            switch (relationshipType)
             {
-                DocumentRelationType.AcquisitionFiles => await _documentFileService.UploadAcquisitionDocumentAsync(long.Parse(parentId), uploadRequest),
-                DocumentRelationType.ResearchFiles => await _documentFileService.UploadResearchDocumentAsync(long.Parse(parentId), uploadRequest),
-                DocumentRelationType.Templates => await _formDocumentService.UploadFormDocumentTemplateAsync(parentId, uploadRequest),
-                DocumentRelationType.Projects => await _documentFileService.UploadProjectDocumentAsync(long.Parse(parentId), uploadRequest),
-                DocumentRelationType.Leases => await _documentFileService.UploadLeaseDocumentAsync(long.Parse(parentId), uploadRequest),
-                DocumentRelationType.ManagementFiles => await _documentFileService.UploadPropertyActivityDocumentAsync(long.Parse(parentId), uploadRequest),
-                DocumentRelationType.DispositionFiles => await _documentFileService.UploadDispositionDocumentAsync(long.Parse(parentId), uploadRequest),
-                _ => throw new BadRequestException("Relationship type not valid for upload."),
-            };
+                case DocumentRelationType.AcquisitionFiles:
+                    await _documentFileService.UploadAcquisitionDocument(long.Parse(parentId), uploadRequest); break;
+                case DocumentRelationType.ResearchFiles:
+                    await _documentFileService.UploadResearchDocument(long.Parse(parentId), uploadRequest); break;
+                case DocumentRelationType.Projects:
+                    await _documentFileService.UploadProjectDocument(long.Parse(parentId), uploadRequest); break;
+                case DocumentRelationType.Leases:
+                    await _documentFileService.UploadLeaseDocument(long.Parse(parentId), uploadRequest); break;
+                case DocumentRelationType.ManagementFiles:
+                    await _documentFileService.UploadPropertyActivityDocument(long.Parse(parentId), uploadRequest); break;
+                case DocumentRelationType.DispositionFiles:
+                    await _documentFileService.UploadDispositionDocument(long.Parse(parentId), uploadRequest); break;
+                case DocumentRelationType.Templates:
+                    await _formDocumentService.UploadFormDocumentTemplateAsync(parentId, uploadRequest); break;
+                default:
+                    throw new BadRequestException("Relationship type not valid for upload.");
+            }
 
-            return new JsonResult(response);
+            return Ok();
         }
 
         /// <summary>
@@ -169,7 +177,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "document" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public async Task<IActionResult> DeleteDocumentRelationship(DocumentRelationType relationshipType, [FromBody] DocumentRelationshipModel model)
+        public async Task<IActionResult> DeleteDocumentRelationship([FromRoute]DocumentRelationType relationshipType, [FromBody]DocumentRelationshipModel model)
         {
             switch (relationshipType)
             {

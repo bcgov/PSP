@@ -6,7 +6,6 @@ namespace Pims.Api.Models.CodeTypes
     [JsonConverter(typeof(JsonStringEnumMemberConverter))]
     public enum DocumentQueueStatusTypes
     {
-
         [EnumMember(Value = "MAYAN_ERROR")]
         MAYAN_ERROR,
 

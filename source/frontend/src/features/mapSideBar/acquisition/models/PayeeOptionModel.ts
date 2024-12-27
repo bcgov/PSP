@@ -102,7 +102,6 @@ export class PayeeOption {
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,
-      advancedPaymentServedDate: null,
       generationDate: null,
       financials: [],
       compReqLeaseStakeholder: [],

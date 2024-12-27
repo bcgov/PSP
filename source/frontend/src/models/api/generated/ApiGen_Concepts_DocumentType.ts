@@ -10,6 +10,6 @@ export interface ApiGen_Concepts_DocumentType extends ApiGen_Base_BaseAudit {
   documentType: string | null;
   documentTypeDescription: string | null;
   documentTypePurpose: string | null;
-  mayanId: number;
+  mayanId: number | null;
   isDisabled: boolean;
 }
