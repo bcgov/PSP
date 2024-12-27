@@ -90,7 +90,7 @@ const UpdateOrganization: React.FC<FormikProps<IEditableOrganizationForm>> = ({
   };
 
   const isContactMethodInvalid = useMemo(() => {
-    if (isOrganizationDisabled === true) {
+    if (isOrganizationDisabled === 'true') {
       return false;
     }
     return (
