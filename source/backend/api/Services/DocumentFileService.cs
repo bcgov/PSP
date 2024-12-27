@@ -1,12 +1,14 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Security.Claims;
+using System.Text.Json;
 using System.Threading.Tasks;
-using MapsterMapper;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
@@ -23,15 +25,15 @@ namespace Pims.Api.Services
     /// </summary>
     public class DocumentFileService : BaseService, IDocumentFileService
     {
-        private readonly IAcquisitionFileDocumentRepository acquisitionFileDocumentRepository;
-        private readonly IResearchFileDocumentRepository researchFileDocumentRepository;
-        private readonly IDocumentService documentService;
+        private readonly IAcquisitionFileDocumentRepository _acquisitionFileDocumentRepository;
+        private readonly IResearchFileDocumentRepository _researchFileDocumentRepository;
+        private readonly IDocumentService _documentService;
         private readonly IProjectRepository _projectRepository;
         private readonly IDocumentRepository _documentRepository;
+        private readonly IDocumentQueueRepository _documentQueueRepository;
         private readonly ILeaseRepository _leaseRepository;
         private readonly IPropertyActivityDocumentRepository _propertyActivityDocumentRepository;
         private readonly IDispositionFileDocumentRepository _dispositionFileDocumentRepository;
-        private readonly IMapper mapper;
 
         public DocumentFileService(
             ClaimsPrincipal user,
@@ -39,23 +41,23 @@ namespace Pims.Api.Services
             IAcquisitionFileDocumentRepository acquisitionFileDocumentRepository,
             IResearchFileDocumentRepository researchFileDocumentRepository,
             IDocumentService documentService,
-            IMapper mapper,
             IProjectRepository projectRepository,
             IDocumentRepository documentRepository,
             ILeaseRepository leaseRepository,
             IPropertyActivityDocumentRepository propertyActivityDocumentRepository,
-            IDispositionFileDocumentRepository dispositionFileDocumentRepository)
+            IDispositionFileDocumentRepository dispositionFileDocumentRepository,
+            IDocumentQueueRepository documentQueueRepository)
             : base(user, logger)
         {
-            this.acquisitionFileDocumentRepository = acquisitionFileDocumentRepository;
-            this.researchFileDocumentRepository = researchFileDocumentRepository;
-            this.documentService = documentService;
-            this.mapper = mapper;
+            _acquisitionFileDocumentRepository = acquisitionFileDocumentRepository;
+            _researchFileDocumentRepository = researchFileDocumentRepository;
+            _documentService = documentService;
             _projectRepository = projectRepository;
             _documentRepository = documentRepository;
             _leaseRepository = leaseRepository;
             _propertyActivityDocumentRepository = propertyActivityDocumentRepository;
             _dispositionFileDocumentRepository = dispositionFileDocumentRepository;
+            _documentQueueRepository = documentQueueRepository;
         }
 
         public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
@@ -68,10 +70,10 @@ namespace Pims.Api.Services
             {
                 case FileType.Research:
                     User.ThrowIfNotAuthorized(Permissions.ResearchFileView);
-                    return researchFileDocumentRepository.GetAllByResearchFile(fileId).Select(f => f as T).ToArray();
+                    return _researchFileDocumentRepository.GetAllByResearchFile(fileId).Select(f => f as T).ToArray();
                 case FileType.Acquisition:
                     User.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-                    return acquisitionFileDocumentRepository.GetAllByAcquisitionFile(fileId).Select(f => f as T).ToArray();
+                    return _acquisitionFileDocumentRepository.GetAllByAcquisitionFile(fileId).Select(f => f as T).ToArray();
                 case FileType.Project:
                     User.ThrowIfNotAuthorized(Permissions.ProjectView);
                     return _projectRepository.GetAllProjectDocuments(fileId).Select(f => f as T).ToArray();
@@ -89,210 +91,136 @@ namespace Pims.Api.Services
             }
         }
 
-        public async Task<DocumentUploadRelationshipResponse> UploadResearchDocumentAsync(long researchFileId, DocumentUploadRequest uploadRequest)
-        {
-            Logger.LogInformation("Uploading document for single research file");
-            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
-
-            // Do not call Mayan if uploaded file is empty (zero-size)
-            ValidateZeroLengthFile(uploadRequest);
-
-            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
-
-            DocumentUploadRelationshipResponse relationshipResponse = new DocumentUploadRelationshipResponse()
-            {
-                UploadResponse = uploadResult,
-            };
-
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
-            ValidateDocumentUploadResponse(uploadResult);
-
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
-            {
-                // Create the pims document research file relationship
-                PimsResearchFileDocument newResearchFileDocument = new PimsResearchFileDocument()
-                {
-                    ResearchFileId = researchFileId,
-                    DocumentId = uploadResult.Document.Id,
-                };
-                newResearchFileDocument = researchFileDocumentRepository.AddResearch(newResearchFileDocument);
-                researchFileDocumentRepository.CommitTransaction();
-
-                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newResearchFileDocument);
-            }
-
-            return relationshipResponse;
-        }
-
-        public async Task<DocumentUploadRelationshipResponse> UploadAcquisitionDocumentAsync(long acquisitionFileId, DocumentUploadRequest uploadRequest)
+        public async Task UploadAcquisitionDocument(long acquisitionFileId, DocumentUploadRequest uploadRequest)
         {
             Logger.LogInformation("Uploading document for single acquisition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
+            uploadRequest.ThrowInvalidFileSize();
 
-            // Do not call Mayan if uploaded file is empty (zero-size)
-            ValidateZeroLengthFile(uploadRequest);
+            PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
+            _documentQueueRepository.SaveChanges();
 
-            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
-
-            DocumentUploadRelationshipResponse relationshipResponse = new DocumentUploadRelationshipResponse()
+            PimsAcquisitionFileDocument newAcquisitionDocument = new()
             {
-                UploadResponse = uploadResult,
+                AcquisitionFileId = acquisitionFileId,
+                DocumentId = pimsDocument.DocumentId,
             };
+            _acquisitionFileDocumentRepository.AddAcquisition(newAcquisitionDocument);
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
-            ValidateDocumentUploadResponse(uploadResult);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
+            _acquisitionFileDocumentRepository.CommitTransaction();
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
-            {
-                // Create the pims document acquisition file relationship
-                PimsAcquisitionFileDocument newAcquisitionDocument = new PimsAcquisitionFileDocument()
-                {
-                    AcquisitionFileId = acquisitionFileId,
-                    DocumentId = uploadResult.Document.Id,
-                };
-                newAcquisitionDocument = acquisitionFileDocumentRepository.AddAcquisition(newAcquisitionDocument);
-                acquisitionFileDocumentRepository.CommitTransaction();
-
-                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newAcquisitionDocument);
-            }
-
-            return relationshipResponse;
+            return;
         }
 
-        public async Task<DocumentUploadRelationshipResponse> UploadProjectDocumentAsync(long projectId, DocumentUploadRequest uploadRequest)
+        public async Task UploadResearchDocument(long researchFileId, DocumentUploadRequest uploadRequest)
+        {
+            Logger.LogInformation("Uploading document for single research file");
+            User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
+            uploadRequest.ThrowInvalidFileSize();
+
+            PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
+            _documentQueueRepository.SaveChanges();
+
+            PimsResearchFileDocument newFileDocument = new()
+            {
+                ResearchFileId = researchFileId,
+                DocumentId = pimsDocument.DocumentId,
+            };
+            _researchFileDocumentRepository.AddResearch(newFileDocument);
+
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
+            _documentQueueRepository.CommitTransaction();
+
+            return;
+        }
+
+        public async Task UploadProjectDocument(long projectId, DocumentUploadRequest uploadRequest)
         {
             Logger.LogInformation("Uploading document for single Project");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ProjectEdit);
+            uploadRequest.ThrowInvalidFileSize();
 
-            // Do not call Mayan if uploaded file is empty (zero-size)
-            ValidateZeroLengthFile(uploadRequest);
+            PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
+            _documentQueueRepository.SaveChanges();
 
-            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
-
-            DocumentUploadRelationshipResponse relationshipResponse = new()
+            PimsProjectDocument newFileDocument = new()
             {
-                UploadResponse = uploadResult,
+                ProjectId = projectId,
+                DocumentId = pimsDocument.DocumentId,
             };
+            _projectRepository.AddProjectDocument(newFileDocument);
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
-            ValidateDocumentUploadResponse(uploadResult);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
+            _documentQueueRepository.CommitTransaction();
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
-            {
-                PimsProjectDocument newProjectDocument = new()
-                {
-                    ProjectId = projectId,
-                    DocumentId = uploadResult.Document.Id,
-                };
-                newProjectDocument = _projectRepository.AddProjectDocument(newProjectDocument);
-                _projectRepository.CommitTransaction();
-
-                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newProjectDocument);
-            }
-
-            return relationshipResponse;
+            return;
         }
 
-        public async Task<DocumentUploadRelationshipResponse> UploadLeaseDocumentAsync(long leaseId, DocumentUploadRequest uploadRequest)
+        public async Task UploadLeaseDocument(long leaseId, DocumentUploadRequest uploadRequest)
         {
             Logger.LogInformation("Uploading document for single Lease");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.LeaseEdit);
+            uploadRequest.ThrowInvalidFileSize();
 
-            // Do not call Mayan if uploaded file is empty (zero-size)
-            ValidateZeroLengthFile(uploadRequest);
+            PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
+            _documentQueueRepository.SaveChanges();
 
-            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
-
-            DocumentUploadRelationshipResponse relationshipResponse = new()
+            PimsLeaseDocument newFileDocument = new()
             {
-                UploadResponse = uploadResult,
+                LeaseId = leaseId,
+                DocumentId = pimsDocument.DocumentId,
             };
+            _leaseRepository.AddLeaseDocument(newFileDocument);
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
-            ValidateDocumentUploadResponse(uploadResult);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
+            _documentQueueRepository.CommitTransaction();
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
-            {
-                PimsLeaseDocument newDocument = new()
-                {
-                    LeaseId = leaseId,
-                    DocumentId = uploadResult.Document.Id,
-                };
-                newDocument = _leaseRepository.AddLeaseDocument(newDocument);
-                _leaseRepository.CommitTransaction();
-
-                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newDocument);
-            }
-
-            return relationshipResponse;
+            return;
         }
 
-        public async Task<DocumentUploadRelationshipResponse> UploadPropertyActivityDocumentAsync(long propertyActivityId, DocumentUploadRequest uploadRequest)
+        public async Task UploadPropertyActivityDocument(long propertyActivityId, DocumentUploadRequest uploadRequest)
         {
             Logger.LogInformation("Uploading document for single Property Activity");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
+            uploadRequest.ThrowInvalidFileSize();
 
-            // Do not call Mayan if uploaded file is empty (zero-size)
-            ValidateZeroLengthFile(uploadRequest);
+            PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
+            _documentQueueRepository.SaveChanges();
 
-            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
-
-            DocumentUploadRelationshipResponse relationshipResponse = new()
+            PimsPropertyActivityDocument newFileDocument = new()
             {
-                UploadResponse = uploadResult,
+                PimsPropertyActivityId = propertyActivityId,
+                DocumentId = pimsDocument.DocumentId,
             };
+            _propertyActivityDocumentRepository.AddPropertyActivityDocument(newFileDocument);
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
-            ValidateDocumentUploadResponse(uploadResult);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
+            _documentQueueRepository.CommitTransaction();
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
-            {
-                PimsPropertyActivityDocument newDocument = new()
-                {
-                    PimsPropertyActivityId = propertyActivityId,
-                    DocumentId = uploadResult.Document.Id,
-                };
-                newDocument = _propertyActivityDocumentRepository.AddPropertyActivityDocument(newDocument);
-                _propertyActivityDocumentRepository.CommitTransaction();
-
-                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newDocument);
-            }
-
-            return relationshipResponse;
+            return;
         }
 
-        public async Task<DocumentUploadRelationshipResponse> UploadDispositionDocumentAsync(long dispositionFileId, DocumentUploadRequest uploadRequest)
+        public async Task UploadDispositionDocument(long dispositionFileId, DocumentUploadRequest uploadRequest)
         {
             Logger.LogInformation("Uploading document for single disposition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.DispositionEdit);
+            uploadRequest.ThrowInvalidFileSize();
 
-            // Do not call Mayan if uploaded file is empty (zero-size)
-            ValidateZeroLengthFile(uploadRequest);
+            PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
+            _documentQueueRepository.SaveChanges();
 
-            DocumentUploadResponse uploadResult = await documentService.UploadDocumentAsync(uploadRequest);
-
-            DocumentUploadRelationshipResponse relationshipResponse = new()
+            PimsDispositionFileDocument newFileDocument = new()
             {
-                UploadResponse = uploadResult,
+                DispositionFileId = dispositionFileId,
+                DocumentId = pimsDocument.DocumentId,
             };
+            _dispositionFileDocumentRepository.AddDispositionDocument(newFileDocument);
 
-            // Throw an error if Mayan returns a null document. This means it wasn't able to store it.
-            ValidateDocumentUploadResponse(uploadResult);
+            await GenerateQueuedDocumentItem(pimsDocument.DocumentId, uploadRequest);
+            _documentQueueRepository.CommitTransaction();
 
-            if (uploadResult.Document is not null && uploadResult.Document.Id != 0)
-            {
-                PimsDispositionFileDocument newDocument = new()
-                {
-                    DispositionFileId = dispositionFileId,
-                    DocumentId = uploadResult.Document.Id,
-                };
-                newDocument = _dispositionFileDocumentRepository.AddDispositionDocument(newDocument);
-                _dispositionFileDocumentRepository.CommitTransaction();
-
-                relationshipResponse.DocumentRelationship = mapper.Map<DocumentRelationshipModel>(newDocument);
-            }
-
-            return relationshipResponse;
+            return;
         }
 
         public async Task<ExternalResponse<string>> DeleteResearchDocumentAsync(PimsResearchFileDocument researchFileDocument)
@@ -300,17 +228,26 @@ namespace Pims.Api.Services
             Logger.LogInformation("Deleting PIMS document for single research file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ResearchFileEdit);
 
-            var relationshipCount = _documentRepository.DocumentRelationshipCount(researchFileDocument.DocumentId);
-            if (relationshipCount == 1)
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            PimsDocument currentDocument = _documentRepository.Find(researchFileDocument.Document.DocumentId);
+
+            if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
-                return await documentService.DeleteDocumentAsync(researchFileDocument.Document);
+                result = await DeleteMayanDocument((long)currentDocument.MayanId);
+                currentDocument = RemoveDocumentMayanID(currentDocument);
+                _documentRepository.CommitTransaction();
             }
-            else
-            {
-                researchFileDocumentRepository.DeleteResearch(researchFileDocument);
-                researchFileDocumentRepository.CommitTransaction();
-                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
-            }
+
+            using var transaction = _documentRepository.BeginTransaction();
+
+            DeleteQueuedDocumentItem(currentDocument.DocumentId);
+            _researchFileDocumentRepository.DeleteResearch(researchFileDocument);
+            DeleteDocument(currentDocument);
+
+            _documentRepository.SaveChanges();
+            transaction.Commit();
+
+            return result;
         }
 
         public async Task<ExternalResponse<string>> DeleteProjectDocumentAsync(PimsProjectDocument projectDocument)
@@ -318,17 +255,26 @@ namespace Pims.Api.Services
             Logger.LogInformation("Deleting PIMS document for single Project");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ProjectEdit);
 
-            var relationshipCount = _documentRepository.DocumentRelationshipCount(projectDocument.DocumentId);
-            if (relationshipCount == 1)
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            PimsDocument currentDocument = _documentRepository.Find(projectDocument.Document.DocumentId);
+
+            if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
-                return await documentService.DeleteDocumentAsync(projectDocument.Document);
+                result = await DeleteMayanDocument((long)currentDocument.MayanId);
+                currentDocument = RemoveDocumentMayanID(currentDocument);
+                _documentRepository.CommitTransaction();
             }
-            else
-            {
-                _projectRepository.DeleteProjectDocument(projectDocument.ProjectDocumentId);
-                _projectRepository.CommitTransaction();
-                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
-            }
+
+            using var transaction = _documentRepository.BeginTransaction();
+
+            DeleteQueuedDocumentItem(currentDocument.DocumentId);
+            _projectRepository.DeleteProjectDocument(projectDocument.ProjectDocumentId);
+            DeleteDocument(currentDocument);
+
+            _documentRepository.SaveChanges();
+            transaction.Commit();
+
+            return result;
         }
 
         public async Task<ExternalResponse<string>> DeleteAcquisitionDocumentAsync(PimsAcquisitionFileDocument acquisitionFileDocument)
@@ -336,17 +282,28 @@ namespace Pims.Api.Services
             Logger.LogInformation("Deleting PIMS document for single acquisition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.AcquisitionFileEdit);
 
-            var relationshipCount = _documentRepository.DocumentRelationshipCount(acquisitionFileDocument.DocumentId);
-            if (relationshipCount == 1)
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            PimsDocument currentDocument = _documentRepository.Find(acquisitionFileDocument.Document.DocumentId);
+
+            if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
-                return await documentService.DeleteDocumentAsync(acquisitionFileDocument.Document);
+                result = await DeleteMayanDocument((long)acquisitionFileDocument.Document.MayanId);
+                currentDocument = RemoveDocumentMayanID(currentDocument);
+                _documentRepository.CommitTransaction();
             }
-            else
-            {
-                acquisitionFileDocumentRepository.DeleteAcquisition(acquisitionFileDocument);
-                acquisitionFileDocumentRepository.CommitTransaction();
-                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
-            }
+
+            using var transaction = _documentRepository.BeginTransaction();
+
+            DeleteQueuedDocumentItem(acquisitionFileDocument.DocumentId);
+
+            _acquisitionFileDocumentRepository.DeleteAcquisition(acquisitionFileDocument);
+
+            DeleteDocument(currentDocument);
+
+            _documentRepository.SaveChanges();
+            transaction.Commit();
+
+            return result;
         }
 
         public async Task<ExternalResponse<string>> DeleteLeaseDocumentAsync(PimsLeaseDocument leaseDocument)
@@ -354,17 +311,28 @@ namespace Pims.Api.Services
             Logger.LogInformation("Deleting PIMS document for single lease");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.LeaseEdit);
 
-            var relationshipCount = _documentRepository.DocumentRelationshipCount(leaseDocument.DocumentId);
-            if (relationshipCount == 1)
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            PimsDocument currentDocument = _documentRepository.Find(leaseDocument.Document.DocumentId);
+
+            // 1 - Delete Mayan first.
+            if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
-                return await documentService.DeleteDocumentAsync(leaseDocument.Document);
+                result = await DeleteMayanDocument((long)currentDocument.MayanId);
+                currentDocument = RemoveDocumentMayanID(currentDocument);
+                _documentRepository.CommitTransaction();
             }
-            else
-            {
-                _leaseRepository.DeleteLeaseDocument(leaseDocument.LeaseDocumentId);
-                _leaseRepository.CommitTransaction();
-                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
-            }
+
+            using var transaction = _documentRepository.BeginTransaction();
+
+            DeleteQueuedDocumentItem(currentDocument.DocumentId);
+            _leaseRepository.DeleteLeaseDocument(leaseDocument.LeaseDocumentId);
+
+            DeleteDocument(currentDocument);
+
+            _documentRepository.SaveChanges();
+            transaction.Commit();
+
+            return result;
         }
 
         public async Task<ExternalResponse<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument)
@@ -372,17 +340,27 @@ namespace Pims.Api.Services
             Logger.LogInformation("Deleting PIMS document for single Property Activity");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ManagementEdit);
 
-            var relationshipCount = _documentRepository.DocumentRelationshipCount(propertyActivityDocument.DocumentId);
-            if (relationshipCount == 1)
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            PimsDocument currentDocument = _documentRepository.Find(propertyActivityDocument.Document.DocumentId);
+
+            if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
-                return await documentService.DeleteDocumentAsync(propertyActivityDocument.Document);
+                result = await DeleteMayanDocument((long)currentDocument.MayanId);
+                currentDocument = RemoveDocumentMayanID(currentDocument);
+                _documentRepository.CommitTransaction();
             }
-            else
-            {
-                _propertyActivityDocumentRepository.DeletePropertyActivityDocument(propertyActivityDocument);
-                _propertyActivityDocumentRepository.CommitTransaction();
-                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
-            }
+
+            using var transaction = _documentRepository.BeginTransaction();
+
+            DeleteQueuedDocumentItem(currentDocument.DocumentId);
+
+            _propertyActivityDocumentRepository.DeletePropertyActivityDocument(propertyActivityDocument);
+            DeleteDocument(currentDocument);
+
+            _documentRepository.SaveChanges();
+            transaction.Commit();
+
+            return result;
         }
 
         public async Task<ExternalResponse<string>> DeleteDispositionDocumentAsync(PimsDispositionFileDocument dispositionFileDocument)
@@ -390,32 +368,99 @@ namespace Pims.Api.Services
             Logger.LogInformation("Deleting PIMS document for single disposition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.DispositionEdit);
 
-            var relationshipCount = _documentRepository.DocumentRelationshipCount(dispositionFileDocument.DocumentId);
-            if (relationshipCount == 1)
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            PimsDocument currentDocument = _documentRepository.Find(dispositionFileDocument.DocumentId);
+
+            if (currentDocument.MayanId.HasValue && currentDocument.MayanId.Value > 0)
             {
-                return await documentService.DeleteDocumentAsync(dispositionFileDocument.Document);
+                result = await DeleteMayanDocument((long)currentDocument.MayanId);
+                currentDocument = RemoveDocumentMayanID(currentDocument);
+                _documentRepository.CommitTransaction(); // leave trace when mayan document deleted.
             }
-            else
+
+            using var transaction = _documentRepository.BeginTransaction();
+
+            DeleteQueuedDocumentItem(currentDocument.DocumentId);
+
+            _dispositionFileDocumentRepository.DeleteDispositionDocument(dispositionFileDocument);
+
+            DeleteDocument(currentDocument);
+
+            _documentRepository.SaveChanges();
+            transaction.Commit();
+
+            return result;
+        }
+
+        private PimsDocument CreatePimsDocument(DocumentUploadRequest uploadRequest, string documentExternalId = null)
+        {
+            // Create the pims document
+            PimsDocument newPimsDocument = new()
             {
-                _dispositionFileDocumentRepository.DeleteDispositionDocument(dispositionFileDocument);
-                _dispositionFileDocumentRepository.CommitTransaction();
-                return new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+                FileName = uploadRequest.File.FileName,
+                DocumentTypeId = uploadRequest.DocumentTypeId,
+                DocumentStatusTypeCode = uploadRequest.DocumentStatusCode,
+                MayanId = null,
+                DocumentExternalId = documentExternalId,
+            };
+
+            _documentRepository.Add(newPimsDocument);
+
+            return newPimsDocument;
+        }
+
+        private async Task GenerateQueuedDocumentItem(long documentId, DocumentUploadRequest uploadRequest)
+        {
+            PimsDocumentQueue queueDocument = new()
+            {
+                DocumentId = documentId,
+                Document = await uploadRequest.File.GetBytes(),
+                DocumentMetadata = uploadRequest.DocumentMetadata != null ? JsonSerializer.Serialize(uploadRequest.DocumentMetadata) : null,
+            };
+            _documentQueueRepository.Add(queueDocument);
+        }
+
+        private async Task<ExternalResponse<string>> DeleteMayanDocument(long mayanDocumentId)
+        {
+            var result = await _documentService.DeleteMayanStorageDocumentAsync(mayanDocumentId);
+            if (result.HttpStatusCode == HttpStatusCode.NotFound)
+            {
+                result.Status = ExternalResponseStatus.Success;
+            }
+
+            return result;
+        }
+
+        private PimsDocument RemoveDocumentMayanID(PimsDocument doc)
+        {
+            doc.MayanId = null;
+            return _documentRepository.Update(doc, false);
+        }
+
+        private void DeleteQueuedDocumentItem(long documentId)
+        {
+            var documentQueuedItem = _documentQueueRepository.GetByDocumentId(documentId);
+            if (documentQueuedItem.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PENDING.ToString()
+                || documentQueuedItem.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PROCESSING.ToString())
+            {
+                throw new BadRequestException("Doucment in process can not be deleted");
+            }
+
+            bool deleted = _documentQueueRepository.Delete(documentQueuedItem);
+            if(!deleted)
+            {
+                Logger.LogWarning("Failed to delete Queued Document {documentId}", documentId);
+                throw new InvalidOperationException("Could not delete document queue item");
             }
         }
 
-        private static void ValidateZeroLengthFile(DocumentUploadRequest uploadRequest)
+        private void DeleteDocument(PimsDocument document)
         {
-            if (uploadRequest.File is not null && uploadRequest.File.Length == 0)
+            bool deleted = _documentRepository.DeleteDocument(document);
+            if (!deleted)
             {
-                throw new BadRequestException("The submitted file is empty");
-            }
-        }
-
-        private static void ValidateDocumentUploadResponse(DocumentUploadResponse uploadResult)
-        {
-            if (uploadResult.Document is null)
-            {
-                throw new BadRequestException("Unexpected exception uploading file", new System.Exception(uploadResult.DocumentExternalResponse.Message));
+                Logger.LogWarning("Failed to delete Document {documentId}", document.DocumentId);
+                throw new InvalidOperationException("Could not delete document");
             }
         }
     }

@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Api.Exceptions;
+using Microsoft.Extensions.Options;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
+using Pims.Core.Api.Exceptions;
 
 namespace Pims.Api.Repositories.Cdogs
 {
@@ -25,11 +27,13 @@ namespace Pims.Api.Repositories.Cdogs
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="configuration">The injected configuration provider.</param>
+        /// <param name="jsonOptions">The jsonOptions.</param>
         public CdogsAuthRepository(
             ILogger<CdogsAuthRepository> logger,
             IHttpClientFactory httpClientFactory,
-            IConfiguration configuration)
-            : base(logger, httpClientFactory, configuration)
+            IConfiguration configuration,
+            IOptions<JsonSerializerOptions> jsonOptions)
+            : base(logger, httpClientFactory, configuration, jsonOptions)
         {
             _currentToken = null;
             _lastSucessfullRequest = DateTime.UnixEpoch;

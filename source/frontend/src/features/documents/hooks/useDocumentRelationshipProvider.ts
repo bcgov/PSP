@@ -7,7 +7,6 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
-import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
 import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
 
 /**
@@ -85,7 +84,7 @@ export const useDocumentRelationshipProvider = () => {
       relationshipType: ApiGen_CodeTypes_DocumentRelationType,
       parentId: string,
       uploadRequest: ApiGen_Requests_DocumentUploadRequest,
-    ) => Promise<AxiosResponse<ApiGen_Requests_DocumentUploadRelationshipResponse, any>>
+    ) => Promise<AxiosResponse>
   >({
     requestFunction: useCallback(
       async (

@@ -24,9 +24,10 @@ export interface ComposedDocument {
 
 export class DocumentRow {
   id?: number;
-  mayanDocumentId: number | undefined;
+  mayanDocumentId: number | null;
   documentType: ApiGen_Concepts_DocumentType | undefined;
   statusTypeCode: ApiGen_Base_CodeType<string> | undefined;
+  queueStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   fileName: string | undefined;
   isFileAvailable: boolean | undefined;
   appCreateTimestamp?: UtcIsoDateTime;
@@ -39,7 +40,8 @@ export class DocumentRow {
     const row: DocumentRow = new DocumentRow();
     row.id = relationship.document?.id;
     row.documentType = relationship.document?.documentType ?? undefined;
-    row.mayanDocumentId = relationship.document?.mayanDocumentId ?? undefined;
+    row.mayanDocumentId = relationship.document?.mayanDocumentId;
+    row.queueStatusTypeCode = relationship.document?.documentQueueStatusTypeCode;
     row.statusTypeCode = relationship.document?.statusTypeCode ?? undefined;
     row.fileName = relationship.document?.fileName ?? undefined;
     row.appCreateTimestamp = relationship.document?.appCreateTimestamp;
@@ -53,10 +55,12 @@ export class DocumentRow {
 
   public static fromApiDocument(document: ApiGen_Concepts_Document): DocumentRow {
     const row: DocumentRow = new DocumentRow();
+
     row.id = document?.id;
     row.documentType = document?.documentType ?? undefined;
     row.mayanDocumentId = document?.mayanDocumentId ?? undefined;
     row.statusTypeCode = document?.statusTypeCode ?? undefined;
+    row.queueStatusTypeCode = document?.documentQueueStatusTypeCode;
     row.fileName = document?.fileName ?? undefined;
     row.appCreateTimestamp = document?.appCreateTimestamp;
     row.appCreateUserid = document?.appCreateUserid ?? undefined;
@@ -90,6 +94,7 @@ export class DocumentRow {
         appCreateUserid: null,
         appLastUpdateUserGuid: null,
         appCreateUserGuid: null,
+        documentQueueStatusTypeCode: null,
       },
       rowVersion: 0,
       appCreateTimestamp: EpochIsoDateTime,
@@ -109,7 +114,6 @@ export class BatchUploadFormModel {
 export class BatchUploadResponseModel {
   public readonly fileName: string;
   public readonly isSuccess: boolean;
-  public readonly response: ApiGen_Requests_DocumentUploadRelationshipResponse | null;
   public readonly errorMessage: string;
 
   constructor(
@@ -120,18 +124,12 @@ export class BatchUploadResponseModel {
     if (exists(apiResponse)) {
       if (isApiError(apiResponse)) {
         this.isSuccess = false;
-        this.response = null;
         this.errorMessage = (apiResponse as IApiError).details;
       } else {
-        this.isSuccess =
-          apiResponse.uploadResponse?.documentExternalResponse?.status === 'Success' ? true : false;
-        this.response = apiResponse;
-        this.errorMessage =
-          apiResponse.uploadResponse?.documentExternalResponse.message ?? 'Mayan error';
+        this.isSuccess = true;
       }
     } else {
       this.isSuccess = false;
-      this.response = null;
       this.errorMessage = 'Network error, please try again or contact your system administrator';
     }
   }

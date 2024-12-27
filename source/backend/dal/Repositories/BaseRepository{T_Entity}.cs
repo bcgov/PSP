@@ -41,11 +41,6 @@ namespace Pims.Dal.Repositories
         {
             return this.Context.Find<T_Entity>(keyValues);
         }
-
-        public void SaveChanges()
-        {
-            this.Context.SaveChanges();
-        }
         #endregion
     }
 }

@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
@@ -30,12 +31,14 @@ namespace Pims.Api.Repositories.Cdogs
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="authRepository">Injected repository that handles authentication.</param>
         /// <param name="configuration">The injected configuration provider.</param>
+        /// <param name="jsonOptions">The jsonOptions.</param>
         public CdogsRepository(
             ILogger<CdogsRepository> logger,
             IHttpClientFactory httpClientFactory,
             IDocumentGenerationAuthRepository authRepository,
-            IConfiguration configuration)
-            : base(logger, httpClientFactory, configuration)
+            IConfiguration configuration,
+            IOptions<JsonSerializerOptions> jsonOptions)
+            : base(logger, httpClientFactory, configuration, jsonOptions)
         {
             _authRepository = authRepository;
         }

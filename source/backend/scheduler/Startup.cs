@@ -39,7 +39,7 @@ using Pims.Core.Security;
 using Pims.Keycloak.Configuration;
 using Pims.Scheduler.Http.Configuration;
 using Pims.Scheduler.Policies;
-using Pims.Scheduler.Repositories.Pims;
+using Pims.Scheduler.Repositories;
 using Pims.Scheduler.Rescheduler;
 using Pims.Scheduler.Services;
 using Prometheus;
@@ -110,6 +110,9 @@ namespace Pims.Scheduler
             services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
             services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<PimsOptions>(this.Configuration.GetSection("Pims:Environment"));
+            services.Configure<UploadQueuedDocumentsJobOptions>(this.Configuration.GetSection("UploadQueuedDocumentsOptions"));
+            services.Configure<RetryQueuedDocumentsJobOptions>(this.Configuration.GetSection("RetryQueuedDocumentsOptions"));
+            services.Configure<QueryProcessingDocumentsJobOptions>(this.Configuration.GetSection("QueryProcessingDocumentsOptions"));
             services.AddOptions();
             services.AddApiVersioning(options =>
             {
@@ -319,16 +322,6 @@ namespace Pims.Scheduler
             ScheduleHangfireJobs(app.ApplicationServices);
         }
 
-        private void ScheduleHangfireJobs(IServiceProvider services)
-        {
-            // provide default definition of all jobs.
-            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.UploadQueuedDocuments), x => x.UploadQueuedDocuments(), Cron.Hourly);
-
-            // override scheduled jobs with configuration.
-            JobScheduleOptions jobOptions = this.Configuration.GetSection("JobOptions").Get<JobScheduleOptions>();
-            services.GetService<IJobRescheduler>().LoadSchedules(jobOptions);
-        }
-
         /// <summary>
         /// Configures the app to to use content security policies.
         /// </summary>
@@ -338,12 +331,24 @@ namespace Pims.Scheduler
             app.Use(
             async (context, next) =>
             {
-                context.Response.Headers.Add("Strict-Transport-Security", "max-age=86400; includeSubDomains");
-                context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
-                context.Response.Headers.Add("X-XSS-Protection", "1");
-                context.Response.Headers.Add("X-Frame-Options", " DENY");
+                context.Response.Headers.Append("Strict-Transport-Security", "max-age=86400; includeSubDomains");
+                context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+                context.Response.Headers.Append("X-XSS-Protection", "1");
+                context.Response.Headers.Append("X-Frame-Options", " DENY");
                 await next().ConfigureAwait(true);
             });
+        }
+
+        private void ScheduleHangfireJobs(IServiceProvider services)
+        {
+            // provide default definition of all jobs.
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.UploadQueuedDocuments), x => x.UploadQueuedDocuments(), Cron.Minutely);
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.RetryQueuedDocuments), x => x.RetryQueuedDocuments(), "0 0 * * *");
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.QueryProcessingDocuments), x => x.QueryProcessingDocuments(), Cron.Minutely);
+
+            // override scheduled jobs with configuration.
+            JobScheduleOptions jobOptions = this.Configuration.GetSection("JobOptions").Get<JobScheduleOptions>();
+            services.GetService<IJobRescheduler>().LoadSchedules(jobOptions);
         }
         #endregion
     }

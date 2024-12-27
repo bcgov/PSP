@@ -19,4 +19,5 @@ export interface ApiGen_Concepts_DocumentQueue extends ApiGen_Base_BaseAudit {
   documentProcessRetries: number | null;
   mayanError: string | null;
   document: number[] | null;
+  documentQueueStatusTypeCode: ApiGen_Base_CodeType<string> | null;
 }
