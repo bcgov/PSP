@@ -7,6 +7,7 @@ import { UpdateCompensationContext } from '../models/UpdateCompensationContext';
 import { createCompensationTableColumns } from './columns';
 
 export interface ICompensationResultProps {
+  isLoading: boolean;
   results: ApiGen_Concepts_CompensationRequisition[];
   statusSolver: UpdateCompensationContext;
   onShow: (compensationId: number) => void;
@@ -15,7 +16,7 @@ export interface ICompensationResultProps {
 
 export function CompensationResults(props: ICompensationResultProps) {
   const location = useLocation();
-  const { results, ...rest } = props;
+  const { results, isLoading, ...rest } = props;
   const columns = createCompensationTableColumns(props.statusSolver, props.onShow, props.onDelete);
 
   const isActiveRow = (entityId: number): boolean => {
@@ -37,10 +38,11 @@ export function CompensationResults(props: ICompensationResultProps) {
       manualSortBy={false}
       lockPageSize={true}
       manualPagination={false}
-      totalItems={results.length}
+      totalItems={results?.length}
       columns={columns}
       data={results ?? []}
       isRowActive={isActiveRow}
+      loading={isLoading}
       noRowsMessage="No matching Compensation Requisition(s) found"
       {...rest}
     ></Table>
