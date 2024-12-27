@@ -1,7 +1,9 @@
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.Json;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Api.Models.Config;
 using Pims.Core.Api.Repositories.Rest;
 
@@ -21,11 +23,13 @@ namespace Pims.Api.Repositories.Cdogs
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="configuration">The injected configuration provider.</param>
+        /// <param name="jsonOptions">The json options.</param>
         protected CdogsBaseRepository(
             ILogger logger,
             IHttpClientFactory httpClientFactory,
-            IConfiguration configuration)
-            : base(logger, httpClientFactory)
+            IConfiguration configuration,
+            IOptions<JsonSerializerOptions> jsonOptions)
+            : base(logger, httpClientFactory, jsonOptions)
         {
             _config = new CdogsConfig();
             configuration.Bind(CdogsConfigSectionKey, _config);

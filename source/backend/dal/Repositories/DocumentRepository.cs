@@ -4,9 +4,8 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
@@ -44,6 +43,23 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsDocuments.AsNoTracking().FirstOrDefault(x => x.DocumentId == documentId);
         }
 
+        public PimsDocument TryGetDocumentRelationships(long documentId)
+        {
+            var documentRelationships = Context.PimsDocuments.AsNoTracking()
+                .Include(d => d.PimsResearchFileDocuments)
+                .Include(d => d.PimsAcquisitionFileDocuments)
+                .Include(d => d.PimsProjectDocuments)
+                .Include(d => d.PimsFormTypes)
+                .Include(d => d.PimsLeaseDocuments)
+                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsDispositionFileDocuments)
+                .Where(d => d.DocumentId == documentId)
+                .AsNoTracking()
+                .FirstOrDefault();
+
+            return documentRelationships;
+        }
+
         /// <summary>
         /// Adds the passed document to the database.
         /// </summary>
@@ -72,9 +88,10 @@ namespace Pims.Dal.Repositories
         public PimsDocument Update(PimsDocument document, bool commitTransaction = true)
         {
             document.ThrowIfNull(nameof(document));
+            User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
 
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentEdit);
             document = Context.Update(document).Entity;
+
             return document;
         }
 
@@ -83,7 +100,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="document"></param>
         /// <returns></returns>
-        public bool Delete(PimsDocument document)
+        public bool Delete(PimsDocument document, bool commitTransaction = true)
         {
             document.ThrowIfNull(nameof(document));
 
@@ -137,9 +154,27 @@ namespace Pims.Dal.Repositories
                 Context.Entry(pimsFormTypeDocument).Property(x => x.DocumentId).IsModified = true;
             }
 
-            Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+            if (commitTransaction)
+            {
+                Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
+            }
 
             Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
+
+            return true;
+        }
+
+        /// <summary>
+        /// Deletes the passed document from the database.
+        /// </summary>
+        /// <param name="document"></param>
+        /// <returns></returns>
+        public bool DeleteDocument(PimsDocument document)
+        {
+            document.ThrowIfNull(nameof(document));
+
+            Context.PimsDocuments.Remove(document);
+
             return true;
         }
 

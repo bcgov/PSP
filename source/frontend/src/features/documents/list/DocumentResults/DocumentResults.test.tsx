@@ -7,6 +7,7 @@ import { mockDocumentResponse, mockDocumentsResponse } from '@/mocks/documents.m
 import { cleanup, mockKeycloak, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
+import { get } from 'lodash';
 
 const setSort = vi.fn();
 
@@ -40,6 +41,21 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
     ...utils,
     tableRows,
     sortButtons,
+    // Finding elements
+    getDocumentFileNameLink: (documentId: number) =>
+      utils.container.querySelector(
+        `button#document-view-filename-link-${documentId}`,
+      ) as HTMLElement,
+    getDocumentFileNameText: (documentId: number) =>
+      utils.container.querySelector(
+        `span#document-view-filename-text-${documentId}`,
+      ) as HTMLElement,
+    getDocumentProcessingIcon: (rowNumber: number) =>
+      utils.container.querySelector(`svg#document-processing-${rowNumber}`) as SVGElement,
+    getDocumentProcessingErrorIcon: (rowNumber: number) =>
+      utils.container.querySelector(`svg#document-error-${rowNumber}`) as SVGElement,
+    getDocumenDeleteIcon: (rowNumber: number) =>
+      utils.container.querySelector(`svg#document-delete-${rowNumber}`) as SVGElement,
   };
 };
 
@@ -81,27 +97,54 @@ describe('Document Results Table', () => {
   });
 
   it('displays document filename as link', async () => {
-    const { queryByTestId, getAllByTestId } = setup({
+    const { getDocumentFileNameLink, getDocumentFileNameText } = setup({
       results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
       claims: [Claims.DOCUMENT_VIEW],
     });
 
-    const filenameLink = await getAllByTestId('document-view-filename-link');
-    expect(filenameLink[0]).toBeVisible();
+    const filenameLink = await getDocumentFileNameLink(20);
+    expect(filenameLink).toBeVisible();
 
-    expect(queryByTestId('document-view-filename-text')).toBeNull();
+    expect(getDocumentFileNameText(20)).toBeNull();
   });
 
   it('displays document filename as plain text', async () => {
     mockKeycloak({ claims: [] });
-    const { queryByTestId, getAllByTestId } = setup({
+    const { getDocumentFileNameLink, getDocumentFileNameText } = setup({
       results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
     });
 
-    const filenameText = await getAllByTestId('document-view-filename-text');
-    expect(filenameText[0]).toBeVisible();
+    const filenameText = await getDocumentFileNameText(20);
+    expect(filenameText).toBeVisible();
 
-    expect(queryByTestId('document-view-filename-link')).toBeNull();
+    expect(getDocumentFileNameLink(20)).toBeNull();
+  });
+
+  it('displays document processing icon', async () => {
+    const { getDocumentProcessingIcon } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    });
+
+    expect(getDocumentProcessingIcon(2)).toBeVisible();
+  });
+
+  it('displays document PIMS ERROR processing icon', async () => {
+    const { getDocumentProcessingErrorIcon } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    });
+
+    expect(getDocumentProcessingErrorIcon(3)).toBeVisible();
+  });
+
+  it('displays document MAYAN ERROR processing icon', async () => {
+    const { getDocumentProcessingErrorIcon } = setup({
+      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
+    });
+
+    expect(getDocumentProcessingErrorIcon(4)).toBeVisible();
   });
 
   it('displays document delete button', async () => {
@@ -123,12 +166,12 @@ describe('Document Results Table', () => {
   });
 
   it('previews a document when text clicked', async () => {
-    const { queryByTestId, getAllByTestId } = setup({
+    const { getDocumentFileNameLink } = setup({
       results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
       claims: [Claims.DOCUMENT_VIEW],
     });
 
-    const filenameLink = getAllByTestId('document-view-filename-link')[0];
+    const filenameLink = await getDocumentFileNameLink(20);
     userEvent.click(filenameLink);
 
     expect(onPreview).toHaveBeenCalled();
@@ -145,7 +188,7 @@ describe('Document Results Table', () => {
     expect(onViewDetails).toHaveBeenCalled();
   });
 
-  it('deletes a document when delete icon cliecked', async () => {
+  it('deletes a document when delete icon clicked', async () => {
     const { getAllByTestId } = setup({
       results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],

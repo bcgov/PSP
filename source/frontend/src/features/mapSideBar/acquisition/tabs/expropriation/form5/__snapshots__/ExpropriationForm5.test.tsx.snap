@@ -720,6 +720,17 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c2.btn.btn-primary,
+.c2.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c2.btn.btn-primary:hover,
+.c2.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
+}
+
 .c0 {
   -webkit-box-pack: end;
   -webkit-justify-content: end;
@@ -752,7 +763,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
       class="col-auto"
     >
       <button
-        class="c1 Button btn btn-primary"
+        class="c1 Button c2 btn btn-primary"
         title="Download File"
         type="button"
       >
