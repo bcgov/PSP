@@ -284,6 +284,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
+                  data-testid="prg-file-progress-status"
                 >
                   <div>
                     <div
@@ -337,6 +338,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
+                  data-testid="prg-appraisal-status"
                 >
                   Received
                 </div>
@@ -355,6 +357,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
+                  data-testid="prg-legal-survey-status"
                 />
               </div>
               <div
@@ -371,6 +374,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
+                  data-testid="prg-taking-type-status"
                 >
                   <div>
                     <div
@@ -424,6 +428,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
+                  data-testid="prg-expropiation-risk-status"
                 />
               </div>
             </div>

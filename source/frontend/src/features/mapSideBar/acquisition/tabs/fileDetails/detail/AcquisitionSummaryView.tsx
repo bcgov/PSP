@@ -106,7 +106,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         )}
       </Section>
       <Section header="Progress Statuses">
-        <SectionField label="File progress(es)">
+        <SectionField label="File progress(es)" valueTestId="prg-file-progress-status">
           <Multiselect
             disable
             disablePreSelectedValues
@@ -117,9 +117,13 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Appraisal">{detail.appraisalStatusDescription}</SectionField>
-        <SectionField label="Legal Survey">{detail.legalSurveyStatusDescription}</SectionField>
-        <SectionField label="Type of taking">
+        <SectionField label="Appraisal" valueTestId="prg-appraisal-status">
+          {detail.appraisalStatusDescription}
+        </SectionField>
+        <SectionField label="Legal Survey" valueTestId="prg-legal-survey-status">
+          {detail.legalSurveyStatusDescription}
+        </SectionField>
+        <SectionField label="Type of taking" valueTestId="prg-taking-type-status">
           <Multiselect
             disable
             disablePreSelectedValues
@@ -130,7 +134,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Expropriation risk">
+        <SectionField label="Expropriation risk" valueTestId="prg-expropiation-risk-status">
           {detail.expropiationRiskStatusDescription}
         </SectionField>
       </Section>

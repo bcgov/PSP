@@ -176,6 +176,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
+            data-testid="prg-file-progress-status"
           >
             <div>
               <div
@@ -229,6 +230,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
+            data-testid="prg-appraisal-status"
           >
             Received
           </div>
@@ -247,6 +249,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
+            data-testid="prg-legal-survey-status"
           />
         </div>
         <div
@@ -263,6 +266,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
+            data-testid="prg-taking-type-status"
           >
             <div>
               <div
@@ -316,6 +320,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
+            data-testid="prg-expropiation-risk-status"
           />
         </div>
       </div>
