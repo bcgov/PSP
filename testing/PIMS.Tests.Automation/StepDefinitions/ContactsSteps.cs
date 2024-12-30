@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.Classes;
-using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -298,7 +297,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             individualContact.LastName = ExcelDataContext.ReadData(rowNumber, "LastName");
             individualContact.FullName = ExcelDataContext.ReadData(rowNumber, "FullName");
             individualContact.PreferableName = ExcelDataContext.ReadData(rowNumber, "PreferableName");
-            individualContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "ContactStatus");
+            individualContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "IndContactStatus");
             individualContact.Organization = ExcelDataContext.ReadData(rowNumber, "Organization");
 
             individualContact.IndEmail1 = ExcelDataContext.ReadData(rowNumber, "IndEmail1");
@@ -357,7 +356,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             organizationContact.OrganizationName = ExcelDataContext.ReadData(rowNumber, "OrganizationName");
             organizationContact.Alias = ExcelDataContext.ReadData(rowNumber, "Alias");
             organizationContact.IncorporationNumber = ExcelDataContext.ReadData(rowNumber, "IncorporationNumber");
-            organizationContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "ContactStatus");
+            organizationContact.ContactStatus = ExcelDataContext.ReadData(rowNumber, "OrgContactStatus");
 
             organizationContact.OrgEmail1 = ExcelDataContext.ReadData(rowNumber, "OrgEmail1");
             organizationContact.OrgEmailType1 = ExcelDataContext.ReadData(rowNumber, "OrgEmailType1");

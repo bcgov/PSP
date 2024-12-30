@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //PIMS Files Elements
         private By propertyPimsFilesLinkTab = By.XPath("//a[contains(text(),'PIMS Files')]");
-        private By propertyPimsFiles = By.XPath("//div[contains(text(),'This property is associated with the following files.')]");
+        private By propertyPimsFiles = By.XPath("//div[contains(text(),'This property is associated with the following files')]");
 
         private By propertyResearchFileSubtitle = By.XPath("//div[contains(text(),'Research Files')]");
         private By propertyResearchCountLabel = By.XPath("//div[contains(text(),'Research Files')]/following-sibling::div[@class='my-1 col-auto']/div");
