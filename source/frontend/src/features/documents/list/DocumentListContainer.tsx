@@ -74,6 +74,10 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     retrieveDocuments();
   }, [retrieveDocuments]);
 
+  const handleDocumentsRefresh = async () => {
+    retrieveDocuments();
+  };
+
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -83,6 +87,7 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       documentResults={documentResults}
       onDelete={onDelete}
       onSuccess={onSuccess}
+      onRefresh={handleDocumentsRefresh}
       disableAdd={props.disableAdd}
       title={props.title}
     />

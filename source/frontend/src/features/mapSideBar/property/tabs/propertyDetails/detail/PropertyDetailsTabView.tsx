@@ -3,7 +3,7 @@ import React from 'react';
 import { Col, Form, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-import { EditButton } from '@/components/common/EditButton';
+import { EditButton } from '@/components/common/buttons/EditButton';
 import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -76,6 +76,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
               query.set('edit', 'true');
               history.push({ search: query.toString() });
             }}
+            style={{ float: 'right' }}
           />
         ) : null}
         {hasClaim(Claims.PROPERTY_EDIT) && propertyIsRetired ? (
@@ -124,7 +125,10 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         <SectionField label="Agricultural land reserve">
           {property?.isALR ? 'Yes' : 'No'}
         </SectionField>
-        <SectionField label="Railway belt / Dominion patent">
+        <SectionField
+          label="Railway belt / Dominion patent"
+          tooltip="A parcel that was previously part of a railway belt or a Dominion patent."
+        >
           {booleanToYesNoUnknownString(property?.isRwyBeltDomPatent)}
         </SectionField>
         <SectionField label="Land parcel type">{property?.propertyType?.description}</SectionField>
@@ -155,7 +159,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             style={readOnlyMultiSelectStyle}
           />
         </SectionField>
-        <SectionField label="Provincial Public Hwy">
+        <SectionField label="Provincial public hwy">
           {pphStatusTypeCodeDesc ?? 'Unknown'}
         </SectionField>
         {isHighwayRoad && (

@@ -1,9 +1,9 @@
-import { FaMailBulk, FaPlus, FaTrash } from 'react-icons/fa';
+import { FaEdit, FaFileContract, FaPlus, FaTrash } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons/RemoveButton';
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
+import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -69,12 +69,13 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                     {exists(agreement.agreementType) && (
                       <StyledButtonContainer>
                         <StyledAddButton
+                          title="Download File"
                           onClick={() => {
                             onGenerate(agreement);
                           }}
                         >
-                          <FaMailBulk className="mr-2" />
-                          Generate
+                          <FaFileContract size={28} className="mr-2" />
+                          {`Generate ${getAgreementFormName(agreement.agreementType.id)}`}
                         </StyledAddButton>
 
                         {!statusUpdateSolver.canEditOrDeleteAgreement(
@@ -93,16 +94,17 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                             <>
                               <EditButton
                                 title="Edit Agreement"
-                                dataTestId={`agreements[${index}].edit-btn`}
+                                data-testId={`agreements[${index}].edit-btn`}
                                 onClick={() =>
                                   history.push(`${match.url}/${agreement.agreementId}/update`)
                                 }
+                                icon={<FaEdit size={'2rem'} />}
                               />
-                              <StyledRemoveLinkButton
+                              <RemoveIconButton
                                 title="Delete Agreement"
-                                data-testid={`agreements[${index}].delete-btn`}
-                                variant="light"
-                                onClick={() => {
+                                data-testId={`agreements[${index}].delete-btn`}
+                                icon={<FaTrash size={'1.75rem'} />}
+                                onRemove={() => {
                                   setModalContent({
                                     ...getDeleteModalProps(),
                                     variant: 'error',
@@ -121,9 +123,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                                   });
                                   setDisplayModal(true);
                                 }}
-                              >
-                                <FaTrash size="2rem" />
-                              </StyledRemoveLinkButton>
+                              />
                             </>
                           )}
                       </StyledButtonContainer>
@@ -199,6 +199,21 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
 };
 
 export default AgreementView;
+
+function getAgreementFormName(agreementType: string | null): string {
+  switch (agreementType) {
+    case ApiGen_CodeTypes_AgreementTypes.H179A:
+      return 'H-179A';
+    case ApiGen_CodeTypes_AgreementTypes.H179P:
+      return 'H-179P';
+    case ApiGen_CodeTypes_AgreementTypes.H179T:
+      return 'H-179T';
+    case ApiGen_CodeTypes_AgreementTypes.H0074:
+      return 'H-0074';
+    default:
+      return '';
+  }
+}
 
 export const StyledButtonContainer = styled.div`
   display: flex;

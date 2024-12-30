@@ -36,7 +36,7 @@ public partial class PimsProperty
     public long PropertyId { get; set; }
 
     /// <summary>
-    /// Foreign key to the proprty type table.
+    /// Foreign key to the property type table.
     /// </summary>
     [Required]
     [Column("PROPERTY_TYPE_CODE")]

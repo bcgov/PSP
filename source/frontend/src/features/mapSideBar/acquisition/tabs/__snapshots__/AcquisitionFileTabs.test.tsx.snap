@@ -64,6 +64,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
 
 .c3 {
   text-align: right;
+  overflow: hidden;
 }
 
 .c5 {
@@ -283,8 +284,9 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
+                  data-testid="assigned-date"
                 >
-                  Jun 27, 2022
+                  Dec 18, 2024
                 </div>
               </div>
               <div

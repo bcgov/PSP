@@ -3,7 +3,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -74,7 +74,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
         {hasClaim(Claims.ACQUISITION_EDIT) && canEditDetails() ? (
-          <EditButton title="Edit acquisition file" onClick={onEdit} />
+          <EditButton title="Edit acquisition file" onClick={onEdit} style={{ float: 'right' }} />
         ) : null}
         {!canEditDetails() && (
           <TooltipIcon
@@ -93,7 +93,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         )}
       </Section>
       <Section header="Schedule">
-        <SectionField label="Assigned date">{prettyFormatDate(detail.assignedDate)}</SectionField>
+        <SectionField label="Assigned date" valueTestId="assigned-date">
+          {prettyFormatDate(detail.assignedDate)}
+        </SectionField>
         <SectionField
           label="Delivery date"
           tooltip="Date for delivery of the property to the project"

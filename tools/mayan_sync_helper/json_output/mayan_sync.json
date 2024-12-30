@@ -1,1473 +1,1260 @@
 {
-   "document_types": [
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT"
-         ],
-         "display_order": 0,
-         "label": "Affidavit of service",
-         "purpose": "The Affidavit of Services and correspondence with the Process Server ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "AFFISERV"
-      },
-      {
-         "categories": [
-            "ACQUIRE"
-         ],
-         "display_order": 1,
-         "label": "Agricultural Land Commission (ALC)",
-         "purpose": "For ALC Applications, Orders, and Resolutions ",
-         "metadata_types": [
-            {
-               "name": "APPLICATION_NUMBER",
-               "required": false
-            },
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "ALC"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT"
-         ],
-         "display_order": 25,
-         "label": "Form 5 - Approval of expropriation",
-         "purpose": "The Approval of Expropriation (Form 5) for Expropriations",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "APPREXPR"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT"
-         ],
-         "display_order": 2,
-         "label": "Appraisals/Reviews",
-         "purpose": "Appraisals property in draft / final state",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "APPRREVI"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 4,
-         "label": "BC assessment search",
-         "purpose": "BC Assessment search",
-         "metadata_types": [
-            {
-               "name": "CIVIC_ADDRESS",
-               "required": false
-            },
-            {
-               "name": "JURISDICTION",
-               "required": false
-            },
-            {
-               "name": "ROLL_NUMBER",
-               "required": false
-            },
-            {
-               "name": "YEAR",
-               "required": false
-            }
-         ],
-         "name": "BCASSE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 5,
-         "label": "Briefing notes",
-         "purpose": "Draft / final versions of the briefing notes",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "BRIENOTE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 7,
-         "label": "Canada lands survey",
-         "purpose": "Surveys registered in the Canada Land System.",
-         "metadata_types": [
-            {
-               "name": "CANADA_LAND_SURVEY_NUMBER",
-               "required": false
-            },
-            {
-               "name": "INDIAN_RESERVE_OR_NATIONAL_PARK",
-               "required": false
-            }
-         ],
-         "name": "CANALAND"
-      },
-      {
-         "categories": [
-            "MANAGEMENT"
-         ],
-         "display_order": 6,
-         "label": "CDOGS template",
-         "purpose": "Templates used for document generation in PIMS",
-         "metadata_types": [],
-         "name": "CDOGTEMP"
-      },
-      {
-         "categories": [
-            "DISPOSE",
-            "MANAGEMENT"
-         ],
-         "display_order": 8,
-         "label": "Certificate of Compliance",
-         "purpose": "The Certificate of Compliance (CoC)",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "CERTCOMPL"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT"
-         ],
-         "display_order": 9,
-         "label": "Certificate of Insurance (H0111)",
-         "purpose": "The Certificate of Insurance H.0111",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "CERTINSU"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT"
-         ],
-         "display_order": 11,
-         "label": "Compensation cheque",
-         "purpose": "The compensation cheque ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "COMPCHEQ"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT"
-         ],
-         "display_order": 12,
-         "label": "Compensation requisition (H-120)",
-         "purpose": "The H.120 Compensation Requisitions ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "COMPREQU"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 10,
-         "label": "Company search",
-         "purpose": "The company search",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "COMPSEAR"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 13,
-         "label": "Condition of entry (H0443)",
-         "purpose": "H.0443 Conditions of Entry ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "CONDENTR"
-      },
-      {
-         "categories": [
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT"
-         ],
-         "display_order": 14,
-         "label": "Conveyance closing documents (ex: PTT forms, Form A transfer etc.)",
-         "purpose": "The conveyance closing documents which might include PTT, Form A Transfer, or Statement of Adjustments. ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "CONVCLOS"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 15,
-         "label": "Correspondence",
-         "purpose": "Attach letters, memos, emails (not record of negotiation, or legal correspondence)",
-         "metadata_types": [
-            {
-               "name": "CIVIC_ADDRESS",
-               "required": false
-            },
-            {
-               "name": "DATE",
-               "required": false
-            },
-            {
-               "name": "OWNER",
-               "required": false
-            },
-            {
-               "name": "PROPERTY_IDENTIFIER",
-               "required": false
-            },
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "CORR"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 16,
-         "label": "Crown grant",
-         "purpose": "The crown grant application and final crown grant",
-         "metadata_types": [
-            {
-               "name": "CROWN_GRANT_NUMBER",
-               "required": false
-            }
-         ],
-         "name": "CROWGRAN"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 17,
-         "label": "District road register",
-         "purpose": "The District road register ",
-         "metadata_types": [
-            {
-               "name": "ELECTORAL_DISTRICT",
-               "required": false
-            },
-            {
-               "name": "HIGHWAY_DISTRICT",
-               "required": false
-            },
-            {
-               "name": "ROAD_NAME",
-               "required": false
-            }
-         ],
-         "name": "DISTREGI"
-      },
-      {
-         "categories": [
-            "DISPOSE",
-            "MANAGEMENT"
-         ],
-         "display_order": 18,
-         "label": "Enhanced Referral Records",
-         "purpose": "The Referral Record for both incoming and outgoing referrals.",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "ENHREFREC"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 19,
-         "label": "Field notes",
-         "purpose": "The survey field notes ",
-         "metadata_types": [
-            {
-               "name": "DISTRICT_LOT_NUMBER",
-               "required": false
-            },
-            {
-               "name": "FIELD_BOOK_NUMBER_YEAR",
-               "required": false
-            },
-            {
-               "name": "LAND_DISTRICT",
-               "required": false
-            }
-         ],
-         "name": "FIELNOTE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 20,
-         "label": "Financial records (invoices, journal vouchers, received cheques etc.)",
-         "purpose": "Financial records which could include invoices, JV\u2019s, contracts ect. ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "FINRECRD"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 22,
-         "label": "First nations consultation",
-         "purpose": "Record of engagement with first nations (ex: First Nations Consultation Log)",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "FIRSNTAI"
-      },
-      {
-         "categories": [
-            "DISPOSE",
-            "MANAGEMENT"
-         ],
-         "display_order": 21,
-         "label": "First Nations Strength of Claim Report",
-         "purpose": "The First Nation Strength of Claim report",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "FNSCR"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 24,
-         "label": "Form 12",
-         "purpose": "Form 12 - Certificate As To Highway In Statutory Right Of Way Plan, pre and post registration",
-         "metadata_types": [
-            {
-               "name": "GAZETTE_DATE",
-               "required": false
-            },
-            {
-               "name": "LEGAL_SURVEY_PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "MOTI_PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "FORM12"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 29,
-         "label": "Gazette",
-         "purpose": "Gazette notices \u2013 all types of gazettes (establishing, closing, widening, erratum\u2019s) ",
-         "metadata_types": [
-            {
-               "name": "GAZETTE_DATE",
-               "required": false
-            },
-            {
-               "name": "GAZETTE_PAGE_NUMBER",
-               "required": false
-            },
-            {
-               "name": "GAZETTE_PUBLISHED_DATE",
-               "required": false
-            },
-            {
-               "name": "GAZETTE_TYPE",
-               "required": false
-            },
-            {
-               "name": "LEGAL_SURVEY_PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "LTSA_SCHEDULE_FILING_NUMBER",
-               "required": false
-            },
-            {
-               "name": "MOTI_PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "ROAD_NAME",
-               "required": false
-            }
-         ],
-         "name": "GAZE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 30,
-         "label": "Historical file",
-         "purpose": "All types of scanned documents from a historical file",
-         "metadata_types": [
-            {
-               "name": "END_DATE",
-               "required": false
-            },
-            {
-               "name": "FILE_NUMBER",
-               "required": false
-            },
-            {
-               "name": "PHYSICAL_LOCATION",
-               "required": false
-            },
-            {
-               "name": "SECTION_NUMBER",
-               "required": false
-            },
-            {
-               "name": "START_DATE",
-               "required": false
-            }
-         ],
-         "name": "HISTFILE"
-      },
-      {
-         "categories": [
-            "ACQUIRE"
-         ],
-         "display_order": 32,
-         "label": "Land Act Tenure/Reserves",
-         "purpose": "Applications and final Land Act Tenure Reserves (Sections 15/16/17)",
-         "metadata_types": [
-            {
-               "name": "REFAG_DOC_NUMBER",
-               "required": false
-            },
-            {
-               "name": "REFAG_LANDFILE_NUMBER",
-               "required": false
-            },
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "LANDACTTENRES"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 33,
-         "label": "Lease / License agreement",
-         "purpose": "Draft or Final Lease/License agreement, amending agreement or extension",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "LEASLICE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 34,
-         "label": "Legal correspondence (ex: to AG/external lawyers)",
-         "purpose": "Emails or letters with internal and external lawyers ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "LEGACORR"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 35,
-         "label": "Legal survey plan",
-         "purpose": "Attach copies of legal survey plans, draft or registered versions",
-         "metadata_types": [
-            {
-               "name": "LEGAL_SURVEY_PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "MOTI_PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "PLAN_TYPE",
-               "required": false
-            }
-         ],
-         "name": "LEGASURV"
-      },
-      {
-         "categories": [
-            "LEASLIC",
-            "MANAGEMENT"
-         ],
-         "display_order": 3,
-         "label": "Approval/sign-off",
-         "purpose": "The record of correspondence (email) approving Lease/Licence",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "LICEAPPR"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 31,
-         "label": "LTSA documents and plans (except title search)",
-         "purpose": "Attach LTSA documents ie: copies of mortgages, SRW\u2019s, Easements, Pending Litigation (except title searches and legal plans)",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "LTSADOCU"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 36,
-         "label": "Ministerial order",
-         "purpose": "Ministerial Orders",
-         "metadata_types": [
-            {
-               "name": "DATE_SIGNED",
-               "required": false
-            },
-            {
-               "name": "MOTI_FILE_NUMBER",
-               "required": false
-            },
-            {
-               "name": "MO_NUMBER",
-               "required": false
-            },
-            {
-               "name": "PROPERTY_IDENTIFIER",
-               "required": false
-            },
-            {
-               "name": "ROAD_NAME",
-               "required": false
-            }
-         ],
-         "name": "MINIORDE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 37,
-         "label": "Miscellaneous notes (LTSA)",
-         "purpose": "Miscellaneous Notes from the property title",
-         "metadata_types": [
-            {
-               "name": "PID",
-               "required": false
-            }
-         ],
-         "name": "MISCNOTE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 38,
-         "label": "MoTI plan",
-         "purpose": "Moti Plans, plans not found in LTSA (Road Surveys)",
-         "metadata_types": [
-            {
-               "name": "LEGAL_SURVEY_PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "MOTI_FILE_NUMBER",
-               "required": false
-            },
-            {
-               "name": "MOTI_PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "PUBLISHED_DATE",
-               "required": false
-            },
-            {
-               "name": "RELATED_GAZETTE",
-               "required": false
-            }
-         ],
-         "name": "MOTIPLAN"
-      },
-      {
-         "categories": [
-            "ACQUIRE"
-         ],
-         "display_order": 26,
-         "label": "Form 7 - Notice of abandonement",
-         "purpose": "",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "NOTIABANDON"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT"
-         ],
-         "display_order": 27,
-         "label": "Form 8 - Notice of advanced payment ",
-         "purpose": "The Notice of Advance Payment  (Form 8) for Expropriation",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "NOTIADVA"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 39,
-         "label": "Notice of claims/Litigation documents",
-         "purpose": "The Notice of Claims/Litigation documents ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "NOTICLAI"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT"
-         ],
-         "display_order": 23,
-         "label": "Form 1 - Notice of expropriation ",
-         "purpose": "The Notice of Expropriation (Form 1)",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "NOTIEXPR"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 40,
-         "label": "Notice of possible entry (H0224)",
-         "purpose": "The Notice of Possible Entry (H.0224) ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "NOTIPOSS"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 41,
-         "label": "Order in Council (OIC)",
-         "purpose": "The Order in Council",
-         "metadata_types": [
-            {
-               "name": "OIC_NUMBER",
-               "required": false
-            },
-            {
-               "name": "OIC_ROUTE_NUMBER",
-               "required": false
-            },
-            {
-               "name": "OIC_TYPE",
-               "required": false
-            },
-            {
-               "name": "ROAD_NAME",
-               "required": false
-            },
-            {
-               "name": "YEAR",
-               "required": false
-            }
-         ],
-         "name": "OIC"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 42,
-         "label": "Other",
-         "purpose": "Uncategorized / Miscellaneous document",
-         "metadata_types": [
-            {
-               "name": "PIN",
-               "required": false
-            },
-            {
-               "name": "PROPERTY_IDENTIFIER",
-               "required": false
-            },
-            {
-               "name": "ROAD_NAME",
-               "required": false
-            },
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "OTHER"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT"
-         ],
-         "display_order": 43,
-         "label": "Other Land Agreement (Indemnity Letter, Letter of Intended Use, Assumption Agreement, etc)",
-         "purpose": "Other forms of Land Agreements such as Indemnity Letters, Letter of Intended Use, Assumption Agreements etc. ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "OTHERLANDAGREEMENT"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 44,
-         "label": "Owner agreement/offer",
-         "purpose": "Attach copies of draft or final Offer to Purchase agreements (H.179s) or external Owner agreements for Offer and Purchase",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "OWNEAGRE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 45,
-         "label": "PA plans / Design drawings",
-         "purpose": "Property acquisition drawings, design drawings, engineered drawings in draft and final versions ",
-         "metadata_types": [
-            {
-               "name": "PLAN_NUMBER",
-               "required": false
-            },
-            {
-               "name": "PLAN_REVISION",
-               "required": false
-            },
-            {
-               "name": "PROJECT_NAME",
-               "required": false
-            },
-            {
-               "name": "PROJECT_NUMBER",
-               "required": false
-            }
-         ],
-         "name": "PAPLAN"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT",
-            "RESEARCH"
-         ],
-         "display_order": 46,
-         "label": "Photos / Images / Video",
-         "purpose": "Attach Photos, images or videos relevant to file/property",
-         "metadata_types": [
-            {
-               "name": "CIVIC_ADDRESS",
-               "required": false
-            },
-            {
-               "name": "DATE",
-               "required": false
-            },
-            {
-               "name": "OWNER",
-               "required": false
-            },
-            {
-               "name": "PROPERTY_IDENTIFIER",
-               "required": false
-            },
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "PHOTIMAG"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 47,
-         "label": "Privy council",
-         "purpose": "The Privy Council ",
-         "metadata_types": [
-            {
-               "name": "YEAR_PRIVY_COUNCIL_NUMBER",
-               "required": false
-            }
-         ],
-         "name": "PRIVCOUN"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 48,
-         "label": "Professional reports (ex: engineering/environmental etc.)",
-         "purpose": "Professional/Expert Report in draft or final (Ie: Geotechnical, Environmental, Archeology, Engineering Reports)  ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "PROFREPO"
-      },
-      {
-         "categories": [
-            "DISPOSE",
-            "MANAGEMENT"
-         ],
-         "display_order": 49,
-         "label": "Purchase and Sale Agreement",
-         "purpose": "The Purchase and Sale Agreement for a road closure file (H.179RC)",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "PURSALEAGRE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT"
-         ],
-         "display_order": 50,
-         "label": "Record of negotiation",
-         "purpose": "The Record of Negotiations ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "RECONEGO"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT"
-         ],
-         "display_order": 51,
-         "label": "Release of claims",
-         "purpose": "The Release of Claims document, Draft and Final versions",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "RELECLAI"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT"
-         ],
-         "display_order": 52,
-         "label": "Spending authority approval (SAA)",
-         "purpose": "The Spending Authority Approval (SAA) document, Draft and Final versions ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "SPENAUTH"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "PROJECT"
-         ],
-         "display_order": 53,
-         "label": "Surplus property declaration",
-         "purpose": "The Surplus Property Declarations document in Draft or Final indicating surplus land",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "SURPPROP"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 54,
-         "label": "Tax notices and assessments",
-         "purpose": "Tax notices or Tax assessments",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "TAXNOTI"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT"
-         ],
-         "display_order": 55,
-         "label": "Temporary license for construction access (H0074)",
-         "purpose": "The Temporary License for Construction Access Agreement (TLCA) Draft or Final version",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "TEMPLICE"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "LEASLIC",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 56,
-         "label": "Title search / Historical title",
-         "purpose": "The Title Search from LTSA which could be a current or historical search ",
-         "metadata_types": [
-            {
-               "name": "OWNER",
-               "required": false
-            },
-            {
-               "name": "PID",
-               "required": false
-            },
-            {
-               "name": "TITLE_NUMBER",
-               "required": false
-            }
-         ],
-         "name": "TITLSEAR"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "DISPOSE",
-            "MANAGEMENT",
-            "RESEARCH"
-         ],
-         "display_order": 57,
-         "label": "Transfer of administration",
-         "purpose": "The Transfer of Administration (TAC) document \u2013 Draft or Final version ",
-         "metadata_types": [
-            {
-               "name": "DATE_SIGNED",
-               "required": false
-            },
-            {
-               "name": "MOTI_FILE_NUMBER",
-               "required": false
-            },
-            {
-               "name": "PROPERTY_IDENTIFIER",
-               "required": false
-            },
-            {
-               "name": "ROAD_NAME",
-               "required": false
-            },
-            {
-               "name": "TRANSFER_NUMBER",
-               "required": false
-            }
-         ],
-         "name": "TRANADMI"
-      },
-      {
-         "categories": [
-            "ACQUIRE",
-            "MANAGEMENT"
-         ],
-         "display_order": 28,
-         "label": "Form 9 - Vesting notice (Form 9)",
-         "purpose": "The Vesting Notice (Form 9) for Expropriations ",
-         "metadata_types": [
-            {
-               "name": "SHORT_DESCRIPTOR",
-               "required": false
-            }
-         ],
-         "name": "VESTNOTI"
-      }
-   ],
-   "metadata_types": [
-      {
-         "label": "Application #",
-         "name": "APPLICATION_NUMBER"
-      },
-      {
-         "label": "Canada land survey #",
-         "name": "CANADA_LAND_SURVEY_NUMBER"
-      },
-      {
-         "label": "Civic address",
-         "name": "CIVIC_ADDRESS"
-      },
-      {
-         "label": "Crown grant #",
-         "name": "CROWN_GRANT_NUMBER"
-      },
-      {
-         "label": "Date",
-         "name": "DATE"
-      },
-      {
-         "label": "Date signed",
-         "name": "DATE_SIGNED"
-      },
-      {
-         "label": "District lot #",
-         "name": "DISTRICT_LOT_NUMBER"
-      },
-      {
-         "label": "Electoral district",
-         "name": "ELECTORAL_DISTRICT"
-      },
-      {
-         "label": "End date",
-         "name": "END_DATE"
-      },
-      {
-         "label": "Field book #/Year",
-         "name": "FIELD_BOOK_NUMBER_YEAR"
-      },
-      {
-         "label": "File #",
-         "name": "FILE_NUMBER"
-      },
-      {
-         "label": "Gazette date",
-         "name": "GAZETTE_DATE"
-      },
-      {
-         "label": "Gazette page #",
-         "name": "GAZETTE_PAGE_NUMBER"
-      },
-      {
-         "label": "Gazette published date",
-         "name": "GAZETTE_PUBLISHED_DATE"
-      },
-      {
-         "label": "Gazette type",
-         "name": "GAZETTE_TYPE"
-      },
-      {
-         "label": "Highway district",
-         "name": "HIGHWAY_DISTRICT"
-      },
-      {
-         "label": "Indian reserve or national park",
-         "name": "INDIAN_RESERVE_OR_NATIONAL_PARK"
-      },
-      {
-         "label": "Jurisdiction",
-         "name": "JURISDICTION"
-      },
-      {
-         "label": "Land district",
-         "name": "LAND_DISTRICT"
-      },
-      {
-         "label": "Legal survey plan #",
-         "name": "LEGAL_SURVEY_PLAN_NUMBER"
-      },
-      {
-         "label": "LTSA schedule filing #",
-         "name": "LTSA_SCHEDULE_FILING_NUMBER"
-      },
-      {
-         "label": "MoTI file #",
-         "name": "MOTI_FILE_NUMBER"
-      },
-      {
-         "label": "MoTI plan #",
-         "name": "MOTI_PLAN_NUMBER"
-      },
-      {
-         "label": "MO #",
-         "name": "MO_NUMBER"
-      },
-      {
-         "label": "OIC #",
-         "name": "OIC_NUMBER"
-      },
-      {
-         "label": "OIC route #",
-         "name": "OIC_ROUTE_NUMBER"
-      },
-      {
-         "label": "OIC type",
-         "name": "OIC_TYPE"
-      },
-      {
-         "label": "Owner",
-         "name": "OWNER"
-      },
-      {
-         "label": "Physical location",
-         "name": "PHYSICAL_LOCATION"
-      },
-      {
-         "label": "PID",
-         "name": "PID"
-      },
-      {
-         "label": "PIN",
-         "name": "PIN"
-      },
-      {
-         "label": "Plan #",
-         "name": "PLAN_NUMBER"
-      },
-      {
-         "label": "Plan revision",
-         "name": "PLAN_REVISION"
-      },
-      {
-         "label": "Plan type",
-         "name": "PLAN_TYPE"
-      },
-      {
-         "label": "Project name",
-         "name": "PROJECT_NAME"
-      },
-      {
-         "label": "Project #",
-         "name": "PROJECT_NUMBER"
-      },
-      {
-         "label": "Property identifier (PID or PIN or road name)",
-         "name": "PROPERTY_IDENTIFIER"
-      },
-      {
-         "label": "Published date",
-         "name": "PUBLISHED_DATE"
-      },
-      {
-         "label": "Reference/Agency Document #",
-         "name": "REFAG_DOC_NUMBER"
-      },
-      {
-         "label": "Reference/Agency Lands file #",
-         "name": "REFAG_LANDFILE_NUMBER"
-      },
-      {
-         "label": "Related gazette",
-         "name": "RELATED_GAZETTE"
-      },
-      {
-         "label": "Road name",
-         "name": "ROAD_NAME"
-      },
-      {
-         "label": "Road name",
-         "name": "ROAD_NAME"
-      },
-      {
-         "label": "Roll #",
-         "name": "ROLL_NUMBER"
-      },
-      {
-         "label": "Section #",
-         "name": "SECTION_NUMBER"
-      },
-      {
-         "label": "Short descriptor",
-         "name": "SHORT_DESCRIPTOR"
-      },
-      {
-         "label": "Start date",
-         "name": "START_DATE"
-      },
-      {
-         "label": "Title #",
-         "name": "TITLE_NUMBER"
-      },
-      {
-         "label": "Transfer #",
-         "name": "TRANSFER_NUMBER"
-      },
-      {
-         "label": "Year",
-         "name": "YEAR"
-      },
-      {
-         "label": "Year - privy council #",
-         "name": "YEAR_PRIVY_COUNCIL_NUMBER"
-      }
-   ],
-   "remove_lingering_document_types": true,
-   "remove_lingering_metadata_types": true
+  "document_types": [
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT"],
+      "display_order": 0,
+      "label": "Affidavit of service",
+      "purpose": "The Affidavit of Services and correspondence with the Process Server ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "AFFISERV"
+    },
+    {
+      "categories": ["ACQUIRE"],
+      "display_order": 1,
+      "label": "Agricultural Land Commission (ALC)",
+      "purpose": "For ALC Applications, Orders, and Resolutions ",
+      "metadata_types": [
+        {
+          "name": "APPLICATION_NUMBER",
+          "required": false
+        },
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "ALC"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT"],
+      "display_order": 25,
+      "label": "Form 5 - Approval of expropriation",
+      "purpose": "The Approval of Expropriation (Form 5) for Expropriations",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "APPREXPR"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT"],
+      "display_order": 2,
+      "label": "Appraisals/Reviews",
+      "purpose": "Appraisals property in draft / final state",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "APPRREVI"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 4,
+      "label": "BC assessment search",
+      "purpose": "BC Assessment search",
+      "metadata_types": [
+        {
+          "name": "CIVIC_ADDRESS",
+          "required": false
+        },
+        {
+          "name": "JURISDICTION",
+          "required": false
+        },
+        {
+          "name": "ROLL_NUMBER",
+          "required": false
+        },
+        {
+          "name": "YEAR",
+          "required": false
+        }
+      ],
+      "name": "BCASSE"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 5,
+      "label": "Briefing notes",
+      "purpose": "Draft / final versions of the briefing notes",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "BRIENOTE"
+    },
+    {
+      "categories": ["ACQUIRE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 7,
+      "label": "Canada lands survey",
+      "purpose": "Surveys registered in the Canada Land System.",
+      "metadata_types": [
+        {
+          "name": "CANADA_LAND_SURVEY_NUMBER",
+          "required": false
+        },
+        {
+          "name": "INDIAN_RESERVE_OR_NATIONAL_PARK",
+          "required": false
+        }
+      ],
+      "name": "CANALAND"
+    },
+    {
+      "categories": ["MANAGEMENT"],
+      "display_order": 6,
+      "label": "CDOGS template",
+      "purpose": "Templates used for document generation in PIMS",
+      "metadata_types": [],
+      "name": "CDOGTEMP"
+    },
+    {
+      "categories": ["DISPOSE", "MANAGEMENT"],
+      "display_order": 8,
+      "label": "Certificate of Compliance",
+      "purpose": "The Certificate of Compliance (CoC)",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "CERTCOMPL"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT"],
+      "display_order": 9,
+      "label": "Certificate of Insurance (H0111)",
+      "purpose": "The Certificate of Insurance H.0111",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "CERTINSU"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT"],
+      "display_order": 11,
+      "label": "Compensation cheque",
+      "purpose": "The compensation cheque ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "COMPCHEQ"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT"],
+      "display_order": 12,
+      "label": "Compensation requisition (H-120)",
+      "purpose": "The H.120 Compensation Requisitions ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "COMPREQU"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 10,
+      "label": "Company search",
+      "purpose": "The company search",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "COMPSEAR"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 13,
+      "label": "Condition of entry (H0443)",
+      "purpose": "H.0443 Conditions of Entry ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "CONDENTR"
+    },
+    {
+      "categories": ["DISPOSE", "LEASLIC", "MANAGEMENT"],
+      "display_order": 14,
+      "label": "Conveyance closing documents (ex: PTT forms, Form A transfer etc.)",
+      "purpose": "The conveyance closing documents which might include PTT, Form A Transfer, or Statement of Adjustments. ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "CONVCLOS"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 15,
+      "label": "Correspondence",
+      "purpose": "Attach letters, memos, emails (not record of negotiation, or legal correspondence)",
+      "metadata_types": [
+        {
+          "name": "CIVIC_ADDRESS",
+          "required": false
+        },
+        {
+          "name": "DATE",
+          "required": false
+        },
+        {
+          "name": "OWNER",
+          "required": false
+        },
+        {
+          "name": "PROPERTY_IDENTIFIER",
+          "required": false
+        },
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "CORR"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 16,
+      "label": "Crown grant",
+      "purpose": "The crown grant application and final crown grant",
+      "metadata_types": [
+        {
+          "name": "CROWN_GRANT_NUMBER",
+          "required": false
+        }
+      ],
+      "name": "CROWGRAN"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 17,
+      "label": "District road register",
+      "purpose": "The District road register ",
+      "metadata_types": [
+        {
+          "name": "ELECTORAL_DISTRICT",
+          "required": false
+        },
+        {
+          "name": "HIGHWAY_DISTRICT",
+          "required": false
+        },
+        {
+          "name": "ROAD_NAME",
+          "required": false
+        }
+      ],
+      "name": "DISTREGI"
+    },
+    {
+      "categories": ["DISPOSE", "MANAGEMENT"],
+      "display_order": 18,
+      "label": "Enhanced Referral Records",
+      "purpose": "The Referral Record for both incoming and outgoing referrals.",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "ENHREFREC"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 19,
+      "label": "Field notes",
+      "purpose": "The survey field notes ",
+      "metadata_types": [
+        {
+          "name": "DISTRICT_LOT_NUMBER",
+          "required": false
+        },
+        {
+          "name": "FIELD_BOOK_NUMBER_YEAR",
+          "required": false
+        },
+        {
+          "name": "LAND_DISTRICT",
+          "required": false
+        }
+      ],
+      "name": "FIELNOTE"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 20,
+      "label": "Financial records (invoices, journal vouchers, received cheques etc.)",
+      "purpose": "Financial records which could include invoices, JV\u2019s, contracts ect. ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "FINRECRD"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 22,
+      "label": "First nations consultation",
+      "purpose": "Record of engagement with first nations (ex: First Nations Consultation Log)",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "FIRSNTAI"
+    },
+    {
+      "categories": ["DISPOSE", "MANAGEMENT"],
+      "display_order": 21,
+      "label": "First Nations Strength of Claim Report",
+      "purpose": "The First Nation Strength of Claim report",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "FNSCR"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 24,
+      "label": "Form 12",
+      "purpose": "Form 12 - Certificate As To Highway In Statutory Right Of Way Plan, pre and post registration",
+      "metadata_types": [
+        {
+          "name": "GAZETTE_DATE",
+          "required": false
+        },
+        {
+          "name": "LEGAL_SURVEY_PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "MOTI_PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "FORM12"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 29,
+      "label": "Gazette",
+      "purpose": "Gazette notices \u2013 all types of gazettes (establishing, closing, widening, erratum\u2019s) ",
+      "metadata_types": [
+        {
+          "name": "GAZETTE_DATE",
+          "required": false
+        },
+        {
+          "name": "GAZETTE_PAGE_NUMBER",
+          "required": false
+        },
+        {
+          "name": "GAZETTE_PUBLISHED_DATE",
+          "required": false
+        },
+        {
+          "name": "GAZETTE_TYPE",
+          "required": false
+        },
+        {
+          "name": "LEGAL_SURVEY_PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "LTSA_SCHEDULE_FILING_NUMBER",
+          "required": false
+        },
+        {
+          "name": "MOTI_PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "ROAD_NAME",
+          "required": false
+        }
+      ],
+      "name": "GAZE"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 30,
+      "label": "Historical file",
+      "purpose": "All types of scanned documents from a historical file",
+      "metadata_types": [
+        {
+          "name": "END_DATE",
+          "required": false
+        },
+        {
+          "name": "FILE_NUMBER",
+          "required": false
+        },
+        {
+          "name": "PHYSICAL_LOCATION",
+          "required": false
+        },
+        {
+          "name": "SECTION_NUMBER",
+          "required": false
+        },
+        {
+          "name": "START_DATE",
+          "required": false
+        }
+      ],
+      "name": "HISTFILE"
+    },
+    {
+      "categories": ["ACQUIRE"],
+      "display_order": 32,
+      "label": "Land Act Tenure/Reserves",
+      "purpose": "Applications and final Land Act Tenure Reserves (Sections 15/16/17)",
+      "metadata_types": [
+        {
+          "name": "REFAG_DOC_NUMBER",
+          "required": false
+        },
+        {
+          "name": "REFAG_LANDFILE_NUMBER",
+          "required": false
+        },
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "LANDACTTENRES"
+    },
+    {
+      "categories": ["ACQUIRE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 33,
+      "label": "Lease / License agreement",
+      "purpose": "Draft or Final Lease/License agreement, amending agreement or extension",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "LEASLICE"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 34,
+      "label": "Legal correspondence (ex: to AG/external lawyers)",
+      "purpose": "Emails or letters with internal and external lawyers ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "LEGACORR"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 35,
+      "label": "Legal survey plan",
+      "purpose": "Attach copies of legal survey plans, draft or registered versions",
+      "metadata_types": [
+        {
+          "name": "LEGAL_SURVEY_PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "MOTI_PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "PLAN_TYPE",
+          "required": false
+        }
+      ],
+      "name": "LEGASURV"
+    },
+    {
+      "categories": ["LEASLIC", "MANAGEMENT"],
+      "display_order": 3,
+      "label": "Approval/sign-off",
+      "purpose": "The record of correspondence (email) approving Lease/Licence",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "LICEAPPR"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 31,
+      "label": "LTSA documents and plans (except title search)",
+      "purpose": "Attach LTSA documents ie: copies of mortgages, SRW\u2019s, Easements, Pending Litigation (except title searches and legal plans)",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "LTSADOCU"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 36,
+      "label": "Ministerial order",
+      "purpose": "Ministerial Orders",
+      "metadata_types": [
+        {
+          "name": "DATE_SIGNED",
+          "required": false
+        },
+        {
+          "name": "MOTI_FILE_NUMBER",
+          "required": false
+        },
+        {
+          "name": "MO_NUMBER",
+          "required": false
+        },
+        {
+          "name": "PROPERTY_IDENTIFIER",
+          "required": false
+        },
+        {
+          "name": "ROAD_NAME",
+          "required": false
+        }
+      ],
+      "name": "MINIORDE"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 37,
+      "label": "Miscellaneous notes (LTSA)",
+      "purpose": "Miscellaneous Notes from the property title",
+      "metadata_types": [
+        {
+          "name": "PID",
+          "required": false
+        }
+      ],
+      "name": "MISCNOTE"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 38,
+      "label": "MoTI plan",
+      "purpose": "Moti Plans, plans not found in LTSA (Road Surveys)",
+      "metadata_types": [
+        {
+          "name": "LEGAL_SURVEY_PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "MOTI_FILE_NUMBER",
+          "required": false
+        },
+        {
+          "name": "MOTI_PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "PUBLISHED_DATE",
+          "required": false
+        },
+        {
+          "name": "RELATED_GAZETTE",
+          "required": false
+        }
+      ],
+      "name": "MOTIPLAN"
+    },
+    {
+      "categories": ["ACQUIRE"],
+      "display_order": 26,
+      "label": "Form 7 - Notice of abandonement",
+      "purpose": "",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "NOTIABANDON"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT"],
+      "display_order": 27,
+      "label": "Form 8 - Notice of advanced payment ",
+      "purpose": "The Notice of Advance Payment  (Form 8) for Expropriation",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "NOTIADVA"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 39,
+      "label": "Notice of claims/Litigation documents",
+      "purpose": "The Notice of Claims/Litigation documents ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "NOTICLAI"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT"],
+      "display_order": 23,
+      "label": "Form 1 - Notice of expropriation ",
+      "purpose": "The Notice of Expropriation (Form 1)",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "NOTIEXPR"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 40,
+      "label": "Notice of possible entry (H0224)",
+      "purpose": "The Notice of Possible Entry (H.0224) ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "NOTIPOSS"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 41,
+      "label": "Order in Council (OIC)",
+      "purpose": "The Order in Council",
+      "metadata_types": [
+        {
+          "name": "OIC_NUMBER",
+          "required": false
+        },
+        {
+          "name": "OIC_ROUTE_NUMBER",
+          "required": false
+        },
+        {
+          "name": "OIC_TYPE",
+          "required": false
+        },
+        {
+          "name": "ROAD_NAME",
+          "required": false
+        },
+        {
+          "name": "YEAR",
+          "required": false
+        }
+      ],
+      "name": "OIC"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 42,
+      "label": "Other",
+      "purpose": "Uncategorized / Miscellaneous document",
+      "metadata_types": [
+        {
+          "name": "PIN",
+          "required": false
+        },
+        {
+          "name": "PROPERTY_IDENTIFIER",
+          "required": false
+        },
+        {
+          "name": "ROAD_NAME",
+          "required": false
+        },
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "OTHER"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT"],
+      "display_order": 43,
+      "label": "Other Land Agreement (Indemnity Letter, Letter of Intended Use, Assumption Agreement, etc)",
+      "purpose": "Other forms of Land Agreements such as Indemnity Letters, Letter of Intended Use, Assumption Agreements etc. ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "OTHERLANDAGREEMENT"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 44,
+      "label": "Owner agreement/offer",
+      "purpose": "Attach copies of draft or final Offer to Purchase agreements (H.179s) or external Owner agreements for Offer and Purchase",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "OWNEAGRE"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT", "PROJECT", "RESEARCH"],
+      "display_order": 45,
+      "label": "PA plans / Design drawings",
+      "purpose": "Property acquisition drawings, design drawings, engineered drawings in draft and final versions ",
+      "metadata_types": [
+        {
+          "name": "PLAN_NUMBER",
+          "required": false
+        },
+        {
+          "name": "PLAN_REVISION",
+          "required": false
+        },
+        {
+          "name": "PROJECT_NAME",
+          "required": false
+        },
+        {
+          "name": "PROJECT_NUMBER",
+          "required": false
+        }
+      ],
+      "name": "PAPLAN"
+    },
+    {
+      "categories": [
+        "ACQUIRE",
+        "DISPOSE",
+        "LEASLIC",
+        "MANAGEMENT",
+        "PROJECT",
+        "RESEARCH"
+      ],
+      "display_order": 46,
+      "label": "Photos / Images / Video",
+      "purpose": "Attach Photos, images or videos relevant to file/property",
+      "metadata_types": [
+        {
+          "name": "CIVIC_ADDRESS",
+          "required": false
+        },
+        {
+          "name": "DATE",
+          "required": false
+        },
+        {
+          "name": "OWNER",
+          "required": false
+        },
+        {
+          "name": "PROPERTY_IDENTIFIER",
+          "required": false
+        },
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "PHOTIMAG"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 47,
+      "label": "Privy council",
+      "purpose": "The Privy Council ",
+      "metadata_types": [
+        {
+          "name": "YEAR_PRIVY_COUNCIL_NUMBER",
+          "required": false
+        }
+      ],
+      "name": "PRIVCOUN"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 48,
+      "label": "Professional reports (ex: engineering/environmental etc.)",
+      "purpose": "Professional/Expert Report in draft or final (Ie: Geotechnical, Environmental, Archeology, Engineering Reports)  ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "PROFREPO"
+    },
+    {
+      "categories": ["DISPOSE", "MANAGEMENT"],
+      "display_order": 49,
+      "label": "Purchase and Sale Agreement",
+      "purpose": "The Purchase and Sale Agreement for a road closure file (H.179RC)",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "PURSALEAGRE"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT"],
+      "display_order": 50,
+      "label": "Record of negotiation",
+      "purpose": "The Record of Negotiations ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "RECONEGO"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT"],
+      "display_order": 51,
+      "label": "Release of claims",
+      "purpose": "The Release of Claims document, Draft and Final versions",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "RELECLAI"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "PROJECT"],
+      "display_order": 52,
+      "label": "Spending authority approval (SAA)",
+      "purpose": "The Spending Authority Approval (SAA) document, Draft and Final versions ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "SPENAUTH"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "PROJECT"],
+      "display_order": 53,
+      "label": "Surplus property declaration",
+      "purpose": "The Surplus Property Declarations document in Draft or Final indicating surplus land",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "SURPPROP"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 54,
+      "label": "Tax notices and assessments",
+      "purpose": "Tax notices or Tax assessments",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "TAXNOTI"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT"],
+      "display_order": 55,
+      "label": "Temporary license for construction access (H0074)",
+      "purpose": "The Temporary License for Construction Access Agreement (TLCA) Draft or Final version",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "TEMPLICE"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "LEASLIC", "MANAGEMENT", "RESEARCH"],
+      "display_order": 56,
+      "label": "Title search / Historical title",
+      "purpose": "The Title Search from LTSA which could be a current or historical search ",
+      "metadata_types": [
+        {
+          "name": "OWNER",
+          "required": false
+        },
+        {
+          "name": "PID",
+          "required": false
+        },
+        {
+          "name": "TITLE_NUMBER",
+          "required": false
+        }
+      ],
+      "name": "TITLSEAR"
+    },
+    {
+      "categories": ["ACQUIRE", "DISPOSE", "MANAGEMENT", "RESEARCH"],
+      "display_order": 57,
+      "label": "Transfer of administration",
+      "purpose": "The Transfer of Administration (TAC) document \u2013 Draft or Final version ",
+      "metadata_types": [
+        {
+          "name": "DATE_SIGNED",
+          "required": false
+        },
+        {
+          "name": "MOTI_FILE_NUMBER",
+          "required": false
+        },
+        {
+          "name": "PROPERTY_IDENTIFIER",
+          "required": false
+        },
+        {
+          "name": "ROAD_NAME",
+          "required": false
+        },
+        {
+          "name": "TRANSFER_NUMBER",
+          "required": false
+        }
+      ],
+      "name": "TRANADMI"
+    },
+    {
+      "categories": ["ACQUIRE", "MANAGEMENT"],
+      "display_order": 28,
+      "label": "Form 9 - Vesting notice (Form 9)",
+      "purpose": "The Vesting Notice (Form 9) for Expropriations ",
+      "metadata_types": [
+        {
+          "name": "SHORT_DESCRIPTOR",
+          "required": false
+        }
+      ],
+      "name": "VESTNOTI"
+    }
+  ],
+  "metadata_types": [
+    {
+      "label": "Application #",
+      "name": "APPLICATION_NUMBER"
+    },
+    {
+      "label": "Canada land survey #",
+      "name": "CANADA_LAND_SURVEY_NUMBER"
+    },
+    {
+      "label": "Civic address",
+      "name": "CIVIC_ADDRESS"
+    },
+    {
+      "label": "Crown grant #",
+      "name": "CROWN_GRANT_NUMBER"
+    },
+    {
+      "label": "Date",
+      "name": "DATE"
+    },
+    {
+      "label": "Date signed",
+      "name": "DATE_SIGNED"
+    },
+    {
+      "label": "District lot #",
+      "name": "DISTRICT_LOT_NUMBER"
+    },
+    {
+      "label": "Electoral district",
+      "name": "ELECTORAL_DISTRICT"
+    },
+    {
+      "label": "End date",
+      "name": "END_DATE"
+    },
+    {
+      "label": "Field book #/Year",
+      "name": "FIELD_BOOK_NUMBER_YEAR"
+    },
+    {
+      "label": "File #",
+      "name": "FILE_NUMBER"
+    },
+    {
+      "label": "Gazette date",
+      "name": "GAZETTE_DATE"
+    },
+    {
+      "label": "Gazette page #",
+      "name": "GAZETTE_PAGE_NUMBER"
+    },
+    {
+      "label": "Gazette published date",
+      "name": "GAZETTE_PUBLISHED_DATE"
+    },
+    {
+      "label": "Gazette type",
+      "name": "GAZETTE_TYPE"
+    },
+    {
+      "label": "Highway district",
+      "name": "HIGHWAY_DISTRICT"
+    },
+    {
+      "label": "Indian reserve or national park",
+      "name": "INDIAN_RESERVE_OR_NATIONAL_PARK"
+    },
+    {
+      "label": "Jurisdiction",
+      "name": "JURISDICTION"
+    },
+    {
+      "label": "Land district",
+      "name": "LAND_DISTRICT"
+    },
+    {
+      "label": "Legal survey plan #",
+      "name": "LEGAL_SURVEY_PLAN_NUMBER"
+    },
+    {
+      "label": "LTSA schedule filing #",
+      "name": "LTSA_SCHEDULE_FILING_NUMBER"
+    },
+    {
+      "label": "MoTI file #",
+      "name": "MOTI_FILE_NUMBER"
+    },
+    {
+      "label": "MoTI plan #",
+      "name": "MOTI_PLAN_NUMBER"
+    },
+    {
+      "label": "MO #",
+      "name": "MO_NUMBER"
+    },
+    {
+      "label": "OIC #",
+      "name": "OIC_NUMBER"
+    },
+    {
+      "label": "OIC route #",
+      "name": "OIC_ROUTE_NUMBER"
+    },
+    {
+      "label": "OIC type",
+      "name": "OIC_TYPE"
+    },
+    {
+      "label": "Owner",
+      "name": "OWNER"
+    },
+    {
+      "label": "Physical location",
+      "name": "PHYSICAL_LOCATION"
+    },
+    {
+      "label": "PID",
+      "name": "PID"
+    },
+    {
+      "label": "PIN",
+      "name": "PIN"
+    },
+    {
+      "label": "Plan #",
+      "name": "PLAN_NUMBER"
+    },
+    {
+      "label": "Plan revision",
+      "name": "PLAN_REVISION"
+    },
+    {
+      "label": "Plan type",
+      "name": "PLAN_TYPE"
+    },
+    {
+      "label": "Project name",
+      "name": "PROJECT_NAME"
+    },
+    {
+      "label": "Project #",
+      "name": "PROJECT_NUMBER"
+    },
+    {
+      "label": "Property identifier (PID or PIN or road name)",
+      "name": "PROPERTY_IDENTIFIER"
+    },
+    {
+      "label": "Published date",
+      "name": "PUBLISHED_DATE"
+    },
+    {
+      "label": "Reference/Agency Document #",
+      "name": "REFAG_DOC_NUMBER"
+    },
+    {
+      "label": "Reference/Agency Lands file #",
+      "name": "REFAG_LANDFILE_NUMBER"
+    },
+    {
+      "label": "Related gazette",
+      "name": "RELATED_GAZETTE"
+    },
+    {
+      "label": "Road name",
+      "name": "ROAD_NAME"
+    },
+    {
+      "label": "Road name",
+      "name": "ROAD_NAME"
+    },
+    {
+      "label": "Roll #",
+      "name": "ROLL_NUMBER"
+    },
+    {
+      "label": "Section #",
+      "name": "SECTION_NUMBER"
+    },
+    {
+      "label": "Short descriptor",
+      "name": "SHORT_DESCRIPTOR"
+    },
+    {
+      "label": "Start date",
+      "name": "START_DATE"
+    },
+    {
+      "label": "Title #",
+      "name": "TITLE_NUMBER"
+    },
+    {
+      "label": "Transfer #",
+      "name": "TRANSFER_NUMBER"
+    },
+    {
+      "label": "Year",
+      "name": "YEAR"
+    },
+    {
+      "label": "Year - privy council #",
+      "name": "YEAR_PRIVY_COUNCIL_NUMBER"
+    }
+  ],
+  "remove_lingering_document_types": true,
+  "remove_lingering_metadata_types": true
 }

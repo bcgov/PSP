@@ -226,7 +226,10 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         <SectionField label="Agricultural land reserve">
           <Text>{values.isALR ? 'Yes' : 'No'}</Text>
         </SectionField>
-        <SectionField label="Railway belt / Dominion patent">
+        <SectionField
+          label="Railway belt / Dominion patent"
+          tooltip="A parcel that was previously part of a railway belt or a Dominion patent."
+        >
           <YesNoSelect field="isRwyBeltDomPatent"></YesNoSelect>
         </SectionField>
         <SectionField label="Land parcel type">

@@ -41,6 +41,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
+                .Include(ad => ad.Document)
+                    .ThenInclude(q => q.PimsDocumentQueues)
+                        .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
                 .Where(ad => ad.ResearchFileId == fileId)
                 .AsNoTracking()
                 .ToList();

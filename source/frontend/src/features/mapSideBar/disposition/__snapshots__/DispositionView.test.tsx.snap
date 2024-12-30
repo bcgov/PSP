@@ -224,7 +224,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   width: 100%;
 }
 
-.c25 {
+.c26 {
   overflow: auto;
   height: 100%;
   width: 100%;
@@ -336,32 +336,32 @@ exports[`DispositionView component > renders as expected 1`] = `
   position: relative;
 }
 
-.c27 {
+.c28 {
   height: 100%;
 }
 
-.c27 .tab-content {
+.c28 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c27 .tab-content .tab-pane {
+.c28 .tab-content .tab-pane {
   position: relative;
 }
 
-.c28 {
+.c29 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c28 .nav-tabs {
+.c29 .nav-tabs {
   height: auto;
 }
 
-.c28 .nav-item {
+.c29 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -369,7 +369,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c28 .nav-item:hover {
+.c29 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -379,7 +379,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c28 .nav-item.active {
+.c29 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -387,7 +387,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c26 {
+.c27 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -404,23 +404,24 @@ exports[`DispositionView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c29 {
+.c30 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
-.c30 {
+.c31 {
   text-align: right;
+  overflow: hidden;
 }
 
-.c34 {
+.c35 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c31 {
+.c32 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -428,18 +429,18 @@ exports[`DispositionView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c33.required::before {
+.c34.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c32 {
+.c33 {
   font-weight: bold;
 }
 
-.c35 {
+.c36 {
   padding: 0 0.4rem;
   display: block;
 }
@@ -506,6 +507,11 @@ exports[`DispositionView component > renders as expected 1`] = `
   color: var(--surface-color-primary-button-default);
 }
 
+.c22 {
+  min-height: 2.5rem;
+  line-height: 3rem;
+}
+
 .c21 {
   font-size: 1.4rem;
   font-weight: normal;
@@ -522,7 +528,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   font-size: 1.4rem;
 }
 
-.c24 {
+.c25 {
   background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
@@ -544,11 +550,11 @@ exports[`DispositionView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c24.selected {
+.c25.selected {
   background-color: #FCBA19;
 }
 
-.c22 {
+.c23 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -565,7 +571,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   border-bottom: 1px solid #606060;
 }
 
-.c23 {
+.c24 {
   font-weight: bold;
   font-size: 1.6rem;
   color: #474543;
@@ -843,7 +849,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                 data-testid="menu-item-row-0"
               >
                 <div
-                  class="col"
+                  class="c22 col"
                 >
                   <span
                     title="File Details"
@@ -852,10 +858,10 @@ exports[`DispositionView component > renders as expected 1`] = `
                   </span>
                 </div>
                 <div
-                  class="c22"
+                  class="c23"
                 >
                   <span
-                    class="c23"
+                    class="c24"
                   >
                     Properties
                   </span>
@@ -872,7 +878,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                   class="pr-2 col-auto"
                 >
                   <div
-                    class="c24"
+                    class="c25"
                   >
                     1
                   </div>
@@ -896,16 +902,16 @@ exports[`DispositionView component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c25 col-9"
+            class="c26 col-9"
           >
             <div
-              class="c26"
+              class="c27"
             >
               <div
-                class="c27"
+                class="c28"
               >
                 <nav
-                  class="c28 nav nav-tabs"
+                  class="c29 nav nav-tabs"
                   role="tablist"
                 >
                   <a
@@ -945,13 +951,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                     role="tabpanel"
                   >
                     <div
-                      class="c29"
+                      class="c30"
                     >
                       <div
-                        class="c30 mr-3 my-1"
+                        class="c31 mr-3 my-1"
                       />
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <div
                           class="collapse show"
@@ -963,13 +969,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Status:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               Draft
                             </div>
@@ -977,10 +983,10 @@ exports[`DispositionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c34"
+                          class="c35"
                         >
                           <div
                             class="no-gutters row"
@@ -1002,13 +1008,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Ministry project:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                               data-testid="dsp-project"
                             >
                               00048 - CLAIMS
@@ -1021,13 +1027,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Product:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                               data-testid="dsp-product"
                             >
                               00055 AVALANCHE  &  PROGRAM REVIEW
@@ -1040,22 +1046,22 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Funding:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             />
                           </div>
                         </div>
                       </div>
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c34"
+                          class="c35"
                         >
                           <div
                             class="no-gutters row"
@@ -1077,13 +1083,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Assigned date:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               Apr 26, 2025
                             </div>
@@ -1095,13 +1101,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Disposition completed date:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               May 28, 1956
                             </div>
@@ -1109,10 +1115,10 @@ exports[`DispositionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c34"
+                          class="c35"
                         >
                           <div
                             class="no-gutters row"
@@ -1134,13 +1140,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Disposition file name:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               Test Disposition File
                             </div>
@@ -1152,7 +1158,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Reference number:
                                 <span>
@@ -1180,7 +1186,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               FILE_REFERENCE 8128827 3EAD56A
                             </div>
@@ -1192,13 +1198,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Disposition status:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             />
                           </div>
                           <div
@@ -1208,13 +1214,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Disposition type:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               Road Closure
                             </div>
@@ -1226,7 +1232,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Initiating document:
                                 <span>
@@ -1254,7 +1260,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               Surplus Declaration
                             </div>
@@ -1266,7 +1272,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Initiating document date:
                                 <span>
@@ -1294,7 +1300,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               Jun 29, 1917
                             </div>
@@ -1306,13 +1312,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Physical file status:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               Pending Litigation
                             </div>
@@ -1324,13 +1330,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Initiating branch:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               PLMB
                             </div>
@@ -1342,13 +1348,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Ministry region:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               Cannot determine
                             </div>
@@ -1356,10 +1362,10 @@ exports[`DispositionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c31 form-section"
+                        class="c32 form-section"
                       >
                         <h2
-                          class="c34"
+                          class="c35"
                         >
                           <div
                             class="no-gutters row"
@@ -1381,16 +1387,16 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 MoTI Solicitor:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               <a
-                                class="c35"
+                                class="c36"
                                 href="/contact/P6"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1422,16 +1428,16 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c32"
+                                class="c33"
                               >
                                 Negotiation agent:
                               </label>
                             </div>
                             <div
-                              class="c33 text-left col"
+                              class="c34 text-left col"
                             >
                               <a
-                                class="c35"
+                                class="c36"
                                 href="/contact/P9"
                                 rel="noopener noreferrer"
                                 target="_blank"

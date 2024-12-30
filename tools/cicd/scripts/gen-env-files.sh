@@ -60,6 +60,34 @@ Cdogs__ServiceClientId=
 Cdogs__ServiceClientSecret=" >> ./source/backend/api/.env
 fi
 
+# Proxy
+if test -f "./source/backend/proxy/.env"; then
+    echo "./source/backend/proxy/.env exists"
+else
+echo \
+"ASPNETCORE_ENVIRONMENT=Docker
+ASPNETCORE_URLS=http://*:5002
+
+TZ=America/Los_Angeles
+
+Keycloak__Secret=
+Keycloak__ServiceAccount__Secret=" >> ./source/backend/proxy/.env
+fi
+
+# Scheduler
+if test -f "./source/backend/scheduler/.env"; then
+    echo "./source/backend/scheduler/.env exists"
+else
+echo \
+"ASPNETCORE_ENVIRONMENT=Docker
+ASPNETCORE_URLS=http://*:8057
+
+TZ=America/Los_Angeles
+
+Keycloak__Secret=
+Keycloak__ServiceAccount__Secret=" >> ./source/backend/scheduler/.env
+fi
+
 # DAL DB migration
 if test -f "./source/backend/dal/.env"; then
     echo "./source/backend/dal/.env exists"

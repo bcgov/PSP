@@ -3,9 +3,9 @@ import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import EditButton from '@/components/common/buttons/EditButton';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
-import EditButton from '@/components/common/EditButton';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
@@ -53,9 +53,9 @@ const AcquisitionMenu: React.FunctionComponent<
                 className={cx('no-gutters', { selected: props.selectedIndex === index })}
               >
                 {activeIndex ? (
-                  <Col>
+                  <StyledMenuCol>
                     <span title="File Details">{label}</span>
-                  </Col>
+                  </StyledMenuCol>
                 ) : (
                   <Col>
                     <LinkButton title="File Details" onClick={() => handleClick(index)}>
@@ -96,9 +96,9 @@ const AcquisitionMenu: React.FunctionComponent<
                   </StyledIconWrapper>
                 </Col>
                 {activeIndex ? (
-                  <Col>
+                  <StyledMenuCol>
                     <span title="View">{label}</span>
-                  </Col>
+                  </StyledMenuCol>
                 ) : (
                   <Col>
                     <LinkButton title="View">{label}</LinkButton>
@@ -127,6 +127,11 @@ const StyledMenuWrapper = styled.div`
   margin: 0px;
   width: 100%;
   color: ${props => props.theme.css.linkColor};
+`;
+
+const StyledMenuCol = styled(Col)`
+  min-height: 2.5rem;
+  line-height: 3rem;
 `;
 
 const StyledRow = styled(Row)`

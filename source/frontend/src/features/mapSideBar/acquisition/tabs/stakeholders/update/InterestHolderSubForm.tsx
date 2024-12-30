@@ -1,9 +1,8 @@
 import { FieldArrayRenderProps, FormikErrors, getIn, useFormikContext } from 'formik';
 import { Fragment, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaTrash } from 'react-icons/fa';
 
-import { StyledRemoveLinkButton } from '@/components/common/buttons';
+import { RemoveIconButton } from '@/components/common/buttons';
 import { DisplayError, Select } from '@/components/common/form';
 import { SelectOption } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
@@ -88,15 +87,12 @@ export const InterestHolderSubForm: React.FunctionComponent<IInterestHolderProps
             ></ContactInputContainer>
           </Col>
           <Col xs="auto">
-            <StyledRemoveLinkButton
+            <RemoveIconButton
               title="Remove Interest"
-              variant="light"
-              onClick={() => {
+              onRemove={() => {
                 arrayHelpers.remove(index);
               }}
-            >
-              <FaTrash size="2rem" />
-            </StyledRemoveLinkButton>
+            />
           </Col>
           {getIn(errors, `interestHolders.${index}.contact`) && (
             <DisplayError field={`interestHolders.${index}.contact`} />

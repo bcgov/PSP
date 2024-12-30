@@ -1,11 +1,11 @@
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaEdit, FaWindowClose } from 'react-icons/fa';
+import { FaWindowClose } from 'react-icons/fa';
 import { MdContactMail } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { StyledIconButton } from '@/components/common/buttons';
+import EditButton from '@/components/common/buttons/EditButton';
 import { ProtectedComponent } from '@/components/common/ProtectedComponent';
 import { H1 } from '@/components/common/styles';
 import { Claims } from '@/constants/claims';
@@ -52,13 +52,10 @@ const ContactViewContainer: React.FunctionComponent<
         <Styled.RowAligned>
           <Col md="auto" className="ml-auto">
             <ProtectedComponent hideIfNotAuthorized claims={[Claims.CONTACT_EDIT]}>
-              <StyledIconButton
+              <EditButton
                 title="Edit Contact"
-                variant="light"
                 onClick={() => history.push(`/contact/${props?.match?.params?.id}/edit`)}
-              >
-                <FaEdit size={22} />
-              </StyledIconButton>
+              />
             </ProtectedComponent>
           </Col>
         </Styled.RowAligned>

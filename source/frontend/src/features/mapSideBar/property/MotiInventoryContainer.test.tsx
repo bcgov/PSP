@@ -2,16 +2,16 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
+import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims } from '@/constants/claims';
+import { getMockCrownTenuresLayerResponse } from '@/mocks/crownTenuresLayerResponse.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockLtsaResponse } from '@/mocks/ltsa.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, cleanup, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
-import { getMockCrownTenuresLayerResponse } from '@/mocks/crownTenuresLayerResponse.mock';
-import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 
 const mockAxios = new MockAdapter(axios);
 const history = createMemoryHistory();
@@ -199,7 +199,7 @@ describe('MotiInventoryContainer component', () => {
   });
 
   it('hides the property information tab for non-inventory properties', async () => {
-    history.push('/mapview/sidebar/non-inventory-property/9212434');
+    history.push('/mapview/sidebar/non-inventory-property/pid/9212434');
     // non-inventory properties will not attempt to contact the backend.
     const error = {
       isAxiosError: true,
