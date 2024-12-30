@@ -76,9 +76,6 @@ public partial class PimsPropertyActivityDocument
     [InverseProperty("PimsPropertyActivityDocuments")]
     public virtual PimsDocument Document { get; set; }
 
-    [InverseProperty("PropertyActivityDocument")]
-    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
-
     [ForeignKey("PimsPropertyActivityId")]
     [InverseProperty("PimsPropertyActivityDocuments")]
     public virtual PimsPropertyActivity PimsPropertyActivity { get; set; }

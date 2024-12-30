@@ -19,6 +19,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
 
 .c1 {
   text-align: right;
+  overflow: hidden;
 }
 
 .c3 {
@@ -76,7 +77,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
             Project Details
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c4"
@@ -140,7 +141,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
             Associated Codes
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c4"
@@ -237,7 +238,7 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
               Associated Products
             </div>
             <div
-              class="pl-8 d-flex align-items-end col-auto"
+              class="pl-2 d-flex align-items-end col-auto"
             >
               <svg
                 class="c4"

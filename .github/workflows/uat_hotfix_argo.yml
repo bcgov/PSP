@@ -34,7 +34,7 @@ on:
 jobs:
   ci-cd-start-notification:
     name: CI-CD Start Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Start notification to Teams Channel
         uses: dragos-cojocari/ms-teams-notification@v1.0.2
@@ -48,7 +48,7 @@ jobs:
   build-frontend:
     name: Build frontend
     needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -67,7 +67,7 @@ jobs:
   build-api:
     name: Build api
     needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -82,11 +82,12 @@ jobs:
         run: |
           ./openshift/4.0/player.sh build api -apply
           ./openshift/4.0/player.sh build proxy -apply
+          ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
     name: Deploy to OpenShift
     needs: [build-frontend, build-api]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -115,6 +116,12 @@ jobs:
           oc tag pims-proxy:latest-$DESTINATION pims-proxy:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+      - name: Deploy scheduler microservice
+        shell: bash
+        run: |
+          oc tag pims-scheduler:latest-$DESTINATION pims-scheduler:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
@@ -123,7 +130,7 @@ jobs:
   database-upgrade:
     name: Upgrade database
     needs: [deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -144,7 +151,7 @@ jobs:
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -166,7 +173,7 @@ jobs:
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -185,7 +192,7 @@ jobs:
   tag-release-image:
     name: Release Tag
     needs: [deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -203,12 +210,13 @@ jobs:
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
           oc tag pims-proxy:uat pims-proxy:v${VERSION}-master
+          oc tag pims-scheduler:uat pims-scheduler:v${VERSION}-master
           oc tag mayan-bcgov:uat mayan-bcgov:v${VERSION}-master
 
   ci-cd-end-notification:
     if: always()
     name: CI-CD End Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [mayan-sync, keycloak-sync]
     steps:
       - name: check workflow status

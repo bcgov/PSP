@@ -6,7 +6,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c5.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c6.btn .Button__value {
+.c5.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c6.btn:hover {
+.c5.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c5.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c5.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-primary:hover,
-.c6.btn.btn-primary:active,
-.c6.btn.btn-primary:focus {
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:active,
+.c5.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c6.btn.btn-secondary {
+.c5.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c6.btn.btn-secondary:hover,
-.c6.btn.btn-secondary:active,
-.c6.btn.btn-secondary:focus {
+.c5.btn.btn-secondary:hover,
+.c5.btn.btn-secondary:active,
+.c5.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-info {
+.c5.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c6.btn.btn-light {
+.c5.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c6.btn.btn-light:hover,
-.c6.btn.btn-light:active,
-.c6.btn.btn-light:focus {
+.c5.btn.btn-light:hover,
+.c5.btn.btn-light:active,
+.c5.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c6.btn.btn-dark {
+.c5.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c6.btn.btn-dark:hover,
-.c6.btn.btn-dark:active,
-.c6.btn.btn-dark:focus {
+.c5.btn.btn-dark:hover,
+.c5.btn.btn-dark:active,
+.c5.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c6.btn.btn-danger {
+.c5.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-danger:hover,
-.c6.btn.btn-danger:active,
-.c6.btn.btn-danger:focus {
+.c5.btn.btn-danger:hover,
+.c5.btn.btn-danger:active,
+.c5.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-warning {
+.c5.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c6.btn.btn-warning:hover,
-.c6.btn.btn-warning:active,
-.c6.btn.btn-warning:focus {
+.c5.btn.btn-warning:hover,
+.c5.btn.btn-warning:active,
+.c5.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c6.btn.btn-link {
+.c5.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,24 +202,71 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c6.Button .Button__icon {
+.c5.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c5.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c5.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c4 {
-  fill: #007bff;
+.c6.c6.btn {
+  background-color: unset;
+  border: none;
 }
 
-.c4:hover {
-  fill: #0056b3;
+.c6.c6.btn:hover,
+.c6.c6.btn:focus,
+.c6.c6.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c6.c6.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c6.c6.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c6.c6.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c6.c6.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c6.c6.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c6.c6.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c6.c6.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c6.c6.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
+}
+
+.c7 {
+  fill: #013366;
+}
+
+.c7:hover {
+  fill: #1E5189;
 }
 
 .c0 {
@@ -228,6 +275,11 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   margin: 0px;
   width: 100%;
   color: var(--surface-color-primary-button-default);
+}
+
+.c2 {
+  min-height: 2.5rem;
+  line-height: 3rem;
 }
 
 .c1 {
@@ -246,7 +298,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   font-size: 1.4rem;
 }
 
-.c5 {
+.c8 {
   background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
@@ -268,11 +320,11 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   align-items: center;
 }
 
-.c5.selected {
+.c8.selected {
   background-color: #FCBA19;
 }
 
-.c2 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -289,7 +341,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
   border-bottom: 1px solid #606060;
 }
 
-.c3 {
+.c4 {
   font-weight: bold;
   font-size: 1.6rem;
   color: #474543;
@@ -304,7 +356,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
       data-testid="menu-item-row-0"
     >
       <div
-        class="col"
+        class="c2 col"
       >
         <span
           title="File Details"
@@ -313,39 +365,43 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
         </span>
       </div>
       <div
-        class="c2"
+        class="c3"
       >
         <span
-          class="c3"
+          class="c4"
         >
           Properties
         </span>
         <button
-          class="btn btn-link"
+          class="c5 Button c6 btn btn-primary"
           data-testid="edit-button"
           title="Change properties"
           type="button"
         >
-          <svg
-            class="c4"
-            data-name="Layer 2"
-            height="2.4rem"
-            id="Layer_2"
-            viewBox="0 0 56.95 85.87"
-            width="2.4rem"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="Button__value"
           >
-            <defs />
-            <g
-              data-name="PDF preview"
-              id="PDF_preview"
+            <svg
+              class="c7"
+              data-name="Layer 2"
+              height="2.4rem"
+              id="Layer_2"
+              viewBox="0 0 56.95 85.87"
+              width="2.4rem"
+              xmlns="http://www.w3.org/2000/svg"
             >
-              <path
-                class="cls-1"
-                d="M55.16,5.56l-3.76-3.77c-2.39-2.39-6.25-2.39-8.64,0h0l-4.62,4.62s.68,.43,1.61,1.04L17,30.68l-1.24-1.83-.23,.23c.05-.05,.09-.11,.15-.16L38.13,6.41C22.22-.8-1.23,7.37,.05,30.58c1.08,19.67,26.62,55.29,26.62,55.29,0,0,24.8-35.75,25.6-55.29,.18-4.48-.53-8.4-1.91-11.75l-22.29,22.5s-.06,.05-.09,.08l.18-.18-1.51-1.05,22.67-23.17c.36,.57,.71,1.17,1.05,1.8l4.81-4.63c2.39-2.39,2.39-6.25,0-8.64Zm-14.73,2.36c1.49,1,3.3,2.27,4.08,3.02,.03,.02,.07,.07,.1,.1l-24.17,24.7-2.96-4.36L40.44,7.93Zm-12.99,33.95c-.87,.71-1.87,1.25-2.95,1.58l-11.49,3.38c-.8,.23-3.92,2.38-4.51,1.78-.59-.59,1.44-3.83,1.67-4.64l3.38-11.49c.32-1.08,.86-2.08,1.57-2.94l5.16,6.81,7.17,5.52Zm-1.51-2.16l-4.9-3.39L45.19,11.64c.87,.92,2.26,2.54,3.65,4.67l-22.91,23.41Z"
-              />
-            </g>
-          </svg>
+              <defs />
+              <g
+                data-name="PDF preview"
+                id="PDF_preview"
+              >
+                <path
+                  class="cls-1"
+                  d="M55.16,5.56l-3.76-3.77c-2.39-2.39-6.25-2.39-8.64,0h0l-4.62,4.62s.68,.43,1.61,1.04L17,30.68l-1.24-1.83-.23,.23c.05-.05,.09-.11,.15-.16L38.13,6.41C22.22-.8-1.23,7.37,.05,30.58c1.08,19.67,26.62,55.29,26.62,55.29,0,0,24.8-35.75,25.6-55.29,.18-4.48-.53-8.4-1.91-11.75l-22.29,22.5s-.06,.05-.09,.08l.18-.18-1.51-1.05,22.67-23.17c.36,.57,.71,1.17,1.05,1.8l4.81-4.63c2.39-2.39,2.39-6.25,0-8.64Zm-14.73,2.36c1.49,1,3.3,2.27,4.08,3.02,.03,.02,.07,.07,.1,.1l-24.17,24.7-2.96-4.36L40.44,7.93Zm-12.99,33.95c-.87,.71-1.87,1.25-2.95,1.58l-11.49,3.38c-.8,.23-3.92,2.38-4.51,1.78-.59-.59,1.44-3.83,1.67-4.64l3.38-11.49c.32-1.08,.86-2.08,1.57-2.94l5.16,6.81,7.17,5.52Zm-1.51-2.16l-4.9-3.39L45.19,11.64c.87,.92,2.26,2.54,3.65,4.67l-22.91,23.41Z"
+                />
+              </g>
+            </svg>
+          </div>
         </button>
       </div>
     </div>
@@ -360,7 +416,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
         class="pr-2 col-auto"
       >
         <div
-          class="c5"
+          class="c8"
         >
           1
         </div>
@@ -369,7 +425,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
         class="col"
       >
         <button
-          class="c6 Button btn btn-link"
+          class="c5 Button btn btn-link"
           title="View"
           type="button"
         >
@@ -392,7 +448,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
         class="pr-2 col-auto"
       >
         <div
-          class="c5"
+          class="c8"
         >
           2
         </div>
@@ -401,7 +457,7 @@ exports[`AcquisitionMenu component > matches snapshot 1`] = `
         class="col"
       >
         <button
-          class="c6 Button btn btn-link"
+          class="c5 Button btn btn-link"
           title="View"
           type="button"
         >

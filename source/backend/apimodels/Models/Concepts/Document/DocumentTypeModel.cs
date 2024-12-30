@@ -33,7 +33,7 @@ namespace Pims.Api.Models.Concepts.Document
         /// <summary>
         /// get/set - The document type id in mayan.
         /// </summary>
-        public long MayanId { get; set; }
+        public long? MayanId { get; set; }
 
         /// <summary>
         /// get/set - The document type is disabled and is maintained for reference only.

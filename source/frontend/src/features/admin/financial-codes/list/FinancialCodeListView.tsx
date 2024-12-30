@@ -4,6 +4,8 @@ import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 
+import AdminIcon from '@/assets/images/admin-icon.svg?react';
+import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import { TableSort } from '@/components/Table/TableSort';
 import { Roles } from '@/constants/roles';
@@ -97,7 +99,10 @@ export const FinancialCodeListView: React.FC = () => {
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Financial Codes</Styled.PageHeader>
+        <CommonStyled.H1>
+          <AdminIcon title="Admin Tools icon" width="2.6rem" height="2.6rem" fill="currentColor" />
+          <span className="ml-2">Financial Codes</span>
+        </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

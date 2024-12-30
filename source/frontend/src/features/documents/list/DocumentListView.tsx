@@ -1,13 +1,17 @@
 import orderBy from 'lodash/orderBy';
 import React, { useContext, useEffect, useMemo, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
+import styled from 'styled-components';
 
+import RefreshButton from '@/components/common/buttons/RefreshButton';
 import GenericModal from '@/components/common/GenericModal';
 import { Section } from '@/components/common/Section/Section';
-import { SectionListHeader } from '@/components/common/SectionListHeader';
+import { InlineFlexDiv, StyledSectionAddButton } from '@/components/common/styles';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
 import { DocumentTypeName } from '@/constants/documentType';
+import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { defaultDocumentFilter, IDocumentFilter } from '@/interfaces/IDocumentResults';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
@@ -30,10 +34,11 @@ export interface IDocumentListViewProps {
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
   addButtonText?: string;
-  onDelete: (relationship: ApiGen_Concepts_DocumentRelationship) => Promise<boolean | undefined>;
-  onSuccess: () => void;
   disableAdd?: boolean;
   title?: string;
+  onDelete: (relationship: ApiGen_Concepts_DocumentRelationship) => Promise<boolean | undefined>;
+  onSuccess: () => void;
+  onRefresh: () => void;
 }
 /**
  * Page that displays document information as a list.
@@ -41,6 +46,8 @@ export interface IDocumentListViewProps {
 export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> = (
   props: IDocumentListViewProps,
 ) => {
+  const { hasClaim } = useKeycloakWrapper();
+
   const { documentResults, isLoading, defaultFilters, hideFilters, title } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
@@ -172,20 +179,41 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
     props.onSuccess();
   };
 
-  const getHeader = () => {
+  const getHeader = (): React.ReactNode => {
     if (props.disableAdd === true) {
       return title ?? 'Documents';
     }
+
     return (
-      <SectionListHeader
-        claims={[Claims.DOCUMENT_ADD]}
-        title={title ?? 'Documents'}
-        addButtonIcon={<FaPlus size={'2rem'} />}
-        addButtonText={props.addButtonText || 'Add Document'}
-        onAdd={() => setIsUploadVisible(true)}
-      />
+      <>
+        <StyledRow className="no-gutters">
+          <Col xs="auto" className="px-2 my-1">
+            <span>{title ?? 'Documents'}</span>
+          </Col>
+          <Col xs="auto" className="my-1">
+            <ListHeaderActionsDiv>
+              {hasClaim([Claims.DOCUMENT_ADD]) && (
+                <StyledSectionAddButton
+                  onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
+                  data-testid={props['data-testId']}
+                >
+                  <FaPlus size={'2rem'} />
+                  &nbsp;{'Add Document'}
+                </StyledSectionAddButton>
+              )}
+              <RefreshButton
+                onClick={() => props.onRefresh && props.onRefresh()}
+                type="button"
+                toolText="Refresh"
+                toolId="btn-refresh-tooltip"
+              ></RefreshButton>
+            </ListHeaderActionsDiv>
+          </Col>
+        </StyledRow>
+      </>
     );
   };
+
   return (
     <>
       <Section header={getHeader()} title="documents" isCollapsable initiallyExpanded>
@@ -250,3 +278,17 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 };
 
 export default DocumentListView;
+
+const StyledRow = styled(Row)`
+  justify-content: space-between;
+  align-items: end;
+  min-height: 4.5rem;
+  .btn {
+    margin: 0;
+  }
+`;
+
+const ListHeaderActionsDiv = styled(InlineFlexDiv)`
+  justify-content: space-between;
+  gap: 0.5rem;
+`;

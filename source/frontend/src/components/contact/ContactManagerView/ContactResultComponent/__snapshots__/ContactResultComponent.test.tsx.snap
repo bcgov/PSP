@@ -811,7 +811,8 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
               class="c5 c6"
             >
               <button
-                class="c7 Button c8 btn btn-light"
+                class="c7 Button c8 btn btn-primary"
+                data-testid="view-button"
                 title="View Contact"
                 type="button"
               >
@@ -823,20 +824,12 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
                     height="22"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 576 512"
                     width="22"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
+                      d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
                     />
                   </svg>
                 </div>
@@ -998,7 +991,8 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
               class="c5 c6"
             >
               <button
-                class="c7 Button c8 btn btn-light"
+                class="c7 Button c8 btn btn-primary"
+                data-testid="view-button"
                 title="View Contact"
                 type="button"
               >
@@ -1010,20 +1004,12 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
                     height="22"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 576 512"
                     width="22"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
+                      d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
                     />
                   </svg>
                 </div>
@@ -1185,7 +1171,8 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
               class="c5 c6"
             >
               <button
-                class="c7 Button c8 btn btn-light"
+                class="c7 Button c8 btn btn-primary"
+                data-testid="view-button"
                 title="View Contact"
                 type="button"
               >
@@ -1197,20 +1184,12 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
                     height="22"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
+                    viewBox="0 0 576 512"
                     width="22"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M21 8V7l-3 2-3-2v1l3 2 3-2zm1-5H2C.9 3 0 3.9 0 5v14c0 1.1.9 2 2 2h20c1.1 0 1.99-.9 1.99-2L24 5c0-1.1-.9-2-2-2zM8 6c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm6 12H2v-1c0-2 4-3.1 6-3.1s6 1.1 6 3.1v1zm8-6h-8V6h8v6z"
+                      d="M572.52 241.4C518.29 135.59 410.93 64 288 64S57.68 135.64 3.48 241.41a32.35 32.35 0 0 0 0 29.19C57.71 376.41 165.07 448 288 448s230.32-71.64 284.52-177.41a32.35 32.35 0 0 0 0-29.19zM288 400a144 144 0 1 1 144-144 143.93 143.93 0 0 1-144 144zm0-240a95.31 95.31 0 0 0-25.31 3.79 47.85 47.85 0 0 1-66.9 66.9A95.78 95.78 0 1 0 288 160z"
                     />
                   </svg>
                 </div>

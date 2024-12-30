@@ -84,9 +84,6 @@ export class CompensationRequisitionFormModel {
       expropriationVestingDate: isValidIsoDateTime(this.expropriationVestingDateTime)
         ? this.expropriationVestingDateTime
         : null,
-      advancedPaymentServedDate: isValidIsoDateTime(this.advancedPaymentServedDate)
-        ? this.advancedPaymentServedDate
-        : null,
       generationDate: isValidIsoDateTime(this.generationDatetTime)
         ? this.generationDatetTime
         : null,
@@ -163,7 +160,6 @@ export class CompensationRequisitionFormModel {
     compensation.agreementDateTime = apiModel.agreementDate || '';
     compensation.expropriationNoticeServedDateTime = apiModel.expropriationNoticeServedDate || '';
     compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
-    compensation.advancedPaymentServedDate = apiModel.advancedPaymentServedDate || '';
     compensation.generationDatetTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';

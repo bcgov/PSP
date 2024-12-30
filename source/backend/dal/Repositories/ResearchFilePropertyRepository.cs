@@ -73,11 +73,8 @@ namespace Pims.Dal.Repositories
 
         public PimsPropertyResearchFile Update(PimsPropertyResearchFile propertyResearchFile)
         {
-            // Mark the property not to be changed it was being tracked.
-            if (propertyResearchFile.Property != null)
-            {
-                Context.Entry(propertyResearchFile.Property).State = EntityState.Unchanged;
-            }
+            // Do not allow this method to make any updates to the related property entity.
+            propertyResearchFile.Property = null;
 
             // Retrieve the existing property research purpose types for the property
             // Note: This is needed given the research file properties purpose types may not have the corresponging id, but corresponding code.

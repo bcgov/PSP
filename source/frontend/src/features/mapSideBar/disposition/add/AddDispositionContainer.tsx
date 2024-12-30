@@ -159,6 +159,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
     userOverrideCodes: UserOverrideCode[],
   ) => {
     try {
+      formikHelpers.setSubmitting(true);
       const dispositionFile = values.toApi();
       const response = await addDispositionFileApi(dispositionFile, userOverrideCodes);
 
@@ -183,7 +184,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
       onSubmit={(
         values: DispositionFormModel,
         formikHelpers: FormikHelpers<DispositionFormModel>,
-      ) =>
+      ) => {
         withUserOverride(
           (userOverrideCodes: UserOverrideCode[]) =>
             handleSubmit(values, formikHelpers, userOverrideCodes),
@@ -197,8 +198,8 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
             });
             setDisplayModal(true);
           },
-        )
-      }
+        );
+      }}
     ></View>
   );
 };
