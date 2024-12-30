@@ -701,6 +701,38 @@ exports[`AddProjectForm component > renders as expected 1`] = `
       </div>
       <div />
       <div />
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Project Management Team
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <button
+            class="c7 Button btn btn-link"
+            data-testid="add-team-member"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              + Add another management team member
+            </div>
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </DocumentFragment>
@@ -2138,6 +2170,38 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
       </div>
       <div />
       <div />
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Project Management Team
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <button
+            class="c7 Button btn btn-link"
+            data-testid="add-team-member"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              + Add another management team member
+            </div>
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </DocumentFragment>

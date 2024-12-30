@@ -927,6 +927,38 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
             </div>
             <div />
             <div />
+            <div
+              class="c11 form-section"
+            >
+              <h2
+                class="c12"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="col"
+                  >
+                    Project Management Team
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <button
+                  class="c3 Button btn btn-link"
+                  data-testid="add-team-member"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    + Add another management team member
+                  </div>
+                </button>
+              </div>
+            </div>
           </form>
         </div>
       </div>

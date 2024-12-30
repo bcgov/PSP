@@ -432,6 +432,26 @@ exports[`ProjectSummaryView component > matches snapshot 1`] = `
         </div>
       </div>
     </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Project Management Team
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;
