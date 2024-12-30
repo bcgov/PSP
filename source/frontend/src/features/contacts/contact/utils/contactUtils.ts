@@ -27,7 +27,7 @@ export const onValidateOrganization = (
       !hasEmail(values) &&
       !hasPhoneNumber(values) &&
       !hasAddress(values) &&
-      (values.isDisabled === 'false' || values.isDisabled === false)
+      values.isDisabled === 'false'
     ) {
       errors.needsContactMethod =
         'Contacts must have a minimum of one method of contact to be saved. (ex: email, phone or address)';
@@ -49,7 +49,7 @@ export const onValidatePerson = (values: IEditablePersonForm, otherCountryId?: s
       !hasEmail(values) &&
       !hasPhoneNumber(values) &&
       !hasAddress(values) &&
-      (values.isDisabled === 'false' || values.isDisabled === false)
+      values.isDisabled === 'false'
     ) {
       errors.needsContactMethod =
         'Contacts must have a minimum of one method of contact to be saved. (ex: email, phone or address)';
