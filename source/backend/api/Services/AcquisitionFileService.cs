@@ -38,6 +38,7 @@ namespace Pims.Api.Services
         private readonly ITakeRepository _takeRepository;
         private readonly IAcquisitionStatusSolver _statusSolver;
         private readonly IPropertyService _propertyService;
+        private readonly IProjectRepository _projectRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -55,6 +56,7 @@ namespace Pims.Api.Services
             ICompReqFinancialService compReqFinancialService,
             IExpropriationPaymentRepository expropriationPaymentRepository,
             ITakeRepository takeRepository,
+            IProjectRepository projectRepository,
             IAcquisitionStatusSolver statusSolver,
             IPropertyService propertyService)
         {
@@ -75,6 +77,7 @@ namespace Pims.Api.Services
             _takeRepository = takeRepository;
             _statusSolver = statusSolver;
             _propertyService = propertyService;
+            _projectRepository = projectRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -206,7 +209,8 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
-            acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository);
+
+            acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository, _projectRepository);
 
             // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -274,7 +278,7 @@ namespace Pims.Api.Services
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
-            acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+            acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository, _projectRepository);
 
             ValidatePayeeDependency(acquisitionFile);
 

@@ -206,7 +206,7 @@ namespace Pims.Api.Test.Services
             var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
             var documentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentId = 1 };
             var relatedDocument = new PimsDocument { MayanId = null };
-            var databaseDocumentQueue = new PimsDocumentQueue { DocumentQueueId = 1 };
+            var databaseDocumentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PROCESSING.ToString() };
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
             var documentServiceMock = this._helper.GetService<Mock<IDocumentService>>();
@@ -230,7 +230,7 @@ namespace Pims.Api.Test.Services
             var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
             var documentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentId = 1 };
             var relatedDocument = new PimsDocument { MayanId = 1 };
-            var databaseDocumentQueue = new PimsDocumentQueue { DocumentQueueId = 1 };
+            var databaseDocumentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PROCESSING.ToString() };
             var documentDetailsResponse = new ExternalResponse<DocumentDetailModel> { Status = ExternalResponseStatus.Error };
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
@@ -283,7 +283,7 @@ namespace Pims.Api.Test.Services
             var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
             var documentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentId = 1 };
             var relatedDocument = new PimsDocument { MayanId = 1 };
-            var databaseDocumentQueue = new PimsDocumentQueue { DocumentQueueId = 1 };
+            var databaseDocumentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PROCESSING.ToString() };
             var documentDetailModel = new DocumentDetailModel { FileLatest = new FileLatestModel { Id = 1 } };
             var documentDetailsResponse = new ExternalResponse<DocumentDetailModel> { Status = ExternalResponseStatus.Success, Payload = documentDetailModel };
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
