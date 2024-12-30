@@ -6,7 +6,14 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c7 {
+  color: #474543;
+  font-size: 1.6rem;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
@@ -40,13 +47,6 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
 
 .c4 {
   font-weight: bold;
-}
-
-.c7 {
-  color: #474543;
-  font-size: 1.6rem;
-  -webkit-text-decoration: none;
-  text-decoration: none;
 }
 
 .c8 {
@@ -139,6 +139,188 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
+          />
+        </div>
+      </div>
+    </div>
+    <div
+      class="c2 form-section"
+    >
+      <h2
+        class="c3"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="col"
+          >
+            Progress Statuses
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              File progress(es):
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+            data-testid="prg-file-progress-status"
+          >
+            <div>
+              <div
+                class="multiselect-container multiSelectContainer disable_ms "
+                id="multiselectContainerReact"
+                style="opacity: 1;"
+              >
+                <div
+                  class="search-wrapper searchWrapper "
+                  style="padding: 0px;"
+                >
+                  <input
+                    autocomplete="off"
+                    class="searchBox "
+                    disabled=""
+                    id="search_input"
+                    name="search_name_input"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="optionListContainer displayNone"
+                >
+                  <ul
+                    class="optionContainer"
+                  >
+                    <span
+                      class="notFound"
+                    >
+                      No Options Available
+                    </span>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Appraisal:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+            data-testid="prg-appraisal-status"
+          >
+            Received
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Legal survey:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+            data-testid="prg-legal-survey-status"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Type of taking:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+            data-testid="prg-taking-type-status"
+          >
+            <div>
+              <div
+                class="multiselect-container multiSelectContainer disable_ms "
+                id="multiselectContainerReact"
+                style="opacity: 1;"
+              >
+                <div
+                  class="search-wrapper searchWrapper "
+                  style="padding: 0px;"
+                >
+                  <input
+                    autocomplete="off"
+                    class="searchBox "
+                    disabled=""
+                    id="search_input"
+                    name="search_name_input"
+                    placeholder=""
+                    type="text"
+                    value=""
+                  />
+                </div>
+                <div
+                  class="optionListContainer displayNone"
+                >
+                  <ul
+                    class="optionContainer"
+                  >
+                    <span
+                      class="notFound"
+                    >
+                      No Options Available
+                    </span>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Expropriation risk:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+            data-testid="prg-expropiation-risk-status"
           />
         </div>
       </div>
