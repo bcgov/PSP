@@ -86,8 +86,11 @@ namespace Pims.Dal.Repositories
         public PimsDocumentQueue Update(PimsDocumentQueue queuedDocument, bool removeDocument = false)
         {
             queuedDocument.ThrowIfNull(nameof(queuedDocument));
-            var existingQueuedDocument = TryGetById(queuedDocument.DocumentQueueId);
-
+            var existingQueuedDocument = TryGetById(queuedDocument.DocumentQueueId) ?? throw new KeyNotFoundException($"DocumentQueueId {queuedDocument.DocumentQueueId} not found.");
+            if (existingQueuedDocument?.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.SUCCESS.ToString() && queuedDocument.DocumentQueueStatusTypeCode != DocumentQueueStatusTypes.SUCCESS.ToString())
+            {
+                throw new InvalidOperationException($"DocumentQueueId {queuedDocument.DocumentQueueId} is already completed.");
+            }
             if (!removeDocument)
             {
                 queuedDocument.Document = existingQueuedDocument.Document;
