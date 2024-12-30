@@ -146,59 +146,53 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
         </SectionField>
         <hr />
 
-        <SectionField
-          label={
-            <>
-              <FaMoneyCheckAlt size={24} className="mr-4" />
-              {getFileCalculatedCompensationTotalLabel()}
-            </>
-          }
-          tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
-          labelWidth="8"
-          className="summary-row no-icon"
-          valueClassName="text-right"
-          valueTestId="payment-total-main-file"
-        >
-          {formatMoney(fileCompensationTotal)}
-        </SectionField>
-
-        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && !isSubfile && (
+        <FlexDiv>
+          <FaMoneyCheckAlt size={24} className="mr-4 mt-2" />
           <SectionField
-            label={
-              <>
-                <FaMoneyCheckAlt size={24} className="mr-4" />
-                Total payments made on main file and all sub files
-              </>
-            }
+            label={<>{getFileCalculatedCompensationTotalLabel()}</>}
             tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
             labelWidth="8"
             className="summary-row no-icon"
             valueClassName="text-right"
-            valueTestId="payment-total-subfiles"
+            valueTestId="payment-total-main-file"
           >
-            {formatMoney(mainAndSubFilesCompensationTotal)}
+            {formatMoney(fileCompensationTotal)}
           </SectionField>
+        </FlexDiv>
+
+        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && !isSubfile && (
+          <FlexDiv>
+            <FaMoneyCheckAlt size={24} className="mr-4 mt-1" />
+            <SectionField
+              label="Total payments made on main file and all sub-files"
+              tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
+              labelWidth="8"
+              className="summary-row no-icon"
+              valueClassName="text-right"
+              valueTestId="payment-total-subfiles"
+            >
+              {formatMoney(mainAndSubFilesCompensationTotal)}
+            </SectionField>
+          </FlexDiv>
         )}
         <hr />
 
-        <SectionField
-          label={
-            <>
-              <FaPencilRuler size={24} className="mr-4" />
-              Drafts
-            </>
-          }
-          tooltip={`This is the total of all requisitions in the "Draft" state.`}
-          labelWidth="8"
-          className="summary-row no-icon"
-          valueClassName="text-right"
-          valueTestId="payment-total-drafts"
-        >
-          {formatMoney(fileDraftCompensationTotal)}
-        </SectionField>
+        <FlexDiv>
+          <FaPencilRuler size={24} className="mr-4 mt-2" />
+          <SectionField
+            label="Drafts"
+            tooltip={`This is the total of all requisitions in the "Draft" state.`}
+            labelWidth="9"
+            className="summary-row no-icon"
+            valueClassName="text-right"
+            valueTestId="payment-total-drafts"
+          >
+            {formatMoney(fileDraftCompensationTotal)}
+          </SectionField>
+        </FlexDiv>
       </StyledSection>
 
-      <Section header="Requisitions in this file (H120)" isCollapsable initiallyExpanded>
+      <Section header="Requisitions in this File (H120)" isCollapsable initiallyExpanded>
         <CompensationResults
           isLoading={isLoading}
           results={compensationsResults}
@@ -218,6 +212,7 @@ const StyledSection = styled(Section)`
     font: ${props => props.theme.bcTokens.typographyColorSecondary};
   }
   .summary-row {
+    flex-grow: 1;
     align-items: center;
     justify-content: space-between;
     min-height: 4.3rem;
@@ -229,3 +224,10 @@ const StyledSection = styled(Section)`
 `;
 
 export default CompensationListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: flex-start;
+`;
