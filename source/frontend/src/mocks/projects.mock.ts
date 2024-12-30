@@ -31,6 +31,7 @@ export const mockProjects = (): ApiGen_Concepts_Project[] => [
     description: 'test DESCRIPTION 1',
     note: 'test NOTE 1',
     projectStatusTypeCode: null,
+    projectPersons: [],
     projectProducts: [],
     ...getEmptyBaseAudit(1),
   },
@@ -49,6 +50,7 @@ export const mockProjects = (): ApiGen_Concepts_Project[] => [
     description: 'test DESCRIPTION 2',
     note: 'test NOTE 2',
     projectStatusTypeCode: null,
+    projectPersons: [],
     projectProducts: [],
     ...getEmptyBaseAudit(1),
   },
@@ -82,6 +84,7 @@ export const mockProjectPostResponse = (
   businessFunctionCode: null,
   workActivityCode: null,
   costTypeCode: null,
+  projectPersons: [],
   projectProducts: [],
   note: summary,
   appCreateTimestamp: '2022-05-28T00:57:37.42',
@@ -109,6 +112,7 @@ export const mockProjectGetResponse = (): ApiGen_Concepts_Project => ({
   code: '771',
   description: 'Project Cool A',
   note: 'Summary of the Project Cool A',
+  projectPersons: [],
   projectProducts: [
     {
       id: 1,

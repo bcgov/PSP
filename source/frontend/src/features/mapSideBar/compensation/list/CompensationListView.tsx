@@ -4,16 +4,18 @@ import styled from 'styled-components';
 
 import { ToggleSaveInputContainer } from '@/components/common/form/ToggleSaveInput/ToggleSaveInputContainer';
 import { ToggleSaveInputView } from '@/components/common/form/ToggleSaveInput/ToggleSaveInputView';
+import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import Claims from '@/constants/claims';
 import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
-import { formatMoney } from '@/utils';
+import { exists, formatMoney } from '@/utils';
 
 import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import { UpdateCompensationContext } from '../models/UpdateCompensationContext';
@@ -22,7 +24,9 @@ import { CompensationResults } from './CompensationResults';
 export interface ICompensationListViewProps {
   fileType: ApiGen_CodeTypes_FileTypes;
   file: ApiGen_Concepts_File;
-  compensations: ApiGen_Concepts_CompensationRequisition[];
+  compensationsResults: ApiGen_Concepts_CompensationRequisition[];
+  subFilescompensations: ApiGen_Concepts_CompensationRequisition[] | null;
+  isLoading: boolean;
   onAdd: () => void;
   onDelete: (compensationId: number) => void;
   onUpdateTotalCompensation: (totalAllowableCompensation: number | null) => Promise<number | null>;
@@ -31,7 +35,9 @@ export interface ICompensationListViewProps {
 export const CompensationListView: React.FunctionComponent<ICompensationListViewProps> = ({
   fileType,
   file,
-  compensations,
+  compensationsResults,
+  subFilescompensations,
+  isLoading,
   onAdd,
   onDelete,
   onUpdateTotalCompensation,
@@ -39,31 +45,37 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
   const history = useHistory();
   const match = useRouteMatch();
 
-  const fileCompensationTotal = compensations
-    .filter(x => !x.isDraft)
-    .reduce((fileTotal: number, current: ApiGen_Concepts_CompensationRequisition) => {
-      const compensationTotal =
-        current.financials?.reduce(
-          (financialTotal: number, financial: ApiGen_Concepts_CompensationFinancial) => {
-            return financialTotal + (financial.totalAmount || 0);
-          },
-          0,
-        ) || 0;
-      return fileTotal + compensationTotal;
-    }, 0);
+  const isSubfile =
+    fileType === ApiGen_CodeTypes_FileTypes.Acquisition &&
+    (file as ApiGen_Concepts_AcquisitionFile).parentAcquisitionFileId !== null;
 
-  const fileDraftCompensationTotal = compensations
-    .filter(x => x.isDraft)
-    .reduce((fileTotal: number, current: ApiGen_Concepts_CompensationRequisition) => {
-      const compensationTotal =
-        current.financials?.reduce(
-          (financialTotal: number, financial: ApiGen_Concepts_CompensationFinancial) => {
-            return financialTotal + (financial.totalAmount || 0);
-          },
-          0,
-        ) || 0;
-      return fileTotal + compensationTotal;
-    }, 0);
+  const calculateCompensationTotal = (
+    compReqs: ApiGen_Concepts_CompensationRequisition[],
+    isDraft: boolean,
+  ): number => {
+    if (!exists(compReqs)) {
+      return 0;
+    }
+
+    return compReqs
+      .filter(x => x.isDraft === isDraft)
+      .reduce((fileTotal: number, current: ApiGen_Concepts_CompensationRequisition) => {
+        const compensationTotal =
+          current.financials?.reduce(
+            (financialTotal: number, financial: ApiGen_Concepts_CompensationFinancial) => {
+              return financialTotal + (financial.totalAmount || 0);
+            },
+            0,
+          ) || 0;
+        return fileTotal + compensationTotal;
+      }, 0);
+  };
+
+  const fileCompensationTotal = calculateCompensationTotal(compensationsResults, false);
+  const fileDraftCompensationTotal = calculateCompensationTotal(compensationsResults, true);
+  const mainAndSubFilesCompensationTotal = subFilescompensations
+    ? calculateCompensationTotal(subFilescompensations, false) + fileCompensationTotal
+    : null;
 
   let updateCompensationContext: UpdateCompensationContext | null;
   switch (fileType) {
@@ -84,8 +96,22 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
       break;
   }
 
+  const getFileCalculatedCompensationTotalLabel = (): string => {
+    if (fileType !== ApiGen_CodeTypes_FileTypes.Acquisition) {
+      return 'Total payments made on this file';
+    }
+
+    if (isSubfile) {
+      return 'Total payments made on the sub file';
+    }
+
+    return 'Total payments made on the main file';
+  };
+
   return (
     <>
+      <LoadingBackdrop show={isLoading} parentScreen={true} />
+
       <StyledSection
         header={
           <SectionListHeader
@@ -120,51 +146,63 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
         </SectionField>
         <hr />
 
-        <SectionField
-          label={
-            <>
-              <FaMoneyCheckAlt size={24} className="mr-4" />
-              Total payments made on this file
-            </>
-          }
-          tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
-          labelWidth="8"
-          className="summary-row no-icon"
-          valueClassName="text-right"
-        >
-          {formatMoney(fileCompensationTotal)}
-        </SectionField>
+        <FlexDiv>
+          <FaMoneyCheckAlt size={24} className="mr-4 mt-2" />
+          <SectionField
+            label={<>{getFileCalculatedCompensationTotalLabel()}</>}
+            tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
+            labelWidth="8"
+            className="summary-row no-icon"
+            valueClassName="text-right"
+            valueTestId="payment-total-main-file"
+          >
+            {formatMoney(fileCompensationTotal)}
+          </SectionField>
+        </FlexDiv>
+
+        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && !isSubfile && (
+          <FlexDiv>
+            <FaMoneyCheckAlt size={24} className="mr-4 mt-1" />
+            <SectionField
+              label="Total payments made on main file and all sub-files"
+              tooltip={`This is the total of all requisitions in the "Final" status. Draft entries are not included here.`}
+              labelWidth="8"
+              className="summary-row no-icon"
+              valueClassName="text-right"
+              valueTestId="payment-total-subfiles"
+            >
+              {formatMoney(mainAndSubFilesCompensationTotal)}
+            </SectionField>
+          </FlexDiv>
+        )}
         <hr />
 
-        <SectionField
-          label={
-            <>
-              <FaPencilRuler size={24} className="mr-4" />
-              Drafts
-            </>
-          }
-          tooltip={`This is the total of all requisitions in the "Draft" state.`}
-          labelWidth="8"
-          className="summary-row no-icon"
-          valueClassName="text-right"
-        >
-          {formatMoney(fileDraftCompensationTotal)}
-        </SectionField>
+        <FlexDiv>
+          <FaPencilRuler size={24} className="mr-4 mt-2" />
+          <SectionField
+            label="Drafts"
+            tooltip={`This is the total of all requisitions in the "Draft" state.`}
+            labelWidth="9"
+            className="summary-row no-icon"
+            valueClassName="text-right"
+            valueTestId="payment-total-drafts"
+          >
+            {formatMoney(fileDraftCompensationTotal)}
+          </SectionField>
+        </FlexDiv>
       </StyledSection>
 
-      {(fileType === ApiGen_CodeTypes_FileTypes.Acquisition ||
-        fileType === ApiGen_CodeTypes_FileTypes.Lease) && (
-        <Section header="Requisitions in this file (H120)" isCollapsable initiallyExpanded>
-          <CompensationResults
-            results={compensations}
-            statusSolver={updateCompensationContext}
-            onShow={(compensationId: number) => {
-              history.push(`${match.url}/compensation-requisition/${compensationId}`);
-            }}
-            onDelete={onDelete}
-          />
-        </Section>
-      )}
+      <Section header="Requisitions in this File (H120)" isCollapsable initiallyExpanded>
+        <CompensationResults
+          isLoading={isLoading}
+          results={compensationsResults}
+          statusSolver={updateCompensationContext}
+          onShow={(compensationId: number) => {
+            history.push(`${match.url}/compensation-requisition/${compensationId}`);
+          }}
+          onDelete={onDelete}
+        />
+      </Section>
     </>
   );
 };
@@ -174,6 +212,7 @@ const StyledSection = styled(Section)`
     font: ${props => props.theme.bcTokens.typographyColorSecondary};
   }
   .summary-row {
+    flex-grow: 1;
     align-items: center;
     justify-content: space-between;
     min-height: 4.3rem;
@@ -185,3 +224,10 @@ const StyledSection = styled(Section)`
 `;
 
 export default CompensationListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  flex-grow: 1;
+  align-items: flex-start;
+`;

@@ -1,6 +1,6 @@
 import { createMemoryHistory } from 'history';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
-import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { mockAcquisitionFileResponse, mockAcquisitionFileSubFilesResponse } from '@/mocks/acquisitionFiles.mock';
 import {
   getMockApiCompensationList,
   getMockApiDefaultCompensation,
@@ -16,6 +16,7 @@ import {
   screen,
   userEvent,
   waitFor,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import CompensationListContainer, {
@@ -69,6 +70,13 @@ const mockPutLeaseApi = {
   loading: false,
 };
 
+const mockGetAcquisitionSubFilesApi = {
+  error: undefined,
+  response: {...mockAcquisitionFileSubFilesResponse()},
+  execute: vi.fn(),
+  loading: false,
+};
+
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
   useCompensationRequisitionRepository: () => {
     return {
@@ -83,6 +91,7 @@ vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
       updateAcquisitionFile: mockPutAcquisitionApi,
+      getAcquisitionSubFiles: mockGetAcquisitionSubFilesApi,
     };
   },
 }));
@@ -134,6 +143,8 @@ describe('compensation list view container', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = await setup({});
+    waitForEffects();
+
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });
@@ -167,8 +178,9 @@ describe('compensation list view container', () => {
     setup({
       claims: [],
     });
+    waitForEffects();
 
-    expect(mockGetFileCompensationsApi.execute).toHaveBeenCalledTimes(0);
+    expect(mockGetFileCompensationsApi.execute).toHaveBeenCalledTimes(1);
   });
 
   it('Creates the Compensation Requisition with the default data for Acquisition File', async () => {

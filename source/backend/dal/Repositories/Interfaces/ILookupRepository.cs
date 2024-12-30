@@ -159,5 +159,15 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsConsultationOutcomeType> GetAllConsultationOutcomeTypes();
 
         IEnumerable<PimsSubfileInterestType> GetAllSubfileInterestTypes();
+
+        IEnumerable<PimsAcqFileProgessType> GetAllAcquisitionFileProgressStatusTypes();
+
+        IEnumerable<PimsAcqFileAppraisalType> GetAllAcquisitionFileAppraisalStatusTypes();
+
+        IEnumerable<PimsAcqFileLglSrvyType> GetAllAcquisitionFileLegalSurveyStatusTypes();
+
+        IEnumerable<PimsAcqFileTakeType> GetAllAcquisitionFileTakeStatusTypes();
+
+        IEnumerable<PimsAcqFileExpropRiskType> GetAllAcquisitionFileExpropiationRiskStatusTypes();
     }
 }

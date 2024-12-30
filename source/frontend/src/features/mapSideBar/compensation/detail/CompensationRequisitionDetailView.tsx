@@ -286,11 +286,14 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
             <SectionField label="Expropriation vesting date" labelWidth="4">
               {prettyFormatDate(compensation.expropriationVestingDate)}
             </SectionField>
-            <SectionField
+            {/* TODO : Remove */}
+            {/* <SectionField
               label="Advanced payment served date"
               labelWidth="4"
               valueTestId="advanced-payment-served-date"
-            ></SectionField>
+            >
+              {prettyFormatDate(compensation.advancedPaymentServedDate)}
+            </SectionField> */}
           </>
         )}
 

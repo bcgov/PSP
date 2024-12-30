@@ -4,7 +4,12 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { fromTypeCode, stringToNumberOrNull, toTypeCodeNullable } from '@/utils/formUtils';
+import {
+  fromTypeCode,
+  fromTypeCodeNullable,
+  stringToNumberOrNull,
+  toTypeCodeNullable,
+} from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
@@ -15,6 +20,8 @@ import {
   WithAcquisitionOwners,
   WithAcquisitionTeam,
 } from '../common/models';
+import { ProgressStatusModel } from '../models/ProgressStatusModel';
+import { TakingTypeStatusModel } from '../models/TakingTypeStatusModel';
 import { InterestHolderForm } from '../tabs/stakeholders/update/models';
 
 export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwners {
@@ -27,6 +34,14 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   estimatedCompletionDate?: string = '';
   possessionDate?: string = '';
   rowVersion?: number;
+
+  //Progress Statuses
+  progressStatuses: ProgressStatusModel[] = [];
+  appraisalStatusType: string | null = null;
+  legalSurveyStatusType: string | null = null;
+  takingStatuses: TakingTypeStatusModel[] = [];
+  expropiationRiskStatusType: string | null = null;
+
   // Code Tables
   acquisitionFileStatusType?: string = '';
   acquisitionPhysFileStatusType?: string = '';
@@ -68,6 +83,13 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         ? this.estimatedCompletionDate
         : null,
       possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
+      acquisitionFileProgressStatuses: this.progressStatuses.map(x => x.toApi(this.id ?? 0)),
+      acquisitionFileAppraisalStatusTypeCode: toTypeCodeNullable(this.appraisalStatusType),
+      acquisitionFileLegalSurveyStatusTypeCode: toTypeCodeNullable(this.legalSurveyStatusType),
+      acquisitionFileTakingStatuses: this.takingStatuses.map(x => x.toApi(this.id ?? 0)),
+      acquisitionFileExpropiationRiskStatusTypeCode: toTypeCodeNullable(
+        this.expropiationRiskStatusType,
+      ),
       totalAllowableCompensation: stringToNumberOrNull(this.totalAllowableCompensation),
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileStatusTypeCode: toTypeCodeNullable(this.acquisitionFileStatusType),
@@ -75,7 +97,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       acquisitionTypeCode: toTypeCodeNullable(this.acquisitionType),
       regionCode: toTypeCodeNullable(Number(this.region)),
       projectId: isValidId(this.project?.id) ? this.project!.id : null,
-      productId: this.product !== '' ? Number(this.product) : null,
+      productId: isValidId(Number(this.product)) ? Number(this.product) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       fundingOther: this.fundingTypeOtherDescription,
       subfileInterestTypeCode: toTypeCodeNullable(this.subfileInterestTypeCode),
@@ -172,6 +194,19 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.deliveryDate = model.deliveryDate ?? undefined;
     newForm.estimatedCompletionDate = model.estimatedCompletionDate ?? undefined;
     newForm.possessionDate = model.possessionDate ?? undefined;
+    newForm.progressStatuses =
+      model.acquisitionFileProgressStatuses.map(x => ProgressStatusModel.fromApi(x)) ?? [];
+    newForm.appraisalStatusType = fromTypeCodeNullable(
+      model.acquisitionFileAppraisalStatusTypeCode,
+    );
+    newForm.legalSurveyStatusType = fromTypeCodeNullable(
+      model.acquisitionFileLegalSurveyStatusTypeCode,
+    );
+    newForm.takingStatuses =
+      model.acquisitionFileTakingStatuses.map(x => TakingTypeStatusModel.fromApi(x)) ?? [];
+    newForm.expropiationRiskStatusType = fromTypeCodeNullable(
+      model.acquisitionFileExpropiationRiskStatusTypeCode,
+    );
     newForm.totalAllowableCompensation = model.totalAllowableCompensation || '';
     newForm.legacyFileNumber = model.legacyFileNumber ?? undefined;
     newForm.acquisitionFileStatusType = fromTypeCode(model.fileStatusTypeCode) ?? undefined;

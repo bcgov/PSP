@@ -11,7 +11,7 @@ namespace Pims.Api.Helpers.Extensions
 {
     public static class AcquisitionFileExtensions
     {
-        public static void ThrowMissingContractorInTeam(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository)
+        public static void ThrowMissingContractorInTeam(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository)
         {
             ArgumentNullException.ThrowIfNull(acquisitionFile);
 
@@ -19,13 +19,19 @@ namespace Pims.Api.Helpers.Extensions
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
 
-            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId))
+            PimsProject project = null;
+            if (acquisitionFile.ProjectId.HasValue)
+            {
+                project = projectRepository.TryGet(acquisitionFile.ProjectId.Value);
+            }
+
+            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId) && (project == null || !project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId)))
             {
                 throw new ContractorNotInTeamException("As a Contractor your user contact information should be assigned to the Acquisition File's team");
             }
         }
 
-        public static void ThrowContractorRemovedFromTeam(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository)
+        public static void ThrowContractorRemovedFromTeam(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository)
         {
             ArgumentNullException.ThrowIfNull(acquisitionFile);
 
@@ -33,7 +39,13 @@ namespace Pims.Api.Helpers.Extensions
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
 
-            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId))
+            PimsProject project = null;
+            if (acquisitionFile.ProjectId.HasValue)
+            {
+                project = projectRepository.TryGet(acquisitionFile.ProjectId.Value);
+            }
+
+            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId) && (project == null || !project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId)))
             {
                 throw new UserOverrideException(UserOverrideCode.ContractorSelfRemoved, "Contractors cannot remove themselves from a file. Please contact the admin at pims@gov.bc.ca");
             }

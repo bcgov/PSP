@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
+import { Claims } from '@/constants';
 import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
@@ -16,6 +17,7 @@ import TakesDetailView from '@/features/mapSideBar/property/tabs/takes/detail/Ta
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
@@ -41,6 +43,7 @@ export const PropertyFileContainer: React.FunctionComponent<
   const id = props.fileProperty?.property?.id ?? undefined;
   const location = props.fileProperty?.property?.location ?? undefined;
   const latLng = useMemo(() => getLatLng(location) ?? undefined, [location]);
+  const { hasClaim } = useKeycloakWrapper();
 
   const composedProperties = useComposedProperties({
     pid,
@@ -69,14 +72,22 @@ export const PropertyFileContainer: React.FunctionComponent<
     composedProperties?.propertyAssociationWrapper?.response?.leaseAssociations;
   useMemo(
     () =>
-      getLeaseInfo(
-        leaseAssociations,
-        getLease.execute,
-        getLeaseStakeholders.execute,
-        getLeaseRenewals.execute,
-        setLeaseAssociationInfo,
-      ),
-    [leaseAssociations, getLease.execute, getLeaseStakeholders.execute, getLeaseRenewals.execute],
+      hasClaim(Claims.LEASE_VIEW)
+        ? getLeaseInfo(
+            leaseAssociations,
+            getLease.execute,
+            getLeaseStakeholders.execute,
+            getLeaseRenewals.execute,
+            setLeaseAssociationInfo,
+          )
+        : null,
+    [
+      leaseAssociations,
+      getLease.execute,
+      getLeaseStakeholders.execute,
+      getLeaseRenewals.execute,
+      hasClaim,
+    ],
   );
 
   // After API property object has been received, we query relevant map layers to find

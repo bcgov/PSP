@@ -133,6 +133,11 @@ namespace Pims.Api.Controllers
                 var leasePaymentCategoryTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeasePaymentCategoryTypes());
                 var consultationOutcomeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllConsultationOutcomeTypes());
                 var subfileInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllSubfileInterestTypes());
+                var acquisitionFileProgressStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileProgressStatusTypes());
+                var acquisitionFileAppraisalStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileAppraisalStatusTypes());
+                var acquisitionFileLegalSurveyStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileLegalSurveyStatusTypes());
+                var acquisitionFileTakeTypesStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileTakeStatusTypes());
+                var acquisitionFileExpropiationRiskStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileExpropiationRiskStatusTypes());
 
                 var codes = new List<object>();
                 codes.AddRange(areaUnitTypes);
@@ -209,6 +214,11 @@ namespace Pims.Api.Controllers
                 codes.AddRange(leasePaymentCategoryTypes);
                 codes.AddRange(consultationOutcomeTypes);
                 codes.AddRange(subfileInterestTypes);
+                codes.AddRange(acquisitionFileProgressStatuses);
+                codes.AddRange(acquisitionFileAppraisalStatuses);
+                codes.AddRange(acquisitionFileLegalSurveyStatuses);
+                codes.AddRange(acquisitionFileTakeTypesStatuses);
+                codes.AddRange(acquisitionFileExpropiationRiskStatuses);
 
                 var response = new JsonResult(codes);
 
