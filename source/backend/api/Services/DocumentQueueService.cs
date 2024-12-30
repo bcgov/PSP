@@ -153,7 +153,7 @@ namespace Pims.Api.Services
                 this.Logger.LogError("Unable to find document queue with {id}", documentQueue.DocumentQueueId);
                 throw new KeyNotFoundException($"Unable to find document queue with matching id: {documentQueue.DocumentQueueId}");
             }
-            else if (databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PENDING.ToString() || databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.SUCCESS.ToString())
+            else if (databaseDocumentQueue.DocumentQueueStatusTypeCode != DocumentQueueStatusTypes.PROCESSING.ToString())
             {
                 this.Logger.LogError("Document Queue {documentQueueId} is not in valid state, aborting poll.", documentQueue.DocumentQueueId);
                 return databaseDocumentQueue;
