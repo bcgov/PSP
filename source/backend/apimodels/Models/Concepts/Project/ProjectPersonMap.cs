@@ -20,7 +20,6 @@ namespace Pims.Api.Models.Concepts.Project
                 .Map(dest => dest.ProjectPersonId, src => src.Id)
                 .Map(dest => dest.ProjectId, src => src.ProjectId)
                 .Map(dest => dest.PersonId, src => src.PersonId)
-                .Map(dest => dest.Person, src => src.Person)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
     }
