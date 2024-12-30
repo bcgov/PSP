@@ -38,7 +38,9 @@ namespace Pims.Api.Services
 
         IList<PimsDocumentTyp> GetPimsDocumentTypes(DocumentRelationType relationshipType);
 
-        Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest);
+        Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest, bool skipExtensionCheck = false);
+
+        Task<DocumentUploadResponse> UploadDocumentSync(DocumentUploadRequest uploadRequest);
 
         Task<DocumentUpdateResponse> UpdateDocumentAsync(DocumentUpdateRequest updateRequest);
 
@@ -51,5 +53,7 @@ namespace Pims.Api.Services
         Task<ExternalResponse<QueryResponse<FilePageModel>>> GetDocumentFilePageListAsync(long documentId, long documentFileId);
 
         Task<HttpResponseMessage> DownloadFilePageImageAsync(long mayanDocumentId, long mayanFileId, long mayanFilePageId);
+
+        PimsDocument AddDocument(PimsDocument newPimsDocument);
     }
 }

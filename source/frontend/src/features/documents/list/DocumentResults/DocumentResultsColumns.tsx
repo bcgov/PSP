@@ -141,10 +141,8 @@ const renderActions = (
       original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.MAYAN_ERROR;
 
     const documentProcessing =
-      (original.mayanDocumentId === null &&
-        original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PENDING) ||
-      (original.mayanDocumentId &&
-        original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PROCESSING);
+      original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PENDING ||
+      original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PROCESSING;
 
     const canViewDocument =
       (original.mayanDocumentId && original.queueStatusTypeCode === null) ||

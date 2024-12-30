@@ -936,7 +936,7 @@ namespace Pims.Dal.Repositories
             }
             else
             {
-                query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
+                query = (filter.Sort?.Length() > 0) ? query.OrderByProperty(true, filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
             }
 
             return query;

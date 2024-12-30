@@ -57,7 +57,12 @@ namespace Pims.Api.Models.Concepts.Document
         public string MayanError { get; set; }
 
         /// <summary>
-        /// get/set - The actual document, represented as a byte[].
+        /// get/set - The related pims document.
+        /// </summary>
+        public DocumentModel PimsDocument { get; set; }
+
+        /// <summary>
+        /// get/set - The actual document content, as a byte array.
         /// </summary>
         public byte[] Document { get; set; }
 
@@ -65,6 +70,6 @@ namespace Pims.Api.Models.Concepts.Document
         /// get/set - The queue status type.
         /// </summary>
         public CodeTypeModel<string> DocumentQueueStatusTypeCode { get; set; }
-        #endregion
-    }
+    #endregion
+}
 }

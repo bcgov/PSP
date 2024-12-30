@@ -18,5 +18,7 @@ namespace Pims.Dal.Repositories
         bool DeleteDocument(PimsDocument document);
 
         int DocumentRelationshipCount(long documentId);
+
+        PimsDocument TryGetDocumentRelationships(long documentId);
     }
 }
