@@ -1235,7 +1235,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                               <label
                                 class="c34"
                               >
-                                Legal Survey:
+                                Legal survey:
                               </label>
                             </div>
                             <div
