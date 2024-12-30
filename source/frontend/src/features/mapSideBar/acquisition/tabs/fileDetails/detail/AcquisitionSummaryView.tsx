@@ -91,6 +91,20 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         {acquisitionFile?.fundingTypeCode?.id === 'OTHER' && (
           <SectionField label="Other funding">{acquisitionFile.fundingOther}</SectionField>
         )}
+        {acquisitionFile?.project?.projectPersons?.map((teamMember, index) => (
+          <React.Fragment key={`project-team-${index}`}>
+            <SectionField label="Management team member">
+              <StyledLink
+                target="_blank"
+                rel="noopener noreferrer"
+                to={`/contact/P${teamMember?.personId}`}
+              >
+                <span>{formatApiPersonNames(teamMember?.person)}</span>
+                <FaExternalLinkAlt className="ml-2" size="1rem" />
+              </StyledLink>
+            </SectionField>
+          </React.Fragment>
+        ))}
       </Section>
       <Section header="Schedule">
         <SectionField label="Assigned date" valueTestId="assigned-date">

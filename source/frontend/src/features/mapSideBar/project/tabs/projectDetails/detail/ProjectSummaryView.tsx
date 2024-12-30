@@ -1,10 +1,15 @@
+import React from 'react';
+import { FaExternalLinkAlt } from 'react-icons/fa';
+
 import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import ProjectProductView from './ProjectProductView';
 
@@ -42,6 +47,22 @@ const ProjectSummaryView: React.FunctionComponent<
         </SectionField>
       </Section>
       <ProjectProductView project={project} />
+      <Section header="Project Management Team">
+        {project?.projectPersons?.map((teamMember, index) => (
+          <React.Fragment key={`project-team-${index}`}>
+            <SectionField label="Management team member">
+              <StyledLink
+                target="_blank"
+                rel="noopener noreferrer"
+                to={`/contact/P${teamMember?.personId}`}
+              >
+                <span>{formatApiPersonNames(teamMember?.person)}</span>
+                <FaExternalLinkAlt className="ml-2" size="1rem" />
+              </StyledLink>
+            </SectionField>
+          </React.Fragment>
+        ))}
+      </Section>
     </StyledSummarySection>
   );
 };

@@ -80,6 +80,7 @@ export const mockAcquisitionFileResponse = (
     },
     regionCode: null,
     note: null,
+    projectPersons: [],
     projectProducts: [],
     ...getEmptyBaseAudit(),
   },
