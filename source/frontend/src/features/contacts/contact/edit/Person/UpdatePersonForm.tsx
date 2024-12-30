@@ -91,7 +91,7 @@ const UpdatePersonComponent: React.FC<
   };
 
   const isContactMethodInvalid = useMemo(() => {
-    if (isPersonDisabled === 'true') {
+    if (isPersonDisabled === true) {
       return false;
     }
     return (
