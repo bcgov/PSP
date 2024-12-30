@@ -85,7 +85,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
       acquisitionFileProgressStatuses: this.progressStatuses.map(x => x.toApi(this.id ?? 0)),
       acquisitionFileAppraisalStatusTypeCode: toTypeCodeNullable(this.appraisalStatusType),
-      acquisitionFileLegalSurveyStatusTypeCode: toTypeCodeNullable(this.appraisalStatusType),
+      acquisitionFileLegalSurveyStatusTypeCode: toTypeCodeNullable(this.legalSurveyStatusType),
       acquisitionFileTakingStatuses: this.takingStatuses.map(x => x.toApi(this.id ?? 0)),
       acquisitionFileExpropiationRiskStatusTypeCode: toTypeCodeNullable(
         this.expropiationRiskStatusType,

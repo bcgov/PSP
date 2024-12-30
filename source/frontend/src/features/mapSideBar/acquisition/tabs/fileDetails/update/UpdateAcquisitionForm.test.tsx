@@ -125,7 +125,7 @@ describe('UpdateAcquisitionForm component', () => {
         ) as HTMLSelectElement,
       getOtherSubfileInterestTypeTextbox: () =>
         utils.container.querySelector(`input[name="otherSubfileInterestType"]`) as HTMLInputElement,
-      getProgessAppraisalStatusTypeDropdown: () =>
+      getProgressAppraisalStatusTypeDropdown: () =>
         utils.container.querySelector(`#input-appraisalStatusType`) as HTMLSelectElement,
     };
   };
@@ -161,7 +161,7 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('displays progress statuses', async () => {
-    const { getProgessAppraisalStatusTypeDropdown } = setup({ initialValues });
+    const { getProgressAppraisalStatusTypeDropdown: getProgessAppraisalStatusTypeDropdown } = setup({ initialValues });
     await act(async () => {});
     expect(getProgessAppraisalStatusTypeDropdown()).toHaveValue('RECEIVED');
   });

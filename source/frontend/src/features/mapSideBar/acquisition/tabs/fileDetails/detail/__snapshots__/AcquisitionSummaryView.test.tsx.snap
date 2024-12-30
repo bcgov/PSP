@@ -244,7 +244,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
             <label
               class="c4"
             >
-              Legal Survey:
+              Legal survey:
             </label>
           </div>
           <div

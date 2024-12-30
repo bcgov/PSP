@@ -69,7 +69,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public CodeTypeModel<string> AcquisitionFileLegalSurveyStatusTypeCode { get; set; }
 
         /// <summary>
-        /// get/set - The list of progress statuses for this file.
+        /// get/set - The list of Taking types statuses for this file.
         /// </summary>
         public IList<AcquisitionFileTakingStatusesModel> AcquisitionFileTakingStatuses { get; set; }
 

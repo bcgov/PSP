@@ -120,7 +120,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         <SectionField label="Appraisal" valueTestId="prg-appraisal-status">
           {detail.appraisalStatusDescription}
         </SectionField>
-        <SectionField label="Legal Survey" valueTestId="prg-legal-survey-status">
+        <SectionField label="Legal survey" valueTestId="prg-legal-survey-status">
           {detail.legalSurveyStatusDescription}
         </SectionField>
         <SectionField label="Type of taking" valueTestId="prg-taking-type-status">
@@ -135,7 +135,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
           />
         </SectionField>
         <SectionField label="Expropriation risk" valueTestId="prg-expropiation-risk-status">
-          {detail.expropiationRiskStatusDescription}
+          {detail.expropriationRiskStatusDescription}
         </SectionField>
       </Section>
       <Section header="Schedule">

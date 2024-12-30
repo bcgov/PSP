@@ -14,7 +14,7 @@ export class DetailAcquisitionFile {
   possessionDate?: string;
   appraisalStatusDescription: string;
   legalSurveyStatusDescription: string;
-  expropiationRiskStatusDescription: string;
+  expropriationRiskStatusDescription: string;
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
   subfileInterestTypeDescription: string | null = null;
@@ -37,7 +37,7 @@ export class DetailAcquisitionFile {
       model.acquisitionFileAppraisalStatusTypeCode?.description ?? '';
     detail.legalSurveyStatusDescription =
       model.acquisitionFileLegalSurveyStatusTypeCode?.description ?? '';
-    detail.expropiationRiskStatusDescription =
+    detail.expropriationRiskStatusDescription =
       model.acquisitionFileExpropiationRiskStatusTypeCode?.description ?? '';
     detail.acquisitionPhysFileStatusTypeDescription =
       model?.acquisitionPhysFileStatusTypeCode?.description ?? undefined;
