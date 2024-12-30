@@ -5,7 +5,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
+import { fromTypeCode, fromTypeCodeNullable, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
 import {
@@ -14,6 +14,8 @@ import {
   WithAcquisitionOwners,
   WithAcquisitionTeam,
 } from '../../../common/models';
+import { ProgressStatusModel } from '../../../models/ProgressStatusModel';
+import { TakingTypeStatusModel } from '../../../models/TakingTypeStatusModel';
 import { InterestHolderForm } from '../../stakeholders/update/models';
 
 export class UpdateAcquisitionSummaryFormModel
@@ -30,6 +32,14 @@ export class UpdateAcquisitionSummaryFormModel
   deliveryDate?: string;
   estimatedCompletionDate?: string;
   possessionDate?: string;
+
+  //Progress Statuses
+  progressStatuses: ProgressStatusModel[] = [];
+  appraisalStatusType: string | null = null;
+  legalSurveyStatusType: string | null = null;
+  takingStatuses: TakingTypeStatusModel[] = [];
+  expropiationRiskStatusType: string | null = null;
+
   rowVersion?: number;
   // Code Tables
   fileStatusTypeCode?: string;
@@ -77,6 +87,13 @@ export class UpdateAcquisitionSummaryFormModel
         ? this.estimatedCompletionDate
         : null,
       possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
+      acquisitionFileProgressStatuses: this.progressStatuses.map(x => x.toApi(this.id ?? 0)),
+      acquisitionFileAppraisalStatusTypeCode: toTypeCodeNullable(this.appraisalStatusType),
+      acquisitionFileLegalSurveyStatusTypeCode: toTypeCodeNullable(this.legalSurveyStatusType),
+      acquisitionFileTakingStatuses: this.takingStatuses.map(x => x.toApi(this.id ?? 0)),
+      acquisitionFileExpropiationRiskStatusTypeCode: toTypeCodeNullable(
+        this.expropiationRiskStatusType,
+      ),
       fileStatusTypeCode: toTypeCodeNullable(this.fileStatusTypeCode),
       acquisitionPhysFileStatusTypeCode: toTypeCodeNullable(this.acquisitionPhysFileStatusType),
       acquisitionTypeCode: toTypeCodeNullable(this.acquisitionType),
@@ -124,6 +141,19 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.deliveryDate = model.deliveryDate ?? undefined;
     newForm.estimatedCompletionDate = model.estimatedCompletionDate ?? undefined;
     newForm.possessionDate = model.possessionDate ?? undefined;
+    newForm.progressStatuses =
+      model.acquisitionFileProgressStatuses.map(x => ProgressStatusModel.fromApi(x)) ?? [];
+    newForm.appraisalStatusType = fromTypeCodeNullable(
+      model.acquisitionFileAppraisalStatusTypeCode,
+    );
+    newForm.legalSurveyStatusType = fromTypeCodeNullable(
+      model.acquisitionFileLegalSurveyStatusTypeCode,
+    );
+    newForm.takingStatuses =
+      model.acquisitionFileTakingStatuses.map(x => TakingTypeStatusModel.fromApi(x)) ?? [];
+    newForm.expropiationRiskStatusType = fromTypeCodeNullable(
+      model.acquisitionFileExpropiationRiskStatusTypeCode,
+    );
     newForm.fileStatusTypeCode = fromTypeCode(model.fileStatusTypeCode) ?? undefined;
     newForm.acquisitionPhysFileStatusType =
       fromTypeCode(model.acquisitionPhysFileStatusTypeCode) ?? undefined;

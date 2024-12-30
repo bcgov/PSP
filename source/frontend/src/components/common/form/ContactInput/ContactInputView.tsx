@@ -28,6 +28,7 @@ export type OptionalAttributes = {
   label?: string;
   required?: boolean;
   displayErrorTooltips?: boolean;
+  placeholder?: string;
 };
 
 export type IContactInputViewProps = FormControlProps & OptionalAttributes & RequiredAttributes;
@@ -39,6 +40,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
   onClear,
   setShowContactManager,
   contactManagerProps,
+  placeholder,
 }) => {
   const { errors, touched, values } = useFormikContext<any>();
   const error = getIn(errors, field);
@@ -46,10 +48,10 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
   const contactInfo: IContactSearchResult | undefined = getIn(values, field);
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
 
-  let text = 'Select from contacts';
+  let text = placeholder ?? 'Select from contacts';
 
   if (contactInfo !== undefined) {
-    text = formatContactSearchResult(contactInfo, 'Select from contacts');
+    text = formatContactSearchResult(contactInfo, placeholder ?? 'Select from contacts');
   }
 
   return (

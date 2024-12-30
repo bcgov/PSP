@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {
   FastDatePicker,
   Input,
+  Multiselect,
   ProjectSelector,
   Select,
   SelectOption,
@@ -31,6 +32,8 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 
 import UpdateAcquisitionOwnersSubForm from '../../../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../../../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
+import { ProgressStatusModel } from '../../../models/ProgressStatusModel';
+import { TakingTypeStatusModel } from '../../../models/TakingTypeStatusModel';
 import { UpdateAcquisitionSummaryFormModel } from './models';
 import StatusToolTip from './StatusToolTip';
 
@@ -76,7 +79,7 @@ const AcquisitionDetailSubForm: React.FC<{
     ApiGen_Concepts_Product[] | undefined
   >(undefined);
   const { retrieveProjectProducts } = useProjectProvider();
-  const { getOptionsByType } = useLookupCodeHelpers();
+  const { getOptionsByType, getByType } = useLookupCodeHelpers();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
@@ -84,6 +87,20 @@ const AcquisitionDetailSubForm: React.FC<{
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
   const ownerSolicitorContact = values.ownerSolicitor.contact;
   const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTEREST_TYPES);
+
+  const acquisitionProgressStatusTypesOptions = getByType(
+    API.ACQUISITION_PROGRESS_STATUS_TYPES,
+  ).map(x => ProgressStatusModel.fromLookup(x));
+  const acquisitionAppraisalStatusTypes = getOptionsByType(API.ACQUISITION_APPRAISAL_STATUS_TYPES);
+  const acquisitionLegalSurveyStatusTypes = getOptionsByType(
+    API.ACQUISITION_LEGALSURVEY_STATUS_TYPES,
+  );
+  const acquisitionTakingStatusTypesOptions = getByType(API.ACQUISITION_TAKING_STATUS_TYPES).map(
+    x => TakingTypeStatusModel.fromLookup(x),
+  );
+  const acquisitionExpropiationRiskStatusTypes = getOptionsByType(
+    API.ACQUISITION_EXPROPIATIONRISK_STATUS_TYPES,
+  );
 
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
@@ -228,6 +245,48 @@ const AcquisitionDetailSubForm: React.FC<{
             <Input field="fundingTypeOtherDescription" />
           </SectionField>
         )}
+      </Section>
+
+      <Section header="Progress Statuses">
+        <SectionField label="File progress">
+          <Multiselect
+            field="progressStatuses"
+            displayValue="progressTypeCodeDescription"
+            placeholder=""
+            options={acquisitionProgressStatusTypesOptions}
+            hidePlaceholder
+          />
+        </SectionField>
+        <SectionField label="Appraisal">
+          <Select
+            field="appraisalStatusType"
+            options={acquisitionAppraisalStatusTypes}
+            placeholder="Select appraisal"
+          />
+        </SectionField>
+        <SectionField label="Legal survey">
+          <Select
+            field="legalSurveyStatusType"
+            options={acquisitionLegalSurveyStatusTypes}
+            placeholder="Select legal survey"
+          />
+        </SectionField>
+        <SectionField label="Type of taking">
+          <Multiselect
+            field="takingStatuses"
+            displayValue="takingTypeCodeDescription"
+            placeholder=""
+            options={acquisitionTakingStatusTypesOptions}
+            hidePlaceholder
+          />
+        </SectionField>
+        <SectionField label="Expropriation risk">
+          <Select
+            field="expropiationRiskStatusType"
+            options={acquisitionExpropiationRiskStatusTypes}
+            placeholder="Select expropiation risk"
+          />
+        </SectionField>
       </Section>
 
       <Section header="Schedule">

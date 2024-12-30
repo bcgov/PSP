@@ -23,9 +23,14 @@ export const onValidateOrganization = (
   const errors = {} as any;
   try {
     // combine yup schema validation with custom rules
-    if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
+    if (
+      !hasEmail(values) &&
+      !hasPhoneNumber(values) &&
+      !hasAddress(values) &&
+      values.isDisabled === 'false'
+    ) {
       errors.needsContactMethod =
-        'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
+        'Contacts must have a minimum of one method of contact to be saved. (ex: email, phone or address)';
     }
     validateYupSchema(values, OrganizationValidationSchema, true, {
       otherCountry: otherCountryId,
@@ -40,9 +45,14 @@ export const onValidatePerson = (values: IEditablePersonForm, otherCountryId?: s
   const errors = {} as any;
   try {
     // combine yup schema validation with custom rules
-    if (!hasEmail(values) && !hasPhoneNumber(values) && !hasAddress(values)) {
+    if (
+      !hasEmail(values) &&
+      !hasPhoneNumber(values) &&
+      !hasAddress(values) &&
+      values.isDisabled === 'false'
+    ) {
       errors.needsContactMethod =
-        'Contacts must have a minimum of one method of contact to be saved. (ex: email,phone or address)';
+        'Contacts must have a minimum of one method of contact to be saved. (ex: email, phone or address)';
     }
     validateYupSchema(values, PersonValidationSchema, true, { otherCountry: otherCountryId });
 

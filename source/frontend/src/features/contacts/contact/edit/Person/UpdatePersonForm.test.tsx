@@ -241,7 +241,7 @@ describe('UpdatePersonForm', () => {
 
       const expectedPerson = { ...mockPerson };
       expectedPerson!.personOrganizations![0].organization = null;
-      expect(updatePerson).toBeCalledWith(expectedPerson);
+      expect(updatePerson).toHaveBeenCalledWith(expectedPerson);
     });
 
     it('should save the form with updated values', async () => {
@@ -287,7 +287,7 @@ describe('UpdatePersonForm', () => {
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
 
-      expect(updatePerson).toBeCalledWith(newValues);
+      expect(updatePerson).toHaveBeenCalledWith(newValues);
     });
 
     it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {

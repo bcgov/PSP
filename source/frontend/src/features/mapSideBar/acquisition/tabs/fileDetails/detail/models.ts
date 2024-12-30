@@ -12,6 +12,9 @@ export class DetailAcquisitionFile {
   deliveryDate?: string;
   estimatedCompletionDate?: string;
   possessionDate?: string;
+  appraisalStatusDescription: string;
+  legalSurveyStatusDescription: string;
+  expropriationRiskStatusDescription: string;
   acquisitionPhysFileStatusTypeDescription?: string;
   acquisitionTypeDescription?: string;
   subfileInterestTypeDescription: string | null = null;
@@ -29,6 +32,13 @@ export class DetailAcquisitionFile {
     detail.deliveryDate = model?.deliveryDate ?? undefined;
     detail.estimatedCompletionDate = model?.estimatedCompletionDate ?? undefined;
     detail.possessionDate = model?.possessionDate ?? undefined;
+
+    detail.appraisalStatusDescription =
+      model.acquisitionFileAppraisalStatusTypeCode?.description ?? '';
+    detail.legalSurveyStatusDescription =
+      model.acquisitionFileLegalSurveyStatusTypeCode?.description ?? '';
+    detail.expropriationRiskStatusDescription =
+      model.acquisitionFileExpropiationRiskStatusTypeCode?.description ?? '';
     detail.acquisitionPhysFileStatusTypeDescription =
       model?.acquisitionPhysFileStatusTypeCode?.description ?? undefined;
     detail.acquisitionTypeDescription = model?.acquisitionTypeCode?.description ?? undefined;
