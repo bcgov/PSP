@@ -184,7 +184,7 @@ export class IEditableOrganizationForm {
   alias?: string;
   incorporationNumber?: string;
   comment?: string;
-  isDisabled: string | boolean = false;
+  isDisabled: string;
   persons: Partial<ApiGen_Concepts_Person>[];
   emailContactMethods: IEditableContactMethodForm[];
   phoneContactMethods: IEditableContactMethodForm[];
