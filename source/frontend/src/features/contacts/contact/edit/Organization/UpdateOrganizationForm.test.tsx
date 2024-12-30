@@ -115,7 +115,7 @@ describe('UpdateOrganizationForm', () => {
       const { getSaveButton } = setup({ id: 1 });
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
-      expect(updateOrganization).toBeCalledWith(mockOrganization);
+      expect(updateOrganization).toHaveBeenCalledWith(mockOrganization);
     });
 
     it('should save the organization with new values', async () => {
@@ -154,7 +154,7 @@ describe('UpdateOrganizationForm', () => {
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
 
-      expect(updateOrganization).toBeCalledWith(newValues);
+      expect(updateOrganization).toHaveBeenCalledWith(newValues);
     });
 
     it(`should save the form with address information when 'Other' country selected and no province is supplied`, async () => {
@@ -201,7 +201,7 @@ describe('UpdateOrganizationForm', () => {
       const save = getSaveButton();
       await act(async () => userEvent.click(save));
 
-      expect(updateOrganization).toBeCalledWith(newValues);
+      expect(updateOrganization).toHaveBeenCalledWith(newValues);
     });
   });
 });
