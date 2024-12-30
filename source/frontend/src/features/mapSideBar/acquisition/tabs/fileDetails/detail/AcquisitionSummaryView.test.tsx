@@ -13,6 +13,8 @@ import { formatMinistryProject, toTypeCodeNullable } from '@/utils/formUtils';
 import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
+import { mockProjects } from '@/mocks/projects.mock';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 // mock auth library
 
@@ -502,6 +504,89 @@ describe('AcquisitionSummaryView component', () => {
       ).toBeVisible();
       expect(getByText(/Sub-interest solicitor/i)).toBeVisible();
       expect(getByText(/Sub-interest representative/i)).toBeVisible();
+    });
+  });
+
+  describe('Project persons', () => {
+    it('renders project persons if present', async () => {
+      const { findByText } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            project: {
+              ...mockAcquisitionFileResponse().project,
+              projectPersons: [
+                {
+                  id: 1,
+                  personId: 1,
+                  person: {
+                    ...getEmptyPerson(),
+                    id: 1,
+                    surname: 'Doe',
+                    firstName: 'John',
+                    middleNames: 'A',
+                  },
+                  project: mockProjects()[0],
+                  projectId: 1,
+                  ...getEmptyBaseAudit(),
+                },
+              ],
+            },
+          },
+        },
+        { claims: [] },
+      );
+      await waitForEffects();
+      expect(await findByText(/Management team member/)).toBeVisible();
+      expect(await findByText(/John A Doe/)).toBeVisible();
+    });
+
+    it('renders multiple project persons if present', async () => {
+      const { findByText, findAllByText } = setup(
+        {
+          acquisitionFile: {
+            ...mockAcquisitionFileResponse(),
+            project: {
+              ...mockAcquisitionFileResponse().project,
+              projectPersons: [
+                {
+                  id: 1,
+                  personId: 1,
+                  person: {
+                    ...getEmptyPerson(),
+                    id: 1,
+                    surname: 'Doe',
+                    firstName: 'John',
+                    middleNames: 'A',
+                  },
+                  project: mockProjects()[0],
+                  projectId: 1,
+                  ...getEmptyBaseAudit(),
+                },
+                {
+                  id: 2,
+                  personId: 2,
+                  person: {
+                    ...getEmptyPerson(),
+                    id: 2,
+                    surname: 'Smith',
+                    firstName: 'Jane',
+                    middleNames: 'B',
+                  },
+                  project: mockProjects()[0],
+                  projectId: 1,
+                  ...getEmptyBaseAudit(),
+                },
+              ],
+            },
+          },
+        },
+        { claims: [] },
+      );
+      await waitForEffects();
+      expect((await findAllByText(/Management team member/))[0]).toBeVisible();
+      expect(await findByText(/John A Doe/)).toBeVisible();
+      expect(await findByText(/Jane B Smith/)).toBeVisible();
     });
   });
 });
