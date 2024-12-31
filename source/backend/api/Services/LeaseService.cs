@@ -38,6 +38,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly ILookupRepository _lookupRepository;
         private readonly ICompReqFinancialService _compReqFinancialService;
+        private readonly IPropertyOperationService _propertyOperationService;
 
         public LeaseService(
             ClaimsPrincipal user,
@@ -55,7 +56,8 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IPropertyService propertyService,
             ILookupRepository lookupRepository,
-            ICompReqFinancialService compReqFinancialService)
+            ICompReqFinancialService compReqFinancialService,
+            IPropertyOperationService propertyOperationService)
             : base(user, logger)
         {
             _logger = logger;
@@ -74,6 +76,7 @@ namespace Pims.Api.Services
             _propertyService = propertyService;
             _lookupRepository = lookupRepository;
             _compReqFinancialService = compReqFinancialService;
+            _propertyOperationService = propertyOperationService;
         }
 
         public PimsLease GetById(long leaseId)
@@ -255,6 +258,7 @@ namespace Pims.Api.Services
                 {
                     incomingLeaseProperty.Internal_Id = matchingProperty.Internal_Id;
                 }
+
                 // If the property is not new, check if the marker location has been updated.
                 if (incomingLeaseProperty.Internal_Id != 0)
                 {
@@ -285,6 +289,11 @@ namespace Pims.Api.Services
                 if (_propertyLeaseRepository.LeaseFilePropertyInCompensationReq(deletedProperty.PropertyLeaseId))
                 {
                     throw new BusinessRuleViolationException("Lease File property can not be removed since it's assigned as a property for a compensation requisition");
+                }
+
+                if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
+                {
+                    throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
                 }
 
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
