@@ -57,7 +57,7 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
             var filter = new DocumentQueueFilter();
-            var documentQueues = new List<PimsDocumentQueue> { new PimsDocumentQueue() };
+            var documentQueues = new List<DocumentQueueSearchResult> { new DocumentQueueSearchResult() };
             var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
 
             documentQueueRepositoryMock.Setup(m => m.GetAllByFilter(filter)).Returns(documentQueues);
@@ -77,11 +77,10 @@ namespace Pims.Api.Test.Services
             var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
             var filter = new DocumentQueueFilter();
             filter.MaxFileSize = 4;
-            var documentQueues = new List<PimsDocumentQueue> { new PimsDocumentQueue() { DocumentQueueId = 1, Document = new byte[] {1, 2, 3 , 4 } }, new PimsDocumentQueue() { DocumentQueueId = 2, Document = new byte[] { 5, 6, 7, 8 } } };
+            var documentQueues = new List<DocumentQueueSearchResult> { new DocumentQueueSearchResult() { DocumentQueueId = 1, Document = new byte[] {1, 2, 3 , 4 }, DocumentSize = 4, }, new DocumentQueueSearchResult() { DocumentQueueId = 2, Document = new byte[] { 5, 6, 7, 8 }, DocumentSize = 4 } };
 
             var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
 
-            documentQueueRepositoryMock.Setup(m => m.GetFileLengthsById(It.IsAny<IEnumerable<long>>())).Returns(new Dictionary<long, int>() { { 1, 4 }, { 2, 4 } });
             documentQueueRepositoryMock.Setup(m => m.GetAllByFilter(filter)).Returns(documentQueues);
 
             // Act
@@ -100,10 +99,9 @@ namespace Pims.Api.Test.Services
             var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
             var filter = new DocumentQueueFilter();
             filter.MaxFileSize = 0;
-            var documentQueues = new List<PimsDocumentQueue> { new PimsDocumentQueue() { DocumentQueueId = 1, Document = new byte[] { 1, 2, 3, 4 } }, new PimsDocumentQueue() { DocumentQueueId = 2, Document = new byte[] { 5, 6, 7, 8 } } };
+            var documentQueues = new List<DocumentQueueSearchResult> { new DocumentQueueSearchResult() { DocumentQueueId = 1, Document = new byte[] { 1, 2, 3, 4 }, DocumentSize = 4, }, new DocumentQueueSearchResult() { DocumentQueueId = 2, Document = new byte[] { 5, 6, 7, 8 }, DocumentSize = 4, } };
             var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
 
-            documentQueueRepositoryMock.Setup(m => m.GetFileLengthsById(It.IsAny<IEnumerable<long>>())).Returns(new Dictionary<long, int>() { { 1, 4 }, { 2, 4 } });
             documentQueueRepositoryMock.Setup(m => m.GetAllByFilter(filter)).Returns(documentQueues);
 
             // Act
