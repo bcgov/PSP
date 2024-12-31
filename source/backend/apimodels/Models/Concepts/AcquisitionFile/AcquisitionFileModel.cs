@@ -74,7 +74,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public IList<AcquisitionFileTakingStatusesModel> AcquisitionFileTakingStatuses { get; set; }
 
         /// <summary>
-        /// get/set - The acquisition file Legal Survey status type.
+        /// get/set - The acquisition file Risk level status type.
         /// </summary>
         public CodeTypeModel<string> AcquisitionFileExpropiationRiskStatusTypeCode { get; set; }
 

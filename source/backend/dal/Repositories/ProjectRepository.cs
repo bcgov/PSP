@@ -147,8 +147,8 @@ namespace Pims.Dal.Repositories
 
             Func<PimsContext, PimsProjectProduct, bool> canDeleteGrandchild = (context, pa) => !context.PimsProducts.Any(o => o.Id == pa.ProductId);
 
-            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), canDeleteGrandchild);
-            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectPerson>(p => p.PimsProjectPeople, pp => pp.Person, project.Id, project.PimsProjectPeople.ToArray(), true);
+            Context.UpdateChild<PimsProject, long, PimsProjectPerson, long>(p => p.PimsProjectPeople, project.Id, project.PimsProjectPeople.ToArray());
+            Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), canDeleteGrandchild);
 
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 
