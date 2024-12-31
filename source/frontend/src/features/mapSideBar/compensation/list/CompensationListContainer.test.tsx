@@ -1,6 +1,9 @@
 import { createMemoryHistory } from 'history';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
-import { mockAcquisitionFileResponse, mockAcquisitionFileSubFilesResponse } from '@/mocks/acquisitionFiles.mock';
+import {
+  mockAcquisitionFileResponse,
+  mockAcquisitionFileSubFilesResponse,
+} from '@/mocks/acquisitionFiles.mock';
 import {
   getMockApiCompensationList,
   getMockApiDefaultCompensation,
@@ -72,7 +75,7 @@ const mockPutLeaseApi = {
 
 const mockGetAcquisitionSubFilesApi = {
   error: undefined,
-  response: {...mockAcquisitionFileSubFilesResponse()},
+  response: { ...mockAcquisitionFileSubFilesResponse() },
   execute: vi.fn(),
   loading: false,
 };

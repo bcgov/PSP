@@ -161,7 +161,9 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('displays progress statuses', async () => {
-    const { getProgressAppraisalStatusTypeDropdown: getProgessAppraisalStatusTypeDropdown } = setup({ initialValues });
+    const { getProgressAppraisalStatusTypeDropdown: getProgessAppraisalStatusTypeDropdown } = setup(
+      { initialValues },
+    );
     await act(async () => {});
     expect(getProgessAppraisalStatusTypeDropdown()).toHaveValue('RECEIVED');
   });
