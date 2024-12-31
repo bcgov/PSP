@@ -179,7 +179,7 @@ namespace Pims.Dal.Repositories
                 DbLastUpdateTimestamp = dq.DbLastUpdateTimestamp,
                 DbLastUpdateUserid = dq.DbLastUpdateUserid,
                 ConcurrencyControlNumber = dq.ConcurrencyControlNumber,
-                DocumentSize = dq.Document.Length,
+                DocumentSize = dq.Document != null ? dq.Document.Length : 0,
             }).ToList();
         }
 
