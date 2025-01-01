@@ -70,13 +70,122 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void GetPropertiesById_NoPermission()
+        public void GetAcquisitionProperties_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(12345);
+            property.Location = new NetTopologySuite.Geometries.Point(1229480.4045231808, 463288.8298389828) { SRID = SpatialReference.BCALBERS };
+
+            var compReqProperty = new PimsPropAcqFlCompReq()
+            {
+                Internal_Id = 1,
+                CompensationRequisitionId = 1,
+                PropertyAcquisitionFileId = 1,
+                PropertyAcquisitionFile = new()
+                {
+                    AcquisitionFileId = 1,
+                    PropertyId = property.Internal_Id,
+                    Property = property,
+                }
+            };
+
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionView);
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            repository.Setup(x => x.GetAcquisitionCompReqPropertiesById(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { compReqProperty.PropertyAcquisitionFile });
+            // mock the spatial conversion to lat/long
+            var propertyService = _helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.TransformAllPropertiesToLatLong(It.IsAny<List<PimsPropertyAcquisitionFile>>()))
+                .Returns<List<PimsPropertyAcquisitionFile>>(x => x.Select(pp =>
+                {
+                    pp.Property.Location = new NetTopologySuite.Geometries.Point(-122, 49) { SRID = SpatialReference.WGS84 };
+                    return pp;
+                }).ToList());
+
+            // Act
+            var result = service.GetAcquisitionProperties(1);
+
+            // Assert
+            repository.Verify(x => x.GetAcquisitionCompReqPropertiesById(It.IsAny<long>()), Times.Once);
+            propertyService.Verify(x => x.TransformAllPropertiesToLatLong(It.IsAny<List<PimsPropertyAcquisitionFile>>()), Times.Once);
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsPropertyAcquisitionFile>>();
+            result.Should().HaveCount(1);
+            result.First().Property.Pid.Should().Be(12345);
+            // service should perform spatial conversion to Lat/Long so that it can be returned to the frontend
+            result.First().Property.Location.SRID.Should().Be(SpatialReference.WGS84);
+            result.First().Property.Location.As<NetTopologySuite.Geometries.Point>().X.Should().Be(-122);
+            result.First().Property.Location.As<NetTopologySuite.Geometries.Point>().Y.Should().Be(49);
+        }
+
+        [Fact]
+        public void GetAcquisitionProperties_NoPermission()
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
             Action act = () => service.GetAcquisitionProperties(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetLeaseProperties_Success()
+        {
+            // Arrange
+            var property = EntityHelper.CreateProperty(12345);
+            property.Location = new NetTopologySuite.Geometries.Point(1229480.4045231808, 463288.8298389828) { SRID = SpatialReference.BCALBERS };
+
+            var leaseCompReqProperty = new PimsPropLeaseCompReq()
+            {
+                Internal_Id = 1,
+                CompensationRequisitionId = 1,
+                PropertyLeaseId = 1,
+                PropertyLease = new()
+                {
+                    LeaseId = 1,
+                    PropertyId = property.Internal_Id,
+                    Property = property,
+                }
+            };
+
+            var service = CreateCompRequisitionServiceWithPermissions(Permissions.CompensationRequisitionView);
+            var repository = _helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            repository.Setup(x => x.GetLeaseCompReqPropertiesById(It.IsAny<long>())).Returns(new List<PimsPropertyLease>() { leaseCompReqProperty.PropertyLease });
+            // mock the spatial conversion to lat/long
+            var propertyService = _helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.TransformAllPropertiesToLatLong(It.IsAny<List<PimsPropertyLease>>()))
+                .Returns<List<PimsPropertyLease>>(x => x.Select(pp =>
+                {
+                    pp.Property.Location = new NetTopologySuite.Geometries.Point(-122, 49) { SRID = SpatialReference.WGS84 };
+                    return pp;
+                }).ToList());
+
+            // Act
+            var result = service.GetLeaseProperties(1);
+
+            // Assert
+            repository.Verify(x => x.GetLeaseCompReqPropertiesById(It.IsAny<long>()), Times.Once);
+            propertyService.Verify(x => x.TransformAllPropertiesToLatLong(It.IsAny<List<PimsPropertyLease>>()), Times.Once);
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsPropertyLease>>();
+            result.Should().HaveCount(1);
+            result.First().Property.Pid.Should().Be(12345);
+            // service should perform spatial conversion to Lat/Long so that it can be returned to the frontend
+            result.First().Property.Location.SRID.Should().Be(SpatialReference.WGS84);
+            result.First().Property.Location.As<NetTopologySuite.Geometries.Point>().X.Should().Be(-122);
+            result.First().Property.Location.As<NetTopologySuite.Geometries.Point>().Y.Should().Be(49);
+        }
+
+        [Fact]
+        public void GetLeaseProperties_NoPermission()
+        {
+            // Arrange
+            var service = this.CreateCompRequisitionServiceWithPermissions();
+
+            // Act
+            Action act = () => service.GetLeaseProperties(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -152,7 +261,7 @@ namespace Pims.Api.Test.Services
 
         [Theory]
         [MemberData(nameof(FileTypesDataNoAccess))]
-        public void AddCompensationsRequisitions_NoPermissions(FileTypes fileType,PimsCompensationRequisition compReq, Exception exception)
+        public void AddCompensationsRequisitions_NoPermissions(FileTypes fileType, PimsCompensationRequisition compReq, Exception exception)
         {
             // Arrange
             var service = this.CreateCompRequisitionServiceWithPermissions();
@@ -286,7 +395,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateCompRequisitionServiceWithPermissions();
 
             // Act
-            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition() {  CompensationRequisitionId = 1, AcquisitionFileId = 1});
+            Action act = () => service.Update(FileTypes.Acquisition, new PimsCompensationRequisition() { CompensationRequisitionId = 1, AcquisitionFileId = 1 });
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -523,7 +632,7 @@ namespace Pims.Api.Test.Services
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Final' to 'Draft'"))), Times.Once);
         }
-        
+
         [Fact]
         public void Update_Status_BackToNull_AuthorizedAdmin()
         {
@@ -564,7 +673,7 @@ namespace Pims.Api.Test.Services
             noteRepository.Verify(x => x.Add(It.Is<PimsAcquisitionFileNote>(x => x.AcquisitionFileId == 1
                 && x.Note.NoteTxt.Equals("Compensation Requisition with # 1, changed status from 'Final' to 'No Status'"))), Times.Once);
         }
-        
+
         [Fact]
         public void Update_Success_Skips_StatusChanged_Note_FromNoStatus()
         {
@@ -646,7 +755,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
-        
+
         [Fact]
         public void Update_Success_ValidMultipleTotalAllowableCompensation()
         {
@@ -690,7 +799,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
-        
+
         [Fact]
         public void Update_Success_TotalAllowableExceededDraft()
         {
@@ -732,7 +841,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             compRepository.Verify(x => x.Update(It.IsAny<PimsCompensationRequisition>()), Times.Once);
         }
-        
+
         [Fact]
         public void Update_Fail_TotalAllowableExceeded()
         {
@@ -774,7 +883,7 @@ namespace Pims.Api.Test.Services
             });
             act.Should().Throw<BusinessRuleViolationException>();
         }
-        
+
         [Fact]
         public void Update_Fail_ValidMultipleTotalAllowableCompensation()
         {
@@ -912,7 +1021,7 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<NotAuthorizedException>();
         }
-        
+
         [Fact]
         public void Delete_Success()
         {
