@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.CodeTypes;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {
@@ -26,6 +25,7 @@ namespace Pims.Api.Services
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IAcquisitionStatusSolver _acquisitionStatusSolver;
         private readonly ILeaseRepository _leaseRepository;
+        private readonly IPropertyService _propertyService;
 
         public CompensationRequisitionService(
             ClaimsPrincipal user,
@@ -36,7 +36,8 @@ namespace Pims.Api.Services
             IAcquisitionFileRepository acqFileRepository,
             ICompReqFinancialService compReqFinancialService,
             IAcquisitionStatusSolver statusSolver,
-            ILeaseRepository leaseRepository)
+            ILeaseRepository leaseRepository,
+            IPropertyService propertyService)
         {
             _user = user;
             _logger = logger;
@@ -47,6 +48,7 @@ namespace Pims.Api.Services
             _compReqFinancialService = compReqFinancialService;
             _acquisitionStatusSolver = statusSolver;
             _leaseRepository = leaseRepository;
+            _propertyService = propertyService;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -121,7 +123,8 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting properties for Compensation Requisition with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            return _compensationRequisitionRepository.GetAcquisitionCompReqPropertiesById(id);
+            var properties = _compensationRequisitionRepository.GetAcquisitionCompReqPropertiesById(id);
+            return _propertyService.TransformAllPropertiesToLatLong(properties);
         }
 
         public IEnumerable<PimsPropertyLease> GetLeaseProperties(long id)
@@ -129,7 +132,8 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting properties for Compensation Requisition with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            return _compensationRequisitionRepository.GetLeaseCompReqPropertiesById(id);
+            var propertyLeases = _compensationRequisitionRepository.GetLeaseCompReqPropertiesById(id);
+            return _propertyService.TransformAllPropertiesToLatLong(propertyLeases);
         }
 
         public IEnumerable<PimsCompensationRequisition> GetFileCompensationRequisitions(FileTypes fileType, long fileId)
