@@ -29,7 +29,7 @@ namespace Pims.Api.Repositories.Mayan
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The jsonOptions.</param>
         public MayanAuthRepository(
-            ILogger<MayanDocumentRepository> logger,
+            ILogger<MayanAuthRepository> logger,
             IHttpClientFactory httpClientFactory,
             IConfiguration configuration,
             IOptions<JsonSerializerOptions> jsonOptions)
