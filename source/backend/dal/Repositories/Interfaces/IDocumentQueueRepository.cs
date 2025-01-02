@@ -9,9 +9,16 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IDocumentQueueRepository : IRepository<PimsDocument>
     {
-        IEnumerable<PimsDocumentQueue> GetAllByFilter(DocumentQueueFilter filter);
 
-        PimsDocumentQueue Update(PimsDocumentQueue queuedDocument);
+        PimsDocumentQueue TryGetById(long documentQueueId);
+
+        PimsDocumentQueue Add(PimsDocumentQueue queuedDocument);
+
+        PimsDocumentQueue GetByDocumentId(long documentId);
+
+        IEnumerable<DocumentQueueSearchResult> GetAllByFilter(DocumentQueueFilter filter);
+
+        PimsDocumentQueue Update(PimsDocumentQueue queuedDocument, bool removeDocument = false);
 
         bool Delete(PimsDocumentQueue queuedDocument);
 

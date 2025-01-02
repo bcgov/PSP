@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,14 +10,9 @@ namespace Pims.Dal.Entities;
 /// Table providing progress tracking of document inclusion into the MAYAN EDMS.
 /// </summary>
 [Table("PIMS_DOCUMENT_QUEUE")]
-[Index("AcquisitionFileDocumentId", Name = "DOCQUE_ACQUISITION_FILE_DOCUMENT_ID_IDX")]
 [Index("DataSourceTypeCode", Name = "DOCQUE_DATA_SOURCE_TYPE_CODE_IDX")]
-[Index("DispositionFileDocumentId", Name = "DOCQUE_DISPOSITION_FILE_DOCUMENT_ID_IDX")]
 [Index("DocumentId", Name = "DOCQUE_DOCUMENT_ID_IDX")]
 [Index("DocumentQueueStatusTypeCode", Name = "DOCQUE_DOCUMENT_QUEUE_STATUS_TYPE_CODE_IDX")]
-[Index("LeaseDocumentId", Name = "DOCQUE_LEASE_DOCUMENT_ID_IDX")]
-[Index("PropertyActivityDocumentId", Name = "DOCQUE_PROPERTY_ACTIVITY_DOCUMENT_ID_IDX")]
-[Index("ResearchFileDocumentId", Name = "DOCQUE_RESEARCH_FILE_DOCUMENT_ID_IDX")]
 public partial class PimsDocumentQueue
 {
     /// <summary>
@@ -34,7 +29,7 @@ public partial class PimsDocumentQueue
     public long? DocumentId { get; set; }
 
     /// <summary>
-    /// Code value that represents the current status of the document as it is processed by PIMS/MAYAN
+    /// Code value that represents the current status of the document as it is processed by PIMS/MAYAN.
     /// </summary>
     [Required]
     [Column("DOCUMENT_QUEUE_STATUS_TYPE_CODE")]
@@ -48,44 +43,6 @@ public partial class PimsDocumentQueue
     [Column("DATA_SOURCE_TYPE_CODE")]
     [StringLength(20)]
     public string DataSourceTypeCode { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_PROPERTY_ACTIVITY_DOCUMENT table.
-    /// </summary>
-    [Column("PROPERTY_ACTIVITY_DOCUMENT_ID")]
-    public long? PropertyActivityDocumentId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_ACQUISITION_FILE_DOCUMENT table.
-    /// </summary>
-    [Column("ACQUISITION_FILE_DOCUMENT_ID")]
-    public long? AcquisitionFileDocumentId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_RESEARCH_FILE_DOCUMENT table.
-    /// </summary>
-    [Column("RESEARCH_FILE_DOCUMENT_ID")]
-    public long? ResearchFileDocumentId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_LEASE_DOCUMENT table.
-    /// </summary>
-    [Column("LEASE_DOCUMENT_ID")]
-    public long? LeaseDocumentId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_DISPOSITION_FILE_DOCUMENT table.
-    /// </summary>
-    [Column("DISPOSITION_FILE_DOCUMENT_ID")]
-    public long? DispositionFileDocumentId { get; set; }
-
-    /// <summary>
-    /// Name of the file to be stored on Mayan EDMS.
-    /// </summary>
-    [Required]
-    [Column("FILE_NAME")]
-    [StringLength(500)]
-    public string FileName { get; set; }
 
     /// <summary>
     /// Fluid key used to uniquely identify document in external system.
@@ -108,7 +65,7 @@ public partial class PimsDocumentQueue
     public DateTime? DocProcessStartDt { get; set; }
 
     /// <summary>
-    /// When the document?s processing finishes, this will be populated
+    /// When the document?s processing finishes, this will be populated.
     /// </summary>
     [Column("DOC_PROCESS_END_DT", TypeName = "datetime")]
     public DateTime? DocProcessEndDt { get; set; }
@@ -133,7 +90,7 @@ public partial class PimsDocumentQueue
     public byte[] Document { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -222,17 +179,9 @@ public partial class PimsDocumentQueue
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("AcquisitionFileDocumentId")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsAcquisitionFileDocument AcquisitionFileDocument { get; set; }
-
     [ForeignKey("DataSourceTypeCode")]
     [InverseProperty("PimsDocumentQueues")]
     public virtual PimsDataSourceType DataSourceTypeCodeNavigation { get; set; }
-
-    [ForeignKey("DispositionFileDocumentId")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsDispositionFileDocument DispositionFileDocument { get; set; }
 
     [ForeignKey("DocumentId")]
     [InverseProperty("PimsDocumentQueues")]
@@ -241,16 +190,4 @@ public partial class PimsDocumentQueue
     [ForeignKey("DocumentQueueStatusTypeCode")]
     [InverseProperty("PimsDocumentQueues")]
     public virtual PimsDocumentQueueStatusType DocumentQueueStatusTypeCodeNavigation { get; set; }
-
-    [ForeignKey("LeaseDocumentId")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsLeaseDocument LeaseDocument { get; set; }
-
-    [ForeignKey("PropertyActivityDocumentId")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsPropertyActivityDocument PropertyActivityDocument { get; set; }
-
-    [ForeignKey("ResearchFileDocumentId")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsResearchFileDocument ResearchFileDocument { get; set; }
 }

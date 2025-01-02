@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import {
   FastDatePicker,
   Input,
+  Multiselect,
   ProjectSelector,
   Select,
   SelectOption,
@@ -33,6 +34,8 @@ import { PropertyForm } from '../../shared/models';
 import { AcquisitionFormModal } from '../common/modals/AcquisitionFormModal';
 import UpdateAcquisitionOwnersSubForm from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
+import { ProgressStatusModel } from '../models/ProgressStatusModel';
+import { TakingTypeStatusModel } from '../models/TakingTypeStatusModel';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 
@@ -132,11 +135,24 @@ const AddAcquisitionDetailSubForm: React.FC<{
   const ownerSolicitorContact = values?.ownerSolicitor.contact;
 
   const { retrieveProjectProducts } = useProjectProvider();
-  const { getOptionsByType } = useLookupCodeHelpers();
+  const { getOptionsByType, getByType } = useLookupCodeHelpers();
   const acquisitionTypes = getOptionsByType(API.ACQUISITION_TYPES);
   const acquisitionPhysFileTypes = getOptionsByType(API.ACQUISITION_PHYSICAL_FILE_STATUS_TYPES);
   const acquisitionFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
   const subfileInterestTypes = getOptionsByType(API.SUBFILE_INTEREST_TYPES);
+  const acquisitionProgressStatusTypesOptions = getByType(
+    API.ACQUISITION_PROGRESS_STATUS_TYPES,
+  ).map(x => ProgressStatusModel.fromLookup(x));
+  const acquisitionAppraisalStatusTypes = getOptionsByType(API.ACQUISITION_APPRAISAL_STATUS_TYPES);
+  const acquisitionLegalSurveyStatusTypes = getOptionsByType(
+    API.ACQUISITION_LEGALSURVEY_STATUS_TYPES,
+  );
+  const acquisitionTakingStatusTypesOptions = getByType(API.ACQUISITION_TAKING_STATUS_TYPES).map(
+    x => TakingTypeStatusModel.fromLookup(x),
+  );
+  const acquisitionExpropiationRiskStatusTypes = getOptionsByType(
+    API.ACQUISITION_EXPROPIATIONRISK_STATUS_TYPES,
+  );
 
   const isSubFile = exists(parentId) && isValidId(parentId);
 
@@ -246,6 +262,48 @@ const AddAcquisitionDetailSubForm: React.FC<{
               <LargeInput field="fundingTypeOtherDescription" />
             </SectionField>
           )}
+        </Section>
+
+        <Section header="Progress Statuses">
+          <SectionField label="File progress">
+            <Multiselect
+              field="progressStatuses"
+              displayValue="progressTypeCodeDescription"
+              placeholder=""
+              options={acquisitionProgressStatusTypesOptions}
+              hidePlaceholder
+            />
+          </SectionField>
+          <SectionField label="Appraisal">
+            <Select
+              field="appraisalStatusType"
+              options={acquisitionAppraisalStatusTypes}
+              placeholder="Select appraisal"
+            />
+          </SectionField>
+          <SectionField label="Legal survey">
+            <Select
+              field="legalSurveyStatusType"
+              options={acquisitionLegalSurveyStatusTypes}
+              placeholder="Select legal survey"
+            />
+          </SectionField>
+          <SectionField label="Type of taking">
+            <Multiselect
+              field="takingStatuses"
+              displayValue="takingTypeCodeDescription"
+              placeholder=""
+              options={acquisitionTakingStatusTypesOptions}
+              hidePlaceholder
+            />
+          </SectionField>
+          <SectionField label="Expropriation risk">
+            <Select
+              field="expropiationRiskStatusType"
+              options={acquisitionExpropiationRiskStatusTypes}
+              placeholder="Select expropiation risk"
+            />
+          </SectionField>
         </Section>
 
         <Section header="Schedule">

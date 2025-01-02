@@ -14,6 +14,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
 
 .c2 {
   text-align: right;
+  overflow: hidden;
 }
 
 .c1 {
@@ -72,7 +73,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
           </div>
         </div>
         <div
-          class="pl-8 d-flex align-items-end col-auto"
+          class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
             class="c3"

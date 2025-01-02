@@ -99,12 +99,21 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.RegionCodeNavigation)
                 .Include(r => r.AcquisitionFundingTypeCodeNavigation)
                 .Include(r => r.SubfileInterestTypeCodeNavigation)
+                .Include(s => s.PimsAcqFileAcqProgresses)
+                    .ThenInclude(p => p.AcqFileProgessTypeCodeNavigation)
+                .Include(s => s.AcqFileAppraisalTypeCodeNavigation)
+                .Include(s => s.AcqFileLglSrvyTypeCodeNavigation)
+                .Include(s => s.PimsAcqFileAcqFlTakeTyps)
+                    .ThenInclude(t => t.AcqFileTakeTypeCodeNavigation)
+                .Include(s => s.AcqFileExpropRiskTypeCodeNavigation)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.WorkActivityCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.CostTypeCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.PimsProjectPeople)
                 .Include(r => r.Product)
                 .Include(r => r.PimsPropertyAcquisitionFiles)
                 .Include(r => r.PimsAcquisitionFileTeams)
@@ -730,6 +739,8 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcquisitionFileTeam, long>(p => p.PimsAcquisitionFileTeams, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionFileTeams.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFile.Internal_Id, acquisitionFile.PimsInterestHolders.ToArray());
             Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqProgress, long>(p => p.PimsAcqFileAcqProgresses, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqProgresses.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqFlTakeTyp, long>(p => p.PimsAcqFileAcqFlTakeTyps, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqFlTakeTyps.ToArray());
 
             return acquisitionFile;
         }
@@ -887,7 +898,7 @@ namespace Pims.Dal.Repositories
 
             if (contractorPersonId is not null)
             {
-                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId));
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId) || (acq.Project != null && acq.Project.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId)));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberPersonId))
@@ -903,6 +914,7 @@ namespace Pims.Dal.Repositories
             var query = Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(r => r.RegionCodeNavigation)
                 .Include(p => p.Project)
+                    .ThenInclude(p => p.PimsProjectPeople)
                 .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
                 .Include(f => f.AcquisitionFundingTypeCodeNavigation)
                 .Include(ph => ph.AcqPhysFileStatusTypeCodeNavigation)
@@ -926,7 +938,18 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(fp => fp.AlternateProject)
                 .Where(predicate);
 
-            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
+            if (filter.Sort?.Length > 0 && filter.Sort[0].Contains("FileNumber"))
+            {
+                query = filter.Sort[0].Contains("asc") ? query.OrderBy(acq => acq.RegionCode)
+                    .ThenBy(acq => acq.FileNo)
+                    .ThenBy(acq => acq.FileNoSuffix) : query.OrderByDescending(acq => acq.RegionCode)
+                    .ThenByDescending(acq => acq.FileNo)
+                    .ThenByDescending(acq => acq.FileNoSuffix);
+            }
+            else
+            {
+                query = (filter.Sort?.Length > 0) ? query.OrderByProperty(true, filter.Sort) : query.OrderBy(acq => acq.AcquisitionFileId);
+            }
 
             return query;
         }

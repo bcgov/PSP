@@ -65,6 +65,7 @@ export default interface ComposedPropertyState {
 export interface IUseComposedPropertiesProps {
   id?: number;
   pid?: number;
+  pin?: number;
   latLng?: LatLngLiteral;
   propertyTypes: PROPERTY_TYPES[];
 }
@@ -72,6 +73,7 @@ export interface IUseComposedPropertiesProps {
 export const useComposedProperties = ({
   id,
   pid,
+  pin,
   latLng,
   propertyTypes,
 }: IUseComposedPropertiesProps): ComposedPropertyState => {
@@ -89,7 +91,7 @@ export const useComposedProperties = ({
   >();
 
   const retrievedPid = getPropertyWrapper?.response?.pid?.toString() ?? pid?.toString();
-  const retrievedPin = getPropertyWrapper?.response?.pin?.toString();
+  const retrievedPin = getPropertyWrapper?.response?.pin?.toString() ?? pin?.toString();
 
   const [composedProperty, setComposedProperty] = useState<ComposedProperty>({
     pid: undefined,
@@ -146,7 +148,7 @@ export const useComposedProperties = ({
         () => executeBcAssessmentSummary(retrievedPid ?? ''),
         PROPERTY_TYPES.BC_ASSESSMENT,
       );
-    } else if (retrievedPin) {
+    } else if (exists(retrievedPin)) {
       typeCheckWrapper(() => findByPin(retrievedPin, true), PROPERTY_TYPES.PARCEL_MAP);
     }
 
@@ -200,7 +202,7 @@ export const useComposedProperties = ({
     () => ({
       id: id,
       pid: pid?.toString() ?? retrievedPid,
-      pin: retrievedPin,
+      pin: pin?.toString() ?? retrievedPin,
       composedProperty: composedProperty,
       ltsaWrapper: getLtsaWrapper,
       apiWrapper: getPropertyWrapper,
@@ -221,6 +223,7 @@ export const useComposedProperties = ({
       id,
       pid,
       retrievedPid,
+      pin,
       retrievedPin,
       composedProperty,
       getLtsaWrapper,

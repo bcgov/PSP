@@ -122,6 +122,100 @@ describe('AcquisitionSummaryView component', () => {
     expect(getByText('legacy file number')).toBeVisible();
   });
 
+  it('renders the file progress statuses', async () => {
+    const { getByTestId } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          estimatedCompletionDate: '2030-01-10T00:00:00',
+          possessionDate: '2035-03-10T00:00:00',
+          acquisitionFileProgressStatuses: [
+            {
+              id: 3,
+              acquisitionFileId: 64,
+              progressStatusTypeCode: {
+                id: 'OWNRCNTCTD',
+                description: 'Owner contacted',
+                isDisabled: false,
+                displayOrder: 6,
+              },
+              appCreateTimestamp: '2024-12-27T17:33:21.553',
+              appLastUpdateTimestamp: '2024-12-27T17:33:21.553',
+              appLastUpdateUserid: 'EHERRERA',
+              appCreateUserid: 'EHERRERA',
+              appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+              appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+              rowVersion: 1,
+            },
+            {
+              id: 4,
+              acquisitionFileId: 64,
+              progressStatusTypeCode: {
+                id: 'WTG4PAPLN',
+                description: 'Waiting for PA plan',
+                isDisabled: false,
+                displayOrder: 7,
+              },
+              appCreateTimestamp: '2024-12-27T17:33:21.553',
+              appLastUpdateTimestamp: '2024-12-27T17:33:21.553',
+              appLastUpdateUserid: 'EHERRERA',
+              appCreateUserid: 'EHERRERA',
+              appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+              appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+              rowVersion: 1,
+            },
+          ],
+          acquisitionFileAppraisalStatusTypeCode: {
+            id: 'RECEIVED',
+            description: 'Received',
+            isDisabled: false,
+            displayOrder: 3,
+          },
+          acquisitionFileLegalSurveyStatusTypeCode: {
+            id: 'OUT4SIGN',
+            description: 'Out for Signatures',
+            isDisabled: false,
+            displayOrder: 4,
+          },
+          acquisitionFileTakingStatuses: [
+            {
+              id: 4,
+              acquisitionFileId: 64,
+              takingStatusTypeCode: {
+                id: 'PARTLTACQ',
+                description: 'Partial Acquisition',
+                isDisabled: false,
+                displayOrder: 3,
+              },
+              appCreateTimestamp: '2024-12-27T17:33:21.553',
+              appLastUpdateTimestamp: '2024-12-27T17:33:21.553',
+              appLastUpdateUserid: 'EHERRERA',
+              appCreateUserid: 'EHERRERA',
+              appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+              appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
+              rowVersion: 1,
+            },
+          ],
+          acquisitionFileExpropiationRiskStatusTypeCode: {
+            id: 'MED',
+            description: 'Medium',
+            isDisabled: false,
+            displayOrder: 3,
+          },
+        },
+      },
+      { claims: [] },
+    );
+    await waitForEffects();
+
+    expect(getByTestId('prg-file-progress-status')).toHaveTextContent('Owner contacted');
+    expect(getByTestId('prg-file-progress-status')).toHaveTextContent('Waiting for PA plan');
+    expect(getByTestId('prg-appraisal-status')).toHaveTextContent('Received');
+    expect(getByTestId('prg-legal-survey-status')).toHaveTextContent('Out for Signatures');
+    expect(getByTestId('prg-taking-type-status')).toHaveTextContent('Partial Acquisition');
+    expect(getByTestId('prg-expropiation-risk-status')).toHaveTextContent('Medium');
+  });
+
   it('renders acquisition-related dates', async () => {
     const { getByText, getByTestId } = setup(
       {

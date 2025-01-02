@@ -30,6 +30,7 @@ const storeState = {
 
 const onDelete = vi.fn().mockResolvedValue(true);
 const onSuccess = vi.fn();
+const onRefresh = vi.fn();
 
 const mockDocumentRowResponse = () =>
   mockDocumentsResponse().map(x => (x?.document ? DocumentRow.fromApi(x) : new DocumentRow()));
@@ -52,6 +53,7 @@ describe('Document List View', () => {
         }
         onDelete={renderOptions?.onDelete || onDelete}
         onSuccess={renderOptions?.onSuccess || onSuccess}
+        onRefresh={renderOptions?.onRefresh || onRefresh}
       />,
       {
         ...renderOptions,
@@ -115,7 +117,7 @@ describe('Document List View', () => {
     expect(getByTestId('document-filename')).toBeInTheDocument();
   });
 
-  it('should have the Documents add button in the component', async () => {
+  it('should have the Documents "Add button" in the component', async () => {
     const { getByText } = setup({
       hideFilters: false,
       isLoading: false,
@@ -125,6 +127,18 @@ describe('Document List View', () => {
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
     });
     expect(getByText('Add Document')).toBeInTheDocument();
+  });
+
+  it('should have the Documents "Refresh button" in the component', async () => {
+    const { getByTestId } = setup({
+      hideFilters: false,
+      isLoading: false,
+      parentId: '1',
+      relationshipType: ApiGen_CodeTypes_DocumentRelationType.ResearchFiles,
+      documentResults: mockDocumentRowResponse(),
+      claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
+    });
+    expect(getByTestId('refresh-button')).toBeInTheDocument();
   });
 
   it('should not display the download icon on the listview', async () => {

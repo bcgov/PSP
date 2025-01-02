@@ -104,7 +104,16 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     ],
   );
 
+  const retrievedPid =
+    composedPropertyState?.pid?.toString() ??
+    composedPropertyState?.apiWrapper?.response?.pid?.toString();
+
+  const retrievedPin =
+    composedPropertyState?.pin?.toString() ??
+    composedPropertyState?.apiWrapper?.response?.pin?.toString();
+
   const tabViews: TabInventoryView[] = [];
+  let defaultTab = InventoryTabNames.title;
 
   tabViews.push({
     content: (
@@ -112,10 +121,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
         ltsaData={composedPropertyState.ltsaWrapper?.response}
         ltsaRequestedOn={composedPropertyState.ltsaWrapper?.requestedOn}
         loading={composedPropertyState.ltsaWrapper?.loading ?? false}
-        pid={
-          composedPropertyState?.pid?.toString() ??
-          composedPropertyState?.apiWrapper?.response?.pid?.toString()
-        }
+        pid={retrievedPid}
       />
     ),
     key: InventoryTabNames.title,
@@ -132,6 +138,11 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
       key: InventoryTabNames.crown,
       name: 'Crown',
     });
+
+    // Show crown land by default when no other information was found
+    if (exists(retrievedPin) && !exists(retrievedPid)) {
+      defaultTab = InventoryTabNames.crown;
+    }
   }
 
   tabViews.push({
@@ -140,17 +151,12 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
         summaryData={composedPropertyState.bcAssessmentWrapper?.response}
         requestedOn={composedPropertyState.bcAssessmentWrapper?.requestedOn}
         loading={composedPropertyState.bcAssessmentWrapper?.loading ?? false}
-        pid={
-          composedPropertyState?.pid?.toString() ??
-          composedPropertyState?.apiWrapper?.response?.pid?.toString()
-        }
+        pid={retrievedPid}
       />
     ),
     key: InventoryTabNames.value,
     name: 'Value',
   });
-
-  let defaultTab = InventoryTabNames.title;
 
   // TODO: PSP-4406 this should have a loading flag
   const propertyViewForm = usePropertyDetails(composedPropertyState.apiWrapper?.response);

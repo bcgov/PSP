@@ -83,7 +83,4 @@ public partial class PimsAcquisitionFileDocument
     [ForeignKey("DocumentId")]
     [InverseProperty("PimsAcquisitionFileDocuments")]
     public virtual PimsDocument Document { get; set; }
-
-    [InverseProperty("AcquisitionFileDocument")]
-    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
 }

@@ -54,6 +54,31 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public DateOnly? PossessionDate { get; set; }
 
         /// <summary>
+        /// get/set - The list of progress statuses for this file.
+        /// </summary>
+        public IList<AcquisitionFileProgressStatusesModel> AcquisitionFileProgressStatuses { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition file appraisal status type.
+        /// </summary>
+        public CodeTypeModel<string> AcquisitionFileAppraisalStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition file Legal Survey status type.
+        /// </summary>
+        public CodeTypeModel<string> AcquisitionFileLegalSurveyStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The list of Taking types statuses for this file.
+        /// </summary>
+        public IList<AcquisitionFileTakingStatusesModel> AcquisitionFileTakingStatuses { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition file Risk level status type.
+        /// </summary>
+        public CodeTypeModel<string> AcquisitionFileExpropiationRiskStatusTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The acquisition physical file status type.
         /// </summary>
         public CodeTypeModel<string> AcquisitionPhysFileStatusTypeCode { get; set; }

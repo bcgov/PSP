@@ -1,7 +1,7 @@
 import { Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
-import { EditButton } from '@/components/common/EditButton';
+import { EditButton } from '@/components/common/buttons/EditButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { MultiselectTextList } from '@/components/common/MultiselectTextList';
 import { Section } from '@/components/common/Section/Section';

@@ -58,7 +58,7 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
           Fee Determination
         </div>
         <div
-          class="pl-8 d-flex align-items-end col-auto"
+          class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"
@@ -330,7 +330,7 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
           Fee Determination
         </div>
         <div
-          class="pl-8 d-flex align-items-end col-auto"
+          class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
             class="c2"

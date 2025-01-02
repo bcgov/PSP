@@ -11,7 +11,16 @@ import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import {
+  act,
+  getByTestId,
+  queryByTestId,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
@@ -36,7 +45,9 @@ describe('compensation list view', () => {
       <CompensationListView
         fileType={renderOptions?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions?.file ?? { ...mockAcquisitionfile }}
-        compensations={renderOptions?.compensations ?? []}
+        compensationsResults={renderOptions?.compensationsResults ?? []}
+        subFilescompensations={renderOptions?.subFilescompensations ?? []}
+        isLoading={false}
         onDelete={onDelete}
         onAdd={onAddCompensationRequisition}
         onUpdateTotalCompensation={onUpdateTotalCompensation}
@@ -74,7 +85,7 @@ describe('compensation list view', () => {
     });
   });
 
-  it('displays the calculated total for the entire file excluding drafts', async () => {
+  it('displays the calculated total for the final compensations', async () => {
     const mockList: ApiGen_Concepts_CompensationRequisition[] = [
       {
         ...emptyCompensationRequisition,
@@ -97,16 +108,108 @@ describe('compensation list view', () => {
         financials: [{ ...emptyCompensationFinancial, totalAmount: 500 }],
       },
     ];
-    const { getAllByText } = setup({ compensations: mockList });
+    const { getByTestId } = setup({ compensationsResults: mockList, subFilescompensations: [] });
+    waitForEffects();
 
     await waitFor(() => {
-      expect(getAllByText('$600.55')[0]).toBeVisible();
+      expect(getByTestId('payment-total-main-file')).toHaveTextContent('$500.00');
+      expect(getByTestId('payment-total-subfiles')).toHaveTextContent('$500.00');
+    });
+  });
+
+  it('displays the calculated total for the final compensations with the subfiles', async () => {
+    const mockList: ApiGen_Concepts_CompensationRequisition[] = [
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 500 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 100 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 0.55 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: false,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 500 }],
+      },
+    ];
+
+    const mockSubFileList: ApiGen_Concepts_CompensationRequisition[] = [
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 0.55 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: false,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 1000 }],
+      },
+    ];
+    const { getByTestId } = setup({
+      compensationsResults: mockList,
+      subFilescompensations: mockSubFileList,
+    });
+    waitForEffects();
+
+    await waitFor(() => {
+      expect(getByTestId('payment-total-main-file')).toHaveTextContent('$500.00');
+      expect(getByTestId('payment-total-subfiles')).toHaveTextContent('$1,500.00');
+    });
+  });
+
+  it('Does not display payment total for subfiles on LEASES', async () => {
+    const { getByTestId, queryByTestId } = setup({
+      fileType: ApiGen_CodeTypes_FileTypes.Lease,
+      compensationsResults: [],
+      subFilescompensations: null,
+    });
+    waitForEffects();
+
+    expect(getByTestId('payment-total-main-file')).toHaveTextContent('$0.00');
+    expect(queryByTestId('payment-total-subfiles')).not.toBeInTheDocument();
+  });
+
+  it('displays the calculated total for the drafts', async () => {
+    const mockList: ApiGen_Concepts_CompensationRequisition[] = [
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 500 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 100 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: true,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 0.55 }],
+      },
+      {
+        ...emptyCompensationRequisition,
+        isDraft: false,
+        financials: [{ ...emptyCompensationFinancial, totalAmount: 500 }],
+      },
+    ];
+    const { getByTestId } = setup({ compensationsResults: mockList });
+
+    await waitFor(() => {
+      expect(getByTestId('payment-total-drafts')).toHaveTextContent('$600.55');
     });
   });
 
   it('displays the calculated total per compensation', async () => {
     const { getAllByText } = setup({
-      compensations: getMockApiCompensationList(),
+      compensationsResults: getMockApiCompensationList(),
     });
 
     await waitFor(() => {
@@ -121,7 +224,7 @@ describe('compensation list view', () => {
         ...mockAcquisitionFileResponse(),
         fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
       },
-      compensations: compensations,
+      compensationsResults: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],
     });
 
@@ -139,7 +242,7 @@ describe('compensation list view', () => {
         ...mockAcquisitionFileResponse(),
         fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
       },
-      compensations: compensations,
+      compensationsResults: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],
     });
 
@@ -154,7 +257,7 @@ describe('compensation list view', () => {
         ...mockAcquisitionFileResponse(),
         fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
       },
-      compensations: compensations,
+      compensationsResults: compensations,
       claims: [Claims.COMPENSATION_REQUISITION_DELETE],
       roles: [Roles.SYSTEM_ADMINISTRATOR],
     });
@@ -165,7 +268,7 @@ describe('compensation list view', () => {
 
   it('delete action hidden if delete claim missing', async () => {
     const { queryByTitle } = setup({
-      compensations: getMockApiCompensationList(),
+      compensationsResults: getMockApiCompensationList(),
       claims: [],
     });
 
@@ -177,7 +280,7 @@ describe('compensation list view', () => {
 
   it('can click the Add Compensation button', async () => {
     const { getByText } = setup({
-      compensations: getMockApiCompensationList(),
+      compensationsResults: getMockApiCompensationList(),
       claims: [Claims.COMPENSATION_REQUISITION_VIEW, Claims.COMPENSATION_REQUISITION_ADD],
     });
 

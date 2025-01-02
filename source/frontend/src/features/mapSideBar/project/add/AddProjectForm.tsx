@@ -11,6 +11,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 
 import { ProjectForm } from '../models';
+import AddProjectTeamSubForm from './AddProjectTeamSubForm';
 import ProductsArrayForm from './ProductsArrayForm';
 
 export interface IAddProjectFormProps {
@@ -99,6 +100,9 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
                 </SectionField>
               </Section>
               <ProductsArrayForm formikProps={formikProps} field="products" />
+              <Section header="Project Management Team">
+                <AddProjectTeamSubForm />
+              </Section>
             </Form>
           </StyledFormWrapper>
         )}

@@ -82,7 +82,4 @@ public partial class PimsLeaseDocument
     [ForeignKey("LeaseId")]
     [InverseProperty("PimsLeaseDocuments")]
     public virtual PimsLease Lease { get; set; }
-
-    [InverseProperty("LeaseDocument")]
-    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
 }

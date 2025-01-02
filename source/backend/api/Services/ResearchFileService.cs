@@ -5,12 +5,11 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {
@@ -120,6 +119,7 @@ namespace Pims.Api.Services
                 {
                     incomingResearchProperty.Internal_Id = matchingProperty.Internal_Id;
                 }
+
                 // If the property is not new, check if the name has been updated.
                 if (incomingResearchProperty.Internal_Id != 0)
                 {
@@ -173,7 +173,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Searching for research files...");
 
-            _logger.LogDebug("Research file search with filter", filter);
+            _logger.LogDebug("Research file search with filter {filter}", filter.Serialize());
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
 
             return _researchFileRepository.GetPage(filter);

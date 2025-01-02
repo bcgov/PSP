@@ -1,5 +1,5 @@
 import axios, { AxiosError } from 'axios';
-import React, { useCallback, useContext } from 'react';
+import React, { useCallback, useContext, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -39,8 +39,15 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
   const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
 
+  const [fileCompensationResults, setfileCompensationResults] =
+    useState<ApiGen_Concepts_CompensationRequisition[]>(null);
+  const [subFilesCompensations, setSubFilesCompensations] =
+    useState<ApiGen_Concepts_CompensationRequisition[]>(null);
+  const [resultsLoading, setResultsLoading] = useState<boolean>(false);
+
   const {
     updateAcquisitionFile: { execute: putAcquisitionFile },
+    getAcquisitionSubFiles: { execute: fetchSubFiles },
   } = useAcquisitionProvider();
 
   const {
@@ -49,16 +56,50 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
 
   const {
     deleteCompensation: { execute: deleteCompensation },
-    getFileCompensationRequisitions: {
-      execute: fetchCompensationRequisitions,
-      response: compensations,
-    },
+    getFileCompensationRequisitions: { execute: fetchCompensationRequisitions },
     postCompensationRequisition: { execute: createCompensationRequisition },
   } = useCompensationRequisitionRepository();
 
   const fetchData = useCallback(async () => {
-    await fetchCompensationRequisitions(fileType, file.id);
-  }, [fetchCompensationRequisitions, file, fileType]);
+    let compReqListResults: ApiGen_Concepts_CompensationRequisition[];
+
+    setResultsLoading(true);
+    switch (fileType) {
+      case ApiGen_CodeTypes_FileTypes.Lease:
+        compReqListResults = await fetchCompensationRequisitions(
+          ApiGen_CodeTypes_FileTypes.Lease,
+          file.id,
+        );
+        setSubFilesCompensations(null);
+
+        break;
+      case ApiGen_CodeTypes_FileTypes.Acquisition:
+        compReqListResults = await fetchCompensationRequisitions(
+          ApiGen_CodeTypes_FileTypes.Acquisition,
+          file.id,
+        );
+
+        if ((file as ApiGen_Concepts_AcquisitionFile).parentAcquisitionFileId === null) {
+          const acquisitionSubFiles = await fetchSubFiles(file.id);
+          const fetchSubfilesCompensationsTasks = acquisitionSubFiles?.map(x => {
+            return fetchCompensationRequisitions(ApiGen_CodeTypes_FileTypes.Acquisition, x.id);
+          });
+
+          if (fetchSubfilesCompensationsTasks) {
+            const tasksResult: ApiGen_Concepts_CompensationRequisition[][] = await Promise.all(
+              fetchSubfilesCompensationsTasks,
+            );
+            const allSubFilesCompensations = tasksResult.flat(1);
+            setSubFilesCompensations(allSubFilesCompensations);
+          }
+        }
+
+        break;
+    }
+
+    setfileCompensationResults(compReqListResults);
+    setResultsLoading(false);
+  }, [fetchCompensationRequisitions, fetchSubFiles, file, fileType]);
 
   const onUpdateTotalCompensation = async (
     totalAllowableCompensation: number | null,
@@ -144,7 +185,6 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       agreementDate: null,
       expropriationNoticeServedDate: null,
       expropriationVestingDate: null,
-      advancedPaymentServedDate: null,
       generationDate: null,
       specialInstruction: null,
       detailedRemarks: null,
@@ -223,17 +263,19 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
   };
 
   React.useEffect(() => {
-    if (compensations === undefined || sidebar.staleFile) {
+    if (fileCompensationResults === null || sidebar.staleFile) {
       fetchData();
     }
-  }, [fetchData, sidebar.staleFile, compensations]);
+  }, [fetchData, sidebar.staleFile, fileCompensationResults]);
 
   return (
     <View
       fileType={fileType}
       file={file}
+      isLoading={resultsLoading}
       onUpdateTotalCompensation={onUpdateTotalCompensation}
-      compensations={compensations || []}
+      compensationsResults={fileCompensationResults}
+      subFilescompensations={subFilesCompensations}
       onAdd={async () => onAddCompensationRequisition()}
       onDelete={async (compensationId: number) => {
         setModalContent({

@@ -31,7 +31,6 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Pims.Api.Handlers;
 using Pims.Api.Helpers;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Helpers.Healthchecks;
 using Pims.Api.Helpers.HealthChecks;
 using Pims.Api.Helpers.Mapping;
@@ -42,21 +41,23 @@ using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Api.Services.Interfaces;
 using Pims.Av;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Helpers;
+using Pims.Core.Api.Middleware;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Core.Json;
 using Pims.Dal;
 using Pims.Dal.Keycloak;
+using Pims.Dal.Repositories;
 using Pims.Geocoder;
 using Pims.Ltsa;
 using Prometheus;
-using Pims.Core.Api.Middleware;
 
 namespace Pims.Api
 {
     /// <summary>
-    /// Startup class, provides a way to startup the .netcore RESTful API and configure it.
+    /// Startup class, provides a way to startup the .netcore REST API and configure it.
     /// </summary>
     [ExcludeFromCodeCoverage]
     public class Startup
@@ -482,6 +483,7 @@ namespace Pims.Api
             services.AddScoped<IEdmsDocumentRepository, MayanDocumentRepository>();
             services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
             services.AddScoped<IDocumentGenerationRepository, CdogsRepository>();
+            services.AddScoped<IDocumentQueueRepository, DocumentQueueRepository>();
             services.AddSingleton<IDocumentGenerationAuthRepository, CdogsAuthRepository>();
         }
 
@@ -524,6 +526,7 @@ namespace Pims.Api
             services.AddScoped<ITakeInteractionSolver, TakeInteractionSolver>();
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
             services.AddScoped<IEnvironmentService, EnvironmentService>();
+            services.AddScoped<IDocumentQueueService, DocumentQueueService>();
         }
 
         /// <summary>

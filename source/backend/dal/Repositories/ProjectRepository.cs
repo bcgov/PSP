@@ -76,6 +76,8 @@ namespace Pims.Dal.Repositories
                     .AsNoTracking()
                     .Include(x => x.PimsProjectProducts)
                         .ThenInclude(x => x.Product)
+                    .Include(x => x.PimsProjectPeople)
+                        .ThenInclude(x => x.Person)
                     .Include(x => x.ProjectStatusTypeCodeNavigation)
                     .Include(x => x.RegionCodeNavigation)
                     .Include(x => x.CostTypeCode)
@@ -145,7 +147,8 @@ namespace Pims.Dal.Repositories
 
             Func<PimsContext, PimsProjectProduct, bool> canDeleteGrandchild = (context, pa) => !context.PimsProducts.Any(o => o.Id == pa.ProductId);
 
-            this.Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), canDeleteGrandchild);
+            Context.UpdateChild<PimsProject, long, PimsProjectPerson, long>(p => p.PimsProjectPeople, project.Id, project.PimsProjectPeople.ToArray());
+            Context.UpdateGrandchild<PimsProject, long, PimsProjectProduct>(p => p.PimsProjectProducts, pp => pp.Product, project.Id, project.PimsProjectProducts.ToArray(), canDeleteGrandchild);
 
             Context.Entry(existingProject).CurrentValues.SetValues(project);
 
@@ -184,6 +187,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
                 .Include(ad => ad.Document)
                     .ThenInclude(d => d.DocumentType)
+                .Include(x => x.Document)
+                    .ThenInclude(q => q.PimsDocumentQueues)
+                        .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
                 .Where(x => x.ProjectId == projectId)
                 .AsNoTracking()
                 .ToList();

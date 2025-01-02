@@ -18,7 +18,7 @@ namespace Pims.Api.Models.Concepts.Document
         /// <summary>
         /// get/set - The document id on the external storage.
         /// </summary>
-        public int MayanDocumentId { get; set; }
+        public int? MayanDocumentId { get; set; }
 
         /// <summary>
         /// get/set - Document Type.
@@ -34,6 +34,11 @@ namespace Pims.Api.Models.Concepts.Document
         /// get/set - Document/File Name.
         /// </summary>
         public string FileName { get; set; }
+
+        /// <summary>
+        /// get/set - The document queue status type.
+        /// </summary>
+        public CodeTypeModel<string> DocumentQueueStatusTypeCode { get; set; }
         #endregion
     }
 }

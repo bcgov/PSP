@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Mayan;
@@ -35,12 +36,14 @@ namespace Pims.Api.Repositories.Mayan
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="authRepository">Injected repository that handles authentication.</param>
         /// <param name="configuration">The injected configuration provider.</param>
+        /// <param name="jsonOptions">The jsonOptions.</param>
         public MayanDocumentRepository(
             ILogger<MayanDocumentRepository> logger,
             IHttpClientFactory httpClientFactory,
             IEdmsAuthRepository authRepository,
-            IConfiguration configuration)
-            : base(logger, httpClientFactory, configuration)
+            IConfiguration configuration,
+            IOptions<JsonSerializerOptions> jsonOptions)
+            : base(logger, httpClientFactory, configuration, jsonOptions)
         {
             _authRepository = authRepository;
         }

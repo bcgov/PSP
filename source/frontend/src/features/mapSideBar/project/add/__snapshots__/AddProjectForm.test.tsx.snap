@@ -701,6 +701,38 @@ exports[`AddProjectForm component > renders as expected 1`] = `
       </div>
       <div />
       <div />
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Project Management Team
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <button
+            class="c7 Button btn btn-link"
+            data-testid="add-team-member"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              + Add another management team member
+            </div>
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </DocumentFragment>
@@ -921,40 +953,86 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
 }
 
 .c8.c8.btn {
-  color: #aaaaaa;
+  background-color: unset;
+  border: none;
+}
+
+.c8.c8.btn:hover,
+.c8.c8.btn:focus,
+.c8.c8.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c8.c8.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c8.c8.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c8.c8.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c8.c8.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c8.c8.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c8.c8.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c8.c8.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c8.c8.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
+}
+
+.c9.c9.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c8.c8.btn .text {
+.c9.c9.btn.btn-primary svg {
+  color: #aaaaaa !important;
+}
+
+.c9.c9.btn.btn-primary .text {
   display: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:active,
-.c8.c8.btn:focus {
-  color: #d8292f;
+.c9.c9.btn.btn-primary svg:hover,
+.c9.c9.btn.btn-primary svg:active,
+.c9.c9.btn.btn-primary svg:focus {
+  color: #d8292f !important;
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
 }
 
-.c8.c8.btn:hover .text,
-.c8.c8.btn:active .text,
-.c8.c8.btn:focus .text {
+.c9.c9.btn.btn-primary svg:hover .text,
+.c9.c9.btn.btn-primary svg:active .text,
+.c9.c9.btn.btn-primary svg:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c9 .react-datepicker__calendar-icon {
+.c10 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -964,19 +1042,19 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
   pointer-events: none;
 }
 
-.c9 .react-datepicker__view-calendar-icon input {
+.c10 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c9 .react-datepicker-wrapper {
+.c10 .react-datepicker-wrapper {
   max-width: 17rem;
 }
 
-.c10.c10.form-control.is-valid {
+.c11.c11.form-control.is-valid {
   background-image: none;
 }
 
-.c10.c10.form-control.is-invalid {
+.c11.c11.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
@@ -1010,13 +1088,13 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
   font-weight: bold;
 }
 
-.c11 textarea.form-control {
+.c12 textarea.form-control {
   min-width: 80rem;
   height: 7rem;
   resize: none;
 }
 
-.c12 {
+.c13 {
   border-bottom: 0.1rem solid grey;
 }
 
@@ -1476,8 +1554,9 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                 class="col-auto"
               >
                 <button
-                  class="c7 Button c8 btn btn-link"
-                  title="Delete Project"
+                  class="c7 Button c8 c9 btn btn-primary"
+                  data-testid="remove-button"
+                  title="Delete Product"
                   type="button"
                 >
                   <div
@@ -1485,11 +1564,11 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                   >
                     <svg
                       fill="currentColor"
-                      height="2rem"
+                      height="22"
                       stroke="currentColor"
                       stroke-width="0"
                       viewBox="0 0 448 512"
-                      width="2rem"
+                      width="22"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
@@ -1586,7 +1665,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                 class="c4 text-left col-4"
               >
                 <div
-                  class="c9 form-group"
+                  class="c10 form-group"
                 >
                   <div
                     class="react-datepicker-wrapper d-block"
@@ -1605,7 +1684,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                       </svg>
                       <input
                         autocomplete="off"
-                        class="c10 form-control date-picker"
+                        class="c11 form-control date-picker"
                         id="datepicker-products.0.startDate"
                         name="products.0.startDate"
                         placeholder="MMM DD, YYYY"
@@ -1677,7 +1756,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                     class="c4 text-left col"
                   >
                     <div
-                      class="c9 form-group"
+                      class="c10 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -1696,7 +1775,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c10 form-control date-picker"
+                            class="c11 form-control date-picker"
                             id="datepicker-products.0.costEstimateDate"
                             name="products.0.costEstimateDate"
                             placeholder="MMM DD, YYYY"
@@ -1726,7 +1805,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                 class="c4 text-left col"
               >
                 <div
-                  class="c11 textarea input form-group"
+                  class="c12 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1755,7 +1834,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                 class="c4 text-left col"
               >
                 <div
-                  class="c11 textarea input form-group"
+                  class="c12 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -1769,7 +1848,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
               </div>
             </div>
             <div
-              class="c12 my-5"
+              class="c13 my-5"
             />
           </div>
           <div>
@@ -1783,8 +1862,9 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                 class="col-auto"
               >
                 <button
-                  class="c7 Button c8 btn btn-link"
-                  title="Delete Project"
+                  class="c7 Button c8 c9 btn btn-primary"
+                  data-testid="remove-button"
+                  title="Delete Product"
                   type="button"
                 >
                   <div
@@ -1792,11 +1872,11 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                   >
                     <svg
                       fill="currentColor"
-                      height="2rem"
+                      height="22"
                       stroke="currentColor"
                       stroke-width="0"
                       viewBox="0 0 448 512"
-                      width="2rem"
+                      width="22"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
@@ -1893,7 +1973,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                 class="c4 text-left col-4"
               >
                 <div
-                  class="c9 form-group"
+                  class="c10 form-group"
                 >
                   <div
                     class="react-datepicker-wrapper d-block"
@@ -1912,7 +1992,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                       </svg>
                       <input
                         autocomplete="off"
-                        class="c10 form-control date-picker"
+                        class="c11 form-control date-picker"
                         id="datepicker-products.1.startDate"
                         name="products.1.startDate"
                         placeholder="MMM DD, YYYY"
@@ -1984,7 +2064,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                     class="c4 text-left col"
                   >
                     <div
-                      class="c9 form-group"
+                      class="c10 form-group"
                     >
                       <div
                         class="react-datepicker-wrapper d-block"
@@ -2003,7 +2083,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                           </svg>
                           <input
                             autocomplete="off"
-                            class="c10 form-control date-picker"
+                            class="c11 form-control date-picker"
                             id="datepicker-products.1.costEstimateDate"
                             name="products.1.costEstimateDate"
                             placeholder="MMM DD, YYYY"
@@ -2033,7 +2113,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                 class="c4 text-left col"
               >
                 <div
-                  class="c11 textarea input form-group"
+                  class="c12 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -2062,7 +2142,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                 class="c4 text-left col"
               >
                 <div
-                  class="c11 textarea input form-group"
+                  class="c12 textarea input form-group"
                 >
                   <textarea
                     class="form-control"
@@ -2090,6 +2170,38 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
       </div>
       <div />
       <div />
+      <div
+        class="c1 form-section"
+      >
+        <h2
+          class="c2"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="col"
+            >
+              Project Management Team
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <button
+            class="c7 Button btn btn-link"
+            data-testid="add-team-member"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              + Add another management team member
+            </div>
+          </button>
+        </div>
+      </div>
     </form>
   </div>
 </DocumentFragment>

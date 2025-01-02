@@ -42,16 +42,10 @@ namespace Pims.Scheduler.Rescheduler
                     throw new ConfigurationException($"Unable to find TimeZoneInfo : {timezoneId}");
                 }
 
-                var cron = scheduling.Cron;
-                if (cron == null)
-                {
-                    throw new ConfigurationException($"Cron is required");
-                }
-
                 _recurringJobManager.AddOrUpdate(
                     recurringJob.Id,
                     recurringJob.Job,
-                    scheduling.Cron,
+                    scheduling.Cron ?? recurringJob.Cron,
                     new RecurringJobOptions() { TimeZone = timezone });
             }
         }

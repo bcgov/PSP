@@ -5,6 +5,7 @@
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 import { ApiGen_Concepts_FinancialCode } from './ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_ProjectPerson } from './ApiGen_Concepts_ProjectPerson';
 import { ApiGen_Concepts_ProjectProduct } from './ApiGen_Concepts_ProjectProduct';
 
 // LINK: @backend/apimodels/Models/Concepts/Project/ProjectModel.cs
@@ -19,4 +20,5 @@ export interface ApiGen_Concepts_Project extends ApiGen_Base_BaseAudit {
   description: string | null;
   note: string | null;
   projectProducts: ApiGen_Concepts_ProjectProduct[] | null;
+  projectPersons: ApiGen_Concepts_ProjectPerson[] | null;
 }

@@ -1,9 +1,11 @@
+import Multiselect from 'multiselect-react-dropdown';
 import React, { useEffect } from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import EditButton from '@/components/common/EditButton';
+import EditButton from '@/components/common/buttons/EditButton';
+import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -13,6 +15,7 @@ import { Claims, Roles } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -51,6 +54,16 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     getPersonDetail: { execute: fetchPerson, response: ownerSolicitorPrimaryContact },
   } = usePersonRepository();
 
+  const selectedProgressStatuses: ApiGen_Base_CodeType<string>[] =
+    acquisitionFile?.acquisitionFileProgressStatuses
+      .map(x => x.progressStatusTypeCode)
+      .filter(exists) ?? [];
+
+  const selectedTakingStatuses: ApiGen_Base_CodeType<string>[] =
+    acquisitionFile?.acquisitionFileTakingStatuses
+      .map(x => x.takingStatusTypeCode)
+      .filter(exists) ?? [];
+
   useEffect(() => {
     if (ownerSolicitor?.primaryContactId) {
       fetchPerson(ownerSolicitor?.primaryContactId);
@@ -74,7 +87,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
         {hasClaim(Claims.ACQUISITION_EDIT) && canEditDetails() ? (
-          <EditButton title="Edit acquisition file" onClick={onEdit} />
+          <EditButton title="Edit acquisition file" onClick={onEdit} style={{ float: 'right' }} />
         ) : null}
         {!canEditDetails() && (
           <TooltipIcon
@@ -91,6 +104,53 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         {acquisitionFile?.fundingTypeCode?.id === 'OTHER' && (
           <SectionField label="Other funding">{acquisitionFile.fundingOther}</SectionField>
         )}
+        {acquisitionFile?.project?.projectPersons?.map((teamMember, index) => (
+          <React.Fragment key={`project-team-${index}`}>
+            <SectionField label="Management team member">
+              <StyledLink
+                target="_blank"
+                rel="noopener noreferrer"
+                to={`/contact/P${teamMember?.personId}`}
+              >
+                <span>{formatApiPersonNames(teamMember?.person)}</span>
+                <FaExternalLinkAlt className="ml-2" size="1rem" />
+              </StyledLink>
+            </SectionField>
+          </React.Fragment>
+        ))}
+      </Section>
+      <Section header="Progress Statuses">
+        <SectionField label="File progress(es)" valueTestId="prg-file-progress-status">
+          <Multiselect
+            disable
+            disablePreSelectedValues
+            hidePlaceholder
+            placeholder=""
+            selectedValues={selectedProgressStatuses}
+            displayValue="description"
+            style={readOnlyMultiSelectStyle}
+          />
+        </SectionField>
+        <SectionField label="Appraisal" valueTestId="prg-appraisal-status">
+          {detail.appraisalStatusDescription}
+        </SectionField>
+        <SectionField label="Legal survey" valueTestId="prg-legal-survey-status">
+          {detail.legalSurveyStatusDescription}
+        </SectionField>
+        <SectionField label="Type of taking" valueTestId="prg-taking-type-status">
+          <Multiselect
+            disable
+            disablePreSelectedValues
+            hidePlaceholder
+            placeholder=""
+            selectedValues={selectedTakingStatuses}
+            displayValue="description"
+            style={readOnlyMultiSelectStyle}
+          />
+        </SectionField>
+        <SectionField label="Expropriation risk" valueTestId="prg-expropiation-risk-status">
+          {detail.expropriationRiskStatusDescription}
+        </SectionField>
       </Section>
       <Section header="Schedule">
         <SectionField label="Assigned date" valueTestId="assigned-date">

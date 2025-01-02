@@ -22,6 +22,7 @@ import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipa
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { exists, isValidId } from '@/utils';
 
 export interface LocationFeatureDataset {
   selectingComponentId: string | null;
@@ -72,7 +73,13 @@ const useLocationFeatureLoader = () => {
   const crownLandLayerServiceFindOneInventory = crownLandLayerService.findOneCrownLandInventory;
 
   const loadLocationDetails = useCallback(
-    async (latLng: LatLngLiteral): Promise<LocationFeatureDataset> => {
+    async ({
+      latLng,
+      pimsPropertyId,
+    }: {
+      latLng: LatLngLiteral;
+      pimsPropertyId?: number | null;
+    }): Promise<LocationFeatureDataset> => {
       const result: LocationFeatureDataset = {
         selectingComponentId: null,
         location: latLng,
@@ -100,6 +107,7 @@ const useLocationFeatureLoader = () => {
       const crownLandTenuresTask = crownLandLayerServiceFindOneTenure(latLng);
       const crownLandInventoryTask = crownLandLayerServiceFindOneInventory(latLng);
       const crownLandInclusionsTask = crownLandLayerServiceFindOneInclusion(latLng);
+      const municipalityFeatureTask = adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
 
       const [
         parcelFeature,
@@ -111,6 +119,7 @@ const useLocationFeatureLoader = () => {
         crownLandTenuresFeature,
         crownLandInventoryFeature,
         crownLandInclusionsFeature,
+        municipalityFeature,
       ] = await Promise.all([
         fullyAttributedTask,
         regionTask,
@@ -121,6 +130,7 @@ const useLocationFeatureLoader = () => {
         crownLandTenuresTask,
         crownLandInventoryTask,
         crownLandInclusionsTask,
+        municipalityFeatureTask,
       ]);
 
       let pimsLocationProperties:
@@ -128,24 +138,25 @@ const useLocationFeatureLoader = () => {
         | undefined = undefined;
 
       // Load PimsProperties
-      if (latLng) {
-        const latLngFeature = await findOneByBoundary(latLng, 'GEOMETRY', 4326);
-        if (latLngFeature !== undefined) {
-          pimsLocationProperties = { features: [latLngFeature], type: 'FeatureCollection' };
+      // - first attempt to find it by our internal PIMS id
+      // - then try to find it on our boundary layer.
+      // - if not found by boundary attempt to match it by PID / PIN coming from parcel-map
+      const isInPims = isValidId(Number(pimsPropertyId));
+      if (isInPims) {
+        pimsLocationProperties = await loadProperties({ PROPERTY_ID: Number(pimsPropertyId) });
+      } else {
+        const boundaryFeature = await findOneByBoundary(latLng, 'GEOMETRY', 4326);
+        if (exists(boundaryFeature)) {
+          pimsLocationProperties = { features: [boundaryFeature], type: 'FeatureCollection' };
+        } else if (exists(parcelFeature)) {
+          pimsLocationProperties = await loadProperties({
+            PID: parcelFeature.properties?.PID || '',
+            PIN: parcelFeature.properties?.PIN?.toString() || '',
+          });
         }
-      } else if (parcelFeature !== undefined) {
-        pimsLocationProperties = await loadProperties({
-          PID: parcelFeature.properties?.PID || '',
-          PIN: parcelFeature.properties?.PIN?.toString() || '',
-        });
       }
 
-      const municipalityFeature = await adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
-
-      if (
-        pimsLocationProperties?.features !== undefined &&
-        pimsLocationProperties.features.length > 0
-      ) {
+      if (exists(pimsLocationProperties?.features) && pimsLocationProperties.features.length > 0) {
         result.pimsFeature = pimsLocationProperties.features[0] ?? null;
       }
 
