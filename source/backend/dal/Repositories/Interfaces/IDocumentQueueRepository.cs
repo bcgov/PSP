@@ -16,9 +16,7 @@ namespace Pims.Dal.Repositories
 
         PimsDocumentQueue GetByDocumentId(long documentId);
 
-        IEnumerable<PimsDocumentQueue> GetAllByFilter(DocumentQueueFilter filter);
-
-        Dictionary<long, int> GetFileLengthsById(IEnumerable<long> documentQueueIds);
+        IEnumerable<DocumentQueueSearchResult> GetAllByFilter(DocumentQueueFilter filter);
 
         PimsDocumentQueue Update(PimsDocumentQueue queuedDocument, bool removeDocument = false);
 

@@ -5,10 +5,10 @@ using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
-using Pims.Core.Extensions;
 using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories

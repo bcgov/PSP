@@ -157,6 +157,7 @@ export class ProjectTeamForm {
   id: number | null;
   projectId: number | null;
   contact: IContactSearchResult;
+  rowVersion: number | null = null;
 
   constructor(projectId?: number) {
     this.projectId = projectId;
@@ -169,15 +170,17 @@ export class ProjectTeamForm {
       personId: this.contact?.personId,
       project: null,
       person: null,
-      ...getEmptyBaseAudit(),
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
   static fromApi(apiModel: ApiGen_Concepts_ProjectPerson): ProjectTeamForm {
     const newForm = new ProjectTeamForm();
+
     newForm.projectId = apiModel.projectId;
     newForm.contact = fromApiPerson(apiModel.person);
     newForm.id = apiModel.id;
+    newForm.rowVersion = apiModel.rowVersion;
 
     return newForm;
   }

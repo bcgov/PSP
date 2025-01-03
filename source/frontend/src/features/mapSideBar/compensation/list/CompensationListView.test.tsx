@@ -11,7 +11,16 @@ import { mockAcquisitionFileResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { act, getByTestId, queryByTestId, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  getByTestId,
+  queryByTestId,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
@@ -37,11 +46,12 @@ describe('compensation list view', () => {
         fileType={renderOptions?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions?.file ?? { ...mockAcquisitionfile }}
         compensationsResults={renderOptions?.compensationsResults ?? []}
-        subFilescompensations={renderOptions?.subFilescompensations ??[]}
+        subFilescompensations={renderOptions?.subFilescompensations ?? []}
         isLoading={false}
         onDelete={onDelete}
         onAdd={onAddCompensationRequisition}
-        onUpdateTotalCompensation={onUpdateTotalCompensation}       />,
+        onUpdateTotalCompensation={onUpdateTotalCompensation}
+      />,
       {
         ...renderOptions,
         store: storeState,
@@ -143,7 +153,10 @@ describe('compensation list view', () => {
         financials: [{ ...emptyCompensationFinancial, totalAmount: 1000 }],
       },
     ];
-    const { getByTestId } = setup({ compensationsResults: mockList, subFilescompensations: mockSubFileList });
+    const { getByTestId } = setup({
+      compensationsResults: mockList,
+      subFilescompensations: mockSubFileList,
+    });
     waitForEffects();
 
     await waitFor(() => {
@@ -156,7 +169,7 @@ describe('compensation list view', () => {
     const { getByTestId, queryByTestId } = setup({
       fileType: ApiGen_CodeTypes_FileTypes.Lease,
       compensationsResults: [],
-      subFilescompensations: null
+      subFilescompensations: null,
     });
     waitForEffects();
 

@@ -90,7 +90,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateWithPermissions(Permissions.LeaseEdit);
             var consultation = EntityHelper.CreateLeaseConsultationItem();
-            
+
             _helper.AddAndSaveChanges(consultation);
 
             var updatedConsultation = EntityHelper.CreateLeaseConsultationItem();
