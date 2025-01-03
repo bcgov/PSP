@@ -470,6 +470,25 @@ ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE]
 	[DISPOSITION_FILE_DOCUMENT_ID] bigint NULL, 
 	[FILE_NAME] nvarchar(500) NOT NULL DEFAULT ' '
 GO
+
+-- Drop dynamically-named default constraint
+PRINT N'Drop dynamically-named default constraint'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_DOCUMENT_QUEUE' 
+                   AND col.NAME = 'FILE_NAME')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 EXEC sp_addextendedproperty 
 	@name = N'MS_Description', @value = N'Foreign key to the PIMS_PROPERTY_ACTIVITY_DOCUMENT table.' , 
 	@level0type = N'Schema', @level0name = N'dbo', 
@@ -532,6 +551,24 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
+-- Drop dynamically-named default constraint
+PRINT N'Drop dynamically-named default constraint'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_DOCUMENT_QUEUE_HIST' 
+                   AND col.NAME = 'FILE_NAME')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE_HIST] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 -- Alter table dbo.PIMS_PROPERTY
 PRINT N'Alter table dbo.PIMS_PROPERTY'
 GO
@@ -547,7 +584,30 @@ GO
 -- Alter table dbo.PIMS_PROJECT_PERSON
 PRINT N'Alter table dbo.PIMS_PROJECT_PERSON'
 GO
+ALTER TABLE [dbo].[PIMS_PROJECT_PERSON] 
+  ADD DEFAULT 'PROJMGR' FOR PROJECT_PERSON_ROLE_TYPE_CODE
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
 ALTER TABLE [dbo].[PIMS_PROJECT_PERSON] ALTER COLUMN [PROJECT_PERSON_ROLE_TYPE_CODE] nvarchar(20) NOT NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop dynamically-named default constraint
+PRINT N'Drop dynamically-named default constraint'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_PROJECT_PERSON' 
+                   AND col.NAME = 'PROJECT_PERSON_ROLE_TYPE_CODE')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_PROJECT_PERSON] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -569,6 +629,24 @@ GO
 PRINT N'Alter table dbo.PIMS_PROJECT_PERSON_HIST'
 GO
 ALTER TABLE [dbo].[PIMS_PROJECT_PERSON_HIST] ALTER COLUMN [PROJECT_PERSON_ROLE_TYPE_CODE] nvarchar(20) NOT NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop dynamically-named default constraint
+PRINT N'Drop dynamically-named default constraint'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_PROJECT_PERSON_HIST' 
+                   AND col.NAME = 'PROJECT_PERSON_ROLE_TYPE_CODE')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_PROJECT_PERSON_HIST] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
