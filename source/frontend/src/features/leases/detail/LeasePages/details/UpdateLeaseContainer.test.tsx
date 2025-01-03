@@ -1,29 +1,26 @@
-import { RenderOptions } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 import React, { forwardRef } from 'react';
-import { act } from 'react-test-renderer';
 
 import { LeaseStateContext } from '@/features/leases/context/LeaseContext';
 import { useLeaseDetail } from '@/features/leases/hooks/useLeaseDetail';
 import { getDefaultFormLease } from '@/features/leases/models';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { defaultApiLease, getEmptyLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { render, screen } from '@/utils/test-utils';
+import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import UpdateLeaseContainer, { UpdateLeaseContainerProps } from './UpdateLeaseContainer';
 import { IUpdateLeaseFormProps } from './UpdateLeaseForm';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
-import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -31,14 +28,16 @@ const storeState = {
 };
 const mockAxios = new MockAdapter(axios);
 
-vi.mock('@/features/leases/hooks/useLeaseDetail');
-vi.mocked(useLeaseDetail).mockReturnValue({
+const mockLeaseApi: ReturnType<typeof useLeaseDetail> = {
   lease: getMockApiLease(),
   setLease: noop,
   getCompleteLease: vi.fn().mockResolvedValue(getMockApiLease()),
   refresh: vi.fn(),
   loading: false,
-});
+};
+
+vi.mock('@/features/leases/hooks/useLeaseDetail');
+vi.mocked(useLeaseDetail).mockReturnValue(mockLeaseApi);
 
 const onEdit = vi.fn();
 
@@ -102,6 +101,27 @@ describe('Update lease container component', () => {
 
     expect(await screen.findByText(/Retired property can not be selected/i)).toBeVisible();
     expect(await screen.findByText(/Close/i)).toBeVisible();
+    expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
+  });
+
+  it('refreshes the lease when clicking on the close button after a business rule violation', async () => {
+    setup({});
+
+    mockAxios.onPut().reply(400, {
+      error: 'This property cannot be deleted because it is part of a subdivision or consolidation',
+      type: 'BusinessRuleViolationException',
+    });
+    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
+
+    expect(
+      await screen.findByText(
+        /This property cannot be deleted because it is part of a subdivision or consolidation/i,
+      ),
+    ).toBeVisible();
+    const button = await screen.findByText(/Close/i);
+    expect(button).toBeVisible();
+    await act(async () => userEvent.click(button));
+    expect(mockLeaseApi.getCompleteLease).toHaveBeenCalled();
     expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
   });
 
