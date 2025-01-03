@@ -327,6 +327,7 @@ namespace Pims.Api.Services
                 {
                     incomingAcquisitionProperty.Internal_Id = matchingProperty.Internal_Id;
                 }
+
                 // If the property is not new, check if the name has been updated.
                 if (incomingAcquisitionProperty.Internal_Id != 0)
                 {

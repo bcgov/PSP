@@ -4,10 +4,10 @@ using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
-using Pims.Dal.Entities;
 using Pims.Core.Extensions;
-using Pims.Dal.Repositories;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
 {
