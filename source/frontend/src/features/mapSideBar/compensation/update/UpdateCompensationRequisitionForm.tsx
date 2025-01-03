@@ -216,13 +216,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                         formikProps={formikProps}
                       />
                     </SectionField>
-                    <SectionField
-                      label="Advanced payment served date"
-                      labelWidth="5"
-                      contentWidth="4"
-                    >
-                      <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
-                    </SectionField>
                   </>
                 )}
 

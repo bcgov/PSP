@@ -62,6 +62,7 @@ describe('Form 8 Detail View component', () => {
     expect(queryByTestId('form8[0].payee-name')).toHaveTextContent('John Doe');
     expect(queryByTestId('form8[0].exp-authority')).toHaveTextContent('FORTIS BC');
     expect(queryByTestId('form8[0].description')).toHaveTextContent('MY DESCRIPTION');
+    expect(queryByTestId('form8[0].advanced-payment-srv-date')).toHaveTextContent('Jan 2, 2025');
 
     expect(queryByText('Total Amount of Advance Taking')).toBeInTheDocument();
     expect(queryByText('$1,000.00')).toBeInTheDocument();
