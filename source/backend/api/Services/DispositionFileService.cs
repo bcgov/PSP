@@ -34,6 +34,7 @@ namespace Pims.Api.Services
         private readonly IDispositionFileChecklistRepository _checklistRepository;
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IDispositionStatusSolver _dispositionStatusSolver;
+        private readonly IPropertyOperationService _propertyOperationService;
 
         public DispositionFileService(
             ClaimsPrincipal user,
@@ -47,7 +48,8 @@ namespace Pims.Api.Services
             IDispositionFileChecklistRepository checklistRepository,
             IEntityNoteRepository entityNoteRepository,
             IUserRepository userRepository,
-            IDispositionStatusSolver dispositionStatusSolver)
+            IDispositionStatusSolver dispositionStatusSolver,
+            IPropertyOperationService propertyOperationService)
         {
             _user = user;
             _logger = logger;
@@ -60,6 +62,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _userRepository = userRepository;
             _dispositionStatusSolver = dispositionStatusSolver;
+            _propertyOperationService = propertyOperationService;
         }
 
         public PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -543,6 +546,11 @@ namespace Pims.Api.Services
             List<PimsDispositionFileProperty> differenceSet = currentFileProperties.Where(x => !dispositionFile.PimsDispositionFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
             foreach (var deletedProperty in differenceSet)
             {
+                if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
+                {
+                    throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
+                }
+
                 _dispositionFilePropertyRepository.Delete(deletedProperty);
 
                 var totalAssociationCount = _propertyRepository.GetAllAssociationsCountById(deletedProperty.PropertyId);
