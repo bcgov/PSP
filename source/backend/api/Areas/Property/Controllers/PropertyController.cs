@@ -3,11 +3,11 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.Property;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Policies;
 using Pims.Core.Json;
-using Pims.Dal.Repositories;
 using Pims.Core.Security;
+using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Property.Controllers
