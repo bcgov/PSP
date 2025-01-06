@@ -207,7 +207,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void AssertTrueElementValueEquals(By elementBy, string text = "")
         {
             WaitUntilVisible(elementBy);
-            Assert.Equal(text, webDriver.FindElement(elementBy).GetDomProperty("Value"));
+            Assert.Equal(text, webDriver.FindElement(elementBy).GetDomProperty("value"));
         }
 
         protected void AssertTrueContentNotEquals(By elementBy, string text)
@@ -220,7 +220,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             
             WaitUntilVisible(elementBy);
-            var numberFromElement = webDriver.FindElement(elementBy).GetDomProperty("Value");
+            var numberFromElement = webDriver.FindElement(elementBy).GetDomProperty("value");
             var number1 = Math.Round(double.Parse(numberFromElement), 4, MidpointRounding.ToEven).ToString();
             var roundedNumber2 = Math.Round(number2, 4, MidpointRounding.ToEven).ToString();
 

@@ -495,7 +495,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div"));
 
             var totalPayments = webDriver.FindElements(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div")).Count;
-            var lastPaymentDeleteIcon = By.CssSelector("div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalPayments +") button[title='delete actual']");
+            var lastPaymentDeleteIcon = By.CssSelector("div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalPayments +") button[title='delete payment']");
             webDriver.FindElement(lastPaymentDeleteIcon).Click();
 
             WaitUntilVisible(licensePaymentsModal);

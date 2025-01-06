@@ -10,7 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Main Menu Elements
         private By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licences'] a");
         private By searchLicenseButton = By.XPath("//a[contains(text(),'Manage Lease/Licence Files')]");
-        private By searchLicenseTitle = By.XPath("//h3[contains(text(),'Leases & Licences')]");
+        private By searchLicenseTitle = By.XPath("//h1/span[contains(text(),'Leases & Licences')]");
 
         //Search Filter Elements
         private By searchBySelect = By.Id("input-searchBy");

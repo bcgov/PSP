@@ -1,5 +1,4 @@
-﻿using FluentAssertions.Equivalency.Steps;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -10,10 +9,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
 
         //Documents Tab List Header
-        private readonly By documentsFileTitle = By.XPath("//div[contains(text(),'File Documents')]");
-        private readonly By documentsTitle = By.XPath("//div[contains(text(),'Documents')]");
-        private readonly By addFileDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
-        private readonly By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
+        private readonly By documentsFileTitle = By.XPath("//span[contains(text(),'File Documents')]");
+        private readonly By documentsTitle = By.XPath("//span[contains(text(),'Documents')]");
+        private readonly By addDocumentBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
 
         //Upload Documents Dialog General Elements
         private readonly By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
@@ -328,18 +326,10 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(documentPaginationPrevPageLink);
         }
 
-        public void AddNewDocumentButton(string fileType)
+        public void AddNewDocumentButton()
         {
-            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project") || fileType.Equals("Property Management"))
-            {
-                WaitUntilClickable(addDocumentBttn);
-                FocusAndClick(addDocumentBttn);
-            }
-            else
-            {
-                WaitUntilClickable(addFileDocumentBttn);
-                FocusAndClick(addFileDocumentBttn);
-            } 
+            WaitUntilClickable(addDocumentBttn);
+            FocusAndClick(addDocumentBttn); 
         }
 
         public void VerifyDocumentFields(string documentType)
@@ -421,19 +411,13 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void VerifyDocumentsListView(string fileType)
+        public void VerifyDocumentsListView()
         {
             WaitUntilVisible(documentFilterTypeSelect);
-            if (fileType.Equals("CDOGS Templates") || fileType.Equals("Project") || fileType.Equals("Property Management"))
-            {
-                AssertTrueIsDisplayed(documentsTitle);
-                AssertTrueIsDisplayed(addDocumentBttn);
-            }
-            else
-            {
-                AssertTrueIsDisplayed(documentsFileTitle);
-                AssertTrueIsDisplayed(addFileDocumentBttn);
-            }
+            
+            AssertTrueIsDisplayed(documentsTitle);
+            AssertTrueIsDisplayed(addDocumentBttn);
+            
             AssertTrueIsDisplayed(documentFilterTypeSelect);
             AssertTrueIsDisplayed(documentFilterStatusSelect);
             AssertTrueIsDisplayed(documentFilterNameInput);

@@ -71,6 +71,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Save");
 
+            Wait(4000);
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
         }
 
