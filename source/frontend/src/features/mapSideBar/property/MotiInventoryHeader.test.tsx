@@ -160,7 +160,7 @@ describe('MotiInventoryHeader component', () => {
       },
       isLoading: false,
     });
-    const zoomButton = getByTitle('Zoom Map');
+    const zoomButton = getByTitle('Zoom into parcel');
     await act(async () => userEvent.click(zoomButton));
     expect(onZoom).toHaveBeenCalled();
   });
@@ -173,7 +173,7 @@ describe('MotiInventoryHeader component', () => {
       },
       isLoading: false,
     });
-    const zoomButton = getByTitle('Zoom Map');
+    const zoomButton = getByTitle('Zoom into parcel');
     await act(async () => userEvent.click(zoomButton));
     expect(onZoom).toHaveBeenCalled();
   });
@@ -187,7 +187,7 @@ describe('MotiInventoryHeader component', () => {
       isLoading: false,
     });
 
-    expect(queryByText('Zoom Map')).not.toBeInTheDocument();
+    expect(queryByText('Zoom into parcel')).not.toBeInTheDocument();
     expect(onZoom).not.toHaveBeenCalled();
   });
 
