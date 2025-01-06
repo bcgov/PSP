@@ -132,7 +132,7 @@ namespace Pims.Api.Services
             {
                 _propertyRepository.CommitTransaction();
             }
-            return GetById(retiredProperty.Internal_Id); ;
+            return GetById(retiredProperty.Internal_Id);
         }
 
         public IList<PimsPropertyContact> GetContacts(long propertyId)
@@ -222,9 +222,9 @@ namespace Pims.Api.Services
             hasActiveExpiryDate = false;
 
             List<PimsLease> activeLeaseList = propertyLeases.Select(x => x.Lease).Where(y => y.LeaseStatusTypeCode == LeaseStatusTypes.ACTIVE.ToString()).ToList();
-            foreach(var agreement in activeLeaseList)
+            foreach (var agreement in activeLeaseList)
             {
-                if(!agreement.TerminationDate.HasValue)
+                if (!agreement.TerminationDate.HasValue)
                 {
                     var latestRenewal = agreement.PimsLeaseRenewals.Where(x => x.IsExercised == true).OrderByDescending(x => x.CommencementDt).FirstOrDefault();
                     if (latestRenewal is null) // No Renewal - Check only Lease dates.

@@ -90,13 +90,11 @@ namespace Pims.Api.Services
             {
                 List<PimsDocumentQueue> documentsBelowMaxFileSize = new List<PimsDocumentQueue>();
                 long totalFileSize = 0;
-                var documentIdSizeDict = _documentQueueRepository.GetFileLengthsById(queuedDocuments.Select(qd => qd.DocumentQueueId));
                 queuedDocuments.ForEach(currentDocument =>
                 {
-                    long currentFileSize = documentIdSizeDict.GetValueOrDefault(currentDocument.DocumentQueueId, 0);
-                    if (currentFileSize + totalFileSize <= filter.MaxFileSize)
+                    if (currentDocument.DocumentSize + totalFileSize <= filter.MaxFileSize)
                     {
-                        totalFileSize += currentFileSize;
+                        totalFileSize += currentDocument.DocumentSize;
                         documentsBelowMaxFileSize.Add(currentDocument);
                     }
                 });
@@ -152,6 +150,11 @@ namespace Pims.Api.Services
             {
                 this.Logger.LogError("Unable to find document queue with {id}", documentQueue.DocumentQueueId);
                 throw new KeyNotFoundException($"Unable to find document queue with matching id: {documentQueue.DocumentQueueId}");
+            }
+            else if (databaseDocumentQueue.DocumentQueueStatusTypeCode != DocumentQueueStatusTypes.PROCESSING.ToString())
+            {
+                this.Logger.LogError("Document Queue {documentQueueId} is not in valid state, aborting poll.", documentQueue.DocumentQueueId);
+                return databaseDocumentQueue;
             }
 
             var relatedDocument = _documentRepository.TryGet(documentQueue.DocumentId.Value);

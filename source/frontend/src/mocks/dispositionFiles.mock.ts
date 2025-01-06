@@ -27,6 +27,7 @@ export const mockDispositionFileResponse = (
     code: '00048',
     description: 'CLAIMS',
     note: null,
+    projectPersons: [],
     projectProducts: [],
     appCreateTimestamp: '2024-02-06T20:56:46.47',
     appLastUpdateTimestamp: '2024-02-06T20:56:46.47',

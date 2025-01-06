@@ -445,6 +445,31 @@ namespace Pims.Dal.Repositories
             return Context.PimsSubfileInterestTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
 
+        public IEnumerable<PimsAcqFileProgessType> GetAllAcquisitionFileProgressStatusTypes()
+        {
+            return Context.PimsAcqFileProgessTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
+        public IEnumerable<PimsAcqFileAppraisalType> GetAllAcquisitionFileAppraisalStatusTypes()
+        {
+            return Context.PimsAcqFileAppraisalTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
+        public IEnumerable<PimsAcqFileLglSrvyType> GetAllAcquisitionFileLegalSurveyStatusTypes()
+        {
+            return Context.PimsAcqFileLglSrvyTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
+        public IEnumerable<PimsAcqFileTakeType> GetAllAcquisitionFileTakeStatusTypes()
+        {
+            return Context.PimsAcqFileTakeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
+        public IEnumerable<PimsAcqFileExpropRiskType> GetAllAcquisitionFileExpropiationRiskStatusTypes()
+        {
+            return Context.PimsAcqFileExpropRiskTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
         #endregion
     }
 }

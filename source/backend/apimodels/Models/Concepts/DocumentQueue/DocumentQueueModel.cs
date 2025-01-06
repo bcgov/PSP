@@ -71,5 +71,5 @@ namespace Pims.Api.Models.Concepts.Document
         /// </summary>
         public CodeTypeModel<string> DocumentQueueStatusTypeCode { get; set; }
     #endregion
-}
+    }
 }

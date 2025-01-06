@@ -87,6 +87,7 @@ namespace Pims.Dal
             {
                 options.CommandTimeout((int)TimeSpan.FromMinutes(10).TotalSeconds);
                 options.UseNetTopologySuite();
+                options.EnableRetryOnFailure();
             });
 
             var serializerOptions = new JsonSerializerOptions()

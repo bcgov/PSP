@@ -1,9 +1,11 @@
 import { isNumber } from 'lodash';
 
 import { SelectOption } from '@/components/common/form';
+import { fromApiPerson, IContactSearchResult } from '@/interfaces/IContactSearchResult';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { ApiGen_Concepts_ProjectPerson } from '@/models/api/generated/ApiGen_Concepts_ProjectPerson';
 import { ApiGen_Concepts_ProjectProduct } from '@/models/api/generated/ApiGen_Concepts_ProjectProduct';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
@@ -66,6 +68,7 @@ export class ProjectForm {
   summary: string | '' = '';
   rowVersion: number | null = null;
   products: ProductForm[] = [];
+  projectTeam: ProjectTeamForm[] = [];
 
   toApi(): ApiGen_Concepts_Project {
     return {
@@ -85,6 +88,7 @@ export class ProjectForm {
           ...getEmptyBaseAudit(0),
         };
       }),
+      projectPersons: this.projectTeam?.map<ApiGen_Concepts_ProjectPerson>(team => team.toApi()),
       businessFunctionCode:
         !!this.businessFunctionCode?.value && isNumber(this.businessFunctionCode.value)
           ? toFinancialCode(
@@ -129,6 +133,9 @@ export class ProjectForm {
         ?.map(x => x.product)
         ?.filter(exists)
         .map(x => ProductForm.fromApi(x)) || [];
+    newForm.projectTeam =
+      model.projectPersons?.filter(exists).map<ProjectTeamForm>(x => ProjectTeamForm.fromApi(x)) ||
+      [];
     newForm.businessFunctionCode =
       !!model.businessFunctionCode?.id && isNumber(model.businessFunctionCode?.id)
         ? businessFunctionOptions.find(c => +c.value === model.businessFunctionCode?.id) ?? null
@@ -141,6 +148,39 @@ export class ProjectForm {
       !!model.workActivityCode?.id && isNumber(model.workActivityCode?.id)
         ? workActivityOptions.find(c => +c.value === model.workActivityCode?.id) ?? null
         : null;
+
+    return newForm;
+  }
+}
+
+export class ProjectTeamForm {
+  id: number | null;
+  projectId: number | null;
+  contact: IContactSearchResult;
+  rowVersion: number | null = null;
+
+  constructor(projectId?: number) {
+    this.projectId = projectId;
+  }
+
+  toApi(): ApiGen_Concepts_ProjectPerson {
+    return {
+      id: this.id,
+      projectId: this.projectId,
+      personId: this.contact?.personId,
+      project: null,
+      person: null,
+      ...getEmptyBaseAudit(this.rowVersion),
+    };
+  }
+
+  static fromApi(apiModel: ApiGen_Concepts_ProjectPerson): ProjectTeamForm {
+    const newForm = new ProjectTeamForm();
+
+    newForm.projectId = apiModel.projectId;
+    newForm.contact = fromApiPerson(apiModel.person);
+    newForm.id = apiModel.id;
+    newForm.rowVersion = apiModel.rowVersion;
 
     return newForm;
   }

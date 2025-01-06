@@ -125,6 +125,8 @@ describe('UpdateAcquisitionForm component', () => {
         ) as HTMLSelectElement,
       getOtherSubfileInterestTypeTextbox: () =>
         utils.container.querySelector(`input[name="otherSubfileInterestType"]`) as HTMLInputElement,
+      getProgressAppraisalStatusTypeDropdown: () =>
+        utils.container.querySelector(`#input-appraisalStatusType`) as HTMLSelectElement,
     };
   };
 
@@ -156,6 +158,14 @@ describe('UpdateAcquisitionForm component', () => {
     const { getByDisplayValue } = setup({ initialValues });
     await act(async () => {});
     expect(getByDisplayValue('legacy file number')).toBeVisible();
+  });
+
+  it('displays progress statuses', async () => {
+    const { getProgressAppraisalStatusTypeDropdown: getProgessAppraisalStatusTypeDropdown } = setup(
+      { initialValues },
+    );
+    await act(async () => {});
+    expect(getProgessAppraisalStatusTypeDropdown()).toHaveValue('RECEIVED');
   });
 
   it('displays owner solicitor and owner representative', async () => {

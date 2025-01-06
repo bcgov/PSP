@@ -86,8 +86,11 @@ namespace Pims.Dal.Repositories
         public PimsDocumentQueue Update(PimsDocumentQueue queuedDocument, bool removeDocument = false)
         {
             queuedDocument.ThrowIfNull(nameof(queuedDocument));
-            var existingQueuedDocument = TryGetById(queuedDocument.DocumentQueueId);
-
+            var existingQueuedDocument = TryGetById(queuedDocument.DocumentQueueId) ?? throw new KeyNotFoundException($"DocumentQueueId {queuedDocument.DocumentQueueId} not found.");
+            if (existingQueuedDocument?.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.SUCCESS.ToString() && queuedDocument.DocumentQueueStatusTypeCode != DocumentQueueStatusTypes.SUCCESS.ToString())
+            {
+                throw new InvalidOperationException($"DocumentQueueId {queuedDocument.DocumentQueueId} is already completed.");
+            }
             if (!removeDocument)
             {
                 queuedDocument.Document = existingQueuedDocument.Document;
@@ -114,21 +117,12 @@ namespace Pims.Dal.Repositories
             return true;
         }
 
-        public Dictionary<long, int> GetFileLengthsById(IEnumerable<long> documentQueueIds)
-        {
-            return Context.PimsDocumentQueues
-                .AsNoTracking()
-                .Where(dq => documentQueueIds.Any(dqId => dqId == dq.DocumentQueueId))
-                .Select(dq => new { Key = dq.Internal_Id, Value = dq.Document.Length })
-                .ToDictionary(pair => pair.Key, pair => pair.Value);
-        }
-
         /// <summary>
         /// Return a list of documents, filtered by the specified arguments.
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<PimsDocumentQueue> GetAllByFilter(DocumentQueueFilter filter)
+        public IEnumerable<DocumentQueueSearchResult> GetAllByFilter(DocumentQueueFilter filter)
         {
             var query = Context.PimsDocumentQueues
                 .Include(dq => dq.DocumentNavigation)
@@ -159,7 +153,7 @@ namespace Pims.Dal.Repositories
             }
 
             // Return the PimsDocumentQueue search results without the file contents - to avoid memory issues.
-            return query.Take(filter.Quantity).Select(dq => new PimsDocumentQueue()
+            return query.Take(filter.Quantity).Select(dq => new DocumentQueueSearchResult()
             {
                 DocumentQueueId = dq.DocumentQueueId,
                 DocumentId = dq.DocumentId,
@@ -185,6 +179,7 @@ namespace Pims.Dal.Repositories
                 DbLastUpdateTimestamp = dq.DbLastUpdateTimestamp,
                 DbLastUpdateUserid = dq.DbLastUpdateUserid,
                 ConcurrencyControlNumber = dq.ConcurrencyControlNumber,
+                DocumentSize = dq.Document != null ? dq.Document.Length : 0,
             }).ToList();
         }
 
