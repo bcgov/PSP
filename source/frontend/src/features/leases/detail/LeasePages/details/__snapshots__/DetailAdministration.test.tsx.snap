@@ -383,17 +383,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         <div
           class="c4 text-left col"
         >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-description"
-              name="description"
-              title="a test description"
-              value="a test description"
-            />
-          </div>
+          a test description
         </div>
       </div>
       <div
@@ -828,18 +818,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         </div>
         <div
           class="c4 text-left col"
-        >
-          <div
-            class="input form-group"
-          >
-            <input
-              class="form-control"
-              id="input-description"
-              name="description"
-              value=""
-            />
-          </div>
-        </div>
+        />
       </div>
       <div
         class="pb-2 row"
