@@ -18,6 +18,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, prettyFormatDate } from '@/utils';
+import { formatMinistryProject } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { cannotEditMessage } from '../../../common/constants';
@@ -39,7 +40,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
   const { hasRole, hasClaim } = useKeycloakWrapper();
 
   const projectName = exists(acquisitionFile?.project)
-    ? acquisitionFile?.project?.code + ' - ' + acquisitionFile?.project?.description
+    ? formatMinistryProject(acquisitionFile?.project?.code, acquisitionFile?.project?.description)
     : '';
 
   const productName = exists(acquisitionFile?.product)
