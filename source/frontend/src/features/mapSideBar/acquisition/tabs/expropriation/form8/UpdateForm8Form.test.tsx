@@ -81,19 +81,19 @@ describe('Form 8 UpdateForm component', () => {
     expect(queryByTestId(`paymentItems[0]`)).not.toBeInTheDocument();
   });
 
-  it('displays the expropriation payment values from api', async () => {
-    const mockFom8Api = mockGetExpropriationPaymentApi(1, 1);
-    const ownerMockOption = PayeeOption.createOwner(mockFom8Api.acquisitionOwner);
+  it('displays the Form8 values from api', async () => {
+    const mockExpropiationPaymentApi = mockGetExpropriationPaymentApi(1, 1);
+    const ownerMockOption = PayeeOption.createOwner(mockExpropiationPaymentApi.acquisitionOwner);
 
     const { getAdvancedPaymentServedDate, getDescriptionTextbox, getPayeeOptionSelect } =
       await setup({
         props: {
-          initialValues: Form8FormModel.fromApi(mockFom8Api),
+          initialValues: Form8FormModel.fromApi(mockExpropiationPaymentApi),
           payeeOptions: [ownerMockOption],
         },
       });
 
-    waitForEffects();
+    await waitForEffects();
     expect(getAdvancedPaymentServedDate()).toHaveValue('Jan 02, 2025');
     expect(getDescriptionTextbox()).toHaveValue('MY DESCRIPTION');
     expect(getPayeeOptionSelect()).toHaveDisplayValue('John Doe Jr. (Owner)');
