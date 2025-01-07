@@ -95,7 +95,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
     setActivityType(typeCode ?? null);
   };
 
-  const isEditMode = props.activity !== undefined;
+  const isEditMode = exists(props.activity);
 
   return (
     <ReactVisibilitySensor
@@ -109,7 +109,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
           <StyledFormWrapper>
             <StyledSummarySection>
               <LoadingBackdrop show={props.loading} />
-              {initialForm !== undefined && (
+              {exists(initialForm) && (
                 <Formik<PropertyActivityFormModel>
                   enableReinitialize
                   innerRef={formikRef}
