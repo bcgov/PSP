@@ -26,6 +26,7 @@ export const DetailAdministration: React.FunctionComponent<
 > = ({ nameSpace, disabled }: IDetailAdministrationProps) => {
   const { values } = useFormikContext<ApiGen_Concepts_Lease>();
   const responsibilityDate = getIn(values, withNameSpace(nameSpace, 'responsibilityEffectiveDate'));
+  const intendedUse = getIn(values, withNameSpace(nameSpace, 'description'));
   const note = getIn(values, withNameSpace(nameSpace, 'note'));
 
   const leasePurposes: ApiGen_Concepts_LeasePurpose[] = getIn(
@@ -112,7 +113,7 @@ export const DetailAdministration: React.FunctionComponent<
           labelWidth="3"
           tooltip="The purpose for which the license is issued, as per the agreement"
         >
-          <Input disabled={disabled} field={withNameSpace(nameSpace, 'description')} />
+          {intendedUse}
         </SectionField>
         <SectionField
           label="Primary arbitration city"

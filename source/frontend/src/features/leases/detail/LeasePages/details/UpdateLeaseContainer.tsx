@@ -48,15 +48,23 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
   // Not all consultations might be coming from the backend. Add the ones missing.
 
   const leaseId = lease?.id;
-  useDeepCompareEffect(() => {
-    const exec = async () => {
-      if (leaseId) {
+
+  const refreshCompleteLease = useCallback(
+    async (leaseId?: number) => {
+      if (isValidId(leaseId)) {
         const lease = await getCompleteLease();
         formikRef?.current?.resetForm({ values: LeaseFormModel.fromApi(lease) });
       }
+    },
+    [formikRef, getCompleteLease],
+  );
+
+  useDeepCompareEffect(() => {
+    const exec = async () => {
+      await refreshCompleteLease(leaseId);
     };
     exec();
-  }, [getCompleteLease, leaseId, formikRef, consultationTypes]);
+  }, [leaseId, consultationTypes, refreshCompleteLease]);
 
   const afterSubmit = useCallback(
     async (updatedLease?: ApiGen_Concepts_Lease) => {
@@ -91,6 +99,10 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
         message: e.response.data.error,
         okButtonText: 'Close',
         variant: 'error',
+        handleOk: async () => {
+          await refreshCompleteLease(leaseId);
+          setDisplayModal(false);
+        },
       });
       setDisplayModal(true);
     } else {
