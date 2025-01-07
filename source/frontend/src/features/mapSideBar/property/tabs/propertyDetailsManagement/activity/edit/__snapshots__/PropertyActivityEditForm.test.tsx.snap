@@ -1,0 +1,1262 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PropertyActivityEditForm component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c11.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c11.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c11.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c11.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c11.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c11.btn.btn-primary:hover,
+.c11.btn.btn-primary:active,
+.c11.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c11.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c11.btn.btn-secondary:hover,
+.c11.btn.btn-secondary:active,
+.c11.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c11.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c11.btn.btn-info:hover,
+.c11.btn.btn-info:active,
+.c11.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c11.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c11.btn.btn-light:hover,
+.c11.btn.btn-light:active,
+.c11.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c11.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c11.btn.btn-dark:hover,
+.c11.btn.btn-dark:active,
+.c11.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c11.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c11.btn.btn-danger:hover,
+.c11.btn.btn-danger:active,
+.c11.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c11.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c11.btn.btn-warning:hover,
+.c11.btn.btn-warning:active,
+.c11.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c11.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c11.btn.btn-link:hover,
+.c11.btn.btn-link:active,
+.c11.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c11.btn.btn-link:disabled,
+.c11.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c11.btn:disabled,
+.c11.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c11.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c11.Button--icon-only:focus {
+  outline: none;
+}
+
+.c11.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c8 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  fill: var(--surface-color-primary-button-default);
+  pointer-events: none;
+}
+
+.c8 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c8 .react-datepicker-wrapper {
+  max-width: 17rem;
+}
+
+.c9.c9.form-control.is-valid {
+  background-image: none;
+}
+
+.c9.c9.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c13.btn.btn-primary,
+.c13.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c13.btn.btn-primary:hover,
+.c13.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
+}
+
+.c14.c14 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.c1 {
+  font-size: 2rem;
+  font-weight: bold;
+  padding: 1rem;
+  background-color: #013366;
+  color: white;
+}
+
+.c0 {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  border-radius: 1rem;
+  text-align: left;
+  -webkit-transition: -webkit-transform 0.5s ease-in-out;
+  -webkit-transition: transform 0.5s ease-in-out;
+  transition: transform 0.5s ease-in-out;
+  position: relative;
+}
+
+.c10 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  background-image: none;
+  color: #9F9D9C;
+  border: #606060 solid 0.1rem;
+  cursor: pointer;
+}
+
+.c10.is-invalid {
+  border: #CE3E39 solid 0.1rem;
+}
+
+.c3 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c5 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2rem;
+}
+
+.c4 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c7.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c6 {
+  font-weight: bold;
+}
+
+.c15 {
+  z-index: 100;
+  width: 100%;
+  padding: 0.5rem 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  gap: 1rem;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0rem;
+  background-color: white;
+}
+
+.c15 .btn {
+  min-height: 3rem;
+}
+
+.c2 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c12 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c12 .btn {
+  margin: 0;
+}
+
+<div
+    class="c0 show"
+  >
+    <div
+      class="c1"
+    >
+      Edit Property Activity
+    </div>
+    <div
+      class=""
+    >
+      <div
+        class="c2"
+      >
+        <div
+          class="c3"
+        >
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c5"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  Activity Details
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Activity type:
+                  </label>
+                </div>
+                <div
+                  class="c7 required text-left col-7"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-activityTypeCode"
+                      name="activityTypeCode"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select type
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-1STNTNCONSULT"
+                        value="1STNTNCONSULT"
+                      >
+                        First Nations Consultation
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-APPLICPERMIT"
+                        value="APPLICPERMIT"
+                      >
+                        Applications/Permits
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-INCDNTISSUE"
+                        value="INCDNTISSUE"
+                      >
+                        Incident and Issues
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-INQUIRY"
+                        value="INQUIRY"
+                      >
+                        Inquiry
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-INVESTRPT"
+                        value="INVESTRPT"
+                      >
+                        Investigation/Report
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-LANDLORDIMPRV"
+                        value="LANDLORDIMPRV"
+                      >
+                        Landlord's Improvements
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-PROPERTYMTC"
+                        value="PROPERTYMTC"
+                      >
+                        Property Maintenance
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-TENANTIMPROV"
+                        value="TENANTIMPROV"
+                      >
+                        Tenant's Improvements
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Sub-type:
+                  </label>
+                </div>
+                <div
+                  class="c7 required text-left col-7"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-activitySubtypeCode"
+                      name="activitySubtypeCode"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select subtype
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Activity status:
+                  </label>
+                </div>
+                <div
+                  class="c7 required text-left col-7"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-activityStatusCode"
+                      name="activityStatusCode"
+                    >
+                      <option
+                        value=""
+                      >
+                        Select status
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-CANCELLED"
+                        value="CANCELLED"
+                      >
+                        Cancelled
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-COMPLETED"
+                        value="COMPLETED"
+                      >
+                        Completed
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-INPROGRESS"
+                        value="INPROGRESS"
+                      >
+                        In-progress
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-NOTSTARTED"
+                        value="NOTSTARTED"
+                      >
+                        Not started
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-ONHOLD"
+                        value="ONHOLD"
+                      >
+                        On Hold
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Requested added date:
+                  </label>
+                </div>
+                <div
+                  class="c7 required text-left col-7"
+                >
+                  <div
+                    class="c8 form-group"
+                  >
+                    <div
+                      class="react-datepicker-wrapper d-block"
+                    >
+                      <div
+                        class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                      >
+                        <svg
+                          class="react-datepicker__calendar-icon"
+                          viewBox="0 0 448 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                          />
+                        </svg>
+                        <input
+                          autocomplete="off"
+                          class="c9 form-control date-picker"
+                          id="datepicker-requestedDate"
+                          name="requestedDate"
+                          placeholder="MMM DD, YYYY"
+                          type="text"
+                          value="Oct 17, 2023"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Completion date:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-7"
+                >
+                  <div
+                    class="c8 form-group"
+                  >
+                    <div
+                      class="react-datepicker-wrapper d-block"
+                    >
+                      <div
+                        class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                      >
+                        <svg
+                          class="react-datepicker__calendar-icon"
+                          viewBox="0 0 448 512"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                          />
+                        </svg>
+                        <input
+                          autocomplete="off"
+                          class="c9 form-control date-picker"
+                          id="datepicker-completionDate"
+                          name="completionDate"
+                          placeholder="MMM DD, YYYY"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Description:
+                  </label>
+                </div>
+                <div
+                  class="c7 required text-left col-12"
+                >
+                  <div
+                    class="textarea input form-group"
+                  >
+                    <textarea
+                      class="form-control"
+                      id="input-description"
+                      name="description"
+                      title=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Ministry contacts:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-8"
+                >
+                  <div
+                    class="no-gutters pr-4 mr-2 row"
+                  >
+                    <div
+                      class="col-11 col"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <div
+                          class="row"
+                        >
+                          <div
+                            class="col"
+                          >
+                            <div
+                              class="c10"
+                            >
+                              Select from contacts
+                            </div>
+                            <div
+                              class="d-none input form-group"
+                            >
+                              <input
+                                class="form-control"
+                                id="input-ministryContacts[0].id"
+                                name="ministryContacts[0].id"
+                                placeholder="Select from Contacts"
+                                value=""
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="pl-0 col-auto"
+                          >
+                            <button
+                              class="c11 Button Button--icon-only px-2 btn btn-primary"
+                              title="Select Contact"
+                              type="button"
+                            >
+                              <div
+                                class="Button__icon"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  height="20"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 448 512"
+                                  width="20"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div />
+                    </div>
+                  </div>
+                  <button
+                    class="c11 Button btn btn-link"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      + Add contact
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Requestor:
+                    <span>
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-section-field-tooltip"
+                        id="section-field-tooltip"
+                      >
+                        <svg
+                          class="tooltip-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                    </span>
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-7"
+                >
+                  <div
+                    class="input form-group"
+                  >
+                    <input
+                      class="form-control"
+                      id="input-requestedSource"
+                      name="requestedSource"
+                      title=""
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Involved parties:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-8"
+                >
+                  <div
+                    class="no-gutters pr-4 mr-2 row"
+                  >
+                    <div
+                      class="col-11 col"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <div
+                          class="row"
+                        >
+                          <div
+                            class="col"
+                          >
+                            <div
+                              class="c10"
+                            >
+                              Select from contacts
+                            </div>
+                            <div
+                              class="d-none input form-group"
+                            >
+                              <input
+                                class="form-control"
+                                id="input-involvedParties[0].id"
+                                name="involvedParties[0].id"
+                                placeholder="Select from Contacts"
+                                value=""
+                              />
+                            </div>
+                          </div>
+                          <div
+                            class="pl-0 col-auto"
+                          >
+                            <button
+                              class="c11 Button Button--icon-only px-2 btn btn-primary"
+                              title="Select Contact"
+                              type="button"
+                            >
+                              <div
+                                class="Button__icon"
+                              >
+                                <svg
+                                  fill="currentColor"
+                                  height="20"
+                                  stroke="currentColor"
+                                  stroke-width="0"
+                                  viewBox="0 0 448 512"
+                                  width="20"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                                  />
+                                </svg>
+                              </div>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                      <div />
+                    </div>
+                  </div>
+                  <button
+                    class="c11 Button btn btn-link"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      + Add contact
+                    </div>
+                  </button>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Service provider:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-7"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <div
+                      class="row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <div
+                          class="c10"
+                        >
+                          Select from contacts
+                        </div>
+                        <div
+                          class="d-none input form-group"
+                        >
+                          <input
+                            class="form-control"
+                            id="input-serviceProvider.id"
+                            name="serviceProvider.id"
+                            placeholder="Select from Contacts"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                      <div
+                        class="pl-0 col-auto"
+                      >
+                        <button
+                          class="c11 Button Button--icon-only px-2 btn btn-primary"
+                          title="Select Contact"
+                          type="button"
+                        >
+                          <div
+                            class="Button__icon"
+                          >
+                            <svg
+                              fill="currentColor"
+                              height="20"
+                              stroke="currentColor"
+                              stroke-width="0"
+                              viewBox="0 0 448 512"
+                              width="20"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M436 160c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20V48c0-26.5-21.5-48-48-48H48C21.5 0 0 21.5 0 48v416c0 26.5 21.5 48 48 48h320c26.5 0 48-21.5 48-48v-48h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20c6.6 0 12-5.4 12-12v-40c0-6.6-5.4-12-12-12h-20v-64h20zm-228-32c35.3 0 64 28.7 64 64s-28.7 64-64 64-64-28.7-64-64 28.7-64 64-64zm112 236.8c0 10.6-10 19.2-22.4 19.2H118.4C106 384 96 375.4 96 364.8v-19.2c0-31.8 30.1-57.6 67.2-57.6h5c12.3 5.1 25.7 8 39.8 8s27.6-2.9 39.8-8h5c37.1 0 67.2 25.8 67.2 57.6v19.2z"
+                              />
+                            </svg>
+                          </div>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c4 form-section"
+          >
+            <h2
+              class="c5"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="col"
+                >
+                  <div
+                    class="c12 no-gutters row"
+                  >
+                    <div
+                      class="d-flex justify-content-start px-2 my-1 col-auto"
+                    >
+                      Invoices Total
+                    </div>
+                    <div
+                      class="d-flex justify-content-end my-1 col-auto"
+                    >
+                      <button
+                        class="c11 Button c13 c14 btn btn-primary"
+                        type="button"
+                      >
+                        <div
+                          class="Button__value"
+                        >
+                          <svg
+                            fill="currentColor"
+                            height="2rem"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 448 512"
+                            width="2rem"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M416 208H272V64c0-17.67-14.33-32-32-32h-32c-17.67 0-32 14.33-32 32v144H32c-17.67 0-32 14.33-32 32v32c0 17.67 14.33 32 32 32h144v144c0 17.67 14.33 32 32 32h32c17.67 0 32-14.33 32-32V304h144c17.67 0 32-14.33 32-32v-32c0-17.67-14.33-32-32-32z"
+                            />
+                          </svg>
+                           Add an Invoice
+                        </div>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Total (before tax):
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-7"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <div
+                      class="input-tooltip-wrapper"
+                    >
+                      <input
+                        class="form-control input-number"
+                        disabled=""
+                        id="input-pretaxAmount"
+                        inputmode="numeric"
+                        name="pretaxAmount"
+                        placeholder=""
+                        type="text"
+                        value="$0.00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    GST amount:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-7"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <div
+                      class="input-tooltip-wrapper"
+                    >
+                      <input
+                        class="form-control input-number"
+                        disabled=""
+                        id="input-gstAmount"
+                        inputmode="numeric"
+                        name="gstAmount"
+                        placeholder=""
+                        type="text"
+                        value="$0.00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    PST amount:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-7"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <div
+                      class="input-tooltip-wrapper"
+                    >
+                      <input
+                        class="form-control input-number"
+                        disabled=""
+                        id="input-pstAmount"
+                        inputmode="numeric"
+                        name="pstAmount"
+                        placeholder=""
+                        type="text"
+                        value="$0.00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Total amount:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col-7"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <div
+                      class="input-tooltip-wrapper"
+                    >
+                      <input
+                        class="form-control input-number"
+                        disabled=""
+                        id="input-totalAmount"
+                        inputmode="numeric"
+                        name="totalAmount"
+                        placeholder=""
+                        type="text"
+                        value="$0.00"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c15"
+          >
+            <button
+              class="c11 Button btn btn-secondary"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                Cancel
+              </div>
+            </button>
+            <button
+              class="c11 Button Button--disabled btn btn-primary"
+              disabled=""
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                Save
+              </div>
+            </button>
+          </div>
+          <div />
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

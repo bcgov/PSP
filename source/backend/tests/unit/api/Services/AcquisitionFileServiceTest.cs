@@ -211,6 +211,38 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_Success_IsContractor_AssignedToProject()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.Project = new PimsProject() { Id = 1, PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1, ProjectId = 1 } } };
+            acqFile.ProjectId = 1;
+            acqFile.ConcurrencyControlNumber = 1;
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var newGuid = Guid.NewGuid();
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            contractorUser.PersonId = 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+            var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
+            projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(acqFile.Project);
+
+            // Act
+            var result = service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+        }
+
+        [Fact]
         public void Add_ThrowIfNull()
         {
             // Arrange
@@ -926,6 +958,48 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
+
+            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+            agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+
+            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsCompensationRequisition>());
+
+            var updatedFile = EntityHelper.CreateAcquisitionFile();
+            updatedFile.ConcurrencyControlNumber = 1;
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.Update(updatedFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
+
+            // Assert
+            act.Should().Throw<UserOverrideException>();
+        }
+
+        [Fact]
+        public void Update_ProjectContractor_Removed()
+        {
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+
+            var project = new PimsProject() { Id = 1, PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1, ProjectId = 1 } } };
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ProjectId = 1;
+            acqFile.Project = project;
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            contractorUser.PersonId = 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(acqFile.RegionCode);
+
+            var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
+            projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(project);
 
             var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
             agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());

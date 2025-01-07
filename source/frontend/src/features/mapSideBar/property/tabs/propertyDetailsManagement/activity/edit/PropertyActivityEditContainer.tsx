@@ -112,7 +112,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
       result = await createActivity(propertyId, model);
     }
 
-    if (result !== undefined) {
+    if (exists(result)) {
       setStaleLastUpdatedBy(true);
       history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${result.id}`);
     }

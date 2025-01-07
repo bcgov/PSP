@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.AcquisitionFile;
@@ -23,6 +24,8 @@ namespace Pims.Api.Models.Concepts.ExpropriationPayment
         public long? ExpropriatingAuthorityId { get; set; }
 
         public OrganizationModel ExpropriatingAuthority { get; set; }
+
+        public DateOnly? AdvancedPaymentServedDate { get; set; }
 
         public string Description { get; set; }
 
