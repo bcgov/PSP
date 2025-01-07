@@ -13,6 +13,7 @@ using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
@@ -392,11 +393,14 @@ namespace Pims.Api.Services
             return result;
         }
 
-        private void ValidateDocumentUpload (DocumentUploadRequest uploadRequest)
+        private static void ValidateDocumentUpload(DocumentUploadRequest uploadRequest)
         {
             uploadRequest.ThrowInvalidFileSize();
 
-            DocumentService.IsValidDocumentExtension(uploadRequest.File.FileName);
+            if (!DocumentService.IsValidDocumentExtension(uploadRequest.File.FileName))
+            {
+                throw new BusinessRuleViolationException($"This file has an invalid file extension.");
+            }
         }
 
         private PimsDocument CreatePimsDocument(DocumentUploadRequest uploadRequest, string documentExternalId = null)
