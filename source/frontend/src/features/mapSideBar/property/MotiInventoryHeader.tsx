@@ -120,11 +120,11 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
           {hasLocation && (
-            <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom Map">
+            <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom into parcel">
               <StyledIconButton
                 variant="info"
                 disabled={!props.onZoom}
-                title="Zoom Map"
+                title="Zoom into parcel"
                 onClick={() => props?.onZoom && props?.onZoom(latitude, longitude)}
               >
                 <FaSearchPlus size={22} />
