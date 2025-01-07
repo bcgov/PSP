@@ -14,7 +14,6 @@ import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '
 
 import AcquisitionSummaryView, { IAcquisitionSummaryViewProps } from './AcquisitionSummaryView';
 import { mockProjects } from '@/mocks/projects.mock';
-import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 // mock auth library
 
