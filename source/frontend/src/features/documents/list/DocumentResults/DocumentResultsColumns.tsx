@@ -5,6 +5,7 @@ import styled from 'styled-components';
 
 import { StyledRemoveLinkButton } from '@/components/common/buttons';
 import { Button } from '@/components/common/buttons/Button';
+import ViewButton from '@/components/common/buttons/ViewButton';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderGenTypeCode } from '@/components/Table';
@@ -187,11 +188,12 @@ const renderActions = (
     return (
       <DocumentsActionsDiv>
         {hasClaim(Claims.DOCUMENT_VIEW) && canViewDocument && (
-          <Button
-            data-testid="document-view-button"
-            icon={<FaEye size={21} id={`document-view-${index}`} title="document view details" />}
+          <ViewButton
+            id={`document-view-${index}`}
+            data-testId="document-view-button"
+            icon={<FaEye size={21} title="document view details" />}
             onClick={() => original?.id && onViewDetails(DocumentRow.toApi(original))}
-          ></Button>
+          ></ViewButton>
         )}
 
         {hasClaim(Claims.DOCUMENT_DELETE) && canDeleteDocument && (

@@ -177,7 +177,7 @@ namespace Pims.Core.Api.Repositories.Rest
                         break;
                     default:
                         result.Status = ExternalResponseStatus.Error;
-                        result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                        result.Message = $"Unable to contact endpoint {response.RequestMessage?.RequestUri}. Http status {response.StatusCode}";
                         break;
                 }
                 return result;
@@ -235,7 +235,7 @@ namespace Pims.Core.Api.Repositories.Rest
                     break;
                 default:
                     result.Status = ExternalResponseStatus.Error;
-                    result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                    result.Message = $"Unable to contact endpoint {response.RequestMessage?.RequestUri}. Http status {response.StatusCode}";
                     break;
             }
 
@@ -350,7 +350,7 @@ namespace Pims.Core.Api.Repositories.Rest
                     break;
                 default:
                     result.Status = ExternalResponseStatus.Error;
-                    result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                    result.Message = $"Unable to contact endpoint {response.RequestMessage?.RequestUri}. Http status {response.StatusCode}";
                     break;
             }
 

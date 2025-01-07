@@ -29,7 +29,6 @@ export class CompensationRequisitionFormModel {
   agreementDateTime = '';
   expropriationNoticeServedDateTime = '';
   expropriationVestingDateTime = '';
-  advancedPaymentServedDate = '';
   generationDatetTime = '';
   specialInstruction = '';
   detailedRemarks = '';
