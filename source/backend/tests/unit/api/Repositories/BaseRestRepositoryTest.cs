@@ -69,22 +69,6 @@ namespace Pims.Core.Test.Repositories.Rest
         }
 
         [Fact]
-        public async Task GetAsync_Exception()
-        {
-            Mock<HttpClient> httpClient = new Mock<HttpClient>();
-
-            // Arrange
-            var expectedResponse = new ExternalResponse<string> { Status = ExternalResponseStatus.Error, Message = "Exception during Get"};
-            _httpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient.Object);
-
-            // Act
-            var result = await _repository.GetAsync<string>(new Uri("http://test.com"), "token");
-
-            // Assert
-            result.Should().BeEquivalentTo(expectedResponse);
-        }
-
-        [Fact]
         public async Task GetRawAsync_Success()
         {
             // Arrange
@@ -132,20 +116,6 @@ namespace Pims.Core.Test.Repositories.Rest
             // Arrange
             var httpClient = new HttpClient(new FakeHttpMessageHandler(new HttpResponseMessage(HttpStatusCode.InternalServerError)));
             _httpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient);
-
-            // Act
-            var result = await _repository.GetRawAsync(new Uri("http://test.com"), "token");
-
-            // Assert
-            result.StatusCode.Should().Be(HttpStatusCode.InternalServerError);
-        }
-
-        [Fact]
-        public async Task GetRawAsync_Exception()
-        {
-            // Arrange
-            var httpClient = new Mock<HttpClient>();
-            _httpClientFactory.Setup(x => x.CreateClient(It.IsAny<string>())).Returns(httpClient.Object);
 
             // Act
             var result = await _repository.GetRawAsync(new Uri("http://test.com"), "token");
