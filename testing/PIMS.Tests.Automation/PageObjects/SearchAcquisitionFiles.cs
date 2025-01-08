@@ -9,7 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchAcquisitionButton = By.XPath("//a[contains(text(),'Manage Acquisition Files')]");
 
         //Acquisition File Search Filters Elements
-        private readonly By searchAcquisitionFileTitle = By.XPath("//h3[contains(text(),'Acquisition Files')]");
+        private readonly By searchAcquisitionFileTitle = By.XPath("//h1/span[contains(text(),'Acquisition Files')]");
 
         private readonly By searchAcquisitionFileSearchBySelect = By.Id("input-searchBy");
         private readonly By searchAcquisitionFileSearchByAddressInput = By.Id("input-address");

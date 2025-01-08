@@ -1,5 +1,4 @@
-﻿using FluentAssertions.Equivalency.Steps;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -10,10 +9,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
 
         //Documents Tab List Header
-        private readonly By documentsFileTitle = By.XPath("//div[contains(text(),'File Documents')]");
-        private readonly By documentsTitle = By.XPath("//div[contains(text(),'Documents')]");
-        private readonly By addFileDocumentBttn = By.XPath("//div[contains(text(),'File Documents')]/following-sibling::div/button");
-        private readonly By addDocumentBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
+        private readonly By documentsFileTitle = By.XPath("//span[contains(text(),'File Documents')]");
+        private readonly By documentsTitle = By.XPath("//span[contains(text(),'Documents')]");
+        private readonly By addDocumentBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
 
         //Upload Documents Dialog General Elements
         private readonly By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
@@ -57,7 +55,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentDistrictRoadRegisterTypeHighwayDistrictInput = By.CssSelector("input[data-testid='metadata-input-HIGHWAY_DISTRICT']");
 
         //Upload Field Notes Type Fields
-        private readonly By documentFieldNotesTypeDistrictLotLabel = By.XPath("//label[contains(text(),'District lot')]");
+        private readonly By documentFieldNotesTypeDistrictLotLabel = By.XPath("//input[@data-testid='metadata-input-DISTRICT_LOT_NUMBER']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'District lot')]");
         private readonly By documentFieldNotesTypeDistrictLotInput = By.CssSelector("input[data-testid='metadata-input-DISTRICT_LOT_NUMBER']");
         private readonly By documentFieldNotesTypeYearLabel = By.XPath("//label[contains(text(),'Field book #/Year')]");
         private readonly By documentFieldNotesTypeYearInput = By.CssSelector("input[data-testid='metadata-input-FIELD_BOOK_NUMBER_YEAR']");
@@ -292,7 +290,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentTableResults1stDocumentTypeContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[1]");
         private readonly By documentTableResults1stDocumentNameContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[2]/div/button/div");
         private readonly By documentTableResults1stDocumentStatusContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[4]");
-        private readonly By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-view-button']");
+        private readonly By documentTableRefreshResultsButton = By.CssSelector("button[data-testid='refresh-button']");
+        private readonly By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-view-button']");
         private readonly By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-delete-button']");
 
         //Documents Tab Pagination
@@ -328,18 +327,10 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(documentPaginationPrevPageLink);
         }
 
-        public void AddNewDocumentButton(string fileType)
+        public void AddNewDocumentButton()
         {
-            if (fileType.Equals("Lease") || fileType.Equals("CDOGS Templates") || fileType.Equals("Project") || fileType.Equals("Property Management"))
-            {
-                WaitUntilClickable(addDocumentBttn);
-                FocusAndClick(addDocumentBttn);
-            }
-            else
-            {
-                WaitUntilClickable(addFileDocumentBttn);
-                FocusAndClick(addFileDocumentBttn);
-            } 
+            WaitUntilClickable(addDocumentBttn);
+            FocusAndClick(addDocumentBttn); 
         }
 
         public void VerifyDocumentFields(string documentType)
@@ -421,19 +412,13 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void VerifyDocumentsListView(string fileType)
+        public void VerifyDocumentsListView()
         {
             WaitUntilVisible(documentFilterTypeSelect);
-            if (fileType.Equals("CDOGS Templates") || fileType.Equals("Project") || fileType.Equals("Property Management"))
-            {
-                AssertTrueIsDisplayed(documentsTitle);
-                AssertTrueIsDisplayed(addDocumentBttn);
-            }
-            else
-            {
-                AssertTrueIsDisplayed(documentsFileTitle);
-                AssertTrueIsDisplayed(addFileDocumentBttn);
-            }
+            
+            AssertTrueIsDisplayed(documentsTitle);
+            AssertTrueIsDisplayed(addDocumentBttn);
+            
             AssertTrueIsDisplayed(documentFilterTypeSelect);
             AssertTrueIsDisplayed(documentFilterStatusSelect);
             AssertTrueIsDisplayed(documentFilterNameInput);
@@ -611,9 +596,15 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentTableResults1stViewBttn).Click();
         }
 
+        public void WaitUploadDocument()
+        {
+            Wait(60000);
+        }
+
         public void ViewUploadedDocument(int index)
         {
-            Wait();
+            webDriver.FindElement(documentTableRefreshResultsButton).Click();
+
             WaitUntilClickable(documentTableResults1stViewBttn);
 
             if (index > 9)

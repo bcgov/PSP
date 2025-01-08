@@ -901,7 +901,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.NavigateCompensationTab();
 
             //Verify initial Compensation Tab List View
-            h120.VerifyCompensationInitTabView();
+            h120.VerifyCompensationInitTabView("Lease");
 
             //Update Allowable Compensation Amount
             h120.UpdateTotalAllowableCompensation(lease.LeaseCompensationTotalAllowableAmount);
@@ -1321,7 +1321,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 {
                     ContactType = ExcelDataContext.ReadData(i, "ContactType"),
                     Summary = ExcelDataContext.ReadData(i, "Summary"),
-                    PrimaryContact = ExcelDataContext.ReadData(i, "PrimaryContact"),
+                    PrimaryContact = ExcelDataContext.ReadData(i, "LeaseTenantsPrimaryContact"),
                     StakeholderType = ExcelDataContext.ReadData(i, "TenantType")
                 };
 

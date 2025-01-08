@@ -273,10 +273,10 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string purpose in lease.LeasePurpose)
                 {
-                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();
-                    FocusAndClick(licenseDetailsPurposeMultiselector);
+                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();                 
 
-                    Wait(5000);
+                    Wait();
+                    FocusAndClick(licenseDetailsPurposeMultiselector);
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
