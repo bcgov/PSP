@@ -179,6 +179,7 @@ export class DocumentUploadFormData {
 
     return {
       documentTypeId: documentType?.id,
+      documentId: null,
       documentStatusCode: this.documentStatusCode,
       file: this.file,
       documentMetadata: metadata,
