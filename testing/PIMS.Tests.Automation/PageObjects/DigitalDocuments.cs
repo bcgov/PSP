@@ -290,7 +290,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentTableResults1stDocumentTypeContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[1]");
         private readonly By documentTableResults1stDocumentNameContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[2]/div/button/div");
         private readonly By documentTableResults1stDocumentStatusContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[4]");
-        private readonly By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-view-button']");
+        private readonly By documentTableRefreshResultsButton = By.CssSelector("button[data-testid='refresh-button']");
+        private readonly By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-view-button']");
         private readonly By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-delete-button']");
 
         //Documents Tab Pagination
@@ -595,9 +596,15 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentTableResults1stViewBttn).Click();
         }
 
+        public void WaitUploadDocument()
+        {
+            Wait(60000);
+        }
+
         public void ViewUploadedDocument(int index)
         {
-            Wait();
+            webDriver.FindElement(documentTableRefreshResultsButton).Click();
+
             WaitUntilClickable(documentTableResults1stViewBttn);
 
             if (index > 9)

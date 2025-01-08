@@ -166,6 +166,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Order Documents by Document Type
             digitalDocumentsTab.OrderByDocumentFileType();
+            digitalDocumentsTab.WaitUploadDocument();
 
             //Insert Document Details to previously uploaded documents
             for (var l = 0; l < digitalDocumentList.Count; l++)

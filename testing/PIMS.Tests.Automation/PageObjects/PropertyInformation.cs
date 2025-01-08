@@ -139,8 +139,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsGeneralLocationContent = By.XPath("//label[contains(text(),'General location')]/parent::div/following-sibling::div");
 
         private readonly By propertyDetailsAttributesTitle = By.XPath("//div[contains(text(),'Property Attributes')]");
-        private readonly By propertyDetailsAttrLegalDescLabel = By.XPath("//label[contains(text(),'Legal description')]");
-        private readonly By propertyDetailsAttrLegalDescContent = By.XPath("//label[contains(text(),'Legal description')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrLegalDescLabel = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Legal description')]");
+        private readonly By propertyDetailsAttrLegalDescContent = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Legal description')]/parent::div/following-sibling::div");
         private readonly By propertyDetailsAttrRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
         private readonly By propertyDetailsAttrRegionDiv = By.XPath("//label[contains(text(),'MOTI region')]/parent::div/following-sibling::div");
         private readonly By propertyDetailsAttrHighwayLabel = By.XPath("//label[contains(text(),'Highways district')]");
