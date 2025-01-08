@@ -92,7 +92,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(searchBySelect, "PID");
 
             WaitUntilVisible(searchByPIDInput);
-            if (webDriver.FindElement(searchByPIDInput).GetAttribute("value") != "")
+            if (webDriver.FindElement(searchByPIDInput).GetDomProperty("value") != "")
             {
                 ClearInput(searchByPIDInput);
             }
@@ -107,7 +107,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(searchBySelect, "PIN");
 
             WaitUntilVisible(searchByPINInput);
-            if (webDriver.FindElement(searchByPINInput).GetAttribute("value") != "")
+            if (webDriver.FindElement(searchByPINInput).GetDomProperty("value") != "")
             {
                 ClearInput(searchByPINInput);
             }
@@ -122,7 +122,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(searchBySelect, "Address");
 
             WaitUntilVisible(searchByAddressInput);
-            if (webDriver.FindElement(searchByAddressInput).GetAttribute("value") != "")
+            if (webDriver.FindElement(searchByAddressInput).GetDomProperty("value") != "")
             {
                 ClearInput(searchByAddressInput);
             }
@@ -138,7 +138,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(searchBySelect, "Plan #");
 
             WaitUntilVisible(searchByPlanInput);
-            if (webDriver.FindElement(searchByPlanInput).GetAttribute("value") != "")
+            if (webDriver.FindElement(searchByPlanInput).GetDomProperty("value") != "")
             {
                 ClearInput(searchByPlanInput);
             }
@@ -153,7 +153,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(searchBySelect, "Legal Description");
 
             WaitUntilVisible(searchByLegalDescriptionInput);
-            if (webDriver.FindElement(searchByLegalDescriptionInput).GetAttribute("value") != "")
+            if (webDriver.FindElement(searchByLegalDescriptionInput).GetDomProperty("value") != "")
             {
                 ClearInput(searchByLegalDescriptionInput);
             }

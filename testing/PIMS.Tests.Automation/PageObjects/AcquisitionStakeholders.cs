@@ -7,13 +7,12 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private By stakeholderLinkTab = By.XPath("//a[contains(text(),'Stakeholders')]");
 
-        private By stakeholderInterestsSubtitle = By.XPath("//h2/div/div/div/div[contains(text(),'Interests')]");
+        private By stakeholderInterestsSubtitle = By.XPath("//h2/div/div[contains(text(),'Interests')]");
         private By stakeholderInterestsEditBttn = By.CssSelector("button[title = 'Edit Interests']");
         private By stakeholderInterestInitP1 = By.XPath("//p[contains(text(),'There are no interest holders associated with this file.')]");
         private By stakeholderInterestInitP2 = By.XPath("//p[contains(text(),'To add an interest holder, click the edit button.')]");
 
-        private By stakeholderNonInterestsSubtitle = By.XPath("//h2/div/div/div/div[contains(text(),'Non-interest Payees')]");
-        private By stakeholderNonInterestsEditBttn = By.CssSelector("button[title = 'Edit Non-interest payees']");
+        private By stakeholderNonInterestsSubtitle = By.XPath("//h2/div/div[contains(text(),'Non-interest Payees')]");
         private By stakeholderNonInterestInitP1 = By.XPath("//p[contains(text(),'There are no non-interest payees associated with this file.')]");
         private By stakeholderNonInterestInitP2 = By.XPath("//p[contains(text(),'To add a non-interest payee, click the edit button.')]");
 
@@ -25,11 +24,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private By stakeholderNonInterestsEditP2 = By.XPath("//i[contains(text(),'No Non-interest payees to display')]");
         private By stakeholderInterestAddNonInterestHolderLink = By.XPath("//button/div[contains(text(),'Add a Non-interest payee')]");
 
-        private By stakeholderInterestTable = By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']");
-        private By stakeholderInterestTotalCount = By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']");
+        private By stakeholderInterestTable = By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']");
+        private By stakeholderInterestTotalCount = By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']");
 
-        private By stakeholderNonInterestTable = By.XPath("//div[contains(text(),'Non-interest Payees')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']");
-        private By stakeholderNonInterestTotalCount = By.XPath("//div[contains(text(),'Non-interest Payees')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']");
+        private By stakeholderNonInterestTable = By.XPath("//div[contains(text(),'Non-interest Payees')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']");
+        private By stakeholderNonInterestTotalCount = By.XPath("//div[contains(text(),'Non-interest Payees')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']");
 
         //Acquisition File Confirmation Modal Elements
         private By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -55,12 +54,6 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(stakeholderInterestsEditBttn).Click();
         }
 
-        public void EditStakeholderNonInterestsButton()
-        {
-            WaitUntilClickable(stakeholderNonInterestsEditBttn);
-            webDriver.FindElement(stakeholderNonInterestsEditBttn).Click();
-        }
-
         public void AddInterestStakeholderButton()
         {
             WaitUntilSpinnerDisappear();
@@ -78,6 +71,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Save");
 
+            Wait(4000);
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
         }
 
@@ -86,16 +80,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             ButtonElement("Cancel");
 
-            //if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
-            //{
-            //    Assert.Equal("Confirm changes", sharedModals.ModalHeader());
-            //    Assert.Equal("If you cancel now, this form will not be saved.", sharedModals.ConfirmationModalText1());
-            //    Assert.Equal("Are you sure you want to Cancel?", sharedModals.ConfirmationModalText2());
-            //    sharedModals.ModalClickOKBttn();
-            //}
             sharedModals.CancelActionModal();
 
-            AssertTrueIsDisplayed(stakeholderNonInterestsEditBttn);
+            AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
         }
 
         public void CreateInterestsStakeholder(AcquisitionStakeholder interest, int index)
@@ -152,7 +139,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             var lastNonInterestHoldersIndex = webDriver.FindElements(stakeholderNonInterestTotalCount).Count -1;
 
-            EditStakeholderNonInterestsButton();
+            EditStakeholderInterestsButton();
             FocusAndClick(By.XPath("//input[@id='input-nonInterestPayees."+ lastNonInterestHoldersIndex +".contact.id']/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/button[@title='Remove Interest']"));
         }
 
@@ -160,13 +147,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            AssertTrueIsDisplayed(stakeholderInterestsSubtitle);
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
+            AssertTrueIsDisplayed(stakeholderInterestsSubtitle);
             AssertTrueIsDisplayed(stakeholderInterestInitP1);
             AssertTrueIsDisplayed(stakeholderInterestInitP2);
 
             AssertTrueIsDisplayed(stakeholderNonInterestsSubtitle);
-            AssertTrueIsDisplayed(stakeholderNonInterestsEditBttn);
             AssertTrueIsDisplayed(stakeholderNonInterestInitP1);
             AssertTrueIsDisplayed(stakeholderNonInterestInitP2);
         }
@@ -193,21 +179,21 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             var lastStakeholder = webDriver.FindElements(stakeholderInterestTotalCount).Count();
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[1]/a"), interest.InterestHolder);
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[2]"), interest.PrimaryContact);
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[3]"), interest.InterestType);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[1]/a"), interest.InterestHolder);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[2]"), interest.PrimaryContact);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[3]"), interest.InterestType);
         }
 
         public void VerifyNonInterestStakeholderViewForm(AcquisitionStakeholder interest)
         {
             Wait();
             AssertTrueIsDisplayed(stakeholderNonInterestsSubtitle);
-            AssertTrueIsDisplayed(stakeholderNonInterestsEditBttn);
+            AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
             AssertTrueIsDisplayed(stakeholderNonInterestTable);
 
             var lastStakeholder = webDriver.FindElements(stakeholderNonInterestTotalCount).Count();
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Non-interest Payee')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[1]/a"), interest.PayeeName);
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Non-interest Payee')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[2]"), interest.StakeholderType);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Non-interest Payee')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[1]/a"), interest.PayeeName);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Non-interest Payee')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[2]"), interest.StakeholderType);
         }
 
         public int TotalInterestHolders()

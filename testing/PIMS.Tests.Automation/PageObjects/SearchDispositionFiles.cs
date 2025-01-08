@@ -9,7 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searcDispositionButton = By.XPath("//a[contains(text(),'Manage Disposition Files')]");
 
         //Disposition File Search Filters Elements
-        private By searchAcquisitionFileTitle = By.XPath("//h3[contains(text(),'Disposition Files')]");
+        private By searchAcquisitionFileTitle = By.XPath("//h1/span[contains(text(),'Disposition Files')]");
 
         private By searchDispositionFileSearchBySelect = By.Id("input-searchBy");
         private By searchDispositionFileSearchByAddressInput = By.Id("input-address");

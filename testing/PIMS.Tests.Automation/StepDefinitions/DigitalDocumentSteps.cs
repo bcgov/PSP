@@ -38,7 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.NavigateDocumentsTab();
 
             //Verify Initial List View
-            digitalDocumentsTab.VerifyDocumentsListView(fileType);
+            digitalDocumentsTab.VerifyDocumentsListView();
 
             //Getting Digital Document Details
             PopulateDigitalDocumentIndex(rowNumber);
@@ -53,7 +53,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < uploadTurns; i++)
             {
                 //Add a New Document Button
-                digitalDocumentsTab.AddNewDocumentButton(fileType);
+                digitalDocumentsTab.AddNewDocumentButton();
 
                 //Verify and create a new Document
                 digitalDocumentsTab.VerifyInitUploadDocumentForm();
@@ -116,7 +116,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void DocumentActivityCreate(int rowNumber)
         {
             //Verify Initial List View
-            digitalDocumentsTab.VerifyDocumentsListView("Property Management");
+            digitalDocumentsTab.VerifyDocumentsListView();
 
             //Getting Digital Document Details
             PopulateDigitalDocumentIndex(rowNumber);
@@ -131,7 +131,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (var i = 0; i < uploadTurns; i++)
             {
                 //Add a New Document Button
-                digitalDocumentsTab.AddNewDocumentButton("Property Management");
+                digitalDocumentsTab.AddNewDocumentButton();
 
                 //Verify and create a new Document
                 digitalDocumentsTab.VerifyInitUploadDocumentForm();
@@ -166,6 +166,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Order Documents by Document Type
             digitalDocumentsTab.OrderByDocumentFileType();
+            digitalDocumentsTab.WaitUploadDocument();
 
             //Insert Document Details to previously uploaded documents
             for (var l = 0; l < digitalDocumentList.Count; l++)
@@ -202,7 +203,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateDigitalDocumentIndex(rowNumber);
 
             //Add new digital document
-            digitalDocumentsTab.AddNewDocumentButton(fileType);
+            digitalDocumentsTab.AddNewDocumentButton();
             //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
             Random random = new Random();
