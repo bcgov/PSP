@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.IO;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Models.Concepts.Document;
 

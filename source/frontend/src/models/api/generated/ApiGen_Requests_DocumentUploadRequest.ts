@@ -8,6 +8,7 @@ import { ApiGen_Concepts_DocumentMetadataUpdate } from './ApiGen_Concepts_Docume
 export interface ApiGen_Requests_DocumentUploadRequest {
   documentTypeMayanId: number;
   documentTypeId: number;
+  documentId: number;
   documentStatusCode: string | null;
   file: File;
   documentMetadata: ApiGen_Concepts_DocumentMetadataUpdate[] | null;

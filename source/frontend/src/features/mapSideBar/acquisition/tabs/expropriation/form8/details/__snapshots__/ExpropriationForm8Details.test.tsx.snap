@@ -440,6 +440,25 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
             <label
               class="c6"
             >
+              Advanced payment served date:
+            </label>
+          </div>
+          <div
+            class="c7 text-left col"
+            data-testid="form8[0].advanced-payment-srv-date"
+          >
+            Jan 2, 2025
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c6"
+            >
               Description:
             </label>
           </div>

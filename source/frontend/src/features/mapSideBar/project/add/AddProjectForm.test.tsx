@@ -11,7 +11,15 @@ import { getUserMock } from '@/mocks/user.mock';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { act, fakeText, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  fakeText,
+  fillInput,
+  prettyDOM,
+  render,
+  RenderOptions,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { ProjectForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
@@ -208,5 +216,39 @@ describe('AddProjectForm component', () => {
 
     const productCodeTextBox = getProductCodeTextBox(0);
     expect(productCodeTextBox).toBeVisible();
+  });
+
+  it('should add a project management team member', async () => {
+    const { getByText, container } = setup({
+      initialValues,
+    });
+
+    const addTeamMemberButton = getByText('+ Add another management team member');
+    await act(async () => {
+      userEvent.click(addTeamMemberButton);
+    });
+
+    const teamMemberNameInput = container.querySelector(
+      `input[name="projectTeam.0.contact.id"]`,
+    ) as HTMLInputElement;
+    expect(teamMemberNameInput).toBeVisible();
+  });
+
+  it('displays a warning when removing a row', async () => {
+    const { getByText, getByTestId, container } = setup({
+      initialValues,
+    });
+
+    const addTeamMemberButton = getByText('+ Add another management team member');
+    await act(async () => {
+      userEvent.click(addTeamMemberButton);
+    });
+
+    const removeButton = getByTestId('team.0.remove-button');
+    await act(async () => {
+      userEvent.click(removeButton);
+    });
+
+    expect(getByText('Remove Team Member')).toBeVisible();
   });
 });

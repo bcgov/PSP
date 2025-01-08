@@ -6,7 +6,7 @@ import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/Api
 import { ApiGen_Concepts_ExpropriationPaymentItem } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPaymentItem';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { booleanToString, stringToBoolean, toTypeCodeNullable } from '@/utils/formUtils';
-import { isNullOrWhitespace } from '@/utils/utils';
+import { isNullOrWhitespace, isValidIsoDateTime } from '@/utils/utils';
 
 import { ExpropriationAuthorityFormModel } from '../../models';
 
@@ -17,6 +17,7 @@ export class Form8FormModel {
   expropriatingAuthorityId: number | null = null;
   expropriationAuthority: ExpropriationAuthorityFormModel | null =
     new ExpropriationAuthorityFormModel();
+  advancedPaymentServedDate: string | null;
   description: string | null = '';
   paymentItems: Form8PaymentItemModel[] = [];
   isDisabled: boolean | null = false;
@@ -38,6 +39,9 @@ export class Form8FormModel {
       interestHolder: null,
       expropriatingAuthorityId: this.expropriationAuthority?.contact?.organizationId ?? null,
       expropriatingAuthority: null,
+      advancedPaymentServedDate: isValidIsoDateTime(this.advancedPaymentServedDate)
+        ? this.advancedPaymentServedDate
+        : null,
       description: this.description,
       isDisabled: this.isDisabled,
       paymentItems: this.paymentItems
@@ -80,6 +84,7 @@ export class Form8FormModel {
     newForm.expropriatingAuthorityId = model.expropriatingAuthorityId;
     newForm.rowVersion = model.rowVersion;
     newForm.isDisabled = model.isDisabled;
+    newForm.advancedPaymentServedDate = model.advancedPaymentServedDate;
     newForm.description = model.description;
     newForm.paymentItems = model.paymentItems?.map(x => Form8PaymentItemModel.fromApi(x)) ?? [];
     newForm.payeeKey = getPayeeKey(model);
