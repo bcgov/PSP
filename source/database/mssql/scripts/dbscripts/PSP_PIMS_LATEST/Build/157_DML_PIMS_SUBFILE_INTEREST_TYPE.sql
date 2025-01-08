@@ -4,6 +4,7 @@ Populate the PIMS_SUBFILE_INTEREST_TYPE table.
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
 Doug Filteau  2024-Oct-16  Initial version
+Doug Filteau  2024-Dec-19  Added MOBILE and LSHOLDR, changed TENANT.
 ----------------------------------------------------------------------------- */
 
 DELETE FROM PIMS_SUBFILE_INTEREST_TYPE
@@ -11,16 +12,18 @@ GO
 
 INSERT INTO PIMS_SUBFILE_INTEREST_TYPE (SUBFILE_INTEREST_TYPE_CODE, DESCRIPTION)
 VALUES
-  (N'TENANT',     'Tenant (Monthly) Leaseholder'),
-  (N'SUBTENANT',  'Sub-Tenant / Lease'),
-  (N'LICOCCUPY',  'License of Occupation'),
-  (N'STRATALOT',  'Strata Lot Owner'),
-  (N'EASEMENT',   'Easement Holder'),
-  (N'SRWUTILITY', 'SRW / Utility Holder'),
-  (N'MORTGAGE',   'Mortgage Interest'),
-  (N'XINGPERMIT', 'Crossing Permit'),
-  (N'LIEN',       'Lis Pendens / Lien'),
-  (N'OTHER',      'Other');
+  (N'TENANT',     N'Tenant (Monthly)'),
+  (N'LSHOLDR',    N'Leaseholder'),
+  (N'SUBTENANT',  N'Sub-Tenant / Lease'),
+  (N'LICOCCUPY',  N'License of Occupation'),
+  (N'STRATALOT',  N'Strata Lot Owner'),
+  (N'EASEMENT',   N'Easement Holder'),
+  (N'SRWUTILITY', N'SRW / Utility Holder'),
+  (N'MORTGAGE',   N'Mortgage Interest'),
+  (N'XINGPERMIT', N'Crossing Permit'),
+  (N'LIEN',       N'Lis Pendens / Lien'),
+  (N'MOBILE',     N'Mobile Home Owner'),
+  (N'OTHER',      N'Other');
 GO
 
 -- --------------------------------------------------------------
