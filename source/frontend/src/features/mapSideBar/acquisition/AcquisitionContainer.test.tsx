@@ -4,15 +4,10 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import {
-  mockAcquisitionFileOwnersResponse,
-  mockAcquisitionFileResponse,
-} from '@/mocks/acquisitionFiles.mock';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { mockNotesResponse } from '@/mocks/noteResponses.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -20,6 +15,7 @@ import {
   render,
   RenderOptions,
   screen,
+  userEvent,
   waitFor,
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
@@ -242,5 +238,32 @@ describe('AcquisitionContainer component', () => {
     await act(async () => viewProps.onSave());
 
     await waitFor(async () => viewProps.formikRef.current?.submitCount === 1);
+  });
+
+  it('triggers the popup for business rule violation', async () => {
+    setup(undefined, { claims: [] });
+
+    const spinner = screen.getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    // simulate 400 error coming back from API
+    mockAxios.onPut().reply(400, {
+      error: 'This property cannot be deleted because it is part of a subdivision or consolidation',
+      type: 'BusinessRuleViolationException',
+    });
+
+    await act(async () => {
+      await viewProps.onUpdateProperties(mockAcquisitionFileResponse());
+    });
+
+    expect(
+      await screen.findByText(
+        /This property cannot be deleted because it is part of a subdivision or consolidation/i,
+      ),
+    ).toBeVisible();
+
+    const button = await screen.findByTitle('ok-modal');
+    expect(button).toBeVisible();
+    await act(async () => userEvent.click(button));
   });
 });

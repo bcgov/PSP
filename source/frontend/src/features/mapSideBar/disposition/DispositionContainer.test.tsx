@@ -4,14 +4,12 @@ import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   mockDispositionFilePropertyResponse,
   mockDispositionFileResponse,
 } from '@/mocks/dispositionFiles.mock';
 import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -19,6 +17,7 @@ import {
   render,
   RenderOptions,
   screen,
+  userEvent,
   waitFor,
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
@@ -26,7 +25,6 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import DispositionContainer, { IDispositionContainerProps } from './DispositionContainer';
 import { IDispositionViewProps } from './DispositionView';
-import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -271,5 +269,32 @@ describe('DispositionContainer component', () => {
     await act(async () => viewProps.onSave());
 
     await waitFor(async () => viewProps.formikRef.current?.submitCount === 1);
+  });
+
+  it('triggers the popup for business rule violation', async () => {
+    setup(undefined, { claims: [] });
+
+    const spinner = screen.getByTestId('filter-backdrop-loading');
+    await waitForElementToBeRemoved(spinner);
+
+    // simulate 400 error coming back from API
+    mockAxios.onPut(new RegExp('dispositionfiles/1/properties')).reply(400, {
+      error: 'This property cannot be deleted because it is part of a subdivision or consolidation',
+      type: 'BusinessRuleViolationException',
+    });
+
+    await act(async () => {
+      await viewProps.onUpdateProperties(mockDispositionFileResponse());
+    });
+
+    expect(
+      await screen.findByText(
+        /This property cannot be deleted because it is part of a subdivision or consolidation/i,
+      ),
+    ).toBeVisible();
+
+    const button = await screen.findByTitle('ok-modal');
+    expect(button).toBeVisible();
+    await act(async () => userEvent.click(button));
   });
 });
