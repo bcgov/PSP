@@ -1660,32 +1660,39 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.ConcurrencyControlNumber = 1;
-
             var property = EntityHelper.CreateProperty(12345);
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new() { Internal_Id = 1, Property = property } };
+
+            var updatedAcqFile = EntityHelper.CreateAcquisitionFile(1);
+            updatedAcqFile.PimsPropertyAcquisitionFiles.Clear();
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = property } });
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Throws<KeyNotFoundException>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Returns(property);
+            propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(3);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
+            var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
+            propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
+
             // Act
-            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
+            service.UpdateProperties(updatedAcqFile, new List<UserOverrideCode>());
 
             // Assert
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
+            propertyRepository.Verify(x => x.Delete(property), Times.Never);
         }
 
         [Fact]
@@ -1694,39 +1701,91 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.ConcurrencyControlNumber = 1;
+            var deletedProperty = EntityHelper.CreateProperty(12345);
+            deletedProperty.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>();
+            deletedProperty.PimsPropertyLeases = new List<PimsPropertyLease>();
+            deletedProperty.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() };
 
-            var property = EntityHelper.CreateProperty(12345);
-            property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>();
-            property.PimsPropertyLeases = new List<PimsPropertyLease>();
-            property.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() };
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new() { Internal_Id = 1, Property = deletedProperty } };
+
+            var updatedAcqFile = EntityHelper.CreateAcquisitionFile(1);
+            updatedAcqFile.PimsPropertyAcquisitionFiles.Clear();
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
-            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = property } });
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { Property = deletedProperty } });
             filePropertyRepository.Setup(x => x.GetAcquisitionFilePropertyRelatedCount(It.IsAny<long>())).Returns(1);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
-            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), false)).Throws<KeyNotFoundException>();
-            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(property);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(deletedProperty);
+            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(deletedProperty);
             propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
+            var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
+            propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
+
             // Act
-            service.UpdateProperties(acqFile, new List<UserOverrideCode>());
+            service.UpdateProperties(updatedAcqFile, new List<UserOverrideCode>());
 
             // Assert
             filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
-            propertyRepository.Verify(x => x.Delete(It.IsAny<PimsProperty>()), Times.Once);
+            propertyRepository.Verify(x => x.Delete(deletedProperty), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateProperties_RemoveProperty_Fails_PropertyIsSubdividedOrConsolidated()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var deletedProperty = EntityHelper.CreateProperty(12345);
+            deletedProperty.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>();
+            deletedProperty.PimsPropertyLeases = new List<PimsPropertyLease>();
+            deletedProperty.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() };
+
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new() { Internal_Id = 1, Property = deletedProperty } };
+
+            var updatedAcqFile = EntityHelper.CreateAcquisitionFile(1);
+            updatedAcqFile.PimsPropertyAcquisitionFiles.Clear();
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+            filePropertyRepository.Setup(x => x.GetAcquisitionFilePropertyRelatedCount(It.IsAny<long>())).Returns(1);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(deletedProperty);
+            propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(deletedProperty);
+            propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
+            propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>() { new() { Internal_Id = 1, SourcePropertyId = deletedProperty.Internal_Id, SourceProperty = deletedProperty } });
+
+            // Act
+            Action act = () => service.UpdateProperties(updatedAcqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("This property cannot be deleted because it is part of a subdivision or consolidation");
         }
 
         [Fact]
@@ -1753,7 +1812,7 @@ namespace Pims.Api.Test.Services
         public void UpdateProperties_NotAuthorized_Contractor()
         {
             // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
@@ -1768,11 +1827,14 @@ namespace Pims.Api.Test.Services
             var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Acquisition File's team");
         }
 
         [Fact]
@@ -1801,11 +1863,14 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>();
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
         }
 
         [Fact]
@@ -1834,11 +1899,14 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>();
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
         }
 
         [Fact]
@@ -1865,8 +1933,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
