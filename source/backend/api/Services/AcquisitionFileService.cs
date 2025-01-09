@@ -39,6 +39,7 @@ namespace Pims.Api.Services
         private readonly IAcquisitionStatusSolver _statusSolver;
         private readonly IPropertyService _propertyService;
         private readonly IProjectRepository _projectRepository;
+        private readonly IPropertyOperationService _propertyOperationService;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -58,7 +59,8 @@ namespace Pims.Api.Services
             ITakeRepository takeRepository,
             IProjectRepository projectRepository,
             IAcquisitionStatusSolver statusSolver,
-            IPropertyService propertyService)
+            IPropertyService propertyService,
+            IPropertyOperationService propertyOperationService)
         {
             _user = user;
             _logger = logger;
@@ -78,6 +80,7 @@ namespace Pims.Api.Services
             _statusSolver = statusSolver;
             _propertyService = propertyService;
             _projectRepository = projectRepository;
+            _propertyOperationService = propertyOperationService;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -365,7 +368,7 @@ namespace Pims.Api.Services
             foreach (var deletedProperty in differenceSet)
             {
                 var acqFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id).FirstOrDefault(ap => ap.PropertyId == deletedProperty.PropertyId);
-                if (acqFileProperties.PimsTakes.Any() || acqFileProperties.PimsInthldrPropInterests.Any())
+                if (acqFileProperties.PimsTakes.Count > 0 || acqFileProperties.PimsInthldrPropInterests.Count > 0)
                 {
                     throw new BusinessRuleViolationException("You must remove all takes and interest holders from an acquisition file property before removing that property from an acquisition file");
                 }
@@ -373,6 +376,11 @@ namespace Pims.Api.Services
                 if (_acquisitionFilePropertyRepository.AcquisitionFilePropertyInCompensationReq(deletedProperty.PropertyAcquisitionFileId))
                 {
                     throw new BusinessRuleViolationException("Acquisition File property can not be removed since it's assigned as a property for a compensation requisition");
+                }
+
+                if (_propertyOperationService.GetOperationsForProperty(deletedProperty.PropertyId).Count > 0)
+                {
+                    throw new BusinessRuleViolationException("This property cannot be deleted because it is part of a subdivision or consolidation");
                 }
 
                 _acquisitionFilePropertyRepository.Delete(deletedProperty);
