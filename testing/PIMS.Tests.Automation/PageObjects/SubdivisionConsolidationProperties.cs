@@ -317,6 +317,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInvalidSubdivisionChildMessage()
         {
+            Wait();
             Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", sharedModals.ToastifyText());
         }
 

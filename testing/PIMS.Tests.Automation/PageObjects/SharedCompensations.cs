@@ -13,12 +13,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private By compensationTotalAllowableLabel = By.XPath("//label[contains(text(),'Total allowable compensation')]");
         private By compensationTotalAllowableContent = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div");
-        private By compensationTotalAllowableEdiBttn = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div/button[@data-testid='edit-button']");
+        private By compensationTotalAllowableEdiBttn = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div/div/button[@data-testid='edit-button']");
         private By compensationTotalAllowableInput = By.CssSelector("input[title='Enter a financial value']");
         private By compensationTotalAllowableSaveBttn = By.CssSelector("button[title='confirm']");
 
-        private By compensationTotalPaymentsMadeLabel = By.XPath("//label[contains(text(),'Total payments made on this file')]");
-        private By compensationTotalPaymentsMadeContent = By.XPath("//label[contains(text(),'Total payments made on this file')]/parent::div/following-sibling::div");
+        private By compensationPaymentsMadeLabel = By.XPath("//label[contains(text(),'Total payments made on this file')]");
+        private By compensationPaymentsMadeContent = By.XPath("//label[contains(text(),'Total payments made on this file')]/parent::div/following-sibling::div");
+
+        private By compensationMainPaymentsMadeLabel = By.XPath("//label[contains(text(),'Total payments made on the main file')]");
+        private By compensationMainPaymentsMadeContent = By.XPath("//label[contains(text(),'Total payments made on the main file')]/parent::div/following-sibling::div");
+
+        private By compensationMainTotalPaymentsMadeLabel = By.XPath("//label[contains(text(),'Total payments made on main file and all sub-files')]");
+        private By compensationMainTotalPaymentsMadeContent = By.XPath("//label[contains(text(),'Total payments made on main file and all sub-files')]/parent::div/following-sibling::div");
 
         private By compensationDraftsTotalLabel = By.XPath("//label[contains(text(),'Drafts')]");
         private By compensationDraftsTotalContent = By.XPath("//label[contains(text(),'Drafts')]/parent::div/following-sibling::div");
@@ -26,7 +32,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By compensationAddCompensationTooltips = By.XPath("//div[contains(text(),'Compensation Requisitions')]/parent::div/parent::div/parent::div/parent::h2/parent::div/div/div/div/label/span");
 
         //Requisition in this file (H120) Elements
-        private By compensationH120Subtitle = By.XPath("//div[contains(text(),'Requisitions in this file (H120)')]");
+        private By compensationH120Subtitle = By.XPath("//div[contains(text(),'Requisitions in this File (H120)')]");
         private By compensationH120Table = By.CssSelector("div[data-testid='AcquisitionCompensationTable']");
         private By compensationH120NoRowsMessage = By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='no-rows-message']");
         private By compensationH120TotalCount = By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']");
@@ -67,8 +73,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private By requisitionExpropriationVestingLabel = By.XPath("//label[contains(text(),'Expropriation vesting date')]");
         private By requisitionExpropriationVestingContent = By.XPath("//label[contains(text(),'Expropriation vesting date')]/parent::div/following-sibling::div");
         private By requisitionExpropriationVestingInput = By.Id("datepicker-expropriationVestingDateTime");
-        private By requisitionAdvancePaymentLabel = By.XPath("//label[contains(text(),'Advanced payment served date')]");
-        private By requisitionAdvancePaymentContent = By.XPath("//label[contains(text(),'Advanced payment served date')]/parent::div/following-sibling::div");
         private By requisitionAdvancePaymentInput = By.Id("datepicker-advancedPaymentServedDate");
         private By requisitionSpecialInstructionLabel = By.XPath("//label[contains(text(),'Special instructions')]");
         private By requisitionSpecialInstructionContent = By.XPath("//label[contains(text(),'Special instructions')]/parent::div/following-sibling::div");
@@ -177,7 +181,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddCompensationBttn()
         {
-            Wait();
+            Wait(4000);
             webDriver.FindElement(compensationAddBttn).Click();
 
             WaitUntilSpinnerDisappear();
@@ -187,8 +191,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']"));
-            webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']")).Click();
+            WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']"));
+            webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']")).Click();
         }
 
         public void DeleteCompensationRequisition(int index)
@@ -246,7 +250,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void DeleteFirstActivity()
         {
             Wait();
-            FocusAndClick(By.XPath("//div[@data-testid='finacialActivity[0]']/div/button[@title='Delete financial activity']"));
+            FocusAndClick(By.XPath("//div[@data-testid='finacialActivity[0]']/div/button[@title='Delete Financial Activity']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
@@ -376,7 +380,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void VerifyCompensationInitTabView()
+        public void VerifyCompensationInitTabView(string fileType)
         {
             AssertTrueIsDisplayed(compensationAddSubtitle);
             AssertTrueIsDisplayed(compensationAddBttn);
@@ -385,8 +389,19 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(compensationTotalAllowableContent);
             AssertTrueIsDisplayed(compensationTotalAllowableEdiBttn);
 
-            AssertTrueIsDisplayed(compensationTotalPaymentsMadeLabel);
-            AssertTrueIsDisplayed(compensationTotalPaymentsMadeContent);
+            if (fileType == "Acquisition")
+            {
+                AssertTrueIsDisplayed(compensationMainPaymentsMadeLabel);
+                AssertTrueIsDisplayed(compensationMainPaymentsMadeContent);
+
+                AssertTrueIsDisplayed(compensationMainTotalPaymentsMadeLabel);
+                AssertTrueIsDisplayed(compensationMainTotalPaymentsMadeContent);
+            }
+            else
+            {
+                AssertTrueIsDisplayed(compensationPaymentsMadeLabel);
+                AssertTrueIsDisplayed(compensationPaymentsMadeContent);
+            }
 
             AssertTrueIsDisplayed(compensationDraftsTotalLabel);
             AssertTrueIsDisplayed(compensationDraftsTotalContent);
@@ -440,7 +455,6 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
                 AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
-                AssertTrueIsDisplayed(requisitionAdvancePaymentLabel);
             }
             
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
@@ -495,7 +509,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionExpropriationServedInput);
             AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
             AssertTrueIsDisplayed(requisitionExpropriationVestingInput);
-            AssertTrueIsDisplayed(requisitionAdvancePaymentLabel);
             AssertTrueIsDisplayed(requisitionAdvancePaymentInput);
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueIsDisplayed(requisitionSpecialInstructionTextarea);
@@ -666,7 +679,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(3)"), TransformCurrencyFormat(compensation.CompensationTotalAmount));
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(4)"), compensation.CompensationStatus);
-            AssertTrueIsDisplayed(By.CssSelector("button svg[data-testid='compensation-view-"+ elementIndex +"']"));
+            AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-view-"+ elementIndex +"']"));
             AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-delete-"+ elementIndex +"']"));
         }
 
@@ -682,7 +695,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Verify Form
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/label[contains(text(),'Activity')]"));
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/button[@title='Delete financial activity']"));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/button[@title='Delete Financial Activity']"));
 
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/div/label[contains(text(),'Code & Description')]"));
             AssertTrueIsDisplayed(By.Id("typeahead-select-financials."+ index +".financialActivityCodeId"));

@@ -10,7 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Admin Tools - CDOGS List View Elements
         private By CDOGSDocumentsTitle = By.XPath("//div[contains(text(),'Documents')]");
-        private By CDOGSAddTemplateBttn = By.XPath("//div[contains(text(),'Documents')]/following-sibling::div/button");
+        private By CDOGSAddTemplateBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
 
         //CDOGS List Filters
         private By CDOGSFilterTypeSelect = By.CssSelector("select[data-testid='document-type']");
@@ -33,7 +33,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Documents List 1st Result Elements
         private By CDOGStTableResults1stDownloadBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/div/button[@data-testid='document-download-button']");
         private By CDOGSTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-view-button']");
-        private By CDOGSTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-delete-button']");
+        private By CDOGSTableResults1stDeleteBttn = By.Id("document-delete-0");
 
         //Document Delete Document Confirmation Modal Elements
         private By documentDeleteHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
@@ -88,7 +88,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void Delete1stTemplate()
         {
             Wait();
-            FocusAndClick(CDOGSTableResults1stDeleteBttn);
+            webDriver.FindElement(CDOGSTableResults1stDeleteBttn).Click();
             
             WaitUntilVisible(documentDeleteHeader);
             Assert.Equal("Delete a document", webDriver.FindElement(documentDeleteHeader).Text);
