@@ -490,22 +490,13 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<FileDownloadResponse> downloadResult = await documentStorageRepository.TryDownloadFileAsync(mayanDocumentId, mayanFileId);
-            if (IsValidDocumentExtension(downloadResult.Payload.FileName))
+
+            // because we bypass file extension checks from legacy systems, we should not check the extension here.
+            if (downloadResult.Status != ExternalResponseStatus.Success)
             {
-                if (downloadResult.Status != ExternalResponseStatus.Success)
-                {
-                    throw GetMayanResponseError(downloadResult.Message);
-                }
-                return downloadResult;
+                throw GetMayanResponseError(downloadResult.Message);
             }
-            else
-            {
-                return new ExternalResponse<FileDownloadResponse>()
-                {
-                    Status = ExternalResponseStatus.Error,
-                    Message = $"Document with id ${mayanDocumentId} has an invalid extension",
-                };
-            }
+            return downloadResult;
         }
 
         public async Task<ExternalResponse<FileStreamResponse>> StreamFileAsync(long mayanDocumentId, long mayanFileId)
@@ -514,22 +505,13 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<FileStreamResponse> downloadResult = await documentStorageRepository.TryStreamFileAsync(mayanDocumentId, mayanFileId);
-            if (IsValidDocumentExtension(downloadResult.Payload.FileName))
+
+            // because we bypass file extension checks from legacy systems, we should not check the extension here.
+            if (downloadResult.Status != ExternalResponseStatus.Success)
             {
-                if (downloadResult.Status != ExternalResponseStatus.Success)
-                {
-                    throw GetMayanResponseError(downloadResult.Message);
-                }
-                return downloadResult;
+                throw GetMayanResponseError(downloadResult.Message);
             }
-            else
-            {
-                return new ExternalResponse<FileStreamResponse>()
-                {
-                    Status = ExternalResponseStatus.Error,
-                    Message = $"Document with id ${mayanDocumentId} has an invalid extension",
-                };
-            }
+            return downloadResult;
         }
 
         public async Task<ExternalResponse<FileDownloadResponse>> DownloadFileLatestAsync(long mayanDocumentId)
@@ -541,19 +523,8 @@ namespace Pims.Api.Services
             {
                 if (documentResult.Payload != null)
                 {
-                    if (IsValidDocumentExtension(documentResult.Payload.FileLatest.FileName))
-                    {
-                        ExternalResponse<FileDownloadResponse> downloadResult = await documentStorageRepository.TryDownloadFileAsync(documentResult.Payload.Id, documentResult.Payload.FileLatest.Id);
-                        return downloadResult;
-                    }
-                    else
-                    {
-                        return new ExternalResponse<FileDownloadResponse>()
-                        {
-                            Status = ExternalResponseStatus.Error,
-                            Message = $"Document with id ${mayanDocumentId} has an invalid extension",
-                        };
-                    }
+                    ExternalResponse<FileDownloadResponse> downloadResult = await documentStorageRepository.TryDownloadFileAsync(documentResult.Payload.Id, documentResult.Payload.FileLatest.Id);
+                    return downloadResult;
                 }
                 else
                 {
@@ -639,7 +610,7 @@ namespace Pims.Api.Services
             return result;
         }
 
-        private static bool IsValidDocumentExtension(string fileName)
+        public static bool IsValidDocumentExtension(string fileName)
         {
             var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
             return ValidExtensions.Contains(fileNameExtension);
