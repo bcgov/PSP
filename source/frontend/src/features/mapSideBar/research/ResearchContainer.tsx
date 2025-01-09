@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import { useCallback, useContext, useEffect, useRef, useState } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -9,6 +10,7 @@ import { useResearchRepository } from '@/hooks/repositories/useResearchRepositor
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
@@ -224,16 +226,32 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   const onUpdateProperties = (
     file: ApiGen_Concepts_File,
   ): Promise<ApiGen_Concepts_File | undefined> => {
-    return withUserOverride((userOverrideCodes: UserOverrideCode[]) => {
-      return updateResearchFileProperties(
-        file as ApiGen_Concepts_ResearchFile,
-        userOverrideCodes,
-      ).then(response => {
-        onSuccess();
-        setIsShowingPropertySelector(false);
-        return response;
-      });
-    });
+    return withUserOverride(
+      (userOverrideCodes: UserOverrideCode[]) => {
+        return updateResearchFileProperties(
+          file as ApiGen_Concepts_ResearchFile,
+          userOverrideCodes,
+        ).then(response => {
+          onSuccess();
+          setIsShowingPropertySelector(false);
+          return response;
+        });
+      },
+      [],
+      (axiosError: AxiosError<IApiError>) => {
+        setModalContent({
+          variant: 'error',
+          title: 'Error',
+          message: axiosError?.response?.data.error,
+          okButtonText: 'Close',
+          handleOk: async () => {
+            formikRef.current?.resetForm();
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      },
+    );
   };
 
   if (

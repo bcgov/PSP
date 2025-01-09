@@ -145,30 +145,117 @@ namespace Pims.Api.Test.Services
 
         #region UpdateProperties
         [Fact]
-        public void UpdateProperties_Delete()
+        public void UpdateProperties_RemovePropertyFile_Success()
         {
             // Arrange
+            var property = EntityHelper.CreateProperty(12345);
             var researchFile = EntityHelper.CreateResearchFile(1);
-            var pimsPropertyResearchFile = new PimsPropertyResearchFile() { Property = new PimsProperty() { RegionCode = 1 } };
-            pimsPropertyResearchFile.PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } };
-            researchFile.PimsPropertyResearchFiles.Add(pimsPropertyResearchFile);
+            researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
+            {
+                new () { Internal_Id = 1, Property = property, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+            };
+
+            var updatedResearchFile = EntityHelper.CreateResearchFile(1);
+            updatedResearchFile.PimsPropertyResearchFiles.Clear();
 
             var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
-            var researchRepository = this._helper.GetService<Mock<IResearchFileRepository>>();
-            researchRepository.Setup(x => x.GetPage(It.IsAny<ResearchFilter>()));
-            researchRepository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
-            var researchFilePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
-            researchFilePropertyRepository.Setup(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()));
-            researchFilePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
+            propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(3);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()));
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+
+            var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
+            propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
             // Act
-            researchFile.PimsPropertyResearchFiles.Clear();
-            researchFile.ConcurrencyControlNumber++;
-            var updatedLease = service.UpdateProperties(researchFile, new List<UserOverrideCode>());
+            updatedResearchFile = service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
             // Assert
-            researchFilePropertyRepository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Once);
-            researchFilePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
+            filePropertyRepository.Verify(x => x.GetAllByResearchFileId(It.IsAny<long>()), Times.Once);
+            filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
+            propertyRepository.Verify(x => x.Delete(property), Times.Never);
+        }
+
+        [Fact]
+        public void UpdateProperties_RemoveProperty_Fails_PropertyIsSubdividedOrConsolidated()
+        {
+            // Arrange
+            var deletedProperty = EntityHelper.CreateProperty(12345);
+            var researchFile = EntityHelper.CreateResearchFile(1);
+            researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
+            {
+                new PimsPropertyResearchFile() { Internal_Id = 1, Property = deletedProperty, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+            };
+
+            var updatedResearchFile = EntityHelper.CreateResearchFile(1);
+            updatedResearchFile.PimsPropertyResearchFiles.Clear();
+
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(deletedProperty);
+            propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()));
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+
+            var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
+            propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>() { new() { Internal_Id = 1, SourcePropertyId = deletedProperty.Internal_Id, SourceProperty = deletedProperty } });
+
+            // Act
+            Action act = () => service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("This property cannot be deleted because it is part of a subdivision or consolidation");
+        }
+
+        [Fact]
+        public void UpdateProperties_RemoveProperty_Sucess()
+        {
+            // Arrange
+            var deletedProperty = EntityHelper.CreateProperty(12345);
+            var researchFile = EntityHelper.CreateResearchFile(1);
+            researchFile.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
+            {
+                new () { Internal_Id = 1, Property = deletedProperty, PimsPrfPropResearchPurposeTypes = new List<PimsPrfPropResearchPurposeType>() { new PimsPrfPropResearchPurposeType() { } } }
+            };
+
+            var updatedResearchFile = EntityHelper.CreateResearchFile(1);
+            updatedResearchFile.PimsPropertyResearchFiles.Clear();
+
+            var service = this.CreateResearchFileServiceWithPermissions(Permissions.ResearchFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            var repository = this._helper.GetService<Mock<IResearchFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(deletedProperty);
+            propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IResearchFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()));
+            filePropertyRepository.Setup(x => x.GetAllByResearchFileId(It.IsAny<long>())).Returns(researchFile.PimsPropertyResearchFiles.ToList());
+
+            var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
+            propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
+
+            // Act
+            updatedResearchFile = service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
+
+            // Assert
+            filePropertyRepository.Verify(x => x.Delete(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
+            propertyRepository.Verify(x => x.Delete(deletedProperty), Times.Once);
         }
 
         [Fact]
