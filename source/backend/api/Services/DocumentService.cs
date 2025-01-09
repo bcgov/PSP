@@ -6,11 +6,15 @@ using System.Net;
 using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Azure;
 using MapsterMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using Pims.Api.Constants;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
@@ -73,6 +77,7 @@ namespace Pims.Api.Services
         private readonly IAvService avService;
         private readonly IMapper mapper;
         private readonly IOptionsMonitor<AuthClientOptions> keycloakOptions;
+        private readonly IMemoryCache _memoryCache;
 
         public DocumentService(
             ClaimsPrincipal user,
@@ -84,7 +89,7 @@ namespace Pims.Api.Services
             IAvService avService,
             IMapper mapper,
             IOptionsMonitor<AuthClientOptions> options,
-            IDocumentQueueRepository queueRepository)
+            IMemoryCache memoryCache)
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
@@ -95,6 +100,7 @@ namespace Pims.Api.Services
             this.keycloakOptions = options;
             _config = new MayanConfig();
             configuration.Bind(MayanConfigSectionKey, _config);
+            _memoryCache = memoryCache;
         }
 
         public IList<PimsDocumentTyp> GetPimsDocumentTypes()
@@ -421,15 +427,24 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>>> GetStorageDocumentTypes(string ordering = "", int? page = null, int? pageSize = null)
         {
-            this.Logger.LogInformation("Retrieving storage document types");
-            this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentView, keycloakOptions);
+            Logger.LogInformation("Retrieving storage document types");
+            User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.DocumentView, keycloakOptions);
 
-            ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>> result = await documentStorageRepository.TryGetDocumentTypesAsync(ordering, page, pageSize);
-            if (result.Status != ExternalResponseStatus.Success)
+            if(!_memoryCache.TryGetValue(CacheKeys.MayanDocumentTypes, out ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>> cachedDocumentTypesResult))
             {
-                throw GetMayanResponseError(result.Message);
+                ExternalResponse<QueryResponse<Models.Mayan.Document.DocumentTypeModel>> result = await documentStorageRepository.TryGetDocumentTypesAsync(ordering, page, pageSize);
+                if (result.Status != ExternalResponseStatus.Success)
+                {
+                    throw GetMayanResponseError(result.Message);
+                }
+
+                MemoryCacheEntryOptions cacheOptions = new();
+                cacheOptions.SetSlidingExpiration(TimeSpan.FromHours(2));
+
+                _memoryCache.Set(CacheKeys.MayanDocumentTypes, result, cacheOptions);
             }
-            return result;
+
+            return cachedDocumentTypesResult;
         }
 
         public async Task<ExternalResponse<QueryResponse<DocumentDetailModel>>> GetStorageDocumentList(string ordering = "", int? page = null, int? pageSize = null)

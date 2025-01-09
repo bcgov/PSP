@@ -822,7 +822,10 @@ namespace Pims.Api.Services
                 return;
             }
             var checklistStatusTypes = _lookupRepository.GetAllChecklistItemStatusTypes();
-            foreach (var itemType in _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType()))
+            var notExpiredChecklistItemTypes = _checklistRepository.GetAllChecklistItemTypes().Where(x => !x.IsExpiredType());
+            var incompleteStatusType = checklistStatusTypes.FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString());
+
+            foreach (var itemType in notExpiredChecklistItemTypes)
             {
                 if (!pimsAcquisitionChecklistItems.Any(cli => cli.AcqChklstItemTypeCode == itemType.AcqChklstItemTypeCode) && DateOnly.FromDateTime(acquisitionFile.AppCreateTimestamp) >= itemType.EffectiveDate)
                 {
@@ -832,7 +835,7 @@ namespace Pims.Api.Services
                         AcqChklstItemTypeCodeNavigation = itemType,
                         ChklstItemStatusTypeCode = ChecklistItemStatusTypes.INCOMP.ToString(),
                         AcquisitionFileId = acquisitionFile.AcquisitionFileId,
-                        ChklstItemStatusTypeCodeNavigation = checklistStatusTypes.FirstOrDefault(cst => cst.Id == ChecklistItemStatusTypes.INCOMP.ToString()),
+                        ChklstItemStatusTypeCodeNavigation = incompleteStatusType,
                     };
 
                     pimsAcquisitionChecklistItems.Add(checklistItem);
