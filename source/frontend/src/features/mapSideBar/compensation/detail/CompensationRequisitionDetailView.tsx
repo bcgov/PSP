@@ -277,18 +277,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
         <SectionField label="Agreement date" labelWidth="4">
           {prettyFormatDate(compensation.agreementDate)}
         </SectionField>
-
-        {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-          <>
-            <SectionField label="Expropriation notice served date" labelWidth="4">
-              {prettyFormatDate(compensation.expropriationNoticeServedDate)}
-            </SectionField>
-            <SectionField label="Expropriation vesting date" labelWidth="4">
-              {prettyFormatDate(compensation.expropriationVestingDate)}
-            </SectionField>
-          </>
-        )}
-
         <SectionField label="Special instructions" labelWidth={'12'} valueClassName="pre-wrap">
           <p style={{ whiteSpace: 'pre-wrap' }}>{compensation.specialInstruction}</p>
         </SectionField>
