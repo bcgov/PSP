@@ -56,7 +56,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By productObjectiveInput = By.Id("input-products.0.objective");
         private By productScopeLabel = By.XPath("//label[contains(text(),'Scope')]");
         private By productScopeInput = By.Id("input-products.0.scope");
-        private By productDeleteButton = By.CssSelector("button[title='Delete Project']");
+        private By productDeleteButton = By.CssSelector("button[title='Delete Product']");
 
         //View Project Form Elements
         private By projectViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Project')]");
@@ -279,7 +279,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteProduct(int productIndex)
         {
-            By deleteButtonElement = By.XPath("//div[@class='collapse show']/div["+ productIndex +"]/div/div/button[@title='Delete Project']");
+            By deleteButtonElement = By.XPath("//div[@class='collapse show']/div["+ productIndex +"]/div/div/button[@title='Delete Product']");
             WaitUntilClickable(deleteButtonElement);
             webDriver.FindElement(deleteButtonElement).Click();
 
