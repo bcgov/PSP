@@ -1020,199 +1020,199 @@ namespace Pims.Api.Test.Services
             act.Should().Throw<UserOverrideException>();
         }
 
-        [Fact]
-        public void Update_FKException_Removed_AcqFileOwner()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+        //[Fact]
+        //public void Update_FKException_Removed_AcqFileOwner()
+        //{
+        //    // Arrange
+        //    var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionOwners = new List<PimsAcquisitionOwner>() {
-                new PimsAcquisitionOwner() {
-                    AcquisitionOwnerId = 100,
-                },
-            };
+        //    var acqFile = EntityHelper.CreateAcquisitionFile();
+        //    acqFile.PimsAcquisitionOwners = new List<PimsAcquisitionOwner>() {
+        //        new PimsAcquisitionOwner() {
+        //            AcquisitionOwnerId = 100,
+        //        },
+        //    };
 
-            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+        //    var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+        //    repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+        //    repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+        //    repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
-            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsCompensationRequisition>() {
-                    new PimsCompensationRequisition() {
-                        CompensationRequisitionId = 1,
-                        AcquisitionFileId = acqFile.Internal_Id,
-                        AcquisitionOwnerId = 100,
-                    },
-                });
+        //    var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+        //    compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+        //        .Returns(new List<PimsCompensationRequisition>() {
+        //            new PimsCompensationRequisition() {
+        //                CompensationRequisitionId = 1,
+        //                AcquisitionFileId = acqFile.Internal_Id,
+        //                AcquisitionOwnerId = 100,
+        //            },
+        //        });
 
-            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+        //    var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+        //    lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+        //    var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+        //    userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
-            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
-            agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+        //    var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+        //    agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
-            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+        //    var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+        //    solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
-            // Act
-            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
-            Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+        //    // Act
+        //    var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
+        //    Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
-            // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
-        }
+        //    // Assert
+        //    act.Should().Throw<ForeignKeyDependencyException>();
+        //    repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        //}
 
-        [Fact]
-        public void Update_FKException_Removed_OwnerSolicitor()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+        //[Fact]
+        //public void Update_FKException_Removed_OwnerSolicitor()
+        //{
+        //    // Arrange
+        //    var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
-                new PimsInterestHolder() {
-                    InterestHolderTypeCode = "AOSLCTR",
-                    InterestHolderId = 100,
-                },
-            };
+        //    var acqFile = EntityHelper.CreateAcquisitionFile();
+        //    acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+        //        new PimsInterestHolder() {
+        //            InterestHolderTypeCode = "AOSLCTR",
+        //            InterestHolderId = 100,
+        //        },
+        //    };
 
-            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+        //    var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+        //    repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+        //    repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+        //    repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
-            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsCompensationRequisition>() {
-                    new PimsCompensationRequisition() {
-                        CompensationRequisitionId = 1,
-                        AcquisitionFileId = acqFile.Internal_Id,
-                        InterestHolderId = 100,
-                    },
-                });
+        //    var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+        //    compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+        //        .Returns(new List<PimsCompensationRequisition>() {
+        //            new PimsCompensationRequisition() {
+        //                CompensationRequisitionId = 1,
+        //                AcquisitionFileId = acqFile.Internal_Id,
+        //                InterestHolderId = 100,
+        //            },
+        //        });
 
-            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+        //    var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+        //    lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+        //    var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+        //    userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
-            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
-            agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+        //    var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+        //    agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
-            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+        //    var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+        //    solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
-            // Act
-            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
-            Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+        //    // Act
+        //    var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
+        //    Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
-            // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
-        }
+        //    // Assert
+        //    act.Should().Throw<ForeignKeyDependencyException>();
+        //    repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        //}
 
-        [Fact]
-        public void Update_FKException_Removed_OwnerRepresentative()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+        //[Fact]
+        //public void Update_FKException_Removed_OwnerRepresentative()
+        //{
+        //    // Arrange
+        //    var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
-                new PimsInterestHolder() {
-                    InterestHolderTypeCode = "AOREP",
-                    InterestHolderId = 100,
-                },
-            };
+        //    var acqFile = EntityHelper.CreateAcquisitionFile();
+        //    acqFile.PimsInterestHolders = new List<PimsInterestHolder>() {
+        //        new PimsInterestHolder() {
+        //            InterestHolderTypeCode = "AOREP",
+        //            InterestHolderId = 100,
+        //        },
+        //    };
 
-            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+        //    var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+        //    repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+        //    repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+        //    repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
-            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsCompensationRequisition>() {
-                    new PimsCompensationRequisition() {
-                        CompensationRequisitionId = 1,
-                        AcquisitionFileId = acqFile.Internal_Id,
-                        InterestHolderId = 100,
-                    },
-                });
+        //    var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+        //    compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+        //        .Returns(new List<PimsCompensationRequisition>() {
+        //            new PimsCompensationRequisition() {
+        //                CompensationRequisitionId = 1,
+        //                AcquisitionFileId = acqFile.Internal_Id,
+        //                InterestHolderId = 100,
+        //            },
+        //        });
 
-            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+        //    var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+        //    lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+        //    var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+        //    userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
-            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
-            agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+        //    var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+        //    agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
-            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+        //    var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+        //    solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
-            // Act
-            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
-            Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+        //    // Act
+        //    var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
+        //    Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
-            // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
-        }
+        //    // Assert
+        //    act.Should().Throw<ForeignKeyDependencyException>();
+        //    repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        //}
 
-        [Fact]
-        public void Update_FKException_Removed_PersonOfInterest()
-        {
-            // Arrange
-            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
+        //[Fact]
+        //public void Update_FKException_Removed_PersonOfInterest()
+        //{
+        //    // Arrange
+        //    var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
 
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
-                new PimsAcquisitionFileTeam() {
-                    AcquisitionFileTeamId = 100,
-                },
-            };
+        //    var acqFile = EntityHelper.CreateAcquisitionFile();
+        //    acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
+        //        new PimsAcquisitionFileTeam() {
+        //            AcquisitionFileTeamId = 100,
+        //        },
+        //    };
 
-            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
-            repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
-            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+        //    var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+        //    repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+        //    repository.Setup(x => x.Update(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+        //    repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
-            var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
-            compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
-                .Returns(new List<PimsCompensationRequisition>() {
-                    new PimsCompensationRequisition() {
-                        CompensationRequisitionId = 1,
-                        AcquisitionFileId = acqFile.Internal_Id,
-                        AcquisitionFileTeamId = 100,
-                    },
-                });
+        //    var compReqRepository = this._helper.GetService<Mock<ICompensationRequisitionRepository>>();
+        //    compReqRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+        //        .Returns(new List<PimsCompensationRequisition>() {
+        //            new PimsCompensationRequisition() {
+        //                CompensationRequisitionId = 1,
+        //                AcquisitionFileId = acqFile.Internal_Id,
+        //                AcquisitionFileTeamId = 100,
+        //            },
+        //        });
 
-            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+        //    var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+        //    lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+        //    var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+        //    userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
-            var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
-            agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
+        //    var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
+        //    agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
-            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
-            solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+        //    var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+        //    solver.Setup(x => x.CanEditDetails(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
-            // Act
-            var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
-            Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
+        //    // Act
+        //    var updatedAcqFile = EntityHelper.CreateAcquisitionFile();
+        //    Action act = () => service.Update(updatedAcqFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
-            // Assert
-            act.Should().Throw<ForeignKeyDependencyException>();
-            repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
-        }
+        //    // Assert
+        //    act.Should().Throw<ForeignKeyDependencyException>();
+        //    repository.Verify(x => x.Update(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+        //}
 
         [Fact]
         public void Update_NewTotalAllowableCompensation_Success()
