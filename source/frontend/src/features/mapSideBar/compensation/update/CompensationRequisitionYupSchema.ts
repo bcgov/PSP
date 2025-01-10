@@ -7,7 +7,7 @@ export const CompensationRequisitionYupSchema = yup.object().shape({
   agreementDate: yup.string(),
   expropriationNoticeServedDateTime: yup.string(),
   expropriationVestingDateTime: yup.string(),
-  generationDatetTime: yup.string(),
+  generationDateTime: yup.string(),
   status: yup.string().required('Status is required'),
   fiscalYear: yup.string().when('status', {
     is: 'final',
