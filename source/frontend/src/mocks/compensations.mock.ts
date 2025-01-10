@@ -22,8 +22,6 @@ export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisiti
   responsibility: null,
   finalizedDate: null,
   agreementDate: null,
-  expropriationNoticeServedDate: null,
-  expropriationVestingDate: null,
   generationDate: null,
   financials: [],
   compReqLeaseStakeholder: [],

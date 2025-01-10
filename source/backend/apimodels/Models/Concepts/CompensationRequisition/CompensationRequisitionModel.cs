@@ -38,10 +38,6 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public DateOnly? AgreementDate { get; set; }
 
-        public DateOnly? ExpropriationNoticeServedDate { get; set; }
-
-        public DateOnly? ExpropriationVestingDate { get; set; }
-
         public DateOnly? GenerationDate { get; set; }
 
         public List<CompensationFinancialModel> Financials { get; set; }
