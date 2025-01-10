@@ -92,7 +92,7 @@ export const ExpropriationForm9: React.FC<IExpropriationForm9Props> = ({
           <SectionField label="Shown on plan(s)">
             <Input field="registeredPlanNumbers" />
           </SectionField>
-          <SectionField label="Expropriation vesting date" labelWidth="5" contentWidth="4">
+          <SectionField label="Expropriation vesting date">
             <FastDatePicker field="expropriationVestingDate" formikProps={formikProps} />
           </SectionField>
 
