@@ -599,38 +599,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c9"
-            >
-              Expropriation notice served date:
-            </label>
-          </div>
-          <div
-            class="c10 text-left col"
-          />
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c9"
-            >
-              Expropriation vesting date:
-            </label>
-          </div>
-          <div
-            class="c10 text-left col"
-          />
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
             class="pr-0 text-left col-12"
           >
             <label
