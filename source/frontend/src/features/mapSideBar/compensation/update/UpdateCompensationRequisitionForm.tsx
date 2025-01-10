@@ -194,31 +194,6 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   <FastDatePicker field="agreementDateTime" formikProps={formikProps} />
                 </SectionField>
 
-                {fileType === ApiGen_CodeTypes_FileTypes.Acquisition && (
-                  <>
-                    <SectionField
-                      label="Expropriation notice served date"
-                      labelWidth="5"
-                      contentWidth="4"
-                    >
-                      <FastDatePicker
-                        field="expropriationNoticeServedDateTime"
-                        formikProps={formikProps}
-                      />
-                    </SectionField>
-                    <SectionField
-                      label="Expropriation vesting date"
-                      labelWidth="5"
-                      contentWidth="4"
-                    >
-                      <FastDatePicker
-                        field="expropriationVestingDateTime"
-                        formikProps={formikProps}
-                      />
-                    </SectionField>
-                  </>
-                )}
-
                 <SectionField label="Special instructions" labelWidth="12">
                   <MediumTextArea field="specialInstruction" />
                 </SectionField>

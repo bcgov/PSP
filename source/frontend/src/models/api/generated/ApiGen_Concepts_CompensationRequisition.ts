@@ -32,8 +32,6 @@ export interface ApiGen_Concepts_CompensationRequisition extends ApiGen_Base_Bas
   responsibility: ApiGen_Concepts_FinancialCode | null;
   finalizedDate: UtcIsoDate | null;
   agreementDate: UtcIsoDate | null;
-  expropriationNoticeServedDate: UtcIsoDate | null;
-  expropriationVestingDate: UtcIsoDate | null;
   generationDate: UtcIsoDate | null;
   financials: ApiGen_Concepts_CompensationFinancial[] | null;
   acquisitionOwnerId: number | null;

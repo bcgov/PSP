@@ -100,8 +100,6 @@ export class PayeeOption {
       responsibilityId: null,
       responsibility: null,
       agreementDate: null,
-      expropriationNoticeServedDate: null,
-      expropriationVestingDate: null,
       generationDate: null,
       financials: [],
       compReqLeaseStakeholder: [],

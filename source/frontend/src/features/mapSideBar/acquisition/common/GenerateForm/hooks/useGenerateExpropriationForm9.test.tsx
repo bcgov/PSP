@@ -8,15 +8,17 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { fromContactSummary } from '@/interfaces';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
+import { DocumentGenerationRequest } from '@/models/api/DocumentGenerationRequest';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { Api_GenerateExpropriationForm9 } from '@/models/generate/acquisition/GenerateExpropriationForm9';
 
 import { ExpropriationForm9Model } from '../../../tabs/expropriation/models';
 import { useGenerateExpropriationForm9 } from './useGenerateExpropriationForm9';
-import { fromContactSummary } from '@/interfaces';
 
 const generateFn = vi
   .fn()
@@ -87,7 +89,7 @@ const setup = (params?: {
   return result.current;
 };
 
-describe('useGenerateExpropriationForm5 functions', () => {
+describe('useGenerateExpropriationForm9 functions', () => {
   it('makes requests to expected api endpoints', async () => {
     const generate = setup();
     await act(async () => generate(1, new ExpropriationForm9Model()));
@@ -110,6 +112,24 @@ describe('useGenerateExpropriationForm5 functions', () => {
     expect(getAcquisitionFilePropertiesFn).toHaveBeenCalled();
     expect(getInterestHoldersFn).toHaveBeenCalled();
     expect(getOrganizationConceptFn).toHaveBeenCalled();
+  });
+
+  it(`sends "Expropriation vesting date" in the json payload to generation api`, async () => {
+    const generate = setup();
+    const expropriationModel = new ExpropriationForm9Model();
+    expropriationModel.expropriationVestingDate = '2024-10-05';
+
+    await act(async () => generate(1, expropriationModel));
+
+    const generateRequest: DocumentGenerationRequest = {
+      templateType: ApiGen_CodeTypes_FormTypes.FORM9.toString(),
+      convertToType: null,
+      templateData: expect.objectContaining<Partial<Api_GenerateExpropriationForm9>>({
+        vesting_date: '2024-10-05',
+      }),
+    };
+
+    expect(generateFn).toHaveBeenCalledWith(generateRequest);
   });
 
   it('throws an error if no acquisition file is found', async () => {

@@ -5,7 +5,7 @@ import { FaFileContract } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
-import { Input } from '@/components/common/form';
+import { FastDatePicker, Input } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import FormItem from '@/components/common/form/FormItem';
@@ -94,6 +94,9 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
           </SectionField>
           <SectionField label="Purpose of expropriation">
             <Input field="purpose" />
+          </SectionField>
+          <SectionField label="Expropriation notice served date">
+            <FastDatePicker field="expropriationNoticeServedDate" formikProps={formikProps} />
           </SectionField>
 
           <RightFlexRow>
