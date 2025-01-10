@@ -27,8 +27,6 @@ export class CompensationRequisitionFormModel {
   responsibility: ApiGen_Concepts_FinancialCode | null = null;
   readonly finalizedDate: string;
   agreementDateTime = '';
-  expropriationNoticeServedDateTime = '';
-  expropriationVestingDateTime = '';
   generationDateTime = '';
   specialInstruction = '';
   detailedRemarks = '';
@@ -77,12 +75,6 @@ export class CompensationRequisitionFormModel {
       responsibility: null,
       agreementDate: isValidIsoDateTime(this.agreementDateTime) ? this.agreementDateTime : null,
       finalizedDate: isValidIsoDateTime(this.finalizedDate) ? this.finalizedDate : null,
-      expropriationNoticeServedDate: isValidIsoDateTime(this.expropriationNoticeServedDateTime)
-        ? this.expropriationNoticeServedDateTime
-        : null,
-      expropriationVestingDate: isValidIsoDateTime(this.expropriationVestingDateTime)
-        ? this.expropriationVestingDateTime
-        : null,
       generationDate: isValidIsoDateTime(this.generationDateTime) ? this.generationDateTime : null,
       specialInstruction: stringToNull(this.specialInstruction),
       detailedRemarks: stringToNull(this.detailedRemarks),
@@ -155,8 +147,6 @@ export class CompensationRequisitionFormModel {
           }
         : null;
     compensation.agreementDateTime = apiModel.agreementDate || '';
-    compensation.expropriationNoticeServedDateTime = apiModel.expropriationNoticeServedDate || '';
-    compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
     compensation.generationDateTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';
