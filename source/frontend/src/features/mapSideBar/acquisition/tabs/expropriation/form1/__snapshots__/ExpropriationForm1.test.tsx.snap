@@ -631,7 +631,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
     class="pb-2 row"
   >
     <div
-      class="pr-0 text-left col-5"
+      class="pr-0 text-left col-4"
     >
       <label
         class="c0"
@@ -640,7 +640,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
       </label>
     </div>
     <div
-      class="c1 text-left col-4"
+      class="c1 text-left col"
     >
       <div
         class="c2 form-group"
