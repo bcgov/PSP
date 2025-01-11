@@ -122,7 +122,7 @@ public partial class PimsInterestHolder
     public virtual PimsPerson Person { get; set; }
 
     [InverseProperty("InterestHolder")]
-    public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; } = new List<PimsCompensationRequisition>();
+    public virtual ICollection<PimsCompReqPayee> PimsCompReqPayees { get; set; } = new List<PimsCompReqPayee>();
 
     [InverseProperty("InterestHolder")]
     public virtual ICollection<PimsExpropriationPayment> PimsExpropriationPayments { get; set; } = new List<PimsExpropriationPayment>();
