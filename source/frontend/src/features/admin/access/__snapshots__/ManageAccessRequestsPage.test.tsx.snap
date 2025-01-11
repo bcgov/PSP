@@ -227,7 +227,11 @@ exports[`Manage access requests > Snapshot matches 1`] = `
   padding: 0;
 }
 
-.c6:disabled {
+.c6:-moz-read-only {
+  background: white;
+}
+
+.c6:read-only {
   background: white;
 }
 
@@ -849,6 +853,8 @@ exports[`Manage access requests > Snapshot matches 1`] = `
               </span>
               <input
                 class="c6 form-control"
+                data-testid="input-page-size"
+                readonly=""
                 type="number"
                 value="10"
               />

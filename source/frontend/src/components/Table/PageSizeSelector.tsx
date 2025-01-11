@@ -31,11 +31,12 @@ export const TablePageSizeSelector: React.FC<ITablePageSizeSelectorProps> = ({
     value: option,
     onClick: () => handleValueChange(option),
   }));
+
   return (
     <Menu options={pageSizeOptions} alignTop={alignTop}>
       <div className="d-flex">
         <StyledText>Show</StyledText>
-        <StyledInput value={`${selected}`} type="number" readOnly />
+        <StyledInput value={`${selected}`} type="number" readOnly data-testid="input-page-size" />
         <StyledText>Entries</StyledText>
       </div>
     </Menu>
