@@ -128,6 +128,7 @@ const StyledInputLikeDiv = styled.div<{ $hasContact: boolean }>`
   padding-bottom: 0.8rem;
   padding-left: 1.2rem;
   padding-right: 2.8rem;
+  word-break: break-all;
 
   background-image: none;
   color: ${props =>
