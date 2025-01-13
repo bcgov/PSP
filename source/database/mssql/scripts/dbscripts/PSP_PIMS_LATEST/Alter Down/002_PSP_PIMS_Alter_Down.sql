@@ -165,6 +165,25 @@ ALTER TABLE [dbo].[PIMS_COMPENSATION_REQUISITION]
 	ADD [ACQUISITION_OWNER_ID] bigint NULL, 
 	[INTEREST_HOLDER_ID] bigint NULL, 
 	[ACQUISITION_FILE_TEAM_ID] bigint NULL
+
+-- Drop dynamically-named default constraint
+PRINT N'Drop dynamically-named default constraint'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_DOCUMENT_QUEUE' 
+                   AND col.NAME = 'FILE_NAME')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
 GO
 EXEC sp_addextendedproperty 
 	@name = N'MS_Description', @value = N'Foreign key to the PIMS_ACQUISITION_OWNER table.' , 
@@ -201,6 +220,79 @@ PRINT N'Create index dbo.CMPREQ_ACQUISITION_FILE_PERSON_ID_IDX'
 GO
 CREATE NONCLUSTERED INDEX [CMPREQ_ACQUISITION_FILE_PERSON_ID_IDX]
 	ON [dbo].[PIMS_COMPENSATION_REQUISITION]([ACQUISITION_FILE_TEAM_ID])
+-- Drop dynamically-named default constraint
+PRINT N'Drop dynamically-named default constraint'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_DOCUMENT_QUEUE_HIST' 
+                   AND col.NAME = 'FILE_NAME')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_DOCUMENT_QUEUE_HIST] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+UPDATE [dbo].[PIMS_PROJECT_PERSON]
+SET    PROJECT_PERSON_ROLE_TYPE_CODE = N'PROJMGR'
+     , CONCURRENCY_CONTROL_NUMBER    = CONCURRENCY_CONTROL_NUMBER + 1
+WHERE  PROJECT_PERSON_ROLE_TYPE_CODE IS NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+ALTER TABLE [dbo].[PIMS_PROJECT_PERSON] 
+  ADD DEFAULT 'PROJMGR' FOR PROJECT_PERSON_ROLE_TYPE_CODE
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+-- Drop dynamically-named default constraint
+PRINT N'Drop dynamically-named default constraint'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_PROJECT_PERSON' 
+                   AND col.NAME = 'PROJECT_PERSON_ROLE_TYPE_CODE')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_PROJECT_PERSON] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+UPDATE [dbo].[PIMS_PROJECT_PERSON_HIST]
+SET    PROJECT_PERSON_ROLE_TYPE_CODE = N'PROJMGR'
+     , CONCURRENCY_CONTROL_NUMBER    = CONCURRENCY_CONTROL_NUMBER + 1
+WHERE  PROJECT_PERSON_ROLE_TYPE_CODE IS NULL
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop dynamically-named default constraint
+PRINT N'Drop dynamically-named default constraint'
+GO
+DECLARE @sqlQry  VARCHAR(1000)
+DECLARE @defName VARCHAR(100)
+SET @defName = (SELECT obj.NAME
+                FROM   SYSOBJECTS obj                          INNER JOIN
+                       SYSCOLUMNS col on obj.ID = col.CDEFAULT INNER JOIN
+                       SYSOBJECTS tbl on col.ID = tbl.ID
+                WHERE  obj.XTYPE = 'D'
+                   AND tbl.NAME = 'PIMS_PROJECT_PERSON_HIST' 
+                   AND col.NAME = 'PROJECT_PERSON_ROLE_TYPE_CODE')
+SET @sqlQry = 'ALTER TABLE [dbo].[PIMS_PROJECT_PERSON_HIST] DROP CONSTRAINT IF EXISTS [' + @defName + ']'
+EXEC (@sqlQry)
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
