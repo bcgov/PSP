@@ -1218,7 +1218,11 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c2:disabled {
+.c2:-moz-read-only {
+  background: white;
+}
+
+.c2:read-only {
   background: white;
 }
 
@@ -1260,6 +1264,8 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             </span>
             <input
               class="c2 form-control"
+              data-testid="input-page-size"
+              readonly=""
               type="number"
               value="10"
             />

@@ -13,6 +13,7 @@ const setup = (
       options={selectorProps?.options ?? [5, 10, 20, 50, 100]}
       onChange={selectorProps?.onChange ?? vi.fn}
     />,
+    rest,
   );
   return { ...utils };
 };
@@ -32,5 +33,17 @@ describe('Page size selector', () => {
     });
 
     expect(onChange).toHaveBeenCalledWith(5);
+  });
+
+  it(`displays the new page size value when page size is changed`, async () => {
+    const onChange = vi.fn();
+    const { getByTitle, getByTestId } = setup({ props: { onChange } });
+
+    await act(async () => {
+      userEvent.click(getByTitle('menu-item-50'));
+    });
+
+    expect(onChange).toHaveBeenCalledWith(50);
+    expect(getByTestId('input-page-size')).toHaveValue(50);
   });
 });

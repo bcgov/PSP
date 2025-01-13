@@ -115,7 +115,7 @@ public partial class PimsAcquisitionFileTeam
     public virtual PimsPerson Person { get; set; }
 
     [InverseProperty("AcquisitionFileTeam")]
-    public virtual ICollection<PimsCompensationRequisition> PimsCompensationRequisitions { get; set; } = new List<PimsCompensationRequisition>();
+    public virtual ICollection<PimsCompReqPayee> PimsCompReqPayees { get; set; } = new List<PimsCompReqPayee>();
 
     [ForeignKey("PrimaryContactId")]
     [InverseProperty("PimsAcquisitionFileTeamPrimaryContacts")]

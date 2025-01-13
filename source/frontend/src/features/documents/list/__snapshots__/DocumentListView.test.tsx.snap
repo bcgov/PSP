@@ -277,7 +277,11 @@ exports[`Document List View > renders as expected 1`] = `
   padding: 0;
 }
 
-.c16:disabled {
+.c16:-moz-read-only {
+  background: white;
+}
+
+.c16:read-only {
   background: white;
 }
 
@@ -1464,6 +1468,8 @@ exports[`Document List View > renders as expected 1`] = `
                 </span>
                 <input
                   class="c16 form-control"
+                  data-testid="input-page-size"
+                  readonly=""
                   type="number"
                   value="10"
                 />
