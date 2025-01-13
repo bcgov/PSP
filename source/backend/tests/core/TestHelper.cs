@@ -222,10 +222,9 @@ namespace Pims.Core.Test
             return (T)ActivatorUtilities.CreateInstance(this.Provider, typeof(T));
         }
 
-        public IFormFile GetFormFile(string text)
+        public IFormFile GetFormFile(string text, string fileName = "test.pdf")
         {
             // Setup mock file using a memory stream
-            var fileName = "test.pdf";
             var stream = new MemoryStream();
             var writer = new StreamWriter(stream);
             writer.Write(text);
