@@ -7,87 +7,44 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table providing progress tracking of document inclusion into the MAYAN EDMS.
+/// Table to support multiple payees on a compensation requisition.
 /// </summary>
-[Table("PIMS_DOCUMENT_QUEUE")]
-[Index("DataSourceTypeCode", Name = "DOCQUE_DATA_SOURCE_TYPE_CODE_IDX")]
-[Index("DocumentId", Name = "DOCQUE_DOCUMENT_ID_IDX")]
-[Index("DocumentQueueStatusTypeCode", Name = "DOCQUE_DOCUMENT_QUEUE_STATUS_TYPE_CODE_IDX")]
-public partial class PimsDocumentQueue
+[Table("PIMS_COMP_REQ_PAYEE")]
+[Index("AcquisitionFileTeamId", Name = "CMPRQP_ACQUISITION_FILE_TEAM_ID_IDX")]
+[Index("CompensationRequisitionId", Name = "CMPRQP_COMPENSATION_REQUISITION_ID_IDX")]
+[Index("InterestHolderId", Name = "CMPRQP_INTEREST_HOLDER_ID_IDX")]
+public partial class PimsCompReqPayee
 {
     /// <summary>
     /// Generated surrogate primary key.
     /// </summary>
     [Key]
-    [Column("DOCUMENT_QUEUE_ID")]
-    public long DocumentQueueId { get; set; }
+    [Column("COMP_REQ_PAYEE_ID")]
+    public long CompReqPayeeId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_DOCUMENT table.
+    /// Foreign key reference to the PIMS_COMPENSATION_REQUISITION table.
     /// </summary>
-    [Column("DOCUMENT_ID")]
-    public long? DocumentId { get; set; }
+    [Column("COMPENSATION_REQUISITION_ID")]
+    public long? CompensationRequisitionId { get; set; }
 
     /// <summary>
-    /// Code value that represents the current status of the document as it is processed by PIMS/MAYAN
+    /// Foreign key reference to the PIMS_ACQUISITION_OWNER table.
     /// </summary>
-    [Required]
-    [Column("DOCUMENT_QUEUE_STATUS_TYPE_CODE")]
-    [StringLength(20)]
-    public string DocumentQueueStatusTypeCode { get; set; }
+    [Column("ACQUISITION_OWNER_ID")]
+    public long? AcquisitionOwnerId { get; set; }
 
     /// <summary>
-    /// Code value that refers to the source system the document originated in.
+    /// Foreign key reference to the PIMS_INTEREST_HOLDER table.
     /// </summary>
-    [Required]
-    [Column("DATA_SOURCE_TYPE_CODE")]
-    [StringLength(20)]
-    public string DataSourceTypeCode { get; set; }
+    [Column("INTEREST_HOLDER_ID")]
+    public long? InterestHolderId { get; set; }
 
     /// <summary>
-    /// Fluid key used to uniquely identify document in external system.
+    /// Foreign key reference to the PIMS_ACQUISITION_FILE_TEAM table.
     /// </summary>
-    [Column("DOCUMENT_EXTERNAL_ID")]
-    [StringLength(1000)]
-    public string DocumentExternalId { get; set; }
-
-    /// <summary>
-    /// Used to store JSON-encoded metadata that needs to be added to the document during upload.
-    /// </summary>
-    [Column("DOCUMENT_METADATA")]
-    [StringLength(4000)]
-    public string DocumentMetadata { get; set; }
-
-    /// <summary>
-    /// When the document is sent to the backend for processing, this will be populated.
-    /// </summary>
-    [Column("DOC_PROCESS_START_DT", TypeName = "datetime")]
-    public DateTime? DocProcessStartDt { get; set; }
-
-    /// <summary>
-    /// When the document?s processing finishes, this will be populated
-    /// </summary>
-    [Column("DOC_PROCESS_END_DT", TypeName = "datetime")]
-    public DateTime? DocProcessEndDt { get; set; }
-
-    /// <summary>
-    /// The number of times that this document has been queued for upload.
-    /// </summary>
-    [Column("DOC_PROCESS_RETRIES")]
-    public int? DocProcessRetries { get; set; }
-
-    /// <summary>
-    /// If the upload process fails, the error corresponding to the failure will be displayed here.
-    /// </summary>
-    [Column("MAYAN_ERROR")]
-    [StringLength(4000)]
-    public string MayanError { get; set; }
-
-    /// <summary>
-    /// The actual document blob, stored temporarily until after processing completes.
-    /// </summary>
-    [Column("DOCUMENT")]
-    public byte[] Document { get; set; }
+    [Column("ACQUISITION_FILE_TEAM_ID")]
+    public long? AcquisitionFileTeamId { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -179,15 +136,19 @@ public partial class PimsDocumentQueue
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("DataSourceTypeCode")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsDataSourceType DataSourceTypeCodeNavigation { get; set; }
+    [ForeignKey("AcquisitionFileTeamId")]
+    [InverseProperty("PimsCompReqPayees")]
+    public virtual PimsAcquisitionFileTeam AcquisitionFileTeam { get; set; }
 
-    [ForeignKey("DocumentId")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsDocument DocumentNavigation { get; set; }
+    [ForeignKey("AcquisitionOwnerId")]
+    [InverseProperty("PimsCompReqPayees")]
+    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
 
-    [ForeignKey("DocumentQueueStatusTypeCode")]
-    [InverseProperty("PimsDocumentQueues")]
-    public virtual PimsDocumentQueueStatusType DocumentQueueStatusTypeCodeNavigation { get; set; }
+    [ForeignKey("CompensationRequisitionId")]
+    [InverseProperty("PimsCompReqPayees")]
+    public virtual PimsCompensationRequisition CompensationRequisition { get; set; }
+
+    [ForeignKey("InterestHolderId")]
+    [InverseProperty("PimsCompReqPayees")]
+    public virtual PimsInterestHolder InterestHolder { get; set; }
 }
