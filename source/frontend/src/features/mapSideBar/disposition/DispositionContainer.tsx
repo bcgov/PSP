@@ -271,6 +271,10 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
           title: 'Error',
           message: axiosError?.response?.data.error,
           okButtonText: 'Close',
+          handleOk: async () => {
+            formikRef.current?.resetForm();
+            setDisplayModal(false);
+          },
         });
         setDisplayModal(true);
       },

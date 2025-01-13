@@ -320,6 +320,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
           title: 'Error',
           message: axiosError?.response?.data.error,
           okButtonText: 'Close',
+          handleOk: async () => {
+            formikRef.current?.resetForm();
+            setDisplayModal(false);
+          },
         });
         setDisplayModal(true);
       },

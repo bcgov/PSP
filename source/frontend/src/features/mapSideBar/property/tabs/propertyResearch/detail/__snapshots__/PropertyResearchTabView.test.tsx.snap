@@ -6,14 +6,274 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
     class="Toastify"
   />
   <div />
-  .c3 {
+  .c2.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c2.btn .Button__value {
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
+}
+
+.c2.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c2.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c2.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c2.btn.btn-primary:hover,
+.c2.btn.btn-primary:active,
+.c2.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c2.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c2.btn.btn-secondary:hover,
+.c2.btn.btn-secondary:active,
+.c2.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c2.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c2.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c2.btn.btn-light:hover,
+.c2.btn.btn-light:active,
+.c2.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c2.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c2.btn.btn-dark:hover,
+.c2.btn.btn-dark:active,
+.c2.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c2.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c2.btn.btn-danger:hover,
+.c2.btn.btn-danger:active,
+.c2.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c2.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c2.btn.btn-warning:hover,
+.c2.btn.btn-warning:active,
+.c2.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c2.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c2.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
+}
+
+.c2.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c3.c3.btn {
+  background-color: unset;
+  border: none;
+}
+
+.c3.c3.btn:hover,
+.c3.c3.btn:focus,
+.c3.c3.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c3.c3.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c3.c3.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c3.c3.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c3.c3.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c3.c3.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c3.c3.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c3.c3.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c3.c3.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
+}
+
+.c1 {
+  text-align: right;
+  overflow: hidden;
+}
+
+.c5 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2rem;
 }
 
-.c2 {
+.c4 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -21,23 +281,19 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
+.c7.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
+.c6 {
   font-weight: bold;
 }
 
 .c0 {
   background-color: #f2f2f2;
-}
-
-.c1 {
-  text-align: right;
 }
 
 <div
@@ -47,29 +303,36 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
       class="c1 mr-3 my-1"
     >
       <button
-        class="btn btn-link"
+        class="c2 Button c3 btn btn-primary"
+        data-testid="edit-button"
+        style="float: right;"
+        title="Edit Property Research"
         type="button"
       >
-        <svg
-          fill="currentColor"
-          height="2rem"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 576 512"
-          width="2rem"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="Button__value"
         >
-          <path
-            d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-          />
-        </svg>
+          <svg
+            fill="currentColor"
+            height="22"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 576 512"
+            width="22"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+            />
+          </svg>
+        </div>
       </button>
     </div>
     <div
-      class="c2 form-section"
+      class="c4 form-section"
     >
       <h2
-        class="c3"
+        class="c5"
       >
         <div
           class="no-gutters row"
@@ -91,13 +354,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Descriptive name:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             The Research Property name
           </div>
@@ -109,13 +372,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Purpose:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             Type A, Type B
           </div>
@@ -127,13 +390,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Legal opinion req'd?:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             Yes
           </div>
@@ -145,13 +408,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Legal opinion obtained?:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             Yes
           </div>
@@ -163,13 +426,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Document reference:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             A document reference
           </div>
@@ -177,10 +440,10 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
       </div>
     </div>
     <div
-      class="c2 form-section"
+      class="c4 form-section"
     >
       <h2
-        class="c3"
+        class="c5"
       >
         <div
           class="no-gutters row"
@@ -202,13 +465,13 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="pr-0 text-left col-4"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Summary comments:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           />
         </div>
         Research summary notes
