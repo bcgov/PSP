@@ -530,6 +530,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                 class="form-control"
                 id="input-name"
                 name="name"
+                style="word-break: break-all;"
                 title="New research file"
                 value="New research file"
               />
@@ -697,6 +698,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                 class="form-control"
                 id="input-roadName"
                 name="roadName"
+                style="word-break: break-all;"
                 title="Test road name"
                 value="Test road name"
               />
@@ -725,6 +727,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                 class="form-control"
                 id="input-roadAlias"
                 name="roadAlias"
+                style="word-break: break-all;"
                 title="Test road alias"
                 value="Test road alias"
               />
@@ -1036,6 +1039,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                       id="input-requestor.id"
                       name="requestor.id"
                       placeholder="Select from Contacts"
+                      style="word-break: break-all;"
                       title="O3"
                       value="O3"
                     />
@@ -1094,6 +1098,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-requestDescription"
             name="requestDescription"
+            style="word-break: break-all;"
             title="a request description"
           >
             a request description
@@ -1190,6 +1195,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-researchResult"
             name="researchResult"
+            style="word-break: break-all;"
             title="A research result"
           >
             A research result
@@ -1309,6 +1315,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-expropriationNotes"
             name="expropriationNotes"
+            style="word-break: break-all;"
             title="An expropriation note"
           >
             An expropriation note

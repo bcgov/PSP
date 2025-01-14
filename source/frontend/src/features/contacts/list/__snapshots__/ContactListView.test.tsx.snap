@@ -697,6 +697,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         id="input-summary"
                         name="summary"
                         placeholder="Name of person or organization"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -726,6 +727,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                           id="input-municipality"
                           name="municipality"
                           placeholder="City of contact's address"
+                          style="word-break: break-all;"
                           title=""
                           value=""
                         />

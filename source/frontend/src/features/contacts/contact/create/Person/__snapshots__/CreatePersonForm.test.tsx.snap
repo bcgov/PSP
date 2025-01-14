@@ -386,6 +386,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-firstName"
                     name="firstName"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -414,6 +415,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-middleNames"
                     name="middleNames"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -442,6 +444,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-surname"
                     name="surname"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -470,6 +473,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-preferredName"
                     name="preferredName"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -622,6 +626,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-emailContactMethods.0.value"
                         name="emailContactMethods.0.value"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -745,6 +750,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-phoneContactMethods.0.value"
                         name="phoneContactMethods.0.value"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -963,6 +969,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-mailingAddress.streetAddress1"
                         name="mailingAddress.streetAddress1"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -1083,6 +1090,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-mailingAddress.municipality"
                     name="mailingAddress.municipality"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1137,6 +1145,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-mailingAddress.postal"
                     name="mailingAddress.postal"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1217,6 +1226,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-propertyAddress.streetAddress1"
                         name="propertyAddress.streetAddress1"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -1337,6 +1347,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-propertyAddress.municipality"
                     name="propertyAddress.municipality"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1391,6 +1402,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-propertyAddress.postal"
                     name="propertyAddress.postal"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1471,6 +1483,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                         class="form-control"
                         id="input-billingAddress.streetAddress1"
                         name="billingAddress.streetAddress1"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -1591,6 +1604,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-billingAddress.municipality"
                     name="billingAddress.municipality"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1645,6 +1659,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                     class="form-control"
                     id="input-billingAddress.postal"
                     name="billingAddress.postal"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -1680,6 +1695,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
                 id="input-comment"
                 name="comment"
                 rows="5"
+                style="word-break: break-all;"
                 title=""
               />
             </div>

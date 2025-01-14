@@ -13,6 +13,7 @@ exports[`AddressSubForm component > renders minimally as expected 1`] = `
       class="form-control"
       id="input-fileProperties.0.property.address.streetAddress1"
       name="fileProperties.0.property.address.streetAddress1"
+      style="word-break: break-all;"
       title="1234 mock Street"
       value="1234 mock Street"
     />
@@ -24,6 +25,7 @@ exports[`AddressSubForm component > renders minimally as expected 1`] = `
       class="form-control"
       id="input-fileProperties.0.property.address.streetAddress2"
       name="fileProperties.0.property.address.streetAddress2"
+      style="word-break: break-all;"
       title="N/A"
       value="N/A"
     />
@@ -35,6 +37,7 @@ exports[`AddressSubForm component > renders minimally as expected 1`] = `
       class="form-control"
       id="input-fileProperties.0.property.address.municipality"
       name="fileProperties.0.property.address.municipality"
+      style="word-break: break-all;"
       title="Victoria"
       value="Victoria"
     />
@@ -46,6 +49,7 @@ exports[`AddressSubForm component > renders minimally as expected 1`] = `
       class="form-control"
       id="input-fileProperties.0.property.address.postal"
       name="fileProperties.0.property.address.postal"
+      style="word-break: break-all;"
       title="V1V1V1"
       value="V1V1V1"
     />
@@ -57,6 +61,7 @@ exports[`AddressSubForm component > renders minimally as expected 1`] = `
       class="form-control"
       id="input-fileProperties.0.property.address.province.description"
       name="fileProperties.0.property.address.province.description"
+      style="word-break: break-all;"
       title="British Columbia"
       value="British Columbia"
     />
@@ -68,6 +73,7 @@ exports[`AddressSubForm component > renders minimally as expected 1`] = `
       class="form-control"
       id="input-fileProperties.0.property.address.country.description"
       name="fileProperties.0.property.address.country.description"
+      style="word-break: break-all;"
       title="Canada"
       value="Canada"
     />

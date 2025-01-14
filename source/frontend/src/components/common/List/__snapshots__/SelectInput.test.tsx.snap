@@ -75,6 +75,7 @@ exports[`SelectInput tests > renders correctly... 1`] = `
         <input
           class="form-control"
           id="input-undefined"
+          style="word-break: break-all;"
           value=""
         />
       </div>

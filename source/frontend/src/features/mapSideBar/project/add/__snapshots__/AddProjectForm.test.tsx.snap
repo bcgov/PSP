@@ -304,6 +304,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
                   class="form-control"
                   id="input-projectName"
                   name="projectName"
+                  style="word-break: break-all;"
                   title=""
                   value=""
                 />
@@ -333,6 +334,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
                   id="input-projectNumber"
                   name="projectNumber"
                   placeholder="if known"
+                  style="word-break: break-all;"
                   title=""
                   value=""
                 />
@@ -481,6 +483,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
                   class="form-control"
                   id="input-summary"
                   name="summary"
+                  style="word-break: break-all;"
                   title=""
                 />
               </div>
@@ -1158,6 +1161,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                   class="form-control"
                   id="input-projectName"
                   name="projectName"
+                  style="word-break: break-all;"
                   title="Project Cool A"
                   value="Project Cool A"
                 />
@@ -1187,6 +1191,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                   id="input-projectNumber"
                   name="projectNumber"
                   placeholder="if known"
+                  style="word-break: break-all;"
                   title="771"
                   value="771"
                 />
@@ -1335,6 +1340,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                   class="form-control"
                   id="input-summary"
                   name="summary"
+                  style="word-break: break-all;"
                   title="Summary of the Project Cool A"
                 >
                   Summary of the Project Cool A
@@ -1608,6 +1614,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                         disabled=""
                         id="input-products.0.code"
                         name="products.0.code"
+                        style="word-break: break-all;"
                         title="70"
                         value="70"
                       />
@@ -1641,6 +1648,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                         disabled=""
                         id="input-products.0.description"
                         name="products.0.description"
+                        style="word-break: break-all;"
                         title="Product A"
                         value="Product A"
                       />
@@ -1811,6 +1819,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                     class="form-control"
                     id="input-products.0.objective"
                     name="products.0.objective"
+                    style="word-break: break-all;"
                     title="Objective of Product A"
                   >
                     Objective of Product A
@@ -1840,6 +1849,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                     class="form-control"
                     id="input-products.0.scope"
                     name="products.0.scope"
+                    style="word-break: break-all;"
                     title="Scope of Product A"
                   >
                     Scope of Product A
@@ -1916,6 +1926,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                         disabled=""
                         id="input-products.1.code"
                         name="products.1.code"
+                        style="word-break: break-all;"
                         title="71"
                         value="71"
                       />
@@ -1949,6 +1960,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                         disabled=""
                         id="input-products.1.description"
                         name="products.1.description"
+                        style="word-break: break-all;"
                         title="Product B"
                         value="Product B"
                       />
@@ -2119,6 +2131,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                     class="form-control"
                     id="input-products.1.objective"
                     name="products.1.objective"
+                    style="word-break: break-all;"
                     title="Objective of Product B"
                   >
                     Objective of Product B
@@ -2148,6 +2161,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
                     class="form-control"
                     id="input-products.1.scope"
                     name="products.1.scope"
+                    style="word-break: break-all;"
                     title="Scope of Product B"
                   >
                     Scope of Product B

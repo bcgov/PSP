@@ -556,6 +556,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   class="form-control"
                   id="input-specialInstruction"
                   name="specialInstruction"
+                  style="word-break: break-all;"
                   title=""
                 />
               </div>
@@ -1233,6 +1234,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   class="form-control"
                   id="input-payee.gstNumber"
                   name="payee.gstNumber"
+                  style="word-break: break-all;"
                   title=""
                   value=""
                 />
@@ -1454,6 +1456,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   class="form-control"
                   id="input-detailedRemarks"
                   name="detailedRemarks"
+                  style="word-break: break-all;"
                   title=""
                 />
               </div>

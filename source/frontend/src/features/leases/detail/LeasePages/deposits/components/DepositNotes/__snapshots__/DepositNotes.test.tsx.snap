@@ -81,6 +81,7 @@ exports[`DepositNotes component > renders as expected 1`] = `
           id="input-returnNotes"
           name="returnNotes"
           rows="5"
+          style="word-break: break-all;"
           title="security deposit notes"
         >
           security deposit notes
