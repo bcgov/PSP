@@ -10,7 +10,7 @@ export interface IExpandableTextListProps<T> {
   keyFunction: (item: T, index: number) => string;
   delimiter?: ReactElement | string;
   maxCollapsedLength?: number;
-  displayedPerChunk?: number;
+  maxExpandedLength?: number;
   className?: string;
   moreText?: string;
   hideText?: string;
@@ -26,21 +26,21 @@ export function ExpandableTextList<T>({
   renderFunction,
   delimiter,
   maxCollapsedLength,
-  displayedPerChunk,
+  maxExpandedLength,
   moreText,
   hideText,
 }: IExpandableTextListProps<T>) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [displayedItemsLength, setDisplayedItemsLength] = useState(
-    !isExpanded ? maxCollapsedLength ?? items.length : displayedPerChunk ?? items.length,
+    !isExpanded ? maxCollapsedLength ?? items.length : maxExpandedLength ?? items.length,
   );
   const displayedItems = items.slice(0, displayedItemsLength);
 
   const updateDisplayedItemsLength = () => {
-    if (displayedPerChunk !== undefined && displayedItemsLength < items.length) {
+    if (maxExpandedLength !== undefined && displayedItemsLength < items.length) {
       const remainingItems = items.length - displayedItemsLength;
-      if (remainingItems >= displayedPerChunk) {
-        setDisplayedItemsLength(displayedItemsLength + displayedPerChunk);
+      if (remainingItems >= maxExpandedLength) {
+        setDisplayedItemsLength(displayedItemsLength + maxExpandedLength);
       } else {
         setDisplayedItemsLength(displayedItemsLength + remainingItems);
       }

@@ -76,7 +76,7 @@ export const HistoricalNumberFieldView: React.FC<IHistoricalNumbersViewProps> = 
             renderFunction={p => <>{p.historicalFileNumber}</>}
             delimiter={'; '}
             maxCollapsedLength={3}
-            displayedPerChunk={10}
+            maxExpandedLength={10}
             className="d-flex flex-wrap"
           />
         </GroupWrapper>
