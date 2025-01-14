@@ -32,11 +32,9 @@ export function ExpandableTextList<T>({
 }: IExpandableTextListProps<T>) {
   const [isExpanded, setIsExpanded] = useState(false);
   const [displayedItemsLength, setDisplayedItemsLength] = useState(
-    !isExpanded ? maxCollapsedLength : displayedPerChunk ?? items.length,
+    !isExpanded ? maxCollapsedLength ?? items.length : displayedPerChunk ?? items.length,
   );
   const displayedItems = items.slice(0, displayedItemsLength);
-
-  console.log(items.length - displayedItemsLength);
 
   const updateDisplayedItemsLength = () => {
     if (displayedPerChunk !== undefined && displayedItemsLength < items.length) {
