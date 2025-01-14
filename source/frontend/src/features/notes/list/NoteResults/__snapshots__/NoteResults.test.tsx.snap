@@ -785,7 +785,11 @@ exports[`Note Results Table > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c1:disabled {
+.c1:-moz-read-only {
+  background: white;
+}
+
+.c1:read-only {
   background: white;
 }
 
@@ -821,6 +825,8 @@ exports[`Note Results Table > matches snapshot 1`] = `
             </span>
             <input
               class="c1 form-control"
+              data-testid="input-page-size"
+              readonly=""
               type="number"
               value="10"
             />

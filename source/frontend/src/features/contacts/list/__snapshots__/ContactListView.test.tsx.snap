@@ -329,7 +329,11 @@ exports[`Contact List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c22:disabled {
+.c22:-moz-read-only {
+  background: white;
+}
+
+.c22:read-only {
   background: white;
 }
 
@@ -1376,6 +1380,8 @@ exports[`Contact List View > matches snapshot 1`] = `
                     </span>
                     <input
                       class="c22 form-control"
+                      data-testid="input-page-size"
+                      readonly=""
                       type="number"
                       value="10"
                     />

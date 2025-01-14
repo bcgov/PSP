@@ -13,6 +13,7 @@ using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
@@ -95,7 +96,7 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single acquisition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.AcquisitionFileEdit);
-            uploadRequest.ThrowInvalidFileSize();
+            ValidateDocumentUpload(uploadRequest);
 
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
@@ -117,7 +118,7 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single research file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ResearchFileEdit);
-            uploadRequest.ThrowInvalidFileSize();
+            ValidateDocumentUpload(uploadRequest);
 
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
@@ -139,7 +140,7 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single Project");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ProjectEdit);
-            uploadRequest.ThrowInvalidFileSize();
+            ValidateDocumentUpload(uploadRequest);
 
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
@@ -161,7 +162,7 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single Lease");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.LeaseEdit);
-            uploadRequest.ThrowInvalidFileSize();
+            ValidateDocumentUpload(uploadRequest);
 
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
@@ -183,7 +184,7 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single Property Activity");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
-            uploadRequest.ThrowInvalidFileSize();
+            ValidateDocumentUpload(uploadRequest);
 
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
@@ -205,7 +206,7 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single disposition file");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.DispositionEdit);
-            uploadRequest.ThrowInvalidFileSize();
+            ValidateDocumentUpload(uploadRequest);
 
             PimsDocument pimsDocument = CreatePimsDocument(uploadRequest);
             _documentQueueRepository.SaveChanges();
@@ -390,6 +391,16 @@ namespace Pims.Api.Services
             transaction.Commit();
 
             return result;
+        }
+
+        private static void ValidateDocumentUpload(DocumentUploadRequest uploadRequest)
+        {
+            uploadRequest.ThrowInvalidFileSize();
+
+            if (!DocumentService.IsValidDocumentExtension(uploadRequest.File.FileName))
+            {
+                throw new BusinessRuleViolationException($"This file has an invalid file extension.");
+            }
         }
 
         private PimsDocument CreatePimsDocument(DocumentUploadRequest uploadRequest, string documentExternalId = null)

@@ -183,8 +183,6 @@ export const CompensationListContainer: React.FC<ICompensationListContainerProps
       responsibility: null,
       finalizedDate: null,
       agreementDate: null,
-      expropriationNoticeServedDate: null,
-      expropriationVestingDate: null,
       generationDate: null,
       specialInstruction: null,
       detailedRemarks: null,

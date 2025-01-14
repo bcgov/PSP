@@ -8,15 +8,17 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { fromContactSummary } from '@/interfaces';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
+import { DocumentGenerationRequest } from '@/models/api/DocumentGenerationRequest';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { Api_GenerateExpropriationForm1 } from '@/models/generate/acquisition/GenerateExpropriationForm1';
 
 import { ExpropriationForm1Model } from '../../../tabs/expropriation/models';
 import { useGenerateExpropriationForm1 } from './useGenerateExpropriationForm1';
-import { fromContactSummary } from '@/interfaces';
 
 const generateFn = vi
   .fn()
@@ -124,6 +126,24 @@ describe('useGenerateExpropriationForm1 functions', () => {
     expect(getPersonConceptFn).toHaveBeenCalled();
     // expropriation authority call
     expect(getOrganizationConceptFn).toHaveBeenCalled();
+  });
+
+  it(`sends "Expropriation notice served date" in the json payload to generation api`, async () => {
+    const generate = setup();
+    const expropriationModel = new ExpropriationForm1Model();
+    expropriationModel.expropriationNoticeServedDate = '2024-10-05';
+
+    await act(async () => generate(1, expropriationModel));
+
+    const generateRequest: DocumentGenerationRequest = {
+      templateType: ApiGen_CodeTypes_FormTypes.FORM1.toString(),
+      convertToType: null,
+      templateData: expect.objectContaining<Partial<Api_GenerateExpropriationForm1>>({
+        notice_served_date: '2024-10-05',
+      }),
+    };
+
+    expect(generateFn).toHaveBeenCalledWith(generateRequest);
   });
 
   it('throws an error if no acquisition file is found', async () => {
