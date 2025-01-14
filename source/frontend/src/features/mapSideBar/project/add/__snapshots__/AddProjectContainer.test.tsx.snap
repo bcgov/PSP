@@ -530,6 +530,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
                         class="form-control"
                         id="input-projectName"
                         name="projectName"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -559,6 +560,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
                         id="input-projectNumber"
                         name="projectNumber"
                         placeholder="if known"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -707,6 +709,7 @@ exports[`AddProjectContainer component > renders as expected 1`] = `
                         class="form-control"
                         id="input-summary"
                         name="summary"
+                        style="word-break: break-all;"
                         title=""
                       />
                     </div>
