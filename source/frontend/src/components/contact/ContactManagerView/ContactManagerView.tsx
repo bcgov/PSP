@@ -3,9 +3,8 @@ import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
-import styled from 'styled-components';
 
-import { Button } from '@/components/common/buttons/Button';
+import { StyledAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants/claims';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
@@ -101,10 +100,10 @@ const ContactManagerView = ({
       <Row>
         {showAddButton && hasClaim(Claims.CONTACT_ADD) && (
           <Col xs="auto" xl="3" className="pl-0">
-            <StyledPrimaryButton onClick={() => history.push('/contact/new')}>
+            <StyledAddButton onClick={() => history.push('/contact/new')} className="m-4">
               <FaPlus className="mr-3" />
-              &nbsp;Add new contact
-            </StyledPrimaryButton>
+              &nbsp;Add New Contact
+            </StyledAddButton>
           </Col>
         )}
       </Row>
@@ -132,10 +131,3 @@ const ContactManagerView = ({
 };
 
 export default ContactManagerView;
-
-const StyledPrimaryButton = styled(Button)`
-  margin: 2rem 1.5rem;
-  &.btn.btn-primary {
-    background-color: ${props => props.theme.bcTokens.iconsColorSuccess};
-  }
-`;
