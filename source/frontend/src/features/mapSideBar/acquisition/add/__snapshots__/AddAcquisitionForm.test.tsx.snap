@@ -287,6 +287,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   padding-bottom: 0.8rem;
   padding-left: 1.2rem;
   padding-right: 2.8rem;
+  word-break: break-all;
   background-image: none;
   color: #9F9D9C;
   border: #606060 solid 0.1rem;
@@ -1714,6 +1715,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                                     id="input-pid"
                                     name="pid"
                                     placeholder="Enter a PID"
+                                    style="word-break: break-all;"
                                     title=""
                                     value=""
                                   />
@@ -2013,6 +2015,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 class="form-control"
                 id="input-fileName"
                 name="fileName"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />
@@ -2063,6 +2066,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 class="form-control"
                 id="input-legacyFileNumber"
                 name="legacyFileNumber"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />
@@ -2455,6 +2459,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                       id="input-ownerSolicitor.contact.id"
                       name="ownerSolicitor.contact.id"
                       placeholder="Select from Contacts"
+                      style="word-break: break-all;"
                       value=""
                     />
                   </div>
@@ -2528,6 +2533,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                       id="input-ownerRepresentative.contact.id"
                       name="ownerRepresentative.contact.id"
                       placeholder="Select from Contacts"
+                      style="word-break: break-all;"
                       value=""
                     />
                   </div>
@@ -2587,6 +2593,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 id="input-ownerRepresentative.comment"
                 name="ownerRepresentative.comment"
                 placeholder="Remarks or additional representative(s)"
+                style="word-break: break-all;"
               />
             </div>
           </div>
@@ -2889,6 +2896,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   padding-bottom: 0.8rem;
   padding-left: 1.2rem;
   padding-right: 2.8rem;
+  word-break: break-all;
   background-image: none;
   color: #9F9D9C;
   border: #606060 solid 0.1rem;
@@ -4308,6 +4316,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                                     id="input-pid"
                                     name="pid"
                                     placeholder="Enter a PID"
+                                    style="word-break: break-all;"
                                     title=""
                                     value=""
                                   />
@@ -4607,6 +4616,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 class="form-control"
                 id="input-fileName"
                 name="fileName"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />
@@ -4657,6 +4667,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 class="form-control"
                 id="input-legacyFileNumber"
                 name="legacyFileNumber"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />
@@ -4945,6 +4956,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                       id="input-ownerSolicitor.contact.id"
                       name="ownerSolicitor.contact.id"
                       placeholder="Select from Contacts"
+                      style="word-break: break-all;"
                       value=""
                     />
                   </div>
@@ -5018,6 +5030,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                       id="input-ownerRepresentative.contact.id"
                       name="ownerRepresentative.contact.id"
                       placeholder="Select from Contacts"
+                      style="word-break: break-all;"
                       value=""
                     />
                   </div>
@@ -5077,6 +5090,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 id="input-ownerRepresentative.comment"
                 name="ownerRepresentative.comment"
                 placeholder="Remarks or additional representative(s)"
+                style="word-break: break-all;"
               />
             </div>
           </div>

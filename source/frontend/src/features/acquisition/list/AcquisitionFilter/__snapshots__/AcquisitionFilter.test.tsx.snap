@@ -325,6 +325,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                     id="input-address"
                     name="address"
                     placeholder="Enter an address"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -459,6 +460,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                 id="input-acquisitionFileNameOrNumber"
                 name="acquisitionFileNameOrNumber"
                 placeholder="Acquisition file number or name or historical file number"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />
@@ -479,6 +481,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                 id="input-projectNameOrNumber"
                 name="projectNameOrNumber"
                 placeholder="Ministry or alternate project name or number"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />
