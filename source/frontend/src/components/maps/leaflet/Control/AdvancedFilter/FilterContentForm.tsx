@@ -269,10 +269,12 @@ const StyledResetContainer = styled.div`
 
 const StyledResetButton = styled(ResetButton)`
   &&.btn {
+    letter-spacing: unset;
     &.btn-info {
       .Button__value {
-        color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
-        text-decoration: underline;
+        font-size: 1.7rem;
+        font-weight: 400;
+        line-height: 1.5;
       }
     }
   }
