@@ -11,14 +11,14 @@ import { formatApiPersonNames } from '@/utils/personUtils';
 import { PayeeType } from './PayeeTypeModel';
 
 export class PayeeOption {
-  public readonly compensationRequisitionId: number | null;
-  public readonly payee_api_id: number | null;
-  public readonly rowVersion: number | null;
-  public readonly api_id: number;
-  public readonly text: string;
-  public readonly fullText: string;
-  public readonly value: string;
-  public readonly payeeType: PayeeType;
+  public compensationRequisitionId: number | null;
+  public payee_api_id: number | null;
+  public rowVersion: number | null;
+  public api_id: number;
+  public text: string;
+  public fullText: string;
+  public value: string;
+  public payeeType: PayeeType;
 
   private constructor(
     payee_api_id: number | null,
@@ -69,17 +69,21 @@ export class PayeeOption {
   }
 
   public static fromApi(compReqPayee: ApiGen_Concepts_CompReqPayee): PayeeOption {
+    let payee: PayeeOption = null;
     if (compReqPayee.acquisitionOwnerId) {
-      return PayeeOption.createOwner(compReqPayee.acquisitionOwner, compReqPayee);
+      payee = PayeeOption.createOwner(compReqPayee.acquisitionOwner, compReqPayee);
     } else if (compReqPayee.acquisitionFileTeamId) {
-      return PayeeOption.createTeamMember(compReqPayee.acquisitionFileTeam, compReqPayee);
+      payee = PayeeOption.createTeamMember(compReqPayee.acquisitionFileTeam, compReqPayee);
     } else if (compReqPayee.interestHolderId) {
-      return PayeeOption.createInterestHolder(compReqPayee.interestHolder, compReqPayee);
+      payee = PayeeOption.createInterestHolder(compReqPayee.interestHolder, compReqPayee);
     }
+    payee.rowVersion = compReqPayee.rowVersion;
+    return payee;
   }
 
   public toApi(): ApiGen_Concepts_CompReqPayee {
     const compReqPayeeModel: ApiGen_Concepts_CompReqPayee = {
+      ...getEmptyBaseAudit(),
       compensationRequisitionId: this.compensationRequisitionId,
       compensationRequisition: null,
       acquisitionOwnerId: null,
@@ -89,7 +93,7 @@ export class PayeeOption {
       acquisitionFileTeamId: null,
       acquisitionFileTeam: null,
       compReqPayeeId: this.payee_api_id,
-      ...getEmptyBaseAudit(),
+      rowVersion: this.rowVersion,
     };
 
     switch (this.payeeType) {
