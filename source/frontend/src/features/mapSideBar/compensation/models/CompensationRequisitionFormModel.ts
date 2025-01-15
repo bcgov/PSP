@@ -29,7 +29,6 @@ export class CompensationRequisitionFormModel {
   readonly finalizedDate: string;
   agreementDateTime = '';
   generationDateTime = '';
-  generationDateTime = '';
   specialInstruction = '';
   detailedRemarks = '';
   financials: FinancialActivityFormModel[] = [];

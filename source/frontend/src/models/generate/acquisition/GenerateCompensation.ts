@@ -35,7 +35,7 @@ export class Api_GenerateCompensation {
   service_line: string;
   responsibility_center: string;
   client: string;
-  payeeInformation: Api_GenerateCompensationPayee;
+  payee: Api_GenerateCompensationPayee;
   alternate_project: Api_GenerateProject | null;
   properties: Api_GenerateH120Property[];
 
@@ -116,7 +116,7 @@ export class Api_GenerateCompensation {
     this.service_line = compensation?.chartOfAccounts?.code ?? '';
     this.responsibility_center = compensation?.responsibility?.code ?? '';
     this.client = client;
-    this.payeeInformation = new Api_GenerateCompensationPayee(
+    this.payee = new Api_GenerateCompensationPayee(
       compensation,
       compReqPayees,
       compensation?.financials ?? [],
