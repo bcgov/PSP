@@ -39,6 +39,7 @@ exports[`LtsaLandSubForm component > renders charge sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.descriptionsOfLand.0.parcelIdentifier"
           name="titleOrders.0.orderedProduct.fieldedData.descriptionsOfLand.0.parcelIdentifier"
+          style="word-break: break-all;"
           title="009-212-434"
           value="009-212-434"
         />

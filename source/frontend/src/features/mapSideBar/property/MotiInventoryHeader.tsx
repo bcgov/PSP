@@ -77,7 +77,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   const hasLocation = exists(longitude) && exists(latitude);
 
   return (
-    <>
+    <HeaderMaxWidthHeight>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
       <Row className="no-gutters">
         <Col xs="7">
@@ -134,7 +134,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
         </Col>
       </Row>
       <StyledDivider />
-    </>
+    </HeaderMaxWidthHeight>
   );
 };
 
@@ -143,6 +143,12 @@ const StyledDivider = styled.div`
   border-bottom-style: solid;
   border-bottom-color: grey;
   border-bottom-width: 0.1rem;
+`;
+
+const HeaderMaxWidthHeight = styled.div`
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 50rem;
 `;
 
 export const PropertyStyleStatus = styled(InlineFlexDiv)`

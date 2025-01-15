@@ -270,6 +270,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               class="form-control"
               id="input-motiName"
               name="motiName"
+              style="word-break: break-all;"
               title=""
               value=""
             />
@@ -1082,6 +1083,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               class="form-control"
               id="input-description"
               name="description"
+              style="word-break: break-all;"
               title=""
             />
           </div>
@@ -1109,6 +1111,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               class="form-control"
               id="input-primaryArbitrationCity"
               name="primaryArbitrationCity"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -1137,6 +1140,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
               id="input-note"
               name="note"
               readonly=""
+              style="word-break: break-all;"
               title=""
             />
           </div>

@@ -221,6 +221,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
   padding-bottom: 0.8rem;
   padding-left: 1.2rem;
   padding-right: 2.8rem;
+  word-break: break-all;
   background-image: none;
   color: #9F9D9C;
   border: #606060 solid 0.1rem;
@@ -279,6 +280,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
                 id="input-expropriationAuthority.contact.id"
                 name="expropriationAuthority.contact.id"
                 placeholder="Select from Contacts"
+                style="word-break: break-all;"
                 value=""
               />
             </div>
@@ -545,6 +547,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
           class="form-control"
           id="input-landInterest"
           name="landInterest"
+          style="word-break: break-all;"
           title=""
           value=""
         />
@@ -584,6 +587,7 @@ exports[`Expropriation Form 1 > matches snapshot 1`] = `
           class="form-control"
           id="input-purpose"
           name="purpose"
+          style="word-break: break-all;"
           title=""
           value=""
         />

@@ -81,6 +81,7 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
                 class="form-control"
                 id="input-propertyName"
                 name="propertyName"
+                style="word-break: break-all;"
                 title="Corner of Nakya PL "
                 value="Corner of Nakya PL "
               />
@@ -400,6 +401,7 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
                 class="form-control"
                 id="input-documentReference"
                 name="documentReference"
+                style="word-break: break-all;"
                 value=""
               />
             </div>
@@ -449,6 +451,7 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
             class="form-control"
             id="input-researchSummary"
             name="researchSummary"
+            style="word-break: break-all;"
           />
         </div>
       </div>
