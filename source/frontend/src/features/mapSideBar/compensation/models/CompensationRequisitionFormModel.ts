@@ -1,18 +1,19 @@
 import { isNumber } from 'lodash';
 
 import { SelectOption } from '@/components/common/form';
+import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqAcquisitionProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqAcquisitionProperty';
 import { ApiGen_Concepts_CompReqLeaseProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseProperty';
+import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { isValidId, isValidIsoDateTime } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
 
-import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
-import { CompensationPayeeFormModel } from './AcquisitionPayeeFormModel';
 import { FinancialActivityFormModel } from './FinancialActivityFormModel';
 
 export class CompensationRequisitionFormModel {
@@ -28,12 +29,20 @@ export class CompensationRequisitionFormModel {
   readonly finalizedDate: string;
   agreementDateTime = '';
   generationDateTime = '';
+  generationDateTime = '';
   specialInstruction = '';
   detailedRemarks = '';
   financials: FinancialActivityFormModel[] = [];
-  payee: CompensationPayeeFormModel;
+  payees: PayeeOption[] = [];
+  leaseStakeholderId: string;
+  legacyPayee: string | null = null;
   alternateProject: IAutocompletePrediction | null = null;
   selectedProperties: ApiGen_Concepts_FileProperty[] = [];
+  isPaymentInTrust = false;
+  pretaxAmount = 0;
+  taxAmount = 0;
+  totalAmount = 0;
+  gstNumber = '';
   rowVersion: number | null = null;
 
   constructor(
@@ -45,15 +54,14 @@ export class CompensationRequisitionFormModel {
     this.id = id;
     this.acquisitionFileId = acquisitionFileId;
     this.leaseId = leaseId;
-    this.payee = new CompensationPayeeFormModel(id);
     this.finalizedDate = isValidIsoDateTime(finalizedDate) ? finalizedDate : '';
   }
 
-  toApi(payeeOptions: PayeeOption[]): ApiGen_Concepts_CompensationRequisition {
-    const modelWithPayeeInformation = this.payee.toApi(payeeOptions);
-
+  toApi(): ApiGen_Concepts_CompensationRequisition {
+    const compReqPayees =
+      this.payees?.map<ApiGen_Concepts_CompReqPayee>(formPayee => formPayee.toApi()) ?? [];
     return {
-      ...modelWithPayeeInformation,
+      ...getEmptyBaseAudit(),
       id: this.id,
       acquisitionFileId: this.acquisitionFileId,
       leaseId: this.leaseId,
@@ -78,6 +86,10 @@ export class CompensationRequisitionFormModel {
       generationDate: isValidIsoDateTime(this.generationDateTime) ? this.generationDateTime : null,
       specialInstruction: stringToNull(this.specialInstruction),
       detailedRemarks: stringToNull(this.detailedRemarks),
+      legacyPayee: this.legacyPayee,
+      isPaymentInTrust: this.isPaymentInTrust,
+      gstNumber: this.gstNumber,
+
       financials: this.financials
         .filter(x => !x.isEmpty())
         .map<ApiGen_Concepts_CompensationFinancial>(x => x.toApi()),
@@ -103,7 +115,21 @@ export class CompensationRequisitionFormModel {
               } as ApiGen_Concepts_CompReqLeaseProperty;
             })
           : null,
+      compReqPayees: compReqPayees ?? [],
+      compReqLeaseStakeholders: isValidId(+this.leaseStakeholderId)
+        ? [
+            {
+              ...getEmptyBaseAudit(),
+              leaseStakeholderId: +this.leaseStakeholderId,
+              compensationRequisitionId: this.id,
+              compReqLeaseStakeholderId: null,
+              leaseStakeholder: null,
+            },
+          ]
+        : [],
       rowVersion: this.rowVersion ?? null,
+      acquisitionFile: null,
+      alternateProject: null,
     };
   }
 
@@ -168,10 +194,16 @@ export class CompensationRequisitionFormModel {
       apiModel?.financials?.map(f => f.totalAmount ?? 0).reduce((prev, next) => prev + next, 0) ??
       0;
 
-    compensation.payee = CompensationPayeeFormModel.fromApi(apiModel);
-    compensation.payee.pretaxAmount = payeePretaxAmount;
-    compensation.payee.taxAmount = payeeTaxAmount;
-    compensation.payee.totalAmount = payeeTotalAmount;
+    compensation.payees =
+      apiModel?.compReqPayees?.map(compReqPayee => PayeeOption.fromApi(compReqPayee)) ?? [];
+    compensation.leaseStakeholderId = apiModel.compReqLeaseStakeholders?.length
+      ? apiModel?.compReqLeaseStakeholders[0].leaseStakeholderId.toString()
+      : null;
+    compensation.pretaxAmount = payeePretaxAmount ?? 0;
+    compensation.taxAmount = payeeTaxAmount ?? 0;
+    compensation.totalAmount = payeeTotalAmount ?? 0;
+    compensation.isPaymentInTrust = apiModel.isPaymentInTrust ?? false;
+    compensation.gstNumber = apiModel.gstNumber ?? '';
 
     if (apiModel.acquisitionFileId != null) {
       compensation.selectedProperties = apiModel.compReqAcquisitionProperties.map(

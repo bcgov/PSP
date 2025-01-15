@@ -9,13 +9,14 @@ import { Api_GenerateCompensation } from './GenerateCompensation';
 
 describe('GenerateCompensation tests', () => {
   it('Can Generate an empty compensation without throwing an error', () => {
-    const compensation = new Api_GenerateCompensation(null, [], null, [], []);
+    const compensation = new Api_GenerateCompensation(null, [], [], null, [], []);
     expect(compensation.generated_date).toBe(moment().format('MMM DD, YYYY'));
   });
 
   it('Builds an empty list of summary financials using the passed h120 categories and compensation financials', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[0],
+      [],
       [],
       {} as any,
       getMockH120Categories(),
@@ -27,6 +28,7 @@ describe('GenerateCompensation tests', () => {
   it('Builds a list of summary financials using the passed h120 categories and compensation financials', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
+      [],
       [],
       {} as any,
       getMockH120Categories(),
@@ -49,6 +51,7 @@ describe('GenerateCompensation tests', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[0],
       [],
+      [],
       {} as any,
       getMockH120Categories(),
       mockCompReqH120s(),
@@ -70,6 +73,7 @@ describe('GenerateCompensation tests', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
       [],
+      [],
       {} as any,
       getMockH120Categories(),
       mockCompReqH120s(),
@@ -82,6 +86,7 @@ describe('GenerateCompensation tests', () => {
     const compensation = new Api_GenerateCompensation(
       {} as any,
       [],
+      [],
       {} as any,
       getMockH120Categories(),
       mockCompReqH120s(),
@@ -92,6 +97,7 @@ describe('GenerateCompensation tests', () => {
   it('adds h120 financial pre-tax totals', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
+      [],
       [],
       {} as any,
       getMockH120Categories(),
@@ -106,34 +112,37 @@ describe('GenerateCompensation tests', () => {
     const compensation = new Api_GenerateCompensation(
       { ...mockCompensations[0], gstNumber: '1' },
       [],
+      [],
       new Api_GenerateAcquisitionFile({ file: null }),
       getMockH120Categories(),
       [],
     );
-    expect(compensation.payee.gst_number).toBe('1');
-    expect(compensation.payee.payment_in_trust).toBe(false);
+    expect(compensation.payeeInformation.gst_number).toBe('1');
+    expect(compensation.payeeInformation.payment_in_trust).toBe(false);
 
     mockCompensations[0].isPaymentInTrust = true;
     const compensationInTrust = new Api_GenerateCompensation(
       mockCompensations[0],
       [],
+      [],
       new Api_GenerateAcquisitionFile({ file: null }),
       getMockH120Categories(),
       [],
     );
 
-    expect(compensationInTrust.payee.payment_in_trust).toBe(true);
+    expect(compensationInTrust.payeeInformation.payment_in_trust).toBe(true);
   });
 
   it('can generate a payee with no cheques', () => {
     const compensation = new Api_GenerateCompensation(
       getMockApiCompensationList()[1],
       [],
+      [],
       new Api_GenerateAcquisitionFile({ file: null }),
       getMockH120Categories(),
       [],
     );
-    expect(compensation.payee.total_amount).toBe('$35.00');
-    expect(compensation.payee.payment_in_trust).toBe(false);
+    expect(compensation.payeeInformation.total_amount).toBe('$35.00');
+    expect(compensation.payeeInformation.payment_in_trust).toBe(false);
   });
 });
