@@ -58,6 +58,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private By productScopeInput = By.Id("input-products.0.scope");
         private By productDeleteButton = By.CssSelector("button[title='Delete Project']");
 
+        //Create Team Members Elements
+        private By teamMemberSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project Management Team')]");
+        private By teamMemberAddBttn = By.CssSelector("button[data-testid='add-team-member']");
+
         //View Project Form Elements
         private By projectViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Project')]");
         private By projectHeaderProjectNameLabel = By.XPath("//h1[contains(text(),'Project')]/parent::div/parent::div/following-sibling::div/div/div/div/div/div/label[contains(text(),'Project')]");
@@ -91,10 +95,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By projectOverrideConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
+        private SharedSelectContact sharedSelectContact;
 
         public Projects(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
+            sharedSelectContact = new SharedSelectContact(webDriver);
         }
 
         public void NavigateToCreateNewProject()
@@ -189,6 +195,16 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 webDriver.FindElement(productScopeDynamicInput).SendKeys(product.Scope);
             }
+        }
+
+        public void AddTeamMember(string teamMember, int index)
+        {
+            var elementNumber = index + 1;
+            WaitUntilClickable(teamMemberAddBttn);
+            FocusAndClick(teamMemberAddBttn);
+
+            FocusAndClick(By.XPath("//div[@data-testid='teamMemberRow-undefined']["+ elementNumber +"]/div/div/div/div/button[@title='Select Contact']"));
+            sharedSelectContact.SelectContact(teamMember, "Individual");
         }
 
         public void UpdateProject(Project project)
@@ -344,6 +360,9 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(projectAssociatedProdsSubtitle);
             AssertTrueIsDisplayed(projectAddProductButton);
 
+            AssertTrueIsDisplayed(teamMemberSubtitle);
+            AssertTrueIsDisplayed(teamMemberAddBttn);
+         
             AssertTrueIsDisplayed(projectCancelButton);
             AssertTrueIsDisplayed(projectSaveButton);
         }
@@ -482,6 +501,21 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(productScopeContent, product.Scope);
                 else    
                     AssertTrueContentEquals(productScopeContent, "no scope entered");
+            }
+        }
+
+        public void VerifyTeamMemberViewForm(List<string> teamMembers)
+        {
+            AssertTrueIsDisplayed(teamMemberSubtitle);
+
+            if (teamMembers!.Count > 0)
+            {
+                for (var i = 0; i < teamMembers.Count; i++)
+                {
+                    var index = i + 1;
+                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Project Management Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/label"), "Management team member:");
+                    AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Project Management Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a/span"), teamMembers[i]);
+                }
             }
         }
 
