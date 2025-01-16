@@ -1,8 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
-import Active from '@/assets/images/active.svg?react';
-import Inactive from '@/assets/images/inactive.svg?react';
+import ActiveIndicator from '@/components/common/ActiveIndicator';
 import { ColumnWithProps, renderTypeCode } from '@/components/Table';
 import { DateTimeCell } from '@/components/Table/DateCell';
 import { stringToFragment } from '@/utils';
@@ -18,8 +17,9 @@ export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[]
     clickable: true,
     sortable: true,
     width: 60,
-    Cell: (props: CellProps<FormUser>) =>
-      props.row.original.isDisabled ? <Inactive /> : <Active />,
+    Cell: (props: CellProps<FormUser>) => (
+      <ActiveIndicator active={!props.row.original.isDisabled} />
+    ),
   },
   {
     Header: 'IDIR/BCeID',

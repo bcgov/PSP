@@ -3,11 +3,11 @@ import React from 'react';
 import { Row } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 
-import Active from '@/assets/images/active.svg?react';
+import ActiveIndicator from '@/components/common/ActiveIndicator';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Input, Select } from '@/components/common/form';
 import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';
-import { FilterBoxForm } from '@/components/common/styles';
+import { FilterBoxForm, FlexRowNoGap } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import * as API from '@/constants/API';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
@@ -88,9 +88,13 @@ export const UsersFilterBar: React.FC<React.PropsWithChildren<IProps>> = ({ valu
             <Col md={3} sm={3}>
               <Row>
                 <Col>
-                  <ActiveFilterCheck<IUsersFilter> fieldName="activeOnly" setFilter={onChange} />
-                  <Active />
-                  <span className="ml-1">Show active users only</span>
+                  <FlexRowNoGap>
+                    <ActiveFilterCheck<IUsersFilter> fieldName="activeOnly" setFilter={onChange} />
+                    <ActiveIndicator active size={16} />
+                    <span className="ml-1">
+                      <b>Active</b> users only
+                    </span>
+                  </FlexRowNoGap>
                 </Col>
               </Row>
             </Col>
