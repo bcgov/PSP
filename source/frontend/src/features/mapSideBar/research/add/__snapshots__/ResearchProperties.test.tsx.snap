@@ -839,6 +839,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                                   id="input-pid"
                                   name="pid"
                                   placeholder="Enter a PID"
+                                  style="word-break: break-all;"
                                   title=""
                                   value=""
                                 />
@@ -1186,6 +1187,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                   class="form-control"
                   id="input-properties.0.name"
                   name="properties.0.name"
+                  style="word-break: break-all;"
                   value=""
                 />
               </div>
@@ -1354,6 +1356,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                   class="form-control"
                   id="input-properties.1.name"
                   name="properties.1.name"
+                  style="word-break: break-all;"
                   value=""
                 />
               </div>

@@ -40,6 +40,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.transactionType"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.transactionType"
+            style="word-break: break-all;"
             title="STATUTORY RIGHT-OF-WAY"
             value="STATUTORY RIGHT-OF-WAY"
           />
@@ -68,6 +69,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeNumber"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeNumber"
+            style="word-break: break-all;"
             title="H107642"
             value="H107642"
           />
@@ -96,6 +98,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.applicationReceivedDate"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.applicationReceivedDate"
+            style="word-break: break-all;"
             title="1972-10-23T21:38:00Z"
             value="1972-10-23T21:38:00Z"
           />
@@ -124,6 +127,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.0.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+            style="word-break: break-all;"
             title="BRITISH COLUMBIA HYDRO AND POWER AUTHORITY"
             value="BRITISH COLUMBIA HYDRO AND POWER AUTHORITY"
           />
@@ -153,6 +157,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.transactionType"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.transactionType"
+            style="word-break: break-all;"
             title="STATUTORY RIGHT-OF-WAY"
             value="STATUTORY RIGHT-OF-WAY"
           />
@@ -181,6 +186,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeNumber"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeNumber"
+            style="word-break: break-all;"
             title="N35326"
             value="N35326"
           />
@@ -209,6 +215,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.applicationReceivedDate"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.applicationReceivedDate"
+            style="word-break: break-all;"
             title="1977-04-14T22:32:00Z"
             value="1977-04-14T22:32:00Z"
           />
@@ -237,6 +244,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.1.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+            style="word-break: break-all;"
             title="THE CORPORATION OF DELTA"
             value="THE CORPORATION OF DELTA"
           />
@@ -266,6 +274,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.transactionType"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.transactionType"
+            style="word-break: break-all;"
             title="MORTGAGE"
             value="MORTGAGE"
           />
@@ -294,6 +303,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeNumber"
+            style="word-break: break-all;"
             title="BL158885"
             value="BL158885"
           />
@@ -322,6 +332,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.applicationReceivedDate"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.applicationReceivedDate"
+            style="word-break: break-all;"
             title="1997-05-07T16:51:00Z"
             value="1997-05-07T16:51:00Z"
           />
@@ -350,6 +361,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.2.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+            style="word-break: break-all;"
             title="RICHMOND SAVINGS CREDIT UNION"
             value="RICHMOND SAVINGS CREDIT UNION"
           />
@@ -379,6 +391,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.transactionType"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.transactionType"
+            style="word-break: break-all;"
             title="MORTGAGE"
             value="MORTGAGE"
           />
@@ -407,6 +420,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.chargeNumber"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.chargeNumber"
+            style="word-break: break-all;"
             title="BR248606"
             value="BR248606"
           />
@@ -435,6 +449,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.applicationReceivedDate"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.3.charge.applicationReceivedDate"
+            style="word-break: break-all;"
             title="2001-09-25T18:11:00Z"
             value="2001-09-25T18:11:00Z"
           />
@@ -464,6 +479,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.transactionType"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.transactionType"
+            style="word-break: break-all;"
             title="STATUTORY RIGHT OF WAY"
             value="STATUTORY RIGHT OF WAY"
           />
@@ -492,6 +508,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeNumber"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeNumber"
+            style="word-break: break-all;"
             title="CA5338545"
             value="CA5338545"
           />
@@ -520,6 +537,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.applicationReceivedDate"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.applicationReceivedDate"
+            style="word-break: break-all;"
             title="2016-07-13T21:01:28Z"
             value="2016-07-13T21:01:28Z"
           />
@@ -548,6 +566,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.lastNameOrCorpName1"
+            style="word-break: break-all;"
             title="ROGERS COMMUNICATIONS INC."
             value="ROGERS COMMUNICATIONS INC."
           />
@@ -570,6 +589,7 @@ exports[`LtsaChargeSubForm component > renders charge sub form 1`] = `
             class="form-control"
             id="input-titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.incorporationNumber"
             name="titleOrders.0.orderedProduct.fieldedData.chargesOnTitle.4.charge.chargeOwnershipGroups.0.chargeOwners.0.incorporationNumber"
+            style="word-break: break-all;"
             title="BC0921753"
             value="BC0921753"
           />

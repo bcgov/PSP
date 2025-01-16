@@ -27,9 +27,7 @@ export class CompensationRequisitionFormModel {
   responsibility: ApiGen_Concepts_FinancialCode | null = null;
   readonly finalizedDate: string;
   agreementDateTime = '';
-  expropriationNoticeServedDateTime = '';
-  expropriationVestingDateTime = '';
-  generationDatetTime = '';
+  generationDateTime = '';
   specialInstruction = '';
   detailedRemarks = '';
   financials: FinancialActivityFormModel[] = [];
@@ -77,15 +75,7 @@ export class CompensationRequisitionFormModel {
       responsibility: null,
       agreementDate: isValidIsoDateTime(this.agreementDateTime) ? this.agreementDateTime : null,
       finalizedDate: isValidIsoDateTime(this.finalizedDate) ? this.finalizedDate : null,
-      expropriationNoticeServedDate: isValidIsoDateTime(this.expropriationNoticeServedDateTime)
-        ? this.expropriationNoticeServedDateTime
-        : null,
-      expropriationVestingDate: isValidIsoDateTime(this.expropriationVestingDateTime)
-        ? this.expropriationVestingDateTime
-        : null,
-      generationDate: isValidIsoDateTime(this.generationDatetTime)
-        ? this.generationDatetTime
-        : null,
+      generationDate: isValidIsoDateTime(this.generationDateTime) ? this.generationDateTime : null,
       specialInstruction: stringToNull(this.specialInstruction),
       detailedRemarks: stringToNull(this.detailedRemarks),
       financials: this.financials
@@ -157,9 +147,7 @@ export class CompensationRequisitionFormModel {
           }
         : null;
     compensation.agreementDateTime = apiModel.agreementDate || '';
-    compensation.expropriationNoticeServedDateTime = apiModel.expropriationNoticeServedDate || '';
-    compensation.expropriationVestingDateTime = apiModel.expropriationVestingDate || '';
-    compensation.generationDatetTime = apiModel.generationDate || '';
+    compensation.generationDateTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';
     compensation.detailedRemarks = apiModel.detailedRemarks || '';
     compensation.financials =

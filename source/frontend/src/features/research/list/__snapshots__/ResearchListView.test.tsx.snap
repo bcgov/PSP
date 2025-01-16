@@ -530,6 +530,7 @@ exports[`Research List View > matches snapshot 1`] = `
                                   id="input-name"
                                   name="name"
                                   placeholder=""
+                                  style="word-break: break-all;"
                                   title=""
                                   value=""
                                 />
@@ -607,6 +608,7 @@ exports[`Research List View > matches snapshot 1`] = `
                               id="input-roadOrAlias"
                               name="roadOrAlias"
                               placeholder="Road name or alias"
+                              style="word-break: break-all;"
                               title=""
                               value=""
                             />
@@ -791,6 +793,7 @@ exports[`Research List View > matches snapshot 1`] = `
                               id="input-appLastUpdateUserid"
                               name="appLastUpdateUserid"
                               placeholder="User's IDIR"
+                              style="word-break: break-all;"
                               title=""
                               value=""
                             />

@@ -852,29 +852,29 @@ namespace Pims.Api.Services
 
             foreach (var compReq in compensationRequisitions)
             {
-                // Check for Acquisition File Owner removed
-                if (compReq.AcquisitionOwnerId is not null
-                    && !acquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(compReq.AcquisitionOwnerId))
-                    && currentAcquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(compReq.AcquisitionOwnerId)))
-                {
-                    throw new ForeignKeyDependencyException("Acquisition File Owner can not be removed since it's assigned as a payee for a compensation requisition");
-                }
+                // Check for Acquisition File Owner removed TODO: update for multiple payees.
+                //if (compReq.AcquisitionOwnerId is not null
+                //    && !acquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(compReq.AcquisitionOwnerId))
+                //    && currentAcquisitionFile.PimsAcquisitionOwners.Any(x => x.Internal_Id.Equals(compReq.AcquisitionOwnerId)))
+                //{
+                //    throw new ForeignKeyDependencyException("Acquisition File Owner can not be removed since it's assigned as a payee for a compensation requisition");
+                //}
 
-                // Check for Acquisition InterestHolders
-                if (compReq.InterestHolderId is not null
-                    && !acquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId))
-                    && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
-                {
-                    throw new ForeignKeyDependencyException("Acquisition File Interest Holders can not be removed since it's assigned as a payee for a compensation requisition");
-                }
+                //// Check for Acquisition InterestHolders
+                //if (compReq.InterestHolderId is not null
+                //    && !acquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId))
+                //    && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
+                //{
+                //    throw new ForeignKeyDependencyException("Acquisition File Interest Holders can not be removed since it's assigned as a payee for a compensation requisition");
+                //}
 
-                // Check for File Person
-                if (compReq.AcquisitionFileTeamId is not null
-                    && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId))
-                    && currentAcquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId)))
-                {
-                    throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
-                }
+                //// Check for File Person
+                //if (compReq.AcquisitionFileTeamId is not null
+                //    && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId))
+                //    && currentAcquisitionFile.PimsAcquisitionFileTeams.Any(x => x.Internal_Id.Equals(compReq.AcquisitionFileTeamId)))
+                //{
+                //    throw new ForeignKeyDependencyException("Acquisition File team member can not be removed since it's assigned as a payee for a compensation requisition");
+                //}
             }
         }
 
@@ -890,13 +890,13 @@ namespace Pims.Api.Services
 
             foreach (var compReq in compensationRequisitions)
             {
-                // Check for Interest Holder
-                if (compReq.InterestHolderId is not null
-                    && !interestHolders.Any(x => x.InterestHolderId.Equals(compReq.InterestHolderId))
-                    && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
-                {
-                    throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
-                }
+                // Check for Interest Holder: TODO: update for multiple payees.
+                //if (compReq.InterestHolderId is not null
+                //    && !interestHolders.Any(x => x.InterestHolderId.Equals(compReq.InterestHolderId))
+                //    && currentAcquisitionFile.PimsInterestHolders.Any(x => x.Internal_Id.Equals(compReq.InterestHolderId)))
+                //{
+                //    throw new ForeignKeyDependencyException("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition");
+                //}
             }
         }
 
