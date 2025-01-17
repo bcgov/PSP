@@ -108,6 +108,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               class="form-control"
               id="input-programName"
               name="programName"
+              style="word-break: break-all;"
               title="A program"
               value="A program"
             />
@@ -136,6 +137,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               class="form-control"
               id="input-type.description"
               name="type.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -163,6 +165,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               class="form-control"
               id="input-paymentReceivableType.description"
               name="paymentReceivableType.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -243,6 +246,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               class="form-control"
               id="input-initiatorType.description"
               name="initiatorType.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -270,6 +274,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               class="form-control"
               id="input-responsibilityType.description"
               name="responsibilityType.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -313,6 +318,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               class="form-control"
               id="input-motiName"
               name="motiName"
+              style="word-break: break-all;"
               title="test moti name"
               value="test moti name"
             />
@@ -341,6 +347,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               class="form-control"
               id="input-region.description"
               name="region.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -409,6 +416,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
               class="form-control"
               id="input-primaryArbitrationCity"
               name="primaryArbitrationCity"
+              style="word-break: break-all;"
               title="VICTORIA"
               value="VICTORIA"
             />
@@ -546,6 +554,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-programName"
               name="programName"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -573,6 +582,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-type.description"
               name="type.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -600,6 +610,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-paymentReceivableType.description"
               name="paymentReceivableType.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -680,6 +691,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-initiatorType.description"
               name="initiatorType.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -707,6 +719,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-responsibilityType.description"
               name="responsibilityType.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -750,6 +763,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-motiName"
               name="motiName"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -777,6 +791,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-region.description"
               name="region.description"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -843,6 +858,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
               class="form-control"
               id="input-primaryArbitrationCity"
               name="primaryArbitrationCity"
+              style="word-break: break-all;"
               value=""
             />
           </div>

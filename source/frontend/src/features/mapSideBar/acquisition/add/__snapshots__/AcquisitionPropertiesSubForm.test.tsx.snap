@@ -689,6 +689,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
                               id="input-pid"
                               name="pid"
                               placeholder="Enter a PID"
+                              style="word-break: break-all;"
                               title=""
                               value=""
                             />
@@ -1383,6 +1384,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
               class="form-control"
               id="input-properties.0.name"
               name="properties.0.name"
+              style="word-break: break-all;"
               value=""
             />
           </div>
@@ -1551,6 +1553,7 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
               class="form-control"
               id="input-properties.1.name"
               name="properties.1.name"
+              style="word-break: break-all;"
               value=""
             />
           </div>

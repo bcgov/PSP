@@ -426,6 +426,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                   class="form-control"
                   id="input-legalSurveyPlanNum"
                   name="legalSurveyPlanNum"
+                  style="word-break: break-all;"
                   value=""
                 />
               </div>
@@ -765,6 +766,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
                     class="form-control"
                     id="input-noLaterThanDays"
                     name="noLaterThanDays"
+                    style="word-break: break-all;"
                     value=""
                   />
                 </div>

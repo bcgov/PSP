@@ -214,54 +214,54 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   margin-right: 0;
 }
 
-.c5.c5.btn {
+.c8.c8.btn {
   background-color: unset;
   border: none;
 }
 
-.c5.c5.btn:hover,
-.c5.c5.btn:focus,
-.c5.c5.btn:active {
+.c8.c8.btn:hover,
+.c8.c8.btn:focus,
+.c8.c8.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c5.c5.btn svg {
+.c8.c8.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c5.c5.btn svg:hover {
+.c8.c8.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c5.c5.btn.btn-primary svg {
+.c8.c8.btn.btn-primary svg {
   color: #013366;
 }
 
-.c5.c5.btn.btn-primary svg:hover {
+.c8.c8.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c5.c5.btn.btn-light svg {
+.c8.c8.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c5.c5.btn.btn-light svg:hover {
+.c8.c8.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c5.c5.btn.btn-info svg {
+.c8.c8.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c5.c5.btn.btn-info svg:hover {
+.c8.c8.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c8 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -280,21 +280,21 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   margin-left: 0.5rem;
 }
 
-.c10 {
+.c13 {
   width: 1.6rem;
   height: 1.6rem;
-}
-
-.c9 {
-  width: 1.6rem;
-  height: 1.6rem;
-}
-
-.c11 {
-  margin-top: 0.3rem;
 }
 
 .c12 {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+.c14 {
+  margin-top: 0.3rem;
+}
+
+.c15 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -303,12 +303,33 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   padding: 0;
 }
 
-.c12:-moz-read-only {
+.c15:-moz-read-only {
   background: white;
 }
 
-.c12:read-only {
+.c15:read-only {
   background: white;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c6 {
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0;
 }
 
 .c2 {
@@ -324,6 +345,19 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
 .c3 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-right: 0.6rem;
+  color: #42814A;
 }
 
 .c0 {
@@ -342,7 +376,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   padding: 0;
 }
 
-.c6 {
+.c9 {
   padding: 1.6rem 3.2rem;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -352,7 +386,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
   overflow-x: auto;
 }
 
-.c7 {
+.c10 {
   padding: 1.5rem;
 }
 
@@ -546,6 +580,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                       id="input-businessIdentifierValue"
                       name="businessIdentifierValue"
                       placeholder="IDIR/Name"
+                      style="word-break: break-all;"
                       title=""
                       value=""
                     />
@@ -606,6 +641,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                       id="input-email"
                       name="email"
                       placeholder="Email"
+                      style="word-break: break-all;"
                       title=""
                       value=""
                     />
@@ -685,60 +721,58 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                   class="col"
                 >
                   <div
-                    class="d-inline-block m-0 form-group"
+                    class="c5 c6"
                   >
                     <div
-                      class="check-field"
+                      class="d-inline-block m-0 form-group"
                     >
                       <div
-                        class="form-check"
+                        class="check-field"
                       >
-                        <input
-                          checked=""
-                          class="form-check-input position-static"
-                          id="input-activeOnly"
-                          name="activeOnly"
-                          type="checkbox"
-                          value="true"
-                        />
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            checked=""
+                            class="form-check-input position-static"
+                            id="input-activeOnly"
+                            name="activeOnly"
+                            type="checkbox"
+                            value="true"
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <svg
-                    height="10"
-                    overflow="visible"
-                    preserveAspectRatio="none"
-                    viewBox="0 0 10 10"
-                    width="10"
-                    xmlns="http://www.w3.org/2000/svg"
-                    xmlns:xlink="http://www.w3.org/1999/xlink"
-                  >
-                    <g
-                      transform="translate(1, 1)"
+                    <div
+                      class="c7"
+                      data-testid="active-indicator"
                     >
-                      <defs>
-                        <path
-                          d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                          id="path-1635974705144170"
-                          vector-effect="non-scaling-stroke"
-                        />
-                      </defs>
-                      <g
-                        transform="translate(0, 0)"
+                      <svg
+                        fill="currentColor"
+                        height="16"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="16"
+                        xmlns="http://www.w3.org/2000/svg"
                       >
+                        <title>
+                          Active
+                        </title>
                         <path
-                          d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                          style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
-                          vector-effect="non-scaling-stroke"
+                          d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
                         />
-                      </g>
-                    </g>
-                  </svg>
-                  <span
-                    class="ml-1"
-                  >
-                    Show active users only
-                  </span>
+                      </svg>
+                    </div>
+                    <span
+                      class="ml-1"
+                    >
+                      <b>
+                        Active
+                      </b>
+                       users only
+                    </span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -749,7 +783,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
         class="align-items-center d-flex col-md-4"
       >
         <button
-          class="c4 Button c5 btn btn-primary"
+          class="c4 Button c8 btn btn-primary"
           type="button"
         >
           <div
@@ -774,7 +808,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
       </div>
     </div>
     <div
-      class="c6 c7"
+      class="c9 c10"
     >
       <div
         class="table"
@@ -800,11 +834,11 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               >
                 Active
                 <div
-                  class="c8"
+                  class="c11"
                   data-testid="sort-column-isDisabled"
                 >
                   <svg
-                    class="c9"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -819,7 +853,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c13"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -846,11 +880,11 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               >
                 IDIR/BCeID
                 <div
-                  class="c8"
+                  class="c11"
                   data-testid="sort-column-businessIdentifierValue"
                 >
                   <svg
-                    class="c9"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -865,7 +899,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c13"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -892,11 +926,11 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               >
                 First name
                 <div
-                  class="c8"
+                  class="c11"
                   data-testid="sort-column-firstName"
                 >
                   <svg
-                    class="c9"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -911,7 +945,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c13"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -938,11 +972,11 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               >
                 Last name
                 <div
-                  class="c8"
+                  class="c11"
                   data-testid="sort-column-surname"
                 >
                   <svg
-                    class="c9"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -957,7 +991,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c13"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -984,11 +1018,11 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               >
                 Email
                 <div
-                  class="c8"
+                  class="c11"
                   data-testid="sort-column-email"
                 >
                   <svg
-                    class="c9"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1003,7 +1037,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c13"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1030,11 +1064,11 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               >
                 Position
                 <div
-                  class="c8"
+                  class="c11"
                   data-testid="sort-column-position"
                 >
                   <svg
-                    class="c9"
+                    class="c12"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1049,7 +1083,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c13"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -1145,36 +1179,27 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title="Click IDIR/BCeID link to view User Information page"
               >
-                <svg
-                  height="10"
-                  overflow="visible"
-                  preserveAspectRatio="none"
-                  viewBox="0 0 10 10"
-                  width="10"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                <div
+                  class="c7"
+                  data-testid="active-indicator"
                 >
-                  <g
-                    transform="translate(1, 1)"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="10"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <defs>
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        id="path-1635974705144170"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </defs>
-                    <g
-                      transform="translate(0, 0)"
-                    >
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </g>
-                  </g>
-                </svg>
+                    <title>
+                      Active
+                    </title>
+                    <path
+                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
                 class="td"
@@ -1335,36 +1360,27 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title="Click IDIR/BCeID link to view User Information page"
               >
-                <svg
-                  height="10"
-                  overflow="visible"
-                  preserveAspectRatio="none"
-                  viewBox="0 0 10 10"
-                  width="10"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                <div
+                  class="c7"
+                  data-testid="active-indicator"
                 >
-                  <g
-                    transform="translate(1, 1)"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="10"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <defs>
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        id="path-1635974705144170"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </defs>
-                    <g
-                      transform="translate(0, 0)"
-                    >
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </g>
-                  </g>
-                </svg>
+                    <title>
+                      Active
+                    </title>
+                    <path
+                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
                 class="td"
@@ -1523,36 +1539,27 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title="Click IDIR/BCeID link to view User Information page"
               >
-                <svg
-                  height="10"
-                  overflow="visible"
-                  preserveAspectRatio="none"
-                  viewBox="0 0 10 10"
-                  width="10"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                <div
+                  class="c7"
+                  data-testid="active-indicator"
                 >
-                  <g
-                    transform="translate(1, 1)"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="10"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <defs>
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        id="path-1635974705144170"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </defs>
-                    <g
-                      transform="translate(0, 0)"
-                    >
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </g>
-                  </g>
-                </svg>
+                    <title>
+                      Active
+                    </title>
+                    <path
+                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
                 class="td"
@@ -1713,36 +1720,27 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title="Click IDIR/BCeID link to view User Information page"
               >
-                <svg
-                  height="10"
-                  overflow="visible"
-                  preserveAspectRatio="none"
-                  viewBox="0 0 10 10"
-                  width="10"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                <div
+                  class="c7"
+                  data-testid="active-indicator"
                 >
-                  <g
-                    transform="translate(1, 1)"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="10"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <defs>
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        id="path-1635974705144170"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </defs>
-                    <g
-                      transform="translate(0, 0)"
-                    >
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </g>
-                  </g>
-                </svg>
+                    <title>
+                      Active
+                    </title>
+                    <path
+                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
                 class="td"
@@ -1897,36 +1895,27 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                 style="box-sizing: border-box; flex: 60 0 auto; min-width: 30px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title="Click IDIR/BCeID link to view User Information page"
               >
-                <svg
-                  height="10"
-                  overflow="visible"
-                  preserveAspectRatio="none"
-                  viewBox="0 0 10 10"
-                  width="10"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
+                <div
+                  class="c7"
+                  data-testid="active-indicator"
                 >
-                  <g
-                    transform="translate(1, 1)"
+                  <svg
+                    fill="currentColor"
+                    height="10"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="10"
+                    xmlns="http://www.w3.org/2000/svg"
                   >
-                    <defs>
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        id="path-1635974705144170"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </defs>
-                    <g
-                      transform="translate(0, 0)"
-                    >
-                      <path
-                        d="M4 0 C6.207660097976 0 8 1.7923399020239998 8 4 C8 6.207660097976 6.207660097976 8 4 8 C1.7923399020239998 8 0 6.207660097976 0 4 C0 1.7923399020239998 1.7923399020239998 0 4 0 Z"
-                        style="stroke: rgb(255, 255, 255); stroke-width: 1; stroke-linecap: butt; stroke-linejoin: miter; fill: rgb(146, 237, 36);"
-                        vector-effect="non-scaling-stroke"
-                      />
-                    </g>
-                  </g>
-                </svg>
+                    <title>
+                      Active
+                    </title>
+                    <path
+                      d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                    />
+                  </svg>
+                </div>
               </div>
               <div
                 class="td"
@@ -2097,19 +2086,19 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c11"
+                  class="c14"
                 >
                   Show
                 </span>
                 <input
-                  class="c12 form-control"
+                  class="c15 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c11"
+                  class="c14"
                 >
                   Entries
                 </span>

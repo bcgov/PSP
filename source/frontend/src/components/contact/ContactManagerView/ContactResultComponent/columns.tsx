@@ -1,9 +1,9 @@
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
-import { FaCircle } from 'react-icons/fa';
 import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
+import ActiveIndicator from '@/components/common/ActiveIndicator';
 import EditButton from '@/components/common/buttons/EditButton';
 import ViewButton from '@/components/common/buttons/ViewButton';
 import { InlineFlexDiv } from '@/components/common/styles';
@@ -22,9 +22,7 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     maxWidth: 10,
     minWidth: 10,
     Cell: (props: CellProps<IContactSearchResult>) => (
-      <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
-        <FaCircle size={10} className="mr-2" />
-      </StatusIndicators>
+      <ActiveIndicator active={!props.row.original.isDisabled} />
     ),
   },
   {

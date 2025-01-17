@@ -14,7 +14,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 }
 
 <div />
-  .c9.btn {
+  .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -43,19 +43,19 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c9.btn .Button__value {
+.c10.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c9.btn:hover {
+.c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c10.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -63,31 +63,31 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c10.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-primary:hover,
-.c9.btn.btn-primary:active,
-.c9.btn.btn-primary:focus {
+.c10.btn.btn-primary:hover,
+.c10.btn.btn-primary:active,
+.c10.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c9.btn.btn-secondary {
+.c10.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c9.btn.btn-secondary:hover,
-.c9.btn.btn-secondary:active,
-.c9.btn.btn-secondary:focus {
+.c10.btn.btn-secondary:hover,
+.c10.btn.btn-secondary:active,
+.c10.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-info {
+.c10.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -95,66 +95,66 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c9.btn.btn-light {
+.c10.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c9.btn.btn-light:hover,
-.c9.btn.btn-light:active,
-.c9.btn.btn-light:focus {
+.c10.btn.btn-light:hover,
+.c10.btn.btn-light:active,
+.c10.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c9.btn.btn-dark {
+.c10.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c9.btn.btn-dark:hover,
-.c9.btn.btn-dark:active,
-.c9.btn.btn-dark:focus {
+.c10.btn.btn-dark:hover,
+.c10.btn.btn-dark:active,
+.c10.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c9.btn.btn-danger {
+.c10.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-danger:hover,
-.c9.btn.btn-danger:active,
-.c9.btn.btn-danger:focus {
+.c10.btn.btn-danger:hover,
+.c10.btn.btn-danger:active,
+.c10.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-warning {
+.c10.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c9.btn.btn-warning:hover,
-.c9.btn.btn-warning:active,
-.c9.btn.btn-warning:focus {
+.c10.btn.btn-warning:hover,
+.c10.btn.btn-warning:active,
+.c10.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c9.btn.btn-link {
+.c10.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -178,9 +178,9 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -190,15 +190,15 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -210,16 +210,29 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c9.Button .Button__icon {
+.c10.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c10.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c10.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-right: 0.6rem;
+  color: #42814A;
 }
 
 .c3 {
@@ -248,6 +261,17 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c6 {
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0;
 }
 
 .c1.form-group {
@@ -298,7 +322,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   margin-bottom: unset;
 }
 
-.c7 {
+.c8 {
   border-left: 1px solid white;
   font-size: 3.4rem;
   margin: 0 36px 0 36px;
@@ -312,7 +336,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   max-width: 85%;
 }
 
-.c8 {
+.c9 {
   padding-right: 0rem;
   padding-left: 1rem;
 }
@@ -323,13 +347,6 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
 
 .c5 {
   max-width: 25rem;
-}
-
-.c6 {
-  display: inline-block;
-  margin: 0rem 0.5rem;
-  padding: 0.2rem;
-  color: #42814A;
 }
 
 @media only screen and (max-width:1199px) {
@@ -503,6 +520,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
               id="input-summary"
               name="summary"
               placeholder="Name of person or organization"
+              style="word-break: break-all;"
               title=""
               value=""
             />
@@ -532,57 +550,68 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
                 id="input-municipality"
                 name="municipality"
                 placeholder="City of contact's address"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />
             </div>
           </div>
           <div
-            class="pl-0 col"
+            class="pl-4 col"
           >
             <div
-              class="d-inline-block m-0 form-group"
+              class="c2 c6"
             >
               <div
-                class="check-field"
+                class="d-inline-block m-0 form-group"
               >
                 <div
-                  class="form-check"
+                  class="check-field"
                 >
-                  <input
-                    checked=""
-                    class="form-check-input position-static"
-                    id="input-activeContactsOnly"
-                    name="activeContactsOnly"
-                    type="checkbox"
-                    value="true"
-                  />
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      checked=""
+                      class="form-check-input position-static"
+                      id="input-activeContactsOnly"
+                      name="activeContactsOnly"
+                      type="checkbox"
+                      value="true"
+                    />
+                  </div>
                 </div>
               </div>
-            </div>
-            <div
-              class="c6"
-            >
-              <svg
-                fill="currentColor"
-                height="16"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="16"
-                xmlns="http://www.w3.org/2000/svg"
+              <div
+                class="c7"
+                data-testid="active-indicator"
               >
-                <path
-                  d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
-                />
-              </svg>
+                <svg
+                  fill="currentColor"
+                  height="16"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="16"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    Active
+                  </title>
+                  <path
+                    d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                  />
+                </svg>
+              </div>
+              <span
+                class="ml-1"
+              >
+                <b>
+                  Active
+                </b>
+                 contacts only
+              </span>
             </div>
-            <span>
-              <b>
-                Active
-              </b>
-               contacts only
-            </span>
           </div>
         </div>
       </div>
@@ -596,7 +625,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
             class="pr-0 col-auto"
           >
             <span
-              class="c7"
+              class="c8"
             />
           </div>
           <div
@@ -606,10 +635,10 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
               class="row"
             >
               <div
-                class="c8 col-auto"
+                class="c9 col-auto"
               >
                 <button
-                  class="c9 Button Button--icon-only primary btn btn-primary"
+                  class="c10 Button Button--icon-only primary btn btn-primary"
                   data-testid="search"
                   id="search-button"
                   title="search"
@@ -635,10 +664,10 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
                 </button>
               </div>
               <div
-                class="c8 col-auto"
+                class="c9 col-auto"
               >
                 <button
-                  class="c9 Button Button--icon-only btn btn-info"
+                  class="c10 Button Button--icon-only btn btn-info"
                   data-testid="reset-button"
                   id="reset-button"
                   title="reset-button"

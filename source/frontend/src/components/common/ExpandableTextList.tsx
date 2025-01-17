@@ -1,4 +1,4 @@
-import { Fragment, ReactElement, useState } from 'react';
+import { Fragment, ReactElement, useEffect, useState } from 'react';
 
 import { exists } from '@/utils/utils';
 
@@ -10,6 +10,7 @@ export interface IExpandableTextListProps<T> {
   keyFunction: (item: T, index: number) => string;
   delimiter?: ReactElement | string;
   maxCollapsedLength?: number;
+  maxExpandedLength?: number;
   className?: string;
   moreText?: string;
   hideText?: string;
@@ -25,12 +26,39 @@ export function ExpandableTextList<T>({
   renderFunction,
   delimiter,
   maxCollapsedLength,
+  maxExpandedLength,
   moreText,
   hideText,
 }: IExpandableTextListProps<T>) {
   const [isExpanded, setIsExpanded] = useState(false);
-  const displayedItemsLength = !isExpanded ? maxCollapsedLength ?? items.length : items.length;
+  const [displayedItemsLength, setDisplayedItemsLength] = useState(
+    !isExpanded ? maxCollapsedLength ?? items.length : maxExpandedLength ?? items.length,
+  );
   const displayedItems = items.slice(0, displayedItemsLength);
+
+  const updateDisplayedItemsLength = () => {
+    if (maxExpandedLength !== undefined && displayedItemsLength < items.length) {
+      const remainingItems = items.length - displayedItemsLength;
+      if (remainingItems >= maxExpandedLength) {
+        setDisplayedItemsLength(displayedItemsLength + maxExpandedLength);
+      } else {
+        setDisplayedItemsLength(displayedItemsLength + remainingItems);
+      }
+    } else {
+      setIsExpanded(prevState => !prevState);
+    }
+  };
+
+  useEffect(() => {
+    setDisplayedItemsLength(!isExpanded ? maxCollapsedLength ?? items.length : items.length);
+  }, [isExpanded, items.length, maxCollapsedLength]);
+
+  useEffect(() => {
+    if (displayedItemsLength === items.length) {
+      setIsExpanded(true);
+    }
+  }, [displayedItemsLength, items.length]);
+
   return (
     <Fragment>
       {displayedItems.map((item: T, index: number) => (
@@ -40,7 +68,7 @@ export function ExpandableTextList<T>({
         </span>
       ))}
       {exists(maxCollapsedLength) && maxCollapsedLength < items.length && (
-        <LinkButton data-testid="expand" onClick={() => setIsExpanded(collapse => !collapse)}>
+        <LinkButton data-testid="expand" onClick={() => updateDisplayedItemsLength()}>
           {isExpanded
             ? hideText ?? 'hide'
             : `[+${items.length - displayedItemsLength} ${moreText ?? 'more...'}]`}
