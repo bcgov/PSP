@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using System.Diagnostics;
+using System.Security.Policy;
 using System.Text.RegularExpressions;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -56,11 +58,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private By productObjectiveInput = By.Id("input-products.0.objective");
         private By productScopeLabel = By.XPath("//label[contains(text(),'Scope')]");
         private By productScopeInput = By.Id("input-products.0.scope");
-        private By productDeleteButton = By.CssSelector("button[title='Delete Project']");
+        private By productDeleteButton = By.CssSelector("button[title='Delete Product']");
 
         //Create Team Members Elements
         private By teamMemberSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project Management Team')]");
         private By teamMemberAddBttn = By.CssSelector("button[data-testid='add-team-member']");
+        private By teamMemberSelectContactBttn = By.XPath("//div[@data-testid='teamMemberRow-undefined']/div/div/div/div/button[@title='Select Contact']");
+        private By teamMembersCount = By.XPath("//div[contains(text(),'Project Management Team')]/parent::div/parent::h2/following-sibling::div/div");
+        private By teamMember1stDeleteBttn = By.XPath("//div[contains(text(),'Project Management Team')]/parent::div/parent::h2/following-sibling::div/div[1]/div[2]/button");
 
         //View Project Form Elements
         private By projectViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Project')]");
@@ -197,13 +202,12 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void AddTeamMember(string teamMember, int index)
+        public void AddUpdateTeamMember(string teamMember)
         {
-            var elementNumber = index + 1;
             WaitUntilClickable(teamMemberAddBttn);
-            FocusAndClick(teamMemberAddBttn);
+            webDriver.FindElement(teamMemberAddBttn).Click();
 
-            FocusAndClick(By.XPath("//div[@data-testid='teamMemberRow-undefined']["+ elementNumber +"]/div/div/div/div/button[@title='Select Contact']"));
+            webDriver.FindElement(teamMemberSelectContactBttn).Click();
             sharedSelectContact.SelectContact(teamMember, "Individual");
         }
 
@@ -219,31 +223,34 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(projectNameInput);
             if (project.Name != "")
-            {
                 webDriver.FindElement(projectNameInput).SendKeys(project.Name);
-            }
+
             if (project.Number != "")
-            {
                 webDriver.FindElement(projectNumberInput).SendKeys(project.Number);
-            }
-            if (project.ProjectStatus != "") { ChooseSpecificSelectOption(projectStatusSelect, project.ProjectStatus); }
-            if (project.ProjectMOTIRegion != "") { ChooseSpecificSelectOption(projectMOTIRegionInput, project.ProjectMOTIRegion); }
+
+            if (project.ProjectStatus != "")
+                ChooseSpecificSelectOption(projectStatusSelect, project.ProjectStatus);
+
+            if (project.ProjectMOTIRegion != "")
+                ChooseSpecificSelectOption(projectMOTIRegionInput, project.ProjectMOTIRegion);
+
             if (project.Summary != "")
-            {
                 webDriver.FindElement(projectSummaryTextarea).SendKeys(project.Summary);
-            }
+
             if (project.CostType != "")
             {
                 webDriver.FindElement(projectCostTypeInput).SendKeys(project.CostType);
                 WaitUntilVisible(projectCostTypeOptions);
                 webDriver.FindElement(projectCostType1stOption).Click();
             }
+
             if (project.WorkActivity != "")
             {
                 webDriver.FindElement(projectWorkActivityInput).SendKeys(project.WorkActivity);
                 WaitUntilVisible(projectWorkActivityOptions);
                 webDriver.FindElement(projectWorkActivity1stOption).Click();
             }
+
             if (project.BusinessFunction != "")
             {
                 webDriver.FindElement(projectBusinessFunctionInput).SendKeys(project.BusinessFunction);
@@ -266,14 +273,18 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(productEstimateDateDynamicInput);
             
             ClearInput(productStartDateDynamicInput);
+            webDriver.FindElement(productStartDateDynamicInput).SendKeys(Keys.Enter);
+
             ClearInput(productCostEstimateDynamicInput);
+            webDriver.FindElement(productCostEstimateDynamicInput).SendKeys(Keys.Enter);
+
             ClearInput(productObjectiveDynamicInput);
             ClearInput(productScopeDynamicInput);
            
             if (product.StartDate != "")
             {
                 webDriver.FindElement(productStartDateDynamicInput).SendKeys(product.StartDate);
-                webDriver.FindElement(productStartDateLabel).Click();
+                webDriver.FindElement(productScopeDynamicInput).SendKeys(Keys.Enter);
             }
             if (product.CostEstimate != "")
             {
@@ -282,6 +293,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (product.EstimateDate != "")
             {
                 webDriver.FindElement(productEstimateDateDynamicInput).SendKeys(product.EstimateDate);
+                webDriver.FindElement(productEstimateDateDynamicInput).SendKeys(Keys.Enter);
             }
             if (product.Objectives != "")
             {
@@ -295,7 +307,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteProduct(int productIndex)
         {
-            By deleteButtonElement = By.XPath("//div[@class='collapse show']/div["+ productIndex +"]/div/div/button[@title='Delete Project']");
+            By deleteButtonElement = By.XPath("//div[@class='collapse show']/div["+ productIndex +"]/div/div/button[@title='Delete Product']");
             WaitUntilClickable(deleteButtonElement);
             webDriver.FindElement(deleteButtonElement).Click();
 
@@ -306,6 +318,22 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.Equal("Deleting this product will remove it from all \"Product\" dropdowns. Are you certain you wish to proceed?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
+        }
+
+        public void DeleteTeamMembers()
+        {
+            
+           while (webDriver.FindElements(teamMembersCount).Count > 0)
+           {
+               WaitUntilClickable(teamMember1stDeleteBttn);
+               webDriver.FindElement(teamMember1stDeleteBttn).Click();
+
+               WaitUntilVisible(productDeleteModal);
+               Assert.Equal("Remove Team Member", sharedModals.ModalHeader());
+               Assert.Equal("Are you sure you want to remove this row?", sharedModals.ModalContent());
+               sharedModals.ModalClickOKBttn();
+           }
+            
         }
 
         public void SaveProject()
@@ -499,8 +527,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(productScopeContent, product.Scope);
                 else if (product.Scope != "")
                     AssertTrueContentEquals(productScopeContent, product.Scope);
-                else    
-                    AssertTrueContentEquals(productScopeContent, "no scope entered");
             }
         }
 

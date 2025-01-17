@@ -58,10 +58,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Add Team Members
-            if (project.ProjectTeamMembers.Count > 0)
+            if (project.ProjectTeamMembers.First() != "")
             {
                 for (int i = 0; i < project.ProjectTeamMembers.Count; i++)
-                    projects.AddTeamMember(project.ProjectTeamMembers[i], i);
+                    projects.AddUpdateTeamMember(project.ProjectTeamMembers[i]);
             }
 
             //Save Project
@@ -81,7 +81,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Verify Team Members within a Project
-            if (project.ProjectTeamMembers.Count > 0)
+            if (project.ProjectTeamMembers.First() != "")
                 projects.VerifyTeamMemberViewForm(project.ProjectTeamMembers);
             
         }
@@ -106,11 +106,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit Products
             if (project.Products.Count > 0)
-            {
                 for (int i = 0; i < project.ProductsCount; i++)
-                {
                     projects.UpdateProduct(project.Products[i], i);
-                }
+
+            //Edit Team members
+            if (project.ProjectTeamMembers.First() != "")
+            {
+                projects.DeleteTeamMembers();
+
+                for (int i = 0; i < project.ProjectTeamMembers.Count; i++)
+                    projects.AddUpdateTeamMember(project.ProjectTeamMembers[i]);
             }
 
             //Save Project
@@ -126,7 +131,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 {
                     projects.VerifyProductViewForm(project.Products[i], i, "Update");
                 }
-            }   
+            }
+
+            //Verify Team Members within a Project
+            if (project.ProjectTeamMembers.First() != "")
+                projects.VerifyTeamMemberViewForm(project.ProjectTeamMembers);
         }
 
         [StepDefinition(@"I search for existing Projects from row number (.*)")]
