@@ -1,4 +1,4 @@
-import { Formik, FormikProps } from 'formik';
+import { FormikProps } from 'formik';
 import { forwardRef } from 'react';
 
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
@@ -6,18 +6,19 @@ import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/Api
 
 import { useUpdatePropertyResearch } from '../hooks/useUpdatePropertyResearch';
 import { UpdatePropertyFormModel } from './models';
-import UpdatePropertyForm from './UpdatePropertyForm';
+import { IUpdatePropertyResearchFormProps } from './UpdatePropertyForm';
 import { UpdatePropertyYupSchema } from './UpdatePropertyYupSchema';
 
-export interface IUpdatePropertyViewProps {
+export interface IUpdatePropertyResearchContainerProps {
   researchFileProperty: ApiGen_Concepts_ResearchFileProperty;
   onSuccess: () => void;
+  View: React.FC<IUpdatePropertyResearchFormProps>;
 }
 
 export const UpdatePropertyResearchContainer = forwardRef<
   FormikProps<any>,
-  IUpdatePropertyViewProps
->((props, formikRef) => {
+  IUpdatePropertyResearchContainerProps
+>(({ researchFileProperty, onSuccess, View }, formikRef) => {
   const { updatePropertyResearchFile } = useUpdatePropertyResearch();
 
   const savePropertyFile = async (researchFile: ApiGen_Concepts_ResearchFileProperty) => {
@@ -28,27 +29,22 @@ export const UpdatePropertyResearchContainer = forwardRef<
     formikRef.current?.setSubmitting(false);
     if (response?.fileName) {
       formikRef.current?.resetForm();
-      props.onSuccess();
+      onSuccess();
     }
   };
 
   return (
-    <Formik<UpdatePropertyFormModel>
-      enableReinitialize
-      innerRef={formikRef}
-      initialValues={UpdatePropertyFormModel.fromApi(props.researchFileProperty)}
-      validationSchema={UpdatePropertyYupSchema}
-      onSubmit={async (values: UpdatePropertyFormModel) => {
-        const researchFile: ApiGen_Concepts_ResearchFileProperty = values.toApi();
-        await savePropertyFile(researchFile);
-      }}
-    >
-      {formikProps => (
-        <StyledFormWrapper>
-          <UpdatePropertyForm formikProps={formikProps} />
-        </StyledFormWrapper>
-      )}
-    </Formik>
+    <StyledFormWrapper>
+      <View
+        formikRef={formikRef as React.RefObject<FormikProps<UpdatePropertyFormModel>>}
+        initialValues={UpdatePropertyFormModel.fromApi(researchFileProperty)}
+        validationSchema={UpdatePropertyYupSchema}
+        onSubmit={async (values: UpdatePropertyFormModel) => {
+          const researchFile: ApiGen_Concepts_ResearchFileProperty = values.toApi();
+          await savePropertyFile(researchFile);
+        }}
+      />
+    </StyledFormWrapper>
   );
 });
 
