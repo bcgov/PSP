@@ -6,7 +6,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c7.btn .Button__value {
+.c8.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c7.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c8.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c8.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-primary:hover,
-.c7.btn.btn-primary:active,
-.c7.btn.btn-primary:focus {
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:active,
+.c8.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c7.btn.btn-secondary {
+.c8.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c7.btn.btn-secondary:hover,
-.c7.btn.btn-secondary:active,
-.c7.btn.btn-secondary:focus {
+.c8.btn.btn-secondary:hover,
+.c8.btn.btn-secondary:active,
+.c8.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-info {
+.c8.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c7.btn.btn-light {
+.c8.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c7.btn.btn-light:hover,
-.c7.btn.btn-light:active,
-.c7.btn.btn-light:focus {
+.c8.btn.btn-light:hover,
+.c8.btn.btn-light:active,
+.c8.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c7.btn.btn-dark {
+.c8.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c7.btn.btn-dark:hover,
-.c7.btn.btn-dark:active,
-.c7.btn.btn-dark:focus {
+.c8.btn.btn-dark:hover,
+.c8.btn.btn-dark:active,
+.c8.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c7.btn.btn-danger {
+.c8.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-danger:hover,
-.c7.btn.btn-danger:active,
-.c7.btn.btn-danger:focus {
+.c8.btn.btn-danger:hover,
+.c8.btn.btn-danger:active,
+.c8.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-warning {
+.c8.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c7.btn.btn-warning:hover,
-.c7.btn.btn-warning:active,
-.c7.btn.btn-warning:focus {
+.c8.btn.btn-warning:hover,
+.c8.btn.btn-warning:active,
+.c8.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c7.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,66 +202,66 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c7.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8.c8.btn {
+.c9.c9.btn {
   background-color: unset;
   border: none;
 }
 
-.c8.c8.btn:hover,
-.c8.c8.btn:focus,
-.c8.c8.btn:active {
+.c9.c9.btn:hover,
+.c9.c9.btn:focus,
+.c9.c9.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c8.c8.btn svg {
+.c9.c9.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c8.c8.btn svg:hover {
+.c9.c9.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c8.c8.btn.btn-primary svg {
+.c9.c9.btn.btn-primary svg {
   color: #013366;
 }
 
-.c8.c8.btn.btn-primary svg:hover {
+.c9.c9.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c8.c8.btn.btn-light svg {
+.c9.c9.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-light svg:hover {
+.c9.c9.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c8.c8.btn.btn-info svg {
+.c9.c9.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c8.c8.btn.btn-info svg:hover {
+.c9.c9.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c5 {
+.c6 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -300,7 +300,33 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c6 {
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-right: 0.6rem;
+  color: #42814A;
+}
+
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-right: 0.6rem;
+  color: #9F9D9C;
+}
+
+.c7 {
   -webkit-box-pack: space-around;
   -webkit-justify-content: space-around;
   -ms-flex-pack: space-around;
@@ -308,15 +334,15 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
   width: 100%;
 }
 
-.c3 {
+.c4 {
   color: #606060;
 }
 
-.c3.active {
+.c4.active {
   color: #42814A;
 }
 
-.c4 a {
+.c5 a {
   font-weight: bold;
   color: #428bca !important;
 }
@@ -689,10 +715,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 active"
+              class="c3"
+              data-testid="active-indicator"
             >
               <svg
-                class="mr-2"
                 fill="currentColor"
                 height="10"
                 stroke="currentColor"
@@ -701,6 +727,9 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
                 width="10"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                <title>
+                  Active
+                </title>
                 <path
                   d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
                 />
@@ -714,7 +743,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 active"
+              class="c4 active"
             >
               <svg
                 fill="currentColor"
@@ -738,7 +767,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c4"
+              class="c5"
             >
               <a
                 href="/contact/1"
@@ -808,10 +837,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c5 c6"
+              class="c6 c7"
             >
               <button
-                class="c7 Button c8 btn btn-primary"
+                class="c8 Button c9 btn btn-primary"
                 data-testid="view-button"
                 title="View Contact"
                 type="button"
@@ -869,10 +898,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 active"
+              class="c3"
+              data-testid="active-indicator"
             >
               <svg
-                class="mr-2"
                 fill="currentColor"
                 height="10"
                 stroke="currentColor"
@@ -881,6 +910,9 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
                 width="10"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                <title>
+                  Active
+                </title>
                 <path
                   d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
                 />
@@ -894,7 +926,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 active"
+              class="c4 active"
             >
               <svg
                 fill="currentColor"
@@ -918,7 +950,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c4"
+              class="c5"
             >
               <a
                 href="/contact/2"
@@ -988,10 +1020,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c5 c6"
+              class="c6 c7"
             >
               <button
-                class="c7 Button c8 btn btn-primary"
+                class="c8 Button c9 btn btn-primary"
                 data-testid="view-button"
                 title="View Contact"
                 type="button"
@@ -1049,10 +1081,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 inactive"
+              class="c10"
+              data-testid="active-indicator"
             >
               <svg
-                class="mr-2"
                 fill="currentColor"
                 height="10"
                 stroke="currentColor"
@@ -1061,6 +1093,9 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
                 width="10"
                 xmlns="http://www.w3.org/2000/svg"
               >
+                <title>
+                  Inactive
+                </title>
                 <path
                   d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
                 />
@@ -1074,7 +1109,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c3 inactive"
+              class="c4 inactive"
             >
               <svg
                 fill="currentColor"
@@ -1098,7 +1133,7 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c4"
+              class="c5"
             >
               <a
                 href="/contact/3"
@@ -1168,10 +1203,10 @@ exports[`Contact Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <div
-              class="c5 c6"
+              class="c6 c7"
             >
               <button
-                class="c7 Button c8 btn btn-primary"
+                class="c8 Button c9 btn btn-primary"
                 data-testid="view-button"
                 title="View Contact"
                 type="button"
