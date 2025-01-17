@@ -5,7 +5,7 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { exists } from '@/utils';
+import { exists, truncateName } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PayeeType } from './PayeeTypeModel';
@@ -33,7 +33,7 @@ export class PayeeOption {
     this.api_id = api_id;
     this.compensationRequisitionId = compensationRequisitionId;
     this.fullText = `${name} (${key})`;
-    this.text = `${PayeeOption.truncateName(name)} (${key})`;
+    this.text = `${truncateName(name, 50)} (${key})`;
     this.value = value;
     this.payeeType = payeeType;
     this.rowVersion = null;
@@ -111,14 +111,6 @@ export class PayeeOption {
     }
 
     return compReqPayeeModel;
-  }
-
-  private static truncateName(name: string): string {
-    if (name.length > 50) {
-      return name.slice(0, 50) + '...';
-    } else {
-      return name;
-    }
   }
 
   public static createOwner(

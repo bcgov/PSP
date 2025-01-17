@@ -13,7 +13,7 @@ import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
 import { getEmptyOrganization, getMockOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
-import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
+import { getMockRepositoryObj, render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import {
   CompensationRequisitionDetailContainer,
@@ -29,12 +29,8 @@ const getPersonConceptFn = vi.fn();
 const getOrganizationConceptFn = vi.fn();
 const setEditMode = vi.fn();
 
-const mockGetCompReqPropertiesApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
+const mockGetCompReqPropertiesApi = getMockRepositoryObj();
+const mockPutCompReqPropertiesApi = getMockRepositoryObj();
 
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
   useCompensationRequisitionRepository: () => {

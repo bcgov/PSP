@@ -3,6 +3,7 @@ import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_Code
 import { ApiGen_Concepts_CompReqLeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseStakeholder';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { truncateName } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 export class CompReqLeaseStakeholderModel {
@@ -61,9 +62,7 @@ export class CompReqLeaseStakeholderModel {
         break;
     }
     compReqPayeeModel.fullText = `${payeeName} (${payeeDescription})`;
-    compReqPayeeModel.text = `${CompReqLeaseStakeholderModel.truncateName(
-      payeeName,
-    )} (${payeeDescription})`;
+    compReqPayeeModel.text = `${truncateName(payeeName, 50)} (${payeeDescription})`;
     compReqPayeeModel.stakeholderId = apiLeaseStakeholder?.leaseStakeholderId;
 
     return compReqPayeeModel;
@@ -80,13 +79,5 @@ export class CompReqLeaseStakeholderModel {
       leaseStakeholder: null,
     };
     return compReqPayeeModel;
-  }
-
-  private static truncateName(name: string): string {
-    if (name.length > 50) {
-      return name.slice(0, 50) + '...';
-    } else {
-      return name;
-    }
   }
 }

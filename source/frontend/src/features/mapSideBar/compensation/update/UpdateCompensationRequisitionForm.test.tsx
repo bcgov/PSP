@@ -18,7 +18,6 @@ import {
   act,
   fakeText,
   fireEvent,
-  prettyDOM,
   render,
   RenderOptions,
   screen,

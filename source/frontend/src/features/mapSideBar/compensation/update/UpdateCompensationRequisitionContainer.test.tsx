@@ -11,7 +11,14 @@ import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGe
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
-import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  waitFor,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import UpdateCompensationRequisitionContainer, {
   UpdateCompensationRequisitionContainerProps,
@@ -24,17 +31,10 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { getCompensationRequisitionPayeesApi } from '@/hooks/pims-api/useApiRequisitionCompensations';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 
-const mockGetAcquisitionOwnersApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
-
 vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   useAcquisitionProvider: () => {
     return {
-      getAcquisitionOwners: mockGetAcquisitionOwnersApi,
+      getAcquisitionOwners: getMockRepositoryObj(),
       getAcquisitionFileSolicitors: {
         execute: vi.fn(),
         loading: false,
@@ -47,12 +47,7 @@ vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
   },
 }));
 
-const mockGetApi = {
-  error: undefined,
-  response: [],
-  execute: vi.fn(),
-  loading: false,
-};
+const mockGetApi = getMockRepositoryObj();
 
 vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   useFinancialCodeRepository: () => {
@@ -65,12 +60,7 @@ vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   },
 }));
 
-const getLeaseFileInterestHoldersApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
+const getLeaseFileInterestHoldersApi = getMockRepositoryObj();
 
 vi.mock('@/hooks/repositories/useLeaseStakeholderRepository', () => ({
   useLeaseStakeholderRepository: () => {
@@ -80,31 +70,20 @@ vi.mock('@/hooks/repositories/useLeaseStakeholderRepository', () => ({
   },
 }));
 
-const getAcquisitionInterestHoldersApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
 vi.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
   useInterestHolderRepository: () => {
     return {
-      getAcquisitionInterestHolders: getAcquisitionInterestHoldersApi,
+      getAcquisitionInterestHolders: getMockRepositoryObj(),
     };
   },
 }));
 
-const putCompensationRequisitionApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
+const putCompensationRequisitionApi = getMockRepositoryObj();
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
   useCompensationRequisitionRepository: () => {
     return {
       updateCompensationRequisition: putCompensationRequisitionApi,
-      getCompensationRequisitionPayees: putCompensationRequisitionApi,
+      getCompensationRequisitionPayees: getMockRepositoryObj(),
     };
   },
 }));
