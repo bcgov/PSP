@@ -29,15 +29,6 @@ public partial class PimsCompensationRequisitionHist
     [Column("LEASE_ID")]
     public long? LeaseId { get; set; }
 
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    [Column("ACQUISITION_FILE_TEAM_ID")]
-    public long? AcquisitionFileTeamId { get; set; }
-
     [Column("CHART_OF_ACCOUNTS_ID")]
     public long? ChartOfAccountsId { get; set; }
 
@@ -147,4 +138,13 @@ public partial class PimsCompensationRequisitionHist
 
     [Column("ADV_PMT_SERVED_DT")]
     public DateOnly? AdvPmtServedDt { get; set; }
+
+    [Column("ACQUISITION_OWNER_ID")]
+    public long? AcquisitionOwnerId { get; set; }
+
+    [Column("INTEREST_HOLDER_ID")]
+    public long? InterestHolderId { get; set; }
+
+    [Column("ACQUISITION_FILE_TEAM_ID")]
+    public long? AcquisitionFileTeamId { get; set; }
 }

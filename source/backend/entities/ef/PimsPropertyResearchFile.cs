@@ -62,7 +62,7 @@ public partial class PimsPropertyResearchFile
     /// Summary of the property research.
     /// </summary>
     [Column("RESEARCH_SUMMARY")]
-    [StringLength(1000)]
+    [StringLength(4000)]
     public string ResearchSummary { get; set; }
 
     /// <summary>
