@@ -2,7 +2,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
     <UserSecretsId>0ef6255f-9ea0-49ec-8c65-c172304b4926</UserSecretsId>
-    <Version>5.8.0-98.2</Version>
+    <Version>5.8.0-98.3</Version>
     <AssemblyVersion>5.8.0.98</AssemblyVersion>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <ProjectGuid>{16BC0468-78F6-4C91-87DA-7403C919E646}</ProjectGuid>
