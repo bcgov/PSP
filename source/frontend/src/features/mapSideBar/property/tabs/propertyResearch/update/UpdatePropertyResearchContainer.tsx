@@ -21,8 +21,8 @@ export const UpdatePropertyResearchContainer = forwardRef<
 >(({ researchFileProperty, onSuccess, View }, formikRef) => {
   const { updatePropertyResearchFile } = useUpdatePropertyResearch();
 
-  const savePropertyFile = async (researchFile: ApiGen_Concepts_ResearchFileProperty) => {
-    const response = await updatePropertyResearchFile(researchFile);
+  const savePropertyFile = async (researchFileProperty: ApiGen_Concepts_ResearchFileProperty) => {
+    const response = await updatePropertyResearchFile(researchFileProperty);
     if (typeof formikRef === 'function' || formikRef === null) {
       throw Error('unexpected ref prop');
     }
