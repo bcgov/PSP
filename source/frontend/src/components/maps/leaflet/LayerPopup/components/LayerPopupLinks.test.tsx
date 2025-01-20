@@ -19,6 +19,8 @@ const mapMachineMock: Partial<IMapStateMachineContext> = {
 const northEast = new L.LatLng(50.5, -120.7);
 const southWest = new L.LatLng(50.3, -121.2);
 
+const onViewPropertyInfoFn = vi.fn();
+
 const renderLinks = (props: ILayerPopupLinksProps) => {
   return render(<LayerPopupLinks {...props} />, {
     mockMapMachine: mapMachineMock as unknown as any,
@@ -29,23 +31,43 @@ describe('Layer Popup links', () => {
   afterEach(cleanup);
 
   it('Renders correctly', () => {
-    const { asFragment } = renderLinks({ bounds: new L.LatLngBounds(southWest, northEast) });
+    const { asFragment } = renderLinks({
+      bounds: new L.LatLngBounds(southWest, northEast),
+      onViewPropertyInfo: onViewPropertyInfoFn,
+    });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it(`Renders the Zoom link`, () => {
-    const { getByText } = renderLinks({ bounds: new L.LatLngBounds(southWest, northEast) });
+    const { getByText } = renderLinks({
+      bounds: new L.LatLngBounds(southWest, northEast),
+      onViewPropertyInfo: onViewPropertyInfoFn,
+    });
     const link = getByText(/Zoom/i);
     expect(link).toBeInTheDocument();
   });
 
   it(`Zooms the map to property bounds when Zoom link is clicked`, async () => {
     // render popup
-    const { getByText } = renderLinks({ bounds: new L.LatLngBounds(southWest, northEast) });
+    const { getByText } = renderLinks({
+      bounds: new L.LatLngBounds(southWest, northEast),
+      onViewPropertyInfo: onViewPropertyInfoFn,
+    });
     const link = getByText(/Zoom/i);
     expect(link).toBeInTheDocument();
     // click link
     await act(async () => userEvent.click(link));
     expect(mapMachineMock.requestFlyToBounds).toBeCalled();
+  });
+
+  it('calls onViewPropertyInfo when link clicked', async () => {
+    const { getByText } = renderLinks({
+      bounds: new L.LatLngBounds(southWest, northEast),
+      onViewPropertyInfo: onViewPropertyInfoFn,
+    });
+
+    const link = getByText('View Property Info');
+    await act(async () => userEvent.click(link));
+    expect(onViewPropertyInfoFn).toHaveBeenCalled();
   });
 });
