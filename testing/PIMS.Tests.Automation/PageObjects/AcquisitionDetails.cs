@@ -658,7 +658,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             var teamMemberIndex = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count() -1;
-            //var teamMemberCount = webDriver.FindElements(acquisitionFileTeamMembersGroup).Count();
 
             WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"));
             ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamMember.TeamMemberRole);
