@@ -9,7 +9,7 @@ export interface ILayerPopupFlyoutProps {
   isInPims: boolean;
   isRetiredProperty: boolean;
   isDisposedProperty: boolean;
-  onViewPropertyInfo: (event: React.MouseEvent<HTMLElement>) => void;
+  // onViewPropertyInfo: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateLeaseLicense: (event: React.MouseEvent<HTMLElement>) => void;
@@ -22,7 +22,6 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
   isInPims,
   isRetiredProperty,
   isDisposedProperty,
-  onViewPropertyInfo,
   onCreateResearchFile,
   onCreateAcquisitionFile,
   onCreateLeaseLicense,
@@ -34,11 +33,6 @@ export const LayerPopupFlyout: React.FC<React.PropsWithChildren<ILayerPopupFlyou
 
   return (
     <StyledFlyerWrapper>
-      <StyledLinkSection>
-        <StyledLinkWrapper>
-          <LinkButton onClick={onViewPropertyInfo}>View Property Info</LinkButton>
-        </StyledLinkWrapper>
-      </StyledLinkSection>
       {!isRetiredProperty && !isDisposedProperty ? (
         <StyledLinkSection>
           <StyledLinkWrapper>

@@ -27,7 +27,6 @@ describe('LayerPopupFlyout component', () => {
       <LayerPopupFlyout
         isInPims={renderOptions?.isInPims ?? false}
         isRetiredProperty={renderOptions?.isRetiredProperty ?? false}
-        onViewPropertyInfo={onViewPropertyInfo}
         onCreateAcquisitionFile={onCreateAcquisitionFile}
         onCreateResearchFile={onCreateResearchFile}
         onCreateLeaseLicense={onCreateLeaseLicense}
