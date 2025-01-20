@@ -9,7 +9,6 @@ export interface ILayerPopupFlyoutProps {
   isInPims: boolean;
   isRetiredProperty: boolean;
   isDisposedProperty: boolean;
-  // onViewPropertyInfo: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateResearchFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateAcquisitionFile: (event: React.MouseEvent<HTMLElement>) => void;
   onCreateLeaseLicense: (event: React.MouseEvent<HTMLElement>) => void;
