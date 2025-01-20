@@ -741,9 +741,6 @@ exports[`ContactManagerView > matches snapshot 1`] = `
         </form>
       </div>
     </div>
-    <div
-      class="row"
-    />
     <div>
       <div
         class="table"
