@@ -1,69 +1,47 @@
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import noop from 'lodash/noop';
+import { createRef } from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
-import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { getMockResearchFileProperty } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { render, RenderOptions } from '@/utils/test-utils';
+import {
+  act,
+  fakeText,
+  fireEvent,
+  getByName,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { UpdatePropertyFormModel } from './models';
-import UpdatePropertyForm from './UpdatePropertyForm';
-import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-
-const testResearchFile: ApiGen_Concepts_ResearchFileProperty = {
-  id: 1,
-  propertyName: 'Corner of Nakya PL ',
-  propertyId: 495,
-
-  propertyResearchPurposeTypes: [
-    {
-      id: 22,
-      propertyResearchPurposeTypeCode: {
-        id: 'FORM12',
-        description: 'Form 12',
-        isDisabled: false,
-        displayOrder: null,
-      },
-      rowVersion: 1,
-      ...getEmptyBaseAudit(),
-    },
-    {
-      id: 23,
-      propertyResearchPurposeTypeCode: {
-        id: 'DOTHER',
-        description: 'District Other',
-        isDisabled: false,
-        displayOrder: null,
-      },
-      rowVersion: 1,
-      ...getEmptyBaseAudit(),
-    },
-  ],
-  rowVersion: 10,
-  isLegalOpinionRequired: null,
-  isLegalOpinionObtained: null,
-  documentReference: null,
-  researchSummary: null,
-  file: null,
-  displayOrder: null,
-  property: null,
-  location: null,
-  fileId: 0,
-};
+import UpdatePropertyForm, { IUpdatePropertyResearchFormProps } from './UpdatePropertyForm';
+import { UpdatePropertyYupSchema } from './UpdatePropertyYupSchema';
 
 const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
+const onSubmit = vi.fn();
+const validationSchema = vi.fn().mockReturnValue(UpdatePropertyYupSchema);
+
 describe('UpdatePropertyForm component', () => {
-  const setup = (renderOptions: RenderOptions & { initialValues: UpdatePropertyFormModel }) => {
-    // render component under test
-    const component = render(
-      <Formik onSubmit={noop} initialValues={renderOptions.initialValues}>
-        {formikProps => <UpdatePropertyForm formikProps={formikProps} />}
-      </Formik>,
+  // render component under test
+  const setup = (
+    renderOptions: RenderOptions & { props?: Partial<IUpdatePropertyResearchFormProps> } = {},
+  ) => {
+    const formikRef = createRef<FormikProps<UpdatePropertyFormModel>>();
+
+    const utils = render(
+      <UpdatePropertyForm
+        formikRef={formikRef}
+        initialValues={renderOptions?.props?.initialValues ?? new UpdatePropertyFormModel()}
+        validationSchema={renderOptions?.props?.validationSchema ?? validationSchema}
+        onSubmit={renderOptions?.props?.onSubmit ?? onSubmit}
+      />,
       {
         ...renderOptions,
         store: storeState,
@@ -72,17 +50,64 @@ describe('UpdatePropertyForm component', () => {
     );
 
     return {
-      component,
+      ...utils,
+      formikRef,
     };
   };
 
-  afterEach(() => {
-    vi.resetAllMocks();
+  let initialValues: UpdatePropertyFormModel;
+
+  beforeEach(() => {
+    initialValues = UpdatePropertyFormModel.fromApi(getMockResearchFileProperty());
   });
 
-  it('renders as expected when provided no research file', () => {
-    const initialValues = UpdatePropertyFormModel.fromApi(testResearchFile);
-    const { component } = setup({ initialValues });
-    expect(component.asFragment()).toMatchSnapshot();
+  afterEach(() => {
+    vi.clearAllMocks();
+  });
+
+  it('renders as expected', () => {
+    const { asFragment } = setup({ props: { initialValues } });
+    expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('displays property research purposes - multiselect', () => {
+    setup({ props: { initialValues } });
+
+    expect(screen.getByText('Form 12')).toBeVisible();
+    expect(screen.getByText('District Other')).toBeVisible();
+  });
+
+  it('validates max length for research summary', async () => {
+    setup({ props: { initialValues } });
+
+    const summary = getByName('researchSummary') as HTMLTextAreaElement;
+
+    await act(async () => {
+      userEvent.paste(summary, fakeText(4001));
+    });
+    await act(async () => {
+      fireEvent.blur(summary);
+    });
+
+    expect(
+      await screen.findByText(/Summary comments must be less than 4000 characters/i),
+    ).toBeVisible();
+    expect(validationSchema).toHaveBeenCalled();
+  });
+
+  it('calls onSubmit when form is submitted', async () => {
+    const { formikRef } = setup({ props: { initialValues } });
+
+    const summary = getByName('researchSummary') as HTMLTextAreaElement;
+
+    await act(async () => {
+      userEvent.paste(summary, fakeText(100));
+    });
+    await act(async () => {
+      formikRef.current?.submitForm();
+    });
+
+    expect(validationSchema).toHaveBeenCalled();
+    expect(onSubmit).toHaveBeenCalled();
   });
 });
