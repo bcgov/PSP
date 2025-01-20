@@ -127,7 +127,7 @@ public partial class PimsLease
     /// Manually etered lease description, not the legal description
     /// </summary>
     [Column("LEASE_DESCRIPTION")]
-    [StringLength(2000)]
+    [StringLength(4000)]
     public string LeaseDescription { get; set; }
 
     /// <summary>
