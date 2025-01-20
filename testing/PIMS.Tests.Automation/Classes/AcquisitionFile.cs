@@ -9,8 +9,15 @@
         public string AcquisitionProjProduct { get; set; } = null!;
         public string AcquisitionProjFunding { get; set; } = null!;
         public string AcquisitionFundingOther { get; set; } = null!;
-        public string AssignedDate { get; set; } = null!;
-        public string DeliveryDate { get; set; } = null!;
+        public List<string> AcquisitionFileProgressStatuses { get; set; } = new List<string>();
+        public string AcquisitionAppraisalStatus { get; set; } = null!;
+        public string AcquisitionLegalSurveyStatus { get; set; } = null!;
+        public List<string> AcquisitionTypeTakingStatuses { get; set; } = new List<string>();
+        public string AcquisitionExpropriationRiskStatus { get; set; } = null!;
+        public string AcquisitionAssignedDate { get; set; } = null!;
+        public string AcquisitionDeliveryDate { get; set; } = null!;
+        public string AcquisitionEstimatedDate { get; set; } = null!;
+        public string AcquisitionPossesionDate { get; set; } = null!;
         public string AcquisitionFileName { get; set; } = null!;
         public string HistoricalFileNumber { get; set; } = null!;
         public string PhysicalFileStatus { get; set; } = null!;

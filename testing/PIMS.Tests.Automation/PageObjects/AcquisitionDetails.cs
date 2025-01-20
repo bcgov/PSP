@@ -26,98 +26,124 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileHeaderProductContent = By.XPath("//label[contains(text(), 'Ministry product')]/parent::div/following-sibling::div[1]");
         private readonly By acquisitionFileHeaderCreatedDateLabel = By.XPath("//strong[contains(text(), 'Created')]");
         private readonly By acquisitionFileHeaderCreatedDateContent = By.XPath("//strong[contains(text(), 'Created')]/parent::span");
-        private By acquisitionFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@id='userNameTooltip']/strong");
-        private By acquisitionFileHeaderLastUpdateLabel = By.XPath("//strong[contains(text(), 'Updated')]");
-        private By acquisitionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
-        private By acquisitionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
-        private By acquisitionFileHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
-        private By acquisitionFileHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
-        private By acquisitionHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
+        private readonly By acquisitionFileHeaderCreatedByContent = By.XPath("//strong[contains(text(),'Created')]/parent::span/span[@id='userNameTooltip']/strong");
+        private readonly By acquisitionFileHeaderLastUpdateLabel = By.XPath("//strong[contains(text(), 'Updated')]");
+        private readonly By acquisitionFileHeaderLastUpdateContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span");
+        private readonly By acquisitionFileHeaderLastUpdateByContent = By.XPath("//strong[contains(text(), 'Updated')]/parent::span/span[@id='userNameTooltip']/strong");
+        private readonly By acquisitionFileHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
+        private readonly By acquisitionFileHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
+        private readonly By acquisitionHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
-        private By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");
-        private By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
-        private By acquisitionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
-        private By acquisitionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
-        private By acquisitionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
-        private By acquisitionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
-        private By acquisitionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
-        private By acquisitionFileProjectProductSelect = By.Id("input-product");
-        private By acquicistionFileProjectProductOptions = By.CssSelector("select[id='input-product'] option");
-        private By acquisitionFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
-        private By acquisitionFileProjectFundingLabel = By.XPath("//label[contains(text(),'Funding')]");
-        private By acquisitionFileProjectFundingInput = By.Id("input-fundingTypeCode");
-        private By acquisitionFileProjectFundingContent = By.XPath("//label[contains(text(),'Funding')]/parent::div/following-sibling::div");
-        private By acquisitionFileProjectOtherFundingLabel = By.XPath("//label[contains(text(),'Other funding')]");
-        private By acquisitionFileProjectOtherFundingInput = By.Id("input-fundingTypeOtherDescription");
-        private By acquisitionFileProjectOtherFundingContent = By.XPath("//label[contains(text(),'Other funding')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
+        private readonly By acquisitionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
+        private readonly By acquisitionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
+        private readonly By acquisitionFileProjectProductContent = By.XPath("//label[contains(text(),'Product')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileProjectFundingLabel = By.XPath("//label[contains(text(),'Funding')]");
+        private readonly By acquisitionFileProjectFundingInput = By.Id("input-fundingTypeCode");
+        private readonly By acquisitionFileProjectFundingContent = By.XPath("//label[contains(text(),'Funding')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileProjectOtherFundingLabel = By.XPath("//label[contains(text(),'Other funding')]");
+        private readonly By acquisitionFileProjectOtherFundingContent = By.XPath("//label[contains(text(),'Other funding')]/parent::div/following-sibling::div");
 
-        private By acquisitionFileScheduleSubtitle = By.XPath("//div[contains(text(),'Schedule')]");
-        private By acquisitionFileScheduleAssignedDateLabel = By.XPath("//label[contains(text(),'Assigned date')]");
-        private By acquisitionFileAssignedDateInput = By.Id("datepicker-assignedDate");
-        private By acquisitionFileScheduleAssignedDateContent = By.XPath("//label[contains(text(),'Assigned date')]/parent::div/following-sibling::div");
-        private By acquisitionFileScheduleDeliveryDateLabel = By.XPath("//label[contains(text(),'Delivery date')]");
-        private By acquisitionFileScheduleDeliveryDateContent = By.XPath("//label[contains(text(),'Delivery date')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileStatusesSubtitle = By.XPath("//div[contains(text(),'Progress Statuses')]/parent::div/parent::h2");
+        private readonly By acquisitionFileStatusesFileProgressLabel = By.XPath("//label[contains(text(),'File progress(es)')]");
+        private readonly By acquisitionFileStatusesFileProgressContent = By.CssSelector("div[data-testid='prg-file-progress-status'] span[class='chip  false disableSelection']");
+        private readonly By acquisitionFileStatusesFileAppraisalLabel = By.XPath("//label[contains(text(),'Appraisal')]");
+        private readonly By acquisitionFileStatusesFileAppraisalContent = By.XPath("//label[contains(text(),'Appraisal')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileStatusesFileLegalSurveyLabel = By.XPath("//label[contains(text(),'Legal survey')]");
+        private readonly By acquisitionFileStatusesFileLegalSurveyContent = By.XPath("//label[contains(text(),'Legal survey')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileStatusesFileTypeTakingLabel = By.XPath("//label[contains(text(),'Type of taking')]");
+        private readonly By acquisitionFileStatusesFileTypeTakingContent = By.CssSelector("div[data-testid='prg-taking-type-status'] span[class='chip  false disableSelection']");
+        private readonly By acquisitionFileStatusesFileExpropriationRiskLabel = By.XPath("//label[contains(text(),'Expropriation risk')]");
+        private readonly By acquisitionFileStatusesFileExpropriationRiskContent = By.XPath("//label[contains(text(),'Expropriation risk')]/parent::div/following-sibling::div");
 
-        private By acquisitionFileScheduleCompletedDateContent = By.XPath("//label[contains(text(),'Acquisition completed date')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileScheduleSubtitle = By.XPath("//div[contains(text(),'Schedule')]");
+        private readonly By acquisitionFileScheduleAssignedDateLabel = By.XPath("//label[contains(text(),'Assigned date')]");
+        private readonly By acquisitionFileScheduleAssignedDateContent = By.XPath("//label[contains(text(),'Assigned date')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileScheduleDeliveryDateLabel = By.XPath("//label[contains(text(),'Delivery date')]");
+        private readonly By acquisitionFileScheduleDeliveryDateContent = By.XPath("//label[contains(text(),'Delivery date')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileScheduleEstimatedDateLabel = By.XPath("//label[contains(text(),'Estimated date')]");
+        private readonly By acquisitionFileScheduleEstimatedDateContent = By.XPath("//label[contains(text(),'Estimated date')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileSchedulePossesionDateLabel = By.XPath("//label[contains(text(),'Possession date')]");
+        private readonly By acquisitionFileSchedulePossesionDateContent = By.XPath("//label[contains(text(),'Possession date')]/parent::div/following-sibling::div");
 
-        private By acquisitionFileDetailsSubtitle = By.XPath("//div[contains(text(),'Acquisition Details')]");
-        private By acquisitionFileDetailsNameLabel = By.XPath("//label[contains(text(),'Acquisition file name')]");
-        private By acquisitionFileDetailsNameContent = By.XPath("//label[contains(text(),'Acquisition file name')]/parent::div/following-sibling::div");
-        private By acquisitionFileDetailsPhysicalFileLabel = By.XPath("//label[contains(text(),'Physical file status')]");
-        private By acquisitionFileDetailsPhysicalFileContent = By.XPath("//label[contains(text(),'Physical file status')]/parent::div/following-sibling::div");
-        private By acquisitionFileDetailsTypeLabel = By.XPath("//label[contains(text(),'Acquisition type')]");
-        private By acquisitionFileDetailsTypeContent = By.XPath("//label[contains(text(),'Acquisition type')]/parent::div/following-sibling::div");
-        private By acquisitionFileDetailsMOTIRegionLabel = By.XPath("//label[contains(text(),'Ministry region')]");
-        private By acquisitionFileDetailsMOTIRegionContent = By.XPath("//label[contains(text(),'Ministry region')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileDetailsSubtitle = By.XPath("//div[contains(text(),'Acquisition Details')]");
+        private readonly By acquisitionFileDetailsNameLabel = By.XPath("//label[contains(text(),'Acquisition file name')]");
+        private readonly By acquisitionFileDetailsNameContent = By.XPath("//label[contains(text(),'Acquisition file name')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileHistoricalNumberLabel = By.XPath("//label[contains(text(),'Historical file number')]");
+        private readonly By acquisitionFileHistoricalNumberTooltip = By.XPath("//label[contains(text(),'Historical file number')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
+        private readonly By acquisitionFileHistoricalNumberContent = By.XPath("//label[contains(text(),'Historical file number')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileDetailsPhysicalFileLabel = By.XPath("//label[contains(text(),'Physical file status')]");
+        private readonly By acquisitionFileDetailsPhysicalFileContent = By.XPath("//label[contains(text(),'Physical file status')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileDetailsTypeLabel = By.XPath("//label[contains(text(),'Acquisition type')]");
+        private readonly By acquisitionFileDetailsTypeContent = By.XPath("//label[contains(text(),'Acquisition type')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileDetailsMOTIRegionLabel = By.XPath("//label[contains(text(),'Ministry region')]");
+        private readonly By acquisitionFileDetailsMOTIRegionContent = By.XPath("//label[contains(text(),'Ministry region')]/parent::div/following-sibling::div");
 
-        private By acquisitionFileTeamSubtitle = By.XPath("//div[contains(text(),'Acquisition Team')]");
+        private readonly By acquisitionFileTeamSubtitle = By.XPath("//div[contains(text(),'Acquisition Team')]");
 
-        private By acquisitionFileOwnerSubtitle = By.XPath("//div[contains(text(),'Owner Information')]");
+        private readonly By acquisitionFileOwnerSubtitle = By.XPath("//div[contains(text(),'Owner Information')]");
+        private readonly By acquisitionFileOwnerCommentLabel = By.XPath("//label[contains(text(),'Comment')]");
 
         //Acquisition File Main Form Input Elements
-        private By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
-        private By acquisitionFileDeliveryDateInput = By.Id("datepicker-deliveryDate");
-        private By acquisitionFileCompletedDateInput = By.Id("datepicker-completionDate");
+        private readonly By acquisitionFileEditButton = By.CssSelector("button[title='Edit acquisition file']");
+        private readonly By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");
+        private readonly By acquisitionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
+        private readonly By acquisitionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
+        private readonly By acquisitionFileProjectProductSelect = By.Id("input-product");
+        private readonly By acquicistionFileProjectProductOptions = By.CssSelector("select[id='input-product'] option");
+        private readonly By acquisitionFileProjectOtherFundingInput = By.Id("input-fundingTypeOtherDescription");
 
-        private By acquisitionFileNameInput = By.Id("input-fileName");
-        private By acquisitionFileNameInvalidMessage = By.XPath("//div[contains(text(),'Acquisition file name must be at most 500 characters')]");
+        private readonly By acquisitionFileStatusesFileProgressCreateLabel = By.XPath("//label[contains(text(),'File progress')]");
+        private readonly By acquisitionFileStatusesFileProgressSelect = By.Id("multiselect-progressStatuses_input");
+        private readonly By acquisitionFileStatusesDeleteBttns = By.CssSelector("div[id='multiselect-progressStatuses'] i[class='custom-close']");
+        private readonly By acquisitionFileStatusesOptions = By.XPath("//input[@id='multiselect-progressStatuses_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By acquisitionFileStatusesAppraisalSelect = By.Id("input-appraisalStatusType");
+        private readonly By acquisitionFileStatusesLegalSurveySelect = By.Id("input-legalSurveyStatusType");
+        private readonly By acquisitionFileStatusesTypeTakingSelect = By.Id("multiselect-takingStatuses_input");
+        private readonly By acquisitionFileTypeTakingDeleteBttns = By.CssSelector("div[id='multiselect-takingStatuses'] i[class='custom-close']");
+        private readonly By acquisitionFileTypeTakingOptions = By.XPath("//input[@id='multiselect-takingStatuses_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By acquisitionFileStatusesExpropriationRiskSelect = By.Id("input-expropiationRiskStatusType");
 
-        private By acquisitionFileHistoricalNumberLabel = By.XPath("//label[contains(text(),'Historical file number')]");
-        private By acquisitionFileHistoricalNumberInput = By.Id("input-legacyFileNumber");
-        private By acquisitionFileHistoricalInvalidMessage = By.XPath("//div[contains(text(),'Legacy file number must be at most 18 characters')]");
-        private By acquisitionFileHistoricalNumberTooltip = By.XPath("//label[contains(text(),'Historical file number')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
+        private readonly By acquisitionFileAssignedDateInput = By.Id("datepicker-assignedDate");
+        private readonly By acquisitionFileDeliveryDateInput = By.Id("datepicker-deliveryDate");
+        private readonly By acquisitionFileEstimatedDateInput = By.Id("datepicker-estimatedCompletionDate");
+        private readonly By acquisitionFilePossesionDateInput = By.Id("datepicker-possessionDate");
 
-        private By acquisitionFilePhysicalStatusSelect = By.Id("input-acquisitionPhysFileStatusType");
-        private By acquisitionFileDetailsTypeSelect = By.Id("input-acquisitionType");
-        private By acquisitionFileDetailsRegionSelect = By.Id("input-region");
+        private readonly By acquisitionFileNameInput = By.Id("input-fileName");
+        private readonly By acquisitionFileNameInvalidMessage = By.XPath("//div[contains(text(),'Acquisition file name must be at most 500 characters')]");
+        private readonly By acquisitionFileHistoricalNumberInput = By.Id("input-legacyFileNumber");
+        private readonly By acquisitionFileHistoricalInvalidMessage = By.XPath("//div[contains(text(),'Legacy file number must be at most 18 characters')]");
+        private readonly By acquisitionFilePhysicalStatusSelect = By.Id("input-acquisitionPhysFileStatusType");
+        private readonly By acquisitionFileDetailsTypeSelect = By.Id("input-acquisitionType");
+        private readonly By acquisitionFileDetailsRegionSelect = By.Id("input-region");
 
-        private By acquisitionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
-        private By acquisitionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
-        private By acquisitionFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div");
-        private By acquisitionFileTeamFirstMemberDeleteBttn = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
-        private By acquisitionFileTeamInvalidTeamMemberMessage = By.XPath("//div[contains(text(),'Select a team member')]");
-        private By acquisitionFileTeamInvalidProfileMessage = By.XPath("//div[contains(text(),'Select a profile')]");
+        private readonly By acquisitionFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
+        private readonly By acquisitionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
+        private readonly By acquisitionFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By acquisitionFileTeamFirstMemberDeleteBttn = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div[3]/button");
+        private readonly By acquisitionFileTeamInvalidTeamMemberMessage = By.XPath("//div[contains(text(),'Select a team member')]");
+        private readonly By acquisitionFileTeamInvalidProfileMessage = By.XPath("//div[contains(text(),'Select a profile')]");
 
-        private By acquisitionFileCreateOwnerSubtitle = By.XPath("//div[contains(text(),'Owners')]");
-        private By acquisitionFileOwnerInfo = By.XPath("//p[contains(text(),'Each property in this file should be owned by the owner(s) in this section')]");
-        private By acquisitionFileAddOwnerLink = By.CssSelector("button[data-testid='add-file-owner']");
-        private By acquisitionFileOwnersGroup = By.XPath("//div[contains(text(),'Owners')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
-        private By acquisitionFileDeleteFirstOwnerBttn = By.XPath("//div[contains(text(),'Owners')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div/div/button");
-        
-        private By acquisitionFileOwnerSolicitorLabel = By.XPath("//label[contains(text(),'Owner solicitor')]");
-        private By acquisitionFileOwnerSolicitorButton = By.XPath("//label[contains(text(),'Owner solicitor')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
-        private By acquisitionFileOwnerSolicitorContent = By.XPath("//label[contains(text(),'Owner solicitor')]/parent::div/following-sibling::div/a/span");
-        private By acquisitionFileOwnerRepresentativeLabel = By.XPath("//label[contains(text(),'Owner representative')]");
-        private By acquisitionFileOwnerRepresentativeButton = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
-        private By acquisitionFileOwnerRepresentativeContent = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/a/span");
-        private By acquisitionFileOwnerCommentLabel = By.XPath("//label[contains(text(),'Comment')]");
-        private By acquisitionFileOwnerCommentTextArea = By.Id("input-ownerRepresentative.comment");
-        private By acquisitionFileOwnerCommentContent = By.XPath("//label[contains(text(),'Comment')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileCreateOwnerSubtitle = By.XPath("//div[contains(text(),'Owners')]");
+        private readonly By acquisitionFileOwnerInfo = By.XPath("//p[contains(text(),'Each property in this file should be owned by the owner(s) in this section')]");
+        private readonly By acquisitionFileAddOwnerLink = By.CssSelector("button[data-testid='add-file-owner']");
+        private readonly By acquisitionFileOwnersGroup = By.XPath("//div[contains(text(),'Owners')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
+        private readonly By acquisitionFileDeleteFirstOwnerBttn = By.XPath("//div[contains(text(),'Owners')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row'][1]/div/div/button");
+        private readonly By acquisitionFileOwnerSolicitorLabel = By.XPath("//label[contains(text(),'Owner solicitor')]");
+        private readonly By acquisitionFileOwnerSolicitorButton = By.XPath("//label[contains(text(),'Owner solicitor')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
+        private readonly By acquisitionFileOwnerSolicitorContent = By.XPath("//label[contains(text(),'Owner solicitor')]/parent::div/following-sibling::div/a/span");
+        private readonly By acquisitionFileOwnerRepresentativeLabel = By.XPath("//label[contains(text(),'Owner representative')]");
+        private readonly By acquisitionFileOwnerRepresentativeButton = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
+        private readonly By acquisitionFileOwnerRepresentativeContent = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/a/span");
 
-        private By acquisitionFileEditButton = By.CssSelector("button[title='Edit acquisition file']");
+        private readonly By acquisitionFileOwnerCommentTextArea = By.Id("input-ownerRepresentative.comment");
+        private readonly By acquisitionFileOwnerCommentContent = By.XPath("//label[contains(text(),'Comment')]/parent::div/following-sibling::div");
+
+        private readonly By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
 
         //Acquisition File Confirmation Modal Elements
-        private By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedSelectContact sharedSelectContact;
         private SharedModals sharedModals;
@@ -213,21 +239,101 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
             }
 
+            //Progress Statuses
+            //Delete File Progress statuses previously selected if any
+            if (webDriver.FindElements(acquisitionFileStatusesDeleteBttns).Count > 0)
+            {
+                Wait();
+                FocusAndClick(acquisitionFileStatusesFileProgressSelect);
+                while (webDriver.FindElements(acquisitionFileStatusesDeleteBttns).Count > 0)
+                {
+                    webDriver.FindElement(acquisitionFileStatusesFileProgressCreateLabel).Click();
+                    webDriver.FindElements(acquisitionFileStatusesDeleteBttns)[0].Click();
+                }
+                webDriver.FindElement(acquisitionFileStatusesFileProgressCreateLabel).Click();
+            }
+
+            if (acquisition.AcquisitionFileProgressStatuses.First() != "")
+            {
+                foreach (string status in acquisition.AcquisitionFileProgressStatuses)
+                {
+                    Wait(2000);
+                    webDriver.FindElement(acquisitionFileStatusesFileProgressCreateLabel).Click();
+                    FocusAndClick(acquisitionFileStatusesFileProgressSelect);
+
+                    WaitUntilClickable(acquisitionFileStatusesOptions);
+                    ChooseMultiSelectSpecificOption(acquisitionFileStatusesOptions, status);
+                    webDriver.FindElement(acquisitionFileStatusesFileProgressCreateLabel).Click();
+                }
+
+                webDriver.FindElement(acquisitionFileStatusesFileProgressCreateLabel).Click();
+            }
+
+            ChooseSpecificSelectOption(acquisitionFileStatusesAppraisalSelect, acquisition.AcquisitionAppraisalStatus);
+            ChooseSpecificSelectOption(acquisitionFileStatusesLegalSurveySelect, acquisition.AcquisitionLegalSurveyStatus);
+
+            //Delete Type of Taking statuses previously selected if any
+            if (webDriver.FindElements(acquisitionFileTypeTakingDeleteBttns).Count > 0)
+            {
+                Wait();
+                FocusAndClick(acquisitionFileStatusesTypeTakingSelect);
+                while (webDriver.FindElements(acquisitionFileTypeTakingDeleteBttns).Count > 0)
+                {
+                    webDriver.FindElement(acquisitionFileStatusesFileTypeTakingLabel).Click();
+                    webDriver.FindElements(acquisitionFileTypeTakingDeleteBttns)[0].Click();
+                }
+                webDriver.FindElement(acquisitionFileStatusesFileTypeTakingLabel).Click();
+            }
+
+            if (acquisition.AcquisitionTypeTakingStatuses.First() != "")
+            {
+                foreach (string status in acquisition.AcquisitionTypeTakingStatuses)
+                {
+                    Wait(2000);
+                    webDriver.FindElement(acquisitionFileStatusesFileTypeTakingLabel).Click();
+                    FocusAndClick(acquisitionFileStatusesTypeTakingSelect);
+
+                    WaitUntilClickable(acquisitionFileTypeTakingOptions);
+                    ChooseMultiSelectSpecificOption(acquisitionFileTypeTakingOptions, status);
+                    webDriver.FindElement(acquisitionFileStatusesFileTypeTakingLabel).Click();
+                }
+
+                webDriver.FindElement(acquisitionFileStatusesFileTypeTakingLabel).Click();
+            }
+
+            ChooseSpecificSelectOption(acquisitionFileStatusesExpropriationRiskSelect, acquisition.AcquisitionExpropriationRiskStatus);
+
             //Schedule
-            if (acquisition.AssignedDate != "")
+            if (acquisition.AcquisitionAssignedDate != "")
             {
                 WaitUntilClickable(acquisitionFileAssignedDateInput);
                 ClearInput(acquisitionFileAssignedDateInput);
-                webDriver.FindElement(acquisitionFileAssignedDateInput).SendKeys(acquisition.AssignedDate);
+                webDriver.FindElement(acquisitionFileAssignedDateInput).SendKeys(acquisition.AcquisitionAssignedDate);
                 webDriver.FindElement(acquisitionFileAssignedDateInput).SendKeys(Keys.Enter);
             }
 
-            if (acquisition.DeliveryDate != "")
+            if (acquisition.AcquisitionDeliveryDate != "")
             {
                 WaitUntilClickable(acquisitionFileDeliveryDateInput);
                 ClearInput(acquisitionFileDeliveryDateInput);
-                webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(acquisition.DeliveryDate);
+                webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(acquisition.AcquisitionDeliveryDate);
                 webDriver.FindElement(acquisitionFileDeliveryDateInput).SendKeys(Keys.Enter);
+            }
+
+            if (acquisition.AcquisitionEstimatedDate != "")
+            {
+                WaitUntilClickable(acquisitionFileEstimatedDateInput);
+                ClearInput(acquisitionFileEstimatedDateInput);
+                webDriver.FindElement(acquisitionFileEstimatedDateInput).SendKeys(acquisition.AcquisitionEstimatedDate);
+                webDriver.FindElement(acquisitionFileEstimatedDateInput).SendKeys(Keys.Enter);
+            }
+
+            if (acquisition.AcquisitionPossesionDate != "")
+            {
+                WaitUntilClickable(acquisitionFilePossesionDateInput);
+                ClearInput(acquisitionFilePossesionDateInput);
+                webDriver.FindElement(acquisitionFilePossesionDateInput).SendKeys(acquisition.AcquisitionPossesionDate);
+                webDriver.FindElement(acquisitionFilePossesionDateInput).SendKeys(Keys.Enter);
             }
 
             //Details
@@ -432,21 +538,50 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0 && acquisition.AcquisitionFundingOther != "")
                 AssertTrueContentEquals(acquisitionFileProjectOtherFundingContent, acquisition.AcquisitionFundingOther);
 
+            //Acquisition File Statuses
+            AssertTrueIsDisplayed(acquisitionFileStatusesSubtitle);
+            AssertTrueIsDisplayed(acquisitionFileStatusesFileProgressLabel);
+
+            if (acquisition.AcquisitionFileProgressStatuses.Count > 0)
+            {
+                for (var i = 0; i < acquisition.AcquisitionFileProgressStatuses.Count; i++)
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='prg-file-progress-status']//span[" + (i + 1) + "]"), acquisition.AcquisitionFileProgressStatuses[i]);
+            }
+
+            AssertTrueIsDisplayed(acquisitionFileStatusesFileAppraisalLabel);
+            AssertTrueContentEquals(acquisitionFileStatusesFileAppraisalContent, acquisition.AcquisitionAppraisalStatus);
+
+            AssertTrueIsDisplayed(acquisitionFileStatusesFileLegalSurveyLabel);
+            AssertTrueContentEquals(acquisitionFileStatusesFileLegalSurveyContent, acquisition.AcquisitionLegalSurveyStatus);
+
+            AssertTrueIsDisplayed(acquisitionFileStatusesFileTypeTakingLabel);
+            if (acquisition.AcquisitionTypeTakingStatuses.Count > 0)
+            {
+                for (var i = 0; i < acquisition.AcquisitionTypeTakingStatuses.Count; i++)
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='prg-taking-type-status']//span[" + (i + 1) + "]"), acquisition.AcquisitionTypeTakingStatuses[i]);
+            }
+
+            AssertTrueIsDisplayed(acquisitionFileStatusesFileExpropriationRiskLabel);
+            AssertTrueContentEquals(acquisitionFileStatusesFileExpropriationRiskContent, acquisition.AcquisitionExpropriationRiskStatus);
+
             //Schedule
             AssertTrueIsDisplayed(acquisitionFileScheduleSubtitle);
             AssertTrueIsDisplayed(acquisitionFileScheduleAssignedDateLabel);
 
-            if (acquisition.AssignedDate != "")
-                AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, TransformDateFormat(acquisition.AssignedDate));
+            if (acquisition.AcquisitionAssignedDate != "")
+                AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, TransformDateFormat(acquisition.AcquisitionAssignedDate));
             else
-            {
                 AssertTrueContentEquals(acquisitionFileScheduleAssignedDateContent, DateTime.Now.ToString("MMM d, yyyy"));
-            }
-
+            
             AssertTrueIsDisplayed(acquisitionFileScheduleDeliveryDateLabel);
+            if(acquisition.AcquisitionDeliveryDate != "")
+                AssertTrueContentEquals(acquisitionFileScheduleDeliveryDateContent, TransformDateFormat(acquisition.AcquisitionDeliveryDate));
 
-            if(acquisition.DeliveryDate != "")
-                AssertTrueContentEquals(acquisitionFileScheduleDeliveryDateContent, TransformDateFormat(acquisition.DeliveryDate));
+            AssertTrueIsDisplayed(acquisitionFileScheduleEstimatedDateLabel);
+            AssertTrueContentEquals(acquisitionFileScheduleEstimatedDateContent, TransformDateFormat(acquisition.AcquisitionEstimatedDate));
+
+            AssertTrueIsDisplayed(acquisitionFileSchedulePossesionDateLabel);
+            AssertTrueContentEquals(acquisitionFileSchedulePossesionDateContent, TransformDateFormat(acquisition.AcquisitionPossesionDate));
 
             //Details
             AssertTrueIsDisplayed(acquisitionFileDetailsSubtitle);
@@ -535,7 +670,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            if(acquisition.OwnerSolicitor != "")
+            if (acquisition.OwnerSolicitor != "")
                 AssertTrueContentEquals(acquisitionFileOwnerSolicitorContent, acquisition.OwnerSolicitor);
 
             if (acquisition.OwnerRepresentative != "")

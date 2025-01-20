@@ -1020,9 +1020,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionProjFunding = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjFunding");
             acquisitionFile.AcquisitionFundingOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionFundingOther");
 
+            //Progress Statuses
+            acquisitionFile.AcquisitionFileProgressStatuses = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "AcquisitionFileProgressStatuses"));
+            acquisitionFile.AcquisitionAppraisalStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionAppraisalStatus");
+            acquisitionFile.AcquisitionLegalSurveyStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionLegalSurveyStatus");
+            acquisitionFile.AcquisitionTypeTakingStatuses = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "AcquisitionTypeTakingStatuses"));
+            acquisitionFile.AcquisitionExpropriationRiskStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionExpropriationRiskStatus");
+
             //Schedule
-            acquisitionFile.AssignedDate = ExcelDataContext.ReadData(rowNumber, "AssignedDate");
-            acquisitionFile.DeliveryDate = ExcelDataContext.ReadData(rowNumber, "DeliveryDate");
+            acquisitionFile.AcquisitionAssignedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionAssignedDate");
+            acquisitionFile.AcquisitionDeliveryDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionDeliveryDate");
+            acquisitionFile.AcquisitionEstimatedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionEstimatedDate");
+            acquisitionFile.AcquisitionPossesionDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionPossesionDate");
 
             //Acquisition Details
             acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
@@ -1375,10 +1384,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 expropriation.ExpPaymentCount = int.Parse(ExcelDataContext.ReadData(i, "ExpPaymentCount"));
                 
                 if (expropriation.ExpPaymentStartRow != 0 && expropriation.ExpPaymentCount != 0)
-                {
                     PopulateExpropPaymentsCollection(expropriation.ExpPaymentStartRow, expropriation.ExpPaymentCount, expropriation.ExpropriationPayments);
-                }
-
+                
                 acquisitionFile.AcquisitionExpropriationForm8s.Add(expropriation);
             }
         }
