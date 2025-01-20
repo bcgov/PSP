@@ -52,14 +52,14 @@ export const AddForm8Container: React.FunctionComponent<
 
         if (acquisitionOwners !== undefined) {
           const ownersOptions: PayeeOption[] = acquisitionOwners.map(x =>
-            PayeeOption.createOwner(x),
+            PayeeOption.createOwner(x, null),
           );
           options.push(...ownersOptions);
         }
 
         if (interestHolders !== undefined) {
           const interestHolderOptions: PayeeOption[] = interestHolders.map(x =>
-            PayeeOption.createInterestHolder(x),
+            PayeeOption.createInterestHolder(x, null),
           );
           options.push(...interestHolderOptions);
         }

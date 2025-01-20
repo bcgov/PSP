@@ -1,6 +1,7 @@
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -24,15 +25,10 @@ export const emptyCompensationRequisition: ApiGen_Concepts_CompensationRequisiti
   agreementDate: null,
   generationDate: null,
   financials: [],
-  compReqLeaseStakeholder: [],
+  compReqPayees: [],
+  compReqLeaseStakeholders: [],
   compReqAcquisitionProperties: [],
   compReqLeaseProperties: [],
-  acquisitionOwnerId: null,
-  acquisitionOwner: null,
-  interestHolderId: null,
-  interestHolder: null,
-  acquisitionFileTeamId: null,
-  acquisitionFileTeam: null,
   legacyPayee: null,
   isPaymentInTrust: null,
   gstNumber: null,
@@ -134,12 +130,11 @@ export const getMockApiCompensationWithFinancials =
         h120CategoryId: null,
       },
     ],
-    compReqLeaseStakeholder: [],
+    compReqLeaseStakeholders: [],
     compReqAcquisitionProperties: [],
     compReqLeaseProperties: [],
     isPaymentInTrust: true,
     gstNumber: '9999',
-    acquisitionOwnerId: 1,
     rowVersion: 1,
   });
 
@@ -151,7 +146,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
   fiscalYear: '2023/2024',
   specialInstruction: 'SPECIAL INSTRUCTION',
   detailedRemarks: 'DETAILED REMARKS',
-  compReqLeaseStakeholder: [],
+  compReqLeaseStakeholders: [],
   compReqAcquisitionProperties: [
     {
       compensationRequisitionPropertyId: 10000,
@@ -261,7 +256,6 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
   ],
   isPaymentInTrust: true,
   gstNumber: '9999',
-  acquisitionOwnerId: 1,
   rowVersion: 1,
 });
 
@@ -660,3 +654,16 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
     rowVersion: 1,
   },
 ];
+
+export const getMockCompReqPayee = (): ApiGen_Concepts_CompReqPayee => ({
+  ...emptyCompensationRequisition,
+  compReqPayeeId: 1,
+  acquisitionFileTeam: null,
+  acquisitionFileTeamId: null,
+  interestHolder: null,
+  interestHolderId: null,
+  acquisitionOwnerId: null,
+  acquisitionOwner: null,
+  compensationRequisition: null,
+  compensationRequisitionId: null,
+});

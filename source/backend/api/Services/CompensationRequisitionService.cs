@@ -150,12 +150,20 @@ namespace Pims.Api.Services
             return compReqs;
         }
 
-        public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id)
+        public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long compReqId)
         {
-            _logger.LogInformation("Getting compensations financials for id: {acquisitionFileId}", id);
+            _logger.LogInformation("Getting compensations financials for id: {compReqId}", compReqId);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
 
-            return _compensationRequisitionRepository.GetCompensationRequisitionFinancials(id);
+            return _compensationRequisitionRepository.GetCompensationRequisitionFinancials(compReqId);
+        }
+
+        public IEnumerable<PimsCompReqPayee> GetCompensationRequisitionPayees(long compReqId)
+        {
+            _logger.LogInformation("Getting compensations payees for id: {compReqId}", compReqId);
+            _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView);
+
+            return _compensationRequisitionRepository.GetCompensationRequisitionPayees(compReqId);
         }
 
         private static string GetCompensationRequisitionStatusText(bool? isDraft)

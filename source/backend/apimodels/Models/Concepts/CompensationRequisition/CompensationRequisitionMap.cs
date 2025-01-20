@@ -34,9 +34,10 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.CompReqLeaseStakeholder, src => src.PimsLeaseStakeholderCompReqs)
+                .Map(dest => dest.CompReqLeaseStakeholders, src => src.PimsLeaseStakeholderCompReqs)
                 .Map(dest => dest.CompReqAcquisitionProperties, src => src.PimsPropAcqFlCompReqs)
                 .Map(dest => dest.CompReqLeaseProperties, src => src.PimsPropLeaseCompReqs)
+                .Map(dest => dest.CompReqPayees, src => src.PimsCompReqPayees)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
@@ -60,9 +61,10 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.PimsLeaseStakeholderCompReqs, src => src.CompReqLeaseStakeholder)
+                .Map(dest => dest.PimsLeaseStakeholderCompReqs, src => src.CompReqLeaseStakeholders)
                 .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompReqAcquisitionProperties)
                 .Map(dest => dest.PimsPropLeaseCompReqs, src => src.CompReqLeaseProperties)
+                .Map(dest => dest.PimsCompReqPayees, src => src.CompReqPayees)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

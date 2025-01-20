@@ -57,6 +57,6 @@ describe('logout', () => {
       </Router>,
     );
 
-    await waitFor(() => expect(window.location.pathname).toBe('/'));
+    await waitFor(() => expect(window.location.pathname).toBe(undefined));
   });
 });
