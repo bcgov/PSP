@@ -12,6 +12,7 @@ import { getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
+  cleanup,
   getByName,
   render,
   RenderOptions,
@@ -68,6 +69,10 @@ describe('Disposition List View', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
+  });
+
+  afterEach(() => {
+    cleanup();
   });
 
   it('matches snapshot', async () => {
@@ -130,7 +135,7 @@ describe('Disposition List View', () => {
     getDispositionFilesPagedApiFn.mockResolvedValue(results);
 
     const { getSearchButton } = setup();
-    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
+    await act(async () => {});
 
     const searchBy = getByName('searchBy');
     expect(searchBy).not.toBeNull();

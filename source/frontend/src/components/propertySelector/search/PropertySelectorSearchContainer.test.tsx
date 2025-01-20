@@ -187,7 +187,7 @@ describe('PropertySelectorSearchContainer component', () => {
     );
 
     const searchButton = getByTitle('search');
-    act(() => {
+    await act(async () => {
       userEvent.click(searchButton);
     });
 

@@ -205,6 +205,14 @@ export function isNumber(value: unknown): value is number {
   return typeof value === 'number';
 }
 
+export function truncateName(name: string, length: number): string {
+  if (name.length > length) {
+    return name.slice(0, length) + '...';
+  } else {
+    return name;
+  }
+}
+
 /**
  * Add a simple retry wrapper to help avoid chunk errors in deployed pims application, recursively calls promise based on attemptsLeft parameter.
  * @param lazyComponent

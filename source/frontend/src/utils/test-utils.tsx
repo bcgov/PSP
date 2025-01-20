@@ -393,6 +393,12 @@ export async function focusOptionMultiselect(
   });
 }
 
+export const getMockRepositoryObj = () => ({
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+});
 // re-export everything from RTL
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';

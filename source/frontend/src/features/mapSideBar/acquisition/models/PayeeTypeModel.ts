@@ -5,5 +5,4 @@ export enum PayeeType {
   Owner = 'OWNER',
   InterestHolder = 'INTEREST_HOLDER',
   LegacyPayee = 'LEGACY_PAYEE',
-  LeaseStakeholder = 'LEASE_STAKEHOLDER',
 }

@@ -27,7 +27,6 @@ describe('LayerPopupFlyout component', () => {
       <LayerPopupFlyout
         isInPims={renderOptions?.isInPims ?? false}
         isRetiredProperty={renderOptions?.isRetiredProperty ?? false}
-        onViewPropertyInfo={onViewPropertyInfo}
         onCreateAcquisitionFile={onCreateAcquisitionFile}
         onCreateResearchFile={onCreateResearchFile}
         onCreateLeaseLicense={onCreateLeaseLicense}
@@ -53,26 +52,11 @@ describe('LayerPopupFlyout component', () => {
     vi.resetAllMocks();
   });
 
-  it('renders property view link by default', async () => {
-    const { getByText, getAllByRole } = setup();
-
-    expect(getByText('View Property Info')).toBeVisible();
-    expect(getAllByRole('button')).toHaveLength(1);
-  });
-
-  it('calls onViewPropertyInfo when link clicked', async () => {
-    const { getByText } = setup();
-
-    const link = getByText('View Property Info');
-    await act(async () => userEvent.click(link));
-    expect(onViewPropertyInfo).toHaveBeenCalled();
-  });
-
   it('renders the link for creating a research file if user has claim', async () => {
     const { getByText, getAllByRole } = setup({ claims: [Claims.RESEARCH_ADD] });
 
     expect(getByText('Research File')).toBeVisible();
-    expect(getAllByRole('button')).toHaveLength(2);
+    expect(getAllByRole('button')).toHaveLength(1);
   });
 
   it('calls onCreateResearchFile when link clicked', async () => {
@@ -87,7 +71,7 @@ describe('LayerPopupFlyout component', () => {
     const { getByText, getAllByRole } = setup({ claims: [Claims.ACQUISITION_ADD] });
 
     expect(getByText('Acquisition File')).toBeVisible();
-    expect(getAllByRole('button')).toHaveLength(2);
+    expect(getAllByRole('button')).toHaveLength(1);
   });
 
   it('calls onCreateAcquisitionFile when link clicked', async () => {
@@ -102,7 +86,7 @@ describe('LayerPopupFlyout component', () => {
     const { getByText, getAllByRole } = setup({ claims: [Claims.DISPOSITION_ADD] });
 
     expect(getByText('Disposition File')).toBeVisible();
-    expect(getAllByRole('button')).toHaveLength(2);
+    expect(getAllByRole('button')).toHaveLength(1);
   });
 
   it('calls onCreateDispositionFile when link clicked', async () => {
