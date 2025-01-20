@@ -9,7 +9,6 @@ export interface IContactManagerModalProps {
   setDisplay?: (display: boolean) => void;
   setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
   selectedRows: IContactSearchResult[];
-  showAddButton?: boolean;
   showActiveSelector?: boolean;
   handleModalOk?: () => void;
   handleModalCancel?: () => void;
