@@ -1045,9 +1045,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Acquisition Team
             if (acquisitionFile.AcquisitionTeamStartRow != 0 && acquisitionFile.AcquisitionTeamCount != 0)
-            {
                 PopulateTeamsCollection(acquisitionFile.AcquisitionTeamStartRow, acquisitionFile.AcquisitionTeamCount);
-            }
+
 
             //Owner
             acquisitionFile.OwnerStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerStartRow"));
@@ -1340,9 +1339,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.ActivitiesCount = int.Parse(ExcelDataContext.ReadData(i, "ActivitiesCount"));
 
                 if (compensation.ActivitiesStartRow != 0 && compensation.ActivitiesCount != 0)
-                {
                     PopulateActivitiesCollection(compensation.ActivitiesStartRow, compensation.ActivitiesCount, compensation.CompensationActivities);
-                }
 
                 acquisitionFile.AcquisitionCompensations.Add(compensation);
             }

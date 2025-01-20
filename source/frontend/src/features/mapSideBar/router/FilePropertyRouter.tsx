@@ -12,6 +12,7 @@ import { exists, isValidId } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
+import UpdatePropertyForm from '../property/tabs/propertyResearch/update/UpdatePropertyForm';
 import UpdatePropertyResearchContainer from '../property/tabs/propertyResearch/update/UpdatePropertyResearchContainer';
 import TakesAddContainer from '../property/tabs/takes/add/TakesAddContainer';
 import { TakeForm } from '../property/tabs/takes/update/TakeForm';
@@ -92,6 +93,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
             researchFileProperty={fileProperty as ApiGen_Concepts_ResearchFileProperty}
             onSuccess={props.onSuccess}
             ref={props.formikRef}
+            View={UpdatePropertyForm}
           />
         </Route>
 

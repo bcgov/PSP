@@ -76,7 +76,7 @@ public partial class PimsLeaseHist
     public string PsFileNo { get; set; }
 
     [Column("LEASE_DESCRIPTION")]
-    [StringLength(2000)]
+    [StringLength(4000)]
     public string LeaseDescription { get; set; }
 
     [Column("LEASE_NOTES")]

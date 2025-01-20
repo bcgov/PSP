@@ -13,8 +13,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
-import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { exists, isValidId } from '@/utils';
 
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
@@ -33,8 +32,9 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<CompensationRequisitionDetailContainerProps>
 > = ({ compensation, setEditMode, View, clientConstant, fileType, file, loading }) => {
   const onGenerate = useGenerateH120();
-  const [payeePerson, setPayeePerson] = useState<ApiGen_Concepts_Person | null>();
-  const [payeeOrganization, setPayeeOrganization] = useState<ApiGen_Concepts_Organization | null>();
+  const [compensationLeaseStakeHolders, setCompensationLeaseStakeHolders] = useState<
+    ApiGen_Concepts_LeaseStakeholder[] | null
+  >();
 
   const [compensationRequisitionProperties, setCompensationRequisitionProperties] = useState<
     ApiGen_Concepts_FileProperty[]
@@ -44,6 +44,11 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
     getCompensationRequisitionProperties: {
       execute: getCompensationProperties,
       loading: loadingCompReqProperties,
+    },
+    getCompensationRequisitionPayees: {
+      execute: getCompensationPayees,
+      loading: loadingCompReqPayees,
+      response: compReqPayees,
     },
   } = useCompensationRequisitionRepository();
 
@@ -55,45 +60,27 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
     getOrganizationDetail: { execute: getOrganization, loading: loadingOrganization },
   } = useOrganizationRepository();
 
-  const fetchCompensationPayee = useCallback(async () => {
+  const fetchLeaseStakeholder = useCallback(async () => {
     if (isValidId(compensation.id)) {
       try {
-        if (exists(compensation.acquisitionFileTeam)) {
-          if (isValidId(compensation.acquisitionFileTeam.personId)) {
-            const person = await getPerson(compensation.acquisitionFileTeam.personId);
-            setPayeePerson(person);
-          }
-          if (isValidId(compensation.acquisitionFileTeam.organizationId)) {
-            const organization = await getOrganization(
-              compensation.acquisitionFileTeam.organizationId,
-            );
-            setPayeeOrganization(organization);
-          }
-        } else if (compensation.interestHolder) {
-          if (isValidId(compensation.interestHolder.personId)) {
-            const person = await getPerson(compensation.interestHolder.personId);
-            setPayeePerson(person);
-          }
-          if (isValidId(compensation.interestHolder.organizationId)) {
-            const organization = await getOrganization(compensation.interestHolder.organizationId);
-            setPayeeOrganization(organization);
-          }
-        } else if (compensation.compReqLeaseStakeholder?.length > 0) {
-          const stakeHolder = compensation.compReqLeaseStakeholder[0].leaseStakeholder;
+        if (
+          (!exists(compReqPayees) || compReqPayees.length === 0) &&
+          compensation.compReqLeaseStakeholders?.length > 0
+        ) {
+          const stakeHolder = compensation.compReqLeaseStakeholders[0].leaseStakeholder;
           if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.ORG) {
             const org = await getOrganization(stakeHolder.organizationId);
-            setPayeeOrganization(org);
+            setCompensationLeaseStakeHolders([{ ...stakeHolder, organization: org }]);
           } else if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.PER) {
             const person = await getPerson(stakeHolder.personId);
-            setPayeePerson(person);
+            setCompensationLeaseStakeHolders([{ ...stakeHolder, person: person }]);
           }
         }
       } catch (e) {
         if (axios.isAxiosError(e)) {
           const axiosError = e as AxiosError<IApiError>;
           if (axiosError.response?.status === 404) {
-            setPayeePerson(null);
-            setPayeeOrganization(null);
+            setCompensationLeaseStakeHolders([]);
           } else {
             toast.error(axiosError.response?.data.error);
           }
@@ -101,10 +88,9 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
       }
     }
   }, [
-    compensation.acquisitionFileTeam,
-    compensation.compReqLeaseStakeholder,
+    compReqPayees,
+    compensation.compReqLeaseStakeholders,
     compensation.id,
-    compensation.interestHolder,
     getOrganization,
     getPerson,
   ]);
@@ -116,26 +102,42 @@ export const CompensationRequisitionDetailContainer: React.FunctionComponent<
     }
   }, [compensation.id, fileType, getCompensationProperties]);
 
+  const fetchCompensationPayees = useCallback(async () => {
+    if (isValidId(compensation.id)) {
+      await getCompensationPayees(compensation.id);
+    }
+  }, [compensation.id, getCompensationPayees]);
+
   useEffect(() => {
-    fetchCompensationPayee();
-  }, [fetchCompensationPayee]);
+    fetchLeaseStakeholder();
+  }, [fetchLeaseStakeholder]);
 
   useEffect(() => {
     fetchCompensationProperties();
   }, [fetchCompensationProperties]);
 
+  useEffect(() => {
+    fetchCompensationPayees();
+  }, [fetchCompensationPayees]);
+
   return compensation ? (
     <View
       fileType={fileType}
-      loading={loading || loadingPerson || loadingOrganization || loadingCompReqProperties}
+      loading={
+        loading ||
+        loadingPerson ||
+        loadingOrganization ||
+        loadingCompReqProperties ||
+        loadingCompReqPayees
+      }
       file={file}
       compensation={compensation}
       compensationProperties={compensationRequisitionProperties}
-      compensationContactPerson={payeePerson}
-      compensationContactOrganization={payeeOrganization}
+      compensationPayees={compReqPayees}
       setEditMode={setEditMode}
       clientConstant={clientConstant}
       onGenerate={onGenerate}
+      compensationLeaseStakeHolders={compensationLeaseStakeHolders}
     ></View>
   ) : null;
 };

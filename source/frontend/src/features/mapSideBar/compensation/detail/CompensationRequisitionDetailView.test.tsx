@@ -41,8 +41,8 @@ describe('Compensation Detail View Component', () => {
         setEditMode={setEditMode}
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
         onGenerate={onGenerate}
-        compensationContactPerson={undefined}
-        compensationContactOrganization={undefined}
+        compensationLeaseStakeHolders={[]}
+        compensationPayees={[]}
       />,
       {
         ...renderOptions,

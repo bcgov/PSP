@@ -145,6 +145,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
         }
       </SimplePagination>
       <LayerPopupLinks
+        onViewPropertyInfo={handleViewPropertyInfo}
         bounds={getFirstBounds(layerPopup.layers)}
         onEllipsisClick={showFlyout ? closeFlyout : openFlyout}
       />
@@ -155,7 +156,6 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
             isInPims={isInPims}
             isRetiredProperty={isRetiredProperty}
             isDisposedProperty={isDisposedProperty}
-            onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
             onCreateLeaseLicense={handleCreateLeaseLicence}

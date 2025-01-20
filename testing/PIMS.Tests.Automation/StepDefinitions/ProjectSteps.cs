@@ -1,7 +1,6 @@
 ﻿using System.Data;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.Classes;
-using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -12,6 +11,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly Projects projects;
         private readonly SearchProjects searchProjects;
         private readonly SharedPagination sharedPagination;
+        private readonly GenericSteps genericSteps;
 
         private readonly string userName = "TRANPSP1";
 
@@ -26,6 +26,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedPagination = new SharedPagination(driver.Current);
 
             project = new Project();
+            genericSteps = new GenericSteps(driver);
         }
 
         [StepDefinition(@"I create a new Project from row number (.*)")]
@@ -53,9 +54,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (project.Products.Count > 0)
             {
                 for (int i = 0; i < project.ProductsCount; i++)
-                {
-                    projects.CreateProduct(project.Products[i], i);
-                }
+                    projects.CreateProduct(project.Products[i], i);  
+            }
+
+            //Add Team Members
+            if (project.ProjectTeamMembers.First() != "")
+            {
+                for (int i = 0; i < project.ProjectTeamMembers.Count; i++)
+                    projects.AddUpdateTeamMember(project.ProjectTeamMembers[i]);
             }
 
             //Save Project
@@ -71,10 +77,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (project.Products.Count > 0)
             {
                 for (int i = 0; i < project.ProductsCount; i++)
-                {
                     projects.VerifyProductViewForm(project.Products[i], i, "Create");
-                }
             }
+
+            //Verify Team Members within a Project
+            if (project.ProjectTeamMembers.First() != "")
+                projects.VerifyTeamMemberViewForm(project.ProjectTeamMembers);
+            
         }
 
         [StepDefinition(@"I update an existing project from row number (.*)")]
@@ -97,11 +106,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit Products
             if (project.Products.Count > 0)
-            {
                 for (int i = 0; i < project.ProductsCount; i++)
-                {
                     projects.UpdateProduct(project.Products[i], i);
-                }
+
+            //Edit Team members
+            if (project.ProjectTeamMembers.First() != "")
+            {
+                projects.DeleteTeamMembers();
+
+                for (int i = 0; i < project.ProjectTeamMembers.Count; i++)
+                    projects.AddUpdateTeamMember(project.ProjectTeamMembers[i]);
             }
 
             //Save Project
@@ -117,7 +131,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 {
                     projects.VerifyProductViewForm(project.Products[i], i, "Update");
                 }
-            }   
+            }
+
+            //Verify Team Members within a Project
+            if (project.ProjectTeamMembers.First() != "")
+                projects.VerifyTeamMemberViewForm(project.ProjectTeamMembers);
         }
 
         [StepDefinition(@"I search for existing Projects from row number (.*)")]
@@ -261,9 +279,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             project.ProductsRowStart = int.Parse(ExcelDataContext.ReadData(rowNumber, "ProductsRowStart"));
             
             if (project.ProductsCount != 0 && project.ProductsRowStart != 0)
-            {
                 PopulateProductCollection(project.ProductsRowStart, project.ProductsCount);
-            }
+
+            project.ProjectTeamMembers = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "ProjectTeamMembers"));
         }
  
         private void PopulateProductCollection(int startRow, int rowsCount)
