@@ -21,8 +21,8 @@ DECLARE @sysadmn BIGINT;
 --
 SELECT @acqfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Acquisition functional';
 SELECT @acgrdon = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Acquisition read-only';
-SELECT @llfunc  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Lease/License functional';
-SELECT @llrdon  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Lease/License read-only';
+SELECT @llfunc  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Lease License functional';
+SELECT @llrdon  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Lease License read-only';
 SELECT @mafunc  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Management functional';
 SELECT @mardon  = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Management read-only';
 SELECT @prjfunc = ROLE_ID FROM PIMS_ROLE WHERE NAME = 'Project functional';
