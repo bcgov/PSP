@@ -1,0 +1,1199 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/31/2024 11:42:01 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{5301DD9B-056D-42A5-928F-32689C43058D}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Connection_Test"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="264"
+  DTS:VersionGUID="{DC0FB7AB-BC78-49CD-A5F4-FC02B14B6E82}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{140B8441-B13A-4C4E-B3B4-4AD455D8D84E}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{2E05C78A-C673-45EB-8C49-6BB8FEC702D9}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[TAP Oracle]"
+      DTS:CreationName="OLEDB"
+      DTS:Description="Oracle Provider for OLE DB"
+      DTS:DTSID="{EC6CB961-FC0B-4E9A-B5ED-12476BA2954D}"
+      DTS:ObjectName="TAP Oracle">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/DEV01;User ID=aparasur;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
+          <DTS:Password
+            DTS:Name="Password"
+            Sensitive="1"></DTS:Password>
+        </DTS:ConnectionManager>
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:PackageParameters>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="8"
+      DTS:DTSID="{0AD9DCD5-BBC1-4567-80C9-0DD717808FF9}"
+      DTS:ObjectName="connString"
+      DTS:Sensitive="True">
+      <DTS:Property
+        DTS:Name="ParameterValue">
+        <DTS:Property
+          DTS:DataType="0"
+          DTS:Name="ParameterValue"></DTS:Property>
+      </DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{66503F3A-A127-4DD1-847E-CDD864B0D602}"
+      DTS:ObjectName="DocumentUploadLimit">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">6</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{BD151358-0ABA-454F-A7E8-75BC4309BFFD}"
+      DTS:ObjectName="Param_Batch_Size">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">5</DTS:Property>
+    </DTS:PackageParameter>
+    <DTS:PackageParameter
+      DTS:CreationName=""
+      DTS:DataType="3"
+      DTS:DTSID="{0BC9F718-81D4-488E-9979-FC6AD6311187}"
+      DTS:ObjectName="Param_Delay_Seconds">
+      <DTS:Property
+        DTS:DataType="3"
+        DTS:Name="ParameterValue">2</DTS:Property>
+    </DTS:PackageParameter>
+  </DTS:PackageParameters>
+  <DTS:Variables>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{ADBDF100-437E-4499-9700-11BA46DEC31D}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::Param_Batch_Size]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="BatchSize">
+      <DTS:VariableValue
+        DTS:DataType="3">5</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{8B16C1ED-D290-4ED1-83A0-F91FECEA3B11}"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DecryptedConnString">
+      <DTS:VariableValue
+        DTS:DataType="8"
+        xml:space="preserve"></DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D6109CC7-75CA-44C6-A048-4AE316E2955E}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="@[$Package::Param_Delay_Seconds]"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DelaySeconds">
+      <DTS:VariableValue
+        DTS:DataType="3">2</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{20633835-44E6-40C2-800A-07FF46DA1E1F}"
+      DTS:EvaluateAsExpression="True"
+      DTS:Expression="&quot;SELECT *&#xA;FROM (&#xA;    SELECT ROW_NUMBER() OVER (ORDER BY A.MULTIMEDIA_OBJECT_ID) AS ROW_NUM, &#xA;           TO_NCHAR(A.TYPE_DESCRIPTION) AS TYPE_DESCRIPTION, &#xA;           TO_NCHAR(A.FILE_NAME) AS FILE_NAME, &#xA;           A.MULTIMEDIA_OBJECT_ID, &#xA;           A.DIGITAL_REPRESENTATION, &#xA;           A.CREATE_DATETIME, &#xA;           A.LAST_UPDATE_DATETIME,&#xA;&#x9;&#x9;   B.MOT_NUMBER &#xA;    FROM APP_TAP.TAP_MULTIMEDIA_OBJECT A JOIN APP_TAP.TAP_LAND_PARCEL B ON A.LAND_PARCEL_ID = B.LAND_PARCEL_ID&#xA;&#x9;WHERE B.MOT_NUMBER IS NOT NULL AND A.MULTIMEDIA_OBJECT_ID &gt; &quot;+ (DT_WSTR, 50) @[User::PIMS_MULTIMEDIA_OBJECT_ID_MAX] + &quot;&#xA;&#x9;ORDER BY A.MULTIMEDIA_OBJECT_ID ASC&#xA;) &#xA;WHERE ROW_NUM = 1 &quot;"
+      DTS:IncludeInDebugDump="2345"
+      DTS:Namespace="User"
+      DTS:ObjectName="DynamicSQL">
+      <DTS:VariableValue
+        DTS:DataType="8">SELECT *
+FROM (
+    SELECT ROW_NUMBER() OVER (ORDER BY A.MULTIMEDIA_OBJECT_ID) AS ROW_NUM, 
+           TO_NCHAR(A.TYPE_DESCRIPTION) AS TYPE_DESCRIPTION, 
+           TO_NCHAR(A.FILE_NAME) AS FILE_NAME, 
+           A.MULTIMEDIA_OBJECT_ID, 
+           A.DIGITAL_REPRESENTATION, 
+           A.CREATE_DATETIME, 
+           A.LAST_UPDATE_DATETIME,
+		   B.MOT_NUMBER 
+    FROM APP_TAP.TAP_MULTIMEDIA_OBJECT A JOIN APP_TAP.TAP_LAND_PARCEL B ON A.LAND_PARCEL_ID = B.LAND_PARCEL_ID
+	WHERE B.MOT_NUMBER IS NOT NULL AND A.MULTIMEDIA_OBJECT_ID &gt; 0
+	ORDER BY A.MULTIMEDIA_OBJECT_ID ASC
+) 
+WHERE ROW_NUM = 1 </DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{135EAE2E-2043-4623-8ED9-5FC8A349353D}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PendingCount">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{D1E9EE97-48F0-4714-90BF-48AD51AFE376}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="PIMS_MULTIMEDIA_OBJECT_ID_MAX">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{2F949B1D-0826-4E86-9FC3-D57B2AADB640}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowOffset">
+      <DTS:VariableValue
+        DTS:DataType="3">0</DTS:VariableValue>
+    </DTS:Variable>
+    <DTS:Variable
+      DTS:CreationName=""
+      DTS:DTSID="{3E3D404B-A685-47B9-A73E-2F8F5B642E61}"
+      DTS:IncludeInDebugDump="6789"
+      DTS:Namespace="User"
+      DTS:ObjectName="RowsFetched">
+      <DTS:VariableValue
+        DTS:DataType="3">1</DTS:VariableValue>
+    </DTS:Variable>
+  </DTS:Variables>
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{d561fef9-443e-4352-be9b-08303f272a01}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Inputs[Derived Column Input].Columns[TYPE_DESCRIPTION]"
+                      cachedDataType="wstr"
+                      cachedLength="240"
+                      cachedName="TYPE_DESCRIPTION"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[TYPE_DESCRIPTION]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Inputs[Derived Column Input].Columns[FILE_NAME]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="FILE_NAME"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]"
+                      name="APP_CREATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      name="APP_LAST_UPDATE_TIMESTAMP"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">[GETDATE]()</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">GETDATE()</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[FILE_NAME_CONV]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="100"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[FILE_NAME_CONV]"
+                      name="FILE_NAME_CONV"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_WSTR,100)#{Package\DUMP ORACLE TAP INTO PIMS "etl" Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_WSTR,100)FILE_NAME</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[TYPE_DESCRIPTION_CONV]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="500"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[TYPE_DESCRIPTION_CONV]"
+                      name="TYPE_DESCRIPTION_CONV"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">(DT_WSTR,500)#{Package\DUMP ORACLE TAP INTO PIMS "etl" Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[TYPE_DESCRIPTION]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">(DT_WSTR,500)TYPE_DESCRIPTION</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup"
+              componentClassID="Microsoft.Lookup"
+              contactInfo="Lookup;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;6"
+              description="Joins additional columns to the data flow by looking up values in a table. For example, join to the 'employee id' column the employees table to get 'hire date' and 'employee name'. We recommend this transformation when the lookup table can fit into memory."
+              name="Lookup"
+              usesDispositions="true"
+              version="6">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the SQL statement that generates the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from [etl].[TAP_SOURCE]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies a SQL statement that uses parameters to generate the lookup table."
+                  expressionType="Notify"
+                  name="SqlCommandParam"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">select * from (select * from [etl].[TAP_SOURCE]) [refTable]
+where [refTable].[MULTIMEDIA_OBJECT_ID] = ?</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of connection used to access the reference dataset."
+                  name="ConnectionType"
+                  typeConverter="LookupConnectionType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the cache type of the lookup table."
+                  name="CacheType"
+                  typeConverter="CacheType">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies how the Lookup transformation handles rows without matching entries in the reference data set."
+                  name="NoMatchBehavior"
+                  typeConverter="LookupNoMatchBehavior">1</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the percentage of the cache that is allocated for rows with no matching entries in the reference dataset."
+                  name="NoMatchCachePercentage">0</property>
+                <property
+                  dataType="System.Int32"
+                  description="Maximum Memory Usage for Reference Cache on a 32 bit platform."
+                  name="MaxMemoryUsage">25</property>
+                <property
+                  dataType="System.Int64"
+                  description="Maximum Memory Usage for Reference Cache on a 64 bit platform."
+                  name="MaxMemoryUsage64">25</property>
+                <property
+                  dataType="System.String"
+                  description="Indicates whether to reference metadata in an XML format."
+                  name="ReferenceMetadataXml">&lt;referenceMetadata&gt;&lt;referenceColumns&gt;&lt;referenceColumn name="TYPE_DESCRIPTION" dataType="DT_WSTR" length="240" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="FILE_NAME" dataType="DT_WSTR" length="100" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MULTIMEDIA_OBJECT_ID" dataType="DT_NUMERIC" length="0" precision="10" scale="0" codePage="0"/&gt;&lt;referenceColumn name="DIGITAL_REPRESENTATION" dataType="DT_IMAGE" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="CREATE_DATETIME" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="LAST_UPDATE_DATETIME" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_CREATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="APP_LAST_UPDATE_TIMESTAMP" dataType="DT_DBTIMESTAMP" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;referenceColumn name="MOT_NUMBER" dataType="DT_I4" length="0" precision="0" scale="0" codePage="0"/&gt;&lt;/referenceColumns&gt;&lt;/referenceMetadata&gt;</property>
+                <property
+                  containsID="true"
+                  dataType="System.String"
+                  description="Specifies the list of lineage identifiers that map to the parameters that the SQL statement in the SQLCommand property uses. Entries in the list are separated by semicolons."
+                  name="ParameterMap">#{Package\DUMP ORACLE TAP INTO PIMS "etl" Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[MULTIMEDIA_OBJECT_ID]};</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Determines whether duplicate keys in the reference data should be treated as errors when full cache mode is used."
+                  name="TreatDuplicateKeysAsError">false</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="Connection manager used to access lookup data."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Inputs[Lookup Input]"
+                  name="Lookup Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Inputs[Lookup Input].Columns[MULTIMEDIA_OBJECT_ID]"
+                      cachedDataType="numeric"
+                      cachedName="MULTIMEDIA_OBJECT_ID"
+                      cachedPrecision="10"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[MULTIMEDIA_OBJECT_ID]">
+                      <properties>
+                        <property
+                          dataType="System.String"
+                          description="Specifies the column in the reference table that a column joins."
+                          name="JoinToReferenceColumn">MULTIMEDIA_OBJECT_ID</property>
+                        <property
+                          dataType="System.Null"
+                          description="Specifies the column in the reference table from which a column is copied."
+                          name="CopyFromReferenceColumn" />
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Outputs[Lookup Match Output]"
+                  errorOrTruncationOperation="Lookup"
+                  exclusionGroup="1"
+                  name="Lookup Match Output"
+                  synchronousInputId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Outputs[Lookup No Match Output]"
+                  description="The Lookup output that handles rows with no matching entries in the reference dataset. Use this output when the NoMatchBehavior property is set to &quot;Send rows with no matching entries to the no match output.&quot;"
+                  exclusionGroup="1"
+                  name="Lookup No Match Output"
+                  synchronousInputId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Inputs[Lookup Input]">
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Outputs[Lookup Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Lookup Error Output"
+                  synchronousInputId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Inputs[Lookup Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Outputs[Lookup Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Outputs[Lookup Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="OLE DB Source"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset"></property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91">SELECT *
+FROM (
+    SELECT ROW_NUMBER() OVER (ORDER BY CREATE_DATETIME) AS ROW_NUM, 
+           TYPE_DESCRIPTION, 
+           FILE_NAME, 
+           MULTIMEDIA_OBJECT_ID, 
+           DIGITAL_REPRESENTATION, 
+           CREATE_DATETIME, 
+           LAST_UPDATE_DATETIME
+    FROM APP_TAP.TAP_MULTIMEDIA_OBJECT
+) 
+WHERE ROW_NUM BETWEEN :RowOffset + 1 AND :RowOffset + :BatchSize</property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable">User::DynamicSQL</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[TAP Oracle]"
+                  connectionManagerRefId="Package.ConnectionManagers[TAP Oracle]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[ROW_NUM]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ROW_NUM]"
+                      length="38"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[ROW_NUM]"
+                      name="ROW_NUM"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[TYPE_DESCRIPTION]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TYPE_DESCRIPTION]"
+                      length="240"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[TYPE_DESCRIPTION]"
+                      name="TYPE_DESCRIPTION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NAME]"
+                      length="100"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[FILE_NAME]"
+                      name="FILE_NAME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[MULTIMEDIA_OBJECT_ID]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MULTIMEDIA_OBJECT_ID]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[MULTIMEDIA_OBJECT_ID]"
+                      name="MULTIMEDIA_OBJECT_ID"
+                      precision="10"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[DIGITAL_REPRESENTATION]"
+                      dataType="image"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DIGITAL_REPRESENTATION]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[DIGITAL_REPRESENTATION]"
+                      name="DIGITAL_REPRESENTATION"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CREATE_DATETIME]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATE_DATETIME]"
+                      name="CREATE_DATETIME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LAST_UPDATE_DATETIME]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_DATETIME]"
+                      name="LAST_UPDATE_DATETIME"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[MOT_NUMBER]"
+                      dataType="numeric"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MOT_NUMBER]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[MOT_NUMBER]"
+                      name="MOT_NUMBER"
+                      precision="38"
+                      scale="8"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ROW_NUM]"
+                      dataType="wstr"
+                      length="38"
+                      name="ROW_NUM" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[TYPE_DESCRIPTION]"
+                      dataType="wstr"
+                      length="600"
+                      name="TYPE_DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[FILE_NAME]"
+                      dataType="wstr"
+                      length="250"
+                      name="FILE_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MULTIMEDIA_OBJECT_ID]"
+                      dataType="numeric"
+                      name="MULTIMEDIA_OBJECT_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[DIGITAL_REPRESENTATION]"
+                      dataType="image"
+                      name="DIGITAL_REPRESENTATION" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CREATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATE_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[LAST_UPDATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="LAST_UPDATE_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[MOT_NUMBER]"
+                      dataType="numeric"
+                      name="MOT_NUMBER"
+                      precision="38"
+                      scale="8" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ROW_NUM]"
+                      dataType="wstr"
+                      length="38"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ROW_NUM]"
+                      name="ROW_NUM" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TYPE_DESCRIPTION]"
+                      dataType="wstr"
+                      length="600"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[TYPE_DESCRIPTION]"
+                      name="TYPE_DESCRIPTION" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NAME]"
+                      dataType="wstr"
+                      length="250"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[FILE_NAME]"
+                      name="FILE_NAME" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MULTIMEDIA_OBJECT_ID]"
+                      dataType="numeric"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MULTIMEDIA_OBJECT_ID]"
+                      name="MULTIMEDIA_OBJECT_ID"
+                      precision="10" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DIGITAL_REPRESENTATION]"
+                      dataType="image"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[DIGITAL_REPRESENTATION]"
+                      name="DIGITAL_REPRESENTATION" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CREATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CREATE_DATETIME]"
+                      name="CREATE_DATETIME" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LAST_UPDATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[LAST_UPDATE_DATETIME]"
+                      name="LAST_UPDATE_DATETIME" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MOT_NUMBER]"
+                      dataType="numeric"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[MOT_NUMBER]"
+                      name="MOT_NUMBER"
+                      precision="38"
+                      scale="8" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="PIMS ETL schema dump load"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[etl].[TAP_SOURCE]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1252</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[PIMS]"
+                  connectionManagerRefId="Package.ConnectionManagers[PIMS]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[MULTIMEDIA_OBJECT_ID]"
+                      cachedDataType="numeric"
+                      cachedName="MULTIMEDIA_OBJECT_ID"
+                      cachedPrecision="10"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[MULTIMEDIA_OBJECT_ID]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[MULTIMEDIA_OBJECT_ID]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[DIGITAL_REPRESENTATION]"
+                      cachedDataType="image"
+                      cachedName="DIGITAL_REPRESENTATION"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[DIGITAL_REPRESENTATION]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[DIGITAL_REPRESENTATION]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[CREATE_DATETIME]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="CREATE_DATETIME"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[CREATE_DATETIME]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[CREATE_DATETIME]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[LAST_UPDATE_DATETIME]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="LAST_UPDATE_DATETIME"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[LAST_UPDATE_DATETIME]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[LAST_UPDATE_DATETIME]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[APP_CREATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_CREATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[APP_CREATE_TIMESTAMP]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_TIMESTAMP]"
+                      cachedDataType="dbTimeStamp"
+                      cachedName="APP_LAST_UPDATE_TIMESTAMP"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_TIMESTAMP]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[MOT_NUMBER]"
+                      cachedDataType="numeric"
+                      cachedName="MOT_NUMBER"
+                      cachedPrecision="38"
+                      cachedScale="8"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[MOT_NUMBER]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output].Columns[MOT_NUMBER]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[FILE_NAME_CONV]"
+                      cachedDataType="wstr"
+                      cachedLength="100"
+                      cachedName="FILE_NAME_CONV"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[FILE_NAME]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[FILE_NAME_CONV]" />
+                    <inputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].Columns[TYPE_DESCRIPTION_CONV]"
+                      cachedDataType="wstr"
+                      cachedLength="500"
+                      cachedName="TYPE_DESCRIPTION_CONV"
+                      externalMetadataColumnId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[TYPE_DESCRIPTION]"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output].Columns[TYPE_DESCRIPTION_CONV]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[TYPE_DESCRIPTION]"
+                      dataType="wstr"
+                      length="500"
+                      name="TYPE_DESCRIPTION" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[FILE_NAME]"
+                      dataType="wstr"
+                      length="100"
+                      name="FILE_NAME" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[MULTIMEDIA_OBJECT_ID]"
+                      dataType="numeric"
+                      name="MULTIMEDIA_OBJECT_ID"
+                      precision="10" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[DIGITAL_REPRESENTATION]"
+                      dataType="image"
+                      name="DIGITAL_REPRESENTATION" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[CREATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="CREATE_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[LAST_UPDATE_DATETIME]"
+                      dataType="dbTimeStamp"
+                      name="LAST_UPDATE_DATETIME" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_CREATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
+                      dataType="dbTimeStamp"
+                      name="APP_LAST_UPDATE_TIMESTAMP" />
+                    <externalMetadataColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input].ExternalColumns[MOT_NUMBER]"
+                      dataType="i4"
+                      name="MOT_NUMBER" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Row Count"
+              componentClassID="Microsoft.RowCount"
+              contactInfo="Row Count;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Counts rows as they pass through a data flow. For example, use the number of rows processed to determine whether or not to perform cleanup operations, or update text in an e-mail message to communicate processing status."
+              name="Row Count">
+              <properties>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable to hold the row count."
+                  name="VariableName">User::RowsFetched</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Row Count.Inputs[Row Count Input 1]"
+                  hasSideEffects="true"
+                  name="Row Count Input 1">
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Row Count.Outputs[Row Count Output 1]"
+                  name="Row Count Output 1"
+                  synchronousInputId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Row Count.Inputs[Row Count Input 1]">
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema.Paths[Derived Column Output]"
+              endId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Inputs[Lookup Input]"
+              name="Derived Column Output"
+              startId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema.Paths[Lookup No Match Output]"
+              endId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load.Inputs[OLE DB Destination Input]"
+              name="Lookup No Match Output"
+              startId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup.Outputs[Lookup No Match Output]" />
+            <path
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema.Paths[OLE DB Source Output]"
+              endId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Row Count.Inputs[Row Count Input 1]"
+              name="OLE DB Source Output"
+              startId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema.Paths[Row Count Output 1]"
+              endId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column.Inputs[Derived Column Input]"
+              name="Row Count Output 1"
+              startId="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Row Count.Outputs[Row Count Output 1]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        <NodeLayout
+          Size="302.666666666667,42.6666666666667"
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema"
+          TopLeft="215.781246784608,304.75435446394" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="132,42.6666666666667"
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Row Count"
+          TopLeft="834.583323256423,140.22807303448" />
+        <NodeLayout
+          Size="154.666666666667,42.6666666666667"
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source"
+          TopLeft="553.166666629414,48.3859649509164" />
+        <NodeLayout
+          Size="156,42.6666666666667"
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Derived Column"
+          TopLeft="818.124994663521,225.912285531216" />
+        <NodeLayout
+          Size="114.666666666667,42.6666666666667"
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\Lookup"
+          TopLeft="877.91665919746,311.017550968617" />
+        <NodeLayout
+          Size="221.333333333334,42.6666666666667"
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\PIMS ETL schema dump load"
+          TopLeft="1002.54165501583,406.526323027229" />
+        <EdgeLayout
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema.Paths[OLE DB Source Output]"
+          TopLeft="630.499999962747,91.052631617583">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="270.083323293676,49.175441416897"
+              Start="0,0"
+              End="270.083323293676,41.675441416897">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.5877207084485" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.5877207084485"
+                    Point2="0,24.5877207084485"
+                    Point3="4,24.5877207084485" />
+                  <mssgle:LineSegment
+                    End="266.083323293676,24.5877207084485" />
+                  <mssgle:CubicBezierSegment
+                    Point1="266.083323293676,24.5877207084485"
+                    Point2="270.083323293676,24.5877207084485"
+                    Point3="270.083323293676,28.5877207084485" />
+                  <mssgle:LineSegment
+                    End="270.083323293676,41.675441416897" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema.Paths[Lookup No Match Output]"
+          TopLeft="935.249992530793,353.684217635284">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="177.9583291517,52.8421053919448"
+              Start="0,0"
+              End="177.9583291517,45.3421053919448">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,22.4210526959724" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,22.4210526959724"
+                    Point2="0,26.4210526959724"
+                    Point3="4,26.4210526959724" />
+                  <mssgle:LineSegment
+                    End="173.9583291517,26.4210526959724" />
+                  <mssgle:CubicBezierSegment
+                    Point1="173.9583291517,26.4210526959724"
+                    Point2="177.9583291517,26.4210526959724"
+                    Point3="177.9583291517,30.4210526959724" />
+                  <mssgle:LineSegment
+                    End="177.9583291517,45.3421053919448" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="33.1727778571,31.4210526959724,111.6127734375,11.609375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema.Paths[Derived Column Output]"
+          TopLeft="896.124994663521,268.578952197883">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="39.124997867272,42.438598770734"
+              Start="0,0"
+              End="39.124997867272,34.938598770734">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.219299385367" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.219299385367"
+                    Point2="0,21.219299385367"
+                    Point3="4,21.219299385367" />
+                  <mssgle:LineSegment
+                    End="35.124997867272,21.219299385367" />
+                  <mssgle:CubicBezierSegment
+                    Point1="35.124997867272,21.219299385367"
+                    Point2="39.124997867272,21.219299385367"
+                    Point3="39.124997867272,25.219299385367" />
+                  <mssgle:LineSegment
+                    End="39.124997867272,34.938598770734" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema.Paths[Row Count Output 1]"
+          TopLeft="898.354158959972,182.894739701147">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,43.0175458300697"
+              Start="0,0"
+              End="0,35.5175458300697">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,35.5175458300697" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

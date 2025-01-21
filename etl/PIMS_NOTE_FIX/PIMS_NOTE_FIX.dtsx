@@ -1,0 +1,272 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/17/2024 9:12:23 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{ED2FA4DA-FEB6-4E95-8ED5-C9E9EDAA5BE2}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="16"
+  DTS:VersionGUID="{BFBF169B-40B3-4F9B-AAA0-365E270AA70A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\BKP TABLE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C94B158C-940B-4E94-B850-1ABF7838E84F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="BKP TABLE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C09DFD26-68EF-4174-BD87-9FD55350282E}"
+          SQLTask:SqlStatementSource="SELECT * INTO etl.PIMS_NOTE_BKP FROM dbo.PIMS_NOTE;&#xA;SELECT * INTO etl.PIMS_LEASE_NOTE_BKP FROM dbo.PIMS_LEASE_NOTE;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\DROP TABLE IF EXISTS"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{111EF98F-3781-40A0-B89E-AFEC1B388F4C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="DROP TABLE IF EXISTS"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C09DFD26-68EF-4174-BD87-9FD55350282E}"
+          SQLTask:SqlStatementSource="DROP TABLE IF EXISTS etl.PIMS_NOTE_BKP;&#xA;DROP TABLE IF EXISTS etl.PIMS_LEASE_NOTE_BKP;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Line Break on PIMS_NOTE field NOTE_TXT"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{E817490C-DFF8-457B-A219-0C9D7C938562}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Line Break on PIMS_NOTE field NOTE_TXT"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C09DFD26-68EF-4174-BD87-9FD55350282E}"
+          SQLTask:SqlStatementSource="UPDATE dbo.PIMS_NOTE&#xA;SET &#xA;&#x9;NOTE_TXT = REPLACE(NOTE_TXT, '---', CHAR(13) + CHAR(10) + '---'),&#xA;&#x9;CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER+1&#xA;WHERE   &#xA;&#x9;APP_CREATE_USERID LIKE 'LEASE_ID: %' and &#xA;&#x9;NOTE_TXT LIKE '%---%';" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_LEASE_NOTE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{bae35f9c-1667-48a2-9ac1-2269792a3e51}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_LEASE_NOTE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C09DFD26-68EF-4174-BD87-9FD55350282E}"
+          SQLTask:SqlStatementSource="INSERT INTO PIMS_LEASE_NOTE (LEASE_ID, NOTE_ID, APP_CREATE_USERID, APP_CREATE_TIMESTAMP, APP_LAST_UPDATE_USERID, APP_LAST_UPDATE_TIMESTAMP )&#xA;&#x9;SELECT &#xA;&#x9;&#x9;CAST(REPLACE(APP_CREATE_USERID,'LEASE_ID: ', '') AS bigint) AS LEASE_ID,&#xA;&#x9;&#x9;NOTE_ID,&#xA;&#x9;&#x9;'NOTE_ID: ' + CAST( NOTE_ID AS varchar) AS APP_CREATE_USERID, &#xA;&#x9;&#x9;GETDATE() AS APP_CREATE_TIMESTAMP,&#xA;&#x9;&#x9;'PIMS_ETL_USER' AS APP_LAST_UPDATE_USERID,&#xA;&#x9;&#x9;GETDATE() AS APP_LAST_UPDATE_TIMESTAMP&#xA;&#x9;FROM&#xA;&#x9;&#x9;PIMS_NOTE &#xA;&#x9;WHERE&#xA;&#x9;&#x9;APP_CREATE_USERID LIKE 'LEASE_ID: %'&#xA;&#x9;&#x9;;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_NOTE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0e41c314-67f0-4e03-9bf0-ec3ec8e4d604}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_NOTE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{C09DFD26-68EF-4174-BD87-9FD55350282E}"
+          SQLTask:SqlStatementSource="INSERT INTO PIMS_NOTE ( APP_CREATE_USERID, APP_LAST_UPDATE_USERID,NOTE_TXT,APP_CREATE_TIMESTAMP, APP_LAST_UPDATE_TIMESTAMP)&#xA;&#x9;select  &#xA;&#x9;&#x9;'LEASE_ID: ' + CAST( pl.LEASE_ID AS varchar) AS APP_CREATE_USERID, &#xA;&#x9;&#x9;'PIMS_ETL_USER' AS APP_LAST_UPDATE_USERID,&#xA;&#x9;&#x9;pl.LEASE_NOTES AS NOTE_TXT,&#xA;&#x9;&#x9;GETDATE() AS APP_CREATE_TIMESTAMP,&#xA;&#x9;&#x9;GETDATE() AS APP_LAST_UPDATE_TIMESTAMP&#xA;&#x9;from &#xA;&#x9;&#x9;PIMS_LEASE pl &#xA;&#x9;&#x9;&#x9;LEFT join PIMS_LEASE_NOTE pln on pl.LEASE_ID = pln.LEASE_ID &#xA;&#x9;&#x9;&#x9;LEFT join PIMS_NOTE pn on pn.NOTE_ID = pln.NOTE_ID &#xA;&#x9;where &#xA;&#x9;&#x9;pl.LEASE_ID NOT IN (&#xA;&#x9;&#x9;&#x9;SELECT pln.LEASE_ID &#xA;&#x9;&#x9;&#x9;&#x9;FROM PIMS_LEASE_NOTE pln &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;LEFT JOIN PIMS_NOTE pn on pn.NOTE_ID = pln.NOTE_ID &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;LEFT JOIN (SELECT LEASE_NOTES FROM PIMS_LEASE WHERE LEASE_NOTES IS NOT NULL) ll on ll.LEASE_NOTES LIKE CONCAT('%',pn.NOTE_TXT,'%') &#xA;&#x9;&#x9;&#x9;&#x9;&#x9;GROUP BY LEASE_ID) &#xA;&#x9;&#x9;AND LEASE_NOTES IS NOT NULL&#xA;&#x9;ORDER BY &#xA;&#x9;&#x9;pl.LEASE_ID;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{909C8DC4-5581-4903-BDA4-F2B6C97DA610}"
+      DTS:From="Package\DROP TABLE IF EXISTS"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\BKP TABLE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{043257C1-7439-4845-83FA-6363B5FFC6EE}"
+      DTS:From="Package\PIMS_NOTE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\PIMS_LEASE_NOTE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{E61456AE-D922-47FC-92A1-7E999BDC0440}"
+      DTS:From="Package\BKP TABLE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\PIMS_NOTE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{E08479A4-20E5-43A2-BD59-C82226E1A234}"
+      DTS:From="Package\PIMS_LEASE_NOTE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\Line Break on PIMS_NOTE field NOTE_TXT" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="137.333333333334,42.6666666666667"
+          Id="Package\BKP TABLE"
+          TopLeft="132.499998025596,264.789478668216" />
+        <NodeLayout
+          Size="200.666666666667,42.6666666666667"
+          Id="Package\DROP TABLE IF EXISTS"
+          TopLeft="97.4999985471369,170.368424259395" />
+        <NodeLayout
+          Size="290.666666666667,42.6666666666667"
+          Id="Package\Line Break on PIMS_NOTE field NOTE_TXT"
+          TopLeft="61.8749990779906,555.736851699795" />
+        <NodeLayout
+          Size="181.333333333334,42.6666666666667"
+          Id="Package\PIMS_LEASE_NOTE"
+          TopLeft="109.999998360872,458.491232835245" />
+        <NodeLayout
+          Size="141.333333333334,42.6666666666667"
+          Id="Package\PIMS_NOTE"
+          TopLeft="127.499998100102,355.824566168578" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="199.499998286367,213.035090926061">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51.7543877421544"
+              Start="0,0"
+              End="0,44.2543877421544">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,44.2543877421544" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="199.416664897154,398.491232835245">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="199.666664729516,307.456145334882">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,48.368420833696"
+              Start="0,0"
+              End="0,40.868420833696">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.868420833696" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="203.937498719431,501.157899501912">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,54.5789521978832"
+              Start="0,0"
+              End="0,47.0789521978832">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.0789521978832" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="R5.7"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="52,60"
+          Id="dd85ecaa-8440-40b3-90ed-93e12466e77a"
+          TopLeft="352.499994747341,93.0526333304324" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
