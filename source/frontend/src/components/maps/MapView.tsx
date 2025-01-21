@@ -1,7 +1,6 @@
 import classNames from 'classnames';
 import React from 'react';
 import { useResizeDetector } from 'react-resize-detector';
-import VisibilitySensor from 'react-visibility-sensor';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 
@@ -25,20 +24,16 @@ const MapView: React.FC<React.PropsWithChildren<MapViewProps>> = () => {
   const isShowingSearchBar = mapMachine.isShowingSearchBar;
 
   return (
-    <VisibilitySensor partialVisibility={true}>
-      {({ isVisible }: { isVisible: boolean }) => (
-        <Styled.MapGrid
-          ref={resizeRef}
-          className={classNames('px-0', 'map', {
-            hideSearchBar: !isShowingSearchBar,
-          })}
-        >
-          <LoadingBackdrop show={mapMachine.isLoading} parentScreen />
-          {isShowingSearchBar && <MapSearch />}
-          {isVisible && <MapLeafletView parentWidth={width} />}
-        </Styled.MapGrid>
-      )}
-    </VisibilitySensor>
+    <Styled.MapGrid
+      ref={resizeRef}
+      className={classNames('px-0', 'map', {
+        hideSearchBar: !isShowingSearchBar,
+      })}
+    >
+      <LoadingBackdrop show={mapMachine.isLoading} parentScreen />
+      {isShowingSearchBar && <MapSearch />}
+      <MapLeafletView parentWidth={width} />
+    </Styled.MapGrid>
   );
 };
 
