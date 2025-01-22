@@ -12,8 +12,8 @@
   DTS:ObjectName="Connection_Test"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="265"
-  DTS:VersionGUID="{3EBA5D25-8B67-40D9-94D2-6FBCCEC90A9D}">
+  DTS:VersionBuild="266"
+  DTS:VersionGUID="{61319805-7FE3-4098-BCE4-A38B6F142807}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -39,11 +39,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/DEV01;User ID=aparasur;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"></DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/DEV01;User ID=aparasur;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -52,14 +48,11 @@
       DTS:CreationName=""
       DTS:DataType="8"
       DTS:DTSID="{0AD9DCD5-BBC1-4567-80C9-0DD717808FF9}"
-      DTS:ObjectName="connString"
-      DTS:Sensitive="True">
+      DTS:ObjectName="connString">
       <DTS:Property
-        DTS:Name="ParameterValue">
-        <DTS:Property
-          DTS:DataType="0"
-          DTS:Name="ParameterValue"></DTS:Property>
-      </DTS:Property>
+        DTS:DataType="8"
+        DTS:Name="ParameterValue"
+        xml:space="preserve"></DTS:Property>
     </DTS:PackageParameter>
     <DTS:PackageParameter
       DTS:CreationName=""
@@ -1034,7 +1027,7 @@ WHERE ROW_NUM BETWEEN :RowOffset + 1 AND :RowOffset + :BatchSize</property>
           Text="R5.7"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="52,60"
+          Size="52,40"
           Id="5b9139a7-3e00-4d13-b453-6a49fa5fe9e5"
           TopLeft="231.249996554107,174.473687494561" />
       </GraphLayout>
