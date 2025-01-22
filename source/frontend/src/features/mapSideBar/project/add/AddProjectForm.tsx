@@ -102,6 +102,12 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
               <ProductsArrayForm formikProps={formikProps} field="products" />
               <Section header="Project Management Team">
                 <AddProjectTeamSubForm />
+                {formikProps.errors?.projectTeam &&
+                  typeof formikProps.errors?.projectTeam === 'string' && (
+                    <div className="invalid-feedback" data-testid="team-profile-dup-error">
+                      {formikProps.errors.projectTeam.toString()}
+                    </div>
+                  )}
               </Section>
             </Form>
           </StyledFormWrapper>
