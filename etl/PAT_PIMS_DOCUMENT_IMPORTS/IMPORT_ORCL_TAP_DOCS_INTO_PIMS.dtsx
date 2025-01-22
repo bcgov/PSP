@@ -12,8 +12,8 @@
   DTS:ObjectName="Package"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="267"
-  DTS:VersionGUID="{DE5C0418-2A54-4055-92B5-4F55269BB541}">
+  DTS:VersionBuild="269"
+  DTS:VersionGUID="{CED628E3-2D15-453F-BE46-9E57637777CE}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -7979,6 +7979,13 @@ AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA</BinaryItem>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <AnnotationLayout
+          Text="R5.7 release"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="92,60"
+          Id="556b0a67-531d-470b-928f-2832696afed7"
+          TopLeft="259.374996135011,171.736845337783" />
       </GraphLayout>
     </LayoutInfo>
   </Package>

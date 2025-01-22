@@ -11,9 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:ProtectionLevel="0"
-  DTS:VersionBuild="16"
-  DTS:VersionGUID="{BFBF169B-40B3-4F9B-AAA0-365E270AA70A}">
+  DTS:ProtectionLevel="2"
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{F93FE1E8-6EDD-4743-B920-DA1AE3399C98}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -262,7 +262,7 @@
           Text="R5.7"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="52,60"
+          Size="92,60"
           Id="dd85ecaa-8440-40b3-90ed-93e12466e77a"
           TopLeft="352.499994747341,93.0526333304324" />
       </GraphLayout>

@@ -12,8 +12,8 @@
   DTS:ObjectName="Connection_Test"
   DTS:PackageType="5"
   DTS:ProtectionLevel="0"
-  DTS:VersionBuild="264"
-  DTS:VersionGUID="{DC0FB7AB-BC78-49CD-A5F4-FC02B14B6E82}">
+  DTS:VersionBuild="265"
+  DTS:VersionGUID="{3EBA5D25-8B67-40D9-94D2-6FBCCEC90A9D}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -1025,11 +1025,18 @@ WHERE ROW_NUM BETWEEN :RowOffset + 1 AND :RowOffset + :BatchSize</property>
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
           Size="302.666666666667,42.6666666666667"
           Id="Package\DUMP ORACLE TAP INTO PIMS &quot;etl&quot; Schema"
           TopLeft="215.781246784608,304.75435446394" />
+        <AnnotationLayout
+          Text="R5.7"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="52,60"
+          Id="5b9139a7-3e00-4d13-b453-6a49fa5fe9e5"
+          TopLeft="231.249996554107,174.473687494561" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
