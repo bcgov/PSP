@@ -63,7 +63,7 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
                     <Col>
                       <p>
                         Before creating a project, <Link to={'/project/list'}>do a search</Link> to
-                        ensure the the project you&apos;re creating doesn&apos;t already exist.
+                        ensure that the project you&apos;re creating doesn&apos;t already exist.
                       </p>
                     </Col>
                   </StyledRow>
