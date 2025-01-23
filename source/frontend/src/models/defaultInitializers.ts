@@ -199,6 +199,11 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     deliveryDate: null,
     estimatedCompletionDate: null,
     possessionDate: null,
+    acquisitionFileProgressStatuses: [],
+    acquisitionFileAppraisalStatusTypeCode: null,
+    acquisitionFileLegalSurveyStatusTypeCode: null,
+    acquisitionFileTakingStatuses: [],
+    acquisitionFileExpropiationRiskStatusTypeCode: null,
     acquisitionPhysFileStatusTypeCode: null,
     acquisitionTypeCode: null,
     subfileInterestTypeCode: null,
@@ -222,7 +227,7 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     parentAcquisitionFileId: null,
     fileName: null,
     fileNumber: null,
-    fileNumberSuffix: null,
+    fileNumberSuffix: 0,
     fileStatusTypeCode: null,
   };
 };

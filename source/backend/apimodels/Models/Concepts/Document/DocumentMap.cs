@@ -1,3 +1,4 @@
+using System.Linq;
 using Mapster;
 using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
@@ -14,6 +15,7 @@ namespace Pims.Api.Models.Concepts.Document
                 .Map(dest => dest.DocumentType, src => src.DocumentType)
                 .Map(dest => dest.StatusTypeCode, src => src.DocumentStatusTypeCodeNavigation)
                 .Map(dest => dest.FileName, src => src.FileName)
+                .Map(dest => dest.DocumentQueueStatusTypeCode, src => src.PimsDocumentQueues.Count > 0 ? src.PimsDocumentQueues.FirstOrDefault().DocumentQueueStatusTypeCodeNavigation : null)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<DocumentModel, Entity.PimsDocument>()

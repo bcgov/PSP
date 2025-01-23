@@ -5,17 +5,17 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models.CodeTypes;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Services
@@ -232,12 +232,6 @@ namespace Pims.Api.Services
             pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
 
             var currentFileProperties = _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId);
-            var newPropertiesAdded = lease.PimsPropertyLeases.Where(x => !currentFileProperties.Any(y => y.Internal_Id == x.Internal_Id)).ToList();
-
-            if (newPropertiesAdded.Any(x => x.Property.IsRetired.HasValue && x.Property.IsRetired.Value))
-            {
-                throw new BusinessRuleViolationException("Retired property can not be selected.");
-            }
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
@@ -256,6 +250,11 @@ namespace Pims.Api.Services
             // Update marker locations in the context of this file
             foreach (var incomingLeaseProperty in leaseWithProperties.PimsPropertyLeases)
             {
+                var matchingProperty = currentFileProperties.FirstOrDefault(c => c.PropertyId == incomingLeaseProperty.PropertyId);
+                if (matchingProperty is not null && incomingLeaseProperty.Internal_Id == 0)
+                {
+                    incomingLeaseProperty.Internal_Id = matchingProperty.Internal_Id;
+                }
                 // If the property is not new, check if the marker location has been updated.
                 if (incomingLeaseProperty.Internal_Id != 0)
                 {
@@ -548,8 +547,11 @@ namespace Pims.Api.Services
             {
                 PimsProperty property = propertyLease.Property;
                 var existingPropertyLeases = _propertyLeaseRepository.GetAllByPropertyId(property.PropertyId);
+                var propertyWithAssociations = _propertyRepository.GetAllAssociationsById(property.PropertyId);
                 var isPropertyOnOtherLease = existingPropertyLeases.Any(p => p.LeaseId != lease.Internal_Id);
                 var isPropertyOnThisLease = existingPropertyLeases.Any(p => p.LeaseId == lease.Internal_Id);
+                var isDisposedOrRetired = existingPropertyLeases.Any(p => p.Property.IsRetired.HasValue && p.Property.IsRetired.Value)
+                    || propertyWithAssociations?.PimsDispositionFileProperties?.Any(d => d.DispositionFile.DispositionFileStatusTypeCode == DispositionFileStatusTypes.COMPLETE.ToString()) == true;
 
                 if (isPropertyOnOtherLease && !isPropertyOnThisLease && !userOverrides.Contains(UserOverrideCode.AddPropertyToInventory))
                 {
@@ -566,6 +568,11 @@ namespace Pims.Api.Services
                         $"{propertyLease?.Property?.Location.Coordinate.Y.ToString(CultureInfo.CurrentCulture) ?? string.Empty} {genericOverrideErrorMsg}";
 
                     throw new UserOverrideException(UserOverrideCode.AddPropertyToInventory, overrideError);
+                }
+
+                if (isDisposedOrRetired && !isPropertyOnThisLease)
+                {
+                    throw new BusinessRuleViolationException("Disposed or retired properties may not be added to a Lease. Remove any disposed or retired properties before continuing.");
                 }
 
                 // If the property exist dont update it, just refer to it by id.

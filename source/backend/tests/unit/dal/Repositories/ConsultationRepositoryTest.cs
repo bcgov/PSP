@@ -5,7 +5,7 @@ using FluentAssertions;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -90,7 +90,7 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateWithPermissions(Permissions.LeaseEdit);
             var consultation = EntityHelper.CreateLeaseConsultationItem();
-            
+
             _helper.AddAndSaveChanges(consultation);
 
             var updatedConsultation = EntityHelper.CreateLeaseConsultationItem();

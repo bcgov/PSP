@@ -1,14 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using LinqKit;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
+using Pims.Core.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {

@@ -215,47 +215,93 @@ exports[`ConsultationListView component > renders as expected 1`] = `
 }
 
 .c11.c11.btn {
-  color: #aaaaaa;
+  background-color: unset;
+  border: none;
+}
+
+.c11.c11.btn:hover,
+.c11.c11.btn:focus,
+.c11.c11.btn:active {
+  background-color: unset;
+  outline: none;
+  box-shadow: none;
+}
+
+.c11.c11.btn svg {
+  -webkit-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.c11.c11.btn svg:hover {
+  -webkit-transition: all 0.3s ease-in;
+  transition: all 0.3s ease-in;
+}
+
+.c11.c11.btn.btn-primary svg {
+  color: #013366;
+}
+
+.c11.c11.btn.btn-primary svg:hover {
+  color: #013366;
+}
+
+.c11.c11.btn.btn-light svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c11.c11.btn.btn-light svg:hover {
+  color: #CE3E39;
+}
+
+.c11.c11.btn.btn-info svg {
+  color: var(--surface-color-primary-button-default);
+}
+
+.c11.c11.btn.btn-info svg:hover {
+  color: var(--surface-color-primary-button-hover);
+}
+
+.c12.c12.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c11.c11.btn .text {
+.c12.c12.btn.btn-primary svg {
+  color: #aaaaaa !important;
+}
+
+.c12.c12.btn.btn-primary .text {
   display: none;
 }
 
-.c11.c11.btn:hover,
-.c11.c11.btn:active,
-.c11.c11.btn:focus {
-  color: #d8292f;
+.c12.c12.btn.btn-primary svg:hover,
+.c12.c12.btn.btn-primary svg:active,
+.c12.c12.btn.btn-primary svg:focus {
+  color: #d8292f !important;
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
 }
 
-.c11.c11.btn:hover .text,
-.c11.c11.btn:active .text,
-.c11.c11.btn:focus .text {
+.c12.c12.btn.btn-primary svg:hover .text,
+.c12.c12.btn.btn-primary svg:active .text,
+.c12.c12.btn.btn-primary svg:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c13.required::before {
+.c15.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c12 {
+.c14 {
   font-weight: bold;
 }
 
@@ -322,6 +368,29 @@ exports[`ConsultationListView component > renders as expected 1`] = `
 
 .c3 .btn {
   margin: 0;
+}
+
+.c13 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
 }
 
 .c10 {
@@ -429,10 +498,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -467,10 +561,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -505,10 +624,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -543,10 +687,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -597,7 +766,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 </div>
               </div>
               <div
-                class="pl-8 d-flex align-items-end col-auto"
+                class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
                   class="c9"
@@ -654,7 +823,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                             class="px-1 col-auto"
                           >
                             <button
-                              class="c4 Button c11 btn btn-link"
+                              class="c4 Button c11 c12 btn btn-primary"
                               data-testid="consultations[0].delete-btn"
                               title="Delete Consultation"
                               type="button"
@@ -664,11 +833,11 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                               >
                                 <svg
                                   fill="currentColor"
-                                  height="2rem"
+                                  height="22"
                                   stroke="currentColor"
                                   stroke-width="0"
                                   viewBox="0 0 448 512"
-                                  width="2rem"
+                                  width="22"
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
@@ -681,26 +850,34 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                           <div
                             class="px-2 col-auto"
                           >
-                            <button
-                              class="btn btn-link"
-                              data-testid="consultations[0].edit-btn"
-                              title="Edit Consultation"
-                              type="button"
+                            <div
+                              class="c13"
                             >
-                              <svg
-                                fill="currentColor"
-                                height="2rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 576 512"
-                                width="2rem"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <button
+                                class="c4 Button c11 btn btn-primary"
+                                data-testid="consultations[0].edit-btn"
+                                title="Edit Consultation"
+                                type="button"
                               >
-                                <path
-                                  d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                                />
-                              </svg>
-                            </button>
+                                <div
+                                  class="Button__value"
+                                >
+                                  <svg
+                                    fill="currentColor"
+                                    height="22"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="22"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                                    />
+                                  </svg>
+                                </div>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -717,7 +894,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Requested on:
                         <span>
@@ -745,7 +922,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     >
                       Jan 1, 2024
                     </div>
@@ -757,7 +934,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Contact:
                         <span>
@@ -785,7 +962,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     />
                   </div>
                   <div
@@ -795,13 +972,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Response received:
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     >
                       Yes
                     </div>
@@ -813,13 +990,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Response received on:
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     >
                       Dec 1, 2024
                     </div>
@@ -831,7 +1008,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Comments:
                         <span>
@@ -859,7 +1036,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     >
                       test comment
                     </div>
@@ -895,7 +1072,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                             class="px-1 col-auto"
                           >
                             <button
-                              class="c4 Button c11 btn btn-link"
+                              class="c4 Button c11 c12 btn btn-primary"
                               data-testid="consultations[1].delete-btn"
                               title="Delete Consultation"
                               type="button"
@@ -905,11 +1082,11 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                               >
                                 <svg
                                   fill="currentColor"
-                                  height="2rem"
+                                  height="22"
                                   stroke="currentColor"
                                   stroke-width="0"
                                   viewBox="0 0 448 512"
-                                  width="2rem"
+                                  width="22"
                                   xmlns="http://www.w3.org/2000/svg"
                                 >
                                   <path
@@ -922,26 +1099,34 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                           <div
                             class="px-2 col-auto"
                           >
-                            <button
-                              class="btn btn-link"
-                              data-testid="consultations[1].edit-btn"
-                              title="Edit Consultation"
-                              type="button"
+                            <div
+                              class="c13"
                             >
-                              <svg
-                                fill="currentColor"
-                                height="2rem"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 576 512"
-                                width="2rem"
-                                xmlns="http://www.w3.org/2000/svg"
+                              <button
+                                class="c4 Button c11 btn btn-primary"
+                                data-testid="consultations[1].edit-btn"
+                                title="Edit Consultation"
+                                type="button"
                               >
-                                <path
-                                  d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
-                                />
-                              </svg>
-                            </button>
+                                <div
+                                  class="Button__value"
+                                >
+                                  <svg
+                                    fill="currentColor"
+                                    height="22"
+                                    stroke="currentColor"
+                                    stroke-width="0"
+                                    viewBox="0 0 576 512"
+                                    width="22"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                  >
+                                    <path
+                                      d="M402.6 83.2l90.2 90.2c3.8 3.8 3.8 10 0 13.8L274.4 405.6l-92.8 10.3c-12.4 1.4-22.9-9.1-21.5-21.5l10.3-92.8L388.8 83.2c3.8-3.8 10-3.8 13.8 0zm162-22.9l-48.8-48.8c-15.2-15.2-39.9-15.2-55.2 0l-35.4 35.4c-3.8 3.8-3.8 10 0 13.8l90.2 90.2c3.8 3.8 10 3.8 13.8 0l35.4-35.4c15.2-15.3 15.2-40 0-55.2zM384 346.2V448H64V128h229.8c3.2 0 6.2-1.3 8.5-3.5l40-40c7.6-7.6 2.2-20.5-8.5-20.5H48C21.5 64 0 85.5 0 112v352c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48V306.2c0-10.7-12.9-16-20.5-8.5l-40 40c-2.2 2.3-3.5 5.3-3.5 8.5z"
+                                    />
+                                  </svg>
+                                </div>
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -958,7 +1143,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Requested on:
                         <span>
@@ -986,7 +1171,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     >
                       Jan 1, 2024
                     </div>
@@ -998,7 +1183,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Contact:
                         <span>
@@ -1026,7 +1211,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     />
                   </div>
                   <div
@@ -1036,13 +1221,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Response received:
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     >
                       Yes
                     </div>
@@ -1054,13 +1239,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Response received on:
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     >
                       Dec 1, 2024
                     </div>
@@ -1072,7 +1257,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c12"
+                        class="c14"
                       >
                         Comments:
                         <span>
@@ -1100,7 +1285,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c13 text-left col"
+                      class="c15 text-left col"
                     >
                       test comment
                     </div>
@@ -1136,10 +1321,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"
@@ -1174,10 +1384,35 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+              <div
+                class="pl-2 d-flex align-items-end col-auto"
+              >
+                <svg
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    expand-section
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
             </div>
           </h2>
           <div
-            class="collapse show"
+            class="collapse"
           >
             <p
               class="pl-2"

@@ -19,32 +19,20 @@ on:
 
 jobs:
   smoke-test:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
 
     steps:
       - uses: actions/checkout@v4
       - name: Setup .NET
         uses: actions/setup-dotnet@v3
         with:
-          dotnet-version: 6.0.x
-
-      #- name: Installing Edge Browser (alternative step)
-      #  run: |
-      #    wget -O - https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | sudo tee /usr/share/keyrings/microsoft.gpg
-      #    sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/edge stable main" > /etc/apt/sources.list.d/microsoft-edge.list'
-      #    sudo apt update
-      #    sudo apt install -y microsoft-edge-stable
+          dotnet-version: 8.0.x
 
       - name: Install Chrome Browser
         run: |
           sudo apt update
           wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
           sudo apt install -y ./google-chrome-stable_current_amd64.deb
-
-      # Edge Browser setup - missing dependencies
-      #- uses: browser-actions/setup-edge@v1
-      #- name: Print Edge version
-      #  run: (Get-Item (Get-Command msedge).Source).VersionInfo.ProductVersion
 
       - name: Restore dependencies
         run: dotnet restore ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.sln

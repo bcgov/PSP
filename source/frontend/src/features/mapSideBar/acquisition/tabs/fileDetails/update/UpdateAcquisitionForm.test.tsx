@@ -107,6 +107,8 @@ describe('UpdateAcquisitionForm component', () => {
         utils.container.querySelector(`select[name="fileStatusTypeCode"]`) as HTMLSelectElement,
       getEstimatedCompletionDatePicker: () =>
         utils.container.querySelector(`input[name="estimatedCompletionDate"]`) as HTMLInputElement,
+      getAssignedDatePicker: () =>
+        utils.container.querySelector(`input[name="assignedDate"]`) as HTMLInputElement,
       getPossessionDatePicker: () =>
         utils.container.querySelector(`input[name="possessionDate"]`) as HTMLInputElement,
       getTeamMemberProfileDropDownList: (index = 0) =>
@@ -123,6 +125,8 @@ describe('UpdateAcquisitionForm component', () => {
         ) as HTMLSelectElement,
       getOtherSubfileInterestTypeTextbox: () =>
         utils.container.querySelector(`input[name="otherSubfileInterestType"]`) as HTMLInputElement,
+      getProgressAppraisalStatusTypeDropdown: () =>
+        utils.container.querySelector(`#input-appraisalStatusType`) as HTMLSelectElement,
     };
   };
 
@@ -156,6 +160,14 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getByDisplayValue('legacy file number')).toBeVisible();
   });
 
+  it('displays progress statuses', async () => {
+    const { getProgressAppraisalStatusTypeDropdown: getProgessAppraisalStatusTypeDropdown } = setup(
+      { initialValues },
+    );
+    await act(async () => {});
+    expect(getProgessAppraisalStatusTypeDropdown()).toHaveValue('RECEIVED');
+  });
+
   it('displays owner solicitor and owner representative', async () => {
     const { getByText } = setup({ initialValues });
     await act(async () => {});
@@ -164,11 +176,13 @@ describe('UpdateAcquisitionForm component', () => {
     expect(getByText('test representative comment')).toBeVisible();
   });
 
-  it('displays estimated completion and possession dates', async () => {
-    const { getEstimatedCompletionDatePicker, getPossessionDatePicker } = setup({ initialValues });
+  it('displays estimated completion, assigned and possession dates', async () => {
+    const { getEstimatedCompletionDatePicker, getPossessionDatePicker, getAssignedDatePicker } =
+      setup({ initialValues });
     await act(async () => {});
     expect(getEstimatedCompletionDatePicker()).toHaveValue('Jul 10, 2024');
     expect(getPossessionDatePicker()).toHaveValue('Jul 10, 2025');
+    expect(getAssignedDatePicker()).toHaveValue('Dec 18, 2024');
   });
 
   it('displays Individual type Owner with data', async () => {

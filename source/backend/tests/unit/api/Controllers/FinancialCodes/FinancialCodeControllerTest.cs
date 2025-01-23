@@ -7,7 +7,7 @@ using Pims.Api.Models.Concepts.FinancialCode;
 using Pims.Api.Controllers;
 using Pims.Api.Services;
 using Pims.Core.Test;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Controllers

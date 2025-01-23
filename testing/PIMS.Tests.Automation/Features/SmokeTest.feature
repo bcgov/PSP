@@ -33,10 +33,10 @@ Scenario: 06. Lease and License Deposits
 	When  I add Deposits to the Lease
 	Then A new lease is created successfully
 
-#Scenario: 07. Lease and License Payments
-#	Given I create a new minimum Lease from row number 5
-#	When  I add Payments to the Lease
-#	Then A new lease is created successfully
+Scenario: 07. Lease and License Payments
+	Given I create a new minimum Lease from row number 5
+	When  I add Periods and Payments to the Lease
+	Then A new lease is created successfully
 
 Scenario: 08. Research File Properties
 	Given I create a basic Research File from row number 10
@@ -58,20 +58,20 @@ Scenario: 11. Acquisition File Agreements Tab
 	When I create Agreements within an Acquisition File
 	Then A new Acquisition file is created successfully
 
-#Scenario: 12. Acquisition File Compensation Tab
-#	Given I create a new Acquisition File from row number 18
-#	When I add additional information to the Acquisition File Details
-#	And I add Properties to the Acquisition File
-#	And I create Stakeholders within an Acquisition File
-#	And I create Compensation Requisition within an Acquisition File
-#	Then A new Acquisition file is created successfully
+Scenario: 12. Acquisition File Compensation Tab
+	Given I create a new Acquisition File from row number 18
+	When I add additional information to the Acquisition File Details
+	And I add Properties to the Acquisition File
+	And I create Stakeholders within an Acquisition File
+	And I create Compensation Requisition within an Acquisition File
+	Then A new Acquisition file is created successfully
 
-#Scenario: 13. Disposition Checklist Tab
-#	Given I create a new Disposition File from row number 1
-#	When I insert Checklist information to an Disposition File
-#	Then Disposition File's Checklist has been saved successfully
+Scenario: 13. Disposition Checklist Tab
+	Given I create a new Disposition File from row number 1
+	When I insert Checklist information to an Disposition File
+	Then Disposition File's Checklist has been saved successfully
 
-Scenario: 12. Disposition Offers and Sale Tab
+Scenario: 14. Disposition Offers and Sale Tab
 	Given I create a new Disposition File from row number 1
 	When I create Appraisal, Assessment, Offers and Sales Details within a Disposition File
 	Then A new Disposition file is created successfully

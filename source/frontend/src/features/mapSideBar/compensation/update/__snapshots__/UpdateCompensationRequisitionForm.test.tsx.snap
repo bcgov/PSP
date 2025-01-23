@@ -948,7 +948,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             </div>
             <div
               class="c5 text-left col"
-            />
+            >
+              FERRIES
+            </div>
           </div>
           <div
             class="pb-2 row"
@@ -964,7 +966,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             </div>
             <div
               class="c5 text-left col"
-            />
+            >
+              SURVEY
+            </div>
           </div>
           <div
             class="pb-2 row"
@@ -980,7 +984,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             </div>
             <div
               class="c5 text-left col"
-            />
+            >
+              HWY PLAN
+            </div>
           </div>
           <div
             class="pb-2 row"
@@ -1211,7 +1217,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               Payment
             </div>
             <div
-              class="pl-8 d-flex align-items-end col-auto"
+              class="pl-2 d-flex align-items-end col-auto"
             >
               <svg
                 class="c12"
@@ -1518,7 +1524,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               Activities
             </div>
             <div
-              class="pl-8 d-flex align-items-end col-auto"
+              class="pl-2 d-flex align-items-end col-auto"
             >
               <svg
                 class="c12"
@@ -1601,7 +1607,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
       class="c14"
     >
       <div
-        class="c15 justify-content-end mb-12 mt-12 p-0 no-gutters row"
+        class="c15 justify-content-end mb-6 mt-6 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"

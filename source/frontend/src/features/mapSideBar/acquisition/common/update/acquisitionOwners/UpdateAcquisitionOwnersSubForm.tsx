@@ -65,7 +65,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
                   <ButtonDiv>
                     <RemoveButton
                       label={isSubFile ? 'Remove Sub-interest' : 'Remove Owner'}
-                      dataTestId={`owners[${index}]-remove-button`}
+                      data-testId={`owners[${index}]-remove-button`}
                       onRemove={() => {
                         setRemoveIndex(index);
                         setShowRemoveModal(true);

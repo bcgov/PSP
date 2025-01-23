@@ -50,7 +50,7 @@ const GenerateFormView: React.FunctionComponent<
               <LinkButton
                 key={`generate-form-entry-${entry.formType}`}
                 onClick={() => onGenerateClick(entry.formType)}
-                title="Generate"
+                title="Download File"
               >
                 {entry.text}
               </LinkButton>

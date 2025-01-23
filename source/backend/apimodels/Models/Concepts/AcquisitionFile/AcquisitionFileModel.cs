@@ -26,7 +26,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - The File number Suffix.
         /// </summary>
-        public string FileNumberSuffix { get; set; }
+        public short FileNumberSuffix { get; set; }
 
         /// <summary>
         /// get/set - A historical reference number of this file in a legacy system (likely PAIMS).
@@ -36,7 +36,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// The assigned date.
         /// </summary>
-        public DateTime? AssignedDate { get; set; }
+        public DateOnly? AssignedDate { get; set; }
 
         /// <summary>
         /// The date for delivery of the property to the project.
@@ -52,6 +52,31 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// Date of possession following acquisition completion.
         /// </summary>
         public DateOnly? PossessionDate { get; set; }
+
+        /// <summary>
+        /// get/set - The list of progress statuses for this file.
+        /// </summary>
+        public IList<AcquisitionFileProgressStatusesModel> AcquisitionFileProgressStatuses { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition file appraisal status type.
+        /// </summary>
+        public CodeTypeModel<string> AcquisitionFileAppraisalStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition file Legal Survey status type.
+        /// </summary>
+        public CodeTypeModel<string> AcquisitionFileLegalSurveyStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The list of Taking types statuses for this file.
+        /// </summary>
+        public IList<AcquisitionFileTakingStatusesModel> AcquisitionFileTakingStatuses { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition file Risk level status type.
+        /// </summary>
+        public CodeTypeModel<string> AcquisitionFileExpropiationRiskStatusTypeCode { get; set; }
 
         /// <summary>
         /// get/set - The acquisition physical file status type.

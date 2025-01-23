@@ -442,6 +442,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
     code: '00048',
     description: 'CLAIMS',
     note: null,
+    projectPersons: [],
     projectProducts: [],
     appCreateTimestamp: '2024-09-04T17:09:56.207',
     appLastUpdateTimestamp: '2024-09-04T17:09:56.207',

@@ -40,6 +40,10 @@ public partial class PimsDocumentQueueHist
     [StringLength(1000)]
     public string DocumentExternalId { get; set; }
 
+    [Column("DOCUMENT_METADATA")]
+    [StringLength(4000)]
+    public string DocumentMetadata { get; set; }
+
     [Column("DOC_PROCESS_START_DT", TypeName = "datetime")]
     public DateTime? DocProcessStartDt { get; set; }
 

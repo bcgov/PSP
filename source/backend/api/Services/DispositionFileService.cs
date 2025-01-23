@@ -6,7 +6,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
@@ -17,7 +17,7 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Api.Services
 {
@@ -501,6 +501,11 @@ namespace Pims.Api.Services
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
             {
+                var matchingProperty = currentFileProperties.FirstOrDefault(c => c.PropertyId == incomingDispositionProperty.PropertyId);
+                if (matchingProperty is not null && incomingDispositionProperty.Internal_Id == 0)
+                {
+                    incomingDispositionProperty.Internal_Id = matchingProperty.Internal_Id;
+                }
                 // If the property is not new, check if the name has been updated.
                 if (incomingDispositionProperty.Internal_Id != 0)
                 {

@@ -10,6 +10,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 interface INavIconProps {
   icon: React.ReactElement;
   text: string;
+  isNavActive: boolean;
   showText: boolean;
   onClick: () => void;
   roles?: Roles[];
@@ -20,7 +21,15 @@ interface INavIconProps {
  * Component that creates a nav, with an icon, and optional text.
  * @param {INavIconProps} param0
  */
-export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIconProps) => {
+export const NavIcon = ({
+  icon,
+  text,
+  isNavActive,
+  showText,
+  onClick,
+  roles,
+  claims,
+}: INavIconProps) => {
   const { hasRole, hasClaim } = useKeycloakWrapper();
 
   const displayIcon =
@@ -31,11 +40,15 @@ export const NavIcon = ({ icon, text, showText, onClick, roles, claims }: INavIc
       onClick={onClick}
       data-testid={`nav-tooltip-${text.replaceAll(' ', '').toLowerCase()}`}
     >
-      <StyledLink>
+      <StyledLink className={clsx({ active: isNavActive })}>
         <TooltipWrapper tooltipId={`nav-tooltip-${text}`} tooltip={text}>
           {icon}
         </TooltipWrapper>
-        {showText && <StyledLabel className={clsx({ show: showText })}>{text}</StyledLabel>}
+        {showText && (
+          <StyledLabel className={clsx({ show: showText, active: isNavActive })}>
+            {text}
+          </StyledLabel>
+        )}
       </StyledLink>
     </StyledNav>
   ) : null;
@@ -45,10 +58,6 @@ const StyledNav = styled(Nav.Item)`
   width: 100%;
   margin-bottom: 2rem;
   fill: ${({ theme }) => theme.css.pimsWhite};
-
-  svg {
-    min-width: max-content;
-  }
 
   &:hover {
     label {
@@ -65,13 +74,24 @@ const StyledLink = styled(Nav.Link)`
   display: flex;
   flex-direction: row;
   align-items: center;
+
+  svg {
+    fill: white;
+    min-width: max-content;
+  }
+
+  &.active {
+    svg {
+      fill: ${({ theme }) => theme.css.focusNavbarActionColor};
+    }
+  }
 `;
 
 const StyledLabel = styled.label`
   margin-left: 1rem;
   margin-bottom: 0;
-  font-size: 1.2rem;
   color: white;
+  font-size: 1.2rem;
   word-break: break-word;
   white-space: break-spaces;
   transition: width 0.25s;
@@ -81,6 +101,9 @@ const StyledLabel = styled.label`
   cursor: pointer;
   &.show {
     width: 100%;
+  }
+  &.active {
+    color: ${({ theme }) => theme.css.focusNavbarActionColor};
   }
 `;
 

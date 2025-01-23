@@ -3,7 +3,7 @@ using Pims.Api.Areas.Acquisition.Controllers;
 using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Core.Extensions;
 using Pims.Core.Test;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Routes

@@ -10,7 +10,7 @@ import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import SimplePagination from '@/components/common/SimplePagination';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Scrollable } from '@/features/projects/styles';
-import { exists, isValidId, pidParser } from '@/utils';
+import { exists, isValidId, pidParser, pinParser } from '@/utils';
 
 import { LayerPopupContent } from './components/LayerPopupContent';
 import { LayerPopupFlyout } from './components/LayerPopupFlyout';
@@ -39,19 +39,25 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
   const pimsPropertyId = featureDataset?.pimsFeature?.properties?.PROPERTY_ID;
   const isInPims = isValidId(Number(pimsPropertyId));
   const isRetiredProperty = featureDataset?.pimsFeature?.properties?.IS_RETIRED ?? false;
+  const isDisposedProperty = featureDataset?.pimsFeature?.properties?.IS_DISPOSED ?? false;
 
   const onPropertyViewClicked = () => {
     if (isInPims) {
       closeFlyout();
       history.push(`/mapview/sidebar/property/${pimsPropertyId}`);
-    } else if (featureDataset?.parcelFeature?.properties?.PID) {
+    } else if (exists(featureDataset?.parcelFeature?.properties?.PID)) {
       closeFlyout();
       const parcelFeature = featureDataset?.parcelFeature;
       const parsedPid = pidParser(parcelFeature?.properties?.PID);
-      history.push(`/mapview/sidebar/non-inventory-property/${parsedPid}`);
+      history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}`);
+    } else if (exists(featureDataset?.parcelFeature?.properties?.PIN)) {
+      closeFlyout();
+      const parcelFeature = featureDataset?.parcelFeature;
+      const parsedPin = pinParser(parcelFeature?.properties?.PIN);
+      history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
     } else {
       console.warn('Invalid marker when trying to see property information');
-      toast.warn('A map parcel must have a PID in order to view detailed information');
+      toast.warn('A map parcel must have a PID or PIN in order to view detailed information');
     }
   };
 
@@ -148,6 +154,7 @@ export const LayerPopupView: React.FC<React.PropsWithChildren<ILayerPopupViewPro
           <LayerPopupFlyout
             isInPims={isInPims}
             isRetiredProperty={isRetiredProperty}
+            isDisposedProperty={isDisposedProperty}
             onViewPropertyInfo={handleViewPropertyInfo}
             onCreateResearchFile={handleCreateResearchFile}
             onCreateAcquisitionFile={handleCreateAcquisitionFile}
@@ -193,7 +200,7 @@ const StyledScrollable = styled(Scrollable)`
 
 const StyledFlyoutContainer = styled.div`
   position: absolute;
-  bottom: -18.5rem;
+  top: 90%;
   left: 100.9%;
   border: 2px solid #bcbec5;
   box-shadow: 6px 6px 12px rgb(0 0 0 / 40%);

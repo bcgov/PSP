@@ -4,9 +4,9 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
+using Pims.Core.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using static Pims.Dal.Entities.PimsLeasePeriodStatusType;
 
 namespace Pims.Api.Services

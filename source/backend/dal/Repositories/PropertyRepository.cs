@@ -10,10 +10,10 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Helpers;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -56,7 +56,7 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public Paged<PimsPropertyVw> GetPage(PropertyFilter filter)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.PropertyView);
+            User.ThrowIfNotAuthorized(Permissions.PropertyView);
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid())
             {
@@ -64,17 +64,17 @@ namespace Pims.Dal.Repositories
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = Context.GeneratePropertyQuery(this.User, filter);
+            var query = Context.GeneratePropertyQuery(User, filter);
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)
                 .ToArray();
 
-            if (!string.IsNullOrWhiteSpace(filter.PinOrPid))
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
             {
                 Regex nonInteger = new Regex("[^\\d]");
-                var formattedPidPin = nonInteger.Replace(filter.PinOrPid, string.Empty);
-                items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPidPin) || i.Pin.ToString().Contains(formattedPidPin)).ToArray();
+                var formattedPid = nonInteger.Replace(filter.Pid, string.Empty);
+                items = items.Where(i => i.Pid.ToString().PadLeft(9, '0').Contains(formattedPid)).ToArray();
             }
 
             return new Paged<PimsPropertyVw>(items, filter.Page, filter.Quantity, query.Count());
@@ -310,7 +310,7 @@ namespace Pims.Dal.Repositories
         /// <param name="property">The property to update.</param>
         /// <param name="overrideLocation">Whether to update the property spatial location with the incoming value. Defaults to false.</param>
         /// <returns>The updated property.</returns>
-        public PimsProperty Update(PimsProperty property, bool overrideLocation = false)
+        public PimsProperty Update(PimsProperty property, bool overrideLocation = false, bool allowRetired = false)
         {
             property.ThrowIfNull(nameof(property));
 
@@ -320,7 +320,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
 
             // prevent editing on retired properties
-            if (existingProperty.IsRetired.HasValue && existingProperty.IsRetired.Value)
+            if (existingProperty.IsRetired.HasValue && existingProperty.IsRetired.Value && !allowRetired)
             {
                 throw new BusinessRuleViolationException("Retired records are referenced for historical purposes only and cannot be edited or deleted.");
             }

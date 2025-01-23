@@ -1,19 +1,14 @@
 import { createMemoryHistory } from 'history';
-import { useMap } from 'react-leaflet';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
 import { EmptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { pidParser } from '@/utils/propertyUtils';
+import { pidParser, pinParser } from '@/utils/propertyUtils';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILayerPopupViewProps, LayerPopupView } from './LayerPopupView';
-import { emptyPimsBoundaryFeatureCollection } from '@/components/common/mapFSM/models';
-import { useKeycloak } from '@react-keycloak/web';
 
 vi.mock('react-leaflet');
 
@@ -54,6 +49,7 @@ describe('LayerPopupView component', () => {
     });
     expect(asFragment()).toMatchSnapshot();
   });
+
   describe('fly out behaviour', () => {
     it('fly out is hidden by default', async () => {
       const { queryByText } = setup({
@@ -122,7 +118,7 @@ describe('LayerPopupView component', () => {
       expect(history.location.pathname).toBe(`/mapview/sidebar/property/${propertyId}`);
     });
 
-    it('handles view property action for non-inventory properties', async () => {
+    it('handles view property action for non-inventory properties - with PID', async () => {
       const pid = '123456789';
       const parsedPid = pidParser(pid);
       const { getByTestId, getByText } = setup({
@@ -162,7 +158,51 @@ describe('LayerPopupView component', () => {
       const link = getByText('View Property Info');
       await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe(
-        `/mapview/sidebar/non-inventory-property/${parsedPid}`,
+        `/mapview/sidebar/non-inventory-property/pid/${parsedPid}`,
+      );
+    });
+
+    it('handles view property action for non-inventory properties - with PIN', async () => {
+      const pin = '123456789';
+      const parsedPin = pinParser(pin);
+      const { getByTestId, getByText } = setup({
+        layerPopup: {
+          layers: [
+            {
+              data: { PIN: pin },
+              title: '',
+              config: {},
+            },
+          ],
+          latlng: undefined,
+        },
+        featureDataset: {
+          parcelFeature: {
+            type: 'Feature',
+            properties: { ...emptyPmbcParcel, PIN: parsedPin },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          fileLocation: null,
+          pimsFeature: null,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          highwayFeature: null,
+          selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null,
+        },
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('View Property Info');
+      await act(async () => userEvent.click(link));
+      expect(history.location.pathname).toBe(
+        `/mapview/sidebar/non-inventory-property/pin/${parsedPin}`,
       );
     });
 
@@ -225,6 +265,97 @@ describe('LayerPopupView component', () => {
       const link = getByText('Research File');
       await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/research/new');
+    });
+
+    it('only shows all file options if file not disposed or retired', async () => {
+      const { getByTestId, getByText } = setup({
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
+        featureDataset: {
+          pimsFeature: {
+            type: 'Feature',
+            properties: {
+              ...EmptyPropertyLocation,
+              IS_RETIRED: false,
+              IS_DISPOSED: false,
+              PROPERTY_ID: 1,
+            },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          fileLocation: null,
+          parcelFeature: null,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          highwayFeature: null,
+          selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null,
+        },
+
+        claims: [
+          Claims.RESEARCH_ADD,
+          Claims.ACQUISITION_ADD,
+          Claims.DISPOSITION_ADD,
+          Claims.LEASE_ADD,
+        ],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('Research File');
+      expect(getByText('Acquisition File')).toBeVisible();
+      expect(getByText('Disposition File')).toBeVisible();
+      expect(getByText('Lease/Licence File')).toBeVisible();
+      expect(link).toBeVisible();
+    });
+
+    it('only shows all file options if file not disposed or retired', async () => {
+      const { getByTestId, getByText, queryByText } = setup({
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
+        featureDataset: {
+          pimsFeature: {
+            type: 'Feature',
+            properties: {
+              ...EmptyPropertyLocation,
+              IS_RETIRED: true,
+              IS_DISPOSED: true,
+              PROPERTY_ID: 1,
+            },
+            geometry: { type: 'Point', coordinates: [] },
+          },
+          location: { lat: 0, lng: 0 },
+          fileLocation: null,
+          parcelFeature: null,
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          highwayFeature: null,
+          selectingComponentId: null,
+          crownLandLeasesFeature: null,
+          crownLandLicensesFeature: null,
+          crownLandTenuresFeature: null,
+          crownLandInventoryFeature: null,
+          crownLandInclusionsFeature: null,
+        },
+
+        claims: [Claims.RESEARCH_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('Research File');
+      expect(queryByText('Acquisition File')).toBeNull();
+      expect(queryByText('Disposition File')).toBeNull();
+      expect(queryByText('Lease/Licence File')).toBeNull();
+      expect(link).toBeVisible();
     });
 
     it('handles create acquisition file action', async () => {
@@ -348,6 +479,40 @@ describe('LayerPopupView component', () => {
       const link = getByText('Create Consolidation');
       await act(async () => userEvent.click(link));
       expect(history.location.pathname).toBe('/mapview/sidebar/consolidation/new');
+    });
+
+    it('handles create lease and licence file action', async () => {
+      const { getByTestId, getByText } = setup({
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
+        featureDataset: null,
+
+        claims: [Claims.LEASE_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('Lease/Licence File');
+      await act(async () => userEvent.click(link));
+      expect(history.location.pathname).toBe('/mapview/sidebar/lease/new');
+    });
+
+    it('handles create disposition file action', async () => {
+      const { getByTestId, getByText } = setup({
+        layerPopup: {
+          latlng: undefined,
+          layers: [],
+        },
+        featureDataset: null,
+
+        claims: [Claims.DISPOSITION_ADD],
+      });
+      const ellipsis = getByTestId('fly-out-ellipsis');
+      await act(async () => userEvent.click(ellipsis));
+      const link = getByText('Disposition File');
+      await act(async () => userEvent.click(link));
+      expect(history.location.pathname).toBe('/mapview/sidebar/disposition/new');
     });
   });
 });

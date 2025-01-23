@@ -141,6 +141,7 @@ const mockDocument: ComposedDocument = {
       appCreateUserid: null,
       appLastUpdateUserGuid: null,
       appCreateUserGuid: null,
+      documentQueueStatusTypeCode: null,
     },
     parentId: null,
     relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,

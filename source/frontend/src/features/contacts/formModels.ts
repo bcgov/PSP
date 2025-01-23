@@ -9,6 +9,7 @@ import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGe
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { exists, isValidId } from '@/utils';
 import {
+  booleanToString,
   emptyStringtoNullable,
   fromTypeCode,
   stringToBoolean,
@@ -33,7 +34,7 @@ export class IEditablePersonForm {
   useOrganizationAddress = false;
   personOrganizationId?: number;
   personOrganizationRowVersion?: number;
-  isDisabled: string | boolean = false;
+  isDisabled: string;
   emailContactMethods: IEditableContactMethodForm[];
   phoneContactMethods: IEditableContactMethodForm[];
   mailingAddress: IEditablePersonAddressForm;
@@ -41,7 +42,7 @@ export class IEditablePersonForm {
   billingAddress: IEditablePersonAddressForm;
 
   constructor() {
-    this.isDisabled = false;
+    this.isDisabled = 'false';
     this.firstName = '';
     this.middleNames = '';
     this.surname = '';
@@ -103,7 +104,7 @@ export class IEditablePersonForm {
 
     formPerson.useOrganizationAddress = person.useOrganizationAddress ?? false;
 
-    formPerson.isDisabled = person.isDisabled;
+    formPerson.isDisabled = booleanToString(person.isDisabled);
 
     formPerson.mailingAddress =
       formAddresses.find(a => a.addressTypeId === ApiGen_CodeTypes_AddressUsageTypes.MAILING) ??
@@ -183,7 +184,7 @@ export class IEditableOrganizationForm {
   alias?: string;
   incorporationNumber?: string;
   comment?: string;
-  isDisabled: boolean;
+  isDisabled: string;
   persons: Partial<ApiGen_Concepts_Person>[];
   emailContactMethods: IEditableContactMethodForm[];
   phoneContactMethods: IEditableContactMethodForm[];
@@ -192,7 +193,7 @@ export class IEditableOrganizationForm {
   billingAddress: IEditableOrganizationAddressForm;
 
   constructor() {
-    this.isDisabled = false;
+    this.isDisabled = 'false';
     this.name = '';
     this.alias = '';
     this.incorporationNumber = '';
@@ -249,7 +250,7 @@ export class IEditableOrganizationForm {
     newForm.alias = organization.alias ?? '';
     newForm.incorporationNumber = organization.incorporationNumber ?? undefined;
     newForm.comment = organization.comment ?? undefined;
-    newForm.isDisabled = organization.isDisabled;
+    newForm.isDisabled = booleanToString(organization.isDisabled);
 
     newForm.persons = formPersonList;
     newForm.mailingAddress =

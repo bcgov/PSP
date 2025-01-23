@@ -6,11 +6,11 @@ using Pims.Api.Areas.Disposition.Controllers;
 using Pims.Api.Services;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
 using Pims.Api.Models.Concepts.File;
 using System;
-using Pims.Api.Helpers.Exceptions;
+using Pims.Core.Api.Exceptions;
 using FluentAssertions;
 
 namespace Pims.Api.Test.Controllers

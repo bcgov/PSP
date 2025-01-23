@@ -2,8 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using Pims.Core.Exceptions;
 using Pims.Dal.Entities;
-using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 
 namespace Pims.Core.Extensions
@@ -17,7 +17,7 @@ namespace Pims.Core.Extensions
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
             PimsAcquisitionFile acquisitionFile = acquisitionFileRepository.GetById(acquisitionFileId);
 
-            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId))
+            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId) && (acquisitionFile.Project == null || !acquisitionFile.Project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId)))
             {
                 throw new NotAuthorizedException("Contractor is not assigned to the Acquisition File's team");
             }

@@ -1,7 +1,7 @@
 import * as bcTokens from '@bcgov/design-tokens/js/variables.js';
 import { useKeycloak } from '@react-keycloak/web';
 import { MemoryHistory } from 'history';
-import Keycloak from 'keycloak-js';
+import { KeycloakInstance } from 'keycloak-js';
 import React from 'react';
 import { ToastContainer } from 'react-toastify';
 import { ThemeProvider } from 'styled-components';
@@ -42,7 +42,7 @@ const TestCommonWrapper: React.FunctionComponent<
         },
         subject: 'test',
         authenticated: true,
-      } as unknown as Keycloak.KeycloakInstance,
+      } as unknown as KeycloakInstance,
       initialized: true,
     });
   }

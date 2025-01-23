@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class DispositionFileDetails : PageObjectBase
     {
         //Disposition Files Menu Elements
-        private By menuDispositionButton = By.CssSelector("div[data-testid='nav-tooltip-disposition'] a");
+        private By menuDispositionButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-disposition']/a");
         private By createDispositionFileButton = By.XPath("//a[contains(text(),'Create a Disposition File')]");
 
         private By dispositionFileSummaryBttn = By.XPath("//div[contains(text(),'File Summary')]");
@@ -17,7 +17,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By dispositionFileEditButton = By.CssSelector("button[title='Edit disposition file']");
 
         //Disposition File Details View and Create Forms Elements
-        private By dispositionFileViewTitle = By.XPath("//h1[contains(text(),'Disposition File')]");
+        private By dispositionFileViewTitle = By.XPath("/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Disposition File')]");
         private By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
 
         private By dispositionFileCreateTitle = By.XPath("//h1[contains(text(),'Create Disposition File')]");

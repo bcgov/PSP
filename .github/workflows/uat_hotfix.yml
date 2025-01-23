@@ -33,7 +33,7 @@ on:
 jobs:
   ci-cd-start-notification:
     name: CI-CD Start Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Start notification to Teams Channel
         uses: dragos-cojocari/ms-teams-notification@v1.0.2
@@ -47,7 +47,7 @@ jobs:
   build-frontend:
     name: Build frontend
     needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -66,7 +66,7 @@ jobs:
   build-api:
     name: Build api
     needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -80,11 +80,13 @@ jobs:
       - name: Call script to build backend (pims-api)
         run: |
           ./openshift/4.0/player.sh build api -apply
+          ./openshift/4.0/player.sh build proxy -apply
+          ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
     name: Deploy frontend and api to OpenShift
     needs: [build-frontend, build-api]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -98,6 +100,8 @@ jobs:
       - name: call scripts to deploy api and frontend
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy proxy $DESTINATION -apply
+          ./openshift/4.0/player.sh deploy scheduler $DESTINATION -apply
           ./openshift/4.0/player.sh deploy app $DESTINATION -apply
 
   # the command:
@@ -107,7 +111,7 @@ jobs:
   database-upgrade:
     name: Upgrade database
     needs: [deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -128,7 +132,7 @@ jobs:
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -150,7 +154,7 @@ jobs:
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -164,12 +168,12 @@ jobs:
       - name: call scripts to sync keycloak
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=$NAMESPACE_OVERRIDE -p BRANCH=$DESTINATION -p API_URL=http://pims-api-uat:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=$NAMESPACE_OVERRIDE -p BRANCH=$GIT_BRANCH -p API_URL=http://pims-api-uat:8080/api -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat -p KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME=pims-api-sso-uat | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
 
   tag-release-image:
     name: Release Tag
     needs: [deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -186,11 +190,13 @@ jobs:
           VERSION=$(make version)
           oc tag pims-app:uat pims-app:v${VERSION}-master
           oc tag pims-api:uat pims-api:v${VERSION}-master
+          oc tag pims-api:uat pims-proxy:v${VERSION}-master
+          oc tag pims-api:uat pims-scheduler:v${VERSION}-master
 
   ci-cd-end-notification:
     if: always()
     name: CI-CD End Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: [mayan-sync, keycloak-sync]
     steps:
       - name: check workflow status

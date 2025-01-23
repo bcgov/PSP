@@ -496,6 +496,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                 </span>
                 <button
                   class="c7 Button c8 btn btn-primary"
+                  title="Download File"
                   type="button"
                 >
                   <div
@@ -504,18 +505,18 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
                     <svg
                       class="mr-2"
                       fill="currentColor"
-                      height="1em"
+                      height="28"
                       stroke="currentColor"
                       stroke-width="0"
-                      viewBox="0 0 640 512"
-                      width="1em"
+                      viewBox="0 0 384 512"
+                      width="28"
                       xmlns="http://www.w3.org/2000/svg"
                     >
                       <path
-                        d="M0 448c0 17.67 14.33 32 32 32h576c17.67 0 32-14.33 32-32V128H0v320zm448-208c0-8.84 7.16-16 16-16h96c8.84 0 16 7.16 16 16v32c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-32zm0 120c0-4.42 3.58-8 8-8h112c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H456c-4.42 0-8-3.58-8-8v-16zM64 264c0-4.42 3.58-8 8-8h304c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm0 96c0-4.42 3.58-8 8-8h176c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zM624 32H16C7.16 32 0 39.16 0 48v48h640V48c0-8.84-7.16-16-16-16z"
+                        d="M224 136V0H24C10.7 0 0 10.7 0 24v464c0 13.3 10.7 24 24 24h336c13.3 0 24-10.7 24-24V160H248c-13.2 0-24-10.8-24-24zM64 72c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8V72zm0 64c0-4.42 3.58-8 8-8h80c4.42 0 8 3.58 8 8v16c0 4.42-3.58 8-8 8H72c-4.42 0-8-3.58-8-8v-16zm192.81 248H304c8.84 0 16 7.16 16 16s-7.16 16-16 16h-47.19c-16.45 0-31.27-9.14-38.64-23.86-2.95-5.92-8.09-6.52-10.17-6.52s-7.22.59-10.02 6.19l-7.67 15.34a15.986 15.986 0 0 1-14.31 8.84c-.38 0-.75-.02-1.14-.05-6.45-.45-12-4.75-14.03-10.89L144 354.59l-10.61 31.88c-5.89 17.66-22.38 29.53-41 29.53H80c-8.84 0-16-7.16-16-16s7.16-16 16-16h12.39c4.83 0 9.11-3.08 10.64-7.66l18.19-54.64c3.3-9.81 12.44-16.41 22.78-16.41s19.48 6.59 22.77 16.41l13.88 41.64c19.77-16.19 54.05-9.7 66 14.16 2.02 4.06 5.96 6.5 10.16 6.5zM377 105L279.1 7c-4.5-4.5-10.6-7-17-7H256v128h128v-6.1c0-6.3-2.5-12.4-7-16.9z"
                       />
                     </svg>
-                    Generate H120
+                    Generate H-120
                   </div>
                 </button>
               </div>
@@ -630,23 +631,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           class="pb-2 row"
         >
           <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c9"
-            >
-              Advanced payment served date:
-            </label>
-          </div>
-          <div
-            class="c10 text-left col"
-            data-testid="advanced-payment-served-date"
-          />
-        </div>
-        <div
-          class="pb-2 row"
-        >
-          <div
             class="pr-0 text-left col-12"
           >
             <label
@@ -754,7 +738,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Financial Coding
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c11"
@@ -816,7 +800,9 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c10 text-left col"
-          />
+          >
+            FERRIES
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -832,7 +818,9 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c10 text-left col"
-          />
+          >
+            SURVEY
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -848,7 +836,9 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c10 text-left col"
-          />
+          >
+            HWY PLAN
+          </div>
         </div>
         <div
           class="pb-2 row"
@@ -931,7 +921,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Payment
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c11"
@@ -1053,7 +1043,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
             Financial Activities
           </div>
           <div
-            class="pl-8 d-flex align-items-end col-auto"
+            class="pl-2 d-flex align-items-end col-auto"
           >
             <svg
               class="c11"

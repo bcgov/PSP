@@ -9,5 +9,7 @@ namespace Pims.Dal.Repositories
     public interface ISystemConstantRepository : IRepository<PimsStaticVariable>
     {
         IEnumerable<PimsStaticVariable> GetAll();
+
+        string GetDataBaseVersion();
     }
 }

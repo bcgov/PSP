@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class LeaseDetails : PageObjectBase
     {
         //Main Menu links Elements
-        private readonly By menuManagementButton = By.CssSelector("div[data-testid='nav-tooltip-leases&licences'] a");
+        private readonly By menuManagementButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-leases&licences']/a");
         private readonly By createLicenseButton = By.XPath("//a[contains(text(),'Create a Lease/Licence File')]");
 
         //File Details Edit Icon
@@ -15,10 +15,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Lease Header Elements
         private readonly By licenseHeaderNbrLabel = By.XPath("//label[contains(text(),'Lease/Licence #')]");
-        private readonly By licenseHeaderNbrContent = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[1]");
+        private readonly By licenseHeaderNbrContent = By.XPath("/html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/div[1]/div[1]/div[2]/span[1]");
         private readonly By licenseHeaderAccountType = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[2]");
         private readonly By licenseHeaderProperty = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]");
-        private readonly By licenseHeaderPropertyContent = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]/parent::div/following-sibling::div/div/span");
+        private readonly By licenseHeaderPropertyContent = By.XPath("//h1[contains(text(),'Lease / Licence')]/parent::div/parent::div/following-sibling::div[2]/div[1]/div/div/div/div[2]/div/label[contains(text(),'Property')]/parent::div/following-sibling::div/span");
         private readonly By licenseHeaderTenantLabel = By.XPath("//label[contains(text(),'Tenant')]");
         private readonly By licenseHeaderPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
         private readonly By licenseHeaderStartDateLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div[2]/div/div/div/div/div[4]/div/label[contains(text(),'Commencement')]");
@@ -26,7 +26,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseHeaderExpiryDateLabel = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[2]/label[contains(text(),'Expiry')]");
         private readonly By licenseHeaderExpiryDateContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div[2]/label[contains(text(),'Expiry')]/parent::div/following-sibling::div[1]");
         private readonly By licenseHeaderHistoricalFileLabel = By.XPath("//label[contains(text(),'Historical file')]");
-        private readonly By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
+        private readonly By licenseHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/span");
 
         private readonly By licenseHeaderCreatedLabel = By.XPath("//span/strong[contains(text(),'Created')]");
         private readonly By licenseHeaderCreatedContent = By.XPath("//strong[contains(text(),'Created')]/parent::span");
@@ -146,7 +146,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsFeeDeterminationSuggestedFeeLabel = By.XPath("//label[contains(text(),'Suggested fee')]");
         private readonly By licenseDetaulsFeeDeterminationSuggestedFeeTooltip = By.CssSelector("span[data-testid='tooltip-icon-section-field-tooltip']");
         private readonly By licenseDetailsFeeDeterminationSuggestedFeeContent = By.CssSelector("span[data-testid='suggestedFee']");
-        private readonly By licenseDetailsFeeDeterminationNotesLabel = By.XPath("//label[contains(text(),'Notes')]");
+        private readonly By licenseDetailsFeeDeterminationNotesLabel = By.XPath("//label[contains(text(),'Comments')]");
         private readonly By licenseDetailsFeeDeterminationNotesTooltip = By.CssSelector("span[data-testid='tooltip-icon-section-field-tooltip']");
         private readonly By licenseDetailsFeeDeterminationNotesInput = By.Id("input-feeDeterminationNote");
         private readonly By licenseDetailsFeeDeterminationNotesContent = By.XPath("//div[contains(text(),'Fee Determination')]/parent::div/parent::h2/following-sibling::div/div[4]/div[2]");
@@ -273,6 +273,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string purpose in lease.LeasePurpose)
                 {
+                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();
                     FocusAndClick(licenseDetailsPurposeMultiselector);
 
                     Wait(5000);
@@ -596,7 +597,7 @@ namespace PIMS.Tests.Automation.PageObjects
             ButtonElement("Save");
 
             sharedModals.IsToastyPresent();
-            Assert.Contains("An error occurred while saving the entity changes", sharedModals.ToastifyText());
+            Assert.Contains("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ToastifyText());
         }
 
         public void CancelLicense()
@@ -824,18 +825,18 @@ namespace PIMS.Tests.Automation.PageObjects
                 for (var i = 0; i < lease.LeaseRenewals.Count; i++)
                 {
                     var elementIdx = i + 1;
-                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/h2/div/div"), "Renewal " + elementIdx);
-                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/div/label[contains(text(),'Exercised')]"));
-                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/div/label[contains(text(),'Exercised')]/parent::div/following-sibling::div"), lease.LeaseRenewals[i].RenewalIsExercised);
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/h2/div/div"), "Renewal " + elementIdx);
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/div/label[contains(text(),'Exercised')]"));
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div/div/label[contains(text(),'Exercised')]/parent::div/following-sibling::div"), lease.LeaseRenewals[i].RenewalIsExercised);
 
-                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[1]/div/div/label[contains(text(),'Commencement')]"));
-                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[1]/div/div/label[contains(text(),'Commencement')]/parent::div/following-sibling::div"), TransformDateFormat(lease.LeaseRenewals[i].RenewalCommencementDate));
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[1]/div/div/label[contains(text(),'Commencement')]"));
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[1]/div/div/label[contains(text(),'Commencement')]/parent::div/following-sibling::div"), TransformDateFormat(lease.LeaseRenewals[i].RenewalCommencementDate));
 
-                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[2]/div/div/label[contains(text(),'Expiry')]"));
-                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[2]/div/div/label[contains(text(),'Expiry')]/parent::div/following-sibling::div"), TransformDateFormat(lease.LeaseRenewals[i].RenewalExpiryDate));
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[2]/div/div/label[contains(text(),'Expiry')]"));
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[2]/div[2]/div/div/label[contains(text(),'Expiry')]/parent::div/following-sibling::div"), TransformDateFormat(lease.LeaseRenewals[i].RenewalExpiryDate));
 
-                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[3]/div/label[contains(text(),'Notes')]"));
-                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Option')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[3]/div/label[contains(text(),'Notes')]/parent::div/following-sibling::div"), lease.LeaseRenewals[i].RenewalNotes);
+                    AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[3]/div/label[contains(text(),'Comments')]"));
+                    AssertTrueContentEquals(By.XPath("//div[contains(text(),'Renewal Options')]/parent::div/parent::h2/following-sibling::div/div["+ elementIdx +"]/div/div[3]/div/label[contains(text(),'Comments')]/parent::div/following-sibling::div"), lease.LeaseRenewals[i].RenewalNotes);
                 }
             }
 

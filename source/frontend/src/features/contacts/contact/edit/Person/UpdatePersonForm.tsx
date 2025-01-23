@@ -79,6 +79,7 @@ const UpdatePersonComponent: React.FC<
 > = ({ values, errors, touched, dirty, submitForm, setFieldValue, isSubmitting }) => {
   const history = useHistory();
   const { getOrganization } = useApiContacts();
+  const isPersonDisabled = getIn(values, 'isDisabled');
 
   const personId = getIn(values, 'id');
   const organizationId = getIn(values, 'organization.id');
@@ -90,6 +91,9 @@ const UpdatePersonComponent: React.FC<
   };
 
   const isContactMethodInvalid = useMemo(() => {
+    if (isPersonDisabled === true) {
+      return false;
+    }
     return (
       !!touched.phoneContactMethods &&
       !!touched.emailContactMethods &&
@@ -98,7 +102,7 @@ const UpdatePersonComponent: React.FC<
         !!touched.billingAddress?.streetAddress1) &&
       getIn(errors, 'needsContactMethod')
     );
-  }, [touched, errors]);
+  }, [touched, errors, isPersonDisabled]);
 
   // update mailing address sub-form when "useOrganizationAddress" checkbox is toggled
   useEffect(() => {

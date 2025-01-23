@@ -97,7 +97,7 @@ describe('Form 8 Detail View component', () => {
     const generateButton = getByTestId('form8[0].generate-form8');
     await act(async () => userEvent.click(generateButton));
 
-    expect(onGenerate).toBeCalledWith(1, '1-12345-01');
+    expect(onGenerate).toHaveBeenCalledWith(1, '01-12345-01');
   });
 
   it('calls the delete form 8', async () => {

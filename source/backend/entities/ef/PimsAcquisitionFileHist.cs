@@ -57,6 +57,18 @@ public partial class PimsAcquisitionFileHist
     [StringLength(20)]
     public string SubfileInterestTypeCode { get; set; }
 
+    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileAppraisalTypeCode { get; set; }
+
+    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileLglSrvyTypeCode { get; set; }
+
+    [Column("ACQ_FILE_EXPROP_RISK_TYPE_CODE")]
+    [StringLength(20)]
+    public string AcqFileExpropRiskTypeCode { get; set; }
+
     [Required]
     [Column("FILE_NAME")]
     [StringLength(500)]
@@ -65,10 +77,8 @@ public partial class PimsAcquisitionFileHist
     [Column("FILE_NO")]
     public int FileNo { get; set; }
 
-    [Required]
-    [Column("FILE_NUMBER")]
-    [StringLength(18)]
-    public string FileNumber { get; set; }
+    [Column("FILE_NO_SUFFIX")]
+    public short FileNoSuffix { get; set; }
 
     [Column("LEGACY_FILE_NUMBER")]
     [StringLength(18)]
@@ -157,4 +167,8 @@ public partial class PimsAcquisitionFileHist
 
     [Column("COMPLETION_DATE", TypeName = "datetime")]
     public DateTime? CompletionDate { get; set; }
+
+    [Column("FILE_NUMBER")]
+    [StringLength(18)]
+    public string FileNumber { get; set; }
 }

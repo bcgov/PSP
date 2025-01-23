@@ -1,8 +1,9 @@
 import React from 'react';
+import { FaListUl } from 'react-icons/fa';
+import { FaRegMap } from 'react-icons/fa6';
 import styled from 'styled-components';
 
-import MapSvg from '@/assets/images/icon-map.svg?react';
-import TableSvg from '@/assets/images/icon-table.svg?react';
+import { Button } from '@/components/common/buttons';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
 export enum SearchToggleOption {
@@ -32,26 +33,32 @@ export const PropertySearchToggle: React.FunctionComponent<
       <StyledNav>
         <StyledLink>
           <TooltipWrapper tooltipId={`${toolId}-map`} tooltip="Map View">
-            <MapSvg
+            <Button
+              variant="info"
+              title="map-view"
               onClick={() => {
                 if (toggle !== SearchToggleOption.Map) {
                   onPageToggle(SearchToggleOption.Map);
                 }
               }}
-            />
+              icon={<FaRegMap size={25} />}
+            ></Button>
           </TooltipWrapper>
         </StyledLink>
       </StyledNav>
       <StyledNav>
         <StyledLink>
           <TooltipWrapper tooltipId={`${toolId}-list`} tooltip="List View">
-            <TableSvg
+            <Button
+              variant="info"
+              title="list-view"
               onClick={() => {
                 if (toggle !== SearchToggleOption.List) {
                   onPageToggle(SearchToggleOption.List);
                 }
               }}
-            />
+              icon={<FaListUl size={21} />}
+            ></Button>
           </TooltipWrapper>
         </StyledLink>
       </StyledNav>
@@ -68,18 +75,22 @@ const StyledToggle = styled('div')<ISearchToggleStyleProps>`
 
   div:nth-child(${props => (props.toggle === SearchToggleOption.Map ? 1 : 2)}) {
     div:nth-child(1) {
-      cursor: auto;
-      svg {
-        fill: #909090;
+      div:nth-child(1) {
+        cursor: auto;
+        svg {
+          fill: #909090;
+        }
       }
     }
   }
 
   div:nth-child(${props => (props.toggle === SearchToggleOption.Map ? 2 : 1)}) {
     div:nth-child(1) {
-      cursor: pointer;
-      svg {
-        fill: #003366;
+      div:nth-child(1) {
+        cursor: pointer;
+        svg {
+          fill: #003366;
+        }
       }
     }
   }
@@ -95,6 +106,8 @@ const StyledLink = styled('div')`
   flex-shrink: 0;
   flex-direction: row;
   align-items: center;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
   svg {
     min-width: max-content;
   }

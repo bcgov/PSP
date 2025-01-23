@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 using Moq;
 using Pims.Dal;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 
 namespace Pims.Core.Test
 {
@@ -93,7 +93,7 @@ namespace Pims.Core.Test
             var serializerOptions = new Mock<IOptions<JsonSerializerOptions>>();
             helper.AddSingleton(serializerOptions);
 
-            var context = new PimsContext(options, contextAccessor.Object, serializerOptions.Object);
+            PimsContext context = new PimsTestContext(options, contextAccessor.Object, serializerOptions.Object);
 
             if (ensureDeleted)
             {

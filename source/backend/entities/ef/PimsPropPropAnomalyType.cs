@@ -27,6 +27,9 @@ public partial class PimsPropPropAnomalyType
     [StringLength(20)]
     public string PropertyAnomalyTypeCode { get; set; }
 
+    [Column("CONCURRENCY_CONTROL_NUMBER")]
+    public long ConcurrencyControlNumber { get; set; }
+
     [Column("APP_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppCreateTimestamp { get; set; }
 
@@ -58,9 +61,6 @@ public partial class PimsPropPropAnomalyType
     [Column("APP_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string AppLastUpdateUserid { get; set; }
-
-    [Column("CONCURRENCY_CONTROL_NUMBER")]
-    public long ConcurrencyControlNumber { get; set; }
 
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }

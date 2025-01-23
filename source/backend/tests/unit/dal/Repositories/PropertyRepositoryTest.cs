@@ -11,9 +11,8 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Xunit;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -29,19 +28,18 @@ namespace Pims.Dal.Test.Repositories
         public static IEnumerable<object[]> AllPropertyFilters =>
             new List<object[]>
             {
-                new object[] { new PropertyFilter() { PinOrPid = "111-111-111" , Ownership = new List<string>()}, 1 },
-                new object[] { new PropertyFilter() { PinOrPid = "111"  , Ownership = new List<string>()}, 2 },
-                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 8 },
+                new object[] { new PropertyFilter() { Pid = "111-111-111", Ownership = new List<string>()}, 1 },
+                new object[] { new PropertyFilter() { Pin = "99999", Ownership = new List<string>()}, 1 },
+                new object[] { new PropertyFilter() { Address = "12342 Test Street"  , Ownership = new List<string>()}, 6 },
                 new object[] { new PropertyFilter() { PlanNumber = "SP-89TTXY", Ownership = new List<string>()}, 1 },
-                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 8 },
-                new object[] { new PropertyFilter(), 8 },
-                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory" }}, 4 },
+                new object[] { new PropertyFilter() { Page = 1, Quantity = 10 , Ownership = new List<string>() }, 6 },
+                new object[] { new PropertyFilter(), 6 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory" }}, 3 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isPropertyOfInterest" }}, 2 },
-
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isDisposed"}}, 1 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isRetired"}}, 2 },
                 new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isOtherInterest"}}, 1 },
-                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory", "isPropertyOfInterest"}}, 6 },
+                new object[] { new PropertyFilter(){ Ownership = new List<string>(){"isCoreInventory", "isPropertyOfInterest"}}, 5 },
             };
         #endregion
 
@@ -92,8 +90,6 @@ namespace Pims.Dal.Test.Repositories
             act.Should().Throw<NotAuthorizedException>();
         }
 
-        /*
-        // TODO: Figure out how to add DB views to the context
         [Theory]
         [MemberData(nameof(AllPropertyFilters))]
         public void GetPage_Properties(PropertyFilter filter, int expectedCount)
@@ -104,19 +100,19 @@ namespace Pims.Dal.Test.Repositories
 
             using var init = helper.InitializeDatabase(user);
 
-            PimsPropertyLocationVw testProperty = null;
+            PimsPropertyVw testProperty = null;
 
             testProperty = init.CreatePropertyView(2);
             testProperty.IsOwned = true;
 
-            testProperty = init.CreatePropertyView(3, pin: 111);
+            testProperty = init.CreatePropertyView(3, pin: 99999);
             testProperty.IsOwned = false;
+            testProperty.HasActiveAcquisitionFile = true;
 
             testProperty = init.CreatePropertyView(4, address: init.PimsAddresses.FirstOrDefault());
             testProperty.IsOwned = false;
-
-            testProperty = init.CreatePropertyView(5, classification: init.PimsPropertyClassificationTypes.FirstOrDefault(c => c.PropertyClassificationTypeCode == "Core Operational"));
-            testProperty.IsOwned = false;
+            testProperty.HasActiveAcquisitionFile = true;
+            testProperty.IsOtherInterest = true;
 
             testProperty = init.CreatePropertyView(6, location: new NetTopologySuite.Geometries.Point(-123.720810, 48.529338));
             testProperty.IsOwned = true;
@@ -129,6 +125,7 @@ namespace Pims.Dal.Test.Repositories
 
             testProperty = init.CreatePropertyView(33333);
             testProperty.SurveyPlanNumber = "SP-89TTXY";
+            testProperty.IsDisposed = true;
 
             testProperty = init.CreatePropertyView(44444);
             testProperty.IsRetired = true;
@@ -142,11 +139,11 @@ namespace Pims.Dal.Test.Repositories
             var result = repository.GetPage(filter);
 
             // Assert
-            Assert.NotNull(result);
-            Assert.IsAssignableFrom<IEnumerable<Entity.PimsProperty>>(result);
-            Assert.Equal(expectedCount, result.Total);
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<IEnumerable<PimsPropertyVw>>();
+            result.Total.Should().Be(expectedCount);
         }
-        */
+
         #endregion
 
         #region Get
@@ -211,15 +208,59 @@ namespace Pims.Dal.Test.Repositories
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var property = EntityHelper.CreateProperty(100);
             property.Internal_Id = 1;
-            property.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() { new PimsPropertyAcquisitionFile() { AcquisitionFile = new PimsAcquisitionFile() {
-                AcquisitionTypeCode = "TYPE", FileName = "ACQFILE", FileNumber = "1234", AcquisitionFileStatusTypeCodeNavigation = new PimsAcquisitionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
-            property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { ResearchFile = new PimsResearchFile() {
-                Name = "Research", RfileNumber = "1234", ResearchFileStatusTypeCodeNavigation = new PimsResearchFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
-            property.PimsPropertyLeases = new List<PimsPropertyLease>() { new PimsPropertyLease() { Lease = new PimsLease() {
-                LeaseLicenseTypeCode = "TYPE", LeasePayRvblTypeCode = "RCVBL", LeaseProgramTypeCode = "PROGRAM", //LeasePurposeTypeCode = "PURPOSE",
-                LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType () { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
-            property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { DispositionFile = new PimsDispositionFile() {
-                DispositionStatusTypeCode = "DRAFT", DispositionTypeCode = "TYPE", DispositionFileStatusTypeCodeNavigation = new PimsDispositionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" } } } };
+            property.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>()
+            {
+                new PimsPropertyAcquisitionFile()
+                {
+                    AcquisitionFile = new PimsAcquisitionFile()
+                    {
+                        AcquisitionTypeCode = "TYPE",
+                        FileName = "ACQFILE",
+                        RegionCode = 1,
+                        FileNo = 1234,
+                        FileNoSuffix = 1,
+                        AcquisitionFileStatusTypeCodeNavigation = new PimsAcquisitionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
+                    }
+                }
+            };
+            property.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>()
+            {
+                new PimsPropertyResearchFile()
+                {
+                    ResearchFile = new PimsResearchFile()
+                    {
+                        Name = "Research",
+                        RfileNumber = "1234",
+                        ResearchFileStatusTypeCodeNavigation = new PimsResearchFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
+                    }
+                }
+            };
+            property.PimsPropertyLeases = new List<PimsPropertyLease>()
+            {
+                new PimsPropertyLease()
+                {
+                    Lease = new PimsLease()
+                    {
+                        LeaseLicenseTypeCode = "TYPE",
+                        LeasePayRvblTypeCode = "RCVBL",
+                        LeaseProgramTypeCode = "PROGRAM",
+                        LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType () { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
+                    }
+                }
+            };
+            property.PimsDispositionFileProperties = new List<PimsDispositionFileProperty>()
+            {
+                new PimsDispositionFileProperty()
+                {
+                    DispositionFile = new PimsDispositionFile()
+                    {
+                        DispositionStatusTypeCode = "DRAFT",
+                        DispositionTypeCode = "TYPE",
+                        DispositionFileStatusTypeCodeNavigation = new PimsDispositionFileStatusType() { Id = "DRAFT", Description = "Draft", DbCreateUserid = "test", DbLastUpdateUserid = "test" }
+                    }
+                }
+            };
+
             _helper.AddAndSaveChanges(property);
 
             // Act
@@ -687,7 +728,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1, isRetired: isRetired);
             _helper.AddAndSaveChanges(property);
 
-            var newValues = new Entity.PimsProperty();
+            var newValues = new PimsProperty();
             property.CopyValues(newValues);
             newValues.Pid = pid;
 
@@ -706,7 +747,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1, isRetired: true);
             _helper.AddAndSaveChanges(property);
 
-            var newValues = new Entity.PimsProperty();
+            var newValues = new PimsProperty();
             property.CopyValues(newValues);
             newValues.Pid = 200;
 
@@ -867,7 +908,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1);
             _helper.AddAndSaveChanges(property);
 
-            var newValues = new Entity.PimsProperty();
+            var newValues = new PimsProperty();
             property.CopyValues(newValues);
             newValues.AdditionalDetails = "test";
             newValues.IsTaxesPayable = true;
@@ -890,7 +931,7 @@ namespace Pims.Dal.Test.Repositories
             var property = EntityHelper.CreateProperty(1);
             _helper.AddAndSaveChanges(property);
 
-            var newValues = new Entity.PimsProperty();
+            var newValues = new PimsProperty();
             property.CopyValues(newValues);
             newValues.AdditionalDetails = "test";
             newValues.IsTaxesPayable = true;

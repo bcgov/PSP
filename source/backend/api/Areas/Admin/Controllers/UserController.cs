@@ -4,12 +4,12 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.User;
-using Pims.Api.Policies;
+using Pims.Core.Api.Policies;
 using Pims.Core.Json;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
+using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Admin.Controllers

@@ -24,17 +24,15 @@ env:
   TAG_DEV: "dev"
   TAG_TEST: "test"
   TAG_PROD: "prod"
+  DEPLOYMENT_NAMESPACE: "3cd915-dev"
 
 on:
-  pull_request_target:
-    branches: [dev]
-    types: [closed]
+  workflow_dispatch:
 
 jobs:
   ci-cd-start-notification:
-    if: github.event.pull_request.merged == true
     name: CI-CD Start Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Start notification to Teams Channel
         uses: dragos-cojocari/ms-teams-notification@v1.0.2
@@ -48,7 +46,7 @@ jobs:
   build-frontend:
     name: Build frontend
     needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -67,7 +65,7 @@ jobs:
   build-api:
     name: Build api
     needs: ci-cd-start-notification
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -78,14 +76,16 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build backend (pims-api)
+      - name: Call script to build backend services
         run: |
           ./openshift/4.0/player.sh build api -apply
+          ./openshift/4.0/player.sh build proxy -apply
+          ./openshift/4.0/player.sh build scheduler -apply
 
   deploy:
-    name: Deploy frontend and api to OpenShift
+    name: Deploy to OpenShift
     needs: [build-frontend, build-api]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -96,10 +96,33 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: call scripts to deploy api and frontend
+      - name: Deploy PIMS frontend
+        shell: bash
         run: |
-          ./openshift/4.0/player.sh deploy api $DESTINATION -apply
-          ./openshift/4.0/player.sh deploy app $DESTINATION -apply
+          oc tag pims-app:latest-$DESTINATION pims-app:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
+      - name: Deploy PIMS api
+        shell: bash
+        run: |
+          oc tag pims-api:latest-$DESTINATION pims-api:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
+      - name: Deploy geoserver proxy microservice
+        shell: bash
+        run: |
+          oc tag pims-proxy:latest-$DESTINATION pims-proxy:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
+      - name: Deploy scheduler microservice
+        shell: bash
+        run: |
+          oc tag pims-scheduler:latest-$DESTINATION pims-scheduler:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
+      - name: Deploy mayan
+        shell: bash
+        run: |
           oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
 
   # the command:
@@ -109,7 +132,7 @@ jobs:
   database-upgrade:
     name: Upgrade database
     needs: [deploy]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -127,12 +150,12 @@ jobs:
           oc wait --for=condition=complete job/$JOB_NAME --timeout=120s
           oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
 
-## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
-## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -150,11 +173,11 @@ jobs:
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
 
-## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
+  ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@v4
@@ -168,13 +191,12 @@ jobs:
       - name: call scripts to sync keycloak
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=3cd915-dev -p BRANCH=$DESTINATION -p API_URL=http://pims-api:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=3cd915-dev -p BRANCH=$DESTINATION -p API_URL=http://pims-api-dev:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
 
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     needs: keycloak-sync
-    if: ${{ always() && github.event.pull_request.merged == true }}
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@v4

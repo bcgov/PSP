@@ -1,4 +1,5 @@
 import { useKeycloak } from '@react-keycloak/web';
+import { useCallback, useMemo } from 'react';
 
 import * as API from '@/constants/API';
 import { exists } from '@/utils';
@@ -53,84 +54,103 @@ export function useKeycloakWrapper(): IKeycloak {
    * Determine if the user has the specified 'claim'
    * @param claim - The name of the claim
    */
-  const hasClaim = (claim?: string | Array<string>): boolean => {
-    return (
-      exists(claim) &&
-      (typeof claim === 'string'
-        ? userInfo?.client_roles?.includes(claim)
-        : claim.some(c => userInfo?.client_roles?.includes(c)))
-    );
-  };
+  const hasClaim = useCallback(
+    (claim?: string | Array<string>): boolean => {
+      return (
+        exists(claim) &&
+        (typeof claim === 'string'
+          ? userInfo?.client_roles?.includes(claim)
+          : claim.some(c => userInfo?.client_roles?.includes(c)))
+      );
+    },
+    [userInfo?.client_roles],
+  );
 
   /**
    * Determine if the user belongs to the specified 'role'
    * @param role - The role name or an array of role name
    */
-  const hasRole = (role?: string | Array<string>): boolean => {
-    return (
-      exists(role) &&
-      (typeof role === 'string'
-        ? userInfo?.client_roles?.includes(role)
-        : role.some(r => userInfo?.client_roles?.includes(r)))
-    );
-  };
+  const hasRole = useCallback(
+    (role?: string | Array<string>): boolean => {
+      return (
+        exists(role) &&
+        (typeof role === 'string'
+          ? userInfo?.client_roles?.includes(role)
+          : role.some(r => userInfo?.client_roles?.includes(r)))
+      );
+    },
+    [userInfo?.client_roles],
+  );
 
   /**
    * Return an array of roles the user belongs to
    */
-  const roles = (): Array<string> => {
+  const roles = useCallback((): Array<string> => {
     const pimsRoleNames = getByType(API.ROLE_TYPES).map(r => r.name);
     return userInfo?.client_roles
       ? [...(userInfo?.client_roles.filter(r => pimsRoleNames.includes(r)) ?? [])]
       : [];
-  };
+  }, [getByType, userInfo?.client_roles]);
 
   /**
    * Return the user's businessIdentifier
    */
-  const businessIdentifier = (): string => {
+  const businessIdentifier = useCallback((): string => {
     return userInfo?.businessIdentifierValue;
-  };
+  }, [userInfo?.businessIdentifierValue]);
 
   /**
    * Return the user's display name
    */
-  const displayName = (): string | undefined => {
+  const displayName = useCallback((): string | undefined => {
     return userInfo?.name ?? userInfo?.preferred_businessIdentifier;
-  };
+  }, [userInfo?.name, userInfo?.preferred_businessIdentifier]);
 
   /**
    * Return the user's first name
    */
-  const firstName = (): string | undefined => {
+  const firstName = useCallback((): string | undefined => {
     return userInfo?.firstName ?? userInfo?.given_name;
-  };
+  }, [userInfo?.firstName, userInfo?.given_name]);
 
   /**
    * Return the user's last name
    */
-  const surname = (): string | undefined => {
+  const surname = useCallback((): string | undefined => {
     return userInfo?.surname ?? userInfo?.family_name;
-  };
+  }, [userInfo?.family_name, userInfo?.surname]);
 
   /**
    * Return the user's email
    */
-  const email = (): string | undefined => {
+  const email = useCallback((): string | undefined => {
     return userInfo?.email;
-  };
+  }, [userInfo?.email]);
 
-  return {
-    obj: keycloak,
-    businessIdentifierValue: businessIdentifier(),
-    displayName: displayName(),
-    firstName: firstName(),
-    surname: surname(),
-    email: email(),
-    roles: roles(),
-    hasRole: hasRole,
-    hasClaim: hasClaim,
-  };
+  return useMemo(
+    () => ({
+      obj: keycloak,
+      businessIdentifierValue: businessIdentifier(),
+      displayName: displayName(),
+      firstName: firstName(),
+      surname: surname(),
+      email: email(),
+      roles: roles(),
+      hasRole: hasRole,
+      hasClaim: hasClaim,
+    }),
+    [
+      businessIdentifier,
+      displayName,
+      email,
+      firstName,
+      hasClaim,
+      hasRole,
+      keycloak,
+      roles,
+      surname,
+    ],
+  );
 }
 
 export default useKeycloakWrapper;

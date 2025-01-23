@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
@@ -23,12 +22,14 @@ using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Mayan;
 using Pims.Av;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Services;
 using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 using Polly;
 
 namespace Pims.Api.Services
@@ -82,7 +83,8 @@ namespace Pims.Api.Services
             IDocumentTypeRepository documentTypeRepository,
             IAvService avService,
             IMapper mapper,
-            IOptionsMonitor<AuthClientOptions> options)
+            IOptionsMonitor<AuthClientOptions> options,
+            IDocumentQueueRepository queueRepository)
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
@@ -135,9 +137,9 @@ namespace Pims.Api.Services
             return documentTypeRepository.GetByCategory(categoryType);
         }
 
-        public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest)
+        public async Task<DocumentUploadResponse> UploadDocumentSync(DocumentUploadRequest uploadRequest)
         {
-            this.Logger.LogInformation("Uploading document");
+            this.Logger.LogInformation("Uploading document and waiting for mayan upload.");
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             ExternalResponse<DocumentDetailModel> externalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File);
@@ -157,7 +159,7 @@ namespace Pims.Api.Services
                         .Or<System.Text.Json.JsonException>()
                         .WaitAndRetryAsync(_config.UploadRetries, (int retry) => TimeSpan.FromSeconds(Math.Pow(2, retry)));
                     var detail = await retryPolicy.ExecuteAsync(async () => await GetStorageDocumentDetail(externalDocument.Id));
-                    if(detail?.Payload?.FileLatest == null)
+                    if (detail?.Payload?.FileLatest == null)
                     {
                         response.DocumentExternalResponse.Status = ExternalResponseStatus.Error;
                         response.DocumentExternalResponse.Message = "Timed out waiting for Mayan to process document";
@@ -172,6 +174,7 @@ namespace Pims.Api.Services
                 {
                     _ = PrecacheDocumentPreviews(externalDocument.Id, externalDocument.FileLatest.Id);
                 }
+
                 // Create metadata of document
                 if (uploadRequest.DocumentMetadata != null)
                 {
@@ -206,6 +209,63 @@ namespace Pims.Api.Services
                 throw GetMayanResponseError(externalResponse.Message);
             }
             return response;
+        }
+
+        public async Task<DocumentUploadResponse> UploadDocumentAsync(DocumentUploadRequest uploadRequest, bool skipExtensionCheck = false)
+        {
+            this.Logger.LogInformation("Uploading document, do not wait for mayan processing. documentId: {documentId}", uploadRequest.DocumentId);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
+
+            ExternalResponse<DocumentDetailModel> externalResponse = await UploadDocumentAsync(uploadRequest.DocumentTypeMayanId, uploadRequest.File, skipExtensionCheck);
+            DocumentUploadResponse response = new DocumentUploadResponse()
+            {
+                DocumentExternalResponse = externalResponse,
+                MetadataExternalResponse = new List<ExternalResponse<DocumentMetadataModel>>(),
+            };
+
+            PimsDocument databaseDocument = documentRepository.TryGet(uploadRequest.DocumentId);
+            response.Document = databaseDocument != null ? mapper.Map<DocumentModel>(databaseDocument) : null;
+
+            if (response?.DocumentExternalResponse?.Payload?.Id != null && response?.DocumentExternalResponse?.Payload?.Id > 0 && databaseDocument != null)
+            {
+                // Create metadata of document
+                if (uploadRequest.DocumentMetadata != null)
+                {
+                    List<DocumentMetadataUpdateModel> creates = new List<DocumentMetadataUpdateModel>();
+                    foreach (var metadata in uploadRequest.DocumentMetadata)
+                    {
+                        if (!string.IsNullOrEmpty(metadata.Value))
+                        {
+                            creates.Add(metadata);
+                        }
+                    }
+
+                    response.MetadataExternalResponse = await CreateMetadata(response.DocumentExternalResponse.Payload.Id, creates);
+                }
+
+                databaseDocument.MayanId = response.DocumentExternalResponse.Payload.Id;
+                documentRepository.Update(databaseDocument);
+                documentRepository.CommitTransaction();
+            }
+            else
+            {
+                this.Logger.LogError("Failed to update associated PIMS document with uploaded Mayan Id. documentId: {documentId}", uploadRequest.DocumentId);
+                this.Logger.LogDebug("Mayan response: {response}", response.Serialize());
+            }
+
+            return response;
+        }
+
+        public PimsDocument AddDocument(PimsDocument newPimsDocument)
+        {
+            this.Logger.LogInformation("Adding document uploaded asynchronously.");
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
+            newPimsDocument.ThrowIfNull(nameof(newPimsDocument));
+
+            documentRepository.Add(newPimsDocument);
+            documentRepository.CommitTransaction();
+
+            return newPimsDocument;
         }
 
         public async Task<DocumentUpdateResponse> UpdateDocumentAsync(DocumentUpdateRequest updateRequest)
@@ -313,17 +373,45 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<string>> DeleteDocumentAsync(PimsDocument document)
         {
-            this.Logger.LogInformation("Deleting document {documentId}", document.Internal_Id);
-            this.User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+            Logger.LogInformation("Deleting document {documentId}", document.Internal_Id);
+            User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
 
-            // If the storage deletion was successful or the id was not found on the storage (already deleted) delete the pims reference.
-            ExternalResponse<string> result = await documentStorageRepository.TryDeleteDocument(document.MayanId);
-            if (result.Status == ExternalResponseStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound)
+            var result = new ExternalResponse<string>() { Status = ExternalResponseStatus.NotExecuted };
+            if (document.MayanId.HasValue)
+            {
+                result = await documentStorageRepository.TryDeleteDocument(document.MayanId.Value);
+            }
+            else
+            {
+                result.Message = "Mayan ID not found in pims";
+            }
+
+            // If the storage deletion was successful or the id was not found on the storage (already deleted) on in pims (no mayan link) delete the pims reference.
+            if (result.Status == ExternalResponseStatus.Success || result.HttpStatusCode == HttpStatusCode.NotFound || !document.MayanId.HasValue)
             {
                 documentRepository.Delete(document);
                 documentRepository.CommitTransaction();
             }
             else
+            {
+                throw GetMayanResponseError(result.Message);
+            }
+
+            return result;
+        }
+
+        public async Task<ExternalResponse<string>> DeleteMayanStorageDocumentAsync(long mayanDocumentId)
+        {
+            Logger.LogInformation("Deleting Mayan document {documentId}", mayanDocumentId);
+            User.ThrowIfNotAuthorized(Permissions.DocumentDelete);
+
+            ExternalResponse<string> result = await documentStorageRepository.TryDeleteDocument(mayanDocumentId);
+            if(result.Status == ExternalResponseStatus.Error && result.HttpStatusCode == HttpStatusCode.NotFound)
+            {
+                return result;
+            }
+
+            if (result.Status == ExternalResponseStatus.Error || result.Status == ExternalResponseStatus.NotExecuted)
             {
                 throw GetMayanResponseError(result.Message);
             }
@@ -402,22 +490,13 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<FileDownloadResponse> downloadResult = await documentStorageRepository.TryDownloadFileAsync(mayanDocumentId, mayanFileId);
-            if (IsValidDocumentExtension(downloadResult.Payload.FileName))
+
+            // because we bypass file extension checks from legacy systems, we should not check the extension here.
+            if (downloadResult.Status != ExternalResponseStatus.Success)
             {
-                if (downloadResult.Status != ExternalResponseStatus.Success)
-                {
-                    throw GetMayanResponseError(downloadResult.Message);
-                }
-                return downloadResult;
+                throw GetMayanResponseError(downloadResult.Message);
             }
-            else
-            {
-                return new ExternalResponse<FileDownloadResponse>()
-                {
-                    Status = ExternalResponseStatus.Error,
-                    Message = $"Document with id ${mayanDocumentId} has an invalid extension",
-                };
-            }
+            return downloadResult;
         }
 
         public async Task<ExternalResponse<FileStreamResponse>> StreamFileAsync(long mayanDocumentId, long mayanFileId)
@@ -426,22 +505,13 @@ namespace Pims.Api.Services
             this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
             ExternalResponse<FileStreamResponse> downloadResult = await documentStorageRepository.TryStreamFileAsync(mayanDocumentId, mayanFileId);
-            if (IsValidDocumentExtension(downloadResult.Payload.FileName))
+
+            // because we bypass file extension checks from legacy systems, we should not check the extension here.
+            if (downloadResult.Status != ExternalResponseStatus.Success)
             {
-                if (downloadResult.Status != ExternalResponseStatus.Success)
-                {
-                    throw GetMayanResponseError(downloadResult.Message);
-                }
-                return downloadResult;
+                throw GetMayanResponseError(downloadResult.Message);
             }
-            else
-            {
-                return new ExternalResponse<FileStreamResponse>()
-                {
-                    Status = ExternalResponseStatus.Error,
-                    Message = $"Document with id ${mayanDocumentId} has an invalid extension",
-                };
-            }
+            return downloadResult;
         }
 
         public async Task<ExternalResponse<FileDownloadResponse>> DownloadFileLatestAsync(long mayanDocumentId)
@@ -453,19 +523,8 @@ namespace Pims.Api.Services
             {
                 if (documentResult.Payload != null)
                 {
-                    if (IsValidDocumentExtension(documentResult.Payload.FileLatest.FileName))
-                    {
-                        ExternalResponse<FileDownloadResponse> downloadResult = await documentStorageRepository.TryDownloadFileAsync(documentResult.Payload.Id, documentResult.Payload.FileLatest.Id);
-                        return downloadResult;
-                    }
-                    else
-                    {
-                        return new ExternalResponse<FileDownloadResponse>()
-                        {
-                            Status = ExternalResponseStatus.Error,
-                            Message = $"Document with id ${mayanDocumentId} has an invalid extension",
-                        };
-                    }
+                    ExternalResponse<FileDownloadResponse> downloadResult = await documentStorageRepository.TryDownloadFileAsync(documentResult.Payload.Id, documentResult.Payload.FileLatest.Id);
+                    return downloadResult;
                 }
                 else
                 {
@@ -551,7 +610,7 @@ namespace Pims.Api.Services
             return result;
         }
 
-        private static bool IsValidDocumentExtension(string fileName)
+        public static bool IsValidDocumentExtension(string fileName)
         {
             var fileNameExtension = Path.GetExtension(fileName).Replace(".", string.Empty).ToLower();
             return ValidExtensions.Contains(fileNameExtension);
@@ -582,13 +641,13 @@ namespace Pims.Api.Services
             }
         }
 
-        private async Task<ExternalResponse<DocumentDetailModel>> UploadDocumentAsync(long documentType, IFormFile fileRaw)
+        private async Task<ExternalResponse<DocumentDetailModel>> UploadDocumentAsync(long documentType, IFormFile fileRaw, bool skipExtensionCheck = false)
         {
             this.Logger.LogInformation("Uploading storage document {documentType}", documentType);
             this.User.ThrowIfNotAuthorized(Permissions.DocumentAdd);
 
             await this.avService.ScanAsync(fileRaw);
-            if (IsValidDocumentExtension(fileRaw.FileName))
+            if (skipExtensionCheck || IsValidDocumentExtension(fileRaw.FileName))
             {
                 ExternalResponse<DocumentDetailModel> result = await documentStorageRepository.TryUploadDocumentAsync(documentType, fileRaw);
                 return result;

@@ -83,6 +83,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
         fullyAttributedFeature: pointFeature.properties,
       });
     }
+    mapMachine.requestCenterToLocation(latlng);
   };
 
   const icon = getIcon(pointFeature, isSelected, mapMachine.showDisposed, mapMachine.showRetired);

@@ -12,6 +12,7 @@ export type IContactInputContainerProps = {
   restrictContactType?: RestrictContactType;
   displayErrorAsTooltip?: boolean;
   onContactSelected?: (contact: IContactSearchResult) => void;
+  placeholder?: string;
 };
 
 export const ContactInputContainer: React.FC<
@@ -27,6 +28,7 @@ export const ContactInputContainer: React.FC<
   restrictContactType,
   displayErrorAsTooltip = true,
   onContactSelected,
+  placeholder,
 }) => {
   const [showContactManager, setShowContactManager] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>([]);
@@ -67,6 +69,7 @@ export const ContactInputContainer: React.FC<
         showActiveSelector: true,
         restrictContactType: restrictContactType,
       }}
+      placeholder={placeholder}
     />
   );
 };

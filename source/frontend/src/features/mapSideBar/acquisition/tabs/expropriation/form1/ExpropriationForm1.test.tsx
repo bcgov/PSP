@@ -63,8 +63,8 @@ describe('Expropriation Form 1', () => {
   });
 
   it('validates form values before generating', async () => {
-    const { getByText } = await setup();
-    await act(async () => userEvent.click(getByText('Generate')));
+    const { getByText, getByTitle } = await setup();
+    await act(async () => userEvent.click(getByTitle(/Download File/i)));
 
     expect(getByText('Expropriation authority is required')).toBeInTheDocument();
     expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
@@ -83,10 +83,10 @@ describe('Expropriation Form 1', () => {
     await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
     await act(async () => userEvent.paste(getPurpose(), 'bar'));
 
-    await act(async () => userEvent.click(getByText('Generate')));
+    await act(async () => userEvent.click(getByTitle(/Download File/i)));
 
-    expect(onGenerate).toBeCalled();
-    expect(onError).not.toBeCalled();
+    expect(onGenerate).toHaveBeenCalled();
+    expect(onError).not.toHaveBeenCalled();
   });
 
   it(`clears the form when Cancel button is clicked`, async () => {
@@ -122,9 +122,9 @@ describe('Expropriation Form 1', () => {
     await act(async () => userEvent.paste(getNatureOfInterest(), 'foo'));
     await act(async () => userEvent.paste(getPurpose(), 'bar'));
 
-    await act(async () => userEvent.click(getByText('Generate')));
+    await act(async () => userEvent.click(getByTitle(/Download File/i)));
 
-    expect(onGenerate).toBeCalled();
-    expect(onError).toBeCalledWith(error);
+    expect(onGenerate).toHaveBeenCalled();
+    expect(onError).toHaveBeenCalledWith(error);
   });
 });

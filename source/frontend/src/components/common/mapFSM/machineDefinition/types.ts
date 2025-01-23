@@ -5,7 +5,7 @@ import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/type
 import { IMapSideBarViewState as IMapSideBarState } from '@/features/mapSideBar/MapSideBar';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
-import { FeatureSelected, MapFeatureData, RequestedFlyTo } from '../models';
+import { FeatureSelected, MapFeatureData, RequestedCenterTo, RequestedFlyTo } from '../models';
 import { LocationFeatureDataset } from '../useLocationFeatureLoader';
 
 export enum SideBarType {
@@ -42,6 +42,7 @@ export type MachineContext = {
   fitToResultsAfterLoading: boolean;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
+  requestedCenterTo: RequestedCenterTo;
   filePropertyLocations: LatLngLiteral[];
   activePimsPropertyIds: number[];
   activeLayers: ILayerItem[];
@@ -49,4 +50,5 @@ export type MachineContext = {
   isFiltering: boolean;
   showDisposed: boolean;
   showRetired: boolean;
+  currentMapBounds: LatLngBounds | null;
 };

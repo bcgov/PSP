@@ -5,8 +5,10 @@ import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
+import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import { StyledIconButton } from '@/components/common/buttons/IconButton';
 import { StyledAddButton } from '@/components/common/styles';
+import * as CommonStyled from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiAcquisitionFile } from '@/hooks/pims-api/useApiAcquisitionFile';
@@ -95,7 +97,10 @@ export const AcquisitionListView: React.FunctionComponent<
   return (
     <Styled.ListPage>
       <Styled.Scrollable>
-        <Styled.PageHeader>Acquisition Files</Styled.PageHeader>
+        <CommonStyled.H1>
+          <AcquisitionFileIcon title="Acquisition file icon" fill="currentColor" />
+          <span className="ml-2">Acquisition Files</span>
+        </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
             <Col>

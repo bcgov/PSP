@@ -39,6 +39,7 @@ export interface IPaginateProperties extends IPaginateParams {
 }
 
 export interface IGeoSearchParams {
+  PROPERTY_ID?: number;
   STREET_ADDRESS_1?: string;
   PID?: string;
   PID_PADDED?: string;
@@ -135,6 +136,11 @@ export const LEASE_CHECKLIST_SECTION_TYPES = 'PimsLeaseChklstSectionType';
 export const LEASE_CHECKLIST_ITEM_STATUS_TYPES = 'PimsChklstItemStatusType';
 export const LEASE_PAYMENT_CATEGORY_TYPES = 'PimsLeasePaymentCategoryType';
 export const SUBFILE_INTEREST_TYPES = 'PimsSubfileInterestType';
+export const ACQUISITION_PROGRESS_STATUS_TYPES = 'PimsAcqFileProgessType';
+export const ACQUISITION_APPRAISAL_STATUS_TYPES = 'PimsAcqFileAppraisalType';
+export const ACQUISITION_LEGALSURVEY_STATUS_TYPES = 'PimsAcqFileLglSrvyType';
+export const ACQUISITION_TAKING_STATUS_TYPES = 'PimsAcqFileTakeType';
+export const ACQUISITION_EXPROPIATIONRISK_STATUS_TYPES = 'PimsAcqFileExpropRiskType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

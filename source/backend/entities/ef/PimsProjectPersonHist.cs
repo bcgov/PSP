@@ -29,7 +29,6 @@ public partial class PimsProjectPersonHist
     [Column("PERSON_ID")]
     public long PersonId { get; set; }
 
-    [Required]
     [Column("PROJECT_PERSON_ROLE_TYPE_CODE")]
     [StringLength(20)]
     public string ProjectPersonRoleTypeCode { get; set; }

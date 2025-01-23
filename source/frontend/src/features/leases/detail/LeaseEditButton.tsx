@@ -16,7 +16,7 @@ export const LeaseEditButton: React.FunctionComponent<
     <ProtectedComponent hideIfNotAuthorized claims={[Claims.LEASE_EDIT]}>
       {!isEditing && !!onEdit && (
         <LinkButton onClick={onEdit} className="float-right">
-          <FaEdit size={'2rem'} />
+          <FaEdit size={22} />
         </LinkButton>
       )}
     </ProtectedComponent>

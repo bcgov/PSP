@@ -114,6 +114,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
         rowVersion: 1,
         appCreateUserGuid: null,
         appLastUpdateUserGuid: null,
+        projectPersons: [],
       },
       projectId: 1,
       fileId: 109,

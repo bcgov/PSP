@@ -5,12 +5,11 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
-using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
@@ -115,6 +114,12 @@ namespace Pims.Api.Services
             // Check if the property is new or if it is being updated
             foreach (var incomingResearchProperty in researchFile.PimsPropertyResearchFiles)
             {
+                var matchingProperty = currentFileProperties.FirstOrDefault(c => c.PropertyId == incomingResearchProperty.PropertyId);
+                if (matchingProperty is not null && incomingResearchProperty.Internal_Id == 0)
+                {
+                    incomingResearchProperty.Internal_Id = matchingProperty.Internal_Id;
+                }
+
                 // If the property is not new, check if the name has been updated.
                 if (incomingResearchProperty.Internal_Id != 0)
                 {
@@ -168,7 +173,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Searching for research files...");
 
-            _logger.LogDebug("Research file search with filter", filter);
+            _logger.LogDebug("Research file search with filter {filter}", filter.Serialize());
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileView);
 
             return _researchFileRepository.GetPage(filter);
@@ -204,7 +209,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
-                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes, allowRetired: true);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)
@@ -220,7 +225,7 @@ namespace Pims.Api.Services
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
                         researchProperty.PropertyId = foundProperty.Internal_Id;
-                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes);
+                        _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes, allowRetired: true);
                         researchProperty.Property = foundProperty;
                     }
                     catch (KeyNotFoundException)

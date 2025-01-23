@@ -4,18 +4,18 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Helpers.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
 using Pims.Dal.Repositories;
-using Pims.Dal.Security;
 
 namespace Pims.Api.Services
 {
@@ -38,6 +38,7 @@ namespace Pims.Api.Services
         private readonly ITakeRepository _takeRepository;
         private readonly IAcquisitionStatusSolver _statusSolver;
         private readonly IPropertyService _propertyService;
+        private readonly IProjectRepository _projectRepository;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -55,6 +56,7 @@ namespace Pims.Api.Services
             ICompReqFinancialService compReqFinancialService,
             IExpropriationPaymentRepository expropriationPaymentRepository,
             ITakeRepository takeRepository,
+            IProjectRepository projectRepository,
             IAcquisitionStatusSolver statusSolver,
             IPropertyService propertyService)
         {
@@ -75,6 +77,7 @@ namespace Pims.Api.Services
             _takeRepository = takeRepository;
             _statusSolver = statusSolver;
             _propertyService = propertyService;
+            _projectRepository = projectRepository;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -107,7 +110,7 @@ namespace Pims.Api.Services
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                 .Select(fileProperty => new AcquisitionFileExportModel
                 {
-                    FileNumber = fileProperty.file.FileNumber ?? string.Empty,
+                    FileNumber = fileProperty.file.FileNumberFormatted ?? string.Empty,
                     LegacyFileNumber = fileProperty.file.LegacyFileNumber ?? string.Empty,
                     FileName = fileProperty.file.FileName ?? string.Empty,
                     MotiRegion = fileProperty.file.RegionCodeNavigation?.Description ?? string.Empty,
@@ -206,7 +209,8 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Adding acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
-            acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository);
+
+            acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository, _projectRepository);
 
             // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -229,7 +233,10 @@ namespace Pims.Api.Services
                 _propertyService.PopulateNewFileProperty(incomingAcquisitionProperty);
             }
 
+            // Set default values, according to business rules
             acquisitionFile.AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString();
+            acquisitionFile.AssignedDate ??= DateTime.Today;
+
             var newAcqFile = _acqFileRepository.Add(acquisitionFile);
             _acqFileRepository.CommitTransaction();
 
@@ -271,7 +278,7 @@ namespace Pims.Api.Services
             ValidateStaff(acquisitionFile);
             ValidateOrganizationStaff(acquisitionFile);
 
-            acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+            acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository, _projectRepository);
 
             ValidatePayeeDependency(acquisitionFile);
 
@@ -315,6 +322,11 @@ namespace Pims.Api.Services
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
+                var matchingProperty = currentFileProperties.FirstOrDefault(c => c.PropertyId == incomingAcquisitionProperty.PropertyId);
+                if (matchingProperty is not null && incomingAcquisitionProperty.Internal_Id == 0)
+                {
+                    incomingAcquisitionProperty.Internal_Id = matchingProperty.Internal_Id;
+                }
                 // If the property is not new, check if the name has been updated.
                 if (incomingAcquisitionProperty.Internal_Id != 0)
                 {

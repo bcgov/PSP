@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -29,7 +29,7 @@ public partial class PimsDocumentQueue
     public long? DocumentId { get; set; }
 
     /// <summary>
-    /// Code value that represents the current status of the document as it is processed by PIMS/MAYAN
+    /// Code value that represents the current status of the document as it is processed by PIMS/MAYAN.
     /// </summary>
     [Required]
     [Column("DOCUMENT_QUEUE_STATUS_TYPE_CODE")]
@@ -52,13 +52,20 @@ public partial class PimsDocumentQueue
     public string DocumentExternalId { get; set; }
 
     /// <summary>
+    /// Used to store JSON-encoded metadata that needs to be added to the document during upload.
+    /// </summary>
+    [Column("DOCUMENT_METADATA")]
+    [StringLength(4000)]
+    public string DocumentMetadata { get; set; }
+
+    /// <summary>
     /// When the document is sent to the backend for processing, this will be populated.
     /// </summary>
     [Column("DOC_PROCESS_START_DT", TypeName = "datetime")]
     public DateTime? DocProcessStartDt { get; set; }
 
     /// <summary>
-    /// When the document?s processing finishes, this will be populated
+    /// When the document?s processing finishes, this will be populated.
     /// </summary>
     [Column("DOC_PROCESS_END_DT", TypeName = "datetime")]
     public DateTime? DocProcessEndDt { get; set; }
@@ -83,7 +90,7 @@ public partial class PimsDocumentQueue
     public byte[] Document { get; set; }
 
     /// <summary>
-    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
+    /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o.
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

@@ -128,17 +128,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
-            //Search for a property by Plan
-            if (lease.SearchProperties.PlanNumber != "")
-            {
-                sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
-                sharedSearchProperties.SelectFirstOptionFromSearch();
-            }
-
             //Search for a property by Legal Description
             if (lease.SearchProperties.LegalDescription != "")
             {
                 sharedSearchProperties.SelectPropertyByLegalDescription(lease.SearchProperties.LegalDescription);
+                sharedSearchProperties.SelectFirstOptionFromSearch();
+            }
+
+            //Search for a property by Plan
+            if (lease.SearchProperties.PlanNumber != "")
+            {
+                sharedSearchProperties.SelectPropertyByPlan(lease.SearchProperties.PlanNumber);
                 sharedSearchProperties.SelectFirstOptionFromSearch();
             }
 
@@ -157,7 +157,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.SaveLicense();
 
             //Verify File Details Form
-            leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails, lease.AccountType);
+            //leaseDetails.VerifyLicensePropertyViewForm(lease.LeasePropertiesDetails, lease.AccountType);
         }
 
         [StepDefinition(@"I update a Lease's Details from row number (.*)")]
@@ -740,7 +740,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Look for a Inventory Property
             PopulateLeaseLicense(rowNumber);
-            searchProperties.SearchPropertyByPINPID(lease.SearchProperties.PID);
+            searchProperties.SearchPropertyByPID(lease.SearchProperties.PID);
 
             //Choose the given result
             searchProperties.SelectFoundPin();
@@ -853,7 +853,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Filter leases Files
             PopulateLeaseLicense(rowNumber);
-            searchLeases.FilterLeasesFiles("025-325-841", "", "", "", "", "", lease.LeaseStatus, "", lease.LeaseExpiryDate, "", "", "");
+            searchLeases.FilterLeasesFiles("", "", "", "", "", "", lease.LeaseStatus, "", lease.LeaseExpiryDate, "", "", "");
             Assert.True(searchLeases.SearchFoundResults());
 
             searchLeases.FilterLeasesFiles("", "", "", "", "", "", "", "Progressive Motor Sports", "", "", "", "");

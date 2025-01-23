@@ -15,7 +15,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search Filter Elements
         private By searchBySelect = By.Id("input-searchBy");
         private By searchLicenseLFileInput = By.Id("input-lFileNo");
-        private By searchLicensePIDInput = By.Id("input-pinOrPid");
+        private By searchLicensePIDInput = By.Id("input-pid");
+        private By searchLicensePINInput = By.Id("input-pin");
         private By searchLicenseAddressInput = By.Id("input-address");
         private By searchLicenseHistoricalFile = By.Id("input-historical");
         private By searchLicenseProgramSelect = By.Id("properties-selector_input");
@@ -189,15 +190,15 @@ namespace PIMS.Tests.Automation.PageObjects
             if (pid != "")
             {
                 WaitUntilClickable(searchBySelect);
-                ChooseSpecificSelectOption(searchBySelect, "PID/PIN");
+                ChooseSpecificSelectOption(searchBySelect, "PID");
                 webDriver.FindElement(searchLicensePIDInput).SendKeys(pid);
             }
 
             if (pin != "")
             {
                 WaitUntilClickable(searchBySelect);
-                ChooseSpecificSelectOption(searchBySelect, "PID/PIN");
-                webDriver.FindElement(searchLicensePIDInput).SendKeys(pin);
+                ChooseSpecificSelectOption(searchBySelect, "PIN");
+                webDriver.FindElement(searchLicensePINInput).SendKeys(pin);
             }
 
             if (address != "")

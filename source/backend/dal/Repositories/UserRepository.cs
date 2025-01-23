@@ -7,12 +7,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Comparers;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
-using Pims.Dal.Security;
 
 namespace Pims.Dal.Repositories
 {
@@ -458,9 +458,6 @@ namespace Pims.Dal.Repositories
                 user.IssueDate = DateTime.UtcNow;
             }
 
-            user.ConcurrencyControlNumber = update.ConcurrencyControlNumber;
-            this.Context.SetOriginalConcurrencyControlNumber(user);
-
             var addRoles = update.PimsUserRoles.Except(user.PimsUserRoles, new UserRoleRoleIdComparer());
             addRoles.ForEach(r => user.PimsUserRoles.Add(new PimsUserRole() { UserId = user.UserId, RoleId = r.RoleId }));
             var removeRoles = user.PimsUserRoles.Except(update.PimsUserRoles, new UserRoleRoleIdComparer());
@@ -511,7 +508,6 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(u => u.UserId == delete.UserId) ?? throw new KeyNotFoundException();
 
             user.ConcurrencyControlNumber = delete.ConcurrencyControlNumber;
-            this.Context.SetOriginalConcurrencyControlNumber(user);
 
             user.PimsUserRoles.ForEach(ur => this.Context.Remove(ur));
             user.PimsUserRoles.Clear();
