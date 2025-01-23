@@ -11,9 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package1"
   DTS:PackageType="5"
-  DTS:ProtectionLevel="2"
-  DTS:VersionBuild="18"
-  DTS:VersionGUID="{5DEEDD21-C75D-4F0F-8717-A9669BA05D73}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="20"
+  DTS:VersionGUID="{6E8FD493-47CE-4E50-9213-0D01023BEB85}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:Variables />
@@ -259,10 +259,10 @@
           </EdgeLayout.Labels>
         </EdgeLayout>
         <AnnotationLayout
-          Text="R5.7 release"
+          Text="R5.7 release - fix"
           ParentId="Package"
           FontInfo="{assembly:Null}"
-          Size="96,60"
+          Size="116,40"
           Id="dd85ecaa-8440-40b3-90ed-93e12466e77a"
           TopLeft="352.499994747341,93.0526333304324" />
       </GraphLayout>
