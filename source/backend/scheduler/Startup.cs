@@ -245,7 +245,12 @@ namespace Pims.Scheduler
             {
                 options.UseSimpleAssemblyNameTypeSerializer().UseRecommendedSerializerSettings().UseRedisStorage(redisConnection).UseSerilogLogProvider().UseConsole();
             });
-            services.AddHangfireServer();
+
+            BackgroundJobServerOptions hangfireOptions = Hangfire.Extensions.Configuration.ConfigurationExtensions.GetHangfireBackgroundJobServerOptions(this.Configuration);
+            services.AddHangfireServer(options =>
+            {
+                options.Queues = hangfireOptions.Queues;
+            });
             services.AddHangfireConsoleExtensions();
 
             services.Configure<ForwardedHeadersOptions>(options =>
@@ -341,10 +346,13 @@ namespace Pims.Scheduler
 
         private void ScheduleHangfireJobs(IServiceProvider services)
         {
+            BackgroundJobServerOptions hangfireOptions = Hangfire.Extensions.Configuration.ConfigurationExtensions.GetHangfireBackgroundJobServerOptions(this.Configuration);
+
             // provide default definition of all jobs.
-            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.UploadQueuedDocuments), x => x.UploadQueuedDocuments(), Cron.Minutely);
-            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.RetryQueuedDocuments), x => x.RetryQueuedDocuments(), "0 0 * * *");
-            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.QueryProcessingDocuments), x => x.QueryProcessingDocuments(), Cron.Minutely);
+
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.UploadQueuedDocuments), hangfireOptions.Queues.FirstOrDefault() ?? "default", x => x.UploadQueuedDocuments(), Cron.Minutely);
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.RetryQueuedDocuments), hangfireOptions.Queues.FirstOrDefault() ?? "default", x => x.RetryQueuedDocuments(), "0 0 * * *");
+            RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.QueryProcessingDocuments), hangfireOptions.Queues.FirstOrDefault() ?? "default", x => x.QueryProcessingDocuments(), Cron.Minutely);
 
             // override scheduled jobs with configuration.
             JobScheduleOptions jobOptions = this.Configuration.GetSection("JobOptions").Get<JobScheduleOptions>();
