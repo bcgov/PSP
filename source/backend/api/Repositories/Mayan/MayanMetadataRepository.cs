@@ -11,6 +11,7 @@ using Microsoft.Extensions.Options;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Requests.Http;
+using Polly.Registry;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -30,13 +31,15 @@ namespace Pims.Api.Repositories.Mayan
         /// <param name="authRepository">Injected repository that handles authentication.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The json options.</param>
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public MayanMetadataRepository(
             ILogger<MayanMetadataRepository> logger,
             IHttpClientFactory httpClientFactory,
             IEdmsAuthRepository authRepository,
             IConfiguration configuration,
-            IOptions<JsonSerializerOptions> jsonOptions)
-            : base(logger, httpClientFactory, configuration, jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(logger, httpClientFactory, configuration, jsonOptions, pollyPipelineProvider)
         {
             _authRepository = authRepository;
         }

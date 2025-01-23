@@ -5,6 +5,7 @@ using System.Text.Json;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Api.Repositories.Rest;
+using Polly.Registry;
 
 namespace Pims.Scheduler.Repositories
 {
@@ -17,11 +18,13 @@ namespace Pims.Scheduler.Repositories
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="jsonOptions">Injected app-wide json options.</param>
+        /// <param name="pollyPipelineProvider"></param>
         protected PimsBaseRepository(
             ILogger logger,
             IHttpClientFactory httpClientFactory,
-            IOptions<JsonSerializerOptions> jsonOptions)
-            : base(logger, httpClientFactory, jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(logger, httpClientFactory, jsonOptions, pollyPipelineProvider)
         {
         }
 
