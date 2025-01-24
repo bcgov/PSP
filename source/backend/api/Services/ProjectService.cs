@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
@@ -140,6 +141,8 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException($"Project {project.Code} already exists. Project will not be duplicated.");
             }
 
+            ValidateTeamMembers(project);
+
             var externalProducts = MatchProducts(project);
             if (externalProducts.Count > 0 && !userOverrides.Contains(UserOverrideCode.ProductReuse))
             {
@@ -159,6 +162,8 @@ namespace Pims.Api.Services
             project.ThrowIfNull(nameof(project));
             _logger.LogInformation($"Updating project with id ${project.Internal_Id}");
 
+            ValidateTeamMembers(project);
+
             var externalProducts = MatchProducts(project);
             if (externalProducts.Count > 0 && !userOverrides.Contains(UserOverrideCode.ProductReuse))
             {
@@ -172,6 +177,15 @@ namespace Pims.Api.Services
             _projectRepository.CommitTransaction();
 
             return updatedProject;
+        }
+
+        private static void ValidateTeamMembers(PimsProject project)
+        {
+            bool duplicate = project.PimsProjectPeople.GroupBy(p => p.PersonId).Any(g => g.Count() > 1);
+            if (duplicate)
+            {
+                throw new BadRequestException("Invalid Project management team, each team member can only be added once.");
+            }
         }
 
         /*
