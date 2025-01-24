@@ -217,14 +217,6 @@ namespace Pims.Api.Services
             }
             databaseDocumentQueue.DocProcessStartDt = DateTime.UtcNow;
 
-            // if the document queued for upload is already in an error state, update the retries.
-            if (databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PIMS_ERROR.ToString() || databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.MAYAN_ERROR.ToString())
-            {
-                this.Logger.LogDebug("Document Queue {documentQueueId}, previously errored, retrying", documentQueue.DocumentQueueId);
-                databaseDocumentQueue.DocProcessRetries += 1;
-                databaseDocumentQueue.DocProcessEndDt = null;
-            }
-
             bool isValid = ValidateQueuedDocument(databaseDocumentQueue, documentQueue);
             if (!isValid)
             {
@@ -232,6 +224,14 @@ namespace Pims.Api.Services
                 databaseDocumentQueue.MayanError = "Document is invalid.";
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
                 return databaseDocumentQueue;
+            }
+
+            // if the document queued for upload is already in an error state, update the retries.
+            if (databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PIMS_ERROR.ToString() || databaseDocumentQueue.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.MAYAN_ERROR.ToString())
+            {
+                this.Logger.LogDebug("Document Queue {documentQueueId}, previously errored, retrying", documentQueue.DocumentQueueId);
+                databaseDocumentQueue.DocProcessRetries = ++databaseDocumentQueue.DocProcessRetries ?? 1;
+                databaseDocumentQueue.DocProcessEndDt = null;
             }
 
             PimsDocument relatedDocument = null;
@@ -242,12 +242,6 @@ namespace Pims.Api.Services
                 this.Logger.LogError("Queued document {documentQueueId} does not have a related PIMS_DOCUMENT {documentId} with valid DocumentType, aborting.", databaseDocumentQueue.DocumentQueueId, relatedDocument?.DocumentId);
                 UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.PIMS_ERROR);
                 return databaseDocumentQueue;
-            }
-            else if (relatedDocument?.MayanId != null && relatedDocument?.MayanId > 0)
-            {
-                this.Logger.LogInformation("Queued document {documentQueueId} already has a mayan id {mayanid}, no further processing required.", databaseDocumentQueue.DocumentQueueId, relatedDocument.MayanId);
-                UpdateDocumentQueueStatus(databaseDocumentQueue, DocumentQueueStatusTypes.SUCCESS);
-                return databaseDocumentQueue; // The document poll job should pick this up and fix the document queue status.
             }
 
             try

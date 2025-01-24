@@ -544,24 +544,63 @@ namespace Pims.Api.Test.Services
         [Fact]
         public async Task Upload_RelatedDocument_MayanId()
         {
-            var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
             // Arrange
-            var documentQueue = new PimsDocumentQueue { DocumentQueueId = 1, DocumentId = 1, Document = new byte[] { 1, 2, 3 } };
+            var service = CreateDocumentQueueServiceWithPermissions(Permissions.SystemAdmin);
+            var documentQueue = new PimsDocumentQueue
+            {
+                DocumentQueueId = 1,
+                DocumentId = 1,
+                DocumentQueueStatusTypeCode = DocumentQueueStatusTypes.PENDING.ToString(),
+                Document = new byte[] { 1, 2, 3 },
+                DocProcessRetries = 0,
+            };
+
+            var relatedDocument = new PimsDocument
+            {
+                DocumentId = 1,
+                DocumentTypeId = 1,
+                FileName = "test.pdf",
+                DocumentStatusTypeCode = "STATUS",
+                MayanId = 1
+            };
+
+            var documentType = new PimsDocumentTyp
+            {
+                DocumentTypeId = 1,
+                MayanId = 1
+            };
+
+            var documentUploadResponse = new DocumentUploadResponse
+            {
+                DocumentExternalResponse = new ExternalResponse<DocumentDetailModel>
+                {
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new DocumentDetailModel
+                    {
+                    }
+                },
+                MetadataExternalResponse = new List<ExternalResponse<DocumentMetadataModel>>()
+            };
 
             var documentRepositoryMock = this._helper.GetService<Mock<IDocumentRepository>>();
             var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
             var documentServiceMock = this._helper.GetService<Mock<IDocumentService>>();
+            var documentTypeRepositoryMock = this._helper.GetService<Mock<IDocumentTypeRepository>>();
 
             documentQueueRepositoryMock.Setup(x => x.TryGetById(It.IsAny<long>())).Returns(documentQueue);
-            documentRepositoryMock.Setup(x => x.TryGetDocumentRelationships(It.IsAny<long>())).Returns(new PimsDocument() { DocumentTypeId = 1, MayanId = 1 });
+            documentRepositoryMock.Setup(x => x.TryGetDocumentRelationships(It.IsAny<long>())).Returns(relatedDocument);
+            documentTypeRepositoryMock.Setup(x => x.GetById(It.IsAny<long>())).Returns(documentType);
+            documentServiceMock.Setup(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true)).ReturnsAsync(documentUploadResponse);
 
             // Act
-            var result =  await service.Upload(documentQueue);
+            var result = await service.Upload(documentQueue);
 
             // Assert
-            result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
-            documentQueueRepositoryMock.Verify(x => x.TryGetById(It.IsAny<long>()), Times.Once);
-            documentRepositoryMock.Verify(x => x.TryGetDocumentRelationships(It.IsAny<long>()), Times.Once);
+            result.Should().NotBeNull();
+            result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.PROCESSING.ToString());
+            documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
+            documentQueueRepositoryMock.Verify(x => x.CommitTransaction(), Times.AtLeastOnce);
+            documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
         [Fact]
