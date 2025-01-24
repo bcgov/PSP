@@ -3,6 +3,7 @@ import React, { useCallback, useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
+import styled from 'styled-components';
 
 import AdminIcon from '@/assets/images/admin-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
@@ -100,8 +101,23 @@ export const FinancialCodeListView: React.FC = () => {
     <Styled.ListPage>
       <Styled.Scrollable>
         <CommonStyled.H1>
-          <AdminIcon title="Admin Tools icon" width="2.6rem" height="2.6rem" fill="currentColor" />
-          <span className="ml-2">Financial Codes</span>
+          <FlexDiv>
+            <div>
+              <AdminIcon
+                title="Admin Tools icon"
+                width="2.6rem"
+                height="2.6rem"
+                fill="currentColor"
+              />
+              <span className="ml-2">Financial Codes</span>
+            </div>
+            {hasRole(Roles.SYSTEM_ADMINISTRATOR) && (
+              <StyledAddButton onClick={() => history.push('/admin/financial-code/new')}>
+                <FaPlus />
+                &nbsp;Add a Financial Code
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
@@ -110,12 +126,7 @@ export const FinancialCodeListView: React.FC = () => {
             </Col>
           </Row>
         </Styled.PageToolbar>
-        {hasRole(Roles.SYSTEM_ADMINISTRATOR) && (
-          <StyledAddButton onClick={() => history.push('/admin/financial-code/new')}>
-            <FaPlus />
-            &nbsp;Create financial code
-          </StyledAddButton>
-        )}
+
         <FinancialCodeResults
           results={sortedFilteredFinancialCodes}
           loading={financialCodesLoading}
@@ -128,3 +139,11 @@ export const FinancialCodeListView: React.FC = () => {
 };
 
 export default FinancialCodeListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+`;
