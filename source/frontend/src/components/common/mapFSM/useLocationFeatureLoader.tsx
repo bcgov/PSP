@@ -148,7 +148,10 @@ const useLocationFeatureLoader = () => {
         const boundaryFeature = await findOneByBoundary(latLng, 'GEOMETRY', 4326);
         if (exists(boundaryFeature)) {
           pimsLocationProperties = { features: [boundaryFeature], type: 'FeatureCollection' };
-        } else if (exists(parcelFeature)) {
+        } else if (
+          exists(parcelFeature) &&
+          (exists(parcelFeature.properties?.PID) || exists(parcelFeature.properties?.PIN))
+        ) {
           pimsLocationProperties = await loadProperties({
             PID: parcelFeature.properties?.PID || '',
             PIN: parcelFeature.properties?.PIN?.toString() || '',
