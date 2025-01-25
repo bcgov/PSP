@@ -598,13 +598,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void WaitUploadDocument()
         {
-            Wait(60000);
+            Wait(300000);
+            webDriver.FindElement(documentTableRefreshResultsButton).Click();
         }
 
         public void ViewUploadedDocument(int index)
         {
-            webDriver.FindElement(documentTableRefreshResultsButton).Click();
-
             WaitUntilClickable(documentTableResults1stViewBttn);
 
             if (index > 9)
@@ -646,6 +645,9 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilExist(docTypeSelectElement);
             ChooseSpecificSelectOption(docTypeSelectElement, document.DocumentType);
             ChooseSpecificSelectOption(statusSelectElement, document.DocumentStatus);
+
+            Wait();
+            webDriver.FindElement(By.XPath("//select[@data-testid='documents."+ docIdx +".document-type']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/*[1]")).Click();
         }
 
         public void InsertDocumentTypeDetails(DigitalDocument document)

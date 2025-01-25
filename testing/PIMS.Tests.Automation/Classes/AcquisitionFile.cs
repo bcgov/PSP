@@ -1,4 +1,6 @@
-﻿namespace PIMS.Tests.Automation.Classes
+﻿using System.Drawing;
+
+namespace PIMS.Tests.Automation.Classes
 {
     public class AcquisitionFile
     {
@@ -22,6 +24,8 @@
         public string HistoricalFileNumber { get; set; } = null!;
         public string PhysicalFileStatus { get; set; } = null!;
         public string AcquisitionType { get; set; } = null!;
+        public string AcquisitionSubfileInterest { get; set; } = null!;
+        public string AcquisitionSubfileInterestOther { get; set; } = null!;
         public string AcquisitionMOTIRegion { get; set; } = null!;
         public int AcquisitionTeamStartRow { get; set; } = 0;
         public int AcquisitionTeamCount { get; set; } = 0;
@@ -48,6 +52,9 @@
         public int AcquisitionCompensationStartRow { get; set; } = 0;
         public int AcquisitionCompensationCount { get; set; } = 0;
         public string AcquisitionCompensationTotalAllowableAmount { get; set; } = null!;
+        public string AcquisitionCompensationMainFileTotal { get; set; } = null!;
+        public string AcquisitionCompensationSubfilesMainFileTotal { get; set; } = null!;
+        public string AcquisitionCompensationDraftTotal { get; set; } = null!;
         public List<Compensation> AcquisitionCompensations { get; set; } = new List<Compensation>() { };
         public int ExpropriationStartRow { get; set; } = 0;
         public int ExpropriationCount { get; set; } = 0;
@@ -176,8 +183,8 @@
         public string CompensationSTOB { get; set; } = null!;
         public string CompensationServiceLine { get; set; } = null!;
         public string CompensationResponsibilityCentre { get; set; } = null!;
-        public string CompensationPayee { get; set; } = null!;
-        public string CompensationPayeeDisplay { get; set; } = null!;
+        public List<string> CompensationPayee { get; set; } = new List<string>();
+        public List<string> CompensationPayeeDisplay { get; set; } = new List<string>();
         public Boolean CompensationPaymentInTrust { get; set; } = false;
         public string CompensationGSTNumber { get; set; } = null!;
         public string CompensationDetailedRemarks { get; set; } = null!;

@@ -37,7 +37,7 @@ namespace PIMS.Tests.Automation.Drivers
             if (runAutomationHeadless)
                 options.AddArgument("--headless=new");
 
-            var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(3));
+            var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(2));
             chromeDriver.Url = Configuration.GetValue<string>("Base_url");
 
             return chromeDriver;
