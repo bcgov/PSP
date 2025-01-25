@@ -836,7 +836,18 @@ exports[`MapContainer > Renders the map 1`] = `
             </div>
             <div
               class="leaflet-bottom leaflet-left"
-            />
+            >
+              <div
+                class="leaflet-control-scale leaflet-control"
+              >
+                <div
+                  class="leaflet-control-scale-line"
+                  style="width: 68px;"
+                >
+                  100 km
+                </div>
+              </div>
+            </div>
             <div
               class="leaflet-bottom leaflet-right"
             >
