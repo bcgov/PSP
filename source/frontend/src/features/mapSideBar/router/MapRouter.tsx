@@ -23,6 +23,7 @@ import DispositionContainer from '../disposition/DispositionContainer';
 import DispositionView from '../disposition/DispositionView';
 import LeaseContainer from '../lease/LeaseContainer';
 import AddProjectContainer from '../project/add/AddProjectContainer';
+import AddProjectForm from '../project/add/AddProjectForm';
 import ProjectContainer from '../project/ProjectContainer';
 import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
@@ -315,6 +316,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
             onSuccess={(newProjectId: number) => {
               history.replace(`/mapview/sidebar/project/${newProjectId}`);
             }}
+            View={AddProjectForm}
           />
         )}
         claim={Claims.PROJECT_ADD}

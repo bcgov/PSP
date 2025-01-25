@@ -1,13 +1,8 @@
 import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa';
-import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
 
-import { StyledAddButton } from '@/components/common/styles';
-import { Claims } from '@/constants/claims';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
 import { fromContactSummary, IContactSearchResult } from '@/interfaces';
 import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
@@ -27,7 +22,6 @@ interface IContactManagerViewProps {
   isSummary?: boolean;
   noInitialSearch?: boolean;
   className?: string;
-  showAddButton?: boolean;
   showActiveSelector?: boolean;
   isSingleSelect?: boolean;
   restrictContactType?: RestrictContactType;
@@ -43,13 +37,10 @@ const ContactManagerView = ({
   isSummary,
   noInitialSearch,
   showSelectedRowCount,
-  showAddButton,
   showActiveSelector,
   isSingleSelect,
   restrictContactType,
 }: IContactManagerViewProps) => {
-  const history = useHistory();
-  const { hasClaim } = useKeycloakWrapper();
   const { getContacts } = useApiContacts();
 
   const initialFilter: IContactFilter = (
@@ -96,16 +87,6 @@ const ContactManagerView = ({
             restrictContactType={restrictContactType}
           />
         </Col>
-      </Row>
-      <Row>
-        {showAddButton && hasClaim(Claims.CONTACT_ADD) && (
-          <Col xs="auto" xl="3" className="pl-0">
-            <StyledAddButton onClick={() => history.push('/contact/new')} className="m-4">
-              <FaPlus className="mr-3" />
-              &nbsp;Add New Contact
-            </StyledAddButton>
-          </Col>
-        )}
       </Row>
       <div>
         <ContactResultComponent

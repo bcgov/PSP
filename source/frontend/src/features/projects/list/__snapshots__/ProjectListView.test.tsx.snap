@@ -6,7 +6,7 @@ exports[`Project List View > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,19 @@ exports[`Project List View > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c7.btn .Button__value {
+.c8.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c7.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c8.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +55,31 @@ exports[`Project List View > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c8.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-primary:hover,
-.c7.btn.btn-primary:active,
-.c7.btn.btn-primary:focus {
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:active,
+.c8.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c7.btn.btn-secondary {
+.c8.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c7.btn.btn-secondary:hover,
-.c7.btn.btn-secondary:active,
-.c7.btn.btn-secondary:focus {
+.c8.btn.btn-secondary:hover,
+.c8.btn.btn-secondary:active,
+.c8.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-info {
+.c8.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +87,66 @@ exports[`Project List View > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c7.btn.btn-light {
+.c8.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c7.btn.btn-light:hover,
-.c7.btn.btn-light:active,
-.c7.btn.btn-light:focus {
+.c8.btn.btn-light:hover,
+.c8.btn.btn-light:active,
+.c8.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c7.btn.btn-dark {
+.c8.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c7.btn.btn-dark:hover,
-.c7.btn.btn-dark:active,
-.c7.btn.btn-dark:focus {
+.c8.btn.btn-dark:hover,
+.c8.btn.btn-dark:active,
+.c8.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c7.btn.btn-danger {
+.c8.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-danger:hover,
-.c7.btn.btn-danger:active,
-.c7.btn.btn-danger:focus {
+.c8.btn.btn-danger:hover,
+.c8.btn.btn-danger:active,
+.c8.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-warning {
+.c8.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c7.btn.btn-warning:hover,
-.c7.btn.btn-warning:active,
-.c7.btn.btn-warning:focus {
+.c8.btn.btn-warning:hover,
+.c8.btn.btn-warning:active,
+.c8.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c7.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +170,9 @@ exports[`Project List View > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +182,15 @@ exports[`Project List View > matches snapshot 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,19 +202,19 @@ exports[`Project List View > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c7.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -233,12 +233,12 @@ exports[`Project List View > matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c10 {
+.c11 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c9 {
+.c10 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -253,12 +253,12 @@ exports[`Project List View > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c5 {
+.c6 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
 }
 
-.c6 {
+.c7 {
   border-left: 2px solid white;
 }
 
@@ -293,13 +293,32 @@ exports[`Project List View > matches snapshot 1`] = `
   width: 100%;
 }
 
-.c4 {
+.c5 {
   -webkit-align-items: center;
   -webkit-box-align: center;
   -ms-flex-align: center;
   align-items: center;
   padding: 0;
   padding-bottom: 2rem;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.25rem;
 }
 
 <div
@@ -311,31 +330,37 @@ exports[`Project List View > matches snapshot 1`] = `
       <h1
         class="c3"
       >
-        <svg
-          class="pb-1"
-          fill="currentColor"
-          height="1em"
-          stroke="currentColor"
-          stroke-width="0"
-          viewBox="0 0 512 512"
-          width="1em"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="c4"
         >
-          <title>
-            Project icon
-          </title>
-          <path
-            d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"
-          />
-        </svg>
-        <span
-          class="ml-2"
-        >
-          Projects
-        </span>
+          <div>
+            <svg
+              class="pb-1"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                Project icon
+              </title>
+              <path
+                d="M320 336c0 8.84-7.16 16-16 16h-96c-8.84 0-16-7.16-16-16v-48H0v144c0 25.6 22.4 48 48 48h416c25.6 0 48-22.4 48-48V288H320v48zm144-208h-80V80c0-25.6-22.4-48-48-48H176c-25.6 0-48 22.4-48 48v48H48c-25.6 0-48 22.4-48 48v80h512v-80c0-25.6-22.4-48-48-48zm-144 0H192V96h128v32z"
+              />
+            </svg>
+            <span
+              class="ml-2"
+            >
+              Projects
+            </span>
+          </div>
+        </div>
       </h1>
       <div
-        class="c4"
+        class="c5"
       >
         <div
           class="row"
@@ -344,7 +369,7 @@ exports[`Project List View > matches snapshot 1`] = `
             class="col"
           >
             <form
-              class="c5 p-3"
+              class="c6 p-3"
               novalidate=""
             >
               <div
@@ -468,7 +493,7 @@ exports[`Project List View > matches snapshot 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c6 col-xl-1"
+                  class="c7 col-xl-1"
                 >
                   <div
                     class="row"
@@ -477,7 +502,7 @@ exports[`Project List View > matches snapshot 1`] = `
                       class="pr-0 col-auto"
                     >
                       <button
-                        class="c7 Button Button--icon-only primary btn btn-primary"
+                        class="c8 Button Button--icon-only primary btn btn-primary"
                         data-testid="search"
                         id="search-button"
                         title="search"
@@ -506,7 +531,7 @@ exports[`Project List View > matches snapshot 1`] = `
                       class="col-auto"
                     >
                       <button
-                        class="c7 Button Button--icon-only btn btn-info"
+                        class="c8 Button Button--icon-only btn btn-info"
                         data-testid="reset-button"
                         id="reset-button"
                         title="reset-button"
@@ -562,11 +587,11 @@ exports[`Project List View > matches snapshot 1`] = `
               >
                 Project #
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-code"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -581,7 +606,7 @@ exports[`Project List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -608,11 +633,11 @@ exports[`Project List View > matches snapshot 1`] = `
               >
                 Project name
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-description"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -627,7 +652,7 @@ exports[`Project List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -678,11 +703,11 @@ exports[`Project List View > matches snapshot 1`] = `
               >
                 Last updated by
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-lastUpdatedBy"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -697,7 +722,7 @@ exports[`Project List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -724,11 +749,11 @@ exports[`Project List View > matches snapshot 1`] = `
               >
                 Updated date
                 <div
-                  class="c8"
+                  class="c9"
                   data-testid="sort-column-lastUpdatedDate"
                 >
                   <svg
-                    class="c9"
+                    class="c10"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -743,7 +768,7 @@ exports[`Project List View > matches snapshot 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c10"
+                    class="c11"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
