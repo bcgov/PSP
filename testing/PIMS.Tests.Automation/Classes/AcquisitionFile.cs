@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-
-namespace PIMS.Tests.Automation.Classes
+﻿namespace PIMS.Tests.Automation.Classes
 {
     public class AcquisitionFile
     {
