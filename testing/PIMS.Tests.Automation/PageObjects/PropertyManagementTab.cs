@@ -86,9 +86,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActMinistryContactAddContactLink = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/following-sibling::button");
         private readonly By managementActMinistryContactDeleteBttns = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/div/div/button");
         private readonly By managementActMinistryContactContent = By.XPath("//label[contains(text(),'Ministry contacts')]/parent::div/following-sibling::div/a/span");
-        private readonly By managementActRequestedSourceLabel = By.XPath("//label[contains(text(),'Requested source')]");
-        private readonly By managementActRequestedSourceInput = By.Id("input-requestedSource");
-        private readonly By managementActRequestedSourceContent = By.XPath("//label[contains(text(),'Requested source')]/parent::div/following-sibling::div");
+        private readonly By managementActRequestorLabel = By.XPath("//label[contains(text(),'Requestor')]");
+        private readonly By managementActRequestorTooltip = By.XPath("//label[contains(text(),'Requestor')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
+        private readonly By managementActRequestorInput = By.Id("input-requestedSource");
+        private readonly By managementActRequestorContent = By.XPath("//label[contains(text(),'Requestor')]/parent::div/following-sibling::div");
         private readonly By managementActInvolvedPartiesLabel = By.XPath("//label[contains(text(),'Involved parties')]");
         private readonly By managementActInvolvedPartiesInput = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
         private readonly By managementActInvolvedPartiesBttn = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div/button");
@@ -315,12 +316,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
-            //Inserting Requested Source
+            //Inserting Requestor
             if (activity.PropertyActivityRequestedSource != string.Empty)
             {
-                ClearInput(managementActRequestedSourceInput);
-                webDriver.FindElement(managementActRequestedSourceInput).Click();
-                webDriver.FindElement(managementActRequestedSourceInput).SendKeys(activity.PropertyActivityRequestedSource);
+                ClearInput(managementActRequestorInput);
+                webDriver.FindElement(managementActRequestorInput).Click();
+                webDriver.FindElement(managementActRequestorInput).SendKeys(activity.PropertyActivityRequestedSource);
             }
                 
 
@@ -487,8 +488,9 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementActMinistryContactInput);
             AssertTrueIsDisplayed(managementActMinistryContactBttn);
             AssertTrueIsDisplayed(managementActMinistryContactAddContactLink);
-            AssertTrueIsDisplayed(managementActRequestedSourceLabel);
-            AssertTrueIsDisplayed(managementActRequestedSourceInput);
+            AssertTrueIsDisplayed(managementActRequestorLabel);
+            AssertTrueIsDisplayed(managementActRequestorTooltip);
+            AssertTrueIsDisplayed(managementActRequestorInput);
             AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
             AssertTrueIsDisplayed(managementActInvolvedPartiesInput);
             AssertTrueIsDisplayed(managementActInvolvedPartiesBttn);
@@ -587,9 +589,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 for(int i = 0; i < activity.PropertyActivityMinistryContact.Count; i++)
                     Assert.Equal(webDriver.FindElements(managementActMinistryContactContent)[i].Text, activity.PropertyActivityMinistryContact[i]);
 
-            AssertTrueIsDisplayed(managementActRequestedSourceLabel);
+            AssertTrueIsDisplayed(managementActRequestorLabel);
+            AssertTrueIsDisplayed(managementActRequestorTooltip);
             if (activity.PropertyActivityRequestedSource != "")
-                AssertTrueContentEquals(managementActRequestedSourceContent, activity.PropertyActivityRequestedSource);
+                AssertTrueContentEquals(managementActRequestorContent, activity.PropertyActivityRequestedSource);
 
             AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
             if (activity.PropertyActivityInvolvedParties.First() != "")

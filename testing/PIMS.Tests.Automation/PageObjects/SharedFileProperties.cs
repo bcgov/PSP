@@ -6,7 +6,9 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Search Properties Section Elements
         private readonly By searchSectionTitle = By.XPath("//div[contains(text(),'Properties to include in this file')]");
+        private readonly By searchSectionSubfileTitle = By.XPath("//div[contains(text(),'Properties to include in this sub-file')]");
         private readonly By searchSectionInstructions = By.XPath("//div[contains(text(),'Properties to include in this file')]/parent::div/parent::h2/following-sibling::div/div[1]");
+        private readonly By searchSectionSubfileInstructions = By.XPath("//div[contains(text(),'Properties to include in this sub-file')]/parent::div/parent::h2/following-sibling::div/div[1]");
 
         //Locate on Map Elements
         private readonly By locateOnMapTab = By.XPath("//a[contains(text(),'Locate on Map')]");
@@ -228,12 +230,20 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(searchPropertiesNoRowsResult).Text;
         }
 
-        public void VerifyLocateOnMapFeature()
+        public void VerifyLocateOnMapFeature(string fileType)
         {
-            WaitUntilVisible(searchSectionTitle);
+            Wait(2000);
 
-            AssertTrueIsDisplayed(searchSectionTitle);
-            AssertTrueIsDisplayed(searchSectionInstructions);
+            if (fileType == "Subfile")
+            {
+                AssertTrueIsDisplayed(searchSectionSubfileTitle);
+                AssertTrueIsDisplayed(searchSectionSubfileInstructions);
+            }
+            else
+            {
+                AssertTrueIsDisplayed(searchSectionTitle);
+                AssertTrueIsDisplayed(searchSectionInstructions);
+            }
 
             AssertTrueIsDisplayed(locateOnMapTab);
             AssertTrueIsDisplayed(searchByTab);
@@ -249,7 +259,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(locateOnMapAddressLabel);
             AssertTrueIsDisplayed(locateOnMapRegionLabel);
             AssertTrueIsDisplayed(locateOnMapDistrictLabel);
-            //AssertTrueIsDisplayed(locateOnMapLegalDescriptionLabel);
+            AssertTrueIsDisplayed(locateOnMapLegalDescriptionLabel);
 
             AssertTrueIsDisplayed(searchPropertiesSelectedPropertiesSubtitle);
             AssertTrueIsDisplayed(searchPropertiesSelectedIdentifierHeader);
