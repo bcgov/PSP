@@ -4,6 +4,7 @@ using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -160,11 +161,9 @@ namespace Pims.Api.Repositories.Mayan
             string authenticationToken = await _authRepository.GetTokenAsync();
 
             Uri endpoint = new($"{this._config.BaseUri}/documents/{documentId}/type/change/");
-            using MultipartFormDataContent multiContent = new MultipartFormDataContent();
-            using HttpContent content = new StringContent(documentTypeId.ToString(CultureInfo.InvariantCulture));
-            multiContent.Add(content, "document_type_id");
 
-            var response = await PostAsync<string>(endpoint, multiContent, authenticationToken).ConfigureAwait(true);
+            using var content = new StringContent($"{{ \"document_type_id\":  \"{documentTypeId}\" }}", Encoding.UTF8, "application/json");
+            var response = await PostAsync<string>(endpoint, content, authenticationToken).ConfigureAwait(true);
             _logger.LogDebug("Finished updating document type for document {documentId}", documentId);
 
             return response;
