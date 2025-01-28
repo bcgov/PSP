@@ -321,6 +321,7 @@ exports[`Disposition filter > matches snapshot 1`] = `
                     id="input-address"
                     name="address"
                     placeholder="Enter an address"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -452,6 +453,7 @@ exports[`Disposition filter > matches snapshot 1`] = `
                 id="input-fileNameOrNumberOrReference"
                 name="fileNameOrNumberOrReference"
                 placeholder="Disposition file number or name or reference number"
+                style="word-break: break-all;"
                 title=""
                 value=""
               />

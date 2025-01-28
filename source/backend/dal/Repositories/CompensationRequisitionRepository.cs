@@ -59,9 +59,7 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Responsibility)
                 .Include(c => c.PimsCompReqFinancials)
                     .ThenInclude(y => y.FinancialActivityCode)
-                .Include(x => x.AcquisitionOwner)
-                .Include(x => x.AcquisitionFileTeam)
-                .Include(x => x.InterestHolder)
+                .Include(c => c.PimsCompReqPayees)
                 .Include(x => x.AlternateProject)
                 .Include(x => x.PimsLeaseStakeholderCompReqs)
                     .ThenInclude(y => y.LeaseStakeholder)
@@ -94,6 +92,7 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropAcqFlCompReq, long>(a => a.PimsPropAcqFlCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropAcqFlCompReqs.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsPropLeaseCompReq, long>(a => a.PimsPropLeaseCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsPropLeaseCompReqs.ToArray(), true);
             Context.UpdateChild<PimsCompensationRequisition, long, PimsLeaseStakeholderCompReq, long>(a => a.PimsLeaseStakeholderCompReqs, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsLeaseStakeholderCompReqs.ToArray(), true);
+            Context.UpdateChild<PimsCompensationRequisition, long, PimsCompReqPayee, long>(a => a.PimsCompReqPayees, compensationRequisition.CompensationRequisitionId, compensationRequisition.PimsCompReqPayees.ToArray(), true);
 
             return compensationRequisition;
         }
@@ -184,12 +183,31 @@ namespace Pims.Dal.Repositories
                 .ToList();
         }
 
-        public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long id)
+        public IEnumerable<PimsCompReqFinancial> GetCompensationRequisitionFinancials(long compReqId)
         {
             return Context.PimsCompReqFinancials
                 .AsNoTracking()
                 .Include(y => y.FinancialActivityCode)
-                .Where(x => x.CompensationRequisitionId == id)
+                .Where(x => x.CompensationRequisitionId == compReqId)
+                .ToList();
+        }
+
+        public IEnumerable<PimsCompReqPayee> GetCompensationRequisitionPayees(long compReqId)
+        {
+            return Context.PimsCompReqPayees
+                .AsNoTracking()
+                .Include(x => x.AcquisitionOwner)
+                .Include(x => x.AcquisitionFileTeam)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.AcquisitionFileTeam)
+                    .ThenInclude(y => y.Organization)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.InterestHolderTypeCodeNavigation)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Person)
+                .Include(x => x.InterestHolder)
+                    .ThenInclude(y => y.Organization)
+                .Where(x => x.CompensationRequisitionId == compReqId)
                 .ToList();
         }
     }

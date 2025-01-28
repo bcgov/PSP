@@ -374,6 +374,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                         id="input-lFileNo"
                         name="lFileNo"
                         placeholder="Enter an L-File number"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />
@@ -498,6 +499,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                     id="input-tenantName"
                     name="tenantName"
                     placeholder="Tenant Name"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -667,6 +669,7 @@ exports[`Lease Filter > matches snapshot 1`] = `
                         id="input-details"
                         name="details"
                         placeholder="Keyword"
+                        style="word-break: break-all;"
                         title=""
                         value=""
                       />

@@ -3,15 +3,15 @@ using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Exceptions;
 using Pims.Core.Json;
-using Pims.Dal.Exceptions;
 using Pims.Core.Security;
+using Pims.Dal.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Projects.Controllers

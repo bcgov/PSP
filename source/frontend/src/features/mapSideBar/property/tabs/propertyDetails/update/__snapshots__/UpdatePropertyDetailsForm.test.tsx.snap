@@ -438,6 +438,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     class="form-control"
                     id="input-address.streetAddress1"
                     name="address.streetAddress1"
+                    style="word-break: break-all;"
                     title="45 - 904 Hollywood Crescent"
                     value="45 - 904 Hollywood Crescent"
                   />
@@ -474,6 +475,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     class="form-control"
                     id="input-address.streetAddress2"
                     name="address.streetAddress2"
+                    style="word-break: break-all;"
                     title="Living in a van"
                     value="Living in a van"
                   />
@@ -513,6 +515,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                     class="form-control"
                     id="input-address.streetAddress3"
                     name="address.streetAddress3"
+                    style="word-break: break-all;"
                     title="Down by the River"
                     value="Down by the River"
                   />
@@ -583,6 +586,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 class="form-control"
                 id="input-address.municipality"
                 name="address.municipality"
+                style="word-break: break-all;"
                 title="Hollywood North"
                 value="Hollywood North"
               />
@@ -1112,6 +1116,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 class="form-control"
                 id="input-address.postal"
                 name="address.postal"
+                style="word-break: break-all;"
                 title="V6Z 5G7"
                 value="V6Z 5G7"
               />
@@ -1140,6 +1145,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 class="form-control"
                 id="input-generalLocation"
                 name="generalLocation"
+                style="word-break: break-all;"
                 value=""
               />
             </div>
@@ -1216,6 +1222,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 class="form-control"
                 id="input-landLegalDescription"
                 name="landLegalDescription"
+                style="word-break: break-all;"
               />
             </div>
           </div>
@@ -1621,6 +1628,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                 class="form-control"
                 id="input-municipalZoning"
                 name="municipalZoning"
+                style="word-break: break-all;"
                 title="Zoning # 1"
                 value="Zoning # 1"
               />
@@ -2622,6 +2630,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
             id="input-notes"
             name="notes"
             rows="4"
+            style="word-break: break-all;"
             title="I edited this Test notes for this property - again"
           >
             I edited this Test notes for this property - again

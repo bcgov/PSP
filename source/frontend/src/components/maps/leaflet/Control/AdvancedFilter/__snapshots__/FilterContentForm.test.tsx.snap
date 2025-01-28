@@ -275,8 +275,17 @@ exports[`FilterContentForm component > renders as expected 1`] = `
   background-color: #f2f2f2;
 }
 
-.c2.c2.btn.btn-info {
-  color: #013366;
+.c2.c2.btn {
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+}
+
+.c2.c2.btn.btn-info .Button__value {
+  font-size: 1.7rem;
+  font-weight: 400;
+  line-height: 1.5;
 }
 
 <form
@@ -286,7 +295,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
       class="c0"
     >
       <button
-        class="c1 Button Button--icon-only c2 btn btn-info"
+        class="c1 Button c2 btn btn-info"
         data-testid="reset-button"
         id="reset-button"
         title="reset-button"
@@ -309,10 +318,12 @@ exports[`FilterContentForm component > renders as expected 1`] = `
             />
           </svg>
         </div>
+        <div
+          class="Button__value"
+        >
+          Reset to Default
+        </div>
       </button>
-      <span>
-        Reset to Default
-      </span>
     </div>
     <div
       class="c3 form-section"

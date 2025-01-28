@@ -1,12 +1,22 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UpdatePropertyForm component > renders as expected when provided no research file 1`] = `
+exports[`UpdatePropertyForm component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c5 {
+  margin-left: 0.5rem;
+  cursor: pointer;
+  fill: #474543;
+}
+
+.c5:hover {
+  fill: #CE3E39;
+}
+
+.c0 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
@@ -81,8 +91,9 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
                 class="form-control"
                 id="input-propertyName"
                 name="propertyName"
-                title="Corner of Nakya PL "
-                value="Corner of Nakya PL "
+                style="word-break: break-all;"
+                title="Corner of Nakya PL"
+                value="Corner of Nakya PL"
               />
             </div>
           </div>
@@ -102,181 +113,185 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
           <div
             class="c4 text-left col"
           >
-            <div>
-              <div
-                class="multiselect-container multiSelectContainer  "
-                id="purpose-selector"
-                style="width: auto; color: black; padding-bottom: 12px;"
-              >
+            <div
+              class="form-group"
+            >
+              <div>
                 <div
-                  class="search-wrapper searchWrapper "
-                  style="background: white; border: 1px solid #606060;"
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-propertyResearchPurposeTypes"
+                  style="width: auto; color: black;"
                 >
-                  <span
-                    class="chip  false false"
-                    style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
                   >
-                    District Other
-                    <i
-                      class="custom-close"
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                     >
-                      <svg
-                        class="ml-3"
-                        fill="currentColor"
-                        height="18px"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 352 512"
-                        width="18px"
-                        xmlns="http://www.w3.org/2000/svg"
+                      Form 12
+                      <i
+                        class="custom-close"
                       >
-                        <path
-                          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                        />
-                      </svg>
-                    </i>
-                  </span>
-                  <span
-                    class="chip  false false"
-                    style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em;"
-                  >
-                    Form 12
-                    <i
-                      class="custom-close"
+                        <svg
+                          class="c5"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <span
+                      class="chip  false false"
+                      style="background: rgb(242, 242, 242); border-radius: 4px; color: black; font-size: 16px; margin-right: 1em; white-space: normal;"
                     >
-                      <svg
-                        class="ml-3"
-                        fill="currentColor"
-                        height="18px"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 352 512"
-                        width="18px"
-                        xmlns="http://www.w3.org/2000/svg"
+                      District Other
+                      <i
+                        class="custom-close"
                       >
-                        <path
-                          d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
-                        />
-                      </svg>
-                    </i>
-                  </span>
-                  <input
-                    autocomplete="off"
-                    class="searchBox "
-                    id="purpose-selector_input"
-                    name="search_name_input"
-                    placeholder=""
-                    type="text"
-                    value=""
-                  />
-                </div>
-                <div
-                  class="optionListContainer displayNone"
-                >
-                  <ul
-                    class="optionContainer"
+                        <svg
+                          class="c5"
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M464 32H48C21.5 32 0 53.5 0 80v352c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V80c0-26.5-21.5-48-48-48zm-83.6 290.5c4.8 4.8 4.8 12.6 0 17.4l-40.5 40.5c-4.8 4.8-12.6 4.8-17.4 0L256 313.3l-66.5 67.1c-4.8 4.8-12.6 4.8-17.4 0l-40.5-40.5c-4.8-4.8-4.8-12.6 0-17.4l67.1-66.5-67.1-66.5c-4.8-4.8-4.8-12.6 0-17.4l40.5-40.5c4.8-4.8 12.6-4.8 17.4 0l66.5 67.1 66.5-67.1c4.8-4.8 12.6-4.8 17.4 0l40.5 40.5c4.8 4.8 4.8 12.6 0 17.4L313.3 256l67.1 66.5z"
+                          />
+                        </svg>
+                      </i>
+                    </span>
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-propertyResearchPurposeTypes_input"
+                      name="search_name_input"
+                      placeholder=""
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
                   >
-                    <li
-                      class="option  highlightOption highlight  "
+                    <ul
+                      class="optionContainer"
                     >
-                      Acquisition
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Classification
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Disposition
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      FN/Treaty
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      FOI
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Highway
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Inquiry
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Issue
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Legal
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      License/Lease
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Land Issue
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Land Exchange
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      MoTI Owned
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Other
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Road Closure
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Registered Interest
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Research
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      TAC
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Unknown
-                    </li>
-                    <li
-                      class="option    "
-                    >
-                      Unregistered Interest
-                    </li>
-                  </ul>
+                      <li
+                        class="option  highlightOption highlight  "
+                      >
+                        Acquisition
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Classification
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Disposition
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        FN/Treaty
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        FOI
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Highway
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Inquiry
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Issue
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Legal
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        License/Lease
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Land Issue
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Land Exchange
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        MoTI Owned
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Other
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Road Closure
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Registered Interest
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Research
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        TAC
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Unknown
+                      </li>
+                      <li
+                        class="option    "
+                      >
+                        Unregistered Interest
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
@@ -400,6 +415,7 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
                 class="form-control"
                 id="input-documentReference"
                 name="documentReference"
+                style="word-break: break-all;"
                 value=""
               />
             </div>
@@ -449,6 +465,7 @@ exports[`UpdatePropertyForm component > renders as expected when provided no res
             class="form-control"
             id="input-researchSummary"
             name="researchSummary"
+            style="word-break: break-all;"
           />
         </div>
       </div>

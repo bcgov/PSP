@@ -859,13 +859,24 @@ namespace Pims.Api.Test.Services
                     },
                 });
 
+            documentStorageRepository.Setup(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<FileDownloadResponse>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new FileDownloadResponse()
+                    {
+                        FileName = "Test",
+                    },
+                });
+
             // Act
             var result = await service.DownloadFileLatestAsync(1);
 
             // Assert
             documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
-            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
-            Assert.Equal(ExternalResponseStatus.Error, result.Status);
+            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+            Assert.Equal(ExternalResponseStatus.Success, result.Status);
         }
 
         [Fact]
@@ -969,7 +980,7 @@ namespace Pims.Api.Test.Services
             // Assert
             documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
 
-            Assert.Equal(ExternalResponseStatus.Error, result.Status);
+            Assert.Equal(ExternalResponseStatus.Success, result.Status);
         }
 
         [Fact]
@@ -1080,13 +1091,24 @@ namespace Pims.Api.Test.Services
                     },
                 });
 
+            documentStorageRepository.Setup(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()))
+                .ReturnsAsync(new ExternalResponse<FileDownloadResponse>()
+                {
+                    HttpStatusCode = System.Net.HttpStatusCode.OK,
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new FileDownloadResponse()
+                    {
+                        FileName = "Test",
+                    },
+                });
+
             // Act
             var result = await service.DownloadFileLatestAsync(1);
 
             // Assert
             documentStorageRepository.Verify(x => x.TryGetDocumentAsync(It.IsAny<long>()), Times.Once);
-            documentStorageRepository.Verify(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Never);
-            Assert.Equal(ExternalResponseStatus.Error, result.Status);
+            documentStorageRepository.Verify(x => x.TryDownloadFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
+            Assert.Equal(ExternalResponseStatus.Success, result.Status);
         }
 
         [Fact]
@@ -1189,7 +1211,7 @@ namespace Pims.Api.Test.Services
             // Assert
             documentStorageRepository.Verify(x => x.TryStreamFileAsync(It.IsAny<long>(), It.IsAny<long>()), Times.Once);
 
-            Assert.Equal(ExternalResponseStatus.Error, result.Status);
+            Assert.Equal(ExternalResponseStatus.Success, result.Status);
         }
     }
 }

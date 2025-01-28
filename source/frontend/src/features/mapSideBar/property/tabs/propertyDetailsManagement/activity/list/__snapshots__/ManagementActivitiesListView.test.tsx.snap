@@ -324,7 +324,11 @@ exports[`Activities list view > renders as expected 1`] = `
   padding: 0;
 }
 
-.c12:disabled {
+.c12:-moz-read-only {
+  background: white;
+}
+
+.c12:read-only {
   background: white;
 }
 
@@ -844,6 +848,8 @@ exports[`Activities list view > renders as expected 1`] = `
                 </span>
                 <input
                   class="c12 form-control"
+                  data-testid="input-page-size"
+                  readonly=""
                   type="number"
                   value="10"
                 />

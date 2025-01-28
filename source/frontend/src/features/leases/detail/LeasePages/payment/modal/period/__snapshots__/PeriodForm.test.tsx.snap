@@ -634,6 +634,7 @@ exports[`PeriodForm component > renders as expected 1`] = `
             class="form-control"
             id="input-paymentDueDateStr"
             name="paymentDueDateStr"
+            style="word-break: break-all;"
             title=""
             value=""
           />
@@ -1429,6 +1430,7 @@ exports[`PeriodForm component > renders with data as expected 1`] = `
             class="form-control"
             id="input-paymentDueDateStr"
             name="paymentDueDateStr"
+            style="word-break: break-all;"
             title=""
             value=""
           />

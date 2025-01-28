@@ -556,6 +556,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   class="form-control"
                   id="input-specialInstruction"
                   name="specialInstruction"
+                  style="word-break: break-all;"
                   title=""
                 />
               </div>
@@ -1123,33 +1124,46 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               <div
                 class="form-group"
               >
-                <select
-                  class="form-select form-control"
-                  id="input-payee.payeeKey"
-                  name="payee.payeeKey"
-                >
-                  <option
-                    value=""
+                <div>
+                  <div
+                    class="multiselect-container multiSelectContainer  "
+                    id="multiselect-payees"
+                    style="width: auto; color: black;"
                   >
-                    Select...
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-OWNER-1"
-                    title="JOHH DOE Sr. (Owner)"
-                    value="OWNER-1"
-                  >
-                    JOHH DOE Sr. (Owner)
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-OWNER-3"
-                    title="FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345) (Owner)"
-                    value="OWNER-3"
-                  >
-                    FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345) (Owner)
-                  </option>
-                </select>
+                    <div
+                      class="search-wrapper searchWrapper "
+                      style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="searchBox "
+                        id="multiselect-payees_input"
+                        name="search_name_input"
+                        placeholder="Select..."
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="optionListContainer displayNone"
+                    >
+                      <ul
+                        class="optionContainer"
+                      >
+                        <li
+                          class="option  highlightOption highlight  "
+                        >
+                          JOHH DOE Sr. (Owner)
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345) (Owner)
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -1179,8 +1193,8 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   >
                     <input
                       class="form-check-input position-static"
-                      id="input-payee.isPaymentInTrust"
-                      name="payee.isPaymentInTrust"
+                      id="input-isPaymentInTrust"
+                      name="isPaymentInTrust"
                       type="checkbox"
                       value="false"
                     />
@@ -1231,8 +1245,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               >
                 <input
                   class="form-control"
-                  id="input-payee.gstNumber"
-                  name="payee.gstNumber"
+                  id="input-gstNumber"
+                  name="gstNumber"
+                  style="word-break: break-all;"
                   title=""
                   value=""
                 />
@@ -1263,9 +1278,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payee.pretaxAmount"
+                    id="input-pretaxAmount"
                     inputmode="numeric"
-                    name="payee.pretaxAmount"
+                    name="pretaxAmount"
                     placeholder=""
                     type="text"
                     value="$0.00"
@@ -1298,9 +1313,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payee.taxAmount"
+                    id="input-taxAmount"
                     inputmode="numeric"
-                    name="payee.taxAmount"
+                    name="taxAmount"
                     placeholder=""
                     type="text"
                     value="$0.00"
@@ -1355,9 +1370,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   <input
                     class="form-control input-number"
                     disabled=""
-                    id="input-payee.totalAmount"
+                    id="input-totalAmount"
                     inputmode="numeric"
-                    name="payee.totalAmount"
+                    name="totalAmount"
                     placeholder=""
                     type="text"
                     value="$0.00"
@@ -1454,6 +1469,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   class="form-control"
                   id="input-detailedRemarks"
                   name="detailedRemarks"
+                  style="word-break: break-all;"
                   title=""
                 />
               </div>

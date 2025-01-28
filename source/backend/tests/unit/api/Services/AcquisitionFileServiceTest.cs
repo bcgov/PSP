@@ -1044,7 +1044,13 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        AcquisitionOwnerId = 100,
+                        PimsCompReqPayees = new List<PimsCompReqPayee>()
+                        {
+                            new PimsCompReqPayee()
+                            {
+                                AcquisitionOwnerId = 100,
+                            },
+                        },
                     },
                 });
 
@@ -1093,7 +1099,13 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        InterestHolderId = 100,
+                        PimsCompReqPayees = new List<PimsCompReqPayee>()
+                        {
+                            new PimsCompReqPayee()
+                            {
+                                InterestHolderId = 100,
+                            },
+                        },
                     },
                 });
 
@@ -1142,7 +1154,13 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        InterestHolderId = 100,
+                        PimsCompReqPayees = new List<PimsCompReqPayee>()
+                        {
+                            new PimsCompReqPayee()
+                            {
+                                InterestHolderId = 100,
+                            },
+                        },
                     },
                 });
 
@@ -1190,7 +1208,13 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition() {
                         CompensationRequisitionId = 1,
                         AcquisitionFileId = acqFile.Internal_Id,
-                        AcquisitionFileTeamId = 100,
+                        PimsCompReqPayees = new List<PimsCompReqPayee>()
+                        {
+                            new PimsCompReqPayee()
+                            {
+                                AcquisitionFileTeamId = 100,
+                            },
+                        },
                     },
                 });
 

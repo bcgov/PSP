@@ -10,7 +10,7 @@ import { ApiGen_Concepts_ProjectProduct } from '@/models/api/generated/ApiGen_Co
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
 import { toFinancialCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists, isValidIsoDateTime } from '@/utils/utils';
+import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
 
 export class ProductForm {
   id: number | null = null;
@@ -88,7 +88,10 @@ export class ProjectForm {
           ...getEmptyBaseAudit(0),
         };
       }),
-      projectPersons: this.projectTeam?.map<ApiGen_Concepts_ProjectPerson>(team => team.toApi()),
+      projectPersons:
+        this.projectTeam
+          ?.map<ApiGen_Concepts_ProjectPerson>(team => team.toApi())
+          ?.filter(exists) ?? [],
       businessFunctionCode:
         !!this.businessFunctionCode?.value && isNumber(this.businessFunctionCode.value)
           ? toFinancialCode(
@@ -164,10 +167,15 @@ export class ProjectTeamForm {
   }
 
   toApi(): ApiGen_Concepts_ProjectPerson {
+    const personId = this.contact?.personId ?? null;
+    if (!isValidId(personId)) {
+      return null;
+    }
+
     return {
       id: this.id,
       projectId: this.projectId,
-      personId: this.contact?.personId,
+      personId: personId ?? null,
       project: null,
       person: null,
       ...getEmptyBaseAudit(this.rowVersion),

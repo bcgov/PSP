@@ -17,6 +17,7 @@ namespace PIMS.Tests.Automation.Classes
         public int ProductsCount { get; set; } = 0;
         public int ProductsRowStart { get; set; } = 0;
         public List<Product> Products { get; set; } = new List<Product>() { };
+        public List<string> ProjectTeamMembers { get; set; } = new List<string>() { };
     }
 
     public class Product

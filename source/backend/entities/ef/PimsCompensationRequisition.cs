@@ -11,11 +11,8 @@ namespace Pims.Dal.Entities;
 /// </summary>
 [Table("PIMS_COMPENSATION_REQUISITION")]
 [Index("AcquisitionFileId", Name = "CMPREQ_ACQUISITION_FILE_ID_IDX")]
-[Index("AcquisitionFileTeamId", Name = "CMPREQ_ACQUISITION_FILE_PERSON_ID_IDX")]
-[Index("AcquisitionOwnerId", Name = "CMPREQ_ACQUISITION_OWNER_ID_IDX")]
 [Index("AlternateProjectId", Name = "CMPREQ_ALTERNATE_PROJECT_ID_IDX")]
 [Index("ChartOfAccountsId", Name = "CMPREQ_CHART_OF_ACCOUNTS_ID_IDX")]
-[Index("InterestHolderId", Name = "CMPREQ_INTEREST_HOLDER_ID_IDX")]
 [Index("LeaseId", Name = "CMPREQ_LEASE_ID_IDX")]
 [Index("ResponsibilityId", Name = "CMPREQ_RESPONSIBILITY_ID_IDX")]
 [Index("YearlyFinancialId", Name = "CMPREQ_YEARLY_FINANCIAL_ID_IDX")]
@@ -39,24 +36,6 @@ public partial class PimsCompensationRequisition
     /// </summary>
     [Column("LEASE_ID")]
     public long? LeaseId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_ACQUISITION_OWNER table.
-    /// </summary>
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_INTEREST_HOLDER table.
-    /// </summary>
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_ACQUISITION_FILE_TEAM table.
-    /// </summary>
-    [Column("ACQUISITION_FILE_TEAM_ID")]
-    public long? AcquisitionFileTeamId { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_CHART_OF_ACCOUNTS table.
@@ -259,14 +238,6 @@ public partial class PimsCompensationRequisition
     [InverseProperty("PimsCompensationRequisitions")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
 
-    [ForeignKey("AcquisitionFileTeamId")]
-    [InverseProperty("PimsCompensationRequisitions")]
-    public virtual PimsAcquisitionFileTeam AcquisitionFileTeam { get; set; }
-
-    [ForeignKey("AcquisitionOwnerId")]
-    [InverseProperty("PimsCompensationRequisitions")]
-    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
-
     [ForeignKey("AlternateProjectId")]
     [InverseProperty("PimsCompensationRequisitions")]
     public virtual PimsProject AlternateProject { get; set; }
@@ -275,16 +246,15 @@ public partial class PimsCompensationRequisition
     [InverseProperty("PimsCompensationRequisitions")]
     public virtual PimsChartOfAccountsCode ChartOfAccounts { get; set; }
 
-    [ForeignKey("InterestHolderId")]
-    [InverseProperty("PimsCompensationRequisitions")]
-    public virtual PimsInterestHolder InterestHolder { get; set; }
-
     [ForeignKey("LeaseId")]
     [InverseProperty("PimsCompensationRequisitions")]
     public virtual PimsLease Lease { get; set; }
 
     [InverseProperty("CompensationRequisition")]
     public virtual ICollection<PimsCompReqFinancial> PimsCompReqFinancials { get; set; } = new List<PimsCompReqFinancial>();
+
+    [InverseProperty("CompensationRequisition")]
+    public virtual ICollection<PimsCompReqPayee> PimsCompReqPayees { get; set; } = new List<PimsCompReqPayee>();
 
     [InverseProperty("CompensationRequisition")]
     public virtual ICollection<PimsLeaseStakeholderCompReq> PimsLeaseStakeholderCompReqs { get; set; } = new List<PimsLeaseStakeholderCompReq>();

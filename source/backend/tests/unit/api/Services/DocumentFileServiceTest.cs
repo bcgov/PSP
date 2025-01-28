@@ -298,6 +298,108 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void UploadDocument_Research_ShouldThrowException_InvalidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
+
+            // Assert
+            Func<Task> action = async () => await service.UploadResearchDocument(1, uploadRequest);
+
+            // Assert
+            action.Should().ThrowAsync<BusinessRuleViolationException>().WithMessage("This file has an invalid file extension.");
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
+        }
+
+        [Fact]
+        public void UploadDocument_Acquisition_ShouldThrowException_InvalidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
+
+            // Assert
+            Func<Task> action = async () => await service.UploadAcquisitionDocument(1, uploadRequest);
+
+            // Assert
+            action.Should().ThrowAsync<BusinessRuleViolationException>().WithMessage("This file has an invalid file extension.");
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
+        }
+
+        [Fact]
+        public void UploadDocument_Project_ShouldThrowException_InvalidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
+
+            // Assert
+            Func<Task> action = async () => await service.UploadProjectDocument(1, uploadRequest);
+
+            // Assert
+            action.Should().ThrowAsync<BusinessRuleViolationException>().WithMessage("This file has an invalid file extension.");
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
+        }
+
+        [Fact]
+        public void UploadDocument_Lease_ShouldThrowException_InvalidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
+
+            // Assert
+            Func<Task> action = async () => await service.UploadLeaseDocument(1, uploadRequest);
+
+            // Assert
+            action.Should().ThrowAsync<BusinessRuleViolationException>().WithMessage("This file has an invalid file extension.");
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
+        }
+
+        [Fact]
+        public void UploadDocument_PropertyActivity_ShouldThrowException_InvalidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
+
+            // Assert
+            Func<Task> action = async () => await service.UploadPropertyActivityDocument(1, uploadRequest);
+
+            // Assert
+            action.Should().ThrowAsync<BusinessRuleViolationException>().WithMessage("This file has an invalid file extension.");
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
+        }
+
+        [Fact]
+        public void UploadDocument_Disposition_ShouldThrowException_InvalidExtension()
+        {
+            // Arrange
+            var service = this.CreateDocumentFileServiceWithPermissions(Permissions.DocumentAdd);
+            var documentService = this._helper.GetService<Mock<IDocumentService>>();
+
+            DocumentUploadRequest uploadRequest = new() { DocumentTypeId = 1, File = this._helper.GetFormFile("Lorem Ipsum", "test.exe") };
+
+            // Assert
+            Func<Task> action = async () => await service.UploadDispositionDocument(1, uploadRequest);
+
+            // Assert
+            action.Should().ThrowAsync<BusinessRuleViolationException>().WithMessage("This file has an invalid file extension.");
+            documentService.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), false), Times.Never);
+        }
+
+        [Fact]
         public async void UploadDocument_Project_Success()
         {
             // Arrange

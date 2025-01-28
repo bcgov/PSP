@@ -1,11 +1,11 @@
 import { useFormikContext } from 'formik';
 import { useEffect } from 'react';
+import { FaDownload } from 'react-icons/fa';
 
 import { Button } from '@/components/common/buttons';
 import { Multiselect } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { ClickableDownload } from '@/components/layout/SideNavBar/styles';
 import { CodeTypeSelectOption } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -66,7 +66,7 @@ export const ProjectExportFormContent: React.FunctionComponent<IProjectExportFor
           ></Multiselect>
         </SectionField>
         <Button className="float-right" type="submit">
-          <ClickableDownload className="text-white" /> Export
+          <FaDownload className="text-white" /> Export
         </Button>
       </>
     );
