@@ -567,7 +567,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(researchFileDetailsProjectAddBttn);
 
             //Properties to include
-            sharedSearchProperties.VerifyLocateOnMapFeature();
+            sharedSearchProperties.VerifyLocateOnMapFeature("Research");
         }
 
         //Verify Edit Research File Init Form

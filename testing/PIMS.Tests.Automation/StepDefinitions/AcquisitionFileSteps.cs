@@ -64,7 +64,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.NavigateToCreateNewAcquisitionFile();
 
             //Validate Acquisition File Details Create Form
-            acquisitionFilesDetails.VerifyAcquisitionFileCreate();
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate("Main");
 
             //Create basic Acquisition File
             acquisitionFilesDetails.CreateMinimumAcquisitionFile(acquisitionFile);
@@ -88,13 +88,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.VerifyMaximumFields();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
             //Validate View File Details View Mode
-            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Main");
 
             //Verify automatic note created when
             if (acquisitionFile.AcquisitionStatus != "Active")
@@ -117,7 +117,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add Additional Optional information to the acquisition file
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
@@ -137,23 +137,23 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Update existing Acquisition file
             acquisitionFilesDetails.EditAcquisitionFileBttn();
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Cancel changes
             acquisitionFilesDetails.CancelAcquisitionFile();
 
             //Edit Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
-            //Get Research File code
+            //Get Acquisition File code
             acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
 
             //Validate View File Details View Mode
-            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Main");
 
             //Verify automatic note created when
             if (acquisitionFile.AcquisitionStatus != "Active")
@@ -545,8 +545,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create Compensation Requisition within an Acquisition File")]
         public void CreateCompensationRequisition()
         {
-            /* TEST COVERAGE: PSP-6066, PSP-6067, PSP-6274, PSP-6277, PSP-6355 */
-
             //Navigate to Compensation Requisition Tab
             h120.NavigateCompensationTab();
 
@@ -568,7 +566,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     h120.OpenCompensationDetails(i);
 
                     //Verify Initial View Form
-                    h120.VerifyCompensationDetailsInitViewForm("Acquisition File");
+                    h120.VerifyCompensationDetailsInitViewForm();
 
                     //Add Details to the Compensation Requisition
                     h120.EditCompensationDetails();
@@ -583,6 +581,50 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     h120.VerifyCompensationListView(acquisitionFile.AcquisitionCompensations[i]);
                 }
             }
+        }
+
+        [StepDefinition(@"I create Compensation Requisition within an Acquisition Subfile")]
+        public void CreateSubfileCompensationRequisition()
+        {
+            /* TEST COVERAGE: PSP-6066, PSP-6067, PSP-6274, PSP-6277, PSP-6355 */
+
+            //Navigate to Compensation Requisition Tab
+            h120.NavigateCompensationTab();
+
+            //Verify initial Compensation Tab List View
+            h120.VerifyCompensationInitTabView("Subfile");
+
+            //Update Allowable Compensation Amount
+            h120.UpdateTotalAllowableCompensation(acquisitionFile.AcquisitionCompensationTotalAllowableAmount);
+
+            //Create Compensation Requisition Forms
+            if (acquisitionFile.AcquisitionCompensations.Count > 0)
+                for (int i = 0; i < acquisitionFile.AcquisitionCompensations.Count; i++)
+                {
+                    //Click on Add new Compensation
+                    h120.AddCompensationBttn();
+
+                    //Open the created Compensation Requisition details
+                    h120.OpenCompensationDetails(i);
+
+                    //Verify Initial View Form
+                    h120.VerifyCompensationDetailsInitViewForm();
+
+                    //Add Details to the Compensation Requisition
+                    h120.EditCompensationDetails();
+                    //h120.VerifyCompensationDetailsInitCreateForm();
+                    h120.UpdateCompensationDetails(acquisitionFile.AcquisitionCompensations[i]);
+
+                    //Save new Compensation Requisition Details
+                    h120.SaveAcquisitionFileCompensation();
+
+                    //Verify added Compensation Requisition List View and Details
+                    h120.VerifyCompensationDetailsViewForm(acquisitionFile.AcquisitionCompensations[i], "Acquisition File");
+                    h120.VerifyCompensationListView(acquisitionFile.AcquisitionCompensations[i]);
+                }
+
+            //Verify Compensation requisition Subfile totals
+            h120.VerifyCompensationsTotalDetails(acquisitionFile, "Subfile");
         }
 
         [StepDefinition(@"I update Compensation Requisition within an Acquisition File from row number (.*)")]
@@ -715,7 +757,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update Expropriation within an Acquisition File from row number (.*)")]
         public void UpdateExpropriation(int rowNumber)
         {
-
             //Populate data
             PopulateAcquisitionFile(rowNumber);
 
@@ -726,7 +767,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Update type of Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
             //Navigate to Expropriation Requisition Tab
@@ -803,7 +844,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.ShowLeftSideForms();
 
             //Validate Acquisition File Details Create Form
-            acquisitionFilesDetails.VerifyAcquisitionFileCreate();
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate("Main");
 
             //Cancel empty acquisition file
             acquisitionFilesDetails.CancelAcquisitionFile();
@@ -855,17 +896,44 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
 
-            //Get Research File code
+            //Get Acquisition File code
             acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
 
             //Edit Acquisition File
             acquisitionFilesDetails.EditAcquisitionFileBttn();
 
             //Add additional information
-            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile);
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Main");
 
             //Save Acquisition File
             acquisitionFilesDetails.SaveAcquisitionFileDetails();
+        }
+
+        [StepDefinition(@"I create a new Sub-file from row number (.*)")]
+        public void CreateSubFileDetails(int rowNumber)
+        {
+            PopulateAcquisitionFile(rowNumber);
+
+            //Go to Acquisition File Sub-Files Tab
+            acquisitionFilesDetails.NavigateToSubfilesTab();
+
+            //Add a new subfile
+            acquisitionFilesDetails.AddAcquisitionSubfileBttn();
+
+            //Validate Acquisition File Details Create Form
+            acquisitionFilesDetails.VerifyAcquisitionFileCreate("Subfile");
+
+            //Fill up subfile details
+            acquisitionFilesDetails.UpdateAcquisitionFile(acquisitionFile, "Subfile");
+
+            //Save Acquisition File
+            acquisitionFilesDetails.SaveAcquisitionFileDetails();
+
+            //Get Acquisition Subfile code
+            acquisitionFileCode = acquisitionFilesDetails.GetAcquisitionFileCode();
+
+            //Validate View File Details View Mode
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Subfile");
         }
 
         [StepDefinition(@"I search for an existing Acquisition File from row number (.*)")]
@@ -955,7 +1023,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void EditAcquisitionFileSuccess()
         {
             acquisitionFilesDetails.NavigateToFileDetailsTab();
-            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile);
+            acquisitionFilesDetails.VerifyAcquisitionFileView(acquisitionFile, "Main");
             searchAcquisitionFiles.Dispose();
         }
 
@@ -1003,6 +1071,33 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails.Dispose();
         }
 
+        [StepDefinition(@"Main Acquisition File totals are verified successfully from row number (.*)")]
+        public void VerifyMainAcquisitionFileTotalsAfterSubfiles(int rowNumber)
+        {
+            PopulateAcquisitionFile(rowNumber);
+
+            //Navigate to Subfiles Tab
+            acquisitionFilesDetails.NavigateToSubfilesTab();
+
+            //Getting the Linked Files Code
+            var linkedFilesCode = acquisitionFilesDetails.GetLinkedFilesCode();
+
+            //Go to search Acquisition Files
+            searchAcquisitionFiles.NavigateToSearchAcquisitionFile();
+
+            //Search for Main Acquisition File
+            searchAcquisitionFiles.SearchAcquisitionFileByAFile(linkedFilesCode);
+            searchAcquisitionFiles.SelectFirstOption();
+
+            //Navigate to Compensation Requisition Tab
+            h120.NavigateCompensationTab();
+
+            //Verify Compensation requisition Main File totals
+            h120.VerifyCompensationsTotalDetails(acquisitionFile, "Main");
+
+            acquisitionFilesDetails.Dispose();
+        }
+
         private void PopulateAcquisitionFile(int rowNumber)
         {
             DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionFiles"]!;
@@ -1020,15 +1115,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionProjFunding = ExcelDataContext.ReadData(rowNumber, "AcquisitionProjFunding");
             acquisitionFile.AcquisitionFundingOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionFundingOther");
 
+            //Progress Statuses
+            acquisitionFile.AcquisitionFileProgressStatuses = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "AcquisitionFileProgressStatuses"));
+            acquisitionFile.AcquisitionAppraisalStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionAppraisalStatus");
+            acquisitionFile.AcquisitionLegalSurveyStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionLegalSurveyStatus");
+            acquisitionFile.AcquisitionTypeTakingStatuses = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "AcquisitionTypeTakingStatuses"));
+            acquisitionFile.AcquisitionExpropriationRiskStatus = ExcelDataContext.ReadData(rowNumber, "AcquisitionExpropriationRiskStatus");
+
             //Schedule
-            acquisitionFile.AssignedDate = ExcelDataContext.ReadData(rowNumber, "AssignedDate");
-            acquisitionFile.DeliveryDate = ExcelDataContext.ReadData(rowNumber, "DeliveryDate");
+            acquisitionFile.AcquisitionAssignedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionAssignedDate");
+            acquisitionFile.AcquisitionDeliveryDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionDeliveryDate");
+            acquisitionFile.AcquisitionEstimatedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionEstimatedDate");
+            acquisitionFile.AcquisitionPossesionDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionPossesionDate");
 
             //Acquisition Details
             acquisitionFile.AcquisitionFileName = ExcelDataContext.ReadData(rowNumber, "AcquisitionFileName");
             acquisitionFile.HistoricalFileNumber = ExcelDataContext.ReadData(rowNumber, "HistoricalFileNumber");
             acquisitionFile.PhysicalFileStatus = ExcelDataContext.ReadData(rowNumber, "PhysicalFileStatus");
             acquisitionFile.AcquisitionType = ExcelDataContext.ReadData(rowNumber, "AcquisitionType");
+            acquisitionFile.AcquisitionSubfileInterest = ExcelDataContext.ReadData(rowNumber, "AcquisitionSubfileInterest");
+            acquisitionFile.AcquisitionSubfileInterestOther = ExcelDataContext.ReadData(rowNumber, "AcquisitionSubfileInterestOther");
             acquisitionFile.AcquisitionMOTIRegion = ExcelDataContext.ReadData(rowNumber, "AcquisitionMOTIRegion");
 
             acquisitionFile.AcquisitionTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionTeamStartRow"));
@@ -1147,6 +1253,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.AcquisitionCompensationStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationStartRow"));
             acquisitionFile.AcquisitionCompensationCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationCount"));
             acquisitionFile.AcquisitionCompensationTotalAllowableAmount = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationTotalAllowableAmount");
+            acquisitionFile.AcquisitionCompensationMainFileTotal = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationMainFileTotal");
+            acquisitionFile.AcquisitionCompensationSubfilesMainFileTotal = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationSubfilesMainFileTotal");
+            acquisitionFile.AcquisitionCompensationDraftTotal = ExcelDataContext.ReadData(rowNumber, "AcquisitionCompensationDraftTotal");
             if (acquisitionFile.AcquisitionCompensationStartRow != 0 && acquisitionFile.AcquisitionCompensationCount != 0)
                 PopulateCompensationsCollection(acquisitionFile.AcquisitionCompensationStartRow, acquisitionFile.AcquisitionCompensationCount);
 
@@ -1321,8 +1430,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
                 compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
                 compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
-                compensation.CompensationPayee = ExcelDataContext.ReadData(i, "CompensationPayee");
-                compensation.CompensationPayeeDisplay = ExcelDataContext.ReadData(i, "CompensationPayeeDisplay"); 
+                compensation.CompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
+                compensation.CompensationPayeeDisplay = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayeeDisplay")); 
                 compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
                 compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");
                 compensation.CompensationDetailedRemarks = ExcelDataContext.ReadData(i, "CompensationDetailedRemarks");
@@ -1372,10 +1481,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 expropriation.ExpPaymentCount = int.Parse(ExcelDataContext.ReadData(i, "ExpPaymentCount"));
                 
                 if (expropriation.ExpPaymentStartRow != 0 && expropriation.ExpPaymentCount != 0)
-                {
                     PopulateExpropPaymentsCollection(expropriation.ExpPaymentStartRow, expropriation.ExpPaymentCount, expropriation.ExpropriationPayments);
-                }
-
+                
                 acquisitionFile.AcquisitionExpropriationForm8s.Add(expropriation);
             }
         }

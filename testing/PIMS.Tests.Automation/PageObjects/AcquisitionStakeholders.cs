@@ -44,13 +44,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateStakeholderTab()
         {
-            WaitUntilClickable(stakeholderLinkTab);
+            Wait(2000);
             webDriver.FindElement(stakeholderLinkTab).Click();
         }
 
         public void EditStakeholderInterestsButton()
         {
-            WaitUntilClickable(stakeholderInterestsEditBttn);
+            Wait(2000);
             webDriver.FindElement(stakeholderInterestsEditBttn).Click();
         }
 
