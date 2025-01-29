@@ -336,7 +336,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Payment" isCollapsable initiallyExpanded>
-        <SectionField label="Payee(s)" labelWidth="4">
+        <SectionField label="Payee(s)" labelWidth="4" valueTestId="comp-req-payees">
           {payeeDetails.map(payeeDetail => (
             <StyledPayeeDisplayName key={`compensations-payee-${payeeDetail.compReqPayeeId}`}>
               {payeeDetail?.contactEnabled && payeeDetail?.contactString && (
