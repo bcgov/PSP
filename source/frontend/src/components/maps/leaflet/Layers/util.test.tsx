@@ -205,5 +205,10 @@ describe('mapUtils tests', () => {
       const cql = toCqlFilterValue({ PID: '12345678', PIN: '54321' }, { forceExactMatch: true });
       expect(cql).toBe("PID = '12345678' AND PIN='54321'");
     });
+
+    it('if property id is specified, exact search should always be used', () => {
+      const cql = toCqlFilterValue({ PROPERTY_ID: '1' });
+      expect(cql).toBe("PROPERTY_ID = '1'");
+    });
   });
 });
