@@ -97,25 +97,4 @@ describe('LeasePropertiesInformation component', () => {
     const propertyHeader = queryByText('Property Information');
     expect(propertyHeader).toBeNull();
   });
-
-  it('renders draft markers with provided lat/lng', async () => {
-    setup({
-      lease: {
-        ...getEmptyLease(),
-        fileProperties: [
-          {
-            ...mockLeaseProperty(1),
-            areaUnitType: toTypeCode('test'),
-            leaseArea: 123,
-            file: null,
-            fileId: 1,
-            location: { coordinate: { x: 123, y: 48 } },
-          },
-        ],
-      },
-    });
-
-    await waitForEffects();
-    expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 48, lng: 123 }]);
-  });
 });

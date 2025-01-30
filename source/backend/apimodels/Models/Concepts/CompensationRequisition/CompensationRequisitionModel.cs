@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.FinancialCode;
-using Pims.Api.Models.Concepts.InterestHolder;
 using Pims.Api.Models.Concepts.Project;
 
 namespace Pims.Api.Models.Concepts.CompensationRequisition
@@ -38,25 +37,9 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public DateOnly? AgreementDate { get; set; }
 
-        public DateOnly? ExpropriationNoticeServedDate { get; set; }
-
-        public DateOnly? ExpropriationVestingDate { get; set; }
-
         public DateOnly? GenerationDate { get; set; }
 
         public List<CompensationFinancialModel> Financials { get; set; }
-
-        public long? AcquisitionOwnerId { get; set; }
-
-        public AcquisitionFileOwnerModel AcquisitionOwner { get; set; }
-
-        public long? InterestHolderId { get; set; }
-
-        public InterestHolderModel InterestHolder { get; set; }
-
-        public long? AcquisitionFileTeamId { get; set; }
-
-        public AcquisitionFileTeamModel AcquisitionFileTeam { get; set; }
 
         public string LegacyPayee { get; set; }
 
@@ -72,7 +55,9 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
 
         public ProjectModel AlternateProject { get; set; }
 
-        public IEnumerable<CompReqLeaseStakeholderModel> CompReqLeaseStakeholder { get; set; }
+        public IEnumerable<CompReqPayeeModel> CompReqPayees { get; set; }
+
+        public IEnumerable<CompReqLeaseStakeholderModel> CompReqLeaseStakeholders { get; set; }
 
         public IEnumerable<CompReqAcquisitionPropertyModel> CompReqAcquisitionProperties { get; set; }
 

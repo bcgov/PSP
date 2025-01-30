@@ -19,6 +19,7 @@ exports[`Input component > renders as expected 1`] = `
       class="form-control"
       id="input-foo"
       name="foo"
+      style="word-break: break-all;"
       title=""
       value=""
     />

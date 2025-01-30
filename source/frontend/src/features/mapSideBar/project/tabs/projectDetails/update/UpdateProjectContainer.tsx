@@ -1,11 +1,14 @@
+import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { RefObject, useEffect, useMemo, useState } from 'react';
 
 import * as API from '@/constants/API';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
@@ -31,6 +34,7 @@ const UpdateProjectContainer = React.forwardRef<
 >((props, formikRef) => {
   const { project, View, onSuccess } = props;
   const { costTypeCode, businessFunctionCode, workActivityCode } = project;
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_Project | void>
@@ -148,8 +152,24 @@ const UpdateProjectContainer = React.forwardRef<
       workActivityOptions={workActivityOptions ?? []}
       initialValues={initialValues}
       onSubmit={(projectForm, formikHelpers) =>
-        withUserOverride((userOverrideCodes: UserOverrideCode[]) =>
-          handleSubmit(projectForm, formikHelpers, userOverrideCodes),
+        withUserOverride(
+          (userOverrideCodes: UserOverrideCode[]) =>
+            handleSubmit(projectForm, formikHelpers, userOverrideCodes),
+          [],
+          (axiosError: AxiosError<IApiError>) => {
+            setModalContent({
+              variant: 'error',
+              title: 'Error',
+              message: axiosError?.response?.data.error,
+              okButtonText: 'Close',
+              handleOk: async () => {
+                const castedRef = formikRef as RefObject<FormikProps<ProjectForm>>;
+                castedRef.current?.resetForm();
+                setDisplayModal(false);
+              },
+            });
+            setDisplayModal(true);
+          },
         )
       }
     />

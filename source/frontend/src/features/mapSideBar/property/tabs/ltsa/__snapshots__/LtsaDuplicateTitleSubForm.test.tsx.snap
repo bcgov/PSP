@@ -39,6 +39,7 @@ exports[`LtsaDuplicateTitleSubForm component > renders charge sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
           name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.intendedRecipientLastName"
+          style="word-break: break-all;"
           title="last"
           value="last"
         />
@@ -78,6 +79,7 @@ exports[`LtsaDuplicateTitleSubForm component > renders charge sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
           name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentNumber"
+          style="word-break: break-all;"
           title="12345"
           value="12345"
         />
@@ -117,6 +119,7 @@ exports[`LtsaDuplicateTitleSubForm component > renders charge sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
           name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateIdentifier.documentDistrictCode"
+          style="word-break: break-all;"
           title="test district code"
           value="test district code"
         />
@@ -156,6 +159,7 @@ exports[`LtsaDuplicateTitleSubForm component > renders charge sub form 1`] = `
           class="form-control"
           id="input-titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
           name="titleOrders.0.orderedProduct.fieldedData.duplicateCertificatesOfTitle.0.certificateDelivery.certificateText"
+          style="word-break: break-all;"
           title="certificate text"
           value="certificate text"
         />

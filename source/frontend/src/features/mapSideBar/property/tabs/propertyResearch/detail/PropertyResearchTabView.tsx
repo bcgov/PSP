@@ -1,9 +1,9 @@
-import { Button } from 'react-bootstrap';
-import { FaEdit } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
 import { Claims } from '@/constants/index';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
@@ -54,14 +54,13 @@ export const PropertyResearchTabView: React.FunctionComponent<
     <StyledSummarySection>
       <StyledEditWrapper className="mr-3 my-1">
         {hasClaim(Claims.RESEARCH_EDIT) ? (
-          <Button
-            variant="link"
+          <EditButton
+            title="Edit Property Research"
             onClick={() => {
               props.setEditMode(true);
             }}
-          >
-            <FaEdit size={'2rem'} />
-          </Button>
+            style={{ float: 'right' }}
+          />
         ) : null}
       </StyledEditWrapper>
       <Section header="Property of Interest">
@@ -83,10 +82,4 @@ export default PropertyResearchTabView;
 
 const StyledSummarySection = styled.div`
   background-color: ${props => props.theme.css.highlightBackgroundColor};
-`;
-
-const StyledEditWrapper = styled.div`
-  color: ${props => props.theme.css.primary};
-
-  text-align: right;
 `;

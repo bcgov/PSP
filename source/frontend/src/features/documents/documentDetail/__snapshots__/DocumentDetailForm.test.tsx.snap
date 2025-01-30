@@ -880,6 +880,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                     data-testid="metadata-input-tag-foo"
                     id="input-documentMetadata.1"
                     name="documentMetadata.1"
+                    style="word-break: break-all;"
                     title="Tag1234"
                     value="Tag1234"
                   />

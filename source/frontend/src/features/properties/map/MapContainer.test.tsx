@@ -190,18 +190,13 @@ describe('MapContainer', () => {
           mp => mp.properties.PROPERTY_ID,
         );
     }
-    const utils = render(
-      <>
-        <MapContainer />
-      </>,
-      {
-        store,
-        history,
-        mockMapMachine: defaultMapMachine,
-        ...renderOptions,
-        useMockAuthentication: true,
-      },
-    );
+    const utils = render(<MapContainer />, {
+      store,
+      history,
+      mockMapMachine: defaultMapMachine,
+      ...renderOptions,
+      useMockAuthentication: true,
+    });
     await act(async () => {}); // Wait for async mount actions to settle
 
     return { ...utils };
@@ -245,13 +240,13 @@ describe('MapContainer', () => {
 
   afterEach(cleanup);
 
-  it('Renders the map', async () => {
+  it('renders the map', async () => {
     const { asFragment } = await setup();
     expect(asFragment()).toMatchSnapshot();
     expect(document.querySelector('.leaflet-container')).toBeVisible();
   });
 
-  it('Can toggle the base map', async () => {
+  it('toggles the base map', async () => {
     await setup();
     // find basemap toggle button
     const basemapToggle = await screen.findByAltText(/Map Thumbnail/i);
@@ -263,7 +258,13 @@ describe('MapContainer', () => {
     expect(basemapToggle).toHaveAttribute('src', '/streets.jpg');
   });
 
-  it('Renders markers when provided', async () => {
+  it('shows the current map scale', async () => {
+    await setup();
+    expect(document.querySelector('.leaflet-control-scale')).toBeVisible();
+    expect(document.querySelector('.leaflet-control-scale-line')).toHaveTextContent(/100 km/i);
+  });
+
+  it('renders markers when provided', async () => {
     await setup();
     expect(document.querySelector('.leaflet-marker-icon')).toBeVisible();
   });
@@ -290,7 +291,7 @@ describe('MapContainer', () => {
     expect(cluster).toBeNull();
   });
 
-  it('the map can handle features with invalid geometry', async () => {
+  it('can handle features with invalid geometry', async () => {
     const { container } = await setup({
       mockMapMachine: {
         ...mapMachineBaseMock,
@@ -305,7 +306,7 @@ describe('MapContainer', () => {
     expect(map).toBeVisible();
   });
 
-  it('the map can zoom out until the markers are clustered', async () => {
+  it('can zoom out until the markers are clustered', async () => {
     const { container } = await setup();
 
     // click the zoom-out button 10 times

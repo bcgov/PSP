@@ -51,7 +51,7 @@ describe('LayerPopupView component', () => {
   });
 
   describe('fly out behaviour', () => {
-    it('fly out is hidden by default', async () => {
+    it('view property info is now displayed by default', async () => {
       const { queryByText } = setup({
         layerPopup: {
           latlng: undefined,
@@ -59,7 +59,7 @@ describe('LayerPopupView component', () => {
         },
         featureDataset: null,
       });
-      expect(queryByText('View Property Info')).toBeNull();
+      expect(queryByText('View Property Info')).toBeInTheDocument();
     });
 
     it('opens fly out when ellipsis is clicked', async () => {

@@ -203,7 +203,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseDetails.EditLeaseFileDetailsBttn();
 
             //Verify Properties section
-            sharedSearchProperties.VerifyLocateOnMapFeature();
+            sharedSearchProperties.VerifyLocateOnMapFeature("Lease");
 
             //Update Properties
             leaseDetails.UpdateLicensePropertiesForm(lease.LeasePropertiesDetails[0], 0);
@@ -901,7 +901,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.NavigateCompensationTab();
 
             //Verify initial Compensation Tab List View
-            h120.VerifyCompensationInitTabView();
+            h120.VerifyCompensationInitTabView("Lease");
 
             //Update Allowable Compensation Amount
             h120.UpdateTotalAllowableCompensation(lease.LeaseCompensationTotalAllowableAmount);
@@ -918,7 +918,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     h120.OpenCompensationDetails(i);
 
                     //Verify Initial View Form
-                    h120.VerifyCompensationDetailsInitViewForm("Lease");
+                    h120.VerifyCompensationDetailsInitViewForm();
 
                     //Add Details to the Compensation Requisition
                     h120.EditCompensationDetails();
@@ -1321,7 +1321,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 {
                     ContactType = ExcelDataContext.ReadData(i, "ContactType"),
                     Summary = ExcelDataContext.ReadData(i, "Summary"),
-                    PrimaryContact = ExcelDataContext.ReadData(i, "PrimaryContact"),
+                    PrimaryContact = ExcelDataContext.ReadData(i, "LeaseTenantsPrimaryContact"),
                     StakeholderType = ExcelDataContext.ReadData(i, "TenantType")
                 };
 
@@ -1445,8 +1445,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
                 compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
                 compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
-                compensation.CompensationPayee = ExcelDataContext.ReadData(i, "CompensationPayee");
-                compensation.CompensationPayeeDisplay = ExcelDataContext.ReadData(i, "CompensationPayeeDisplay");
+                compensation.CompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
+                compensation.CompensationPayeeDisplay = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayeeDisplay"));
                 compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
                 compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");
                 compensation.CompensationDetailedRemarks = ExcelDataContext.ReadData(i, "CompensationDetailedRemarks");

@@ -101,3 +101,21 @@ Scenario: 16. Acquisition File Error Message - Takes In-Progress
 	And I create Takes within Acquisition File's Properties
 	And I add additional information to complete the Acquisition File
 	Then Acquisition File cannot be completed due to In-Progress Takes
+
+Scenario: 17. Acquisition File Subfiles - Subfile Details
+	Given I create a new Acquisition File from row number 22
+	When I add additional information to the Acquisition File Details
+	And I create a new Sub-file from row number 23
+	Then A new Acquisition file is created successfully
+
+Scenario: 18. Acquisition File Compensation Requsition - Sum of Subfiles Compensation Requisitions
+	Given I create a new Acquisition File from row number 22
+	When I add additional information to the Acquisition File Details
+	And I add Properties to the Acquisition File
+	And I create Stakeholders within an Acquisition File
+	And I create Compensation Requisition within an Acquisition File
+	And I create a new Sub-file from row number 23
+	And I add Properties to the Acquisition File
+	And I create Stakeholders within an Acquisition File
+	And I create Compensation Requisition within an Acquisition Subfile
+	Then Main Acquisition File totals are verified successfully from row number 22

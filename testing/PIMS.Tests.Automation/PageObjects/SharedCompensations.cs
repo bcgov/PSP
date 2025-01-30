@@ -5,150 +5,151 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SharedCompensations : PageObjectBase
     {
-        private By compensationLinkTab = By.XPath("//a[contains(text(),'Compensation')]");
+        private readonly By compensationLinkTab = By.XPath("//a[contains(text(),'Compensation')]");
 
         //Add Compensation Elements
-        private By compensationAddSubtitle = By.XPath("//div[contains(text(),'Compensation Requisitions')]");
-        private By compensationAddBttn = By.XPath("//div[contains(text(),'Compensation Requisitions')]/following-sibling::div/button");
+        private readonly By compensationAddSubtitle = By.XPath("//div[contains(text(),'Compensation Requisitions')]");
+        private readonly By compensationAddBttn = By.XPath("//div[contains(text(),'Compensation Requisitions')]/following-sibling::div/button");
 
-        private By compensationTotalAllowableLabel = By.XPath("//label[contains(text(),'Total allowable compensation')]");
-        private By compensationTotalAllowableContent = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div");
-        private By compensationTotalAllowableEdiBttn = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div/button[@data-testid='edit-button']");
-        private By compensationTotalAllowableInput = By.CssSelector("input[title='Enter a financial value']");
-        private By compensationTotalAllowableSaveBttn = By.CssSelector("button[title='confirm']");
+        private readonly By compensationTotalAllowableLabel = By.XPath("//label[contains(text(),'Total allowable compensation')]");
+        private readonly By compensationTotalAllowableContent = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div");
+        private readonly By compensationTotalAllowableEdiBttn = By.XPath("//label[contains(text(),'Total allowable compensation')]/parent::div/following-sibling::div/div/button[@data-testid='edit-button']");
+        private readonly By compensationTotalAllowableInput = By.CssSelector("input[title='Enter a financial value']");
+        private readonly By compensationTotalAllowableSaveBttn = By.CssSelector("button[title='confirm']");
 
-        private By compensationTotalPaymentsMadeLabel = By.XPath("//label[contains(text(),'Total payments made on this file')]");
-        private By compensationTotalPaymentsMadeContent = By.XPath("//label[contains(text(),'Total payments made on this file')]/parent::div/following-sibling::div");
+        private readonly By compensationPaymentsMadeLabel = By.XPath("//label[contains(text(),'Total payments made on this file')]");
+        private readonly By compensationPaymentsMadeContent = By.XPath("//label[contains(text(),'Total payments made on this file')]/parent::div/following-sibling::div");
 
-        private By compensationDraftsTotalLabel = By.XPath("//label[contains(text(),'Drafts')]");
-        private By compensationDraftsTotalContent = By.XPath("//label[contains(text(),'Drafts')]/parent::div/following-sibling::div");
+        private readonly By compensationMainPaymentsMadeLabel = By.XPath("//label[contains(text(),'Total payments made on the main file')]");
+        private readonly By compensationMainPaymentsMadeContent = By.XPath("//label[contains(text(),'Total payments made on the main file')]/parent::div/following-sibling::div");
 
-        private By compensationAddCompensationTooltips = By.XPath("//div[contains(text(),'Compensation Requisitions')]/parent::div/parent::div/parent::div/parent::h2/parent::div/div/div/div/label/span");
+        private readonly By compensationMainTotalPaymentsMadeLabel = By.XPath("//label[contains(text(),'Total payments made on main file and all sub-files')]");
+        private readonly By compensationMainTotalPaymentsMadeContent = By.XPath("//label[contains(text(),'Total payments made on main file and all sub-files')]/parent::div/following-sibling::div");
+
+        private readonly By compensationPaymentsMadeSubfileLabel = By.XPath("//label[contains(text(),'Total payments made on the sub file')]");
+        private readonly By compensationPaymentsMadeSubfileContent = By.XPath("//label[contains(text(),'Total payments made on the sub file')]/parent::div/following-sibling::div");
+
+        private readonly By compensationDraftsTotalLabel = By.XPath("//label[contains(text(),'Drafts')]");
+        private readonly By compensationDraftsTotalContent = By.XPath("//label[contains(text(),'Drafts')]/parent::div/following-sibling::div");
+
+        private readonly By compensationAddCompensationTooltips = By.XPath("//div[contains(text(),'Compensation Requisitions')]/parent::div/parent::div/parent::div/parent::h2/parent::div/div/div/div/label/span");
 
         //Requisition in this file (H120) Elements
-        private By compensationH120Subtitle = By.XPath("//div[contains(text(),'Requisitions in this file (H120)')]");
-        private By compensationH120Table = By.CssSelector("div[data-testid='AcquisitionCompensationTable']");
-        private By compensationH120NoRowsMessage = By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='no-rows-message']");
-        private By compensationH120TotalCount = By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By compensationH120Subtitle = By.XPath("//div[contains(text(),'Requisitions in this File (H120)')]");
+        private readonly By compensationH120Table = By.CssSelector("div[data-testid='AcquisitionCompensationTable']");
+        private readonly By compensationH120NoRowsMessage = By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='no-rows-message']");
+        private readonly By compensationH120TotalCount = By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Compensation Requisition Details Elements
-        private By compensationDetailsTitle = By.XPath("//div[contains(text(),'Compensation Requisition (H120)')]");
-        private By compensationClientLabel = By.XPath("//label[contains(text(),'Client')]");
-        private By compensationClientContent = By.CssSelector("div[data-testid='compensation-client']");
+        private readonly By compensationDetailsTitle = By.XPath("//div[contains(text(),'Compensation Requisition (H120)')]");
+        private readonly By compensationClientLabel = By.XPath("//label[contains(text(),'Client')]");
+        private readonly By compensationClientContent = By.CssSelector("div[data-testid='compensation-client']");
 
-        private By compensationRequisitionNumberLabel = By.XPath("//label[contains(text(),'Requisition number')]");
-        private By compensationRequisitionNumberContent = By.CssSelector("div[data-testid='compensation-number']");
-        private By compensationAmountLabel = By.XPath("//label[contains(text(),'Compensation amount')]");
-        private By compensationAmountContent = By.CssSelector("div[data-testid='header-pretax-amount'] p");
-        private By compensationGSTLabel = By.XPath("//label[contains(text(),'Applicable GST')]");
-        private By compensationGSTContent = By.CssSelector("div[data-testid='header-tax-amount'] p");
-        private By compensationTotalChequeAmountLabel = By.XPath("//label[contains(text(),'Total cheque amount')]");
-        private By compensationTotalChequeAmountContent = By.CssSelector("div[data-testid='header-total-amount'] p");
+        private readonly By compensationRequisitionNumberLabel = By.XPath("//label[contains(text(),'Requisition number')]");
+        private readonly By compensationRequisitionNumberContent = By.CssSelector("div[data-testid='compensation-number']");
+        private readonly By compensationAmountLabel = By.XPath("//label[contains(text(),'Compensation amount')]");
+        private readonly By compensationAmountContent = By.CssSelector("div[data-testid='header-pretax-amount'] p");
+        private readonly By compensationGSTLabel = By.XPath("//label[contains(text(),'Applicable GST')]");
+        private readonly By compensationGSTContent = By.CssSelector("div[data-testid='header-tax-amount'] p");
+        private readonly By compensationTotalChequeAmountLabel = By.XPath("//label[contains(text(),'Total cheque amount')]");
+        private readonly By compensationTotalChequeAmountContent = By.CssSelector("div[data-testid='header-total-amount'] p");
 
-        private By requisitionDetailsViewSubtitle = By.XPath("//div[contains(text(),'Requisition Details')]");
-        private By requisitionDetailsCreateSubtitle = By.XPath("//div[contains(text(),'Requisition details')]");
-        private By requisitionGenerateH120Bttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[2]");
-        private By requisitionEditBttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[@title='Edit compensation requisition']");
-        private By requisitionStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
-        private By requisitionStatusContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
-        private By requisitionStatusSelect = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/div/select[@id='input-status']");
-        private By requisitionAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
-        private By requisitionAltProjectContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]/parent::div/following-sibling::div");
-        private By requisitionAltProjectInput = By.Id("typeahead-alternateProject");
-        private By requisitionAltProjectOptions = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options']");
-        private By requisitionAltProject1stOption = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options'] a:nth-child(1)");
-        private By requisitionFinalDateLabel = By.XPath("//label[contains(text(),'Final date')]");
-        private By requisitionAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
-        private By requisitionAgreementContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div");
-        private By requisitionAgreementInput = By.Id("datepicker-agreementDateTime");
-        private By requsitionExpropriationServedLabel = By.XPath("//label[contains(text(),'Expropriation notice served date')]");
-        private By requsitionExpropriationServedContent = By.XPath("//label[contains(text(),'Expropriation notice served date')]/parent::div/following-sibling::div");
-        private By requisitionExpropriationServedInput = By.Id("datepicker-expropriationNoticeServedDateTime");
-        private By requisitionExpropriationVestingLabel = By.XPath("//label[contains(text(),'Expropriation vesting date')]");
-        private By requisitionExpropriationVestingContent = By.XPath("//label[contains(text(),'Expropriation vesting date')]/parent::div/following-sibling::div");
-        private By requisitionExpropriationVestingInput = By.Id("datepicker-expropriationVestingDateTime");
-        private By requisitionAdvancePaymentLabel = By.XPath("//label[contains(text(),'Advanced payment served date')]");
-        private By requisitionAdvancePaymentContent = By.XPath("//label[contains(text(),'Advanced payment served date')]/parent::div/following-sibling::div");
-        private By requisitionAdvancePaymentInput = By.Id("datepicker-advancedPaymentServedDate");
-        private By requisitionSpecialInstructionLabel = By.XPath("//label[contains(text(),'Special instructions')]");
-        private By requisitionSpecialInstructionContent = By.XPath("//label[contains(text(),'Special instructions')]/parent::div/following-sibling::div");
-        private By requisitionSpecialInstructionTextarea = By.Id("input-specialInstruction");
+        private readonly By requisitionDetailsViewSubtitle = By.XPath("//div[contains(text(),'Requisition Details')]");
+        private readonly By requisitionDetailsCreateSubtitle = By.XPath("//div[contains(text(),'Requisition details')]");
+        private readonly By requisitionGenerateH120Bttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[2]");
+        private readonly By requisitionEditBttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[@title='Edit compensation requisition']");
+        private readonly By requisitionStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
+        private readonly By requisitionStatusContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
+        private readonly By requisitionStatusSelect = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/div/select[@id='input-status']");
+        private readonly By requisitionAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
+        private readonly By requisitionAltProjectContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]/parent::div/following-sibling::div");
+        private readonly By requisitionAltProjectInput = By.Id("typeahead-alternateProject");
+        private readonly By requisitionAltProjectOptions = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options']");
+        private readonly By requisitionAltProject1stOption = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options'] a:nth-child(1)");
+        private readonly By requisitionFinalDateLabel = By.XPath("//label[contains(text(),'Final date')]");
+        private readonly By requisitionAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
+        private readonly By requisitionAgreementContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div");
+        private readonly By requisitionAgreementInput = By.Id("datepicker-agreementDateTime");
+        private readonly By requisitionSpecialInstructionLabel = By.XPath("//label[contains(text(),'Special instructions')]");
+        private readonly By requisitionSpecialInstructionContent = By.XPath("//label[contains(text(),'Special instructions')]/parent::div/following-sibling::div");
+        private readonly By requisitionSpecialInstructionTextarea = By.Id("input-specialInstruction");
 
-        private By requisitionFinancialCodingSubtitle = By.XPath("//div[contains(text(),'Financial Coding')]");
-        private By requisitionProductLabel = By.XPath("//div[contains(text(),'Financial Coding')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Product')]");
-        private By requisitionProductContent = By.XPath("//div[contains(text(),'Financial Coding')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Product')]/parent::div/following-sibling::div");
+        private readonly By requisitionFinancialCodingSubtitle = By.XPath("//div[contains(text(),'Financial Coding')]");
+        private readonly By requisitionProductLabel = By.XPath("//div[contains(text(),'Financial Coding')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Product')]");
+        private readonly By requisitionProductContent = By.XPath("//div[contains(text(),'Financial Coding')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Product')]/parent::div/following-sibling::div");
 
-        private By requisitionBusinessLabel = By.XPath("//label[contains(text(),'Business function')]");
-        private By requisitionBusinessContent = By.XPath("//label[contains(text(),'Business function')]/parent::div/following-sibling::div");
-        private By requisitionWorkActivityLabel = By.XPath("//label[contains(text(),'Work activity')]");
-        private By requisitionWorkActivityContent = By.XPath("//label[contains(text(),'Work activity')]/parent::div/following-sibling::div");
-        private By requisitionCostTypeLabel = By.XPath("//label[contains(text(),'Cost type')]");
-        private By requisitionCostTypeContent = By.XPath("//label[contains(text(),'Cost type')]/parent::div/following-sibling::div");
-        private By requisitionFiscalYearLabel = By.XPath("//label[contains(text(),'Fiscal year')]");
-        private By requisitionFiscalYearContent = By.XPath("//label[contains(text(),'Fiscal year')]/parent::div/following-sibling::div");
-        private By requisitionFiscalYearSelect = By.Id("input-fiscalYear");
-        private By requisitionSTOBLabel = By.XPath("//label[contains(text(),'STOB')]");
-        private By requisitionSTOBContent = By.XPath("//label[contains(text(),'STOB')]/parent::div/following-sibling::div");
-        private By requisitionSTOBInput = By.Id("typeahead-select-stob");
-        private By requisitionSTOBOptions = By.CssSelector("div[id='typeahead-select-stob']");
-        private By requisitionSTOB1stOption = By.CssSelector("div[id='typeahead-select-stob'] a:nth-child(1)");
-        private By requisitionServiceLineLabel = By.XPath("//label[contains(text(),'Service line')]");
-        private By requisitionServiceLineContent = By.XPath("//label[contains(text(),'Service line')]/parent::div/following-sibling::div/label");
-        private By requisitionServiceLineInput = By.Id("typeahead-select-serviceLine");
-        private By requisitionServiceLineOptions = By.CssSelector("div[id='typeahead-select-serviceLine']");
-        private By requisitionServiceLine1stOption = By.CssSelector("div[id='typeahead-select-serviceLine'] a:nth-child(1)");
-        private By requisitionResponsibilityCentreLabel = By.XPath("//label[contains(text(),'Responsibility centre')]");
-        private By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div/label");
-        private By requisitionResponsibilityCentreInput = By.Id("typeahead-select-responsibilityCentre");
-        private By requisitionResponsibilityCentreOptions = By.CssSelector("div[id='typeahead-select-responsibilityCentre']");
-        private By requisitionResponsibilityCentre1stOption = By.CssSelector("div[id='typeahead-select-responsibilityCentre'] a:nth-child(1)");
+        private readonly By requisitionBusinessLabel = By.XPath("//label[contains(text(),'Business function')]");
+        private readonly By requisitionBusinessContent = By.XPath("//label[contains(text(),'Business function')]/parent::div/following-sibling::div");
+        private readonly By requisitionWorkActivityLabel = By.XPath("//label[contains(text(),'Work activity')]");
+        private readonly By requisitionWorkActivityContent = By.XPath("//label[contains(text(),'Work activity')]/parent::div/following-sibling::div");
+        private readonly By requisitionCostTypeLabel = By.XPath("//label[contains(text(),'Cost type')]");
+        private readonly By requisitionCostTypeContent = By.XPath("//label[contains(text(),'Cost type')]/parent::div/following-sibling::div");
+        private readonly By requisitionFiscalYearLabel = By.XPath("//label[contains(text(),'Fiscal year')]");
+        private readonly By requisitionFiscalYearContent = By.XPath("//label[contains(text(),'Fiscal year')]/parent::div/following-sibling::div");
+        private readonly By requisitionFiscalYearSelect = By.Id("input-fiscalYear");
+        private readonly By requisitionSTOBLabel = By.XPath("//label[contains(text(),'STOB')]");
+        private readonly By requisitionSTOBContent = By.XPath("//label[contains(text(),'STOB')]/parent::div/following-sibling::div");
+        private readonly By requisitionSTOBInput = By.Id("typeahead-select-stob");
+        private readonly By requisitionSTOBOptions = By.CssSelector("div[id='typeahead-select-stob']");
+        private readonly By requisitionSTOB1stOption = By.CssSelector("div[id='typeahead-select-stob'] a:nth-child(1)");
+        private readonly By requisitionServiceLineLabel = By.XPath("//label[contains(text(),'Service line')]");
+        private readonly By requisitionServiceLineContent = By.XPath("//label[contains(text(),'Service line')]/parent::div/following-sibling::div/label");
+        private readonly By requisitionServiceLineInput = By.Id("typeahead-select-serviceLine");
+        private readonly By requisitionServiceLineOptions = By.CssSelector("div[id='typeahead-select-serviceLine']");
+        private readonly By requisitionServiceLine1stOption = By.CssSelector("div[id='typeahead-select-serviceLine'] a:nth-child(1)");
+        private readonly By requisitionResponsibilityCentreLabel = By.XPath("//label[contains(text(),'Responsibility centre')]");
+        private readonly By requisitionResponsibilityCentreContent = By.XPath("//label[contains(text(),'Responsibility centre')]/parent::div/following-sibling::div/label");
+        private readonly By requisitionResponsibilityCentreInput = By.Id("typeahead-select-responsibilityCentre");
+        private readonly By requisitionResponsibilityCentreOptions = By.CssSelector("div[id='typeahead-select-responsibilityCentre']");
+        private readonly By requisitionResponsibilityCentre1stOption = By.CssSelector("div[id='typeahead-select-responsibilityCentre'] a:nth-child(1)");
 
-        private By requisitionPaymentSubtitle = By.XPath("//h2/div/div[contains(text(),'Payment')]");
-        private By requisitionPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
-        private By requisitionPayeeContent = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div/label[1]");
-        private By requisitionPayeeContentLink = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div/a/span");
-        private By requisitionPayeeSelect = By.Id("input-payee.payeeKey");
-        private By requisitionPaymentInTrustLabel = By.XPath("//label[contains(text(),'Payment in Trust?')]");
-        private By requisitionPaymentInTrustContent1 = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div/label[1]");
-        private By requisitionPaymentInTrustContent2 = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div/label[2]");
-        private By requisitionPaymentInTrustCheckbox = By.Id("input-payee.isPaymentInTrust");
-        private By requisitionGSTNumberLabel = By.XPath("//label[contains(text(),'GST number')]");
-        private By requisitionGSTNumberInput = By.Id("input-payee.gstNumber");
-        private By requisitionAmountLabel = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Amount (before tax)')]");
-        private By requisitionAmountContent = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Amount (before tax)')]/parent::div/following-sibling::div");
-        private By requisitionAmountInput = By.Id("input-payee.pretaxAmount");
-        private By requisitionGSTApplicableLabel = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST applicable?')]");
-        private By requisitionGSTApplicableContent = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST applicable?')]/parent::div/following-sibling::div");
-        private By requisitionGSTAmountLabel = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]");
-        private By requisitionGSTAmountContent = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]/parent::div/following-sibling::div");
-        private By requisitionGSTAmountInput = By.Id("input-payee.taxAmount");
-        private By requisitionTotalAmountLabel = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]");
-        private By requisitionTotalAmountContent = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]/parent::div/following-sibling::div");
-        private By requisitionTotalAmountInput = By.Id("input-payee.totalAmount");
+        private readonly By requisitionPaymentSubtitle = By.XPath("//h2/div/div[contains(text(),'Payment')]");
+        private readonly By requisitionPayeeLabel = By.XPath("//label[contains(text(),'Payee')]");
+        private readonly By requisitionPayeeContentCount = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div");
+        private readonly By requisitionPayeeMultiselect = By.Id("multiselect-payees_input");
+        private readonly By requisitionPayeeDeleteBttns = By.CssSelector("div[id='multiselect-payees'] i[class='custom-close']");
+        private readonly By requisitionPayeeOptions = By.XPath("//input[@id='multiselect-payees_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By requisitionPaymentInTrustLabel = By.XPath("//label[contains(text(),'Payment in Trust?')]");
+        private readonly By requisitionPaymentInTrustContent1 = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div/label[1]");
+        private readonly By requisitionPaymentInTrustContent2 = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div/label[2]");
+        private readonly By requisitionPaymentInTrustCheckbox = By.Id("input-isPaymentInTrust");
+        private readonly By requisitionGSTNumberLabel = By.XPath("//label[contains(text(),'GST number')]");
+        private readonly By requisitionGSTNumberInput = By.Id("input-gstNumber");
+        private readonly By requisitionAmountLabel = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Amount (before tax)')]");
+        private readonly By requisitionAmountContent = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Amount (before tax)')]/parent::div/following-sibling::div");
+        private readonly By requisitionAmountInput = By.Id("input-pretaxAmount");
+        private readonly By requisitionGSTApplicableLabel = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST applicable?')]");
+        private readonly By requisitionGSTApplicableContent = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST applicable?')]/parent::div/following-sibling::div");
+        private readonly By requisitionGSTAmountLabel = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]");
+        private readonly By requisitionGSTAmountContent = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'GST amount')]/parent::div/following-sibling::div");
+        private readonly By requisitionGSTAmountInput = By.Id("input-taxAmount");
+        private readonly By requisitionTotalAmountLabel = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]");
+        private readonly By requisitionTotalAmountContent = By.XPath("//div[contains(text(),'Payment')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Total amount')]/parent::div/following-sibling::div");
+        private readonly By requisitionTotalAmountInput = By.Id("input-totalAmount");
 
-        private By requisitionFinancialActivitiesSubtitle = By.XPath("//div[contains(text(),'Financial Activities')]");
-        private By requisitionActivitiesSubtitle = By.XPath("//div[contains(text(),'Activities')]");
-        private By requisitionAddActivityBttn = By.CssSelector("button[data-testid='add-financial-activity']");
+        private readonly By requisitionFinancialActivitiesSubtitle = By.XPath("//div[contains(text(),'Financial Activities')]");
+        private readonly By requisitionActivitiesSubtitle = By.XPath("//div[contains(text(),'Activities')]");
+        private readonly By requisitionAddActivityBttn = By.CssSelector("button[data-testid='add-financial-activity']");
 
-        private By requisitionDetailRemarksLabel = By.XPath("//label[contains(text(),'Detailed remarks')]");
-        private By requisitionDetailRemarksContent = By.XPath("//label[contains(text(),'Detailed remarks')]/parent::div/following-sibling::div");
-        private By requisitionDetailRemarksTextarea = By.Id("input-detailedRemarks");
+        private readonly By requisitionDetailRemarksLabel = By.XPath("//label[contains(text(),'Detailed remarks')]");
+        private readonly By requisitionDetailRemarksContent = By.XPath("//label[contains(text(),'Detailed remarks')]/parent::div/following-sibling::div");
+        private readonly By requisitionDetailRemarksTextarea = By.Id("input-detailedRemarks");
 
-        private By requisitionFooterCompensationAmountLabel = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Compensation amount')]");
-        private By requisitionFooterCompensationAmountContent = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Compensation amount')]/parent::div/following-sibling::div");
-        private By requisitionFooterApplicableGSTLabel = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Applicable GST')]");
-        private By requisitionFooterApplicableGSTContent = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Applicable GST')]/parent::div/following-sibling::div");
-        private By requisitionFooterTotalChequeAmountLabel = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Total cheque amount')]");
-        private By requisitionFooterTotalChequeAmountContent = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Total cheque amount')]/parent::div/following-sibling::div");
+        private readonly By requisitionFooterCompensationAmountLabel = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Compensation amount')]");
+        private readonly By requisitionFooterCompensationAmountContent = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Compensation amount')]/parent::div/following-sibling::div");
+        private readonly By requisitionFooterApplicableGSTLabel = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Applicable GST')]");
+        private readonly By requisitionFooterApplicableGSTContent = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Applicable GST')]/parent::div/following-sibling::div");
+        private readonly By requisitionFooterTotalChequeAmountLabel = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Total cheque amount')]");
+        private readonly By requisitionFooterTotalChequeAmountContent = By.XPath("//div[contains(text(),'Financial Activities')]/parent::div/parent::h2/parent::div/following-sibling::div/div/div/div/div/label[contains(text(),'Total cheque amount')]/parent::div/following-sibling::div");
 
         //Activities Count
-        private By requisitionFinancialActivitiesCount = By.XPath("//div[contains(text(),'Activities')]/parent::div/parent::h2/following-sibling::div/div/div/label");
+        private readonly By requisitionFinancialActivitiesCount = By.XPath("//div[contains(text(),'Activities')]/parent::div/parent::h2/following-sibling::div/div/div/label");
 
         //Compensation Details Elements
-        private By requisitionCancelBttn = By.XPath("//button[@id='close-tray']/parent::div/following-sibling::div/div/div/div/div/div/button/div[contains(text(),'Cancel')]");
+        private readonly By requisitionCancelBttn = By.XPath("//button[@id='close-tray']/parent::div/following-sibling::div/div/div/div/div/div/button/div[contains(text(),'Cancel')]");
 
         //Acquisition File Confirmation Modal Elements
-        private By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
+        private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
         private SharedModals sharedModals;
 
@@ -177,7 +178,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddCompensationBttn()
         {
-            Wait();
+            Wait(4000);
             webDriver.FindElement(compensationAddBttn).Click();
 
             WaitUntilSpinnerDisappear();
@@ -187,8 +188,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']"));
-            webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button div svg[data-testid='compensation-view-"+ index +"']")).Click();
+            WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']"));
+            webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']")).Click();
         }
 
         public void DeleteCompensationRequisition(int index)
@@ -211,7 +212,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             ButtonElement("Save");
-
+            
+            Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("Confirm status change", sharedModals.ModalHeader());
@@ -246,7 +248,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void DeleteFirstActivity()
         {
             Wait();
-            FocusAndClick(By.XPath("//div[@data-testid='finacialActivity[0]']/div/button[@title='Delete financial activity']"));
+            FocusAndClick(By.XPath("//div[@data-testid='finacialActivity[0]']/div/button[@title='Delete Financial Activity']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
@@ -292,26 +294,26 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(requisitionAgreementInput).SendKeys(Keys.Enter);
             }
 
-            if (compensation.CompensationExpropriationNoticeDate != "")
-            {
-                ClearInput(requisitionExpropriationServedInput);
-                webDriver.FindElement(requisitionExpropriationServedInput).SendKeys(compensation.CompensationExpropriationNoticeDate);
-                webDriver.FindElement(requisitionExpropriationServedInput).SendKeys(Keys.Enter);
-            }
+            //if (compensation.CompensationExpropriationNoticeDate != "")
+            //{
+            //    ClearInput(requisitionExpropriationServedInput);
+            //    webDriver.FindElement(requisitionExpropriationServedInput).SendKeys(compensation.CompensationExpropriationNoticeDate);
+            //    webDriver.FindElement(requisitionExpropriationServedInput).SendKeys(Keys.Enter);
+            //}
 
-            if (compensation.CompensationExpropriationVestingDate != "")
-            {
-                ClearInput(requisitionExpropriationVestingInput);
-                webDriver.FindElement(requisitionExpropriationVestingInput).SendKeys(compensation.CompensationExpropriationVestingDate);
-                webDriver.FindElement(requisitionExpropriationVestingInput).SendKeys(Keys.Enter);
-            }
+            //if (compensation.CompensationExpropriationVestingDate != "")
+            //{
+            //    ClearInput(requisitionExpropriationVestingInput);
+            //    webDriver.FindElement(requisitionExpropriationVestingInput).SendKeys(compensation.CompensationExpropriationVestingDate);
+            //    webDriver.FindElement(requisitionExpropriationVestingInput).SendKeys(Keys.Enter);
+            //}
 
-            if (compensation.CompensationAdvancedPaymentDate != "")
-            {
-                ClearInput(requisitionAdvancePaymentInput);
-                webDriver.FindElement(requisitionAdvancePaymentInput).SendKeys(compensation.CompensationAdvancedPaymentDate);
-                webDriver.FindElement(requisitionAdvancePaymentInput).SendKeys(Keys.Enter);
-            }
+            //if (compensation.CompensationAdvancedPaymentDate != "")
+            //{
+            //    ClearInput(requisitionAdvancePaymentInput);
+            //    webDriver.FindElement(requisitionAdvancePaymentInput).SendKeys(compensation.CompensationAdvancedPaymentDate);
+            //    webDriver.FindElement(requisitionAdvancePaymentInput).SendKeys(Keys.Enter);
+            //}
 
             if (compensation.CompensationSpecialInstructions != "")
             {
@@ -349,8 +351,34 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Payment
-            if (compensation.CompensationPayee != "")
-                ChooseSpecificSelectOption(requisitionPayeeSelect, compensation.CompensationPayee);
+            //Delete Payees previously selected if any
+            if (webDriver.FindElements(requisitionPayeeDeleteBttns).Count > 0)
+            {
+                Wait();
+                FocusAndClick(requisitionPayeeMultiselect);
+                while (webDriver.FindElements(requisitionPayeeDeleteBttns).Count > 0)
+                {
+                    webDriver.FindElement(requisitionPayeeLabel).Click();
+                    webDriver.FindElements(requisitionPayeeDeleteBttns)[0].Click();
+                }
+                webDriver.FindElement(requisitionPayeeLabel).Click();
+            }
+
+            if (compensation.CompensationPayee.First() != "")
+            {
+                foreach (string payee in compensation.CompensationPayee)
+                {
+                    Wait(2000);
+                    webDriver.FindElement(requisitionPayeeLabel).Click();
+                    FocusAndClick(requisitionPayeeMultiselect);
+
+                    Wait(2000);
+                    ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
+                    webDriver.FindElement(requisitionPayeeLabel).Click();
+                }
+
+                webDriver.FindElement(requisitionPayeeLabel).Click();
+            }
 
             if (compensation.CompensationPaymentInTrust)
                 FocusAndClick(requisitionPaymentInTrustCheckbox);
@@ -376,7 +404,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void VerifyCompensationInitTabView()
+        public void VerifyCompensationInitTabView(string fileType)
         {
             AssertTrueIsDisplayed(compensationAddSubtitle);
             AssertTrueIsDisplayed(compensationAddBttn);
@@ -385,8 +413,24 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(compensationTotalAllowableContent);
             AssertTrueIsDisplayed(compensationTotalAllowableEdiBttn);
 
-            AssertTrueIsDisplayed(compensationTotalPaymentsMadeLabel);
-            AssertTrueIsDisplayed(compensationTotalPaymentsMadeContent);
+            if (fileType == "Acquisition")
+            {
+                AssertTrueIsDisplayed(compensationMainPaymentsMadeLabel);
+                AssertTrueIsDisplayed(compensationMainPaymentsMadeContent);
+
+                AssertTrueIsDisplayed(compensationMainTotalPaymentsMadeLabel);
+                AssertTrueIsDisplayed(compensationMainTotalPaymentsMadeContent);
+            }
+            else if (fileType == "Lease")
+            {
+                AssertTrueIsDisplayed(compensationPaymentsMadeLabel);
+                AssertTrueIsDisplayed(compensationPaymentsMadeContent);
+            }
+            else
+            {
+                AssertTrueIsDisplayed(compensationPaymentsMadeSubfileLabel);
+                AssertTrueIsDisplayed(compensationPaymentsMadeSubfileContent);
+            }
 
             AssertTrueIsDisplayed(compensationDraftsTotalLabel);
             AssertTrueIsDisplayed(compensationDraftsTotalContent);
@@ -409,7 +453,7 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElements(compensationH120TotalCount).Count();
         }
 
-        public void VerifyCompensationDetailsInitViewForm(string fileType)
+        public void VerifyCompensationDetailsInitViewForm()
         {
             //Title
             AssertTrueIsDisplayed(compensationDetailsTitle);
@@ -435,14 +479,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionAltProjectLabel);
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
             AssertTrueIsDisplayed(requisitionAgreementLabel);
-
-            if (fileType == "Acquisition File")
-            {
-                AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
-                AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
-                AssertTrueIsDisplayed(requisitionAdvancePaymentLabel);
-            }
-            
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
 
             //Financial Coding
@@ -491,12 +527,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
             AssertTrueIsDisplayed(requisitionAgreementLabel);
             AssertTrueIsDisplayed(requisitionAgreementInput);
-            AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
-            AssertTrueIsDisplayed(requisitionExpropriationServedInput);
-            AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
-            AssertTrueIsDisplayed(requisitionExpropriationVestingInput);
-            AssertTrueIsDisplayed(requisitionAdvancePaymentLabel);
-            AssertTrueIsDisplayed(requisitionAdvancePaymentInput);
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueIsDisplayed(requisitionSpecialInstructionTextarea);
 
@@ -518,7 +548,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Payment
             AssertTrueIsDisplayed(requisitionPaymentSubtitle);
             AssertTrueIsDisplayed(requisitionPayeeLabel);
-            AssertTrueIsDisplayed(requisitionPayeeSelect);
+            AssertTrueIsDisplayed(requisitionPayeeMultiselect);
             AssertTrueIsDisplayed(requisitionPaymentInTrustLabel);
             AssertTrueIsDisplayed(requisitionPaymentInTrustCheckbox);
             AssertTrueIsDisplayed(requisitionGSTNumberLabel);
@@ -565,18 +595,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionStatusLabel);
             AssertTrueContentEquals(requisitionStatusContent, compensation.CompensationStatus);
             AssertTrueIsDisplayed(requisitionAltProjectLabel);
-            AssertTrueContentEquals(requisitionAltProjectContent, TransformProjectFormat(compensation.CompensationAlternateProject));
+            if(compensation.CompensationAlternateProject != "")
+                AssertTrueContentEquals(requisitionAltProjectContent, TransformProjectFormat(compensation.CompensationAlternateProject));
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
             AssertTrueIsDisplayed(requisitionAgreementLabel);
             AssertTrueContentEquals(requisitionAgreementContent, TransformDateFormat(compensation.CompensationAgreementDate));
-            if (fileType == "Acquisition File")
-            {
-                AssertTrueIsDisplayed(requsitionExpropriationServedLabel);
-                AssertTrueContentEquals(requsitionExpropriationServedContent, TransformDateFormat(compensation.CompensationExpropriationNoticeDate));
-                AssertTrueIsDisplayed(requisitionExpropriationVestingLabel);
-                AssertTrueContentEquals(requisitionExpropriationVestingContent, TransformDateFormat(compensation.CompensationExpropriationVestingDate));
-            }
-            
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueContentEquals(requisitionSpecialInstructionContent, compensation.CompensationSpecialInstructions);
 
@@ -605,20 +628,15 @@ namespace PIMS.Tests.Automation.PageObjects
             //Payee
             AssertTrueIsDisplayed(requisitionPayeeLabel);
 
-            if (webDriver.FindElements(requisitionPayeeContentLink).Count > 0)
-                AssertTrueContentEquals(requisitionPayeeContentLink, compensation.CompensationPayeeDisplay);
-
-            else if(webDriver.FindElements(requisitionPayeeContent).Count > 0)
-                AssertTrueElementContains(requisitionPayeeContent, compensation.CompensationPayeeDisplay);
-
-            if (compensation.CompensationPaymentInTrust)
-            {
-                if(webDriver.FindElements(requisitionPaymentInTrustContent2).Count > 0)
-                    AssertTrueContentEquals(requisitionPaymentInTrustContent2, ", in trust");
-                else if(webDriver.FindElements(requisitionPaymentInTrustContent1).Count > 0)
-                    AssertTrueContentEquals(requisitionPaymentInTrustContent1, ", in trust");
-            }
-                
+            if (webDriver.FindElements(requisitionPayeeContentCount).Count > 0)
+                for (int i = 0; i < compensation.CompensationPayee.Count; i++)
+                {
+                    var elementIndex = i + 1;
+                    AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), compensation.CompensationPayeeDisplay[i]);
+                    if (compensation.CompensationPaymentInTrust)
+                        AssertTrueElementContains(By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div["+ elementIndex +"]"), "in trust");
+                }
+                     
             AssertTrueIsDisplayed(requisitionAmountLabel);
             AssertTrueContentEquals(requisitionAmountContent, TransformCurrencyFormat(compensation.CompensationAmount));
 
@@ -659,6 +677,36 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(requisitionFooterTotalChequeAmountContent, TransformCurrencyFormat(compensation.CompensationTotalAmount));
         }
 
+        public void VerifyCompensationsTotalDetails(AcquisitionFile acquisition, string fileType)
+        {
+            Wait();
+
+            AssertTrueIsDisplayed(compensationTotalAllowableLabel);
+            AssertTrueContentEquals(compensationTotalAllowableContent, TransformCurrencyFormat(acquisition.AcquisitionCompensationTotalAllowableAmount));
+
+            if (fileType == "Main")
+            {
+                AssertTrueIsDisplayed(compensationMainPaymentsMadeLabel);
+                AssertTrueContentEquals(compensationMainPaymentsMadeContent, TransformCurrencyFormat(acquisition.AcquisitionCompensationMainFileTotal));
+
+                AssertTrueIsDisplayed(compensationMainTotalPaymentsMadeLabel);
+                AssertTrueContentEquals(compensationMainTotalPaymentsMadeContent, TransformCurrencyFormat(acquisition.AcquisitionCompensationSubfilesMainFileTotal));
+            }
+            else if (fileType == "Subfile")
+            {
+                AssertTrueIsDisplayed(compensationPaymentsMadeSubfileLabel);
+                AssertTrueContentEquals(compensationPaymentsMadeSubfileContent, TransformCurrencyFormat(acquisition.AcquisitionCompensationMainFileTotal));
+            }
+            else
+            {
+                AssertTrueIsDisplayed(compensationPaymentsMadeLabel);
+                AssertTrueContentEquals(compensationPaymentsMadeContent, TransformCurrencyFormat(acquisition.AcquisitionCompensationMainFileTotal));
+            }
+
+            AssertTrueIsDisplayed(compensationDraftsTotalLabel);
+            AssertTrueContentEquals(compensationDraftsTotalContent, TransformCurrencyFormat(acquisition.AcquisitionCompensationDraftTotal));
+        }
+
         public void VerifyCompensationListView(Compensation compensation)
         {
             var lastCreatedCompensationReq = webDriver.FindElements(compensationH120TotalCount).Count;
@@ -666,7 +714,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(3)"), TransformCurrencyFormat(compensation.CompensationTotalAmount));
             AssertTrueContentEquals(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+lastCreatedCompensationReq+")  div:nth-child(4)"), compensation.CompensationStatus);
-            AssertTrueIsDisplayed(By.CssSelector("button svg[data-testid='compensation-view-"+ elementIndex +"']"));
+            AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-view-"+ elementIndex +"']"));
             AssertTrueIsDisplayed(By.CssSelector("button[data-testid='compensation-delete-"+ elementIndex +"']"));
         }
 
@@ -682,7 +730,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Verify Form
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/label[contains(text(),'Activity')]"));
-            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/button[@title='Delete financial activity']"));
+            AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/button[@title='Delete Financial Activity']"));
 
             AssertTrueIsDisplayed(By.XPath("//div[@data-testid='finacialActivity["+ index +"]']/div/div/label[contains(text(),'Code & Description')]"));
             AssertTrueIsDisplayed(By.Id("typeahead-select-financials."+ index +".financialActivityCodeId"));

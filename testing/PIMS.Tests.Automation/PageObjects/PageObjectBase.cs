@@ -139,7 +139,7 @@ namespace PIMS.Tests.Automation.PageObjects
             var js = (IJavaScriptExecutor)webDriver;
 
             var childrenElements = webDriver.FindElements(parentName);
-            var selectedOption = childrenElements.Should().ContainSingle(o => o.GetAttribute("value").Equals(option)).Subject;
+            var selectedOption = childrenElements.Should().ContainSingle(o => o.GetDomProperty("value").Equals(option)).Subject;
 
             System.Diagnostics.Debug.WriteLine(selectedOption);
 
@@ -164,7 +164,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(elementBy);
 
             var element = webDriver.FindElement(elementBy);
-            while (!element.GetAttribute("value").Equals(""))
+            while (!element.GetDomProperty("value").Equals(""))
             {
                 element.SendKeys(Keys.Backspace);
             }
@@ -173,7 +173,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void ClearDigitsInput(By elementBy)
         {
             var element = webDriver.FindElement(elementBy);
-            while (!element.GetAttribute("value").Equals("0"))
+            while (!element.GetDomProperty("value").Equals("0"))
             {
                 element.SendKeys(Keys.Backspace);
             }
@@ -207,7 +207,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void AssertTrueElementValueEquals(By elementBy, string text = "")
         {
             WaitUntilVisible(elementBy);
-            Assert.Equal(text, webDriver.FindElement(elementBy).GetAttribute("Value"));
+            Assert.Equal(text, webDriver.FindElement(elementBy).GetDomProperty("value"));
         }
 
         protected void AssertTrueContentNotEquals(By elementBy, string text)
@@ -220,7 +220,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             
             WaitUntilVisible(elementBy);
-            var numberFromElement = webDriver.FindElement(elementBy).GetAttribute("Value");
+            var numberFromElement = webDriver.FindElement(elementBy).GetDomProperty("value");
             var number1 = Math.Round(double.Parse(numberFromElement), 4, MidpointRounding.ToEven).ToString();
             var roundedNumber2 = Math.Round(number2, 4, MidpointRounding.ToEven).ToString();
 

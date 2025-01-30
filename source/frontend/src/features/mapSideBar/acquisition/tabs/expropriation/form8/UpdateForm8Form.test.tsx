@@ -4,10 +4,19 @@ import { createRef } from 'react';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  render,
+  RenderOptions,
+  userEvent,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import { Form8FormModel } from './models/Form8FormModel';
 import UpdateForm8Form, { IForm8FormProps } from './UpdateForm8Form';
+import { mockGetExpropriationPaymentApi } from '@/mocks/ExpropriationPayment.mock';
+import { PayeeOption } from '../../../models/PayeeOptionModel';
 
 const currentGstPercent = 0.05;
 const onSave = vi.fn();
@@ -26,7 +35,7 @@ describe('Form 8 UpdateForm component', () => {
         onSave={onSave}
         onCancel={onCancel}
         onSuccess={onSucces}
-        payeeOptions={[]}
+        payeeOptions={renderOptions.props?.payeeOptions ?? []}
         initialValues={renderOptions.props?.initialValues ?? defatulForm8Model}
         gstConstant={currentGstPercent}
       />,
@@ -49,6 +58,11 @@ describe('Form 8 UpdateForm component', () => {
         ) as HTMLInputElement,
       getDescriptionTextbox: () =>
         utils.container.querySelector('textarea[name="description"]') as HTMLInputElement,
+      getAdvancedPaymentServedDate: () => {
+        return utils.container.querySelector(
+          `input[name="advancedPaymentServedDate"]`,
+        ) as HTMLInputElement;
+      },
       getSaveButton: () => utils.getByText(/Save/i),
     };
   };
@@ -63,13 +77,33 @@ describe('Form 8 UpdateForm component', () => {
       getPayeeOptionSelect,
       getExpropriationAuthoritySelect,
       getDescriptionTextbox,
+      getAdvancedPaymentServedDate,
     } = await setup({});
 
     expect(getPayeeOptionSelect()).toHaveValue('');
     expect(getExpropriationAuthoritySelect()).toHaveValue('');
     expect(getDescriptionTextbox()).toHaveValue('');
+    expect(getAdvancedPaymentServedDate()).toHaveValue('');
 
     expect(queryByTestId(`paymentItems[0]`)).not.toBeInTheDocument();
+  });
+
+  it('displays the Form8 values from api', async () => {
+    const mockExpropiationPaymentApi = mockGetExpropriationPaymentApi(1, 1);
+    const ownerMockOption = PayeeOption.createOwner(mockExpropiationPaymentApi.acquisitionOwner);
+
+    const { getAdvancedPaymentServedDate, getDescriptionTextbox, getPayeeOptionSelect } =
+      await setup({
+        props: {
+          initialValues: Form8FormModel.fromApi(mockExpropiationPaymentApi),
+          payeeOptions: [ownerMockOption],
+        },
+      });
+
+    await waitForEffects();
+    expect(getAdvancedPaymentServedDate()).toHaveValue('Jan 02, 2025');
+    expect(getDescriptionTextbox()).toHaveValue('MY DESCRIPTION');
+    expect(getPayeeOptionSelect()).toHaveDisplayValue('John Doe Jr. (Owner)');
   });
 
   it('validates that only one payment item per type is added', async () => {

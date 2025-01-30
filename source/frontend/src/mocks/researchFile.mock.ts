@@ -1,4 +1,6 @@
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
 import { getEmptyOrganization } from './organization.mock';
 import { getMockApiProperty } from './properties.mock';
@@ -132,4 +134,46 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
   rowVersion: 1,
   requestorPerson: null,
   requestSourceDescription: null,
+});
+
+export const getMockResearchFileProperty = (
+  id = 1,
+  fileId = 100,
+): ApiGen_Concepts_ResearchFileProperty => ({
+  id,
+  fileId,
+  propertyName: 'Corner of Nakya PL',
+  propertyId: 495,
+
+  propertyResearchPurposeTypes: [
+    {
+      id: 22,
+      propertyResearchPurposeTypeCode: {
+        id: 'FORM12',
+        description: 'Form 12',
+        isDisabled: false,
+        displayOrder: null,
+      },
+      ...getEmptyBaseAudit(1),
+    },
+    {
+      id: 23,
+      propertyResearchPurposeTypeCode: {
+        id: 'DOTHER',
+        description: 'District Other',
+        isDisabled: false,
+        displayOrder: null,
+      },
+      ...getEmptyBaseAudit(1),
+    },
+  ],
+  rowVersion: 1,
+  isLegalOpinionRequired: null,
+  isLegalOpinionObtained: null,
+  documentReference: null,
+  researchSummary: null,
+  file: null,
+  displayOrder: null,
+  property: null,
+  location: null,
 });

@@ -1,71 +1,68 @@
+import { useGenerateH120 } from '@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH120';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import {
-  mockAcquisitionFileResponse,
-  mockApiAcquisitionFileTeamOrganization,
-  mockApiAcquisitionFileTeamPerson,
-} from '@/mocks/acquisitionFiles.mock';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import {
   getMockApiDefaultCompensation,
   getMockCompensationPropertiesReq,
 } from '@/mocks/compensations.mock';
-import { getEmptyPerson } from '@/mocks/contacts.mock';
-import { emptyApiInterestHolder } from '@/mocks/interestHolder.mock';
-import { getEmptyOrganization, getMockOrganization } from '@/mocks/organization.mock';
-import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { getMockOrganization } from '@/mocks/organization.mock';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
-import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import {
   CompensationRequisitionDetailContainer,
   CompensationRequisitionDetailContainerProps,
 } from './CompensationRequisitionDetailContainer';
 import { CompensationRequisitionDetailViewProps } from './CompensationRequisitionDetailView';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 vi.mock('@/hooks/pims-api/useApiContacts');
 vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
+vi.mock('@/features/mapSideBar/acquisition/common/GenerateForm/hooks/useGenerateH120');
 
 const getPersonConceptFn = vi.fn();
 const getOrganizationConceptFn = vi.fn();
 const setEditMode = vi.fn();
+const onGenerate = vi.fn();
 
-const mockGetCompReqPropertiesApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
+const mockGetCompReqPropertiesApi = getMockRepositoryObj();
+const mockGetCompReqPayeesApi = getMockRepositoryObj([]);
 
-vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
-  useCompensationRequisitionRepository: () => {
-    return {
-      getCompensationRequisitionProperties: mockGetCompReqPropertiesApi,
-    };
-  },
-}));
+vi.mocked(useCompensationRequisitionRepository, { partial: true }).mockReturnValue({
+  getCompensationRequisitionProperties: mockGetCompReqPropertiesApi,
+  getCompensationRequisitionPayees: mockGetCompReqPayeesApi,
+});
 
-vi.mocked(useApiContacts).mockImplementation(
-  () =>
-    ({
-      getPersonConcept: getPersonConceptFn,
-      getOrganizationConcept: getOrganizationConceptFn,
-    } as unknown as ReturnType<typeof useApiContacts>),
-);
+vi.mocked(useApiContacts, { partial: true }).mockReturnValue({
+  getPersonConcept: getPersonConceptFn,
+  getOrganizationConcept: getOrganizationConceptFn,
+});
 
-let viewProps: CompensationRequisitionDetailViewProps;
-const CompensationViewComponent = (props: CompensationRequisitionDetailViewProps) => {
+vi.mocked(useGenerateH120).mockReturnValue(onGenerate);
+
+let viewProps: CompensationRequisitionDetailViewProps | undefined;
+
+const TestView = (props: CompensationRequisitionDetailViewProps) => {
   viewProps = props;
-  return <></>;
+  return <>Content Rendered</>;
 };
 
 describe('Compensation Detail View container', () => {
-  const setup = (
-    renderOptions: RenderOptions & { props?: Partial<CompensationRequisitionDetailContainerProps> },
+  const setup = async (
+    renderOptions: RenderOptions & {
+      props?: Partial<CompensationRequisitionDetailContainerProps>;
+    } = {},
   ) => {
     const utils = render(
       <CompensationRequisitionDetailContainer
-        View={CompensationViewComponent}
-        {...renderOptions.props}
+        View={TestView}
         loading={renderOptions.props?.loading ?? false}
         setEditMode={setEditMode}
         compensation={renderOptions.props?.compensation ?? getMockApiDefaultCompensation()}
@@ -79,12 +76,17 @@ describe('Compensation Detail View container', () => {
       },
     );
 
+    // wait for useEffect to complete
+    await waitForEffects();
+
     return {
       ...utils,
     };
   };
 
   beforeEach(() => {
+    viewProps = undefined;
+
     getPersonConceptFn.mockResolvedValue({
       data: {
         id: 1,
@@ -104,109 +106,34 @@ describe('Compensation Detail View container', () => {
     vi.clearAllMocks();
   });
 
-  it('makes request to get person concept for acquisition team payee', async () => {
-    const teamPerson = mockApiAcquisitionFileTeamPerson();
-    setup({
-      props: {
-        compensation: {
-          ...getMockApiDefaultCompensation(),
-          acquisitionFileTeamId: teamPerson.id ?? 1,
-          acquisitionFileTeam: teamPerson,
-        },
-      },
-    });
+  it('renders the underlying form', async () => {
+    const { getByText } = await setup();
 
-    await waitForEffects();
-    expect(getPersonConceptFn).toHaveBeenCalled();
-    expect(viewProps.compensationContactPerson).toStrictEqual({
-      id: 1,
-      firstName: 'first',
-      surname: 'last',
-    } as ApiGen_Concepts_Person);
+    expect(getByText(/Content Rendered/)).toBeVisible();
+    expect(viewProps.fileType).toBe(ApiGen_CodeTypes_FileTypes.Acquisition);
+    expect(viewProps.clientConstant).toBe('034');
+    expect(viewProps.compensationPayees).toEqual([]);
   });
 
   it('makes request to get the properties selected for the compensation requisition', async () => {
-    const teamPerson = mockApiAcquisitionFileTeamPerson();
-    setup({
-      props: {
-        compensation: {
-          ...getMockApiDefaultCompensation(),
-          acquisitionFileTeamId: teamPerson.id ?? 1,
-          acquisitionFileTeam: teamPerson,
-        },
-      },
-    });
+    await setup({ props: { compensation: getMockApiDefaultCompensation() } });
 
-    await waitForEffects();
-
-    expect(mockGetCompReqPropertiesApi.execute).toHaveBeenCalled();
+    expect(mockGetCompReqPropertiesApi.execute).toHaveBeenCalledWith(
+      ApiGen_CodeTypes_FileTypes.Acquisition,
+      1,
+    );
   });
 
-  it('makes request to get organization concept for acquisition team payee', async () => {
-    const teamOrg = mockApiAcquisitionFileTeamOrganization();
-    setup({
-      props: {
-        compensation: {
-          ...getMockApiDefaultCompensation(),
-          acquisitionFileTeamId: teamOrg.id ?? 1,
-          acquisitionFileTeam: teamOrg,
-        },
-      },
-    });
+  it('makes request to get the payees for the compensation requisition', async () => {
+    await setup({ props: { compensation: getMockApiDefaultCompensation() } });
 
-    await waitForEffects();
-    expect(getOrganizationConceptFn).toHaveBeenCalled();
-    expect(viewProps.compensationContactOrganization).toStrictEqual(getMockOrganization());
+    expect(mockGetCompReqPayeesApi.execute).toHaveBeenCalledWith(1);
   });
 
-  it('makes request to get person concept for interest holder payee', async () => {
-    const ihPerson: ApiGen_Concepts_InterestHolder = {
-      ...emptyApiInterestHolder,
-      interestHolderId: 1,
-      acquisitionFileId: 2,
-      personId: 1,
-      person: { ...getEmptyPerson(), id: 1, firstName: 'first', surname: 'last' },
-    };
-    setup({
-      props: {
-        compensation: {
-          ...getMockApiDefaultCompensation(),
-          interestHolderId: ihPerson.interestHolderId,
-          interestHolder: ihPerson,
-        },
-      },
-    });
+  it('calls onGenerate when generation button is clicked', async () => {
+    await setup({ props: { compensation: getMockApiDefaultCompensation() } });
 
-    await waitForEffects();
-    expect(getPersonConceptFn).toHaveBeenCalled();
-    expect(viewProps.compensationContactPerson).toStrictEqual({
-      id: 1,
-      firstName: 'first',
-      surname: 'last',
-    } as ApiGen_Concepts_Person);
-  });
-
-  it('makes request to get organization concept for interest holder payee', async () => {
-    const ihOrg: ApiGen_Concepts_InterestHolder = {
-      ...emptyApiInterestHolder,
-      interestHolderId: 1,
-      acquisitionFileId: 2,
-      organizationId: 100,
-      organization: { ...getEmptyOrganization(), id: 100, name: 'ABC Inc' },
-    };
-
-    setup({
-      props: {
-        compensation: {
-          ...getMockApiDefaultCompensation(),
-          interestHolderId: ihOrg.interestHolderId,
-          interestHolder: ihOrg,
-        },
-      },
-    });
-
-    await waitForEffects();
-    expect(getOrganizationConceptFn).toHaveBeenCalled();
-    expect(viewProps.compensationContactOrganization).toStrictEqual(getMockOrganization());
+    await act(async () => viewProps.onGenerate(viewProps.fileType, viewProps.compensation));
+    expect(onGenerate).toHaveBeenCalled();
   });
 });

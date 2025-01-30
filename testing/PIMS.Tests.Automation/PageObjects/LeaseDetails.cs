@@ -273,10 +273,10 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string purpose in lease.LeasePurpose)
                 {
-                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();
-                    FocusAndClick(licenseDetailsPurposeMultiselector);
+                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();                 
 
-                    Wait(5000);
+                    Wait();
+                    FocusAndClick(licenseDetailsPurposeMultiselector);
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
@@ -639,7 +639,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsExpiryDateInput);
 
             //Properties to include in this file
-            sharedSearchProperties.VerifyLocateOnMapFeature();
+            sharedSearchProperties.VerifyLocateOnMapFeature("Lease");
 
             //Administration
             AssertTrueIsDisplayed(licenseDetailsAdmSubtitle);

@@ -1,5 +1,14 @@
 import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useReducer, useRef, useState } from 'react';
+import { LatLngLiteral } from 'leaflet';
+import React, {
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useReducer,
+  useRef,
+  useState,
+} from 'react';
 import * as Yup from 'yup';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
@@ -24,6 +33,7 @@ import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stake
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { exists, getLatLng, locationFromFileProperty } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import MapSideBarLayout from '../layout/MapSideBarLayout';
@@ -213,6 +223,19 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
   } = useLeaseRepository();
 
+  const { setFilePropertyLocations } = useMapStateMachine();
+
+  const locations: LatLngLiteral[] = useMemo(() => {
+    if (exists(lease?.fileProperties)) {
+      return lease?.fileProperties
+        .map(x => locationFromFileProperty(x))
+        .map(y => getLatLng(y))
+        .filter(exists);
+    } else {
+      return [];
+    }
+  }, [lease?.fileProperties]);
+
   const onChildSuccess = useCallback(() => {
     setStaleLastUpdatedBy(true);
   }, [setStaleLastUpdatedBy]);
@@ -296,6 +319,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       fetchLastUpdatedBy();
     }
   }, [fetchLastUpdatedBy, lastUpdatedBy, leaseId, staleLastUpdatedBy]);
+
+  useEffect(() => {
+    setFilePropertyLocations(locations);
+  }, [setFilePropertyLocations, locations]);
 
   return (
     <MapSideBarLayout

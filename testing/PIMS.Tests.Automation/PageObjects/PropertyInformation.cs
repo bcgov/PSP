@@ -40,7 +40,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyInformationHeaderPlanLabel = By.XPath("//label[contains(text(),'Plan')]");
         private readonly By propertyInformationHeaderPlanContent = By.XPath("//label[contains(text(),'Plan #')]/parent::div/following-sibling::div");
         private readonly By propertyInformationHeaderHistoricFileLabel = By.XPath("//label[contains(text(),'Historical file #:')]");
-        private readonly By propertyInformationHeaderHistoricFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
+        private readonly By propertyInformationHeaderHistoricFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/span");
         private readonly By propertyInformationHeaderPIDLabel = By.XPath("//label[contains(text(),'PID')]");
         private readonly By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
         private readonly By propertyInformationHeaderLandTypeLabel = By.XPath("//h1/parent::div/parent::div/following-sibling::div/div/div/div[2]/div/div/div/label[contains(text(),'Land parcel type')]");
@@ -139,8 +139,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsGeneralLocationContent = By.XPath("//label[contains(text(),'General location')]/parent::div/following-sibling::div");
 
         private readonly By propertyDetailsAttributesTitle = By.XPath("//div[contains(text(),'Property Attributes')]");
-        private readonly By propertyDetailsAttrLegalDescLabel = By.XPath("//label[contains(text(),'Legal Description')]");
-        private readonly By propertyDetailsAttrLegalDescContent = By.XPath("//label[contains(text(),'Legal Description')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsAttrLegalDescLabel = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Legal description')]");
+        private readonly By propertyDetailsAttrLegalDescContent = By.XPath("//div[contains(text(),'Property Attributes')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Legal description')]/parent::div/following-sibling::div");
         private readonly By propertyDetailsAttrRegionLabel = By.XPath("//label[contains(text(),'MOTI region')]");
         private readonly By propertyDetailsAttrRegionDiv = By.XPath("//label[contains(text(),'MOTI region')]/parent::div/following-sibling::div");
         private readonly By propertyDetailsAttrHighwayLabel = By.XPath("//label[contains(text(),'Highways district')]");
@@ -192,7 +192,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsMeasurementTypeLabel = By.XPath("//label[contains(text(),'Type')]");
         private readonly By propertyDetailsMeasurementTypeContent = By.XPath("//label[contains(text(),'Type')]/parent::div/following-sibling::div");
 
-        private readonly By propertyDetailsViewNotesTitle = By.XPath("//div[contains(text(),'Measurements')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Notes')]");
+        private readonly By propertyDetailsViewNotesTitle = By.XPath("//div[contains(text(),'Measurements')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Comments')]");
         private readonly By propertyDetailsEditNotesTitle = By.XPath("//h2/div/div[contains(text(),'Comments')]");
         private readonly By propertyDetailsViewNotesContent = By.XPath("//div[contains(text(),'Comments')]/parent::div/parent::h2/following-sibling::div/p");
 
@@ -213,7 +213,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsGeneralLocationInput = By.Id("input-generalLocation");
 
         private readonly By propertyAttrAddHistoricalFileButton = By.CssSelector("button[data-testid='add-historical-number']");
-        private readonly By propertyAttrHistoricalFilesTotalCount = By.XPath("//label[contains(text(),'Historical File #')]/parent::div/following-sibling::div/div");
+        private readonly By propertyAttrHistoricalFilesTotalCount = By.XPath("//label[contains(text(),'Historical file #')]/parent::div/following-sibling::div/div");
         private readonly By propertyAttributesHistoricalFile1stDeleteButton = By.CssSelector("div[data-testid='historical-number-row-0'] button");
         private readonly By propertyAttributesLegalDescriptionInput = By.Id("input-landLegalDescription");
         private readonly By propertyDetailsMotiRegionSelect = By.Id("input-regionTypeCode");
@@ -990,7 +990,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int PropertyTabs()
         {
-            Wait();
+            Wait(5000);
             return webDriver.FindElements(propertyInformationTabsTotal).Count();
         }
 

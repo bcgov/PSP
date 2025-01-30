@@ -5,6 +5,7 @@ import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { MdAirlineStops } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import * as CommonStyled from '@/components/common/styles';
@@ -118,8 +119,18 @@ export const DispositionListView: React.FC<unknown> = () => {
     <S.ListPage>
       <S.Scrollable>
         <CommonStyled.H1>
-          <MdAirlineStops title="Disposition file Icon" fill="currentColor" />
-          <span className="ml-2">Disposition Files</span>
+          <FlexDiv>
+            <div>
+              <MdAirlineStops title="Disposition file Icon" fill="currentColor" />
+              <span className="ml-2">Disposition Files</span>
+            </div>
+            {hasClaim(Claims.DISPOSITION_ADD) && (
+              <StyledAddButton onClick={() => history.push('/mapview/sidebar/disposition/new')}>
+                <FaPlus />
+                &nbsp;Add a Disposition File
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
         <S.PageToolbar>
           <Row>
@@ -142,12 +153,7 @@ export const DispositionListView: React.FC<unknown> = () => {
             </Col>
           </Row>
         </S.PageToolbar>
-        {hasClaim(Claims.DISPOSITION_ADD) && (
-          <StyledAddButton onClick={() => history.push('/mapview/sidebar/disposition/new')}>
-            <FaPlus />
-            &nbsp;Add a Disposition File
-          </StyledAddButton>
-        )}
+
         <DispositionSearchResults
           results={results.map(a => DispositionSearchResultModel.fromApi(a))}
           totalItems={totalItems}
@@ -166,3 +172,11 @@ export const DispositionListView: React.FC<unknown> = () => {
 };
 
 export default DispositionListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+`;
