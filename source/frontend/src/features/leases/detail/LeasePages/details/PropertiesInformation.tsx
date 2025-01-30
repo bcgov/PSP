@@ -1,13 +1,10 @@
 import { FieldArray, getIn, useFormikContext } from 'formik';
-import { LatLngLiteral } from 'leaflet';
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
 
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Section } from '@/components/common/Section/Section';
 import { PropertyInformation } from '@/features/leases';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
-import { exists, getLatLng, locationFromFileProperty } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 export interface IPropertiesInformationProps {
@@ -28,23 +25,6 @@ export const PropertiesInformation: React.FunctionComponent<
   const properties: ApiGen_Concepts_PropertyLease[] = React.useMemo(() => {
     return getIn(values, withNameSpace(nameSpace, 'fileProperties')) ?? [];
   }, [values, nameSpace]);
-
-  const { setFilePropertyLocations } = useMapStateMachine();
-
-  const locations: LatLngLiteral[] = useMemo(() => {
-    if (exists(properties)) {
-      return properties
-        .map(x => locationFromFileProperty(x))
-        .map(y => getLatLng(y))
-        .filter(exists);
-    } else {
-      return [];
-    }
-  }, [properties]);
-
-  useEffect(() => {
-    setFilePropertyLocations(locations);
-  }, [setFilePropertyLocations, locations]);
 
   return properties?.length ? (
     <Section initiallyExpanded={true} isCollapsable={true} header="Property Information">
