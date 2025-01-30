@@ -14,7 +14,7 @@ exports[`Contact List View > matches snapshot 1`] = `
 }
 
 <div />
-  .c13.btn {
+  .c15.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -43,19 +43,19 @@ exports[`Contact List View > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c13.btn .Button__value {
+.c15.btn .Button__value {
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
 }
 
-.c13.btn:hover {
+.c15.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c13.btn:focus {
+.c15.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -63,31 +63,31 @@ exports[`Contact List View > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c13.btn.btn-primary {
+.c15.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c13.btn.btn-primary:hover,
-.c13.btn.btn-primary:active,
-.c13.btn.btn-primary:focus {
+.c15.btn.btn-primary:hover,
+.c15.btn.btn-primary:active,
+.c15.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c13.btn.btn-secondary {
+.c15.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c13.btn.btn-secondary:hover,
-.c13.btn.btn-secondary:active,
-.c13.btn.btn-secondary:focus {
+.c15.btn.btn-secondary:hover,
+.c15.btn.btn-secondary:active,
+.c15.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c13.btn.btn-info {
+.c15.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -95,66 +95,66 @@ exports[`Contact List View > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c13.btn.btn-info:hover,
-.c13.btn.btn-info:active,
-.c13.btn.btn-info:focus {
+.c15.btn.btn-info:hover,
+.c15.btn.btn-info:active,
+.c15.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c13.btn.btn-light {
+.c15.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c13.btn.btn-light:hover,
-.c13.btn.btn-light:active,
-.c13.btn.btn-light:focus {
+.c15.btn.btn-light:hover,
+.c15.btn.btn-light:active,
+.c15.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c13.btn.btn-dark {
+.c15.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c13.btn.btn-dark:hover,
-.c13.btn.btn-dark:active,
-.c13.btn.btn-dark:focus {
+.c15.btn.btn-dark:hover,
+.c15.btn.btn-dark:active,
+.c15.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c13.btn.btn-danger {
+.c15.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c13.btn.btn-danger:hover,
-.c13.btn.btn-danger:active,
-.c13.btn.btn-danger:focus {
+.c15.btn.btn-danger:hover,
+.c15.btn.btn-danger:active,
+.c15.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c13.btn.btn-warning {
+.c15.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c13.btn.btn-warning:hover,
-.c13.btn.btn-warning:active,
-.c13.btn.btn-warning:focus {
+.c15.btn.btn-warning:hover,
+.c15.btn.btn-warning:active,
+.c15.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c13.btn.btn-link {
+.c15.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -178,9 +178,9 @@ exports[`Contact List View > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c13.btn.btn-link:hover,
-.c13.btn.btn-link:active,
-.c13.btn.btn-link:focus {
+.c15.btn.btn-link:hover,
+.c15.btn.btn-link:active,
+.c15.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -190,15 +190,15 @@ exports[`Contact List View > matches snapshot 1`] = `
   outline: none;
 }
 
-.c13.btn.btn-link:disabled,
-.c13.btn.btn-link.disabled {
+.c15.btn.btn-link:disabled,
+.c15.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c13.btn:disabled,
-.c13.btn:disabled:hover {
+.c15.btn:disabled,
+.c15.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -210,66 +210,79 @@ exports[`Contact List View > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c13.Button .Button__icon {
+.c15.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c13.Button--icon-only:focus {
+.c15.Button--icon-only:focus {
   outline: none;
 }
 
-.c13.Button--icon-only .Button__icon {
+.c15.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c20.c20.btn {
+.c22.c22.btn {
   background-color: unset;
   border: none;
 }
 
-.c20.c20.btn:hover,
-.c20.c20.btn:focus,
-.c20.c20.btn:active {
+.c22.c22.btn:hover,
+.c22.c22.btn:focus,
+.c22.c22.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c20.c20.btn svg {
+.c22.c22.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c20.c20.btn svg:hover {
+.c22.c22.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c20.c20.btn.btn-primary svg {
+.c22.c22.btn.btn-primary svg {
   color: #013366;
 }
 
-.c20.c20.btn.btn-primary svg:hover {
+.c22.c22.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c20.c20.btn.btn-light svg {
+.c22.c22.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c20.c20.btn.btn-light svg:hover {
+.c22.c22.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c20.c20.btn.btn-info svg {
+.c22.c22.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c20.c20.btn.btn-info svg:hover {
+.c22.c22.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c7 {
+.c12 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding-right: 0.6rem;
+  color: #42814A;
+}
+
+.c8 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -281,13 +294,13 @@ exports[`Contact List View > matches snapshot 1`] = `
   gap: 0.8rem;
 }
 
-.c7 .form-label {
+.c8 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c14 {
+.c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -306,21 +319,21 @@ exports[`Contact List View > matches snapshot 1`] = `
   margin-left: 0.5rem;
 }
 
-.c16 {
+.c18 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c15 {
+.c17 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c21 {
+.c23 {
   margin-top: 0.3rem;
 }
 
-.c22 {
+.c24 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -329,15 +342,15 @@ exports[`Contact List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c22:-moz-read-only {
+.c24:-moz-read-only {
   background: white;
 }
 
-.c22:read-only {
+.c24:read-only {
   background: white;
 }
 
-.c6 {
+.c7 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -345,6 +358,17 @@ exports[`Contact List View > matches snapshot 1`] = `
   -webkit-flex-wrap: nowrap;
   -ms-flex-wrap: nowrap;
   flex-wrap: nowrap;
+}
+
+.c11 {
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 0;
 }
 
 .c3 {
@@ -357,7 +381,7 @@ exports[`Contact List View > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c5.form-group {
+.c6.form-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -365,7 +389,7 @@ exports[`Contact List View > matches snapshot 1`] = `
   margin-bottom: 0;
 }
 
-.c5.form-group .radio-group {
+.c6.form-group .radio-group {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -378,7 +402,7 @@ exports[`Contact List View > matches snapshot 1`] = `
   column-gap: unset;
 }
 
-.c5.form-group .radio-group .form-check {
+.c6.form-group .radio-group .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -393,50 +417,64 @@ exports[`Contact List View > matches snapshot 1`] = `
   justify-content: center;
 }
 
-.c5.form-group .radio-group .form-check .form-check-input {
+.c6.form-group .radio-group .form-check .form-check-input {
   margin-left: 0;
 }
 
-.c5.form-group .radio-group .form-check-label {
+.c6.form-group .radio-group .form-check-label {
   margin-left: 1rem;
 }
 
-.c5 .form-label {
+.c6 .form-label {
   margin-bottom: unset;
 }
 
-.c11 {
+.c13 {
   border-left: 1px solid white;
   font-size: 3.4rem;
   margin: 0 36px 0 36px;
   vertical-align: top;
 }
 
-.c4 {
+.c5 {
   background-color: #d9eaf7;
   border-radius: 0.4rem;
   padding: 1rem;
   max-width: 85%;
 }
 
-.c12 {
+.c14 {
   padding-right: 0rem;
   padding-left: 1rem;
 }
 
-.c8 {
+.c9 {
   max-width: 30em;
 }
 
-.c9 {
+.c10 {
   max-width: 25rem;
 }
 
-.c10 {
-  display: inline-block;
-  margin: 0rem 0.5rem;
-  padding: 0.2rem;
+.c21 {
+  -webkit-box-pack: space-around;
+  -webkit-justify-content: space-around;
+  -ms-flex-pack: space-around;
+  justify-content: space-around;
+  width: 100%;
+}
+
+.c19 {
+  color: #606060;
+}
+
+.c19.active {
   color: #42814A;
+}
+
+.c20 a {
+  font-weight: bold;
+  color: #428bca !important;
 }
 
 .c1 {
@@ -448,25 +486,9 @@ exports[`Contact List View > matches snapshot 1`] = `
   overflow-y: auto;
 }
 
-.c19 {
-  -webkit-box-pack: space-around;
-  -webkit-justify-content: space-around;
-  -ms-flex-pack: space-around;
-  justify-content: space-around;
+.c2 {
+  padding: 1.6rem 3.2rem;
   width: 100%;
-}
-
-.c17 {
-  color: #606060;
-}
-
-.c17.active {
-  color: #42814A;
-}
-
-.c18 a {
-  font-weight: bold;
-  color: #428bca !important;
 }
 
 .c0 {
@@ -482,18 +504,31 @@ exports[`Contact List View > matches snapshot 1`] = `
   -ms-flex-positive: 1;
   flex-grow: 1;
   width: 100%;
-  font-size: 14px;
   gap: 2.5rem;
   padding: 0;
 }
 
-.c2 {
-  padding: 1.6rem 3.2rem;
-  width: 100%;
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  margin-bottom: 0.25rem;
 }
 
 @media only screen and (max-width:1199px) {
-  .c4 {
+  .c5 {
     max-width: 50%;
   }
 }
@@ -507,23 +542,29 @@ exports[`Contact List View > matches snapshot 1`] = `
       <h1
         class="c3"
       >
-        <svg
-          fill="currentColor"
-          height="24"
-          title="Contact manager icon"
-          viewBox="0 0 24 24"
-          width="24"
-          xmlns="http://www.w3.org/2000/svg"
+        <div
+          class="c4"
         >
-          <path
-            d="M22.0122 12H14.0078V5.6H22.0122V12ZM14.0078 19.15H2.00111V17.3333C2.00111 15.2 4.5 14.0196 8.00445 14.0196C11.5089 14.0196 14.0078 15.2 14.0078 17.3333V19.15ZM8.00445 5.6C9.6587 5.6 11.0061 7.03644 11.0061 8.8C11.0061 10.5636 9.6587 12 8.00445 12C6.35019 12 5.00278 10.5636 5.00278 8.8C5.00278 7.03644 6.33685 5.6 8.00445 5.6ZM22.0122 0H2.00111C0.89383 0 0 0.952889 0 2.13333V21.8667C0 23.0329 0.907171 24 2.00111 24H22.0122C23.1062 24 24 23.0329 24 21.8667V2.13333C24 0.952889 23.1062 0 22.0122 0ZM21.0117 7.73333V6.66667L18.01 8.8L15.0083 6.66667V7.73333L18.01 9.86667L21.0117 7.73333Z"
-          />
-        </svg>
-        <span
-          class="ml-2"
-        >
-          Contacts
-        </span>
+          <div>
+            <svg
+              fill="currentColor"
+              height="24"
+              title="Contact manager icon"
+              viewBox="0 0 24 24"
+              width="24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M22.0122 12H14.0078V5.6H22.0122V12ZM14.0078 19.15H2.00111V17.3333C2.00111 15.2 4.5 14.0196 8.00445 14.0196C11.5089 14.0196 14.0078 15.2 14.0078 17.3333V19.15ZM8.00445 5.6C9.6587 5.6 11.0061 7.03644 11.0061 8.8C11.0061 10.5636 9.6587 12 8.00445 12C6.35019 12 5.00278 10.5636 5.00278 8.8C5.00278 7.03644 6.33685 5.6 8.00445 5.6ZM22.0122 0H2.00111C0.89383 0 0 0.952889 0 2.13333V21.8667C0 23.0329 0.907171 24 2.00111 24H22.0122C23.1062 24 24 23.0329 24 21.8667V2.13333C24 0.952889 23.1062 0 22.0122 0ZM21.0117 7.73333V6.66667L18.01 8.8L15.0083 6.66667V7.73333L18.01 9.86667L21.0117 7.73333Z"
+              />
+            </svg>
+            <span
+              class="ml-2"
+            >
+              Contacts
+            </span>
+          </div>
+        </div>
       </h1>
       <div>
         <div
@@ -534,7 +575,7 @@ exports[`Contact List View > matches snapshot 1`] = `
           >
             <form
               action="#"
-              class="c4"
+              class="c5"
             >
               <div
                 class="p-5 row"
@@ -546,7 +587,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                     class="col-auto"
                   >
                     <div
-                      class="c5 form-group"
+                      class="c6 form-group"
                     >
                       <label
                         class="form-label"
@@ -558,7 +599,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         class="radio-group"
                       >
                         <div
-                          class="c6 pb-3"
+                          class="c7 pb-3"
                         >
                           <div
                             class="form-check"
@@ -595,7 +636,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c6 pb-3"
+                          class="c7 pb-3"
                         >
                           <div
                             class="form-check"
@@ -632,7 +673,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                           </label>
                         </div>
                         <div
-                          class="c6 pb-3"
+                          class="c7 pb-3"
                         >
                           <div
                             class="form-check"
@@ -690,7 +731,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                     class="pl-0 col-lg-auto"
                   >
                     <div
-                      class="c7 c8 input form-group"
+                      class="c8 c9 input form-group"
                     >
                       <input
                         class="form-control"
@@ -714,7 +755,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                       class="pl-0 col"
                     >
                       <div
-                        class="c7 c9 input form-group"
+                        class="c8 c10 input form-group"
                       >
                         <label
                           class="form-label"
@@ -734,51 +775,61 @@ exports[`Contact List View > matches snapshot 1`] = `
                       </div>
                     </div>
                     <div
-                      class="pl-0 col"
+                      class="pl-4 col"
                     >
                       <div
-                        class="d-inline-block m-0 form-group"
+                        class="c7 c11"
                       >
                         <div
-                          class="check-field"
+                          class="d-inline-block m-0 form-group"
                         >
                           <div
-                            class="form-check"
+                            class="check-field"
                           >
-                            <input
-                              checked=""
-                              class="form-check-input position-static"
-                              id="input-activeContactsOnly"
-                              name="activeContactsOnly"
-                              type="checkbox"
-                              value="true"
-                            />
+                            <div
+                              class="form-check"
+                            >
+                              <input
+                                checked=""
+                                class="form-check-input position-static"
+                                id="input-activeContactsOnly"
+                                name="activeContactsOnly"
+                                type="checkbox"
+                                value="true"
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div
-                        class="c10"
-                      >
-                        <svg
-                          fill="currentColor"
-                          height="16"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 512 512"
-                          width="16"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div
+                          class="c12"
+                          data-testid="active-indicator"
                         >
-                          <path
-                            d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
-                          />
-                        </svg>
+                          <svg
+                            fill="currentColor"
+                            height="16"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="16"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <title>
+                              Active
+                            </title>
+                            <path
+                              d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
+                            />
+                          </svg>
+                        </div>
+                        <span
+                          class="ml-1"
+                        >
+                          <b>
+                            Active
+                          </b>
+                           contacts only
+                        </span>
                       </div>
-                      <span>
-                        <b>
-                          Active
-                        </b>
-                         contacts only
-                      </span>
                     </div>
                   </div>
                 </div>
@@ -792,7 +843,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                       class="pr-0 col-auto"
                     >
                       <span
-                        class="c11"
+                        class="c13"
                       />
                     </div>
                     <div
@@ -802,10 +853,10 @@ exports[`Contact List View > matches snapshot 1`] = `
                         class="row"
                       >
                         <div
-                          class="c12 col-auto"
+                          class="c14 col-auto"
                         >
                           <button
-                            class="c13 Button Button--icon-only primary btn btn-primary"
+                            class="c15 Button Button--icon-only primary btn btn-primary"
                             data-testid="search"
                             id="search-button"
                             title="search"
@@ -831,10 +882,10 @@ exports[`Contact List View > matches snapshot 1`] = `
                           </button>
                         </div>
                         <div
-                          class="c12 col-auto"
+                          class="c14 col-auto"
                         >
                           <button
-                            class="c13 Button Button--icon-only btn btn-info"
+                            class="c15 Button Button--icon-only btn btn-info"
                             data-testid="reset-button"
                             id="reset-button"
                             title="reset-button"
@@ -867,9 +918,6 @@ exports[`Contact List View > matches snapshot 1`] = `
             </form>
           </div>
         </div>
-        <div
-          class="row"
-        />
         <div>
           <div
             class="table"
@@ -915,11 +963,11 @@ exports[`Contact List View > matches snapshot 1`] = `
                   >
                     Summary
                     <div
-                      class="c14"
+                      class="c16"
                       data-testid="sort-column-summary"
                     >
                       <svg
-                        class="c15"
+                        class="c17"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -934,7 +982,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c16"
+                        class="c18"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -961,11 +1009,11 @@ exports[`Contact List View > matches snapshot 1`] = `
                   >
                     First name
                     <div
-                      class="c14"
+                      class="c16"
                       data-testid="sort-column-firstName"
                     >
                       <svg
-                        class="c15"
+                        class="c17"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -980,7 +1028,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c16"
+                        class="c18"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1007,11 +1055,11 @@ exports[`Contact List View > matches snapshot 1`] = `
                   >
                     Last name
                     <div
-                      class="c14"
+                      class="c16"
                       data-testid="sort-column-surname"
                     >
                       <svg
-                        class="c15"
+                        class="c17"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1026,7 +1074,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c16"
+                        class="c18"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1053,11 +1101,11 @@ exports[`Contact List View > matches snapshot 1`] = `
                   >
                     Organization
                     <div
-                      class="c14"
+                      class="c16"
                       data-testid="sort-column-organizationName"
                     >
                       <svg
-                        class="c15"
+                        class="c17"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1072,7 +1120,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c16"
+                        class="c18"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1123,11 +1171,11 @@ exports[`Contact List View > matches snapshot 1`] = `
                   >
                     City
                     <div
-                      class="c14"
+                      class="c16"
                       data-testid="sort-column-municipalityName"
                     >
                       <svg
-                        class="c15"
+                        class="c17"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1142,7 +1190,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                         />
                       </svg>
                       <svg
-                        class="c16"
+                        class="c18"
                         fill="currentColor"
                         height="1em"
                         stroke="currentColor"
@@ -1203,10 +1251,10 @@ exports[`Contact List View > matches snapshot 1`] = `
                     title=""
                   >
                     <div
-                      class="c17 active"
+                      class="c12"
+                      data-testid="active-indicator"
                     >
                       <svg
-                        class="mr-2"
                         fill="currentColor"
                         height="10"
                         stroke="currentColor"
@@ -1215,6 +1263,9 @@ exports[`Contact List View > matches snapshot 1`] = `
                         width="10"
                         xmlns="http://www.w3.org/2000/svg"
                       >
+                        <title>
+                          Active
+                        </title>
                         <path
                           d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
                         />
@@ -1228,7 +1279,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                     title=""
                   >
                     <div
-                      class="c17 active"
+                      class="c19 active"
                     >
                       <svg
                         fill="currentColor"
@@ -1252,7 +1303,7 @@ exports[`Contact List View > matches snapshot 1`] = `
                     title=""
                   >
                     <div
-                      class="c18"
+                      class="c20"
                     >
                       <a
                         href="/contact/1"
@@ -1318,10 +1369,10 @@ exports[`Contact List View > matches snapshot 1`] = `
                     title=""
                   >
                     <div
-                      class="c6 c19"
+                      class="c7 c21"
                     >
                       <button
-                        class="c13 Button c20 btn btn-primary"
+                        class="c15 Button c22 btn btn-primary"
                         data-testid="view-button"
                         title="View Contact"
                         type="button"
@@ -1376,19 +1427,19 @@ exports[`Contact List View > matches snapshot 1`] = `
                     class="d-flex"
                   >
                     <span
-                      class="c21"
+                      class="c23"
                     >
                       Show
                     </span>
                     <input
-                      class="c22 form-control"
+                      class="c24 form-control"
                       data-testid="input-page-size"
                       readonly=""
                       type="number"
                       value="10"
                     />
                     <span
-                      class="c21"
+                      class="c23"
                     >
                       Entries
                     </span>

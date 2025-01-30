@@ -635,6 +635,95 @@ this.ScenarioInitialize(scenarioInfo);
             this.ScenarioCleanup();
         }
         
+        [Xunit.SkippableFactAttribute(DisplayName="17. Acquisition File Subfiles - Subfile Details")]
+        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
+        [Xunit.TraitAttribute("Description", "17. Acquisition File Subfiles - Subfile Details")]
+        public void _17_AcquisitionFileSubfiles_SubfileDetails()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("17. Acquisition File Subfiles - Subfile Details", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 105
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 106
+ testRunner.Given("I create a new Acquisition File from row number 22", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 107
+ testRunner.When("I add additional information to the Acquisition File Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 108
+ testRunner.And("I create a new Sub-file from row number 23", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 109
+ testRunner.Then("A new Acquisition file is created successfully", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.SkippableFactAttribute(DisplayName="18. Acquisition File Compensation Requsition - Sum of Subfiles Compensation Requi" +
+            "sitions")]
+        [Xunit.TraitAttribute("FeatureTitle", "AcquisitionFiles")]
+        [Xunit.TraitAttribute("Description", "18. Acquisition File Compensation Requsition - Sum of Subfiles Compensation Requi" +
+            "sitions")]
+        public void _18_AcquisitionFileCompensationRequsition_SumOfSubfilesCompensationRequisitions()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("18. Acquisition File Compensation Requsition - Sum of Subfiles Compensation Requi" +
+                    "sitions", null, tagsOfScenario, argumentsOfScenario, featureTags);
+#line 111
+this.ScenarioInitialize(scenarioInfo);
+#line hidden
+            if ((TagHelper.ContainsIgnoreTag(tagsOfScenario) || TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                testRunner.SkipScenario();
+            }
+            else
+            {
+                this.ScenarioStart();
+#line 112
+ testRunner.Given("I create a new Acquisition File from row number 22", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 113
+ testRunner.When("I add additional information to the Acquisition File Details", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 114
+ testRunner.And("I add Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 115
+ testRunner.And("I create Stakeholders within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 116
+ testRunner.And("I create Compensation Requisition within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 117
+ testRunner.And("I create a new Sub-file from row number 23", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 118
+ testRunner.And("I add Properties to the Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 119
+ testRunner.And("I create Stakeholders within an Acquisition File", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 120
+ testRunner.And("I create Compensation Requisition within an Acquisition Subfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 121
+ testRunner.Then("Main Acquisition File totals are verified successfully from row number 22", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            }
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "3.9.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

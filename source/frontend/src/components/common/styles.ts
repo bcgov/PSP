@@ -17,6 +17,12 @@ export const InlineFlexDiv = styled.div`
   flex-wrap: nowrap;
 `;
 
+export const FlexRowNoGap = styled(InlineFlexDiv)`
+  flex-direction: row;
+  align-items: center;
+  gap: 0;
+`;
+
 export const Breadcrumb = styled(BsBreadcrumb)`
   .breadcrumb-item:not(:first-child)::before {
     content: '>';

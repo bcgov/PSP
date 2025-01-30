@@ -1,40 +1,44 @@
 import { InterestHolderType } from '@/constants/interestHolderTypes';
-import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
-import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
-import { ApiGen_Concepts_CompReqLeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseStakeholder';
+import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
-import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { exists, isNullOrWhitespace } from '@/utils';
+import { exists, isValidId, truncateName } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PayeeType } from './PayeeTypeModel';
 
 export class PayeeOption {
-  public readonly api_id: number;
-  public readonly text: string;
-  public readonly fullText: string;
-  public readonly value: string;
-  public readonly payeeType: PayeeType;
+  public compensationRequisitionId: number | null;
+  public payee_api_id: number | null;
+  public rowVersion: number | null;
+  public api_id: number;
+  public text: string;
+  public fullText: string;
+  public value: string;
+  public payeeType: PayeeType;
 
   private constructor(
+    payee_api_id: number | null,
     api_id: number,
+    compensationRequisitionId: number | null,
     name: string,
     key: string,
     value: string,
     payeeType: PayeeType,
   ) {
+    this.payee_api_id = payee_api_id;
     this.api_id = api_id;
+    this.compensationRequisitionId = compensationRequisitionId;
     this.fullText = `${name} (${key})`;
-    this.text = `${PayeeOption.truncateName(name)} (${key})`;
+    this.text = `${truncateName(name, 50)} (${key})`;
     this.value = value;
     this.payeeType = payeeType;
+    this.rowVersion = null;
   }
-
-  public static fromApi(apiModel: ApiGen_Concepts_CompensationRequisition): string {
+  public static getKeyFromPayee(apiModel: ApiGen_Concepts_CompReqPayee): string {
     if (apiModel.acquisitionOwnerId) {
       return PayeeOption.generateKey(apiModel.acquisitionOwnerId, PayeeType.Owner);
     }
@@ -57,131 +61,101 @@ export class PayeeOption {
       }
     }
 
-    if (apiModel.compReqLeaseStakeholder?.length > 0) {
-      return PayeeOption.generateKey(
-        apiModel.compReqLeaseStakeholder[0].leaseStakeholderId,
-        PayeeType.LeaseStakeholder,
-      );
-    }
-
-    if (apiModel.legacyPayee) {
-      return PayeeOption.generateKey(apiModel.id, PayeeType.LegacyPayee);
-    }
-
     return '';
   }
 
-  public static toApi(
-    compensationRequisitionId: number,
-    payeeKey: string,
-    options: PayeeOption[],
-  ): ApiGen_Concepts_CompensationRequisition {
-    const compensationModel: ApiGen_Concepts_CompensationRequisition = {
-      acquisitionFileId: null,
-      leaseId: null,
-      isPaymentInTrust: null,
-      gstNumber: null,
+  public static getKeyFromLegacyPayee(compReqId: number): string {
+    return PayeeOption.generateKey(compReqId, PayeeType.LegacyPayee);
+  }
+
+  public static fromApi(compReqPayee: ApiGen_Concepts_CompReqPayee): PayeeOption {
+    let payee: PayeeOption = null;
+    if (isValidId(compReqPayee.acquisitionOwnerId)) {
+      payee = PayeeOption.createOwner(compReqPayee.acquisitionOwner, compReqPayee);
+    } else if (isValidId(compReqPayee.acquisitionFileTeamId)) {
+      payee = PayeeOption.createTeamMember(compReqPayee.acquisitionFileTeam, compReqPayee);
+    } else if (isValidId(compReqPayee.interestHolderId)) {
+      payee = PayeeOption.createInterestHolder(compReqPayee.interestHolder, compReqPayee);
+    }
+    if (exists(payee)) {
+      payee.rowVersion = compReqPayee.rowVersion;
+    }
+    return payee;
+  }
+
+  public toApi(): ApiGen_Concepts_CompReqPayee | null {
+    const compReqPayeeModel: ApiGen_Concepts_CompReqPayee = {
+      ...getEmptyBaseAudit(),
+      compensationRequisitionId: this.compensationRequisitionId,
+      compensationRequisition: null,
       acquisitionOwnerId: null,
-      alternateProject: null,
-      alternateProjectId: null,
-      interestHolderId: null,
-      acquisitionFileTeam: null,
       acquisitionOwner: null,
+      interestHolderId: null,
       interestHolder: null,
       acquisitionFileTeamId: null,
-      id: null,
-      acquisitionFile: null,
-      isDraft: null,
-      fiscalYear: null,
-      yearlyFinancialId: null,
-      yearlyFinancial: null,
-      chartOfAccountsId: null,
-      chartOfAccounts: null,
-      responsibilityId: null,
-      responsibility: null,
-      agreementDate: null,
-      generationDate: null,
-      financials: [],
-      compReqLeaseStakeholder: [],
-      compReqAcquisitionProperties: [],
-      compReqLeaseProperties: [],
-      legacyPayee: null,
-      finalizedDate: null,
-      specialInstruction: null,
-      detailedRemarks: null,
-      ...getEmptyBaseAudit(),
+      acquisitionFileTeam: null,
+      compReqPayeeId: this.payee_api_id,
+      rowVersion: this.rowVersion,
     };
 
-    if (isNullOrWhitespace(payeeKey)) {
-      return compensationModel;
-    }
-
-    const payeeOption = options?.find(x => x.value === payeeKey) ?? null;
-
-    if (payeeOption === null) {
-      return compensationModel;
-    }
-
-    switch (payeeOption.payeeType) {
+    switch (this.payeeType) {
       case PayeeType.AcquisitionTeam:
-        compensationModel.acquisitionFileTeamId = payeeOption.api_id;
+        compReqPayeeModel.acquisitionFileTeamId = this.api_id;
         break;
       case PayeeType.OwnerRepresentative:
       case PayeeType.OwnerSolicitor:
       case PayeeType.InterestHolder:
-        compensationModel.interestHolderId = payeeOption.api_id;
+        compReqPayeeModel.interestHolderId = this.api_id;
         break;
       case PayeeType.Owner:
-        compensationModel.acquisitionOwnerId = payeeOption.api_id;
-        break;
-      case PayeeType.LeaseStakeholder:
-        {
-          const leaseStakeHolderPayee: ApiGen_Concepts_CompReqLeaseStakeholder = {
-            compReqLeaseStakeholderId: null,
-            compensationRequisitionId: compensationRequisitionId,
-            leaseStakeholderId: payeeOption.api_id,
-            leaseStakeholder: null,
-          } as ApiGen_Concepts_CompReqLeaseStakeholder;
-
-          compensationModel.compReqLeaseStakeholder = [leaseStakeHolderPayee];
-        }
+        compReqPayeeModel.acquisitionOwnerId = this.api_id;
         break;
     }
 
-    return compensationModel;
-  }
-
-  private static truncateName(name: string): string {
-    if (name.length > 50) {
-      return name.slice(0, 50) + '...';
+    if (
+      isValidId(compReqPayeeModel.acquisitionFileTeamId) ||
+      isValidId(compReqPayeeModel.interestHolderId) ||
+      isValidId(compReqPayeeModel.acquisitionOwnerId)
+    ) {
+      return compReqPayeeModel;
     } else {
-      return name;
+      return null;
     }
   }
 
-  public static createOwner(model: ApiGen_Concepts_AcquisitionFileOwner): PayeeOption {
+  public static createOwner(
+    model: ApiGen_Concepts_AcquisitionFileOwner,
+    compReqPayee?: ApiGen_Concepts_CompReqPayee,
+  ): PayeeOption {
     const name = model.isOrganization
       ? `${model.lastNameAndCorpName}, Inc. No. ${model.incorporationNumber} (OR Reg. No. ${model.registrationNumber})`
       : [model.givenName, model.lastNameAndCorpName, model.otherName].filter(x => !!x).join(' ');
 
     return new PayeeOption(
-      model.id || 0,
+      compReqPayee?.compReqPayeeId,
+      model?.id || 0,
+      compReqPayee?.compensationRequisitionId,
       name,
       'Owner',
-      PayeeOption.generateKey(model.id, PayeeType.Owner),
+      PayeeOption.generateKey(model?.id, PayeeType.Owner),
       PayeeType.Owner,
     );
   }
 
-  public static createOwnerSolicitor(model: ApiGen_Concepts_InterestHolder): PayeeOption {
+  public static createOwnerSolicitor(
+    model: ApiGen_Concepts_InterestHolder,
+    compReqPayee?: ApiGen_Concepts_CompReqPayee,
+  ): PayeeOption {
     let name = '';
-    if (model.person) {
+    if (exists(model?.person)) {
       name = formatApiPersonNames(model.person);
     } else {
-      name = model.organization?.name || '';
+      name = model?.organization?.name || '';
     }
     return new PayeeOption(
+      compReqPayee?.compReqPayeeId,
       model.interestHolderId || 0,
+      compReqPayee?.compensationRequisitionId,
       name,
       `Owner's Solicitor`,
       PayeeOption.generateKey(model.interestHolderId, PayeeType.OwnerSolicitor),
@@ -189,10 +163,15 @@ export class PayeeOption {
     );
   }
 
-  public static createOwnerRepresentative(model: ApiGen_Concepts_InterestHolder): PayeeOption {
+  public static createOwnerRepresentative(
+    model: ApiGen_Concepts_InterestHolder,
+    compReqPayee?: ApiGen_Concepts_CompReqPayee,
+  ): PayeeOption {
     const name = formatApiPersonNames(model.person);
     return new PayeeOption(
+      compReqPayee?.compReqPayeeId,
       model.interestHolderId || 0,
+      compReqPayee?.compensationRequisitionId,
       name,
       `Owner's Representative`,
       PayeeOption.generateKey(model.interestHolderId, PayeeType.OwnerRepresentative),
@@ -200,34 +179,42 @@ export class PayeeOption {
     );
   }
 
-  public static createTeamMember(model: ApiGen_Concepts_AcquisitionFileTeam): PayeeOption {
+  public static createTeamMember(
+    model: ApiGen_Concepts_AcquisitionFileTeam,
+    compReqPayee?: ApiGen_Concepts_CompReqPayee,
+  ): PayeeOption {
     let name = '';
-    if (model.person) {
+    if (exists(model?.person)) {
       name = formatApiPersonNames(model.person);
     } else {
-      name = model.organization?.name || '';
+      name = model?.organization?.name || '';
     }
     return new PayeeOption(
-      model.id || 0,
+      compReqPayee?.compReqPayeeId,
+      model?.id || 0,
+      compReqPayee?.compensationRequisitionId,
       name,
-      model.teamProfileType?.description ?? '',
-      PayeeOption.generateKey(model.id, PayeeType.AcquisitionTeam),
+      model?.teamProfileType?.description ?? '',
+      PayeeOption.generateKey(model?.id, PayeeType.AcquisitionTeam),
       PayeeType.AcquisitionTeam,
     );
   }
 
-  public static createInterestHolder(model: ApiGen_Concepts_InterestHolder): PayeeOption {
+  public static createInterestHolder(
+    model: ApiGen_Concepts_InterestHolder,
+    compReqPayee?: ApiGen_Concepts_CompReqPayee,
+  ): PayeeOption {
     if (model.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR) {
-      return this.createOwnerSolicitor(model);
+      return this.createOwnerSolicitor(model, compReqPayee);
     } else if (model.interestHolderType?.id === InterestHolderType.OWNER_REPRESENTATIVE) {
-      return this.createOwnerRepresentative(model);
+      return this.createOwnerRepresentative(model, compReqPayee);
     }
 
     let name = '';
-    if (model.person) {
+    if (exists(model?.person)) {
       name = formatApiPersonNames(model.person);
     } else {
-      name = model.organization?.name || '';
+      name = model?.organization?.name || '';
     }
 
     // The interest holders should always have a property
@@ -240,7 +227,9 @@ export class PayeeOption {
         : 'ERROR: Missing interest holder';
 
     return new PayeeOption(
+      compReqPayee?.compReqPayeeId,
       model.interestHolderId || 0,
+      compReqPayee?.compensationRequisitionId,
       name,
       `${typeDescription}`,
       PayeeOption.generateKey(model.interestHolderId, PayeeType.InterestHolder),
@@ -248,50 +237,18 @@ export class PayeeOption {
     );
   }
 
-  public static createLeaseStakeholder(model: ApiGen_Concepts_LeaseStakeholder): PayeeOption {
-    let payeeName: string;
-    let payeeDescription: string;
-
-    switch (model.lessorType.id) {
-      case ApiGen_CodeTypes_LessorTypes.ORG:
-        payeeName = `${model?.organization?.name ?? ''}, Inc. No. ${
-          model?.organization?.incorporationNumber ?? ''
-        }`;
-        break;
-      case ApiGen_CodeTypes_LessorTypes.PER:
-        payeeName = formatApiPersonNames(model.person);
-        break;
-      default:
-        payeeName = ApiGen_CodeTypes_LessorTypes.UNK;
-    }
-
-    switch (model.stakeholderTypeCode.id) {
-      case ApiGen_CodeTypes_LeaseStakeholderTypes.OWNER:
-        payeeDescription = 'Owner';
-        break;
-      case ApiGen_CodeTypes_LeaseStakeholderTypes.OWNREP:
-        payeeDescription = `Owner's Representative`;
-        break;
-      default:
-        payeeDescription = model.stakeholderTypeCode.description;
-        break;
-    }
-
+  public static createLegacyPayee(
+    model: ApiGen_Concepts_CompensationRequisition,
+    compReqPayeeId: number | null,
+    compReqId: number | null,
+  ): PayeeOption {
     return new PayeeOption(
-      model.leaseStakeholderId || 0,
-      payeeName,
-      payeeDescription,
-      PayeeOption.generateKey(model.leaseStakeholderId, PayeeType.LeaseStakeholder),
-      PayeeType.LeaseStakeholder,
-    );
-  }
-
-  public static createLegacyPayee(model: ApiGen_Concepts_CompensationRequisition): PayeeOption {
-    return new PayeeOption(
-      model.id || 0,
+      compReqPayeeId,
+      model?.id || 0,
+      compReqId,
       model.legacyPayee || '',
       'Legacy free-text value',
-      PayeeOption.generateKey(model.id, PayeeType.LegacyPayee),
+      PayeeOption.generateKey(model?.id, PayeeType.LegacyPayee),
       PayeeType.LegacyPayee,
     );
   }

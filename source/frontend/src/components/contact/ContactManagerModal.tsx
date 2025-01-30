@@ -9,7 +9,6 @@ export interface IContactManagerModalProps {
   setDisplay?: (display: boolean) => void;
   setSelectedRows: (selectedContacts: IContactSearchResult[]) => void;
   selectedRows: IContactSearchResult[];
-  showAddButton?: boolean;
   showActiveSelector?: boolean;
   handleModalOk?: () => void;
   handleModalCancel?: () => void;
@@ -36,7 +35,6 @@ export const ContactManagerModal: React.FunctionComponent<
           <ContactManagerView
             setSelectedRows={props.setSelectedRows}
             selectedRows={props.selectedRows}
-            showAddButton={props.showAddButton}
             showActiveSelector={props.showActiveSelector}
             noInitialSearch={props.selectedRows.length === 0}
             isSingleSelect={props.isSingleSelect}

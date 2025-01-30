@@ -194,6 +194,7 @@ const mapRequestStates = {
                 if (
                   context.currentMapBounds &&
                   context.currentMapBounds.isValid() &&
+                  defaultBounds.contains(context.currentMapBounds) &&
                   context.currentMapBounds.contains(validBounds)
                 ) {
                   return context.currentMapBounds;

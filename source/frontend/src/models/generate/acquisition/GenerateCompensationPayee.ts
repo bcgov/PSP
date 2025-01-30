@@ -1,8 +1,9 @@
 import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { formatMoney } from '@/utils';
+import { exists, formatMoney } from '@/utils';
 import { formatApiPersonNames, formatNames } from '@/utils/personUtils';
 
 export class Api_GenerateCompensationPayee {
@@ -15,46 +16,59 @@ export class Api_GenerateCompensationPayee {
 
   constructor(
     compensation: ApiGen_Concepts_CompensationRequisition | null,
+    compReqPayees: ApiGen_Concepts_CompReqPayee[],
     financialActivities: ApiGen_Concepts_CompensationFinancial[] | [],
   ) {
     this.gst_number = compensation?.gstNumber ?? '';
+    const names: string[] = [];
 
-    if (compensation?.acquisitionOwner) {
-      this.name = formatNames([
-        compensation?.acquisitionOwner.givenName,
-        compensation?.acquisitionOwner.lastNameAndCorpName,
-      ]);
-    } else if (compensation?.interestHolder) {
-      if (compensation?.interestHolder.person) {
-        this.name = formatNames([
-          compensation?.interestHolder.person.firstName,
-          compensation?.interestHolder.person.surname,
-        ]);
-      } else {
-        this.name = compensation?.interestHolder.organization?.name ?? '';
+    compReqPayees.forEach((payee: ApiGen_Concepts_CompReqPayee) => {
+      if (exists(payee?.acquisitionOwner)) {
+        names.push(
+          formatNames([
+            payee?.acquisitionOwner.givenName,
+            payee?.acquisitionOwner.lastNameAndCorpName,
+          ]),
+        );
+      } else if (exists(payee?.interestHolder)) {
+        if (exists(payee?.interestHolder.person)) {
+          names.push(
+            formatNames([
+              payee?.interestHolder.person.firstName,
+              payee?.interestHolder.person.surname,
+            ]),
+          );
+        } else {
+          names.push(payee?.interestHolder.organization?.name ?? '');
+        }
+      } else if (exists(payee?.acquisitionFileTeam)) {
+        if (exists(payee?.acquisitionFileTeam.person)) {
+          names.push(
+            formatNames([
+              payee?.acquisitionFileTeam.person.firstName,
+              payee?.acquisitionFileTeam.person.surname,
+            ]),
+          );
+        } else {
+          names.push(payee?.acquisitionFileTeam?.organization?.name ?? '');
+        }
       }
-    } else if (compensation?.acquisitionFileTeam) {
-      if (compensation?.acquisitionFileTeam.person) {
-        this.name = formatNames([
-          compensation?.acquisitionFileTeam.person.firstName,
-          compensation?.acquisitionFileTeam.person.surname,
-        ]);
-      } else {
-        this.name = compensation?.acquisitionFileTeam.organization?.name ?? '';
-      }
-    } else if (compensation?.legacyPayee) {
-      this.name = compensation?.legacyPayee ?? '';
-    } else if (compensation?.compReqLeaseStakeholder?.length > 0) {
+    });
+
+    if (compensation?.compReqLeaseStakeholders?.length > 0) {
       const stakeHolder: ApiGen_Concepts_LeaseStakeholder =
-        compensation?.compReqLeaseStakeholder[0].leaseStakeholder;
+        compensation?.compReqLeaseStakeholders[0].leaseStakeholder;
       if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.ORG) {
-        this.name = stakeHolder.organization?.name ?? '';
+        names.push(stakeHolder.organization?.name ?? '');
       } else if (stakeHolder.lessorType.id === ApiGen_CodeTypes_LessorTypes.PER) {
-        this.name = formatApiPersonNames(stakeHolder.person);
+        names.push(formatApiPersonNames(stakeHolder.person));
       }
-    } else {
-      this.name = '';
     }
+
+    if (exists(compensation?.legacyPayee)) {
+      names.push(compensation?.legacyPayee ?? '');
+    }
+    this.name = names.join(', ');
 
     const preTaxAmount: number = financialActivities
       .map(f => f.pretaxAmount ?? 0)

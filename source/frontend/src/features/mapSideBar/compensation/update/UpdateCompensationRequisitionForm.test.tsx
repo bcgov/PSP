@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
+import Claims from '@/constants/claims';
 import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
 import {
   mockAcquisitionFileOwnersResponse,
@@ -9,8 +10,10 @@ import {
 import {
   emptyCompensationFinancial,
   getMockApiDefaultCompensation,
+  getMockCompReqPayee,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -24,13 +27,11 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
+import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
+import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import UpdateCompensationRequisitionForm, {
   CompensationRequisitionFormProps,
 } from './UpdateCompensationRequisitionForm';
-import Claims from '@/constants/claims';
-import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
-import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 const currentGstPercent = 0.05;
 const onSave = vi.fn();
@@ -86,12 +87,16 @@ describe('Compensation Requisition UpdateForm component', () => {
         isLoading={renderOptions.props?.isLoading ?? false}
         showAltProjectError={false}
         setShowAltProjectError={setShowAltProjectError}
+        leaseStakeholders={[]}
       />,
       {
         ...renderOptions,
         store: storeState,
       },
     );
+
+    // wait for useEffect
+    await waitFor(async () => {});
 
     return {
       ...utils,
@@ -109,17 +114,17 @@ describe('Compensation Requisition UpdateForm component', () => {
         ) as HTMLElement;
       },
       getPayeeOptionsDropDown: () =>
-        utils.container.querySelector(`select[name="payee.payeeKey"]`) as HTMLInputElement,
+        utils.container.querySelector(`#multiselect-payees`) as HTMLInputElement,
       getPayeeGSTNumber: () =>
-        utils.container.querySelector(`input[name="payee.gstNumber"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="gstNumber"]`) as HTMLInputElement,
       getPayeePaymentInTrust: () =>
-        utils.container.querySelector(`input[name="payee.isPaymentInTrust"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="isPaymentInTrust"]`) as HTMLInputElement,
       getPayeePreTaxAmount: () =>
-        utils.container.querySelector(`input[name="payee.pretaxAmount"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="pretaxAmount"]`) as HTMLInputElement,
       getPayeeTaxAmount: () =>
-        utils.container.querySelector(`input[name="payee.taxAmount"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="taxAmount"]`) as HTMLInputElement,
       getPayeeTotalAmount: () =>
-        utils.container.querySelector(`input[name="payee.totalAmount"]`) as HTMLInputElement,
+        utils.container.querySelector(`input[name="totalAmount"]`) as HTMLInputElement,
       getSpecialInstructionsTextbox: () =>
         utils.container.querySelector(`textarea[name="specialInstruction"]`) as HTMLInputElement,
       getDetailedRemarksTextbox: () =>
@@ -194,7 +199,6 @@ describe('Compensation Requisition UpdateForm component', () => {
     const compensationWithPayeeInformation = CompensationRequisitionFormModel.fromApi({
       ...apiCompensation,
       fiscalYear: '2020',
-      acquisitionOwnerId: 1,
       isDraft: true,
       gstNumber: '9999',
       isPaymentInTrust: true,
@@ -216,8 +220,6 @@ describe('Compensation Requisition UpdateForm component', () => {
       getPayeePaymentInTrust,
     } = await setup({ props: { initialValues: compensationWithPayeeInformation } });
 
-    await waitFor(async () => {});
-
     expect(getPayeePaymentInTrust()).toBeChecked();
     expect(getPayeeGSTNumber()).toHaveValue('9999');
     expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');
@@ -230,7 +232,6 @@ describe('Compensation Requisition UpdateForm component', () => {
     const mockCompensation = CompensationRequisitionFormModel.fromApi({
       ...apiCompensation,
       fiscalYear: '2020',
-      acquisitionOwnerId: 1,
       isDraft: true,
     });
 
@@ -253,8 +254,8 @@ describe('Compensation Requisition UpdateForm component', () => {
     const apiCompensation = getMockApiDefaultCompensation();
     const mockCompensation = CompensationRequisitionFormModel.fromApi({
       ...apiCompensation,
+      compReqPayees: [{ ...getMockCompReqPayee(), acquisitionFileTeamId: 1 }],
       fiscalYear: '2020',
-      acquisitionOwnerId: 1,
       isDraft: true,
     });
 
@@ -283,7 +284,6 @@ describe('Compensation Requisition UpdateForm component', () => {
     const mockCompensation = CompensationRequisitionFormModel.fromApi({
       ...apiCompensation,
       fiscalYear: '2020',
-      acquisitionOwnerId: 1,
       isDraft: true,
     });
     const { findByText, getStatusDropDown, getByTitle } = await setup({
@@ -347,7 +347,7 @@ describe('Compensation Requisition UpdateForm component', () => {
 
     const payeesAndLegacyOptions = [
       ...payeeOptions,
-      PayeeOption.createLegacyPayee(apiCompensation),
+      PayeeOption.createLegacyPayee(apiCompensation, null, null),
     ];
 
     const {
@@ -364,7 +364,9 @@ describe('Compensation Requisition UpdateForm component', () => {
       },
     });
 
-    expect(getPayeeOptionsDropDown()).toHaveValue('LEGACY_PAYEE-1');
+    expect(getPayeeOptionsDropDown()).toHaveTextContent(
+      'Stark, Tony (Legacy free-text value)JOHH DOE Sr. (Owner)FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345) (Owner)',
+    );
     expect(getPayeePaymentInTrust()).toBeChecked();
     expect(getPayeeGSTNumber()).toHaveValue('9999');
     expect(getPayeePreTaxAmount()).toHaveValue('$30,000.00');

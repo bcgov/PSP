@@ -43,7 +43,7 @@ export const LeaseAndLicenses = ({ onLinkClick }: ISideTrayPageProps) => {
           </ExportH3>
           <p className="ml-9 font-weight-bold">Aggregated Lease & Licence Payments</p>
           <ExportAggregatedLeasesContainer />
-          <p className="ml-9 font-weight-bold">Lease & Licence Payments by Fiscal Year</p>
+          <p className="ml-9 mt-3 font-weight-bold">Lease & Licence Payments by Fiscal Year</p>
           <ExportLeasePaymentsContainer />
         </HalfHeightDiv>
       )}

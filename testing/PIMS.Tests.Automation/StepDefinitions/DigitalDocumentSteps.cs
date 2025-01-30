@@ -71,11 +71,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 //Upload several documents per time
                 digitalDocumentsTab.UploadDocument(documentURLs);
 
-                //Fill document type and status of uploaded documents
+                //Fill document type, status and details of uploaded documents
                 int documentRoundIdx = 0;
                 for (var k = documentStartIdx; k <= documentEndIdx; k++)
                 {
                     digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[k], documentRoundIdx);
+                    //digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[k].DocumentType);
+                    //digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[k]);
                     documentRoundIdx++;
                 }
                     
@@ -88,6 +90,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Order Documents by Document Type
             digitalDocumentsTab.OrderByDocumentFileType();
+            digitalDocumentsTab.WaitUploadDocument();
+
 
             //Insert Document Details to previously uploaded documents
             for (var l = 0; l < digitalDocumentList.Count; l++)
@@ -97,7 +101,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
                 digitalDocumentsTab.InsertDocumentTypeDetails(digitalDocumentList[l]);
                 digitalDocumentsTab.SaveDigitalDocumentUpdate();
-
             }
 
             //Go back to 1st page

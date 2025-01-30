@@ -1,115 +1,73 @@
 import moment from 'moment';
 
-import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
-import {
-  mockAcquisitionFileOwnersResponse,
-  mockAcquisitionFileResponse,
-} from '@/mocks/acquisitionFiles.mock';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
+import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
+import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { useCompensationRequisitionRepository } from '@/hooks/repositories/useRequisitionCompensationRepository';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
 import { getMockApiDefaultCompensation } from '@/mocks/compensations.mock';
+import { getMockApiLease, getMockLeaseStakeholders } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { systemConstantsSlice } from '@/store/slices/systemConstants/systemConstantsSlice';
-import { act, render, RenderOptions, waitFor, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  waitForEffects,
+} from '@/utils/test-utils';
 
+import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import UpdateCompensationRequisitionContainer, {
   UpdateCompensationRequisitionContainerProps,
 } from './UpdateCompensationRequisitionContainer';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
-import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { getMockApiLease, getMockLeaseStakeholders } from '@/mocks/lease.mock';
-import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { PayeeType } from '../../acquisition/models/PayeeTypeModel';
-import { CompensationPayeeFormModel } from '../models/AcquisitionPayeeFormModel';
 
-const mockGetAcquisitionOwnersApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
+vi.mock('@/hooks/repositories/useAcquisitionProvider');
+vi.mock('@/hooks/repositories/useFinancialCodeRepository');
+vi.mock('@/hooks/repositories/useLeaseStakeholderRepository');
+vi.mock('@/hooks/repositories/useInterestHolderRepository');
+vi.mock('@/hooks/repositories/useRequisitionCompensationRepository');
 
-vi.mock('@/hooks/repositories/useAcquisitionProvider', () => ({
-  useAcquisitionProvider: () => {
-    return {
-      getAcquisitionOwners: mockGetAcquisitionOwnersApi,
-      getAcquisitionFileSolicitors: {
-        execute: vi.fn(),
-        loading: false,
-      },
-      getAcquisitionFileRepresentatives: {
-        execute: vi.fn(),
-        loading: false,
-      },
-    };
-  },
-}));
+const getMockAcquisitionOwnersApi = getMockRepositoryObj();
 
-const mockGetApi = {
-  error: undefined,
-  response: [],
-  execute: vi.fn(),
-  loading: false,
-};
+vi.mocked(useAcquisitionProvider, { partial: true }).mockReturnValue({
+  getAcquisitionOwners: getMockAcquisitionOwnersApi,
+});
 
-vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
-  useFinancialCodeRepository: () => {
-    return {
-      getFinancialActivityCodeTypes: mockGetApi,
-      getChartOfAccountsCodeTypes: mockGetApi,
-      getResponsibilityCodeTypes: mockGetApi,
-      getYearlyFinancialsCodeTypes: mockGetApi,
-    };
-  },
-}));
+const mockGetFinancialCodesApi = getMockRepositoryObj();
 
-const getLeaseFileInterestHoldersApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
+vi.mocked(useFinancialCodeRepository, { partial: true }).mockReturnValue({
+  getFinancialActivityCodeTypes: mockGetFinancialCodesApi,
+  getChartOfAccountsCodeTypes: mockGetFinancialCodesApi,
+  getResponsibilityCodeTypes: mockGetFinancialCodesApi,
+  getYearlyFinancialsCodeTypes: mockGetFinancialCodesApi,
+});
 
-vi.mock('@/hooks/repositories/useLeaseStakeholderRepository', () => ({
-  useLeaseStakeholderRepository: () => {
-    return {
-      getLeaseStakeholders: getLeaseFileInterestHoldersApi,
-    };
-  },
-}));
+const getLeaseFileInterestHoldersApi = getMockRepositoryObj();
 
-const getAcquisitionInterestHoldersApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
-vi.mock('@/hooks/repositories/useInterestHolderRepository', () => ({
-  useInterestHolderRepository: () => {
-    return {
-      getAcquisitionInterestHolders: getAcquisitionInterestHoldersApi,
-    };
-  },
-}));
+vi.mocked(useLeaseStakeholderRepository, { partial: true }).mockReturnValue({
+  getLeaseStakeholders: getLeaseFileInterestHoldersApi,
+});
 
-const putCompensationRequisitionApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-};
-vi.mock('@/hooks/repositories/useRequisitionCompensationRepository', () => ({
-  useCompensationRequisitionRepository: () => {
-    return {
-      updateCompensationRequisition: putCompensationRequisitionApi,
-    };
-  },
-}));
+vi.mocked(useInterestHolderRepository, { partial: true }).mockReturnValue({
+  getAcquisitionInterestHolders: getMockRepositoryObj(),
+});
+
+const putCompensationRequisitionApi = getMockRepositoryObj();
+vi.mocked(useCompensationRequisitionRepository, { partial: true }).mockReturnValue({
+  updateCompensationRequisition: putCompensationRequisitionApi,
+  getCompensationRequisitionPayees: getMockRepositoryObj(),
+});
 
 let viewProps: CompensationRequisitionFormProps | undefined;
+
 const TestView: React.FC<CompensationRequisitionFormProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
@@ -124,13 +82,13 @@ describe('UpdateCompensationRequisition Container component', () => {
       props?: Partial<UpdateCompensationRequisitionContainerProps>;
     } = {},
   ) => {
-    const component = render(
+    const utils = render(
       <UpdateCompensationRequisitionContainer
         compensation={renderOptions?.props?.compensation ?? getMockApiDefaultCompensation()}
         fileType={renderOptions?.props?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions?.props?.file ?? mockAcquisitionFileResponse(1)}
-        onSuccess={onSuccess}
-        onCancel={onCancel}
+        onSuccess={renderOptions?.props?.onSuccess ?? onSuccess}
+        onCancel={renderOptions?.props?.onCancel ?? onCancel}
         View={TestView}
       />,
       {
@@ -144,8 +102,11 @@ describe('UpdateCompensationRequisition Container component', () => {
       },
     );
 
+    // wait for useEffect
+    await act(async () => {});
+
     return {
-      ...component,
+      ...utils,
     };
   };
 
@@ -159,7 +120,7 @@ describe('UpdateCompensationRequisition Container component', () => {
 
   it('renders the underlying form', async () => {
     const { getByText } = await setup();
-    await act(async () => {});
+
     expect(getByText(/Content Rendered/)).toBeVisible();
   });
 
@@ -200,47 +161,6 @@ describe('UpdateCompensationRequisition Container component', () => {
     expect(onSuccess).not.toHaveBeenCalled();
   });
 
-  it('makes request to update the compensation with payees', async () => {
-    const acquisitionFileMock: ApiGen_Concepts_AcquisitionFile = {
-      ...mockAcquisitionFileResponse(),
-    };
-    getAcquisitionInterestHoldersApi.execute.mockResolvedValue([]);
-    mockGetAcquisitionOwnersApi.execute.mockResolvedValue(mockAcquisitionFileOwnersResponse());
-
-    const mockCompensationUpdate = getMockApiDefaultCompensation(1, null);
-    putCompensationRequisitionApi.execute.mockResolvedValue({
-      ...mockCompensationUpdate,
-      acquisitionOwnerId: 1,
-    });
-
-    await act(async () => {
-      setup({
-        props: {
-          compensation: mockCompensationUpdate,
-          fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
-          file: acquisitionFileMock,
-        },
-      });
-    });
-    await waitForEffects();
-
-    expect(mockGetAcquisitionOwnersApi.execute).toHaveBeenCalled();
-    expect(getAcquisitionInterestHoldersApi.execute).toHaveBeenCalled();
-
-    const compReqModel = CompensationRequisitionFormModel.fromApi(mockCompensationUpdate);
-    compReqModel.payee = new CompensationPayeeFormModel(mockCompensationUpdate.id);
-    compReqModel.payee.payeeKey = PayeeOption.generateKey(1, PayeeType.Owner);
-
-    await act(async () => {
-      viewProps?.onSave(compReqModel);
-    });
-
-    expect(putCompensationRequisitionApi.execute).toHaveBeenCalledWith(
-      ApiGen_CodeTypes_FileTypes.Acquisition,
-      expect.objectContaining({ acquisitionOwnerId: 1 }),
-    );
-  });
-
   it('filters expired financial codes when updating', async () => {
     const expiredFinancialCodes: ApiGen_Concepts_FinancialCode[] = [
       {
@@ -264,16 +184,13 @@ describe('UpdateCompensationRequisition Container component', () => {
         ...getEmptyBaseAudit(),
       },
     ];
-    mockGetApi.execute = vi.fn().mockResolvedValue(expiredFinancialCodes);
+    mockGetFinancialCodesApi.execute = vi.fn().mockResolvedValue(expiredFinancialCodes);
     await setup();
-    await act(async () => {});
 
-    await waitFor(async () => {
-      expect(viewProps?.financialActivityOptions).toHaveLength(1);
-      expect(viewProps?.chartOfAccountsOptions).toHaveLength(1);
-      expect(viewProps?.responsiblityCentreOptions).toHaveLength(1);
-      expect(viewProps?.yearlyFinancialOptions).toHaveLength(1);
-    });
+    expect(viewProps?.financialActivityOptions).toHaveLength(1);
+    expect(viewProps?.chartOfAccountsOptions).toHaveLength(1);
+    expect(viewProps?.responsiblityCentreOptions).toHaveLength(1);
+    expect(viewProps?.yearlyFinancialOptions).toHaveLength(1);
   });
 
   it('LEASE - makes request to update the compensation with payees', async () => {
@@ -299,34 +216,24 @@ describe('UpdateCompensationRequisition Container component', () => {
     const updatedCompensationModel = new CompensationRequisitionFormModel(1, null, 1, '');
     updatedCompensationModel.detailedRemarks = 'my update';
 
-    const testPayeeOption: PayeeOption = PayeeOption.createLeaseStakeholder(
-      getMockLeaseStakeholders()[0],
-    );
-
-    const leasePayeeOptions: PayeeOption[] = getMockLeaseStakeholders().map(x =>
-      PayeeOption.createLeaseStakeholder(x),
-    );
-
-    updatedCompensationModel.payee.payeeKey = testPayeeOption.value;
+    updatedCompensationModel.leaseStakeholderId = '2';
 
     await act(async () => {
       viewProps?.onSave(updatedCompensationModel);
     });
 
-    const concept = updatedCompensationModel.toApi(leasePayeeOptions);
     expect(putCompensationRequisitionApi.execute).toHaveBeenCalledWith(
       ApiGen_CodeTypes_FileTypes.Lease,
-      {
-        ...concept,
-        compReqLeaseStakeholder: [
-          {
+      expect.objectContaining({
+        compReqLeaseStakeholders: [
+          expect.objectContaining({
             compReqLeaseStakeholderId: null,
             compensationRequisitionId: 1,
             leaseStakeholder: null,
             leaseStakeholderId: 2,
-          },
+          }),
         ],
-      },
+      }),
     );
   });
 });

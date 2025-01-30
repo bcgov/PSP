@@ -6,14 +6,12 @@ import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
 import { ApiGen_Concepts_AcquisitionFile } from './ApiGen_Concepts_AcquisitionFile';
-import { ApiGen_Concepts_AcquisitionFileOwner } from './ApiGen_Concepts_AcquisitionFileOwner';
-import { ApiGen_Concepts_AcquisitionFileTeam } from './ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationFinancial } from './ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompReqAcquisitionProperty } from './ApiGen_Concepts_CompReqAcquisitionProperty';
 import { ApiGen_Concepts_CompReqLeaseProperty } from './ApiGen_Concepts_CompReqLeaseProperty';
 import { ApiGen_Concepts_CompReqLeaseStakeholder } from './ApiGen_Concepts_CompReqLeaseStakeholder';
+import { ApiGen_Concepts_CompReqPayee } from './ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_FinancialCode } from './ApiGen_Concepts_FinancialCode';
-import { ApiGen_Concepts_InterestHolder } from './ApiGen_Concepts_InterestHolder';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
 // LINK: @backend/apimodels/Models/Concepts/CompensationRequisition/CompensationRequisitionModel.cs
@@ -34,12 +32,6 @@ export interface ApiGen_Concepts_CompensationRequisition extends ApiGen_Base_Bas
   agreementDate: UtcIsoDate | null;
   generationDate: UtcIsoDate | null;
   financials: ApiGen_Concepts_CompensationFinancial[] | null;
-  acquisitionOwnerId: number | null;
-  acquisitionOwner: ApiGen_Concepts_AcquisitionFileOwner | null;
-  interestHolderId: number | null;
-  interestHolder: ApiGen_Concepts_InterestHolder | null;
-  acquisitionFileTeamId: number | null;
-  acquisitionFileTeam: ApiGen_Concepts_AcquisitionFileTeam | null;
   legacyPayee: string | null;
   isPaymentInTrust: boolean | null;
   gstNumber: string | null;
@@ -47,7 +39,8 @@ export interface ApiGen_Concepts_CompensationRequisition extends ApiGen_Base_Bas
   detailedRemarks: string | null;
   alternateProjectId: number | null;
   alternateProject: ApiGen_Concepts_Project | null;
-  compReqLeaseStakeholder: ApiGen_Concepts_CompReqLeaseStakeholder[] | null;
+  compReqPayees: ApiGen_Concepts_CompReqPayee[] | null;
+  compReqLeaseStakeholders: ApiGen_Concepts_CompReqLeaseStakeholder[] | null;
   compReqAcquisitionProperties: ApiGen_Concepts_CompReqAcquisitionProperty[] | null;
   compReqLeaseProperties: ApiGen_Concepts_CompReqLeaseProperty[] | null;
 }

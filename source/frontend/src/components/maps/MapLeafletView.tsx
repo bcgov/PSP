@@ -10,7 +10,12 @@ import {
 } from 'leaflet';
 import { isEqual } from 'lodash';
 import React, { useEffect, useRef, useState } from 'react';
-import { LayerGroup, MapContainer as ReactLeafletMap, TileLayer } from 'react-leaflet';
+import {
+  LayerGroup,
+  MapContainer as ReactLeafletMap,
+  ScaleControl,
+  TileLayer,
+} from 'react-leaflet';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
@@ -242,6 +247,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
         <LegendControl />
         <ZoomOutButton />
+        <ScaleControl position="bottomleft" metric={true} imperial={false} />
         <AdvancedFilterButton
           onToggle={mapMachine.toggleMapFilterDisplay}
           active={mapMachine.isFiltering}

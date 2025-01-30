@@ -4,6 +4,7 @@ import moment from 'moment';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_H120Category } from '@/models/api/generated/ApiGen_Concepts_H120Category';
 import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
@@ -41,6 +42,7 @@ export class Api_GenerateCompensation {
   constructor(
     compensation: ApiGen_Concepts_CompensationRequisition | null,
     compReqProperties: ApiGen_Concepts_AcquisitionFileProperty[] | ApiGen_Concepts_PropertyLease[],
+    compReqPayees: ApiGen_Concepts_CompReqPayee[],
     file: ICompensationRequisitionFile | null,
     h120Categories: ApiGen_Concepts_H120Category[],
     finalFileFinancials: ApiGen_Concepts_CompensationFinancial[],
@@ -114,7 +116,11 @@ export class Api_GenerateCompensation {
     this.service_line = compensation?.chartOfAccounts?.code ?? '';
     this.responsibility_center = compensation?.responsibility?.code ?? '';
     this.client = client;
-    this.payee = new Api_GenerateCompensationPayee(compensation, compensation?.financials ?? []);
+    this.payee = new Api_GenerateCompensationPayee(
+      compensation,
+      compReqPayees,
+      compensation?.financials ?? [],
+    );
     this.alternate_project = new Api_GenerateProject(compensation?.alternateProject ?? null);
   }
 }

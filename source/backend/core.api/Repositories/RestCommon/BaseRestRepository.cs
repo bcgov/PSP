@@ -322,7 +322,10 @@ namespace Pims.Core.Api.Repositories.Rest
                     switch (Type.GetTypeCode(typeof(T)))
                     {
                         case TypeCode.String:
-                            result.Payload = (T)Convert.ChangeType(payload, typeof(T), CultureInfo.InvariantCulture);
+                            if(payload.Length > 0)
+                            {
+                                result.Payload = (T)Convert.ChangeType(payload, typeof(T), CultureInfo.InvariantCulture);
+                            }
                             break;
                         default:
                             T requestTokenResult = JsonSerializer.Deserialize<T>(payload, _jsonOptions.Value);

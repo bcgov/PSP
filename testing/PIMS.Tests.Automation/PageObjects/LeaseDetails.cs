@@ -639,7 +639,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsExpiryDateInput);
 
             //Properties to include in this file
-            sharedSearchProperties.VerifyLocateOnMapFeature();
+            sharedSearchProperties.VerifyLocateOnMapFeature("Lease");
 
             //Administration
             AssertTrueIsDisplayed(licenseDetailsAdmSubtitle);
