@@ -5,7 +5,7 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { exists, truncateName } from '@/utils';
+import { exists, isValidId, truncateName } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PayeeType } from './PayeeTypeModel';
@@ -70,18 +70,20 @@ export class PayeeOption {
 
   public static fromApi(compReqPayee: ApiGen_Concepts_CompReqPayee): PayeeOption {
     let payee: PayeeOption = null;
-    if (compReqPayee.acquisitionOwnerId) {
+    if (isValidId(compReqPayee.acquisitionOwnerId)) {
       payee = PayeeOption.createOwner(compReqPayee.acquisitionOwner, compReqPayee);
-    } else if (compReqPayee.acquisitionFileTeamId) {
+    } else if (isValidId(compReqPayee.acquisitionFileTeamId)) {
       payee = PayeeOption.createTeamMember(compReqPayee.acquisitionFileTeam, compReqPayee);
-    } else if (compReqPayee.interestHolderId) {
+    } else if (isValidId(compReqPayee.interestHolderId)) {
       payee = PayeeOption.createInterestHolder(compReqPayee.interestHolder, compReqPayee);
     }
-    payee.rowVersion = compReqPayee.rowVersion;
+    if (exists(payee)) {
+      payee.rowVersion = compReqPayee.rowVersion;
+    }
     return payee;
   }
 
-  public toApi(): ApiGen_Concepts_CompReqPayee {
+  public toApi(): ApiGen_Concepts_CompReqPayee | null {
     const compReqPayeeModel: ApiGen_Concepts_CompReqPayee = {
       ...getEmptyBaseAudit(),
       compensationRequisitionId: this.compensationRequisitionId,
@@ -110,7 +112,15 @@ export class PayeeOption {
         break;
     }
 
-    return compReqPayeeModel;
+    if (
+      isValidId(compReqPayeeModel.acquisitionFileTeamId) ||
+      isValidId(compReqPayeeModel.interestHolderId) ||
+      isValidId(compReqPayeeModel.acquisitionOwnerId)
+    ) {
+      return compReqPayeeModel;
+    } else {
+      return null;
+    }
   }
 
   public static createOwner(

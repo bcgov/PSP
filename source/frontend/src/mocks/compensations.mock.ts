@@ -655,9 +655,9 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
   },
 ];
 
-export const getMockCompReqPayee = (): ApiGen_Concepts_CompReqPayee => ({
+export const getMockCompReqPayee = (compReqPayeeId = 1): ApiGen_Concepts_CompReqPayee => ({
   ...emptyCompensationRequisition,
-  compReqPayeeId: 1,
+  compReqPayeeId,
   acquisitionFileTeam: null,
   acquisitionFileTeamId: null,
   interestHolder: null,

@@ -11,7 +11,7 @@ import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
-import { isValidId, isValidIsoDateTime } from '@/utils';
+import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
 
 import { FinancialActivityFormModel } from './FinancialActivityFormModel';
@@ -58,7 +58,10 @@ export class CompensationRequisitionFormModel {
 
   toApi(): ApiGen_Concepts_CompensationRequisition {
     const compReqPayees =
-      this.payees?.map<ApiGen_Concepts_CompReqPayee>(formPayee => formPayee.toApi()) ?? [];
+      this.payees
+        ?.map<ApiGen_Concepts_CompReqPayee>(formPayee => formPayee.toApi())
+        ?.filter(exists) ?? [];
+
     return {
       ...getEmptyBaseAudit(),
       id: this.id,
@@ -194,7 +197,17 @@ export class CompensationRequisitionFormModel {
       0;
 
     compensation.payees =
-      apiModel?.compReqPayees?.map(compReqPayee => PayeeOption.fromApi(compReqPayee)) ?? [];
+      apiModel?.compReqPayees
+        ?.map(compReqPayee => PayeeOption.fromApi(compReqPayee))
+        ?.filter(exists) ?? [];
+
+    // support legacy payee when updating compensation requisition
+    compensation.legacyPayee = apiModel?.legacyPayee ?? null;
+
+    if (exists(compensation.legacyPayee) && compensation.payees.length === 0) {
+      compensation.payees.push(PayeeOption.createLegacyPayee(apiModel, null, apiModel?.id));
+    }
+
     compensation.leaseStakeholderId = apiModel.compReqLeaseStakeholders?.length
       ? apiModel?.compReqLeaseStakeholders[0].leaseStakeholderId.toString()
       : null;

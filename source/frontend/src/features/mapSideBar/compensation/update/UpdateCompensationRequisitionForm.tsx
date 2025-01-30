@@ -264,7 +264,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                       selectFunction={(optionPayees, selectedPayees) =>
                         optionPayees.filter(payee =>
                           selectedPayees?.find(
-                            selectedPayee => selectedPayee.api_id === payee.api_id,
+                            selectedPayee =>
+                              selectedPayee.api_id === payee.api_id &&
+                              selectedPayee.payeeType === payee.payeeType,
                           ),
                         )
                       }
