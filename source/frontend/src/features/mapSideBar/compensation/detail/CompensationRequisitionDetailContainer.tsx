@@ -25,11 +25,11 @@ export interface CompensationRequisitionDetailContainerProps {
   clientConstant: string;
   loading: boolean;
   setEditMode: (editMode: boolean) => void;
-  View: React.FunctionComponent<React.PropsWithChildren<CompensationRequisitionDetailViewProps>>;
+  View: React.FunctionComponent<CompensationRequisitionDetailViewProps>;
 }
 
 export const CompensationRequisitionDetailContainer: React.FunctionComponent<
-  React.PropsWithChildren<CompensationRequisitionDetailContainerProps>
+  CompensationRequisitionDetailContainerProps
 > = ({ compensation, setEditMode, View, clientConstant, fileType, file, loading }) => {
   const onGenerate = useGenerateH120();
   const [compensationLeaseStakeHolders, setCompensationLeaseStakeHolders] = useState<

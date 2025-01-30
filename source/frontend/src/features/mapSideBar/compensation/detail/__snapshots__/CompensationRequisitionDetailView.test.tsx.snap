@@ -914,6 +914,7 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
           </div>
           <div
             class="c10 text-left col"
+            data-testid="comp-req-payees"
           />
         </div>
         <div

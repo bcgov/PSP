@@ -17,21 +17,17 @@ import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpd
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
-import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { exists, formatMoney, getFilePropertyName, isValidId, prettyFormatDate } from '@/utils';
-import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { cannotEditMessage } from '../../acquisition/common/constants';
-import { DetailAcquisitionFileOwner } from '../../acquisition/models/DetailAcquisitionFileOwner';
 import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import { UpdateCompensationContext } from '../models/UpdateCompensationContext';
+import { PayeeDetail } from './PayeeDetail';
 
 export interface CompensationRequisitionDetailViewProps {
   fileType: ApiGen_CodeTypes_FileTypes;
@@ -49,16 +45,8 @@ export interface CompensationRequisitionDetailViewProps {
   ) => void;
 }
 
-export interface PayeeViewDetails {
-  compReqPayeeId: number;
-  displayName: string;
-  isPaymentInTrust: boolean;
-  contactEnabled: boolean;
-  contactString: string | null;
-}
-
 export const CompensationRequisitionDetailView: React.FunctionComponent<
-  React.PropsWithChildren<CompensationRequisitionDetailViewProps>
+  CompensationRequisitionDetailViewProps
 > = ({
   fileType,
   file,
@@ -84,28 +72,34 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
 
   const isGstApplicable = results.length > 0;
 
-  const payeeDetails = useMemo(() => {
-    const tempPayeeDetails = [];
+  const payeeDetails = useMemo<PayeeDetail[]>(() => {
+    const tempPayeeDetails: PayeeDetail[] = [];
     if (!compensation) {
       return;
     }
 
     if (compensationPayees?.length > 0) {
       compensationPayees.forEach((currentPayee: ApiGen_Concepts_CompReqPayee) => {
-        let currentPayeeDetail: PayeeViewDetails;
+        let currentPayeeDetail = new PayeeDetail();
         if (currentPayee.acquisitionOwner) {
-          currentPayeeDetail = createPayeeFromOwner(currentPayee.acquisitionOwner);
+          currentPayeeDetail = PayeeDetail.createFromOwner(currentPayee.acquisitionOwner);
         } else if (isValidId(currentPayee.interestHolderId)) {
           if (exists(currentPayee?.interestHolder?.personId)) {
-            currentPayeeDetail = createPayeeFromPerson(currentPayee.interestHolder.person);
+            currentPayeeDetail = PayeeDetail.createFromPerson(currentPayee.interestHolder.person);
           } else if (currentPayee?.interestHolder?.organizationId) {
-            currentPayeeDetail = createPayeeFromOrg(currentPayee.interestHolder.organization);
+            currentPayeeDetail = PayeeDetail.createFromOrganization(
+              currentPayee.interestHolder.organization,
+            );
           }
         } else if (isValidId(currentPayee?.acquisitionFileTeamId)) {
-          if (currentPayee?.acquisitionFileTeam?.personId) {
-            currentPayeeDetail = createPayeeFromPerson(currentPayee.acquisitionFileTeam.person);
-          } else if (currentPayee?.acquisitionFileTeam?.organizationId) {
-            currentPayeeDetail = createPayeeFromOrg(currentPayee.acquisitionFileTeam.organization);
+          if (isValidId(currentPayee?.acquisitionFileTeam?.personId)) {
+            currentPayeeDetail = PayeeDetail.createFromPerson(
+              currentPayee.acquisitionFileTeam.person,
+            );
+          } else if (isValidId(currentPayee?.acquisitionFileTeam?.organizationId)) {
+            currentPayeeDetail = PayeeDetail.createFromOrganization(
+              currentPayee.acquisitionFileTeam.organization,
+            );
           }
         }
         currentPayeeDetail.compReqPayeeId = currentPayee.compReqPayeeId;
@@ -114,24 +108,18 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       });
     } else if (compensationLeaseStakeHolders?.length > 0) {
       const stakeHolder = compensationLeaseStakeHolders[0];
-      let payeeDetail: PayeeViewDetails;
+      let payeeDetail = new PayeeDetail();
 
-      if (exists(stakeHolder?.personId)) {
-        payeeDetail = createPayeeFromPerson(stakeHolder.person);
-      } else if (exists(stakeHolder?.organizationId)) {
-        payeeDetail = createPayeeFromOrg(stakeHolder.organization);
+      if (isValidId(stakeHolder?.personId)) {
+        payeeDetail = PayeeDetail.createFromPerson(stakeHolder.person);
+      } else if (isValidId(stakeHolder?.organizationId)) {
+        payeeDetail = PayeeDetail.createFromOrganization(stakeHolder.organization);
       }
       payeeDetail.isPaymentInTrust = compensation.isPaymentInTrust;
       tempPayeeDetails.push(payeeDetail);
     } else if (compensation.legacyPayee) {
-      const payeeDetail: PayeeViewDetails = {
-        compReqPayeeId: 0,
-        contactEnabled: false,
-        isPaymentInTrust: compensation?.isPaymentInTrust || false,
-        contactString: null,
-        displayName: '',
-      };
-      payeeDetail.displayName = `${compensation.legacyPayee}`;
+      const payeeDetail = PayeeDetail.createFromLegacyPayee(compensation.legacyPayee);
+      payeeDetail.isPaymentInTrust = compensation?.isPaymentInTrust ?? false;
       tempPayeeDetails.push(payeeDetail);
     }
 
@@ -348,7 +336,7 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
 
       <Section header="Payment" isCollapsable initiallyExpanded>
-        <SectionField label="Payee(s)" labelWidth="4">
+        <SectionField label="Payee(s)" labelWidth="4" valueTestId="comp-req-payees">
           {payeeDetails.map(payeeDetail => (
             <StyledPayeeDisplayName key={`compensations-payee-${payeeDetail.compReqPayeeId}`}>
               {payeeDetail?.contactEnabled && payeeDetail?.contactString && (
@@ -443,49 +431,6 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
       </Section>
     </StyledSummarySection>
   );
-};
-
-const createPayeeFromOwner = (owner: ApiGen_Concepts_AcquisitionFileOwner): PayeeViewDetails => {
-  const payeeDetail: PayeeViewDetails = {
-    compReqPayeeId: 0,
-    contactEnabled: false,
-    isPaymentInTrust: false,
-    contactString: null,
-    displayName: '',
-  };
-  const ownerDetail = DetailAcquisitionFileOwner.fromApi(owner);
-  payeeDetail.displayName = ownerDetail?.ownerName;
-  return payeeDetail;
-};
-
-const createPayeeFromPerson = (person: ApiGen_Concepts_Person): PayeeViewDetails => {
-  const payeeDetail: PayeeViewDetails = {
-    compReqPayeeId: 0,
-    contactEnabled: false,
-    isPaymentInTrust: false,
-    contactString: null,
-    displayName: '',
-  };
-
-  payeeDetail.displayName = formatApiPersonNames(person);
-  payeeDetail.contactString = 'P' + person?.id;
-  payeeDetail.contactEnabled = true;
-  return payeeDetail;
-};
-
-const createPayeeFromOrg = (organization: ApiGen_Concepts_Organization): PayeeViewDetails => {
-  const payeeDetail: PayeeViewDetails = {
-    compReqPayeeId: 0,
-    contactEnabled: false,
-    isPaymentInTrust: false,
-    contactString: null,
-    displayName: '',
-  };
-
-  payeeDetail.displayName = organization?.name ?? '';
-  payeeDetail.contactString = 'O' + organization?.id;
-  payeeDetail.contactEnabled = true;
-  return payeeDetail;
 };
 
 export default CompensationRequisitionDetailView;
