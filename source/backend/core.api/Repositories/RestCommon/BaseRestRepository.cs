@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
+using Pims.Core.Http;
 using Polly;
 using Polly.Registry;
 
@@ -45,7 +46,7 @@ namespace Pims.Core.Api.Repositories.Rest
             _logger = logger;
             _httpClientFactory = httpClientFactory;
             _jsonOptions = jsonOptions;
-            _resiliencePipeline = pollyPipelineProvider.GetPipeline<HttpResponseMessage>("retry-network-policy");
+            _resiliencePipeline = pollyPipelineProvider.GetPipeline<HttpResponseMessage>(HttpRequestClient.NetworkPolicyName);
         }
 
         public abstract void AddAuthentication(HttpClient client, string authenticationToken = null);

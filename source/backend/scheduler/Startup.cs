@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Security.Claims;
 using System.Text;
@@ -32,6 +33,7 @@ using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Handlers;
 using Pims.Core.Api.Helpers;
 using Pims.Core.Api.Middleware;
+using Pims.Core.Configuration;
 using Pims.Core.Converters;
 using Pims.Core.Http;
 using Pims.Core.Json;
@@ -42,6 +44,7 @@ using Pims.Scheduler.Policies;
 using Pims.Scheduler.Repositories;
 using Pims.Scheduler.Rescheduler;
 using Pims.Scheduler.Services;
+using Polly;
 using Prometheus;
 using StackExchange.Redis;
 
@@ -197,6 +200,20 @@ namespace Pims.Scheduler
             services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
             services.AddResponseCaching();
             services.AddMemoryCache();
+
+            PollyOptions pollyOptions = new();
+            this.Configuration.GetSection("Polly").Bind(pollyOptions);
+
+            services.AddResiliencePipeline<string, HttpResponseMessage>(HttpRequestClient.NetworkPolicyName, (builder) =>
+            {
+                builder.AddRetry(new()
+                {
+                    BackoffType = DelayBackoffType.Exponential,
+                    Delay = TimeSpan.FromSeconds(pollyOptions.DelayInSeconds),
+                    MaxRetryAttempts = pollyOptions.MaxRetries,
+                    ShouldHandle = new PredicateBuilder<HttpResponseMessage>().Handle<HttpRequestException>().HandleResult(response => (int)response.StatusCode >= 500 && (int)response.StatusCode <= 599),
+                });
+            });
 
             // Export metrics from all HTTP clients registered in services
             services.UseHttpClientMetrics();

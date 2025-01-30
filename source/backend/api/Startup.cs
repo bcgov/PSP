@@ -240,7 +240,7 @@ namespace Pims.Api
             PollyOptions pollyOptions = new();
             this.Configuration.GetSection("Polly").Bind(pollyOptions);
 
-            services.AddResiliencePipeline<string, HttpResponseMessage>("retry-network-policy", (builder) =>
+            services.AddResiliencePipeline<string, HttpResponseMessage>(HttpRequestClient.NetworkPolicyName, (builder) =>
             {
                 builder.AddRetry(new()
                 {

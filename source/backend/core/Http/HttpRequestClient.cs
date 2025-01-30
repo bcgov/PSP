@@ -4,7 +4,6 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
@@ -20,6 +19,7 @@ namespace Pims.Core.Http
     public class HttpRequestClient : IHttpRequestClient
     {
         #region Variables
+        public static string NetworkPolicyName = "retry-network-policy";
         protected readonly ResiliencePipeline<HttpResponseMessage> _resiliencePipeline;
         private readonly JsonSerializerOptions _serializeOptions;
         private readonly ILogger<HttpRequestClient> _logger;
@@ -52,7 +52,7 @@ namespace Pims.Core.Http
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
             _logger = logger;
-            _resiliencePipeline = pollyPipelineProvider.GetPipeline<HttpResponseMessage>("retry-network-policy");
+            _resiliencePipeline = pollyPipelineProvider.GetPipeline<HttpResponseMessage>(HttpRequestClient.NetworkPolicyName);
         }
         #endregion
 
