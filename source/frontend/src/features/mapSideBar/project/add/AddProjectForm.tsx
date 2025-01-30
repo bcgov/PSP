@@ -63,7 +63,7 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
                     <Col>
                       <p>
                         Before creating a project, <Link to={'/project/list'}>do a search</Link> to
-                        ensure the the project you&apos;re creating doesn&apos;t already exist.
+                        ensure that the project you&apos;re creating doesn&apos;t already exist.
                       </p>
                     </Col>
                   </StyledRow>
@@ -102,6 +102,12 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
               <ProductsArrayForm formikProps={formikProps} field="products" />
               <Section header="Project Management Team">
                 <AddProjectTeamSubForm />
+                {formikProps.errors?.projectTeam &&
+                  typeof formikProps.errors?.projectTeam === 'string' && (
+                    <div className="invalid-feedback" data-testid="team-profile-dup-error">
+                      {formikProps.errors.projectTeam.toString()}
+                    </div>
+                  )}
               </Section>
             </Form>
           </StyledFormWrapper>

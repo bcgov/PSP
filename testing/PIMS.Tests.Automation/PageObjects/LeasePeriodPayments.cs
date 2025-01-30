@@ -229,7 +229,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licensePaymentPeriodStartDateTooltip);
             var startDateInputElement = webDriver.FindElement(licensePaymentPeriodStartDateInput);
 
-            if (startDateInputElement.GetAttribute("value") != "")
+            if (startDateInputElement.GetDomProperty("value") != "")
                 ClearInput(licensePaymentPeriodStartDateInput);
             
             startDateInputElement.Click();
@@ -495,7 +495,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div"));
 
             var totalPayments = webDriver.FindElements(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div")).Count;
-            var lastPaymentDeleteIcon = By.CssSelector("div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalPayments +") button[title='delete actual']");
+            var lastPaymentDeleteIcon = By.CssSelector("div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalPayments +") button[title='delete payment']");
             webDriver.FindElement(lastPaymentDeleteIcon).Click();
 
             WaitUntilVisible(licensePaymentsModal);
@@ -662,8 +662,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[6]"),TransformCurrencyFormat(payment.PaymentTotalReceived));
             AssertTrueContentEquals(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[7]"), payment.PaymentStatus);
             AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[8]/button[@title='Payment comments']"));
-            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[9]/div/button[@title='edit actual']"));
-            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[9]/div/button[@title='delete actual']"));
+            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[9]/div/button[@title='edit payment']"));
+            AssertTrueIsDisplayed(By.XPath("//b[contains(text(),'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div["+ totalPaymentInPeriod +"]/div/div[9]/div/button[@title='delete payment']"));
         }
 
         private static string ConcatenateDates(string startDate, string endDate)

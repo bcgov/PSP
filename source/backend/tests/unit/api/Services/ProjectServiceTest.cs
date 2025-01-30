@@ -4,13 +4,14 @@ using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
 using Moq;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -78,10 +79,10 @@ namespace Pims.Api.Test.Services
             var service = this.CreateProjectServiceWithPermissions();
 
             // Act
-            Action result = () => service.GetPage(new ProjectFilter { ProjectName = "test" });
+            Action act = () => service.GetPage(new ProjectFilter { ProjectName = "test" });
 
             // Assert
-            result.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
         }
 
         [Fact]
@@ -95,10 +96,10 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             // Act
-            Action result = () => service.GetPage(null);
+            Action act = () => service.GetPage(null);
 
             // Assert
-            result.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>();
             repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()), Times.Never);
         }
 
@@ -113,10 +114,10 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
 
             // Act
-            Action result = () => service.GetPage(new ProjectFilter { Page = 0 });
+            Action act = () => service.GetPage(new ProjectFilter { Page = 0 });
 
             // Assert
-            result.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>();
             repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()), Times.Never);
         }
 
@@ -183,17 +184,15 @@ namespace Pims.Api.Test.Services
         public void Add_Project_ShouldFail_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ProjectService>(user);
+            var service = this.CreateProjectServiceWithPermissions();
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Add(new PimsProject(), new List<UserOverrideCode>() { });
+            Action act = () => service.Add(new PimsProject(), new List<UserOverrideCode>() { });
 
             // Assert
-            result.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
         }
 
@@ -201,17 +200,15 @@ namespace Pims.Api.Test.Services
         public void Add_Project_ShouldFail_IfNull()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd);
-            var service = helper.Create<ProjectService>(user);
+            var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectAdd);
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Add(null, new List<UserOverrideCode>() { });
+            Action act = () => service.Add(null, new List<UserOverrideCode>() { });
 
             // Assert
-            result.Should().Throw<ArgumentException>();
+            act.Should().Throw<ArgumentException>();
             repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
         }
 
@@ -219,23 +216,18 @@ namespace Pims.Api.Test.Services
         public void Add_Project_ShouldFail_IfDuplicateProject()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd, Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
+            var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectAdd, Permissions.ProjectView);
 
             var duplicateProject = new PimsProject() { Code = "1" };
 
-            var projectRepo = helper.GetService<Mock<IProjectRepository>>();
+            var projectRepo = _helper.GetService<Mock<IProjectRepository>>();
             projectRepo.Setup(x => x.GetAllByName(It.IsAny<string>())).Returns(new List<PimsProject>() { duplicateProject });
 
             // Act
-            Action result = () => service.Add(
-                new PimsProject() { Code = "1" },
-                new List<UserOverrideCode>() { }
-            );
+            Action act = () => service.Add(new PimsProject() { Code = "1" }, new List<UserOverrideCode>());
 
             // Assert
-            result.Should().Throw<BusinessRuleViolationException>();
+            act.Should().Throw<BusinessRuleViolationException>();
             projectRepo.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
         }
 
@@ -243,9 +235,7 @@ namespace Pims.Api.Test.Services
         public void Add_Project_ShouldFail_IfDuplicateProduct()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd, Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
+            var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectAdd, Permissions.ProjectView);
 
             var duplicateProduct = new PimsProduct() { Code = "1" };
 
@@ -256,36 +246,48 @@ namespace Pims.Api.Test.Services
                     }
                 };
 
-            var productRepo = helper.GetService<Mock<IProductRepository>>();
+            var productRepo = _helper.GetService<Mock<IProductRepository>>();
             productRepo.Setup(x => x.GetProjectProductsByProject(It.IsAny<long>())).Returns(new List<PimsProjectProduct>());
             productRepo.Setup(x => x.GetProducts(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct> { duplicateProduct });
 
 
-            var projectRepo = helper.GetService<Mock<IProjectRepository>>();
+            var projectRepo = _helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Add(
-                new PimsProject()
-                {
-                    PimsProjectProducts = existingProjectProducts,
-                },
-                new List<UserOverrideCode>() { }
-            );
+            Action act = () => service.Add(new PimsProject() { PimsProjectProducts = existingProjectProducts }, new List<UserOverrideCode>());
 
             // Assert
-            result.Should().Throw<UserOverrideException>();
+            act.Should().Throw<UserOverrideException>();
             projectRepo.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Add_Project_ShouldFail_IfDuplicateTeamMembers()
+        {
+            // Arrange
+            var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectAdd, Permissions.ProjectView);
+
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
+            repository.Setup(x => x.GetAllByName(It.IsAny<string>())).Returns(new List<PimsProject>());
+
+            var project = EntityHelper.CreateProject(1, "007", "Test Project");
+            project.PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 }, new PimsProjectPerson() { PersonId = 1 } };
+
+            // Act
+            Action act = () => service.Add(project, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>().WithMessage("Invalid Project management team, each team member can only be added once.");
+            repository.Verify(x => x.Add(It.IsAny<PimsProject>()), Times.Never);
         }
 
         [Fact]
         public void Add_Project_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectAdd, Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
+            var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectAdd, Permissions.ProjectView);
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsProject>())).Returns(new PimsProject());
             repository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(new PimsProject());
 
@@ -301,17 +303,14 @@ namespace Pims.Api.Test.Services
         public void Get_ProjectById_ShouldFail_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var service = this.CreateProjectServiceWithPermissions();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action actionFn = () => service.GetById(1);
+            Action act = () => service.GetById(1);
 
             // Assert
-            actionFn.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Never);
         }
 
@@ -319,11 +318,9 @@ namespace Pims.Api.Test.Services
         public void Get_ProjectById_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.ProjectView);
-            var service = helper.Create<ProjectService>(user);
+            var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(new PimsProject());
 
             // Act
@@ -338,35 +335,29 @@ namespace Pims.Api.Test.Services
         public void Get_Products_ShouldFail_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IProductRepository>>();
+            var service = this.CreateProjectServiceWithPermissions();
+            var repository = _helper.GetService<Mock<IProductRepository>>();
 
             // Act
-            Action actionFn = () => service.GetProducts(1);
+            Action act = () => service.GetProducts(1);
 
             // Assert
-            actionFn.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.GetByProject(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
-        public void Get_ProductFile_ShouldFail_NotAuthorized()
+        public void Get_ProductFiles_ShouldFail_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IAcquisitionFileRepository>>();
+            var service = this.CreateProjectServiceWithPermissions();
+            var repository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
 
             // Act
-            Action actionFn = () => service.GetProductFiles(1);
+            Action act = () => service.GetProductFiles(1);
 
             // Assert
-            actionFn.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
             repository.Verify(x => x.GetByProductId(It.IsAny<long>()), Times.Never);
         }
 
@@ -374,17 +365,15 @@ namespace Pims.Api.Test.Services
         public void Update_Project_ShouldFail_NotAuthorized()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission();
-            var service = helper.Create<ProjectService>(user);
-
-            var repository = helper.GetService<Mock<IProjectRepository>>();
+            var service = this.CreateProjectServiceWithPermissions();
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Update(new PimsProject(), new List<UserOverrideCode>() { });
+            Action act = () => service.Update(new PimsProject(), new List<UserOverrideCode>() { });
 
             // Assert
-            result.Should().Throw<NotAuthorizedException>();
+            act.Should().Throw<NotAuthorizedException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
         }
 
         [Fact]
@@ -395,10 +384,29 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IProjectRepository>>();
 
             // Act
-            Action result = () => service.Update(null, new List<UserOverrideCode>() { });
+            Action act = () => service.Update(null, new List<UserOverrideCode>() { });
 
             // Assert
-            result.Should().Throw<ArgumentNullException>();
+            act.Should().Throw<ArgumentNullException>();
+            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_Project_ShouldFail_IfDuplicateTeamMembers()
+        {
+            // Arrange
+            var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
+            var repository = _helper.GetService<Mock<IProjectRepository>>();
+
+            var project = EntityHelper.CreateProject(1, "007", "Test Project");
+            project.PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 }, new PimsProjectPerson() { PersonId = 1 } };
+
+            // Act
+            Action result = () => service.Update(project, new List<UserOverrideCode>());
+
+            // Assert
+            result.Should().Throw<BadRequestException>().WithMessage("Invalid Project management team, each team member can only be added once.");
+            repository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Never);
         }
 
         [Fact]

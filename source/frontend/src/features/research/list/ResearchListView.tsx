@@ -5,6 +5,7 @@ import { FaPlus } from 'react-icons/fa';
 import { MdTopic } from 'react-icons/md';
 import { useHistory } from 'react-router';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
@@ -67,8 +68,18 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
     <Styled.ListPage>
       <Styled.Scrollable>
         <CommonStyled.H1>
-          <MdTopic title="Research file icon" />
-          <span className="ml-2">Research Files</span>
+          <FlexDiv>
+            <div>
+              <MdTopic title="Research file icon" />
+              <span className="ml-2">Research Files</span>
+            </div>
+            {hasClaim(Claims.RESEARCH_ADD) && (
+              <StyledAddButton onClick={() => history.push('/mapview/sidebar/research/new')}>
+                <FaPlus />
+                &nbsp;Create a Research File
+              </StyledAddButton>
+            )}
+          </FlexDiv>
         </CommonStyled.H1>
         <Styled.PageToolbar>
           <Row>
@@ -77,12 +88,7 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
             </Col>
           </Row>
         </Styled.PageToolbar>
-        {hasClaim(Claims.RESEARCH_ADD) && (
-          <StyledAddButton onClick={() => history.push('/mapview/sidebar/research/new')}>
-            <FaPlus />
-            &nbsp;Create a Research File
-          </StyledAddButton>
-        )}
+
         <ResearchSearchResults
           results={results.map(r => ResearchSearchResultModel.fromApi(r))}
           totalItems={totalItems}
@@ -101,3 +107,11 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
 };
 
 export default ResearchListView;
+
+const FlexDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.25rem;
+`;

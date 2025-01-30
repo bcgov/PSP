@@ -1,13 +1,14 @@
 import { ApiGen_Concepts_PropertyResearchFilePurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyResearchFilePurpose';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { getEmptyBaseAudit, getEmptyResearchFile } from '@/models/defaultInitializers';
+import { ILookupCode } from '@/store/slices/lookupCodes';
 import { exists } from '@/utils/utils';
 
 export class PropertyResearchFilePurposeFormModel {
-  public id?: number;
+  public id: number | null = null;
+  public rowVersion: number | null = null;
   public propertyResearchPurposeTypeCode?: string;
   public propertyPurposeTypeDescription?: string;
-  public version?: number;
 
   public static fromApi(
     base: ApiGen_Concepts_PropertyResearchFilePurpose,
@@ -18,7 +19,15 @@ export class PropertyResearchFilePurposeFormModel {
       base.propertyResearchPurposeTypeCode?.id ?? undefined;
     newModel.propertyPurposeTypeDescription =
       base.propertyResearchPurposeTypeCode?.description ?? undefined;
-    newModel.version = base.rowVersion ?? undefined;
+    newModel.rowVersion = base.rowVersion ?? null;
+    return newModel;
+  }
+
+  static fromLookup(base: ILookupCode): PropertyResearchFilePurposeFormModel {
+    const newModel = new PropertyResearchFilePurposeFormModel();
+    newModel.propertyResearchPurposeTypeCode = base.id.toString();
+    newModel.propertyPurposeTypeDescription = base.name;
+
     return newModel;
   }
 
@@ -31,7 +40,7 @@ export class PropertyResearchFilePurposeFormModel {
         displayOrder: null,
         isDisabled: false,
       },
-      rowVersion: this.version ?? null,
+      rowVersion: this.rowVersion ?? null,
       ...getEmptyBaseAudit(),
     };
   }

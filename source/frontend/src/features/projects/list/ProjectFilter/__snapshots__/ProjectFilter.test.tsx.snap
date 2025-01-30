@@ -260,6 +260,7 @@ exports[`Project Filter > matches snapshot 1`] = `
                     id="input-projectNumber"
                     name="projectNumber"
                     placeholder="Project number"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />
@@ -276,6 +277,7 @@ exports[`Project Filter > matches snapshot 1`] = `
                     id="input-projectName"
                     name="projectName"
                     placeholder="Project name"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />

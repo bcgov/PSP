@@ -1,5 +1,6 @@
 using Mapster;
 using Pims.Api.Models.Base;
+using System.Linq;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.CompensationRequisition
@@ -23,16 +24,8 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.Responsibility, src => src.Responsibility)
                 .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDt)
-                .Map(dest => dest.ExpropriationNoticeServedDate, src => src.ExpropNoticeServedDt)
-                .Map(dest => dest.ExpropriationVestingDate, src => src.ExpropVestingDt)
                 .Map(dest => dest.GenerationDate, src => src.GenerationDt)
                 .Map(dest => dest.Financials, src => src.PimsCompReqFinancials)
-                .Map(dest => dest.AcquisitionOwnerId, src => src.AcquisitionOwnerId)
-                .Map(dest => dest.AcquisitionOwner, src => src.AcquisitionOwner)
-                .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
-                .Map(dest => dest.InterestHolder, src => src.InterestHolder)
-                .Map(dest => dest.AcquisitionFileTeamId, src => src.AcquisitionFileTeamId)
-                .Map(dest => dest.AcquisitionFileTeam, src => src.AcquisitionFileTeam)
                 .Map(dest => dest.LegacyPayee, src => src.LegacyPayee)
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
                 .Map(dest => dest.GstNumber, src => src.GstNumber)
@@ -41,9 +34,10 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.CompReqLeaseStakeholder, src => src.PimsLeaseStakeholderCompReqs)
+                .Map(dest => dest.CompReqLeaseStakeholders, src => src.PimsLeaseStakeholderCompReqs)
                 .Map(dest => dest.CompReqAcquisitionProperties, src => src.PimsPropAcqFlCompReqs)
                 .Map(dest => dest.CompReqLeaseProperties, src => src.PimsPropLeaseCompReqs)
+                .Map(dest => dest.CompReqPayees, src => src.PimsCompReqPayees)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<CompensationRequisitionModel, Entity.PimsCompensationRequisition>()
@@ -57,13 +51,8 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.ResponsibilityId, src => src.ResponsibilityId)
                 .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
                 .Map(dest => dest.AgreementDt, src => src.AgreementDate)
-                .Map(dest => dest.ExpropNoticeServedDt, src => src.ExpropriationNoticeServedDate)
-                .Map(dest => dest.ExpropVestingDt, src => src.ExpropriationVestingDate)
                 .Map(dest => dest.GenerationDt, src => src.GenerationDate)
                 .Map(dest => dest.PimsCompReqFinancials, src => src.Financials)
-                .Map(dest => dest.AcquisitionOwnerId, src => src.AcquisitionOwnerId)
-                .Map(dest => dest.InterestHolderId, src => src.InterestHolderId)
-                .Map(dest => dest.AcquisitionFileTeamId, src => src.AcquisitionFileTeamId)
                 .Map(dest => dest.LegacyPayee, src => src.LegacyPayee)
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
                 .Map(dest => dest.GstNumber, src => src.GstNumber)
@@ -72,9 +61,10 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.DetailedRemarks, src => src.DetailedRemarks)
                 .Map(dest => dest.AlternateProjectId, src => src.AlternateProjectId)
                 .Map(dest => dest.AlternateProject, src => src.AlternateProject)
-                .Map(dest => dest.PimsLeaseStakeholderCompReqs, src => src.CompReqLeaseStakeholder)
+                .Map(dest => dest.PimsLeaseStakeholderCompReqs, src => src.CompReqLeaseStakeholders)
                 .Map(dest => dest.PimsPropAcqFlCompReqs, src => src.CompReqAcquisitionProperties)
                 .Map(dest => dest.PimsPropLeaseCompReqs, src => src.CompReqLeaseProperties)
+                .Map(dest => dest.PimsCompReqPayees, src => src.CompReqPayees)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

@@ -1,7 +1,7 @@
 import { Formik } from 'formik';
 import styled from 'styled-components';
 
-import { Select, SelectOption, TextArea } from '@/components/common/form';
+import { FastDatePicker, Select, SelectOption, TextArea } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { Section } from '@/components/common/Section/Section';
@@ -94,6 +94,11 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
                         displayErrorAsTooltip={false}
                       ></ContactInputContainer>
                     </SectionField>
+
+                    <SectionField label="Advanced payment served date" labelWidth="4">
+                      <FastDatePicker field="advancedPaymentServedDate" formikProps={formikProps} />
+                    </SectionField>
+
                     <SectionField label="Description">
                       <TextArea field="description" />
                     </SectionField>
@@ -141,4 +146,5 @@ const StyledContent = styled.div`
 const StyledFooter = styled.div`
   margin-right: 1rem;
   padding-bottom: 1rem;
+  z-index: 0;
 `;

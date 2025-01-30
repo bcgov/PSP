@@ -260,6 +260,7 @@ describe('Property list view', () => {
       component: { getByTestId },
       findSpinner,
     } = setup({});
+    await act(async () => {});
 
     // wait for table to finish loading
     await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());

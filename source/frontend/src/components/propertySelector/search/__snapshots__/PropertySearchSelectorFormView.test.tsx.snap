@@ -353,6 +353,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
                     id="input-pid"
                     name="pid"
                     placeholder="Enter a PID"
+                    style="word-break: break-all;"
                     title=""
                     value=""
                   />

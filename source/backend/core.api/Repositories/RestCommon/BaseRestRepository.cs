@@ -177,7 +177,7 @@ namespace Pims.Core.Api.Repositories.Rest
                         break;
                     default:
                         result.Status = ExternalResponseStatus.Error;
-                        result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                        result.Message = $"Unable to contact endpoint {response.RequestMessage?.RequestUri}. Http status {response.StatusCode}";
                         break;
                 }
                 return result;
@@ -235,7 +235,7 @@ namespace Pims.Core.Api.Repositories.Rest
                     break;
                 default:
                     result.Status = ExternalResponseStatus.Error;
-                    result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                    result.Message = $"Unable to contact endpoint {response.RequestMessage?.RequestUri}. Http status {response.StatusCode}";
                     break;
             }
 
@@ -322,7 +322,10 @@ namespace Pims.Core.Api.Repositories.Rest
                     switch (Type.GetTypeCode(typeof(T)))
                     {
                         case TypeCode.String:
-                            result.Payload = (T)Convert.ChangeType(payload, typeof(T), CultureInfo.InvariantCulture);
+                            if(payload.Length > 0)
+                            {
+                                result.Payload = (T)Convert.ChangeType(payload, typeof(T), CultureInfo.InvariantCulture);
+                            }
                             break;
                         default:
                             T requestTokenResult = JsonSerializer.Deserialize<T>(payload, _jsonOptions.Value);
@@ -350,7 +353,7 @@ namespace Pims.Core.Api.Repositories.Rest
                     break;
                 default:
                     result.Status = ExternalResponseStatus.Error;
-                    result.Message = $"Unable to contact endpoint {response.RequestMessage.RequestUri}. Http status {response.StatusCode}";
+                    result.Message = $"Unable to contact endpoint {response.RequestMessage?.RequestUri}. Http status {response.StatusCode}";
                     break;
             }
 

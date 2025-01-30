@@ -997,6 +997,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                                       id="input-pid"
                                       name="pid"
                                       placeholder="Enter a PID"
+                                      style="word-break: break-all;"
                                       title=""
                                       value=""
                                     />
@@ -1345,6 +1346,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                       class="form-control"
                       id="input-properties.0.name"
                       name="properties.0.name"
+                      style="word-break: break-all;"
                       value=""
                     />
                   </div>

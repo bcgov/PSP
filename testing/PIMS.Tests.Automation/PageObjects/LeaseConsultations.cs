@@ -146,43 +146,51 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 case "District":
                     ButtonElement(consultationDistrictExpandBttn);
+                    Wait();
                     int lastDistrictConsultation = webDriver.FindElements(consultationDistrictCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/h2/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
                 case "Engineering":
                     ButtonElement(consultationEngineeringExpandBttn);
+                    Wait();
                     int lastEngineerConsultation = webDriver.FindElements(consultationEngineeringCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/h2/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
                 case "First Nation":
                     ButtonElement(consultationFirstNationExpandBttn);
+                    Wait();
                     int lastFirstNationConsultation = webDriver.FindElements(consultationFirstNationCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/h2/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
                 case "Headquarter (HQ)":
                     ButtonElement(consultationHeadquarterExpandBttn);
+                    Wait();
                     int lastHeadquarterConsultation = webDriver.FindElements(consultationHeadquarterCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/h2/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
                 case "Regional planning":
                     ButtonElement(consultationRegionalPlanningExpandBttn);
+                    Wait();
                     int lastRegionalPlanningConsultation = webDriver.FindElements(consultationRegionalPlanningCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/h2/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
                 case "Regional property services":
                     ButtonElement(consultationRegionalPropServicesExpandBttn);
+                    Wait();
                     int lastRegionalPropServicesConsultation = webDriver.FindElements(consultationRegionalPropServicesCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/h2/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
                 case "Strategic Real Estate (SRE)":
                     ButtonElement(consultationSREExpandBttn);
+                    Wait();
                     int lastSREConsultation = webDriver.FindElements(consultationSRECount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/h2/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
                 case "Other":
                     ButtonElement(consultationOtherExpandBttn);
+                    Wait();
                     int lastOtherConsultation = webDriver.FindElements(consultationOtherCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/h2/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
             }
         }

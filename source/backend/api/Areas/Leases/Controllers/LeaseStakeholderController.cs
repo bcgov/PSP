@@ -69,9 +69,9 @@ namespace Pims.Api.Areas.Lease.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var updatedLease = _leaseService.GetStakeholdersByLeaseId(leaseId);
+            var leaseStakeholders = _leaseService.GetStakeholdersByLeaseId(leaseId);
 
-            return new JsonResult(_mapper.Map<IEnumerable<LeaseStakeholderModel>>(updatedLease));
+            return new JsonResult(_mapper.Map<IEnumerable<LeaseStakeholderModel>>(leaseStakeholders));
         }
 
         /// <summary>

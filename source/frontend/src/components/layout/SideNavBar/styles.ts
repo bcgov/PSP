@@ -1,5 +1,5 @@
 import { Col } from 'react-bootstrap';
-import { FaDownload, FaWindowClose } from 'react-icons/fa';
+import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { H1 } from '@/components/common/styles';
@@ -110,14 +110,6 @@ export const ExportH3 = styled.h3`
   border-bottom: solid 0.3rem ${props => props.theme.css.headerBorderColor};
   display: flex;
   align-items: flex-end;
-`;
-
-export const ClickableDownload = styled(FaDownload)`
-  &:hover {
-    cursor: pointer;
-  }
-  align-self: center;
-  color: ${({ theme }) => theme.css.activeActionColor};
 `;
 
 export const Content = styled.div`

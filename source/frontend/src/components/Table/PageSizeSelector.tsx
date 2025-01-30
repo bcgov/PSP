@@ -17,7 +17,7 @@ export const TablePageSizeSelector: React.FC<ITablePageSizeSelectorProps> = ({
   onChange,
   alignTop,
 }) => {
-  const [selected, setSelected] = React.useState(value);
+  const [selected, setSelected] = React.useState<number>(value);
 
   const handleValueChange = (newSelection: number) => {
     if (newSelection !== selected) {
@@ -31,11 +31,12 @@ export const TablePageSizeSelector: React.FC<ITablePageSizeSelectorProps> = ({
     value: option,
     onClick: () => handleValueChange(option),
   }));
+
   return (
     <Menu options={pageSizeOptions} alignTop={alignTop}>
       <div className="d-flex">
         <StyledText>Show</StyledText>
-        <StyledInput defaultValue={`${selected}`} type="number" />
+        <StyledInput value={`${selected}`} type="number" readOnly data-testid="input-page-size" />
         <StyledText>Entries</StyledText>
       </div>
     </Menu>
@@ -52,7 +53,7 @@ const StyledInput = styled(Form.Control)`
   max-width: 5rem;
   margin-left: 1rem;
   margin-right: 1rem;
-  &:disabled {
+  &:read-only {
     background: white;
   }
   text-align: center;

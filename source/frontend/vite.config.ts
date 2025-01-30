@@ -55,7 +55,6 @@ export default defineConfig({
         },
       },
     },
-    pool: 'vmThreads',
     maxConcurrency: 32,
   },
   resolve: {
