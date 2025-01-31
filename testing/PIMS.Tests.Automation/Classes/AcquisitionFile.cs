@@ -181,7 +181,8 @@
         public string CompensationSTOB { get; set; } = null!;
         public string CompensationServiceLine { get; set; } = null!;
         public string CompensationResponsibilityCentre { get; set; } = null!;
-        public List<string> CompensationPayee { get; set; } = new List<string>();
+        public string LeaseCompensationPayee { get; set; } = null!;
+        public List<string> AcquisitionCompensationPayee { get; set; } = new List<string>();
         public List<string> CompensationPayeeDisplay { get; set; } = new List<string>();
         public Boolean CompensationPaymentInTrust { get; set; } = false;
         public string CompensationGSTNumber { get; set; } = null!;

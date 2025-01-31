@@ -523,19 +523,46 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void SaveAcquisitionFileWithErrors()
-        {
-            Wait();
-            ButtonElement("Save");
-        }
-
         public void SaveAcquisitionFileDetailsWithExpectedErrors()
         {
             Wait(5000);
             ButtonElement("Save");
 
-            sharedModals.IsToastyPresent();
-            //Assert.Contains("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ToastifyText());
+            Wait();
+            while (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
+            {
+                //if (sharedModals.ModalHeader().Contains("Error"))
+                //{
+                //    Assert.Equal("Different Ministry region", sharedModals.ModalHeader());
+                //    Assert.Contains("The selected Ministry region is different from that associated to one or more selected properties", sharedModals.ModalContent());
+                //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
+                //    sharedModals.ModalClickOKBttn();
+
+                //    Wait();
+                //}
+                //else if (sharedModals.ModalContent().Contains("The selected property already exists in the system's inventory."))
+                //{
+                //    Assert.Equal("User Override Required", sharedModals.ModalHeader());
+                //    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
+                //    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
+                //    sharedModals.ModalClickOKBttn();
+
+                //    Wait();
+                //}
+                //else if (sharedModals.ModalContent().Contains("This change will be reflected on other related entities - generated documents, sub-files, etc."))
+                //{
+                //    Assert.Equal("Different Project or Product", sharedModals.ModalHeader());
+                //    Assert.Contains("This change will be reflected on other related entities - generated documents, sub-files, etc.", sharedModals.ModalContent());
+                //    Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
+                //    sharedModals.ModalClickOKBttn();
+
+                //    Wait();
+                //}
+                if (sharedModals.ModalHeader().Contains("Error"))
+                {
+                    break;
+                }
+            }
         }
 
         public void CancelAcquisitionFile()

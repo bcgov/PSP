@@ -923,7 +923,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     //Add Details to the Compensation Requisition
                     h120.EditCompensationDetails();
                     //h120.VerifyCompensationDetailsInitCreateForm();
-                    h120.UpdateCompensationDetails(lease.LeaseCompensations[i]);
+                    h120.UpdateCompensationDetails(lease.LeaseCompensations[i], "Lease");
 
                     //Save new Compensation Requisition Details
                     h120.SaveAcquisitionFileCompensation();
@@ -959,14 +959,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             h120.EditCompensationDetails();
 
             //Make changes on created Compensation Requisition Form
-            h120.UpdateCompensationDetails(lease.LeaseCompensations[0]);
+            h120.UpdateCompensationDetails(lease.LeaseCompensations[0], "Lease");
 
             //Cancel changes
             h120.CancelAcquisitionFileCompensation();
 
             //Make changes on created Compensation Requisition Form
             h120.EditCompensationDetails();
-            h120.UpdateCompensationDetails(lease.LeaseCompensations[0]);
+            h120.UpdateCompensationDetails(lease.LeaseCompensations[0], "Lease");
 
             //Save changes
             h120.SaveAcquisitionFileCompensation();
@@ -1445,7 +1445,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.CompensationSTOB = ExcelDataContext.ReadData(i, "CompensationSTOB");
                 compensation.CompensationServiceLine = ExcelDataContext.ReadData(i, "CompensationServiceLine");
                 compensation.CompensationResponsibilityCentre = ExcelDataContext.ReadData(i, "CompensationResponsibilityCentre");
-                compensation.CompensationPayee = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayee"));
+                compensation.LeaseCompensationPayee = ExcelDataContext.ReadData(i, "CompensationPayee");
                 compensation.CompensationPayeeDisplay = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "CompensationPayeeDisplay"));
                 compensation.CompensationPaymentInTrust = Boolean.Parse(ExcelDataContext.ReadData(i, "CompensationPaymentInTrust"));
                 compensation.CompensationGSTNumber = ExcelDataContext.ReadData(i, "CompensationGSTNumber");
@@ -1454,10 +1454,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 compensation.ActivitiesCount = int.Parse(ExcelDataContext.ReadData(i, "ActivitiesCount"));
 
                 if (compensation.ActivitiesStartRow != 0 && compensation.ActivitiesCount != 0)
-                {
                     PopulateActivitiesCollection(compensation.ActivitiesStartRow, compensation.ActivitiesCount, compensation.CompensationActivities);
-                }
-
+                
                 lease.LeaseCompensations.Add(compensation);
             }
         }

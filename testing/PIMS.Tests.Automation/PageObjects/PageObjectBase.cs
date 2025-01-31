@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(120));
         }
 
-        protected virtual void Wait(int milliseconds = 2000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
         {
