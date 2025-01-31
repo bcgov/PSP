@@ -28,7 +28,8 @@ export const toCqlFilterValue = (object: Record<string, string>, flags?: IWfsCql
       } else if (
         ((key === 'PID' || key === 'PID_PADDED' || key === 'PID_NUMBER') &&
           object[key]?.length === 9) ||
-        flags?.forceExactMatch
+        flags?.forceExactMatch ||
+        key === 'PROPERTY_ID'
       ) {
         cql.push(`${key} = '${object[key]}'`);
       } else {

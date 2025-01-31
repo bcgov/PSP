@@ -1,6 +1,7 @@
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
+import Claims from '@/constants/claims';
 import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
 import {
   mockAcquisitionFileOwnersResponse,
@@ -12,6 +13,7 @@ import {
   getMockCompReqPayee,
 } from '@/mocks/compensations.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -25,13 +27,11 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
+import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
+import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
 import UpdateCompensationRequisitionForm, {
   CompensationRequisitionFormProps,
 } from './UpdateCompensationRequisitionForm';
-import Claims from '@/constants/claims';
-import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
-import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 
 const currentGstPercent = 0.05;
 const onSave = vi.fn();
@@ -94,6 +94,9 @@ describe('Compensation Requisition UpdateForm component', () => {
         store: storeState,
       },
     );
+
+    // wait for useEffect
+    await waitFor(async () => {});
 
     return {
       ...utils,
@@ -216,8 +219,6 @@ describe('Compensation Requisition UpdateForm component', () => {
       getPayeeGSTNumber,
       getPayeePaymentInTrust,
     } = await setup({ props: { initialValues: compensationWithPayeeInformation } });
-
-    await waitFor(async () => {});
 
     expect(getPayeePaymentInTrust()).toBeChecked();
     expect(getPayeeGSTNumber()).toHaveValue('9999');
@@ -364,7 +365,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     });
 
     expect(getPayeeOptionsDropDown()).toHaveTextContent(
-      'JOHH DOE Sr. (Owner)FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345) (Owner)Stark, Tony (Legacy free-text value)',
+      'Stark, Tony (Legacy free-text value)JOHH DOE Sr. (Owner)FORTIS BC, Inc. No. 9999 (OR Reg. No. 12345) (Owner)',
     );
     expect(getPayeePaymentInTrust()).toBeChecked();
     expect(getPayeeGSTNumber()).toHaveValue('9999');

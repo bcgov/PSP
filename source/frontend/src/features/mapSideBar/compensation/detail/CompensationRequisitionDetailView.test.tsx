@@ -2,16 +2,28 @@ import { createMemoryHistory } from 'history';
 
 import Claims from '@/constants/claims';
 import { Roles } from '@/constants/index';
-import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import {
+  getMockApiAcquisitionFileOwnerOrganization,
+  getMockApiAcquisitionFileOwnerPerson,
+  mockAcquisitionFileResponse,
+  mockApiAcquisitionFileTeamOrganization,
+  mockApiAcquisitionFileTeamPerson,
+} from '@/mocks/acquisitionFiles.mock';
 import {
   emptyCompensationFinancial,
   getMockApiCompensationWithProperty,
   getMockApiDefaultCompensation,
   getMockCompensationPropertiesReq,
+  getMockCompReqPayee,
 } from '@/mocks/compensations.mock';
+import {
+  getMockApiInterestHolderOrganization,
+  getMockApiInterestHolderPerson,
+} from '@/mocks/interestHolders.mock';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_CompReqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqPayee';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
 
@@ -42,7 +54,7 @@ describe('Compensation Detail View Component', () => {
         clientConstant={renderOptions.props?.clientConstant ?? '034'}
         onGenerate={onGenerate}
         compensationLeaseStakeHolders={[]}
-        compensationPayees={[]}
+        compensationPayees={renderOptions?.props?.compensationPayees ?? []}
       />,
       {
         ...renderOptions,
@@ -224,7 +236,7 @@ describe('Compensation Detail View Component', () => {
     expect(compensationFinalizedDate).toHaveTextContent('Jun 12, 2024');
   });
 
-  it('Displays the Product information', async () => {
+  it('displays the Product information', async () => {
     const mockCompensation = getMockApiDefaultCompensation();
     const { queryByTestId } = await setup({
       claims: [Claims.COMPENSATION_REQUISITION_VIEW],
@@ -234,6 +246,108 @@ describe('Compensation Detail View Component', () => {
     });
 
     expect(queryByTestId('file-product')).toHaveTextContent('00048');
+  });
+
+  it.each([
+    [
+      'OWNERS',
+      [
+        {
+          ...getMockCompReqPayee(1),
+          compensationRequisitionId: 11,
+          acquisitionOwner: getMockApiAcquisitionFileOwnerPerson(),
+        },
+        {
+          ...getMockCompReqPayee(2),
+          compensationRequisitionId: 11,
+          acquisitionOwner: getMockApiAcquisitionFileOwnerOrganization(),
+        },
+      ],
+      ['JOHH DOE', 'FORTIS BC'],
+    ],
+    [
+      'INTEREST HOLDERS',
+      [
+        {
+          ...getMockCompReqPayee(1),
+          compensationRequisitionId: 11,
+          interestHolderId: 14,
+          interestHolder: getMockApiInterestHolderPerson(14),
+        },
+        {
+          ...getMockCompReqPayee(2),
+          interestHolderId: 15,
+          interestHolder: getMockApiInterestHolderOrganization(15),
+        },
+      ],
+      ['Chester Tester', 'FORTIS BC'],
+    ],
+    [
+      'ACQUITISION TEAM',
+      [
+        {
+          ...getMockCompReqPayee(1),
+          acquisitionFileTeamId: 11,
+          acquisitionFileTeam: mockApiAcquisitionFileTeamPerson(11),
+        },
+        {
+          ...getMockCompReqPayee(2),
+          acquisitionFileTeamId: 12,
+          acquisitionFileTeam: mockApiAcquisitionFileTeamOrganization(12),
+        },
+      ],
+      ['first last', 'ABC Inc'],
+    ],
+  ])(
+    'displays the compensation payees - for %s',
+    async (_: string, compReqPayees: ApiGen_Concepts_CompReqPayee[], expectedValues: string[]) => {
+      const { findByText } = await setup({
+        claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+        props: {
+          compensationPayees: compReqPayees,
+        },
+      });
+
+      for (const expected of expectedValues) {
+        expect(await findByText(new RegExp(expected, 'i'))).toBeVisible();
+      }
+    },
+  );
+
+  it('displays the compensation payees - for LEGACY PAYEE', async () => {
+    const { findByText } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        compensationPayees: [],
+        compensation: {
+          ...getMockApiDefaultCompensation(),
+          legacyPayee: 'Legacy Test Value',
+        },
+      },
+    });
+
+    expect(await findByText(/Legacy Test Value/i)).toBeVisible();
+  });
+
+  it('displays empty string - for NULL PAYEES', async () => {
+    const { findByTestId } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        compensationPayees: [
+          {
+            ...getMockCompReqPayee(1),
+            acquisitionFileTeam: null,
+            acquisitionFileTeamId: null,
+            interestHolder: null,
+            interestHolderId: null,
+            acquisitionOwnerId: null,
+            acquisitionOwner: null,
+          },
+        ],
+      },
+    });
+
+    expect(await findByTestId('comp-req-payees')).toHaveTextContent('');
   });
 
   it('calls onGenerate when generation button is clicked', async () => {

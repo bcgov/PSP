@@ -1,6 +1,7 @@
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 
 import { getEmptyPerson } from './contacts.mock';
+import { getMockOrganization } from './organization.mock';
 
 export const getMockApiInterestHolders = (): ApiGen_Concepts_InterestHolder[] => [
   {
@@ -158,3 +159,66 @@ export const getMockApiInterestHolders = (): ApiGen_Concepts_InterestHolder[] =>
     rowVersion: 1,
   },
 ];
+
+export const getMockApiInterestHolderPerson = (
+  interestHolderId = 14,
+): ApiGen_Concepts_InterestHolder => ({
+  interestHolderId,
+  acquisitionFileId: 1,
+  personId: 5,
+  person: {
+    ...getEmptyPerson(),
+    id: 5,
+    isDisabled: false,
+    surname: 'Tester',
+    firstName: 'Chester',
+    personOrganizations: [],
+    personAddresses: [],
+    contactMethods: [],
+    rowVersion: 1,
+    comment: null,
+    middleNames: null,
+    preferredName: null,
+  },
+  organizationId: null,
+  organization: null,
+  isDisabled: false,
+  interestHolderType: { id: 'INTHLDR', description: null, displayOrder: null, isDisabled: false },
+  interestHolderProperties: [],
+  comment: null,
+  primaryContact: null,
+  primaryContactId: null,
+  appCreateTimestamp: '2023-06-01T18:29:17.8',
+  appLastUpdateTimestamp: '2023-06-01T20:41:47.8',
+  appLastUpdateUserid: 'DESMITH',
+  appCreateUserid: 'DESMITH',
+  appLastUpdateUserGuid: '7db28007-0d47-4ef0-bb46-c365a4b95a73',
+  appCreateUserGuid: '7db28007-0d47-4ef0-bb46-c365a4b95a73',
+  rowVersion: 4,
+});
+
+export const getMockApiInterestHolderOrganization = (
+  interestHolderId = 14,
+): ApiGen_Concepts_InterestHolder => ({
+  interestHolderId,
+  acquisitionFileId: 1,
+  personId: null,
+  person: null,
+  organizationId: 6,
+  organization: {
+    ...getMockOrganization({ id: 6, name: 'FORTIS BC' }),
+  },
+  isDisabled: false,
+  interestHolderType: { id: 'INTHLDR', description: null, displayOrder: null, isDisabled: false },
+  interestHolderProperties: [],
+  comment: null,
+  primaryContact: null,
+  primaryContactId: null,
+  appCreateTimestamp: '2023-06-01T18:29:17.8',
+  appLastUpdateTimestamp: '2023-06-01T20:41:47.8',
+  appLastUpdateUserid: 'DESMITH',
+  appCreateUserid: 'DESMITH',
+  appLastUpdateUserGuid: '7db28007-0d47-4ef0-bb46-c365a4b95a73',
+  appCreateUserGuid: '7db28007-0d47-4ef0-bb46-c365a4b95a73',
+  rowVersion: 4,
+});
