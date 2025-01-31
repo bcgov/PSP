@@ -214,6 +214,15 @@ exports[`Project List View > matches snapshot 1`] = `
   margin-right: 0;
 }
 
+.c1 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .c9 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -258,17 +267,22 @@ exports[`Project List View > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c7 {
-  border-left: 2px solid white;
+.c5 {
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  padding: 0;
+  padding-bottom: 2rem;
 }
 
-.c1 {
+.c7 {
+  border-left: 0.2rem solid white;
+}
+
+.c2 {
+  padding: 1.6rem 3.2rem;
   width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
 }
 
 .c0 {
@@ -286,20 +300,6 @@ exports[`Project List View > matches snapshot 1`] = `
   width: 100%;
   gap: 2.5rem;
   padding: 0;
-}
-
-.c2 {
-  padding: 1.6rem 3.2rem;
-  width: 100%;
-}
-
-.c5 {
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding: 0;
-  padding-bottom: 2rem;
 }
 
 .c4 {

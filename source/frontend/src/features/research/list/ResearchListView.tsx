@@ -21,7 +21,6 @@ import {
 import { IResearchFilter } from '../interfaces';
 import ResearchFilter, { defaultResearchFilter } from './ResearchFilter/ResearchFilter';
 import { ResearchSearchResults } from './ResearchSearchResults/ResearchSearchResults';
-import * as Styled from './styles';
 
 /**
  * Page that displays leases information.
@@ -65,8 +64,8 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
   }, [error]);
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <CommonStyled.PaddedScrollable>
         <CommonStyled.H1>
           <FlexDiv>
             <div>
@@ -81,13 +80,13 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
             )}
           </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <ResearchFilter filter={filter} setFilter={changeFilter} />
             </Col>
           </Row>
-        </Styled.PageToolbar>
+        </CommonStyled.PageToolbar>
 
         <ResearchSearchResults
           results={results.map(r => ResearchSearchResultModel.fromApi(r))}
@@ -101,8 +100,8 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
           setPageIndex={setCurrentPage}
           loading={loading}
         />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </CommonStyled.PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 

@@ -295,13 +295,13 @@ exports[`Document List View > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
+.c8 {
+  border-left: 0.2rem solid white;
+}
+
 .c7 {
   background-color: #d9eaf7;
   border-radius: 0.5rem 0.5rem 0rem 0rem;
-}
-
-.c8 {
-  border-left: 0.2rem solid white;
 }
 
 .c14 {
@@ -621,7 +621,7 @@ exports[`Document List View > renders as expected 1`] = `
             class="col-lg-auto"
           >
             <div
-              class="c8 no-gutters pl-2 row"
+              class="c8 no-gutters pl-2 col"
             >
               <div
                 class="col"

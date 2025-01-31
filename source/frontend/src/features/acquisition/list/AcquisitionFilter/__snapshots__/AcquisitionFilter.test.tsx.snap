@@ -232,6 +232,10 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
   border-bottom-left-radius: 0;
 }
 
+.c3 {
+  border-left: 0.2rem solid white;
+}
+
 .c0 {
   background-color: #d9eaf7;
   border-radius: 0.5rem;
@@ -243,10 +247,6 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
 
 .c0 .idir-input-group input {
   max-width: 100%;
-}
-
-.c3 {
-  border-left: 0.2rem solid white;
 }
 
 <form

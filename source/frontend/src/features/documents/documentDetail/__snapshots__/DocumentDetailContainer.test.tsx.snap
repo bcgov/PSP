@@ -214,6 +214,15 @@ exports[`DocumentDetailContainer component > renders the underlying form 1`] = `
   margin-right: 0;
 }
 
+.c10 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .c5 {
   font-weight: bold;
   color: var(--theme-blue-100);
@@ -236,15 +245,6 @@ exports[`DocumentDetailContainer component > renders the underlying form 1`] = `
 
 .c1 {
   font-weight: bold;
-}
-
-.c10 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
 }
 
 .c9 {

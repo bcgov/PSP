@@ -282,6 +282,15 @@ exports[`Contact List View > matches snapshot 1`] = `
   color: #42814A;
 }
 
+.c1 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .c8 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -381,6 +390,28 @@ exports[`Contact List View > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
+.c2 {
+  padding: 1.6rem 3.2rem;
+  width: 100%;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  width: 100%;
+  gap: 2.5rem;
+  padding: 0;
+}
+
 .c6.form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -475,37 +506,6 @@ exports[`Contact List View > matches snapshot 1`] = `
 .c20 a {
   font-weight: bold;
   color: #428bca !important;
-}
-
-.c1 {
-  width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
-}
-
-.c2 {
-  padding: 1.6rem 3.2rem;
-  width: 100%;
-}
-
-.c0 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  width: 100%;
-  gap: 2.5rem;
-  padding: 0;
 }
 
 .c4 {
