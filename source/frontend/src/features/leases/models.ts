@@ -89,7 +89,6 @@ export class LeaseFormModel {
   otherLeaseTypeDescription = '';
   otherProgramTypeDescription = '';
   otherCategoryTypeDescription = '';
-  note = '';
   programName = '';
   motiName = '';
   amount: NumberFieldValue = '';
@@ -147,7 +146,6 @@ export class LeaseFormModel {
     leaseDetail.leaseTypeCode = fromTypeCode(apiModel?.type) || '';
     leaseDetail.regionId = fromTypeCode(apiModel?.region)?.toString() || '';
     leaseDetail.programTypeCode = fromTypeCode(apiModel?.programType) || '';
-    leaseDetail.note = apiModel?.note || '';
     leaseDetail.returnNotes = apiModel?.returnNotes || '';
     leaseDetail.documentationReference = apiModel?.documentationReference || '';
     leaseDetail.motiName = apiModel?.motiName || '';
@@ -202,7 +200,7 @@ export class LeaseFormModel {
       type: toTypeCodeNullable(formLease.leaseTypeCode) ?? null,
       region: toTypeCodeNullable(Number(formLease.regionId)) ?? null,
       programType: toTypeCodeNullable(formLease.programTypeCode) ?? null,
-      note: stringToNull(formLease.note),
+      note: null,
       returnNotes: formLease.returnNotes,
       documentationReference: stringToNull(formLease.documentationReference),
       motiName: formLease.motiName,

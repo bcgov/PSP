@@ -28,15 +28,4 @@ describe('DetailNotes component', () => {
       component,
     };
   };
-  it('renders the lease notes', () => {
-    const {
-      component: { getByDisplayValue },
-    } = setup({
-      lease: {
-        ...new LeaseFormModel(),
-        note: 'lease notes',
-      },
-    });
-    expect(getByDisplayValue('lease notes')).toBeVisible();
-  });
 });
