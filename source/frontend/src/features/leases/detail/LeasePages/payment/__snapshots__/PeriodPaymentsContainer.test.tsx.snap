@@ -218,7 +218,8 @@ exports[`PaymentsView component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c0 {
@@ -566,7 +567,8 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c0 {
@@ -994,7 +996,8 @@ exports[`PeriodsPaymentsContainer component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c0 {
@@ -1897,7 +1900,8 @@ exports[`PeriodsPaymentsContainer component > renders with data as expected 1`] 
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c0 {

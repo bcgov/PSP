@@ -270,7 +270,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c21 {
@@ -302,7 +302,8 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c1 {
@@ -2879,7 +2880,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c22 {
@@ -2911,7 +2912,8 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c1 {

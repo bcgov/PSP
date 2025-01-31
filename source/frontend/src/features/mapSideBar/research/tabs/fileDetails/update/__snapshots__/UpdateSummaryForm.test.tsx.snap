@@ -368,7 +368,8 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c1 {
@@ -537,7 +538,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             </div>
           </div>
         </div>
-        <h2
+        <div
           class="c5"
         >
           <div
@@ -585,7 +586,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
               </svg>
             </div>
           </div>
-        </h2>
+        </div>
         <div
           class="c9 collapse"
         >
