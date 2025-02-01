@@ -53,8 +53,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   parentWidth,
 }) => {
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
-
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
+  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
+  const [isMapReady, setIsMapReady] = useState(false);
 
   // a reference to the layer popup
   const popupRef = useRef<LeafletPopup>(null);
@@ -72,9 +73,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const handleMapClickEvent = (latlng: LatLng) => {
     mapMachine.mapClick(latlng);
   };
-
-  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
-  const [isMapReady, setIsMapReady] = useState(false);
 
   const handleZoomUpdate = (zoomLevel: number) => {
     setZoom(zoomLevel);
@@ -112,7 +110,18 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     zoom,
   ]);
 
-  const { mapLocationFeatureDataset, repositioningFeatureDataset, isRepositioning } = mapMachine;
+  const {
+    mapLocationFeatureDataset,
+    repositioningFeatureDataset,
+    isRepositioning,
+    setDefaultMapLayers,
+  } = mapMachine;
+
+  useEffect(() => {
+    if (isMapReady) {
+      setDefaultMapLayers(layers);
+    }
+  }, [isMapReady, layers, setDefaultMapLayers]);
 
   useEffect(() => {
     activeFeatureLayer?.clearLayers();
@@ -189,10 +198,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     });
   }, []);
 
-  const handleMapReady = () => {
-    mapMachine.setDefaultMapLayers(layers);
-  };
-
   const handleMapCreated = (mapInstance: L.Map) => {
     setIsMapReady(true);
     if (mapInstance !== null) {
@@ -219,7 +224,6 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         maxZoom={MAP_MAX_ZOOM}
         closePopupOnClick={false}
         ref={handleMapCreated}
-        whenReady={handleMapReady}
       >
         <MapEvents
           click={e => handleMapClickEvent(e.latlng)}
