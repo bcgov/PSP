@@ -40,7 +40,7 @@ export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = (
         message: `You've marked this status file as a duplicate. If you save it, you'll still see it in the management table.
 
         Please ensure that all related documents and notes are moved to the main file.
-        
+
         Do you want to acknowledge and proceed?`,
         title: 'Warning',
         handleCancel: () => {
