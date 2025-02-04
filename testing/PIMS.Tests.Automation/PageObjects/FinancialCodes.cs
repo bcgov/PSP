@@ -10,7 +10,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Financial Codes List View Elements
         //Financial Codes Filters Elements
-        private readonly By financialCodeTitle = By.XPath("//h1/span[contains(text(),'Financial Codes')]");
+        private readonly By financialCodeTitle = By.XPath("//h1/div/div/span[contains(text(),'Financial Codes')]");
         private readonly By financialCodeTypeSelect = By.Id("input-financialCodeType");
         private readonly By financialCodeDescriptionInput = By.Id("input-codeValueOrDescription");
         private readonly By financialCodeShowExpiredInput = By.Id("input-showExpiredCodes");
@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By financialCodeSearchBttn = By.Id("search-button");
         private readonly By financialCodeResetBttn = By.Id("reset-button");
 
-        private readonly By financialCodeCreateNewBttn = By.XPath("//div[@data-testid='FinancialCodeTable']/preceding-sibling::button");
+        private readonly By financialCodeCreateNewBttn = By.XPath("//div[contains(text(),'Add a Financial Code')]/parent::button");
 
         //Financial Codes Table
         private readonly By financialCodeTableHeaderCodeValue = By.XPath("//div[@data-testid='FinancialCodeTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Code value')]");

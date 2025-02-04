@@ -9,7 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchAcquisitionButton = By.XPath("//a[contains(text(),'Manage Acquisition Files')]");
 
         //Acquisition File Search Filters Elements
-        private readonly By searchAcquisitionFileTitle = By.XPath("//h1/span[contains(text(),'Acquisition Files')]");
+        private readonly By searchAcquisitionFileTitle = By.XPath("//h1/div/div/span[contains(text(),'Acquisition Files')]");
 
         private readonly By searchAcquisitionFileSearchBySelect = By.Id("input-searchBy");
         private readonly By searchAcquisitionFileSearchByAddressInput = By.Id("input-address");
@@ -23,7 +23,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchAcquisitionFileProjectInput = By.Id("input-projectNameOrNumber");
         private readonly By searchAcquisitionFileSearchButton = By.Id("search-button");
         private readonly By searchAcquisitionFileResetButton = By.Id("reset-button");
-        private readonly By searchAcquisitionFileCreateNewButton = By.XPath("//button[@type='button']/div[contains(text(),'Create an acquisition file')]/parent::button");
+        private readonly By searchAcquisitionFileCreateNewButton = By.XPath("//div[contains(text(),'Create an Acquisition File')]/parent::button");
 
         //Acquisition Files List Elements
         private readonly By searchAcquisitionFileNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Acquisition file #')]");
