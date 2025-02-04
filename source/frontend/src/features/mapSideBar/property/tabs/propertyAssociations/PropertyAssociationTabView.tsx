@@ -1,10 +1,7 @@
-import {
-  MdFence,
-  MdOutlineCallMissedOutgoing,
-  MdOutlineRealEstateAgent,
-  MdTopic,
-} from 'react-icons/md';
-
+import AcquisitionIcon from '@/assets/images/acquisition-grey-icon.svg?react';
+import DispositionIcon from '@/assets/images/disposition-grey-icon.svg?react';
+import LeaseIcon from '@/assets/images/lease-grey-icon.svg?react';
+import ResearchIcon from '@/assets/images/research-grey-icon.svg?react';
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -34,7 +31,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdTopic title="User Profile" size="2.5rem" />}
+            icon={<ResearchIcon title="User Profile" />}
             title="Research"
             count={props.associations?.researchAssociations?.length}
           />
@@ -50,7 +47,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdOutlineRealEstateAgent title="Acquisition-Files" size="2.5rem" />}
+            icon={<AcquisitionIcon title="Acquisition-Files" />}
             title="Acquisition"
             count={props.associations?.acquisitionAssociations?.length}
           />
@@ -66,7 +63,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdFence title="Leases-Licences" size="2.5rem" />}
+            icon={<LeaseIcon title="Leases-Licences" />}
             title="Leases/Licences"
             count={props.associations?.leaseAssociations?.length}
           />
@@ -85,7 +82,7 @@ const PropertyAssociationTabView: React.FunctionComponent<
       <Section
         header={
           <AssociationHeader
-            icon={<MdOutlineCallMissedOutgoing title="Disposition-Files" size="2.5rem" />}
+            icon={<DispositionIcon title="Disposition-Files" />}
             title="Disposition"
             count={props.associations?.dispositionAssociations?.length}
           />
