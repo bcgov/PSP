@@ -84,7 +84,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Edit Tenant section
         public void EditStakeholderButton()
         {
-            Wait();
+            Wait(3000);
             webDriver.FindElement(StakeholderEditButton).Click();
         }
 

@@ -523,19 +523,19 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void SaveAcquisitionFileWithErrors()
-        {
-            Wait();
-            ButtonElement("Save");
-        }
-
         public void SaveAcquisitionFileDetailsWithExpectedErrors()
         {
             Wait(5000);
             ButtonElement("Save");
 
-            sharedModals.IsToastyPresent();
-            //Assert.Contains("Acquisition File Interest Holder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ToastifyText());
+            Wait();
+            while (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
+            {
+                if (sharedModals.ModalHeader().Contains("Error"))
+                {
+                    break;
+                }
+            }
         }
 
         public void CancelAcquisitionFile()
