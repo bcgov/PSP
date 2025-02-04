@@ -26,7 +26,7 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.AgreementDate, src => src.AgreementDt)
                 .Map(dest => dest.GenerationDate, src => src.GenerationDt)
                 .Map(dest => dest.Financials, src => src.PimsCompReqFinancials)
-                .Map(dest => dest.LegacyPayee, src => src.LegacyPayee)
+                //.Map(dest => dest.LegacyPayee, src => src.LegacyPayee) TODO: needs fixing
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
                 .Map(dest => dest.GstNumber, src => src.GstNumber)
                 .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
@@ -53,7 +53,7 @@ namespace Pims.Api.Models.Concepts.CompensationRequisition
                 .Map(dest => dest.AgreementDt, src => src.AgreementDate)
                 .Map(dest => dest.GenerationDt, src => src.GenerationDate)
                 .Map(dest => dest.PimsCompReqFinancials, src => src.Financials)
-                .Map(dest => dest.LegacyPayee, src => src.LegacyPayee)
+                //.Map(dest => dest.LegacyPayee, src => src.LegacyPayee) TODO: needs fixing
                 .Map(dest => dest.IsPaymentInTrust, src => src.IsPaymentInTrust)
                 .Map(dest => dest.GstNumber, src => src.GstNumber)
                 .Map(dest => dest.FinalizedDate, src => src.FinalizedDate)
