@@ -1,9 +1,9 @@
 /* -----------------------------------------------------------------------------
-Alter the display order of the PIMS_DISPOSITION_FILE_STATUS_TYPE table.
+Alter the display order of the PIMS_LEASE_STATUS_TYPE table.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
-Doug Filteau  2025-Feb-04  Display order enforced.
+Doug Filteau  2025-Feb-04  Display order enforced
 ----------------------------------------------------------------------------- */
 
 SET XACT_ABORT ON
@@ -18,14 +18,16 @@ GO
 -- Alter the display order
 PRINT N'Alter the display order'
 GO
-UPDATE PIMS_DISPOSITION_FILE_STATUS_TYPE
-SET    DISPLAY_ORDER = CASE DISPOSITION_FILE_STATUS_TYPE_CODE
-                         WHEN N'ACTIVE'    THEN 1
-                         WHEN N'DRAFT'     THEN 2
-                         WHEN N'COMPLETE'  THEN 3
-                         WHEN N'HOLD'      THEN 4
-                         WHEN N'CANCELLED' THEN 5
-                         WHEN N'ARCHIVED'  THEN 6
+UPDATE PIMS_LEASE_STATUS_TYPE
+SET    DISPLAY_ORDER = CASE LEASE_STATUS_TYPE_CODE
+                         WHEN N'ACTIVE'     THEN 1
+                         WHEN N'DRAFT'      THEN 2
+                         WHEN N'DUPLICATE'  THEN 3
+                         WHEN N'INACTIVE'   THEN 4
+                         WHEN N'DISCARD'    THEN 5
+                         WHEN N'TERMINATED' THEN 6
+                         WHEN N'ARCHIVED'   THEN 7
+                         WHEN N'EXPIRED'    THEN 8
                        END
      , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
 GO

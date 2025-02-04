@@ -4,6 +4,7 @@ Populate the PIMS_DISPOSITION_FILE_STATUS_TYPE table.
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
 Doug Filteau  2023-Nov-21  Initial version
+Doug Filteau  2025-Feb-04  Display order enforced.
 ----------------------------------------------------------------------------- */
 
 DELETE FROM PIMS_DISPOSITION_FILE_STATUS_TYPE

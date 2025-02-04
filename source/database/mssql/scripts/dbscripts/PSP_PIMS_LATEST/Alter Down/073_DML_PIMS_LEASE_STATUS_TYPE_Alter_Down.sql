@@ -1,9 +1,9 @@
 /* -----------------------------------------------------------------------------
-Alter the display order of the PIMS_DISPOSITION_FILE_STATUS_TYPE table.
+Alter the data in the PIMS_LEASE_STATUS_TYPE table.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
-Doug Filteau  2025-Jan-24  Initial version.
+Doug Filteau  2025-Feb-04  Display order enforced
 ----------------------------------------------------------------------------- */
 
 SET XACT_ABORT ON
@@ -18,8 +18,8 @@ GO
 -- Alter the display order
 PRINT N'Alter the display order'
 GO
-UPDATE PIMS_DISPOSITION_FILE_STATUS_TYPE
-SET    DISPLAY_ORDER = NULL
+UPDATE PIMS_LEASE_STATUS_TYPE
+SET    DISPLAY_ORDER              = NULL
      , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
 GO
 IF @@ERROR <> 0 SET NOEXEC ON

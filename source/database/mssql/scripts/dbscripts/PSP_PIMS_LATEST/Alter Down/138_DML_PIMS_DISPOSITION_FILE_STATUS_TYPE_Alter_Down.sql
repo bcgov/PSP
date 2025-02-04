@@ -19,14 +19,7 @@ GO
 PRINT N'Alter the display order'
 GO
 UPDATE PIMS_DISPOSITION_FILE_STATUS_TYPE
-SET    DISPLAY_ORDER = CASE DISPOSITION_FILE_STATUS_TYPE_CODE
-                         WHEN N'ACTIVE'    THEN 1
-                         WHEN N'DRAFT'     THEN 2
-                         WHEN N'COMPLETE'  THEN 3
-                         WHEN N'HOLD'      THEN 4
-                         WHEN N'CANCELLED' THEN 5
-                         WHEN N'ARCHIVED'  THEN 6
-                       END
+SET    DISPLAY_ORDER              = NULL
      , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
 GO
 IF @@ERROR <> 0 SET NOEXEC ON

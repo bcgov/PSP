@@ -19,14 +19,14 @@ GO
 PRINT N'Alter the display order'
 GO
 UPDATE PIMS_ACQUISITION_FILE_STATUS_TYPE
-SET    DISPLAY_ORDER = CASE
-                         WHEN ACQUISITION_FILE_STATUS_TYPE_CODE = N'ACTIVE' THEN 1
-                         WHEN ACQUISITION_FILE_STATUS_TYPE_CODE = N'DRAFT'  THEN 2
-                         WHEN ACQUISITION_FILE_STATUS_TYPE_CODE = N'COMPLT' THEN 3
-                         WHEN ACQUISITION_FILE_STATUS_TYPE_CODE = N'HOLD'   THEN 4
-                         WHEN ACQUISITION_FILE_STATUS_TYPE_CODE = N'CANCEL' THEN 5
-                         WHEN ACQUISITION_FILE_STATUS_TYPE_CODE = N'CLOSED' THEN 6
-                         WHEN ACQUISITION_FILE_STATUS_TYPE_CODE = N'ARCHIV' THEN 7
+SET    DISPLAY_ORDER = CASE ACQUISITION_FILE_STATUS_TYPE_CODE
+                         WHEN N'ACTIVE' THEN 1
+                         WHEN N'DRAFT'  THEN 2
+                         WHEN N'COMPLT' THEN 3
+                         WHEN N'HOLD'   THEN 4
+                         WHEN N'CANCEL' THEN 5
+                         WHEN N'ARCHIV' THEN 6
+                         WHEN N'CLOSED' THEN 7
                        END
      , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
 GO
