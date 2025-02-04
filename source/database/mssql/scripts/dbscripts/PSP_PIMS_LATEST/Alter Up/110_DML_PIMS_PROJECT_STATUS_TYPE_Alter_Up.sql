@@ -19,7 +19,7 @@ GO
 PRINT N'Alter the display order'
 GO
 UPDATE PIMS_PROJECT_STATUS_TYPE
-SET    DISPLAY_ORDER = CASE DISPOSITION_FILE_STATUS_TYPE_CODE
+SET    DISPLAY_ORDER = CASE PROJECT_STATUS_TYPE_CODE
                          WHEN N'AC'   THEN 1
                          WHEN N'CO'   THEN 2
                          WHEN N'HO'   THEN 3
