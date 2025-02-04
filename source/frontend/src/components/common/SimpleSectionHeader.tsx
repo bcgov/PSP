@@ -21,7 +21,7 @@ export const SimpleSectionHeader: React.FunctionComponent<
 > = ({ title, className, children }) => {
   return (
     <StyledRow className={clsx('no-gutters', className)}>
-      <Col xs="auto" className="d-flex justify-content-start px-2 my-1">
+      <Col xs="auto" className="d-flex justify-content-start align-items-end">
         {title ?? ''}
       </Col>
       {exists(children) && (

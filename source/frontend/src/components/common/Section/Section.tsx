@@ -40,7 +40,7 @@ export const Section: React.FC<
       {exists(header) && (
         <StyledSectionHeader isStyledHeader={isStyledHeader}>
           <Row className="no-gutters">
-            <Col>{header}</Col>
+            <Col className="align-items-end">{header}</Col>
             {isCollapsable && (
               <Col xs="auto" className="pl-2 d-flex align-items-end">
                 {isCollapsed && (
