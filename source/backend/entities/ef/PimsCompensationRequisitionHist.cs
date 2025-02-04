@@ -41,10 +41,6 @@ public partial class PimsCompensationRequisitionHist
     [Column("ALTERNATE_PROJECT_ID")]
     public long? AlternateProjectId { get; set; }
 
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
-
     [Column("IS_DRAFT")]
     public bool? IsDraft { get; set; }
 
@@ -61,12 +57,6 @@ public partial class PimsCompensationRequisitionHist
 
     [Column("AGREEMENT_DT")]
     public DateOnly? AgreementDt { get; set; }
-
-    [Column("EXPROP_NOTICE_SERVED_DT")]
-    public DateOnly? ExpropNoticeServedDt { get; set; }
-
-    [Column("EXPROP_VESTING_DT")]
-    public DateOnly? ExpropVestingDt { get; set; }
 
     [Column("GENERATION_DT")]
     public DateOnly? GenerationDt { get; set; }
@@ -147,4 +137,14 @@ public partial class PimsCompensationRequisitionHist
 
     [Column("ACQUISITION_FILE_TEAM_ID")]
     public long? AcquisitionFileTeamId { get; set; }
+
+    [Column("EXPROP_NOTICE_SERVED_DT")]
+    public DateOnly? ExpropNoticeServedDt { get; set; }
+
+    [Column("EXPROP_VESTING_DT")]
+    public DateOnly? ExpropVestingDt { get; set; }
+
+    [Column("LEGACY_PAYEE")]
+    [StringLength(1000)]
+    public string LegacyPayee { get; set; }
 }
