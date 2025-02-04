@@ -13,4 +13,5 @@ export interface ApiGen_Concepts_Association {
   createdBy: string | null;
   createdByGuid: string | null;
   status: string | null;
+  statusCode: string | null;
 }

@@ -1,4 +1,4 @@
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikHelpers, FormikProps } from 'formik';
 import { Prompt } from 'react-router-dom';
 import styled from 'styled-components';
 
@@ -9,6 +9,8 @@ import LeaseDetailSubForm from '@/features/leases/add/LeaseDetailSubForm';
 import RenewalSubForm from '@/features/leases/add/RenewalSubForm';
 import { getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { LeasePropertySelector } from '@/features/leases/shared/propertyPicker/LeasePropertySelector';
+import { useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
 export interface IUpdateLeaseFormProps {
   onSubmit: (lease: LeaseFormModel) => Promise<void>;
@@ -18,13 +20,49 @@ export interface IUpdateLeaseFormProps {
 
 export const UpdateLeaseForm: React.FunctionComponent<IUpdateLeaseFormProps> = ({
   onSubmit,
+  initialValues,
   formikRef,
 }) => {
+  const { setModalContent, setDisplayModal } = useModalContext();
+
+  const handleSubmit = async (
+    values: LeaseFormModel,
+    formikHelpers: FormikHelpers<LeaseFormModel>,
+  ): Promise<void> => {
+    if (
+      initialValues.statusTypeCode !== ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE &&
+      values.statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE
+    ) {
+      setModalContent({
+        variant: 'warning',
+        okButtonText: 'Yes',
+        cancelButtonText: 'No',
+        message: `You've marked this status file as a duplicate. If you save it, you'll still see it in the management table.
+
+        Please ensure that all related documents and notes are moved to the main file.
+        
+        Do you want to acknowledge and proceed?`,
+        title: 'Warning',
+        handleCancel: () => {
+          formikHelpers.setFieldValue('statusTypeCode', initialValues.statusTypeCode);
+          setDisplayModal(false);
+        },
+        handleOk: () => {
+          onSubmit(values);
+          setDisplayModal(false);
+        },
+      });
+      setDisplayModal(true);
+    } else {
+      await onSubmit(values);
+    }
+  };
+
   return (
     <StyledFormWrapper>
       <Formik<LeaseFormModel>
         validationSchema={AddLeaseYupSchema}
-        onSubmit={values => onSubmit(values)}
+        onSubmit={handleSubmit}
         initialValues={getDefaultFormLease()}
         innerRef={formikRef}
       >

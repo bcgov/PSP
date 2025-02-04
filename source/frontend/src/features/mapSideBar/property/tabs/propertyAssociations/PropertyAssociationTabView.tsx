@@ -7,6 +7,8 @@ import {
 
 import { Section } from '@/components/common/Section/Section';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import TooltipIcon from '@/components/common/TooltipIcon';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
@@ -27,9 +29,20 @@ export interface IPropertyAssociationTabViewProps {
 const PropertyAssociationTabView: React.FunctionComponent<
   React.PropsWithChildren<IPropertyAssociationTabViewProps>
 > = props => {
+  const leaseAssociations =
+    props.associations?.leaseAssociations?.filter(
+      x => x.statusCode !== ApiGen_CodeTypes_LeaseStatusTypes.DUPLICATE,
+    ) ?? [];
+
   return (
     <StyledSummarySection>
-      <Section>This property is associated with the following files:</Section>
+      <Section>
+        This property is associated with the following files:{' '}
+        <TooltipIcon
+          toolTipId="duplicate-files-tooltip"
+          toolTip="Duplicated files are hidden on the Property Information, PIMS files tab, underneath the Leases/Licenses."
+        ></TooltipIcon>
+      </Section>
 
       <Section
         header={
@@ -65,17 +78,19 @@ const PropertyAssociationTabView: React.FunctionComponent<
       </Section>
       <Section
         header={
-          <AssociationHeader
-            icon={<MdFence title="Leases-Licences" size="2.5rem" />}
-            title="Leases/Licences"
-            count={props.associations?.leaseAssociations?.length}
-          />
+          <>
+            <AssociationHeader
+              icon={<MdFence title="Leases-Licences" size="2.5rem" />}
+              title="Leases/Licences"
+              count={leaseAssociations.length}
+            />
+          </>
         }
         isCollapsable
       >
         <LeaseAssociationContent
           associationName="lease"
-          associations={props.associations?.leaseAssociations ?? undefined}
+          associations={leaseAssociations}
           linkUrlMask="/mapview/sidebar/lease/|id|"
           stakeholders={props.associatedLeaseStakeholders}
           renewals={props.associatedLeaseRenewals}
