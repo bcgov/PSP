@@ -518,7 +518,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                 else if (sharedModals.ModalHeader().Contains("Error"))
                 {
-                    break;
+                    return;
                 }
             }
         }
