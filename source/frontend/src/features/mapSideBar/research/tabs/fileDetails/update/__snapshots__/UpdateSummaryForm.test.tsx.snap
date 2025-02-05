@@ -443,7 +443,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Research File Information
           </div>
@@ -636,7 +636,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Project
           </div>
@@ -668,7 +668,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Roads
           </div>
@@ -747,7 +747,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Research Request
           </div>
@@ -1117,7 +1117,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Result
           </div>
@@ -1214,7 +1214,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Expropriation
           </div>

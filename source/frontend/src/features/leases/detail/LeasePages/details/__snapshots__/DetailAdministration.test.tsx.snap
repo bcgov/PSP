@@ -53,7 +53,7 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           Administration
         </div>
@@ -482,7 +482,7 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           Administration
         </div>

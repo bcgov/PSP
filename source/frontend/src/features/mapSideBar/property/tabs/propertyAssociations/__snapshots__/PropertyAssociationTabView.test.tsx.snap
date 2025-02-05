@@ -81,7 +81,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3"
@@ -308,7 +308,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3"
@@ -535,7 +535,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3"
@@ -760,7 +760,7 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3"

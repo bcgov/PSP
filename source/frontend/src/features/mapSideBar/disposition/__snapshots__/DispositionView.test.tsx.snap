@@ -993,7 +993,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                             class="no-gutters row"
                           >
                             <div
-                              class="col"
+                              class="align-items-end col"
                             >
                               Project
                             </div>
@@ -1068,7 +1068,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                             class="no-gutters row"
                           >
                             <div
-                              class="col"
+                              class="align-items-end col"
                             >
                               Schedule
                             </div>
@@ -1125,7 +1125,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                             class="no-gutters row"
                           >
                             <div
-                              class="col"
+                              class="align-items-end col"
                             >
                               Disposition Details
                             </div>
@@ -1372,7 +1372,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                             class="no-gutters row"
                           >
                             <div
-                              class="col"
+                              class="align-items-end col"
                             >
                               Disposition Team
                             </div>

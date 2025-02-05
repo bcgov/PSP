@@ -144,7 +144,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Project
                 </div>
@@ -185,7 +185,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Roads
                 </div>
@@ -242,7 +242,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Research Request
                 </div>
@@ -350,7 +350,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Result
                 </div>
@@ -406,7 +406,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Expropriation
                 </div>

@@ -112,7 +112,7 @@ exports[`Add Improvements container component > displays the improvement types i
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Commercial Improvements
             </div>
@@ -221,7 +221,7 @@ exports[`Add Improvements container component > displays the improvement types i
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Residential Improvements
             </div>
@@ -330,7 +330,7 @@ exports[`Add Improvements container component > displays the improvement types i
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               <div
                 class="d-flex align-items-center"
@@ -575,7 +575,7 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Commercial Improvements
             </div>
@@ -684,7 +684,7 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Residential Improvements
             </div>
@@ -793,7 +793,7 @@ exports[`Add Improvements container component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               <div
                 class="d-flex align-items-center"

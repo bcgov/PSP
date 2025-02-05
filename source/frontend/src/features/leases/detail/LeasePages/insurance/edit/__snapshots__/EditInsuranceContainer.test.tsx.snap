@@ -77,7 +77,7 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Required Coverage
           </div>
@@ -157,7 +157,7 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Home Insurance
           </div>

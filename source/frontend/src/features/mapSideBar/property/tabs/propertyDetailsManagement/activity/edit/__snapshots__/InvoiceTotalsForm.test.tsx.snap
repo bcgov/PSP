@@ -284,13 +284,13 @@ exports[`EditPropertyActivity - InvoiceTotalsForm > renders as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           <div
             class="c2 no-gutters row"
           >
             <div
-              class="d-flex justify-content-start px-2 my-1 col-auto"
+              class="d-flex justify-content-start align-items-end col-auto"
             >
               Invoices Total
             </div>

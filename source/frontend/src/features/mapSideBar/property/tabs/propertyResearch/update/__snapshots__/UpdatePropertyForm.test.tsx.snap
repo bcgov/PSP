@@ -61,7 +61,7 @@ exports[`UpdatePropertyForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Property of Interest
           </div>
@@ -434,7 +434,7 @@ exports[`UpdatePropertyForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Research Summary
           </div>

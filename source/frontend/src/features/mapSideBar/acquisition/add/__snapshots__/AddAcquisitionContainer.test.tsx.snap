@@ -684,7 +684,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Project
                   </div>
@@ -890,7 +890,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Progress Statuses
                   </div>
@@ -1345,7 +1345,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Schedule
                   </div>
@@ -1598,7 +1598,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Properties to include in this sub-file:
                   </div>
@@ -2139,7 +2139,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                       class="no-gutters row"
                     >
                       <div
-                        class="col"
+                        class="align-items-end col"
                       >
                         Selected properties
                       </div>
@@ -2199,7 +2199,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Acquisition Details
                   </div>
@@ -2572,7 +2572,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Acquisition Team
                   </div>
@@ -2605,7 +2605,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Sub-Interest
                   </div>
@@ -3545,7 +3545,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Project
                   </div>
@@ -3747,7 +3747,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Progress Statuses
                   </div>
@@ -4202,7 +4202,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Schedule
                   </div>
@@ -4455,7 +4455,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Properties to include in this file:
                   </div>
@@ -4996,7 +4996,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                       class="no-gutters row"
                     >
                       <div
-                        class="col"
+                        class="align-items-end col"
                       >
                         Selected properties
                       </div>
@@ -5056,7 +5056,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Acquisition Details
                   </div>
@@ -5325,7 +5325,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Acquisition Team
                   </div>
@@ -5358,7 +5358,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Owners
                   </div>

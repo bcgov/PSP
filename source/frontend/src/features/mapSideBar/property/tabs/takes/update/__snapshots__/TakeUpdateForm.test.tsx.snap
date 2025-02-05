@@ -173,7 +173,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Update Take
           </div>
@@ -457,7 +457,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-items-end col"
               >
                 Area
               </div>
@@ -1849,7 +1849,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-items-end col"
               >
                 Surplus
               </div>

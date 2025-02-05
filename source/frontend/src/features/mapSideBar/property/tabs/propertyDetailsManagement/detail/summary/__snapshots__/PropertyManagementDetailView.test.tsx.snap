@@ -54,7 +54,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           <div
             class="row"

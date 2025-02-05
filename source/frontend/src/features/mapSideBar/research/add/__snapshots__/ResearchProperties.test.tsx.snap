@@ -508,7 +508,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           Properties to include in this file:
         </div>
@@ -1049,7 +1049,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Selected properties
             </div>

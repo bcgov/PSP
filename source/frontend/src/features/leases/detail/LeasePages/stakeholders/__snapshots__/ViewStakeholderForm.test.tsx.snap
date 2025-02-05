@@ -305,13 +305,13 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3 no-gutters row"
             >
               <div
-                class="px-2 my-1 col-auto"
+                class="align-items-end col-auto"
               >
                 Tenants
               </div>
@@ -606,7 +606,7 @@ exports[`Tenant component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Assignee
           </div>
@@ -626,7 +626,7 @@ exports[`Tenant component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Property manager
           </div>
@@ -646,7 +646,7 @@ exports[`Tenant component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Representative
           </div>
@@ -666,7 +666,7 @@ exports[`Tenant component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Tenant
           </div>
@@ -686,7 +686,7 @@ exports[`Tenant component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Unknown
           </div>

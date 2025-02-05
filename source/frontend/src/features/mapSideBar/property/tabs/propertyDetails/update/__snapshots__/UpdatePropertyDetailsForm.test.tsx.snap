@@ -397,7 +397,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Property Address
           </div>
@@ -1164,7 +1164,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Property Attributes
           </div>
@@ -1802,7 +1802,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Tenure Status
           </div>
@@ -2268,7 +2268,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Measurements
           </div>
@@ -2614,7 +2614,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Comments
           </div>

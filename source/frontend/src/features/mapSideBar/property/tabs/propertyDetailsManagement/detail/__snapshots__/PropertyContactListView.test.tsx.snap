@@ -385,13 +385,13 @@ exports[`PropertyContactListView component > renders as expected when provided v
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           <div
             class="c2 no-gutters row"
           >
             <div
-              class="px-2 my-1 col-auto"
+              class="align-items-end col-auto"
             >
               Property Contact
             </div>

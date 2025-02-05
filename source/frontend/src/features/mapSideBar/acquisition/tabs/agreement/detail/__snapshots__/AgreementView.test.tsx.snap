@@ -314,10 +314,10 @@ exports[`AgreementView component > renders as expected 1`] = `
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
 }
 
 .c4 {
@@ -346,13 +346,13 @@ exports[`AgreementView component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             <div
               class="c3 no-gutters row"
             >
               <div
-                class="px-2 my-1 col-auto"
+                class="align-items-end col-auto"
               >
                 Agreements
               </div>
@@ -379,7 +379,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   <div
                     class="c5"
@@ -693,7 +693,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   <div
                     class="c5"

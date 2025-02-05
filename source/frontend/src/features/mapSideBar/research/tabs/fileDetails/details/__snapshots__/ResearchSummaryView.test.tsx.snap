@@ -59,7 +59,7 @@ exports[`ResearchSummaryView component > renders as expected when research file 
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Project
           </div>
@@ -100,7 +100,7 @@ exports[`ResearchSummaryView component > renders as expected when research file 
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Roads
           </div>
@@ -157,7 +157,7 @@ exports[`ResearchSummaryView component > renders as expected when research file 
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Research Request
           </div>
@@ -265,7 +265,7 @@ exports[`ResearchSummaryView component > renders as expected when research file 
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Result
           </div>
@@ -321,7 +321,7 @@ exports[`ResearchSummaryView component > renders as expected when research file 
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Expropriation
           </div>

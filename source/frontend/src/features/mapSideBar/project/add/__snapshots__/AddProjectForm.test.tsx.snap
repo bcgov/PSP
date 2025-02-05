@@ -274,7 +274,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Project Details
             </div>
@@ -502,7 +502,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Associated Codes
             </div>
@@ -682,7 +682,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Associated products
             </div>
@@ -715,7 +715,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Project Management Team
             </div>
@@ -1132,7 +1132,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Project Details
             </div>
@@ -1362,7 +1362,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Associated Codes
             </div>
@@ -1542,7 +1542,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Associated products
             </div>
@@ -2196,7 +2196,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Project Management Team
             </div>

@@ -380,13 +380,13 @@ exports[`compensation list view > renders as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           <div
             class="c3 no-gutters row"
           >
             <div
-              class="px-2 my-1 col-auto"
+              class="align-items-end col-auto"
             >
               Compensation Requisitions
             </div>
@@ -695,7 +695,7 @@ exports[`compensation list view > renders as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           Requisitions in this File (H120)
         </div>

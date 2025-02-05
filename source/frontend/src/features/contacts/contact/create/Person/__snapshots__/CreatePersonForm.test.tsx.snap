@@ -356,7 +356,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-items-end col"
               >
                 Contact Details
               </div>
@@ -564,7 +564,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-items-end col"
               >
                 <div
                   class="d-flex align-items-center"
@@ -876,7 +876,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-items-end col"
               >
                 <div
                   class="d-flex align-items-center"
@@ -1165,7 +1165,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-items-end col"
               >
                 Property Address
               </div>
@@ -1422,7 +1422,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-items-end col"
               >
                 Billing Address
               </div>
@@ -1679,7 +1679,7 @@ exports[`CreatePersonForm > renders as expected 1`] = `
               class="no-gutters row"
             >
               <div
-                class="col"
+                class="align-items-end col"
               >
                 Comments
               </div>

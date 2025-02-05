@@ -318,13 +318,13 @@ exports[`Lease Documents Page > renders as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           <div
             class="c2 no-gutters row"
           >
             <div
-              class="px-2 my-1 col-auto"
+              class="col-auto"
             >
               <span>
                 Documents

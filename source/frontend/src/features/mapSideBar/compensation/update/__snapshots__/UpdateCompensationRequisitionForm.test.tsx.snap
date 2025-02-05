@@ -344,7 +344,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Requisition Details
             </div>
@@ -575,7 +575,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               <div
                 class="d-flex align-items-center"
@@ -768,7 +768,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Financial Coding
             </div>
@@ -1073,7 +1073,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Payment
             </div>
@@ -1394,7 +1394,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               Activities
             </div>

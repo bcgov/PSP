@@ -336,7 +336,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Show Ownership
           </div>
@@ -621,7 +621,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Project
           </div>
@@ -733,7 +733,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Tenure
           </div>
@@ -1123,7 +1123,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Lease / Licence
           </div>
@@ -1695,7 +1695,7 @@ exports[`FilterContentForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Anomaly
           </div>

@@ -996,7 +996,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                               class="no-gutters row"
                             >
                               <div
-                                class="col"
+                                class="align-items-end col"
                               >
                                 Project
                               </div>
@@ -1038,7 +1038,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                               class="no-gutters row"
                             >
                               <div
-                                class="col"
+                                class="align-items-end col"
                               >
                                 Roads
                               </div>
@@ -1097,7 +1097,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                               class="no-gutters row"
                             >
                               <div
-                                class="col"
+                                class="align-items-end col"
                               >
                                 Research Request
                               </div>
@@ -1211,7 +1211,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                               class="no-gutters row"
                             >
                               <div
-                                class="col"
+                                class="align-items-end col"
                               >
                                 Result
                               </div>
@@ -1269,7 +1269,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                               class="no-gutters row"
                             >
                               <div
-                                class="col"
+                                class="align-items-end col"
                               >
                                 Expropriation
                               </div>

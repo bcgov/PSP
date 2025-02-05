@@ -603,7 +603,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Project
           </div>
@@ -813,7 +813,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Progress Statuses
           </div>
@@ -1268,7 +1268,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Schedule
           </div>
@@ -1521,7 +1521,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Details
           </div>
@@ -1900,7 +1900,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Team
           </div>
@@ -2327,7 +2327,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Sub-Interest
           </div>
@@ -4767,7 +4767,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Project
           </div>
@@ -4992,7 +4992,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Progress Statuses
           </div>
@@ -5447,7 +5447,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Schedule
           </div>
@@ -5700,7 +5700,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Details
           </div>
@@ -5975,7 +5975,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Team
           </div>
@@ -6402,7 +6402,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Owners
           </div>

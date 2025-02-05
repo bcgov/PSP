@@ -58,13 +58,13 @@ exports[`DepositsReceivedContainer component > renders as expected 1`] = `
         class="no-gutters row"
       >
         <div
-          class="col"
+          class="align-items-end col"
         >
           <div
             class="c2 no-gutters row"
           >
             <div
-              class="px-2 my-1 col-auto"
+              class="align-items-end col-auto"
             >
               Deposits Received
             </div>

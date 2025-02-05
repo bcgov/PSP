@@ -573,7 +573,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Contact Details
                   </div>
@@ -781,7 +781,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     <div
                       class="d-flex align-items-center"
@@ -1093,7 +1093,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     <div
                       class="d-flex align-items-center"
@@ -1382,7 +1382,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Property Address
                   </div>
@@ -1639,7 +1639,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Billing Address
                   </div>
@@ -1896,7 +1896,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Comments
                   </div>
