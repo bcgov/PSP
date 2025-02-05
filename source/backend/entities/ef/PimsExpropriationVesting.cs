@@ -7,52 +7,37 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table to support multiple payees on a compensation requisition.
+/// Entity continaing the vesting date of the expropriation.
 /// </summary>
-[Table("PIMS_COMP_REQ_PAYEE")]
-[Index("AcquisitionFileTeamId", Name = "CMPRQP_ACQUISITION_FILE_TEAM_ID_IDX")]
-[Index("AcquisitionOwnerId", Name = "CMPRQP_ACQUISITION_OWNER_ID_IDX")]
-[Index("CompensationRequisitionId", Name = "CMPRQP_COMPENSATION_REQUISITION_ID_IDX")]
-[Index("InterestHolderId", Name = "CMPRQP_INTEREST_HOLDER_ID_IDX")]
-public partial class PimsCompReqPayee
+[Table("PIMS_EXPROPRIATION_VESTING")]
+[Index("AcquisitionFileId", Name = "EXPVST_ACQUISITION_FILE_ID_IDX")]
+[Index("CompensationRequisitionId", Name = "EXPVST_COMPENSATION_REQUISITION_ID_IDX")]
+public partial class PimsExpropriationVesting
 {
     /// <summary>
-    /// Generated surrogate primary key.
+    /// Unique auto-generated surrogate primary key
     /// </summary>
     [Key]
-    [Column("COMP_REQ_PAYEE_ID")]
-    public long CompReqPayeeId { get; set; }
+    [Column("EXPROPRIATION_VESTING_ID")]
+    public long ExpropriationVestingId { get; set; }
 
     /// <summary>
-    /// Foreign key reference to the PIMS_COMPENSATION_REQUISITION table.
+    /// Foreign key of the acquisition file.
+    /// </summary>
+    [Column("ACQUISITION_FILE_ID")]
+    public long AcquisitionFileId { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_COMPENSATION_REQUISITION table.
     /// </summary>
     [Column("COMPENSATION_REQUISITION_ID")]
     public long? CompensationRequisitionId { get; set; }
 
     /// <summary>
-    /// Foreign key reference to the PIMS_ACQUISITION_OWNER table.
+    /// Expropriation vesting date.
     /// </summary>
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    /// <summary>
-    /// Foreign key reference to the PIMS_INTEREST_HOLDER table.
-    /// </summary>
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    /// <summary>
-    /// Foreign key reference to the PIMS_ACQUISITION_FILE_TEAM table.
-    /// </summary>
-    [Column("ACQUISITION_FILE_TEAM_ID")]
-    public long? AcquisitionFileTeamId { get; set; }
-
-    /// <summary>
-    /// Payee where only the name is known from the PAIMS system,
-    /// </summary>
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
+    [Column("EXPROP_VESTING_DT")]
+    public DateOnly? ExpropVestingDt { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -144,19 +129,7 @@ public partial class PimsCompReqPayee
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("AcquisitionFileTeamId")]
-    [InverseProperty("PimsCompReqPayees")]
-    public virtual PimsAcquisitionFileTeam AcquisitionFileTeam { get; set; }
-
-    [ForeignKey("AcquisitionOwnerId")]
-    [InverseProperty("PimsCompReqPayees")]
-    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
-
-    [ForeignKey("CompensationRequisitionId")]
-    [InverseProperty("PimsCompReqPayees")]
-    public virtual PimsCompensationRequisition CompensationRequisition { get; set; }
-
-    [ForeignKey("InterestHolderId")]
-    [InverseProperty("PimsCompReqPayees")]
-    public virtual PimsInterestHolder InterestHolder { get; set; }
+    [ForeignKey("AcquisitionFileId")]
+    [InverseProperty("PimsExpropriationVestings")]
+    public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
 }

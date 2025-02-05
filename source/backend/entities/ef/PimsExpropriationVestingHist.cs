@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_COMP_REQ_PAYEE_HIST")]
-[Index("CompReqPayeeHistId", "EndDateHist", Name = "PIMS_CMPRQP_H_UK", IsUnique = true)]
-public partial class PimsCompReqPayeeHist
+[Table("PIMS_EXPROPRIATION_VESTING_HIST")]
+[Index("ExpropriationVestingHistId", "EndDateHist", Name = "PIMS_EXPVST_H_UK", IsUnique = true)]
+public partial class PimsExpropriationVestingHist
 {
     [Key]
-    [Column("_COMP_REQ_PAYEE_HIST_ID")]
-    public long CompReqPayeeHistId { get; set; }
+    [Column("_EXPROPRIATION_VESTING_HIST_ID")]
+    public long ExpropriationVestingHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,24 +20,17 @@ public partial class PimsCompReqPayeeHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("COMP_REQ_PAYEE_ID")]
-    public long CompReqPayeeId { get; set; }
+    [Column("EXPROPRIATION_VESTING_ID")]
+    public long ExpropriationVestingId { get; set; }
+
+    [Column("ACQUISITION_FILE_ID")]
+    public long AcquisitionFileId { get; set; }
 
     [Column("COMPENSATION_REQUISITION_ID")]
     public long? CompensationRequisitionId { get; set; }
 
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    [Column("ACQUISITION_FILE_TEAM_ID")]
-    public long? AcquisitionFileTeamId { get; set; }
-
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
+    [Column("EXPROP_VESTING_DT")]
+    public DateOnly? ExpropVestingDt { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
