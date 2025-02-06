@@ -1,4 +1,5 @@
 ﻿
+using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
@@ -33,26 +34,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
         protected string leaseCode = "";
         protected string compensationNumber = "";
 
-        public LeaseLicenseSteps(BrowserDriver driver)
+        public LeaseLicenseSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
             genericSteps = new GenericSteps(driver);
-            leaseDetails = new LeaseDetails(driver.Current);
-            leaseConsultation = new LeaseConsultations(driver.Current);
-            checklist = new LeasesChecklist(driver.Current);
-            tenant = new LeaseTenants(driver.Current);
-            periodPayments = new LeasePeriodPayments(driver.Current);
-            improvements = new LeaseImprovements(driver.Current);
-            insurance = new LeaseInsurance(driver.Current);
-            deposits = new LeaseDeposits(driver.Current);
-            surplus = new LeaseSurplus(driver.Current);
-            searchLeases = new SearchLease(driver.Current);
-            searchProperties = new SearchProperties(driver.Current);
-            propertyInformation = new PropertyInformation(driver.Current);
-            sharedSearchProperties = new SharedFileProperties(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
-            h120 = new SharedCompensations(driver.Current);
-            notes = new Notes(driver.Current);
+            leaseDetails = new LeaseDetails(driver);
+            leaseConsultation = new LeaseConsultations(driver);
+            checklist = new LeasesChecklist(driver);
+            tenant = new LeaseTenants(driver);
+            periodPayments = new LeasePeriodPayments(driver);
+            improvements = new LeaseImprovements(driver);
+            insurance = new LeaseInsurance(driver);
+            deposits = new LeaseDeposits(driver);
+            surplus = new LeaseSurplus(driver);
+            searchLeases = new SearchLease(driver);
+            searchProperties = new SearchProperties(driver);
+            propertyInformation = new PropertyInformation(driver);
+            sharedSearchProperties = new SharedFileProperties(driver);
+            sharedPagination = new SharedPagination(driver);
+            h120 = new SharedCompensations(driver);
+            notes = new Notes(driver);
 
             lease = new Lease();
         }
@@ -878,7 +879,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.SearchLicenseByLFile(leaseCode);
 
             Assert.True(searchLeases.SearchFoundResults());
-            searchLeases.Dispose();
         }
 
         [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
@@ -889,7 +889,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchLeases.VerifySearchLeasesView();
             searchLeases.VerifyLeaseTableContent(lease);
-            searchLeases.Dispose();
         }
 
         [StepDefinition(@"I create Compensation Requisition within an Lease/Licence")]

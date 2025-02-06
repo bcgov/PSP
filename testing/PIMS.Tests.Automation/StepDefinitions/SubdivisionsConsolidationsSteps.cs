@@ -1,4 +1,5 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 
@@ -15,10 +16,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private PropertySubdivision propertySubdivision;
         private PropertyConsolidation propertyConsolidation;
 
-        public SubdivisionsConsolidationsSteps(BrowserDriver driver)
+        public SubdivisionsConsolidationsSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            subdivisionConsolidationProps = new SubdivisionConsolidationProperties(driver.Current);
+            subdivisionConsolidationProps = new SubdivisionConsolidationProperties(driver);
 
             propertySubdivision = new PropertySubdivision();
             propertyConsolidation = new PropertyConsolidation();
@@ -106,36 +107,30 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void SubdivisionCreatedSuccessfully()
         {
             subdivisionConsolidationProps.VerifySubdivisionHistory(propertySubdivision);
-            subdivisionConsolidationProps.Dispose();
         }
 
         [StepDefinition(@"Consolidation is created successfully")]
         public void ConsolidationCreatedSuccessfully()
         {
             subdivisionConsolidationProps.VerifyConsolidationHistory(propertyConsolidation);
-            subdivisionConsolidationProps.Dispose();
         }
 
         [StepDefinition(@"Subdivision has a Parent that is not in the MOTI Inventory error")]
         public void SourceNotInventoryError()
         {
             subdivisionConsolidationProps.VerifyInvalidSubdivisionChildrenMessage();
-            subdivisionConsolidationProps.Dispose();
         }
 
         [StepDefinition(@"Subdivision has the same Child twice error")]
         public void SubdivisionSameDestinationTwiceError()
         {
             subdivisionConsolidationProps.VerifyInvalidSubdivisionChildMessage();
-            subdivisionConsolidationProps.Dispose();
         }
 
         [StepDefinition(@"Subdivision has only one Child error")]
         public void SubdivisionOnlyOneDestinationError()
         {
-
             subdivisionConsolidationProps.VerifyMissingChildMessage();
-            subdivisionConsolidationProps.Dispose();
         }
 
         [StepDefinition(@"Consolidation has a Child that is in the MOTI Inventory error")]
@@ -144,7 +139,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //TEST COVERAGE: PSP-8038
 
             subdivisionConsolidationProps.VerifyInvalidConsolidationChildMessage();
-            subdivisionConsolidationProps.Dispose();
         }
 
         [StepDefinition(@"Consolidation has the same Parent twice error")]
@@ -153,7 +147,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //TEST COVERAGE: PSP-8034
 
             subdivisionConsolidationProps.VerifyInvalidConsolidationRepeatedParentMessage();
-            subdivisionConsolidationProps.Dispose();
         }
 
         [StepDefinition(@"Consolidation has only one Parent error")]
@@ -162,7 +155,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //TEST COVERAGE: PSP-8036
 
             subdivisionConsolidationProps.VerifyMissingParentMessage();
-            subdivisionConsolidationProps.Dispose();
         }
 
         private void PopulateSubdivisionData(int rowNumber)
