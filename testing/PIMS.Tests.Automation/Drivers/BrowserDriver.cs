@@ -4,7 +4,6 @@ using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using Xunit.Abstractions;
 
 namespace PIMS.Tests.Automation.Drivers
 {
@@ -72,7 +71,6 @@ namespace PIMS.Tests.Automation.Drivers
                 Current.Close();
                 Current.Dispose();
                 Current.Quit();
-
             }    
         }
     }

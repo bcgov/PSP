@@ -1,11 +1,6 @@
-﻿using AventStack.ExtentReports;
-using DotNetEnv;
-using DotNetEnv.Configuration;
-using Microsoft.Extensions.Configuration;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
-using PIMS.Tests.Automation.Reports;
 using SeleniumExtras.WaitHelpers;
 
 namespace PIMS.Tests.Automation.PageObjects
