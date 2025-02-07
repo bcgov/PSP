@@ -27,7 +27,8 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c2 {
@@ -80,7 +81,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Project
           </div>
@@ -153,7 +154,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Progress Statuses
           </div>
@@ -335,7 +336,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Schedule
           </div>
@@ -473,7 +474,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Details
           </div>
@@ -604,7 +605,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Team
           </div>
@@ -707,7 +708,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Owner Information
           </div>

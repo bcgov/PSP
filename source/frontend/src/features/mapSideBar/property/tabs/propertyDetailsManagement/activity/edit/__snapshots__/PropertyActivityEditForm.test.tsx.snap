@@ -304,7 +304,8 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c4 {
@@ -409,7 +410,7 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   Activity Details
                 </div>
@@ -1048,13 +1049,13 @@ exports[`PropertyActivityEditForm component > renders as expected 1`] = `
                 class="no-gutters row"
               >
                 <div
-                  class="col"
+                  class="align-items-end col"
                 >
                   <div
                     class="c12 no-gutters row"
                   >
                     <div
-                      class="d-flex justify-content-start px-2 my-1 col-auto"
+                      class="d-flex justify-content-start align-items-end col-auto"
                     >
                       Invoices Total
                     </div>
