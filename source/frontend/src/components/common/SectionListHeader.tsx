@@ -25,7 +25,7 @@ export const SectionListHeader: React.FunctionComponent<
 
   return (
     <StyledRow className={clsx('no-gutters', props.className)}>
-      <Col xs="auto" className="px-2 my-1">
+      <Col xs="auto" className="align-items-end">
         {props.title}
       </Col>
       <Col xs="auto" className="my-1">

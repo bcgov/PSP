@@ -423,7 +423,8 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c1 {
@@ -602,7 +603,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Project
           </div>
@@ -812,7 +813,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Progress Statuses
           </div>
@@ -1267,7 +1268,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Schedule
           </div>
@@ -1520,7 +1521,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Details
           </div>
@@ -1899,7 +1900,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Team
           </div>
@@ -2326,7 +2327,7 @@ exports[`UpdateAcquisitionForm component > Sub-interest files > renders as expec
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Sub-Interest
           </div>
@@ -4586,7 +4587,8 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c1 {
@@ -4765,7 +4767,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Project
           </div>
@@ -4990,7 +4992,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Progress Statuses
           </div>
@@ -5445,7 +5447,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Schedule
           </div>
@@ -5698,7 +5700,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Details
           </div>
@@ -5973,7 +5975,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Acquisition Team
           </div>
@@ -6400,7 +6402,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           class="no-gutters row"
         >
           <div
-            class="col"
+            class="align-items-end col"
           >
             Owners
           </div>

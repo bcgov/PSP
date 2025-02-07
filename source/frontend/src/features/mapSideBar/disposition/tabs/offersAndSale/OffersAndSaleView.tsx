@@ -67,15 +67,17 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
         isCollapsable={false}
         header={
           <StyledSubHeader>
-            <label>Appraisal and Assessment</label>
+            <div>Appraisal and Assessment</div>
             {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
-              <EditButton
-                title="Edit Appraisal"
-                data-testId={`appraisal-edit-btn`}
-                onClick={() => {
-                  history.push(`${match.url}/appraisal/update`);
-                }}
-              />
+              <div>
+                <EditButton
+                  title="Edit Appraisal"
+                  data-testId={`appraisal-edit-btn`}
+                  onClick={() => {
+                    history.push(`${match.url}/appraisal/update`);
+                  }}
+                />
+              </div>
             )}
             {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && !canEditDetails() && (
               <TooltipIcon
@@ -162,7 +164,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
         isCollapsable={false}
         header={
           <StyledSubHeader>
-            <label>Sales Details</label>
+            <div>Sales Details</div>
             {keycloak.hasClaim(Claims.DISPOSITION_EDIT) && canEditDetails() && (
               <EditButton
                 title="Edit Sale"
@@ -338,8 +340,8 @@ const StyledSpacer = styled.div`
 const StyledSubHeader = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
+  align-items: end;
+  justify-content: space-between;
 
   label {
     color: ${props => props.theme.bcTokens.surfaceColorPrimaryButtonDefault};
@@ -348,9 +350,5 @@ const StyledSubHeader = styled.div`
     width: 100%;
     text-align: left;
     margin-bottom: 0;
-  }
-
-  button {
-    margin-bottom: 1rem;
   }
 `;
