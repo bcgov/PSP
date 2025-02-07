@@ -50,7 +50,6 @@ jobs:
       - name: Test
         run: dotnet test ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.csproj --no-build --verbosity normal --filter Category=Smoke-Test
       - name: Upload Report
-        uses: actions/upload-artifact@v2
         if: always()
         with:
           name: Test Results
