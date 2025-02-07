@@ -1,4 +1,5 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using System.Data;
 using System.Linq.Expressions;
@@ -17,10 +18,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private List<DigitalDocument> digitalDocumentList;
 
 
-        public DigitalDocumentSteps(BrowserDriver driver)
+        public DigitalDocumentSteps(IWebDriver driver)
         {
-            digitalDocumentsTab = new DigitalDocuments(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            digitalDocumentsTab = new DigitalDocuments(driver);
+            sharedPagination = new SharedPagination(driver);
             documentFiles = UploadFileDocuments();
             documentsRowStart = 0;
             documentsRowsQuantity = 0;

@@ -62,13 +62,6 @@ public partial class PimsCompensationRequisition
     public long? AlternateProjectId { get; set; }
 
     /// <summary>
-    /// Payee where only the name is known from the PAIMS system,
-    /// </summary>
-    [Column("LEGACY_PAYEE")]
-    [StringLength(1000)]
-    public string LegacyPayee { get; set; }
-
-    /// <summary>
     /// Indicates if the agreement is in draft format.
     /// </summary>
     [Column("IS_DRAFT")]
@@ -99,18 +92,6 @@ public partial class PimsCompensationRequisition
     /// </summary>
     [Column("AGREEMENT_DT")]
     public DateOnly? AgreementDt { get; set; }
-
-    /// <summary>
-    /// Expropriation notice served date.
-    /// </summary>
-    [Column("EXPROP_NOTICE_SERVED_DT")]
-    public DateOnly? ExpropNoticeServedDt { get; set; }
-
-    /// <summary>
-    /// Expropriation vesting date.
-    /// </summary>
-    [Column("EXPROP_VESTING_DT")]
-    public DateOnly? ExpropVestingDt { get; set; }
 
     /// <summary>
     /// Document generation date.

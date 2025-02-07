@@ -1,6 +1,7 @@
 ﻿using System.Data;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.Classes;
+using OpenQA.Selenium;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -18,12 +19,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private Project project;
         protected string projectName = "";
 
-        public ProjectSteps(BrowserDriver driver)
+        public ProjectSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            projects = new Projects(driver.Current);
-            searchProjects = new SearchProjects(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            projects = new Projects(driver);
+            searchProjects = new SearchProjects(driver);
+            sharedPagination = new SharedPagination(driver);
 
             project = new Project();
             genericSteps = new GenericSteps(driver);
@@ -84,6 +85,45 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (project.ProjectTeamMembers.First() != "")
                 projects.VerifyTeamMemberViewForm(project.ProjectTeamMembers);
             
+        }
+
+        [StepDefinition(@"I create a duplicate Project from row number (.*)")]
+        public void CreateDuplicateProject(int rowNumber)
+        {
+            /* TEST COVERAGE:  PSP-5428, PSP-5429, PSP-5447, PSP-5534, PSP-5535 */
+
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Create new contact form
+            projects.NavigateToCreateNewProject();
+
+            //Verify Create Project Form
+            projects.VerifyCreateProjectForm();
+
+            //Create a new Project
+            PopulateProjectData(rowNumber);
+            projects.CreateProject(project);
+
+            //Verify Create Product Form
+            projects.VerifyCreateProductForm();
+
+            //Add Products
+            if (project.Products.Count > 0)
+            {
+                for (int i = 0; i < project.ProductsCount; i++)
+                    projects.CreateProduct(project.Products[i], i);
+            }
+
+            //Add Team Members
+            if (project.ProjectTeamMembers.First() != "")
+            {
+                for (int i = 0; i < project.ProjectTeamMembers.Count; i++)
+                    projects.AddUpdateTeamMember(project.ProjectTeamMembers[i]);
+            }
+
+            //Save Project
+            projects.SaveProject();
         }
 
         [StepDefinition(@"I update an existing project from row number (.*)")]
@@ -234,7 +274,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProjects.SearchProjectByName(projectName);
 
             Assert.True(searchProjects.SearchFoundResults());
-            searchProjects.Dispose();
         }
 
         [StepDefinition(@"Expected Project Content is displayed on Projects Table")]
@@ -245,7 +284,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchProjects.VerifySearchView();
             searchProjects.VerifyViewSearchResult(project);
-            searchProjects.Dispose();
         }
 
         [StepDefinition(@"Duplicate Project Alert is displayed")]
@@ -253,8 +291,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE:  PSP-5670 */
 
-            Assert.True(projects.DuplicateProject());
-            searchProjects.Dispose();
+            projects.DuplicateProject();
         }
 
         private void PopulateProjectData(int rowNumber)
