@@ -254,7 +254,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c5 {
@@ -369,7 +369,8 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c12 {
@@ -696,7 +697,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                     A unique file number will be generated for this research file on save.
                   </div>
                 </div>
-                <h2
+                <div
                   class="c14"
                 >
                   <div
@@ -744,7 +745,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                       </svg>
                     </div>
                   </div>
-                </h2>
+                </div>
                 <div
                   class="c18 collapse"
                 >
@@ -794,7 +795,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Project
                   </div>
@@ -826,7 +827,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Properties to include in this file:
                   </div>
@@ -1367,7 +1368,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                       class="no-gutters row"
                     >
                       <div
-                        class="col"
+                        class="align-items-end col"
                       >
                         Selected properties
                       </div>

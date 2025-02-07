@@ -1,4 +1,5 @@
-﻿using PIMS.Tests.Automation.Classes;
+﻿using OpenQA.Selenium;
+using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
 using PIMS.Tests.Automation.PageObjects;
 using System.Data;
@@ -23,18 +24,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private string dispositionFileCode = "";
         private DispositionFile dispositionFile;
 
-        public DispositionFileSteps(BrowserDriver driver)
+        public DispositionFileSteps(IWebDriver driver)
         {
             loginSteps = new LoginSteps(driver);
-            dispositionFileDetails = new DispositionFileDetails(driver.Current);
-            searchDispositionFiles = new SearchDispositionFiles(driver.Current);
-            sharedFileProperties = new SharedFileProperties(driver.Current);
-            searchProperties = new SearchProperties(driver.Current);
-            propertyInformation = new PropertyInformation(driver.Current);
-            notes = new Notes(driver.Current);
-            checklist = new DispositionChecklist(driver.Current);
-            offerSale = new DispositionOfferSale(driver.Current);
-            sharedPagination = new SharedPagination(driver.Current);
+            dispositionFileDetails = new DispositionFileDetails(driver);
+            searchDispositionFiles = new SearchDispositionFiles(driver);
+            sharedFileProperties = new SharedFileProperties(driver);
+            searchProperties = new SearchProperties(driver);
+            propertyInformation = new PropertyInformation(driver);
+            notes = new Notes(driver);
+            checklist = new DispositionChecklist(driver);
+            offerSale = new DispositionOfferSale(driver);
+            sharedPagination = new SharedPagination(driver);
 
             dispositionFile = new DispositionFile();
         }
@@ -558,7 +559,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchDispositionFiles.SearchDispositionFileByDFile(dispositionFileCode);
 
             Assert.True(searchDispositionFiles.SearchFoundResults());
-            searchDispositionFiles.Dispose();
         }
 
         [StepDefinition(@"Disposition File's Checklist has been saved successfully")]
@@ -568,7 +568,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Checklist Content after update
             checklist.VerifyChecklistViewForm(dispositionFile.DispositionFileChecklist);
-            checklist.Dispose();
         }
 
         [StepDefinition(@"Expected Disposition File Content is displayed on Disposition File List View")]
@@ -579,8 +578,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Verify List View
             searchDispositionFiles.VerifyDispositionFileListView();
             searchDispositionFiles.VerifyDispositionFileTableContent(dispositionFile);
-            searchDispositionFiles.Dispose();
-
         }
 
         private void PopulateDispositionFile(int rowNumber)

@@ -104,6 +104,7 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PimsPropAcqFlCompReqs)
                 .Include(l => l.PimsPropLeaseCompReqs)
                 .Include(s => s.PimsLeaseStakeholderCompReqs)
+                .Include(ap => ap.PimsCompReqPayees)
                 .AsNoTracking()
                 .FirstOrDefault(c => c.CompensationRequisitionId == compensationId);
 
@@ -127,6 +128,11 @@ namespace Pims.Dal.Repositories
                 foreach (var compReqLeaseStakeholder in deletedEntity.PimsLeaseStakeholderCompReqs)
                 {
                     Context.PimsLeaseStakeholderCompReqs.Remove(new PimsLeaseStakeholderCompReq() { LeaseStakeholderCompReqId = compReqLeaseStakeholder.LeaseStakeholderCompReqId });
+                }
+
+                foreach (var compReqAcqPayee in deletedEntity.PimsCompReqPayees)
+                {
+                    Context.PimsCompReqPayees.Remove(new() { CompReqPayeeId = compReqAcqPayee.CompReqPayeeId });
                 }
 
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
