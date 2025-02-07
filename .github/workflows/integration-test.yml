@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: FT Smoke Test
+name: FT Smoke Test (.NET)
 env:
   Base_url: ${{ vars.BASE_URL }}
   CloseBrowserAfterEachTest: true
@@ -39,8 +39,6 @@ jobs:
           sudo apt update
           wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux-aarch64.tar.gz
           sudo tar -xvf geckodriver-v0.35.0-linux-aarch64.tar.gz
-          sudo mv geckodriver /usr/local/bin/
-          cd /usr/local/bin/
           sudo chmod +x geckodriver
 
       - name: Restore dependencies
