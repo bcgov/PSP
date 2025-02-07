@@ -15,8 +15,6 @@ using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
-using static Pims.Dal.Entities.PimsLeaseStatusType;
-using DocumentFormat.OpenXml.Vml.Spreadsheet;
 
 namespace Pims.Api.Test.Services
 {
@@ -691,11 +689,10 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
-            lease.OrigExpiryDate = new DateTime(2025, 1, 31);
-            lease.LeaseStatusTypeCode = PimsLeaseStatusTypes.ACTIVE;
+            lease.LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString();
             lease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType()
             {
-                Id = PimsLeaseStatusTypes.ACTIVE,
+                Id = LeaseStatusTypes.ACTIVE.ToString(),
             };
             lease.OrigStartDate = new DateTime(2024, 1, 1);
             lease.OrigExpiryDate = new DateTime(2025, 1, 31);
@@ -738,11 +735,10 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
-            lease.OrigExpiryDate = new DateTime(2025, 1, 31);
-            lease.LeaseStatusTypeCode = PimsLeaseStatusTypes.ACTIVE;
+            lease.LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString();
             lease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType()
             {
-                Id = PimsLeaseStatusTypes.ACTIVE,
+                Id = LeaseStatusTypes.ACTIVE.ToString(),
             };
             lease.OrigStartDate = new DateTime(2024, 1, 1);
             lease.OrigExpiryDate = new DateTime(2025, 1, 31);
