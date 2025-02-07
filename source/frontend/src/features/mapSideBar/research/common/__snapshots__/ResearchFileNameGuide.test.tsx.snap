@@ -33,7 +33,7 @@ exports[`ResearchFileNameGuide > renders as expected 1`] = `
   cursor: pointer;
 }
 
-<h2
+<div
     class="c0"
   >
     <div
@@ -81,7 +81,7 @@ exports[`ResearchFileNameGuide > renders as expected 1`] = `
         </svg>
       </div>
     </div>
-  </h2>
+  </div>
   .c0 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
