@@ -1,7 +1,7 @@
 # This workflow will build a .NET project
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
 
-name: FT-Smoke-Test
+name: FT Smoke Test
 env:
   Base_url: ${{ vars.BASE_URL }}
   CloseBrowserAfterEachTest: true
@@ -49,8 +49,8 @@ jobs:
         run: dotnet build ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.sln --no-restore
       - name: Test
         run: dotnet test ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.csproj --no-build --verbosity normal --filter Category=Smoke-Test
-      - name: Upload Report
-        if: always()
-        with:
-          name: Test Results
-          path: ${{github.workspace}}/reports
+      # - name: Upload Report
+      #   if: always()
+      #   with:
+      #     name: Test Results
+      #     path: ${{github.workspace}}/reports
