@@ -40,6 +40,7 @@ jobs:
           wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux-aarch64.tar.gz
           sudo tar -xvf geckodriver-v0.35.0-linux-aarch64.tar.gz
           sudo chmod +x geckodriver
+          export PATH=$PATH:/home/runner/work/PSP/PSP/testing/PIMS.Tests.Automation/bin/Debug/net8.0
 
       - name: Restore dependencies
         run: dotnet restore ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.sln
