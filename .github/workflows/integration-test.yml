@@ -48,6 +48,7 @@ jobs:
         run: dotnet build ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.sln --no-restore
       - name: Test
         run: dotnet test ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.csproj --no-build --verbosity normal --filter Category=Smoke-Test
+
       - name: Deploy pages
         uses: JamesIves/github-pages-deploy-action@v4.5.0
         with:
