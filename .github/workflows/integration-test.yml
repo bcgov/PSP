@@ -4,7 +4,7 @@
 name: FT-Smoke-Test
 env:
   Base_url: ${{ vars.BASE_URL }}
-  CloseBrowserAfterEachTest: false
+  CloseBrowserAfterEachTest: true
   RunHeadless: true
   Users__0__User: ${{ secrets.USER_1_USERNAME }}
   Users__0__Password: ${{ secrets.USER_1_PASSWORD }}
@@ -28,11 +28,20 @@ jobs:
         with:
           dotnet-version: 8.0.x
 
-      - name: Install Chrome Browser
+      # - name: Install Chrome Browser
+      #   run: |
+      #     sudo apt update
+      #     wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+      #     sudo apt install -y ./google-chrome-stable_current_amd64.deb
+
+      - name: Install GeckoDriver
         run: |
           sudo apt update
-          wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
-          sudo apt install -y ./google-chrome-stable_current_amd64.deb
+          wget https://github.com/mozilla/geckodriver/releases/download/v0.35.0/geckodriver-v0.35.0-linux-aarch64.tar.gz
+          sudo tar -xvf geckodriver-v0.35.0-linux-aarch64.tar.gz
+          sudo mv geckodriver /usr/local/bin/
+          cd /usr/local/bin/
+          sudo chmod +x geckodriver
 
       - name: Restore dependencies
         run: dotnet restore ./testing/PIMS.Tests.Automation/PIMS.Tests.Automation.sln
