@@ -1,8 +1,8 @@
 import { FormikProps } from 'formik';
 import { useContext } from 'react';
-import { MdTopic } from 'react-icons/md';
 import { matchPath, Route, useHistory, useRouteMatch } from 'react-router-dom';
 
+import ResearchFileIcon from '@/assets/images/research-icon.svg?react';
 import FileLayout from '@/features/mapSideBar/layout/FileLayout';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
@@ -79,7 +79,14 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = props => {
     return (
       <MapSideBarLayout
         title={props.isEditing ? 'Update Research File' : 'Research File'}
-        icon={<MdTopic title="Research file Icon" size={28} />}
+        icon={
+          <ResearchFileIcon
+            title="Research file Icon"
+            width="2.8rem"
+            height="2.8rem"
+            fill="currentColor"
+          />
+        }
         header={<ResearchHeader researchFile={props.researchFile} lastUpdatedBy={lastUpdatedBy} />}
         footer={
           props.isEditing && (

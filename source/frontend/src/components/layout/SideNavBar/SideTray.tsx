@@ -2,13 +2,14 @@
 import clsx from 'classnames';
 import { ReactElement, useEffect, useState } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
-import { MdAirlineStops, MdTopic } from 'react-icons/md';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import AdminIcon from '@/assets/images/admin-icon.svg?react';
 import ContactIcon from '@/assets/images/contact-icon.svg?react';
+import DispositionFileIcon from '@/assets/images/disposition-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
+import ResearchFileIcon from '@/assets/images/research-icon.svg?react';
 import SubdivisionIcon from '@/assets/images/subdivision-icon.svg?react';
 import { AdminTools, LeaseAndLicenses, ResearchTray } from '@/components/layout';
 
@@ -76,7 +77,7 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [
       SidebarContextType.RESEARCH,
       <SideTrayLayout
-        icon={<MdTopic size={26} title="Research file icon" />}
+        icon={<ResearchFileIcon title="Research file icon" fill="currentColor" />}
         title="Research Files"
         onClose={onClose}
       >
@@ -130,7 +131,14 @@ export const SideTray = ({ context, setContext }: ISideTrayProps) => {
     [
       SidebarContextType.DISPOSITION,
       <SideTrayLayout
-        icon={<MdAirlineStops title="Disposition file Icon" fill="currentColor" />}
+        icon={
+          <DispositionFileIcon
+            title="Disposition file Icon"
+            width="2.6rem"
+            height="2.6rem"
+            fill="currentColor"
+          />
+        }
         title="Disposition Files"
         onClose={onClose}
       >

@@ -36,9 +36,9 @@ const MapSideBarLayout: React.FunctionComponent<
       {mapSideBarViewState.isCollapsed ? (
         <>
           <Row>
-            <Col xs={12} className="justify-content-center d-flex">
+            <StyledCollapsedIconWrapper xs={12} className="justify-content-center d-flex">
               {icon}
-            </Col>
+            </StyledCollapsedIconWrapper>
           </Row>
           <Styled.Underline className="mb-4" />
           <Row>
@@ -115,6 +115,10 @@ const StyledSidebarWrapper = styled.div`
   }
   padding: 1.6rem;
   color: ${props => props.theme.bcTokens.typographyColorSecondary};
+`;
+
+const StyledCollapsedIconWrapper = styled(Col)`
+  margin-bottom: 0.3rem;
 `;
 
 const StyledButtonBar = styled(Col)`

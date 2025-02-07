@@ -1,9 +1,9 @@
 import { Formik, FormikProps } from 'formik';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { MdTopic } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
+import ResearchFileIcon from '@/assets/images/research-icon.svg?react';
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -169,7 +169,14 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
       {formikProps => (
         <MapSideBarLayout
           title="Create Research File"
-          icon={<MdTopic title="Research file Icon" size={28} />}
+          icon={
+            <ResearchFileIcon
+              title="Research file Icon"
+              width="2.8rem"
+              height="2.8rem"
+              fill="currentColor"
+            />
+          }
           footer={
             <SidebarFooter
               isOkDisabled={formikProps?.isSubmitting || bcaLoading}
