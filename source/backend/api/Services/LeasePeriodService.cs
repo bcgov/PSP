@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
-using Pims.Dal.Entities;
+using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
-using Pims.Dal.Repositories;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
+using Pims.Dal.Repositories;
 using static Pims.Dal.Entities.PimsLeasePeriodStatusType;
 
 namespace Pims.Api.Services
@@ -16,12 +17,16 @@ namespace Pims.Api.Services
         private readonly ILeasePeriodRepository _leasePeriodRepository;
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly ILeaseService _leaseService;
+        private readonly ILeaseStatusSolver _leaseStatusSolver;
 
-        public LeasePeriodService(ILeasePeriodRepository leasePeriodRepository, ClaimsPrincipal user, ILogger<LeasePeriodService> logger)
+        public LeasePeriodService(ILeasePeriodRepository leasePeriodRepository, ClaimsPrincipal user, ILogger<LeasePeriodService> logger, ILeaseService leaseService, ILeaseStatusSolver leaseStatusSolver)
         {
             _leasePeriodRepository = leasePeriodRepository;
             _user = user;
             _logger = logger;
+            _leaseService = leaseService;
+            _leaseStatusSolver = leaseStatusSolver;
         }
 
         public IEnumerable<PimsLeasePeriod> GetPeriods(long leaseId)
@@ -36,6 +41,13 @@ namespace Pims.Api.Services
             _logger.LogInformation("Deleting period to lease with id: {id}", leaseId);
             ValidateDeletionRules(period);
 
+            var currentLease = _leaseService.GetById(leaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             _leasePeriodRepository.Delete(period.Internal_Id);
             _leasePeriodRepository.CommitTransaction();
 
@@ -47,6 +59,13 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating period to lease with id: {id}", leaseId);
             ValidateUpdateRules(period, periodId);
 
+            var currentLease = _leaseService.GetById(leaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             _leasePeriodRepository.Update(period);
             _leasePeriodRepository.CommitTransaction();
 
@@ -57,6 +76,13 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Adding period to lease with id: {id}", leaseId);
             ValidateAddRules(period);
+
+            var currentLease = _leaseService.GetById(leaseId);
+            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
+            if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             _leasePeriodRepository.Add(period);
             _leasePeriodRepository.CommitTransaction();

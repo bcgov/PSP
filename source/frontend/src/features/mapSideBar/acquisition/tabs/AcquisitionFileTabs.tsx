@@ -23,6 +23,7 @@ import AgreementContainer from './agreement/detail/AgreementContainer';
 import AgreementView from './agreement/detail/AgreementView';
 import ExpropriationTabContainer from './expropriation/ExpropriationTabContainer';
 import ExpropriationTabContainerView from './expropriation/ExpropriationTabContainerView';
+import AcquisitionFileStatusUpdateSolver from './fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import AcquisitionSummaryView from './fileDetails/detail/AcquisitionSummaryView';
 import StakeHolderContainer from './stakeholders/detail/StakeHolderContainer';
 import StakeHolderView from './stakeholders/detail/StakeHolderView';
@@ -50,6 +51,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
+  const solverStatus = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
@@ -73,6 +75,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
     content: (
       <ChecklistView
         apiFile={acquisitionFile}
+        isFileFinalStatus={!solverStatus.canEditChecklists()}
         showEditButton={true}
         onEdit={() => setIsEditing(true)}
         sectionTypeName={API.ACQUISITION_CHECKLIST_SECTION_TYPES}
@@ -116,6 +119,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
         <ExpropriationTabContainer
           acquisitionFile={acquisitionFile}
           View={ExpropriationTabContainerView}
+          statusUpdateSolver={solverStatus}
         />
       ),
       key: FileTabType.EXPROPRIATION,
@@ -130,6 +134,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           fileType={ApiGen_CodeTypes_FileTypes.Acquisition}
           file={acquisitionFile}
           View={CompensationListView}
+          statusUpdateSolver={solverStatus}
         />
       ),
       key: FileTabType.COMPENSATIONS,
@@ -139,7 +144,13 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   if (exists(acquisitionFile?.id)) {
     tabViews.push({
-      content: <SubFileListContainer acquisitionFile={acquisitionFile} View={SubFileListView} />,
+      content: (
+        <SubFileListContainer
+          acquisitionFile={acquisitionFile}
+          View={SubFileListView}
+          statusUpdateSolver={solverStatus}
+        />
+      ),
       key: FileTabType.SUB_FILES,
       name: 'Sub-Files',
     });

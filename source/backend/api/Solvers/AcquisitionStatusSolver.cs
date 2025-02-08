@@ -17,13 +17,13 @@ namespace Pims.Api.Services
             {
                 case AcquisitionStatusTypes.ACTIVE:
                 case AcquisitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = true;
                     break;
                 case AcquisitionStatusTypes.ARCHIV:
                 case AcquisitionStatusTypes.CANCEL:
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
-                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:
@@ -79,7 +79,7 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditOrDeleteCompensation(AcquisitionStatusTypes? acquisitionStatus, bool? isDraftCompensation)
+        public bool CanEditOrDeleteCompensation(AcquisitionStatusTypes? acquisitionStatus, bool? isDraftCompensation, bool? isAdmin)
         {
             if (acquisitionStatus == null)
             {
@@ -91,14 +91,14 @@ namespace Pims.Api.Services
             {
                 case AcquisitionStatusTypes.ACTIVE:
                 case AcquisitionStatusTypes.DRAFT:
-                    canEdit = true;
+                    canEdit = (isDraftCompensation.HasValue && isDraftCompensation.Value) || (isAdmin.HasValue && isAdmin.Value);
                     break;
                 case AcquisitionStatusTypes.ARCHIV:
                 case AcquisitionStatusTypes.CANCEL:
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
                 case AcquisitionStatusTypes.HOLD:
-                    canEdit = isDraftCompensation ?? true;
+                    canEdit = false;
                     break;
                 default:
                     canEdit = false;
@@ -127,7 +127,7 @@ namespace Pims.Api.Services
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
                 case AcquisitionStatusTypes.HOLD:
-                    canEdit = agreementStatus != AgreementStatusTypes.FINAL;
+                    canEdit = false;
                     break;
                 default:
                     canEdit = false;
@@ -147,8 +147,19 @@ namespace Pims.Api.Services
             bool canEdit;
             switch (acquisitionStatus)
             {
-                default:
+                case AcquisitionStatusTypes.ACTIVE:
+                case AcquisitionStatusTypes.DRAFT:
                     canEdit = true;
+                    break;
+                case AcquisitionStatusTypes.ARCHIV:
+                case AcquisitionStatusTypes.CANCEL:
+                case AcquisitionStatusTypes.CLOSED:
+                case AcquisitionStatusTypes.COMPLT:
+                case AcquisitionStatusTypes.HOLD:
+                    canEdit = false;
+                    break;
+                default:
+                    canEdit = false;
                     break;
             }
 
@@ -165,8 +176,48 @@ namespace Pims.Api.Services
             bool canEdit;
             switch (acquisitionStatus)
             {
-                default:
+                case AcquisitionStatusTypes.ACTIVE:
+                case AcquisitionStatusTypes.DRAFT:
                     canEdit = true;
+                    break;
+                case AcquisitionStatusTypes.ARCHIV:
+                case AcquisitionStatusTypes.CANCEL:
+                case AcquisitionStatusTypes.CLOSED:
+                case AcquisitionStatusTypes.COMPLT:
+                case AcquisitionStatusTypes.HOLD:
+                    canEdit = false;
+                    break;
+                default:
+                    canEdit = false;
+                    break;
+            }
+
+            return canEdit;
+        }
+
+        public bool CanEditExpropriation(AcquisitionStatusTypes? acquisitionStatus)
+        {
+            if (acquisitionStatus == null)
+            {
+                return false;
+            }
+
+            bool canEdit;
+            switch (acquisitionStatus)
+            {
+                case AcquisitionStatusTypes.ACTIVE:
+                case AcquisitionStatusTypes.DRAFT:
+                    canEdit = true;
+                    break;
+                case AcquisitionStatusTypes.ARCHIV:
+                case AcquisitionStatusTypes.CANCEL:
+                case AcquisitionStatusTypes.CLOSED:
+                case AcquisitionStatusTypes.COMPLT:
+                case AcquisitionStatusTypes.HOLD:
+                    canEdit = false;
+                    break;
+                default:
+                    canEdit = false;
                     break;
             }
 

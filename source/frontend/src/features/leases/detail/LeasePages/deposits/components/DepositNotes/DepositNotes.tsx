@@ -6,12 +6,16 @@ import styled from 'styled-components';
 import { TextArea } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants/index';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
 export interface IDepositNotesProps {
   disabled?: boolean;
+  statusSolver?: LeaseStatusUpdateSolver;
   onSave: (notes: string) => Promise<void>;
   onEdit: () => void;
   onCancel: () => void;
@@ -23,6 +27,7 @@ export interface IDepositNotesProps {
  */
 export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProps>> = ({
   disabled,
+  statusSolver,
   onEdit,
   onSave,
   onCancel,
@@ -47,6 +52,13 @@ export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProp
               onEdit();
               setCollapsed(false);
             }}
+            cannotAddComponent={
+              <TooltipIcon
+                toolTipId={`deposit-notes-cannot-edit-tooltip`}
+                toolTip={cannotEditMessage}
+              />
+            }
+            isAddEnabled={statusSolver?.canEditDeposits()}
           />
         ) : (
           <span>Deposit Comments</span>

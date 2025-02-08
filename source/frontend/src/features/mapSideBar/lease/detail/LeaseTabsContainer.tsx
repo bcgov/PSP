@@ -4,6 +4,7 @@ import { useHistory, useLocation } from 'react-router-dom';
 import { Claims, NoteTypes } from '@/constants';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { LeaseFormModel } from '@/features/leases/models';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -45,6 +46,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
       ? LeaseFileTabNames.tenant
       : LeaseFileTabNames.payee;
   const stakeHolderTypeName = lease?.paymentReceivableType.id === 'RCVBL' ? 'Tenant' : 'Payee';
+  const statusSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);
 
   const location = useLocation();
   const history = useHistory();
@@ -196,6 +198,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
         <CompensationListContainer
           fileType={ApiGen_CodeTypes_FileTypes.Lease}
           file={lease}
+          statusUpdateSolver={statusSolver}
           View={CompensationListView}
         />
       ),

@@ -25,6 +25,7 @@ namespace Pims.Api.Services
         private readonly IEntityNoteRepository _entityNoteRepository;
         private readonly IPropertyService _propertyService;
         private readonly IPropertyOperationService _propertyOperationService;
+        private readonly IResearchStatusSolver _researchStatusSolver;
 
         public ResearchFileService(
             ClaimsPrincipal user,
@@ -35,7 +36,8 @@ namespace Pims.Api.Services
             ILookupRepository lookupRepository,
             IEntityNoteRepository entityNoteRepository,
             IPropertyService propertyService,
-            IPropertyOperationService propertyOperationService)
+            IPropertyOperationService propertyOperationService,
+            IResearchStatusSolver researchStatusSolver)
         {
             _user = user;
             _logger = logger;
@@ -46,6 +48,7 @@ namespace Pims.Api.Services
             _entityNoteRepository = entityNoteRepository;
             _propertyService = propertyService;
             _propertyOperationService = propertyOperationService;
+            _researchStatusSolver = researchStatusSolver;
         }
 
         public PimsResearchFile GetById(long id)
@@ -95,6 +98,13 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
+            var currentResearchFile = _researchFileRepository.GetById(researchFile.ResearchFileId);
+            var currentResearchStatus = _researchStatusSolver.GetCurrentResearchStatus(currentResearchFile?.ResearchFileStatusTypeCode);
+            if (!_researchStatusSolver.CanEditDetails(currentResearchStatus) && !_user.HasPermission(Permissions.SystemAdmin))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
+
             var newResearchFile = _researchFileRepository.Update(researchFile);
             AddNoteIfStatusChanged(newResearchFile);
 
@@ -110,6 +120,13 @@ namespace Pims.Api.Services
             ValidateVersion(researchFile.Internal_Id, researchFile.ConcurrencyControlNumber);
 
             MatchProperties(researchFile, userOverrideCodes);
+
+            var currentResearchFile = _researchFileRepository.GetById(researchFile.ResearchFileId);
+            var currentResearchStatus = _researchStatusSolver.GetCurrentResearchStatus(currentResearchFile?.ResearchFileStatusTypeCode);
+            if (!_researchStatusSolver.CanEditProperties(currentResearchStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             // Get the current properties in the research file
             var currentFileProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Internal_Id);
@@ -192,6 +209,13 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating property research file...");
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileEdit);
             ValidateVersion(researchFileId, researchFileVersion);
+
+            var currentResearchFile = _researchFileRepository.GetById(researchFileId);
+            var currentResearchStatus = _researchStatusSolver.GetCurrentResearchStatus(currentResearchFile?.ResearchFileStatusTypeCode);
+            if (!_researchStatusSolver.CanEditProperties(currentResearchStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
 
             _researchFilePropertyRepository.Update(propertyResearchFile);
             _researchFilePropertyRepository.CommitTransaction();

@@ -5,11 +5,13 @@ import { toast } from 'react-toastify';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims } from '@/constants';
 import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
 
+import { cannotEditMessage } from '../../common/constants';
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
 import { useGenerateExpropriationForm5 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm5';
 import { useGenerateExpropriationForm8 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm8';
@@ -23,12 +25,13 @@ export interface IExpropriationTabContainerViewProps {
   loading: boolean;
   acquisitionFile: ApiGen_Concepts_AcquisitionFile;
   form8s: ApiGen_Concepts_ExpropriationPayment[];
+  isFileFinalStatus: boolean;
   onForm8Deleted: (form8Id: number) => void;
 }
 
 export const ExpropriationTabContainerView: React.FunctionComponent<
   IExpropriationTabContainerViewProps
-> = ({ loading, acquisitionFile, form8s, onForm8Deleted }) => {
+> = ({ loading, acquisitionFile, form8s, onForm8Deleted, isFileFinalStatus }) => {
   const history = useHistory();
   const match = useRouteMatch();
 
@@ -91,6 +94,13 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
             onAdd={() => {
               history.push(`${match.url}/add`);
             }}
+            cannotAddComponent={
+              <TooltipIcon
+                toolTipId={`deposit-notes-cannot-edit-tooltip`}
+                toolTip={cannotEditMessage}
+              />
+            }
+            isAddEnabled={!isFileFinalStatus}
           />
         }
       >
@@ -102,6 +112,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
             acquisitionFileNumber={acquisitionFile.fileNumber ?? ''}
             onGenerate={onGenerateForm8}
             onDelete={() => form?.id && onForm8Deleted(form.id)}
+            isFileFinalStatus={isFileFinalStatus}
           ></ExpropriationForm8Details>
         ))}
       </Section>

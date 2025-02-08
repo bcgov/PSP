@@ -25,13 +25,14 @@ export interface IExpropriationForm8DetailsProps {
   form8Index: number;
   form8: ApiGen_Concepts_ExpropriationPayment;
   acquisitionFileNumber: string;
+  isFileFinalStatus: boolean;
   onDelete: (form8Id: number) => void;
   onGenerate: (form8Id: number, acquisitionFileNumber: string) => void;
 }
 
 export const ExpropriationForm8Details: React.FunctionComponent<
   IExpropriationForm8DetailsProps
-> = ({ form8, form8Index, acquisitionFileNumber, onDelete, onGenerate }) => {
+> = ({ form8, form8Index, acquisitionFileNumber, isFileFinalStatus, onDelete, onGenerate }) => {
   const history = useHistory();
   const match = useRouteMatch();
   const keycloak = useKeycloakWrapper();
@@ -60,7 +61,7 @@ export const ExpropriationForm8Details: React.FunctionComponent<
             Generate Form 8
           </StyledSectionAddButton>
 
-          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && (
+          {keycloak.hasClaim(Claims.ACQUISITION_EDIT) && !isFileFinalStatus && (
             <>
               <EditButton
                 title="Edit form 8"

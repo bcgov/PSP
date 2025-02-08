@@ -5,7 +5,7 @@ import EditButton from '@/components/common/buttons/EditButton';
 import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { Claims, Roles } from '@/constants';
+import { Claims } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
@@ -38,7 +38,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
   const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
 
   const canEditDetails = () => {
-    if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || statusSolver.canEditOfferSalesValues()) {
+    if (statusSolver.canEditOfferSalesValues()) {
       return true;
     }
     return false;

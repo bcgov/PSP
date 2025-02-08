@@ -9,7 +9,6 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import Claims from '@/constants/claims';
-import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationFinancial } from '@/models/api/generated/ApiGen_Concepts_CompensationFinancial';
@@ -17,8 +16,7 @@ import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { exists, formatMoney } from '@/utils';
 
-import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
-import { UpdateCompensationContext } from '../models/UpdateCompensationContext';
+import { IUpdateCompensationStrategy } from '../models/IUpdateCompensationStrategy';
 import { CompensationResults } from './CompensationResults';
 
 export interface ICompensationListViewProps {
@@ -27,6 +25,7 @@ export interface ICompensationListViewProps {
   compensationsResults: ApiGen_Concepts_CompensationRequisition[];
   subFilescompensations: ApiGen_Concepts_CompensationRequisition[] | null;
   isLoading: boolean;
+  statusUpdateSolver?: IUpdateCompensationStrategy;
   onAdd: () => void;
   onDelete: (compensationId: number) => void;
   onUpdateTotalCompensation: (totalAllowableCompensation: number | null) => Promise<number | null>;
@@ -38,6 +37,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
   compensationsResults,
   subFilescompensations,
   isLoading,
+  statusUpdateSolver,
   onAdd,
   onDelete,
   onUpdateTotalCompensation,
@@ -77,25 +77,6 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
     ? calculateCompensationTotal(subFilescompensations, false) + fileCompensationTotal
     : null;
 
-  let updateCompensationContext: UpdateCompensationContext | null;
-  switch (fileType) {
-    case ApiGen_CodeTypes_FileTypes.Acquisition:
-      {
-        const solver = new AcquisitionFileStatusUpdateSolver(file.fileStatusTypeCode);
-        updateCompensationContext = new UpdateCompensationContext(solver);
-      }
-      break;
-    case ApiGen_CodeTypes_FileTypes.Lease:
-      {
-        const solver = new LeaseStatusUpdateSolver(file.fileStatusTypeCode);
-        updateCompensationContext = new UpdateCompensationContext(solver);
-      }
-      break;
-    default:
-      updateCompensationContext = null;
-      break;
-  }
-
   const getFileCalculatedCompensationTotalLabel = (): string => {
     if (fileType !== ApiGen_CodeTypes_FileTypes.Acquisition) {
       return 'Total payments made on this file';
@@ -119,7 +100,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
             title="Compensation Requisitions"
             addButtonText="Add Requisition"
             addButtonIcon={<FaPlus size={'2rem'} />}
-            onAdd={onAdd}
+            onAdd={statusUpdateSolver?.canEditOrDeleteCompensation() ? onAdd : null}
           />
         }
       >
@@ -135,14 +116,16 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
           className="summary-row"
           valueClassName="text-right d-flex justify-content-end"
         >
-          <ToggleSaveInputContainer
-            onSave={async (value: string) => {
-              return (await onUpdateTotalCompensation(Number(value)))?.toString() ?? '';
-            }}
-            initialValue={file.totalAllowableCompensation?.toString() ?? ''}
-            asCurrency
-            View={ToggleSaveInputView}
-          />
+          {statusUpdateSolver?.canEditOrDeleteCompensation() && (
+            <ToggleSaveInputContainer
+              onSave={async (value: string) => {
+                return (await onUpdateTotalCompensation(Number(value)))?.toString() ?? '';
+              }}
+              initialValue={file.totalAllowableCompensation?.toString() ?? ''}
+              asCurrency
+              View={ToggleSaveInputView}
+            />
+          )}
         </SectionField>
         <hr />
 
@@ -196,7 +179,7 @@ export const CompensationListView: React.FunctionComponent<ICompensationListView
         <CompensationResults
           isLoading={isLoading}
           results={compensationsResults}
-          statusSolver={updateCompensationContext}
+          statusSolver={statusUpdateSolver}
           onShow={(compensationId: number) => {
             history.push(`${match.url}/compensation-requisition/${compensationId}`);
           }}
