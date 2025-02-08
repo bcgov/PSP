@@ -32,7 +32,6 @@ export interface ApiGen_Concepts_CompensationRequisition extends ApiGen_Base_Bas
   agreementDate: UtcIsoDate | null;
   generationDate: UtcIsoDate | null;
   financials: ApiGen_Concepts_CompensationFinancial[] | null;
-  legacyPayee: string | null;
   isPaymentInTrust: boolean | null;
   gstNumber: string | null;
   specialInstruction: string | null;
