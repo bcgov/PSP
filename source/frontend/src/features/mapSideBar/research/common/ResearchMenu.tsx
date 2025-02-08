@@ -29,7 +29,6 @@ const ResearchMenu: React.FunctionComponent<
     props.onChange(index);
   };
   const statusSolver = new ResearchStatusUpdateSolver(props.researchFile);
-  const test = hasClaim(Claims.RESEARCH_EDIT) && statusSolver.canEditProperties();
   return (
     <StyledMenuWrapper>
       {props.items.map((label: string, index: number) => (
