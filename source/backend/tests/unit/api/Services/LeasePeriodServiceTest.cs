@@ -9,6 +9,7 @@ using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Api.Test.Services
 {
@@ -44,6 +45,9 @@ namespace Pims.Api.Test.Services
 
             var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
@@ -144,6 +148,9 @@ namespace Pims.Api.Test.Services
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
             leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
 
@@ -207,6 +214,9 @@ namespace Pims.Api.Test.Services
             var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit);
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
             leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };

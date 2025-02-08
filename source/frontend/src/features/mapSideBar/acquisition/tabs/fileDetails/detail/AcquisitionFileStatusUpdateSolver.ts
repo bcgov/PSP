@@ -49,13 +49,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
       default:
@@ -77,13 +77,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = isDraftCompensation ?? isAdmin ?? true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
       default:
@@ -105,13 +105,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
       default:
@@ -133,13 +133,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
       default:
@@ -161,13 +161,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
       default:
@@ -237,13 +237,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
       default:
@@ -265,13 +265,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
       default:
@@ -293,13 +293,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
       default:
@@ -321,13 +321,13 @@ class AcquisitionFileStatusUpdateSolver
     switch (statusCode) {
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_AcquisitionStatusTypes.ARCHIV:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CANCEL:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.CLOSED:
       case ApiGen_CodeTypes_AcquisitionStatusTypes.COMPLT:
-      case ApiGen_CodeTypes_AcquisitionStatusTypes.HOLD:
         canEdit = false;
         break;
     }

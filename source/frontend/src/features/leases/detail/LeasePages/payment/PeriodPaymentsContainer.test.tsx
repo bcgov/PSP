@@ -22,6 +22,8 @@ import { createRef } from 'react';
 import PeriodPaymentsContainer from './PeriodPaymentsContainer';
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsView.test';
 import { createMemoryHistory } from 'history';
+import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 
 const defaultRepositoryResponse = {
   execute: vi.fn(),
@@ -72,16 +74,6 @@ const storeState = {
 const setLease = vi.fn();
 const onSuccessMock = vi.fn();
 
-let viewProps!: IPeriodPaymentsViewProps;
-const TermsView = (props: IPeriodPaymentsViewProps) => {
-  viewProps = props;
-  return (
-    <Formik innerRef={props.formikRef} onSubmit={noop} initialValues={{ value: 0 }}>
-      {({ values }) => <>{values.value}</>}
-    </Formik>
-  );
-};
-
 describe('PeriodsPaymentsContainer component', () => {
   const setup = async (
     renderOptions: RenderOptions &
@@ -98,6 +90,7 @@ describe('PeriodsPaymentsContainer component', () => {
             ...renderOptions.initialValues,
             id: 1,
             startDate: '2020-01-01',
+            fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
           },
           setLease,
         }}

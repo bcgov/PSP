@@ -9,6 +9,7 @@ import { getAllByRole as getAllByRoleBase, render, RenderOptions } from '@/utils
 import DepositsReturnedContainer, {
   IDepositsReturnedContainerProps,
 } from './DepositsReturnedContainer';
+import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
 
 const mockCallback = (id: number): void => {};
 
@@ -20,6 +21,7 @@ const setup = (renderOptions: RenderOptions & IDepositsReturnedContainerProps) =
       depositReturns={renderOptions.depositReturns}
       onEdit={mockCallback}
       onDelete={mockCallback}
+      statusSolver={new LeaseStatusUpdateSolver()}
     />,
     {
       ...renderOptions,

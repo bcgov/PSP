@@ -6,6 +6,40 @@ exports[`DepositsContainer > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
+  .c0 {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  background-color: rgba(0,0,0,0.5);
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-align-content: center;
+  -ms-flex-line-pack: center;
+  align-content: center;
+  justify-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="spinner-border text-warning"
+      data-testid="filter-backdrop-loading"
+    />
+  </div>
   .c4 {
   float: right;
   cursor: pointer;
@@ -389,10 +423,8 @@ exports[`DepositsContainer > renders as expected 1`] = `
             name="returnNotes"
             rows="5"
             style="word-break: break-all;"
-            title="Tenant no longer has a dog, deposit returned, less fee for carpet cleaning"
-          >
-            Tenant no longer has a dog, deposit returned, less fee for carpet cleaning
-          </textarea>
+            title=""
+          />
         </div>
       </div>
     </div>

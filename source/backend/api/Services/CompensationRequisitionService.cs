@@ -111,7 +111,7 @@ namespace Pims.Api.Services
 
                 if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
                 {
-                    throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                    throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
                 }
             }
             else if (currentCompensation.LeaseId is not null)
@@ -221,7 +221,7 @@ namespace Pims.Api.Services
             var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
             if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, compensationRequisition.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             compensationRequisition.IsDraft ??= true;
@@ -293,7 +293,7 @@ namespace Pims.Api.Services
             var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
             if (!_acquisitionStatusSolver.CanEditOrDeleteCompensation(currentAcquisitionStatus, currentCompensation.IsDraft, _user.HasPermission(Permissions.SystemAdmin)))
             {
-                throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
             CheckTotalAllowableCompensation(currentAcquisitionFile, compensationRequisition);

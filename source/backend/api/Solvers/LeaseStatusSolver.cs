@@ -18,11 +18,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -48,11 +48,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -78,11 +78,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = (isDraftCompensation.HasValue && isDraftCompensation.Value) || (isAdmin.HasValue && isAdmin.Value);
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -108,11 +108,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -138,11 +138,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -168,11 +168,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -198,11 +198,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -228,11 +228,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -258,11 +258,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:
@@ -288,11 +288,11 @@ namespace Pims.Api.Services
             {
                 case LeaseStatusTypes.ACTIVE:
                 case LeaseStatusTypes.DRAFT:
+                case LeaseStatusTypes.INACTIVE:
                     canEdit = true;
                     break;
                 case LeaseStatusTypes.TERMINATED:
                 case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.INACTIVE:
                 case LeaseStatusTypes.DISCARD:
                 case LeaseStatusTypes.ARCHIVED:
                 case LeaseStatusTypes.EXPIRED:

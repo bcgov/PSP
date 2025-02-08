@@ -31,6 +31,7 @@ describe('Form 8 Detail View component', () => {
         }
         onDelete={onDelete}
         onGenerate={onGenerate}
+        isFileFinalStatus={false}
       />,
       {
         ...renderOptions,

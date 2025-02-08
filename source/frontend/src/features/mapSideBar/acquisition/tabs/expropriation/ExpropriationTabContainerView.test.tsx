@@ -23,6 +23,7 @@ describe('Expropriation Tab Container View', () => {
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
         form8s={renderOptions.props?.form8s ?? []}
         onForm8Deleted={vi.fn()}
+        isFileFinalStatus={false}
       />,
       {
         ...renderOptions,

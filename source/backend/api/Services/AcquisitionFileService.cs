@@ -765,9 +765,8 @@ namespace Pims.Api.Services
         private void ValidateAcquisitionFileStatusForAgreement(long acquisitionFileId, string agreementCurrentStatusTypeCode)
         {
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
-            var agreementStatus = Enum.Parse<AgreementStatusTypes>(agreementCurrentStatusTypeCode);
 
-            if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus, agreementStatus))
+            if (!_statusSolver.CanEditOrDeleteAgreement(currentAcquisitionStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }

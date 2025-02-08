@@ -25,6 +25,7 @@ import {
 import CompensationListView, { ICompensationListViewProps } from './CompensationListView';
 import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import AcquisitionFileStatusUpdateSolver from '../../acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -51,6 +52,11 @@ describe('compensation list view', () => {
         onDelete={onDelete}
         onAdd={onAddCompensationRequisition}
         onUpdateTotalCompensation={onUpdateTotalCompensation}
+        statusUpdateSolver={
+          new AcquisitionFileStatusUpdateSolver(
+            toTypeCode(ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE),
+          )
+        }
       />,
       {
         ...renderOptions,
@@ -250,7 +256,7 @@ describe('compensation list view', () => {
     expect(icon).toBeVisible();
   });
 
-  it('does not display warning icon if compensation in final state and user is admin', async () => {
+  it('displays warning icon if compensation in final state and user is admin', async () => {
     const compensations = getMockApiCompensationList();
     const { queryByTestId } = setup({
       file: {
@@ -263,7 +269,7 @@ describe('compensation list view', () => {
     });
 
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
-    expect(icon).toBeNull();
+    expect(icon).toBeVisible();
   });
 
   it('delete action hidden if delete claim missing', async () => {

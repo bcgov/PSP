@@ -1455,6 +1455,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
@@ -1957,7 +1960,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
+            act.Should().Throw<BusinessRuleViolationException>().WithMessage("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -3093,6 +3096,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
+            solver.Setup(x => x.CanEditExpropriation(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
             // Act
             var result = service.AddExpropriationPayment(1, newExpPayment);

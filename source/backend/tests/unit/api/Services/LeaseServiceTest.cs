@@ -376,6 +376,11 @@ namespace Pims.Api.Test.Services
             compReqFinancialRepository.Setup(c => c.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 50 } });
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             currentLeaseEntity.TotalAllowableCompensation = 100;
             var result = service.Update(currentLeaseEntity, new List<UserOverrideCode>());
@@ -438,6 +443,11 @@ namespace Pims.Api.Test.Services
 
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var result = service.Update(leaseEntity, new List<UserOverrideCode>());
 
@@ -485,6 +495,11 @@ namespace Pims.Api.Test.Services
 
             var noteRepository = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var result = service.Update(leaseEntity, new List<UserOverrideCode>());
 
@@ -511,6 +526,11 @@ namespace Pims.Api.Test.Services
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -560,6 +580,11 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             Action act = () => service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -616,6 +641,11 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
@@ -648,6 +678,11 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
@@ -675,6 +710,11 @@ namespace Pims.Api.Test.Services
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -712,6 +752,11 @@ namespace Pims.Api.Test.Services
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -756,6 +801,11 @@ namespace Pims.Api.Test.Services
 
             propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>())).Returns<PimsPropertyLease>(x => x);
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
             PimsPropertyLease updatedLeaseProperty = updatedLease.PimsPropertyLeases.First();
@@ -796,6 +846,11 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             updatedLease = service.Update(updatedLease, new List<UserOverrideCode>());
 
@@ -829,6 +884,11 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.Update(updatedLease, new List<UserOverrideCode>());
 
@@ -861,6 +921,11 @@ namespace Pims.Api.Test.Services
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>() { new() { Internal_Id = 1, SourcePropertyId = deletedProperty.Internal_Id, SourceProperty = deletedProperty } });
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.Update(updatedLease, new List<UserOverrideCode>());
 
@@ -892,6 +957,11 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             updatedLease = service.Update(updatedLease, new List<UserOverrideCode>());
@@ -998,6 +1068,9 @@ namespace Pims.Api.Test.Services
 
             consultationRepository.Setup(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var result = service.AddConsultation(new PimsLeaseConsultation());
 
@@ -1031,6 +1104,9 @@ namespace Pims.Api.Test.Services
 
             consultationRepository.Setup(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
 
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var result = service.UpdateConsultation(new PimsLeaseConsultation());
 
@@ -1061,8 +1137,14 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
             var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
 
             consultationRepository.Setup(x => x.TryDeleteConsultation(It.IsAny<long>())).Returns(true);
+            consultationRepository.Setup(x => x.GetConsultationById(It.IsAny<long>())).Returns(EntityHelper.CreateLeaseConsultationItem());
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var result = service.DeleteConsultation(1);

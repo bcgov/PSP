@@ -21,6 +21,9 @@ import {
 
 import DepositsContainer from './DepositsContainer';
 import { FormLeaseDeposit } from './models/FormLeaseDeposit';
+import { toTypeCode } from '@/utils/formUtils';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { getMockApiLease } from '@/mocks/lease.mock';
 
 const onSuccessMock = vi.fn();
 
@@ -31,7 +34,10 @@ const setup = (renderOptions: RenderOptions & { lease?: LeaseFormModel } = {}): 
   const result = render(
     <LeaseStateContext.Provider
       value={{
-        lease: LeaseFormModel.toApi(renderOptions.lease ?? { ...getDefaultFormLease(), id: 1 }),
+        lease: {
+          ...getMockApiLease(),
+          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
+        },
         setLease: noop,
       }}
     >

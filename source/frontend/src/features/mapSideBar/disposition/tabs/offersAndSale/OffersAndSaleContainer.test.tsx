@@ -8,6 +8,7 @@ import { render, RenderOptions } from '@/utils/test-utils';
 
 import OffersAndSaleContainer, { IOffersAndSaleContainerProps } from './OffersAndSaleContainer';
 import { IOffersAndSaleViewProps } from './OffersAndSaleView';
+import DispositionStatusUpdateSolver from '../fileDetails/detail/DispositionStatusUpdateSolver';
 
 const history = createMemoryHistory();
 
@@ -70,6 +71,11 @@ describe('OffersAndSale Container component', () => {
         dispositionFile={renderOptions?.props?.dispositionFile ?? mockDispositionFileResponse()}
         View={TestView}
         onSuccess={onSuccess}
+        statusSolver={
+          new DispositionStatusUpdateSolver(
+            renderOptions?.props?.dispositionFile ?? mockDispositionFileResponse(),
+          )
+        }
       />,
       {
         history,

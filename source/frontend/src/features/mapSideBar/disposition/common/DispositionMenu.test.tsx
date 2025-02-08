@@ -142,7 +142,7 @@ describe('DispositionMenu component', () => {
     expect(icon).toBeVisible();
   });
 
-  it(`it does not render the warning icon instead of the edit button for system admins`, () => {
+  it(`it renders the warning icon instead of the edit button for system admins`, () => {
     const { queryByTitle, queryByTestId } = setup(
       {
         dispositionFile: {
@@ -157,7 +157,7 @@ describe('DispositionMenu component', () => {
 
     const button = queryByTitle('Change properties');
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
-    expect(button).toBeVisible();
-    expect(icon).toBeNull();
+    expect(button).toBeNull();
+    expect(icon).toBeVisible();
   });
 });

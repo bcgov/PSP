@@ -174,6 +174,9 @@ namespace Pims.Api.Test.Services
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             updatedResearchFile = service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
@@ -213,6 +216,9 @@ namespace Pims.Api.Test.Services
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>() { new() { Internal_Id = 1, SourcePropertyId = deletedProperty.Internal_Id, SourceProperty = deletedProperty } });
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             Action act = () => service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
@@ -250,6 +256,9 @@ namespace Pims.Api.Test.Services
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             updatedResearchFile = service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
@@ -283,6 +292,9 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -319,6 +331,9 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -366,6 +381,9 @@ namespace Pims.Api.Test.Services
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>());
@@ -422,6 +440,9 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>());
 
@@ -470,6 +491,9 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             var updatedResearchFile = service.UpdateProperties(researchFile, new List<UserOverrideCode>());
 
@@ -515,6 +539,9 @@ namespace Pims.Api.Test.Services
                 RegionCode = 1
             });
             propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyResearchFile>())).Returns<PimsPropertyResearchFile>(x => x);
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>());
@@ -581,6 +608,9 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(researchFile);
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             var result = service.Update(researchFile);
 
@@ -645,6 +675,9 @@ namespace Pims.Api.Test.Services
             lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { newStatusType, oldStatusType });
             var noteEntityRepositoryMock = this._helper.GetService<Mock<IEntityNoteRepository>>();
 
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
             // Act
             var updatedResearchFile = service.Update(updatedResearchFileRequest);
 
@@ -679,6 +712,10 @@ namespace Pims.Api.Test.Services
             var lookupRepositoryMock = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepositoryMock.Setup(x => x.GetAllResearchFileStatusTypes()).Returns(new List<PimsResearchFileStatusType>() { sameStatusType });
             var noteEntityRepositoryMock = this._helper.GetService<Mock<IEntityNoteRepository>>();
+
+
+            var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
+            solver.Setup(x => x.CanEditDetails(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
             // Act
             var updatedResearchFile = service.Update(updatedResearchFileRequest);

@@ -58,6 +58,9 @@ namespace Pims.Api.Test.Services
             this.MockCommonServices();
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var payment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
 
@@ -86,6 +89,9 @@ namespace Pims.Api.Test.Services
             var paidPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 2, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
             var partialPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now, PaymentAmountTotal = 1, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
 
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             this.paymentService.AddPayment(lease.Internal_Id, unpaidPayment);
             this.paymentService.AddPayment(lease.Internal_Id, overpaidPayment);
             this.paymentService.AddPayment(lease.Internal_Id, paidPayment);
@@ -111,6 +117,9 @@ namespace Pims.Api.Test.Services
             this.MockCommonServices();
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var addPayment = new PimsLeasePayment() { PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
@@ -133,6 +142,9 @@ namespace Pims.Api.Test.Services
 
             this.MockCommonServices();
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
+
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.BASE.ToString() };
@@ -159,6 +171,9 @@ namespace Pims.Api.Test.Services
             PimsLeasePayment response = null;
             this.leasePaymentRepository.Setup(x => x.Update(It.IsAny<PimsLeasePayment>())).Callback<PimsLeasePayment>(x => response = x);
 
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.VBL.ToString(), PaymentAmountTotal = 1 };
 
@@ -184,6 +199,9 @@ namespace Pims.Api.Test.Services
             PimsLeasePayment response = null;
             this.leasePaymentRepository.Setup(x => x.Update(It.IsAny<PimsLeasePayment>())).Callback<PimsLeasePayment>(x => response = x);
 
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now, LeasePaymentCategoryTypeCode = LeasePaymentCategoryTypes.ADDL.ToString(), PaymentAmountTotal = 1 };
 
@@ -207,6 +225,9 @@ namespace Pims.Api.Test.Services
             this.MockCommonServices();
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(period);
 
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
             // Act
             var payment = new PimsLeasePayment() { LeasePaymentId = originalPayment.LeasePaymentId, PaymentReceivedDate = DateTime.Now.AddDays(30) };
 
@@ -227,6 +248,9 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
+
+            var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var payment = new PimsLeasePayment();

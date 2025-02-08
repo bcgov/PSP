@@ -46,13 +46,13 @@ namespace Pims.Api.Services
             {
                 case AcquisitionStatusTypes.ACTIVE:
                 case AcquisitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = true;
                     break;
                 case AcquisitionStatusTypes.ARCHIV:
                 case AcquisitionStatusTypes.CANCEL:
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
-                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:
@@ -72,8 +72,8 @@ namespace Pims.Api.Services
 
             var canEdit = acquisitionStatus switch
             {
-                AcquisitionStatusTypes.ACTIVE or AcquisitionStatusTypes.DRAFT => true,
-                AcquisitionStatusTypes.ARCHIV or AcquisitionStatusTypes.CANCEL or AcquisitionStatusTypes.CLOSED or AcquisitionStatusTypes.COMPLT or AcquisitionStatusTypes.HOLD => false,
+                AcquisitionStatusTypes.ACTIVE or AcquisitionStatusTypes.DRAFT or AcquisitionStatusTypes.HOLD => true,
+                AcquisitionStatusTypes.ARCHIV or AcquisitionStatusTypes.CANCEL or AcquisitionStatusTypes.CLOSED or AcquisitionStatusTypes.COMPLT => false,
                 _ => false,
             };
             return canEdit;
@@ -91,13 +91,13 @@ namespace Pims.Api.Services
             {
                 case AcquisitionStatusTypes.ACTIVE:
                 case AcquisitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = (isDraftCompensation.HasValue && isDraftCompensation.Value) || (isAdmin.HasValue && isAdmin.Value);
                     break;
                 case AcquisitionStatusTypes.ARCHIV:
                 case AcquisitionStatusTypes.CANCEL:
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
-                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:
@@ -108,25 +108,20 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditOrDeleteAgreement(AcquisitionStatusTypes? acquisitionStatus, AgreementStatusTypes? agreementStatus)
+        public bool CanEditOrDeleteAgreement(AcquisitionStatusTypes? acquisitionStatus)
         {
-            if (acquisitionStatus == null)
-            {
-                return false;
-            }
-
             bool canEdit;
             switch (acquisitionStatus)
             {
                 case AcquisitionStatusTypes.ACTIVE:
                 case AcquisitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = true;
                     break;
                 case AcquisitionStatusTypes.ARCHIV:
                 case AcquisitionStatusTypes.CANCEL:
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
-                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:
@@ -149,13 +144,13 @@ namespace Pims.Api.Services
             {
                 case AcquisitionStatusTypes.ACTIVE:
                 case AcquisitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = true;
                     break;
                 case AcquisitionStatusTypes.ARCHIV:
                 case AcquisitionStatusTypes.CANCEL:
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
-                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:
@@ -178,13 +173,13 @@ namespace Pims.Api.Services
             {
                 case AcquisitionStatusTypes.ACTIVE:
                 case AcquisitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = true;
                     break;
                 case AcquisitionStatusTypes.ARCHIV:
                 case AcquisitionStatusTypes.CANCEL:
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
-                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:
@@ -207,13 +202,13 @@ namespace Pims.Api.Services
             {
                 case AcquisitionStatusTypes.ACTIVE:
                 case AcquisitionStatusTypes.DRAFT:
+                case AcquisitionStatusTypes.HOLD:
                     canEdit = true;
                     break;
                 case AcquisitionStatusTypes.ARCHIV:
                 case AcquisitionStatusTypes.CANCEL:
                 case AcquisitionStatusTypes.CLOSED:
                 case AcquisitionStatusTypes.COMPLT:
-                case AcquisitionStatusTypes.HOLD:
                     canEdit = false;
                     break;
                 default:

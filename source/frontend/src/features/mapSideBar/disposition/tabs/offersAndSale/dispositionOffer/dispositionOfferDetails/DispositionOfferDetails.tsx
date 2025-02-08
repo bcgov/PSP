@@ -14,13 +14,12 @@ import { ApiGen_Concepts_DispositionFileOffer } from '@/models/api/generated/Api
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { formatMoney } from '@/utils/numberFormatUtils';
 
-import DispositionStatusUpdateSolver from '../../../fileDetails/detail/DispositionStatusUpdateSolver';
-
 export interface IDispositionOfferDetailsProps {
   index: number;
   dispositionOffer: ApiGen_Concepts_DispositionFileOffer;
   onDelete: (offerId: number) => void;
   dispositionFile: ApiGen_Concepts_DispositionFile;
+  isFileFinalStatus: boolean;
 }
 
 const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsProps> = ({
@@ -28,6 +27,7 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
   dispositionOffer,
   onDelete,
   dispositionFile,
+  isFileFinalStatus,
 }) => {
   const keycloak = useKeycloakWrapper();
   const history = useHistory();
@@ -35,13 +35,11 @@ const DispositionOfferDetails: React.FunctionComponent<IDispositionOfferDetailsP
 
   const { setModalContent, setDisplayModal } = useModalContext();
 
-  const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
-
   const canEditDetails = () => {
-    if (statusSolver.canEditOfferSalesValues()) {
-      return true;
+    if (isFileFinalStatus) {
+      return false;
     }
-    return false;
+    return true;
   };
 
   return (

@@ -151,6 +151,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             index={index}
             onDelete={onDispositionOfferDeleted}
             dispositionFile={dispositionFile}
+            isFileFinalStatus={isFileFinalStatus}
           ></DispositionOfferDetails>
         ))}
         {dispositionOffers.length === 0 && (

@@ -12,7 +12,6 @@ import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/
 
 const mockViewProps: IAgreementViewProps = {
   agreements: [],
-  statusUpdateSolver: new AcquisitionFileStatusUpdateSolver(),
   onGenerate: vi.fn(),
   loading: false,
   onDelete: vi.fn(),
@@ -24,7 +23,6 @@ describe('AgreementView component', () => {
       <AgreementView
         loading={mockViewProps.loading}
         agreements={mockViewProps.agreements}
-        statusUpdateSolver={mockViewProps.statusUpdateSolver}
         onGenerate={mockViewProps.onGenerate}
         onDelete={mockViewProps.onDelete}
       />,
@@ -45,7 +43,6 @@ describe('AgreementView component', () => {
 
   beforeEach(() => {
     mockViewProps.agreements = mockAgreementsResponse();
-    mockViewProps.statusUpdateSolver = new AcquisitionFileStatusUpdateSolver();
   });
 
   afterEach(() => {
@@ -73,13 +70,6 @@ describe('AgreementView component', () => {
   });
 
   it('displays confirmation modal when Delete Agreement button is clicked', async () => {
-    mockViewProps.statusUpdateSolver = new AcquisitionFileStatusUpdateSolver({
-      id: ApiGen_CodeTypes_AcquisitionStatusTypes.ACTIVE,
-      description: '',
-      displayOrder: 1,
-      isDisabled: false,
-    });
-
     const { getAllByTitle } = setup({
       claims: [Claims.ACQUISITION_EDIT],
     });

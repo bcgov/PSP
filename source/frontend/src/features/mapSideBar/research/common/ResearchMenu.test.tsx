@@ -2,6 +2,7 @@ import { Claims } from '@/constants/index';
 import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
 import ResearchMenu, { IResearchMenuProps } from './ResearchMenu';
+import { getMockResearchFile } from '@/mocks/researchFile.mock';
 
 // mock auth library
 
@@ -18,6 +19,7 @@ describe('ResearchMenu component', () => {
         items={props.items}
         onChange={props.onChange}
         onEdit={props.onEdit}
+        researchFile={props.researchFile}
       />,
       {
         useMockAuthentication: true,
@@ -39,6 +41,7 @@ describe('ResearchMenu component', () => {
       selectedIndex: 0,
       onChange,
       onEdit,
+      researchFile: getMockResearchFile(),
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -49,6 +52,7 @@ describe('ResearchMenu component', () => {
       selectedIndex: 0,
       onChange,
       onEdit,
+      researchFile: getMockResearchFile(),
     });
 
     expect(getByText(testItems[0])).toBeVisible();
@@ -62,6 +66,7 @@ describe('ResearchMenu component', () => {
       selectedIndex: 1,
       onChange,
       onEdit,
+      researchFile: getMockResearchFile(),
     });
 
     expect(getByTestId('menu-item-row-0')).not.toHaveClass('selected');
@@ -75,6 +80,7 @@ describe('ResearchMenu component', () => {
       selectedIndex: 1,
       onChange,
       onEdit,
+      researchFile: getMockResearchFile(),
     });
 
     const lastItem = getByText(testItems[2]);
@@ -90,6 +96,7 @@ describe('ResearchMenu component', () => {
         selectedIndex: 0,
         onChange,
         onEdit,
+        researchFile: getMockResearchFile(),
       },
       { claims: [Claims.RESEARCH_EDIT] },
     );
@@ -98,7 +105,7 @@ describe('ResearchMenu component', () => {
     expect(button).toBeVisible();
     await act(async () => userEvent.click(button));
 
-    expect(onEdit).toHaveBeenCalledWith();
+    expect(onEdit).toHaveBeenCalled();
   });
 
   it(`doesn't render the edit button for users without edit permissions`, () => {
@@ -108,6 +115,7 @@ describe('ResearchMenu component', () => {
         selectedIndex: 1,
         onChange,
         onEdit,
+        researchFile: getMockResearchFile(),
       },
       { claims: [Claims.RESEARCH_VIEW] }, // no edit permissions, just view.
     );

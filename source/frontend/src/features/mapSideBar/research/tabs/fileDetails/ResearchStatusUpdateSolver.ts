@@ -18,11 +18,11 @@ class ResearchStatusUpdateSolver {
 
     switch (statusCode) {
       case ApiGen_CodeTypes_ResearchFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_ResearchFileStatusTypes.INACTIVE:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_ResearchFileStatusTypes.ARCHIVED:
       case ApiGen_CodeTypes_ResearchFileStatusTypes.CLOSED:
-      case ApiGen_CodeTypes_ResearchFileStatusTypes.INACTIVE:
         canEdit = false;
         break;
       default:
@@ -84,11 +84,11 @@ class ResearchStatusUpdateSolver {
 
     switch (statusCode) {
       case ApiGen_CodeTypes_ResearchFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_ResearchFileStatusTypes.INACTIVE:
         canEdit = true;
         break;
       case ApiGen_CodeTypes_ResearchFileStatusTypes.ARCHIVED:
       case ApiGen_CodeTypes_ResearchFileStatusTypes.CLOSED:
-      case ApiGen_CodeTypes_ResearchFileStatusTypes.INACTIVE:
         canEdit = false;
         break;
       default:
