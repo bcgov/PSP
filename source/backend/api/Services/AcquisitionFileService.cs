@@ -263,6 +263,11 @@ namespace Pims.Api.Services
                 ValidateDraftsOnComplete(acquisitionFile);
             }
 
+            if(currentAcquisitionStatus != AcquisitionStatusTypes.CANCEL && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.CANCEL.ToString())
+            {
+                ValidateDraftsOnCancelled(acquisitionFile);
+            }
+
             if (!_statusSolver.CanEditDetails(currentAcquisitionStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active or hold, so you cannot save changes. Refresh your browser to see file state.");
@@ -754,6 +759,16 @@ namespace Pims.Api.Services
             if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.INPROGRESS.ToString()))
             {
                 throw new BusinessRuleViolationException("Please ensure all in-progress property takes have been completed or canceled before completing an Acquisition File.");
+            }
+        }
+
+        private void ValidateDraftsOnCancelled(PimsAcquisitionFile incomingFile)
+        {
+            var takes = _takeRepository.GetAllByAcquisitionFileId(incomingFile.AcquisitionFileId);
+
+            if (takes.Any(t => t.TakeStatusTypeCode == AcquisitionTakeStatusTypes.INPROGRESS.ToString()))
+            {
+                throw new BusinessRuleViolationException("Please ensure all in-progress property takes have been completed or cancelled before cancelling an Acquisition File.");
             }
         }
 

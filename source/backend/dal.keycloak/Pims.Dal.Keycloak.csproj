@@ -11,6 +11,7 @@
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Identity" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging" Version="8.0.0" />
+    <PackageReference Include="Polly.Extensions" Version="8.5.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\entities\Pims.Dal.Entities.csproj" />

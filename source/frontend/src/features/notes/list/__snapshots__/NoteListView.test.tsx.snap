@@ -16,7 +16,8 @@ exports[`Note List View > renders as expected 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c3 {
@@ -125,13 +126,13 @@ exports[`Note List View > renders as expected 1`] = `
             class="no-gutters row"
           >
             <div
-              class="col"
+              class="align-items-end col"
             >
               <div
                 class="c5 no-gutters row"
               >
                 <div
-                  class="px-2 my-1 col-auto"
+                  class="align-items-end col-auto"
                 >
                   Notes
                 </div>

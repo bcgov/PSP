@@ -15,6 +15,10 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 
 import { ILayerItem } from './types';
 
+interface LayersFormModel {
+  layers: ILayerItem[];
+}
+
 const ParentNode = styled(ListGroup.Item)`
   display: flex;
   align-items: center;
@@ -163,13 +167,15 @@ const LayerNodeCheckbox: React.FC<
   );
 };
 
-const MapLayerSynchronizer = () => {
-  const { values } = useFormikContext<{ layers: ILayerItem[] }>();
-  const { setMapLayers } = useMapStateMachine();
+const MapLayerSynchronizer: React.FC<unknown> = () => {
+  const { values } = useFormikContext<LayersFormModel>();
+  const { setMapLayers, isShowingMapLayers } = useMapStateMachine();
 
   useEffect(() => {
-    setMapLayers(values.layers ?? []);
-  }, [setMapLayers, values]);
+    if (isShowingMapLayers) {
+      setMapLayers(values.layers ?? []);
+    }
+  }, [isShowingMapLayers, setMapLayers, values.layers]);
 
   return null;
 };
@@ -178,13 +184,13 @@ const MapLayerSynchronizer = () => {
  * This component displays the nested groups of layers
  */
 const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> = ({ items }) => {
-  const { values } = useFormikContext<any>();
+  const { values } = useFormikContext<LayersFormModel>();
 
-  const getParentIndex = (key: string, mapLayers: TreeNode[]) => {
+  const getParentIndex = (key: string, mapLayers: ILayerItem[]) => {
     return mapLayers.findIndex(node => node.key === key);
   };
 
-  const getLayerNodeIndex = (nodeKey: string, parentKey: string, mapLayers: TreeNode[]) => {
+  const getLayerNodeIndex = (nodeKey: string, parentKey: string, mapLayers: ILayerItem[]) => {
     const parent = mapLayers.find(node => node.key === parentKey);
 
     return parent
@@ -252,10 +258,6 @@ const LayersTree: React.FC<React.PropsWithChildren<{ items: TreeMenuItem[] }>> =
   );
 };
 
-interface LayersFormModel {
-  layers: ILayerItem[];
-}
-
 /**
  * This component displays the layers group menu
  */
@@ -264,10 +266,10 @@ export const LayersMenu: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <Formik<LayersFormModel> initialValues={{ layers }} onSubmit={noop} enableReinitialize>
-      {() => (
+      {({ values }) => (
         <FormikForm>
           <MapLayerSynchronizer />
-          <TreeMenu hasSearch={false} data={layers}>
+          <TreeMenu hasSearch={false} data={values.layers}>
             {({ items }) => {
               return (
                 <FormSection className="bg-white p-3">

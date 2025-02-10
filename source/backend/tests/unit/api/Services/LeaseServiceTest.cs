@@ -685,6 +685,98 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_CommencementDate_Overlap_ExpiryDate_Success()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString();
+            lease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType()
+            {
+                Id = LeaseStatusTypes.ACTIVE.ToString(),
+            };
+            lease.OrigStartDate = new DateTime(2024, 1, 1);
+            lease.OrigExpiryDate = new DateTime(2025, 1, 31);
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+
+            lease.PimsLeaseRenewals = new List<PimsLeaseRenewal>()
+            {
+                new()
+                {
+                    LeaseId = lease.LeaseId,
+                    CommencementDt = new DateTime(2025, 1 , 1),
+                    ExpiryDt = new DateTime(2025, 12, 31),
+                    IsExercised = true,
+                },
+            };
+
+            // Act
+            var updatedLease = service.Update(lease, new List<UserOverrideCode>() { UserOverrideCode.CommencementOverlapExpiryDate });
+
+            // Assert
+            leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
+            propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Once);
+        }
+
+        [Fact]
+        public void Update_CommencementDate_Overlap_ExpiryDate_ThrowOverride()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString();
+            lease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType()
+            {
+                Id = LeaseStatusTypes.ACTIVE.ToString(),
+            };
+            lease.OrigStartDate = new DateTime(2024, 1, 1);
+            lease.OrigExpiryDate = new DateTime(2025, 1, 31);
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+
+            lease.PimsLeaseRenewals = new List<PimsLeaseRenewal>()
+            {
+                new()
+                {
+                    LeaseId = lease.LeaseId,
+                    CommencementDt = new DateTime(2025, 1 , 1),
+                    ExpiryDt = new DateTime(2025, 12, 31),
+                    IsExercised = true,
+                },
+            };
+
+            // Act
+            Action act = () => service.Update(lease, new List<UserOverrideCode>() { });
+
+            // Assert
+            var ex = act.Should().Throw<UserOverrideException>();
+            ex.Which.UserOverride.Should().Be(UserOverrideCode.CommencementOverlapExpiryDate);
+        }
+
+        [Fact]
         public void UpdateProperties_MatchProperties_Success_NoInternalId()
         {
             // Arrange

@@ -101,7 +101,7 @@ export const H3 = styled.h3`
   border-bottom: solid 0.2rem ${props => props.theme.css.actionColor};
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 `;
 
 export const FilterBoxForm = styled(Form)`

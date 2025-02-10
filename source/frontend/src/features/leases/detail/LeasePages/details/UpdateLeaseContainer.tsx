@@ -117,12 +117,12 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
         onSubmit={(lease: LeaseFormModel) =>
           withUserOverride(
             (userOverrideCodes: UserOverrideCode[]) => onSubmit(lease, userOverrideCodes),
-
             [],
             customErrorHandler,
           )
         }
         formikRef={formikRef}
+        initialValues={LeaseFormModel.fromApi(lease)}
       />
     </>
   );

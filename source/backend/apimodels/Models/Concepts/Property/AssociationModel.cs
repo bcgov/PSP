@@ -17,5 +17,7 @@ namespace Pims.Api.Models.Concepts.Property
         public string CreatedByGuid { get; set; }
 
         public string Status { get; set; }
+
+        public string StatusCode { get; set; }
     }
 }

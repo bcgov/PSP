@@ -7,7 +7,7 @@ export const LeaseH4 = styled.h4`
   font-size: 1.8rem;
   color: white;
   text-align: center;
-  padding-bottom: 1.6rem;
+  padding-bottom: 1rem;
 `;
 
 export const FormDescriptionLabel = styled(Form.Label)`
