@@ -22,7 +22,7 @@ namespace PIMS.Tests.Automation.Reports
         public TestHooks(IObjectContainer container)
         {
             _container = container;
-            currentWebDriverLazy = new Lazy<IWebDriver>(CreateFirefoxWebDriver);
+            currentWebDriverLazy = new Lazy<IWebDriver>(CreateChromeWebDriver);
             configurationLazy = new Lazy<IConfiguration>(ReadConfiguration);
             closeBrowserOnDispose = Configuration.GetValue("CloseBrowserAfterEachTest", true);
             runAutomationHeadless = Configuration.GetValue("RunHeadless", true);
