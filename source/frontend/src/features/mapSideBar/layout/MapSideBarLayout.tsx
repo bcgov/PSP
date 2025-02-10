@@ -104,9 +104,12 @@ const MapSideBarLayout: React.FunctionComponent<
 };
 
 const StyledSidebarWrapper = styled.div`
-  &.collapsed svg:first-of-type {
-    width: 2.6rem;
-    height: 2.6rem;
+  &.collapsed .row:first {
+    svg {
+      width: 2.6rem;
+      height: 2.6rem;
+      margin-right: 0;
+    }
   }
 
   &.expanded {
@@ -118,7 +121,7 @@ const StyledSidebarWrapper = styled.div`
     flex-direction: column;
     overflow: hidden;
 
-    svg {
+    h1 svg {
       width: 2.8rem;
       height: 2.8rem;
     }
