@@ -1,6 +1,7 @@
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.IO;
+using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -8,12 +9,15 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Exceptions;
+using Pims.Core.Configuration;
 using Pims.Core.Http;
 using Pims.Core.Http.Configuration;
+
 using Pims.Keycloak;
 using Pims.Keycloak.Configuration;
 using Pims.Tools.Keycloak.Sync.Configuration;
 using Pims.Tools.Keycloak.Sync.Configuration.Realm;
+using Polly;
 
 namespace Pims.Tools.Keycloak.Sync
 {
@@ -84,6 +88,20 @@ namespace Pims.Tools.Keycloak.Sync
                 .AddTransient<ISyncFactory, SyncFactory>();
 
             services.AddHttpClient("Pims.Tools.Keycloak.Sync", client => { });
+
+            PollyOptions pollyOptions = new();
+            config.GetSection("Polly").Bind(pollyOptions);
+
+            services.AddResiliencePipeline<string, HttpResponseMessage>("retry-network-policy", (builder) =>
+            {
+                builder.AddRetry(new()
+                {
+                    BackoffType = DelayBackoffType.Exponential,
+                    Delay = TimeSpan.FromSeconds(pollyOptions.DelayInSeconds),
+                    MaxRetryAttempts = pollyOptions.MaxRetries,
+                    ShouldHandle = new PredicateBuilder<HttpResponseMessage>().Handle<HttpRequestException>().HandleResult(response => (int)response.StatusCode >= 500 && (int)response.StatusCode <= 599),
+                });
+            });
 
             var provider = services.BuildServiceProvider();
             var logger = provider.GetService<ILogger<Startup>>();

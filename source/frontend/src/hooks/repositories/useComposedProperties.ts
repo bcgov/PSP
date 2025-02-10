@@ -33,8 +33,6 @@ export enum PROPERTY_TYPES {
   CROWN_TENURES = 'CROWN_TENURES',
 }
 
-export const ALL_PROPERTY_TYPES = Object.values(PROPERTY_TYPES);
-
 export default interface ComposedPropertyState {
   pid?: string;
   pin?: string;

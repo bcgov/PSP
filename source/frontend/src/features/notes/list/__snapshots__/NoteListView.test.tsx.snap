@@ -28,6 +28,15 @@ exports[`Note List View > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
+.c1 {
+  width: 100%;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
 .c7 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -63,29 +72,9 @@ exports[`Note List View > renders as expected 1`] = `
   height: 1.6rem;
 }
 
-.c5 {
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c5 .btn {
-  margin: 0;
-}
-
-.c1 {
+.c2 {
+  padding: 1.6rem 3.2rem;
   width: 100%;
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-  overflow-y: auto;
 }
 
 .c0 {
@@ -105,8 +94,20 @@ exports[`Note List View > renders as expected 1`] = `
   padding: 0;
 }
 
-.c2 {
-  width: 100%;
+.c5 {
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+  min-height: 4.5rem;
+}
+
+.c5 .btn {
+  margin: 0;
 }
 
 <div

@@ -9,7 +9,7 @@ import styled from 'styled-components';
 
 import { StyledIconButton } from '@/components/common/buttons';
 import * as CommonStyled from '@/components/common/styles';
-import { StyledAddButton } from '@/components/common/styles';
+import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Claims } from '@/constants';
 import {
@@ -31,7 +31,6 @@ import { useDispositionFileExport } from '../hooks/useDispositionFileExport';
 import DispositionFilter from './DispositionFilter/DispositionFilter';
 import { DispositionSearchResults } from './DispositionSearchResults/DispositionSearchResults';
 import { DispositionFilterModel, DispositionSearchResultModel } from './models';
-import * as S from './styles';
 
 /**
  * Page that displays Disposition files information.
@@ -116,8 +115,8 @@ export const DispositionListView: React.FC<unknown> = () => {
   );
 
   return (
-    <S.ListPage>
-      <S.Scrollable>
+    <CommonStyled.ListPage>
+      <PaddedScrollable>
         <CommonStyled.H1>
           <FlexDiv>
             <div>
@@ -132,7 +131,7 @@ export const DispositionListView: React.FC<unknown> = () => {
             )}
           </FlexDiv>
         </CommonStyled.H1>
-        <S.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <DispositionFilter
@@ -152,7 +151,7 @@ export const DispositionListView: React.FC<unknown> = () => {
               </TooltipWrapper>
             </Col>
           </Row>
-        </S.PageToolbar>
+        </CommonStyled.PageToolbar>
 
         <DispositionSearchResults
           results={results.map(a => DispositionSearchResultModel.fromApi(a))}
@@ -166,8 +165,8 @@ export const DispositionListView: React.FC<unknown> = () => {
           setPageIndex={setCurrentPage}
           loading={loading}
         ></DispositionSearchResults>
-      </S.Scrollable>
-    </S.ListPage>
+      </PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 

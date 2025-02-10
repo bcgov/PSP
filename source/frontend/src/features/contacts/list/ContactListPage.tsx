@@ -4,12 +4,10 @@ import styled from 'styled-components';
 
 import ContactIcon from '@/assets/images/contact-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
-import { StyledAddButton } from '@/components/common/styles';
+import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import ContactManagerView from '@/components/contact/ContactManagerView/ContactManagerView';
 import Claims from '@/constants/claims';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-
-import * as Styled from '../styles';
 
 /**
  * Page that displays a list of contacts.
@@ -19,8 +17,8 @@ export const ContactListPage = () => {
   const { hasClaim } = useKeycloakWrapper();
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <PaddedScrollable>
         <CommonStyled.H1>
           <FlexDiv>
             <div>
@@ -36,8 +34,8 @@ export const ContactListPage = () => {
           </FlexDiv>
         </CommonStyled.H1>
         <ContactManagerView showActiveSelector />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 

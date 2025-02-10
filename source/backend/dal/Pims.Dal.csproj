@@ -35,6 +35,7 @@
     <PackageReference Include="Microsoft.Extensions.Options" Version="8.0.0" />
     <PackageReference Include="NetTopologySuite" Version="2.5.0" />
     <PackageReference Include="NpgSql.EntityFrameworkCore.PostgreSQL.Design" Version="1.1.1" />
+    <PackageReference Include="Polly.Extensions" Version="8.5.1" />
     <PackageReference Include="ProjNet" Version="2.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.9.0" />
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />

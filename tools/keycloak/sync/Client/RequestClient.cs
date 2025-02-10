@@ -9,8 +9,7 @@ using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
 using Pims.Core.Http.Configuration;
 using Pims.Tools.Keycloak.Sync.Configuration;
-using Polly;
-using Polly.Retry;
+using Polly.Registry;
 
 namespace Pims.Tools.Keycloak.Sync
 {
@@ -23,7 +22,6 @@ namespace Pims.Tools.Keycloak.Sync
         private readonly RequestOptions _requestOptions;
         private readonly ILogger _logger;
         private readonly JsonSerializerOptions _serializerOptions;
-        private readonly AsyncRetryPolicy _retryPolicy;
         #endregion
 
         #region Constructors
@@ -38,6 +36,7 @@ namespace Pims.Tools.Keycloak.Sync
         /// <param name="requestOptions"></param>
         /// <param name="serializerOptions"></param>
         /// <param name="logger"></param>
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public RequestClient(
             IHttpClientFactory clientFactory,
             JwtSecurityTokenHandler tokenHandler,
@@ -45,8 +44,9 @@ namespace Pims.Tools.Keycloak.Sync
             IOptionsMonitor<OpenIdConnectOptions> openIdConnectOptions,
             IOptionsMonitor<RequestOptions> requestOptions,
             IOptionsMonitor<JsonSerializerOptions> serializerOptions,
-            ILogger<RequestClient> logger)
-            : base(clientFactory, tokenHandler, authClientOptions, openIdConnectOptions, serializerOptions, logger)
+            ILogger<RequestClient> logger,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(clientFactory, tokenHandler, authClientOptions, openIdConnectOptions, serializerOptions, logger, pollyPipelineProvider)
         {
             _requestOptions = requestOptions.CurrentValue;
             _logger = logger;
@@ -56,9 +56,6 @@ namespace Pims.Tools.Keycloak.Sync
                 PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
                 DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull,
             };
-            _retryPolicy = Policy
-                .Handle<HttpRequestException>(result => result?.StatusCode != null && (int)result.StatusCode >= 500 && (int)result.StatusCode < 600 && _requestOptions.RetryAfterFailure)
-                 .WaitAndRetryAsync(_requestOptions.RetryAttempts, retryAttempt => TimeSpan.FromSeconds(Math.Pow(2, retryAttempt)));
         }
         #endregion
 
@@ -74,7 +71,7 @@ namespace Pims.Tools.Keycloak.Sync
         public async Task<TR> HandleGetAsync<TR>(string url, Func<HttpResponseMessage, bool> onError = null)
             where TR : class
         {
-            var response = await _retryPolicy.ExecuteAsync(async () => await SendAsync(url, HttpMethod.Get));
+            var response = await SendAsync(url, HttpMethod.Get);
 
             if (response.IsSuccessStatusCode)
             {
@@ -109,7 +106,7 @@ namespace Pims.Tools.Keycloak.Sync
         public virtual async Task<TR> HandleRequestAsync<TR>(HttpMethod method, string url, Func<HttpResponseMessage, bool> onError = null)
             where TR : class
         {
-            var response = await _retryPolicy.ExecuteAsync(async () => await SendAsync(url, method));
+            var response = await SendAsync(url, method);
 
             if (response.IsSuccessStatusCode)
             {

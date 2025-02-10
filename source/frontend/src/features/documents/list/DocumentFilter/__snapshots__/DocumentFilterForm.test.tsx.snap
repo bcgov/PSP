@@ -214,13 +214,13 @@ exports[`DocumentFilterForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
+.c1 {
+  border-left: 0.2rem solid white;
+}
+
 .c0 {
   background-color: #d9eaf7;
   border-radius: 0.5rem 0.5rem 0rem 0rem;
-}
-
-.c1 {
-  border-left: 0.2rem solid white;
 }
 
 <form
@@ -370,7 +370,7 @@ exports[`DocumentFilterForm component > renders as expected 1`] = `
         class="col-lg-auto"
       >
         <div
-          class="c1 no-gutters pl-2 row"
+          class="c1 no-gutters pl-2 col"
         >
           <div
             class="col"
@@ -651,13 +651,13 @@ exports[`DocumentFilterForm component > renders with data as expected 1`] = `
   margin-right: 0;
 }
 
+.c1 {
+  border-left: 0.2rem solid white;
+}
+
 .c0 {
   background-color: #d9eaf7;
   border-radius: 0.5rem 0.5rem 0rem 0rem;
-}
-
-.c1 {
-  border-left: 0.2rem solid white;
 }
 
 <form
@@ -807,7 +807,7 @@ exports[`DocumentFilterForm component > renders with data as expected 1`] = `
         class="col-lg-auto"
       >
         <div
-          class="c1 no-gutters pl-2 row"
+          class="c1 no-gutters pl-2 col"
         >
           <div
             class="col"

@@ -9,7 +9,7 @@ import styled from 'styled-components';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import { StyledIconButton } from '@/components/common/buttons';
 import * as CommonStyled from '@/components/common/styles';
-import { StyledAddButton } from '@/components/common/styles';
+import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import Claims from '@/constants/claims';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
@@ -23,7 +23,6 @@ import { useLeaseExport } from '../hooks/useLeaseExport';
 import { ILeaseFilter } from '../interfaces';
 import { defaultFilter, LeaseFilter } from './LeaseFilter/LeaseFilter';
 import { LeaseSearchResults } from './LeaseSearchResults/LeaseSearchResults';
-import * as Styled from './styles';
 
 /**
  * Page that displays leases information.
@@ -81,8 +80,8 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   }, [error]);
 
   return (
-    <Styled.ListPage>
-      <Styled.Scrollable>
+    <CommonStyled.ListPage>
+      <PaddedScrollable>
         <CommonStyled.H1>
           <FlexDiv>
             <div>
@@ -97,7 +96,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
             )}
           </FlexDiv>
         </CommonStyled.H1>
-        <Styled.PageToolbar>
+        <CommonStyled.PageToolbar>
           <Row>
             <Col>
               <LeaseFilter filter={filter} setFilter={changeFilter} />
@@ -117,7 +116,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
               </TooltipWrapper>
             </Col>
           </Row>
-        </Styled.PageToolbar>
+        </CommonStyled.PageToolbar>
 
         <LeaseSearchResults
           results={results}
@@ -131,8 +130,8 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
           setPageIndex={setCurrentPage}
           loading={loading}
         />
-      </Styled.Scrollable>
-    </Styled.ListPage>
+      </PaddedScrollable>
+    </CommonStyled.ListPage>
   );
 };
 

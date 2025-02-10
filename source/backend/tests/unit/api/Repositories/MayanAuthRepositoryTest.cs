@@ -16,6 +16,8 @@ using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Mayan;
 using Pims.Core.Api.Exceptions;
+using Polly;
+using Polly.Registry;
 using Xunit;
 
 namespace Pims.Api.Repositories.Mayan
@@ -27,6 +29,7 @@ namespace Pims.Api.Repositories.Mayan
         private readonly IOptions<JsonSerializerOptions> _jsonOptions;
         private readonly IConfiguration _configuration;
         private readonly MayanAuthRepository _repository;
+        private readonly Mock<ResiliencePipelineProvider<string>> _pipelineProvider;
 
         public MayanAuthRepositoryTest()
         {
@@ -34,11 +37,14 @@ namespace Pims.Api.Repositories.Mayan
             _httpClientFactory = new Mock<IHttpClientFactory>();
             _jsonOptions = Options.Create<JsonSerializerOptions>(new JsonSerializerOptions() { AllowTrailingCommas = true, PropertyNameCaseInsensitive = true });
             _configuration = _configuration = new ConfigurationBuilder().AddInMemoryCollection(new Dictionary<string, string> { { "Mayan:BaseUri", "http://mayan" } }).Build();
+            _pipelineProvider = new Mock<ResiliencePipelineProvider<string>>();
+            _pipelineProvider.Setup(_pipelineProvider => _pipelineProvider.GetPipeline<HttpResponseMessage>(It.IsAny<string>())).Returns(ResiliencePipeline<HttpResponseMessage>.Empty);
             _repository = new MayanAuthRepository(
                 _logger.Object,
                 _httpClientFactory.Object,
                 _configuration,
-                _jsonOptions);
+                _jsonOptions,
+                _pipelineProvider.Object);
         }
 
         [Fact]

@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Select } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
+import { ColButtons } from '@/components/common/styles';
 import { REGION_TYPES, RESEARCH_FILE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { mapLookupCode } from '@/utils';
@@ -177,8 +178,4 @@ const FilterBoxForm = styled(Form)`
       max-width: 100%;
     }
   }
-`;
-
-const ColButtons = styled(Col)`
-  border-left: 0.2rem solid white;
 `;
