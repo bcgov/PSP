@@ -46,7 +46,7 @@ export const LeaseViewPageForm: React.FunctionComponent<
           {displayLeaseTerminationMessage() && (
             <StyledTerminationMessage>{getTerminationMessage()}</StyledTerminationMessage>
           )}
-          <LeaseEditButton onEdit={onEdit} isEditing={isEditing} />
+          <LeaseEditButton onEdit={onEdit} isEditing={isEditing} pageName={leasePageName} />
         </StyledTerminationWrapper>
       </StyledEditWrapper>
       <>{children}</>

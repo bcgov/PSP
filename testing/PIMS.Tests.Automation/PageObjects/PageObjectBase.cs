@@ -105,7 +105,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             var js = (IJavaScriptExecutor)webDriver;
-            
+
             var selectElement = webDriver.FindElement(parentElement);
             wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(selectElement.FindElements(By.TagName("option"))));
 
@@ -218,7 +218,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void AssertTrueDoublesEquals(By elementBy, double number2)
         {
-            
+
             WaitUntilVisible(elementBy);
             var numberFromElement = webDriver.FindElement(elementBy).GetDomProperty("value");
             var number1 = Math.Round(double.Parse(numberFromElement), 4, MidpointRounding.ToEven).ToString();
@@ -266,7 +266,7 @@ namespace PIMS.Tests.Automation.PageObjects
             else
             {
                 decimal value = decimal.Parse(amount);
-                return value.ToString("#,##0.0000");        
+                return value.ToString("#,##0.0000");
             }
         }
 
@@ -326,7 +326,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             for (int i = 0; i < list.Count; i++)
             {
-                if(i == list.Count -1)
+                if (i == list.Count -1)
                     result = result + list[i];
                 else
                     result = result + list[i] + ", ";
@@ -410,12 +410,5 @@ namespace PIMS.Tests.Automation.PageObjects
             System.Diagnostics.Debug.WriteLine(expiryDates);
             return expiryDates[0].ToString("MMM d, yyyy");
         }
-
-        public void Dispose()
-        {
-            webDriver.Close();
-            webDriver.Quit();
-            webDriver.Dispose();
-        }
     }
-}
+}   

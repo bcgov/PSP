@@ -41,7 +41,7 @@ const FormGuideView: FunctionComponent<PropsWithChildren<IFormGuideViewProps>> =
 
 export default FormGuideView;
 
-const StyledSectionHeader = styled.h2`
+const StyledSectionHeader = styled.div`
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;

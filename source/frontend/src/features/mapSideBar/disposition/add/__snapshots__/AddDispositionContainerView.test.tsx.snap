@@ -284,7 +284,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   border-bottom: solid 0.2rem;
   width: 100%;
   text-align: left;
-  margin-bottom: 2.4rem;
+  margin-bottom: 1.6rem;
 }
 
 .c5 {
@@ -399,7 +399,8 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2rem;
+  margin-bottom: 2.4rem;
+  font-size: 2.6rem;
 }
 
 .c12 {
@@ -657,7 +658,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Project
                   </div>
@@ -782,7 +783,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Schedule
                   </div>
@@ -850,7 +851,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Properties to include in this file:
                   </div>
@@ -1391,7 +1392,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                       class="no-gutters row"
                     >
                       <div
-                        class="col"
+                        class="align-items-end col"
                       >
                         Selected properties
                       </div>
@@ -1451,7 +1452,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Disposition Details
                   </div>
@@ -2008,7 +2009,7 @@ exports[`Add Disposition Container View > matches snapshot 1`] = `
                   class="no-gutters row"
                 >
                   <div
-                    class="col"
+                    class="align-items-end col"
                   >
                     Disposition Team
                   </div>

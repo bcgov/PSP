@@ -14,6 +14,7 @@ using Microsoft.Extensions.Options;
 using Pims.Api.Models.Cdogs;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Requests.Http;
+using Polly.Registry;
 
 namespace Pims.Api.Repositories.Cdogs
 {
@@ -32,13 +33,15 @@ namespace Pims.Api.Repositories.Cdogs
         /// <param name="authRepository">Injected repository that handles authentication.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The jsonOptions.</param>
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public CdogsRepository(
             ILogger<CdogsRepository> logger,
             IHttpClientFactory httpClientFactory,
             IDocumentGenerationAuthRepository authRepository,
             IConfiguration configuration,
-            IOptions<JsonSerializerOptions> jsonOptions)
-            : base(logger, httpClientFactory, configuration, jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(logger, httpClientFactory, configuration, jsonOptions, pollyPipelineProvider)
         {
             _authRepository = authRepository;
         }
