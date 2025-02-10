@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Api.Models.Config;
 using Pims.Core.Api.Repositories.Rest;
+using Polly.Registry;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -25,12 +26,14 @@ namespace Pims.Api.Repositories.Mayan
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The injected json options.</param>
+        /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         protected MayanBaseRepository(
             ILogger logger,
             IHttpClientFactory httpClientFactory,
             IConfiguration configuration,
-            IOptions<JsonSerializerOptions> jsonOptions)
-            : base(logger, httpClientFactory, jsonOptions)
+            IOptions<JsonSerializerOptions> jsonOptions,
+            ResiliencePipelineProvider<string> pollyPipelineProvider)
+            : base(logger, httpClientFactory, jsonOptions, pollyPipelineProvider)
         {
             _config = new MayanConfig();
             configuration.Bind(MayanConfigSectionKey, _config);
